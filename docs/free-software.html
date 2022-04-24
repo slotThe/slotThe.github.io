@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>FOSS – Tony Zorman</title>
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="./css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/skin.css" />
+    <link rel="stylesheet" type="text/css" href="./css/default.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="./" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="./posts.html">Posts</a></li>
+              <li><a href="./research.html">Research</a></li>
+              <li><a href="./free-software.html">FOSS</a></li>
+              <li><a href="./about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <h1>FOSS</h1>
+
+          <div id="contents">
+<p class="mini-header">Contents</p>
+<ul>
+<li><a href="#contributor">Contributor</a>
+<ul>
+<li><a href="#xmonad">XMonad</a></li>
+<li><a href="#kmonad">Kmonad</a></li>
+<li><a href="#xmobar">Xmobar</a></li>
+<li><a href="#void-linux">Void Linux</a></li>
+</ul></li>
+<li><a href="#author">Author</a>
+<ul>
+<li><a href="#hmenu">hmenu</a></li>
+<li><a href="#kbd-mode">kbd-mode</a></li>
+<li><a href="#vmensa">vmensa</a></li>
+</ul></li>
+</ul>
+</div>
+<p>Free software is quite dear to my heart and so I try to contribute as
+much as I can to all kinds of different projects. List below are either
+ones that I’ve stuck with for a while, or personal projects that are
+still actively maintained.</p>
+<h2 id="contributor">Contributor</h2>
+<h3 id="xmonad">XMonad</h3>
+<p>I’m a maintainer for <a href="https://xmonad.org/">XMonad</a>, a minimal X11 window manager written in
+Haskell. In particular, this encompasses the <code>xmonad</code> repository, where
+the lean core of the program resides, <code>xmonad-contrib</code>, containing lots
+of user extensions for all kinds of different use-cases, as well as some
+auxillary packages like <code>X11</code>—Haskell bindings to Xlib.</p>
+<div class="pure-g">
+<div class="pure-u-1-2">
+<img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true">
+</div>
+<div class="pure-u-1-2">
+<img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true">
+</div>
+</div>
+<div class="pure-g">
+<div class="pure-u-1-2">
+<img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true">
+</div>
+<div class="pure-u-1-2">
+<img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true">
+</div>
+</div>
+<p>As I strongly believe in dogfooding, I’m an avid user of course! My
+configuration can be found
+<a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">here</a>.</p>
+<h3 id="kmonad">Kmonad</h3>
+<p>I’m a contributor<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to kmonad, a keyboard remapping daemon in the
+spirit of <a href="https://qmk.fm/">QMK</a>. However, instead of being firmware for a specific
+keyboard, it is implemented in software and thus works for any
+keyboard—even your laptop keyboard!</p>
+<p style="text-align:center;">
+<img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=kmonad&repo=kmonad&show_owner=true" width="50%">
+</p>
+<p>My personal keyboard configuration—<a href="https://colemakmods.github.io/mod-dh/">colemak-dh</a>, with some extras to
+facilitate more convenient Haskell and LaTeX programming—can be found
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd">here</a>.</p>
+<h3 id="xmobar">Xmobar</h3>
+<p>Since XMonad does not have a built-in status bar, one has to use a third
+party bar—<a href="https://github.com/jaor/xmobar">xmobar</a> is that bar! As these programs have to work together
+quite closely, one can’t help but also be a contributor to xmobar if one
+uses it with xmonad.</p>
+<p>The configuration I use is available
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs">here</a>.</p>
+<h3 id="void-linux">Void Linux</h3>
+<p>I maintain a few packages for the <a href="https://voidlinux.org/">Void</a> GNU/Linux distribution:</p>
+<pre class="console"><code>$ xmypkgs soliditsallgood@mailbox.org
+cgrep
+ghc
+ghc-bin
+kmonad
+pandoc</code></pre>
+<p>The fact that this includes GHC also means bumping/updating <em>every</em>
+Haskell package in case of an update—lots of fun!</p>
+<h2 id="author">Author</h2>
+<h3 id="hmenu">hmenu</h3>
+<p>I’m the author of <a href="https://gitlab.com/slotThe/hmenu">hmenu</a>, a wrapper for <a href="https://tools.suckless.org/dmenu/">dmenu</a> in the spirit of
+<a href="https://dmwit.com/yeganesh/">yeganesh</a>. More concretely, it displays commands in order of usage
+(with an optional decay for frequency sorting) and can open programs or
+(given) files inside of your terminal or any chosen program.</p>
+<h3 id="kbd-mode">kbd-mode</h3>
+<p>I wrote the Emacs integration for kmonad’s configuration files—that is,
+<a href="https://github.com/kmonad/kbd-mode">kbd-mode</a> is a major more for <code>.kbd</code> files.</p>
+<h3 id="vmensa">vmensa</h3>
+<p><a href="https://gitlab.com/slotThe/vmensa">vmensa</a> is a CLI application to query and filter the menus of the
+different canteens at TU Dresden.</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>As well as de-facto maintainer, as the author of kmonad is
+chronically ill and can’t spend much time on the project.
+However, due to other constraints, I do not have as much time to
+commit as I would in order to actually call myself a “maintainer”.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+        </div>
+        <div id="footer" class="no-print">
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a> <!-- TODO -->
+          &nbsp;|&nbsp;
+          <a href="./impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
