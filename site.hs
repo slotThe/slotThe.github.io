@@ -81,6 +81,7 @@ postCtx :: Context String
 postCtx = dateField "date" "%B %e, %Y"
        <> defaultContext
 
+-- https://svejcar.dev/posts/2019/11/27/table-of-contents-in-hakyll/
 tocPandocCompiler :: Compiler (Item String)
 tocPandocCompiler = pandocCompilerWith defaultHakyllReaderOptions
                 =<< tocPandocWriterOptions
@@ -91,6 +92,7 @@ tocPandocCompiler = pandocCompilerWith defaultHakyllReaderOptions
         <$> unsafeCompiler (compileTemplate "" tmplSpec)
     pure defaultHakyllWriterOptions
         { writerTableOfContents = True
+        , writerTOCDepth        = 3
         , writerTemplate        = tmpl
         }
    where
