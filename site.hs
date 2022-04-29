@@ -50,12 +50,12 @@ main = hakyllWith config do
     route idRoute
     compile do
       posts <- recentFirst =<< loadAll allPosts
-      let archiveCtx = listField "posts" postCtx (return posts)
-                    <> constField "title" "Archives"
-                    <> defaultContext
+      let allPostsCtx = listField "posts" postCtx (return posts)
+                     <> constField "title" "All Posts"
+                     <> defaultContext
       makeItem ""
-          >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-          >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+          >>= loadAndApplyTemplate "templates/all-posts.html" allPostsCtx
+          >>= loadAndApplyTemplate "templates/default.html"   allPostsCtx
           >>= relativizeUrls
 
   match "index.html" do
