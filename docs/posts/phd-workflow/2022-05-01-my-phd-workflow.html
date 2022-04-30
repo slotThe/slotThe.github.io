@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>My PhD Research Workflow – Tony Zorman</title>
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/skin.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../../posts.html">Posts</a></li>
+              <li><a href="../../research.html">Research</a></li>
+              <li><a href="../../free-software.html">FOSS</a></li>
+              <li><a href="../../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <h1>My PhD Research Workflow</h1>
+
+          <article>
+    <section class="header">
+        Posted on May  1, 2022
+        
+            by Tony Zorman
+        
+    </section>
+    <section>
+        <div id="contents">
+<p class="mini-header">Contents</p>
+<ul>
+<li><a href="#high-level-structure">High Level Structure</a>
+<ul>
+<li><a href="#topics">Topics</a></li>
+<li><a href="#files">Files</a></li>
+</ul></li>
+<li><a href="#note-taking">Note Taking</a>
+<ul>
+<li><a href="#handwritten-notes">Handwritten Notes</a></li>
+<li><a href="#digital-notes">Digital Notes</a></li>
+</ul></li>
+<li><a href="#staying-up-to-date">Staying Up To Date</a>
+<ul>
+<li><a href="#citations">Citations</a></li>
+</ul></li>
+<li><a href="#final-thoughts">Final Thoughts</a></li>
+</ul>
+</div>
+<p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
+workflow, I decided that it was as good a time as any to write about
+mine—deeming it novel enough to hopefully contribute something to the
+discussion.</p>
+<p>Just like Castel, I’m a new PhD student in mathematics, which means no
+lab work and—in my case—no code. Just you and your inability to
+understand basic concepts. As such, I often scribble things down on
+paper or a blackboard first and, when sufficiently convinced that the
+information is worth keeping around, type it up. Typesetting something
+is a surprisingly effective way to catch errors in handwritten
+manuscripts!</p>
+<p>As basically my entire digital life happens in either <a href="https://www.gnu.org/software/emacs/">Emacs</a> or
+<a href="https://xmonad.org/">XMonad</a>, my setup is very heavily skewed in that direction; I will make
+use of these tools almost every step of the way. As such, there is a
+lot of tangential almost relevant bits that I could cover here.
+However, since these aren’t directly related to my <em>research</em>
+workflow—and there is a lot of great resources out there already—I
+decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h1 id="high-level-structure">High Level Structure</h1>
+<h2 id="topics">Topics</h2>
+<p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/xmonad-actions-topicspace.html">TopicSpace</a>, which upgrades the X11
+workspace—virtual desktop—concept to so-called topics. These are
+workspaces with a “theme” associated to them; for example, I have a
+topic for every project that I’m currently working on. This results in
+a very clean separation of concerns. Plus, I always know where my
+windows are!</p>
+<p>Every topic has a directory and a “startup hook”, firing when the topic
+is switched to and empty, associated to it. While most convenient for
+programming related tasks—e.g., spawn <code>ghcid</code> in the relevant directory
+or automatically build and open this website—it’s also quite convenient
+for mathematical projects.</p>
+<p>I have set up special keybindings to bring up an Emacs session in the
+topic directory, or spawn a terminal there. Switching to topics is done
+fuzzily via the XMonad prompt, which means I only have to type a few
+characters to get to my destination. This makes it feasible to have 30
+topics, instead of the usual 9 or so, in the first place. As a result,
+it’s rather fast to go from thinking about a certain problem to working
+on it. When I’m already inside a project, I leverage Emacs’s built-in
+<code>project.el</code> library to search through files and the like.</p>
+<p><img class="pure-img" src="./topics.gif"></p>
+<h2 id="files">Files</h2>
+<p>Here I keep things relatively simple; I have a big “library” directory
+in which essentially all books or papers that I’ve ever read reside.
+This may sound a bit chaotic, but since I never interact with this
+as-a-directory it is actually the easiest and cleanest solution for me.</p>
+<p>To keep a bit of order, all files are named in a consistent and
+descriptive way: <code>authors_title.pdf</code>, where <code>authors</code> is a list of last
+names of all authors separated by hyphens and <code>title</code> is the title of
+the work, also separated by hyphens. For example:</p>
+<pre><code>    pastro-street_double-of-a-monoidal-category.pdf</code></pre>
+<p>Also in this directory are <code>.xopp</code> files, when I scribble on the
+relevant PDFs in <a href="https://xournalpp.github.io/">xournalpp</a>; more on that later.</p>
+<p>Instead of navigating to it, all interaction with the library is done
+via <a href="https://github.com/slotthe/hmenu">hmenu</a>, a small wrapper around <a href="https://tools.suckless.org/dmenu/">dmenu</a> to facilitate this kind of
+behaviour. I merely have to press <code>M-y</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and can then fuzzy search
+through the directory. Once I’ve made a choice, PDFs are automatically
+opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.</p>
+<p><img class="pure-img" src="./hmenu.gif"></p>
+<p>My bibliography is organised in a similar spirit; see
+<a href="#citations">Citations</a>.</p>
+<h1 id="note-taking">Note Taking</h1>
+<h2 id="handwritten-notes">Handwritten Notes</h2>
+<p>For handwritten notes I… use real paper! A little elaboration is
+probably in order, having talked about <code>.xopp</code> files and xournalpp
+above. I do have a Wacom tablet lying around and I’m quite happy
+annotating PDFs with it. In lieu of printing everything out, this
+alleviates a little bit of the usual pain with reading papers, like
+coming back to one three weeks later and getting stuck on the same
+calculation as last time. I do love those annotations!</p>
+<p>However, there is just something deeply psychologically pleasing about
+ordinary pen and paper—nothing beats drawing up the first version of
+many ideas there. It’s a very “pure” experience: there’s no noise or
+distractions, nothing that could break, no additional layer of
+abstraction between you and the maths. Chalkboards—but not whiteboards,
+with their ever empty markers—fall into this category as well,
+especially when collaborating with others.</p>
+<p>Not without my quirks (as I’m sure you’ve noticed), I’m a bit picky
+about the particular writing setup. It’s either completely white A5<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+paper, paired with a good (mechanical) pencil/a very fine pen, or very
+thick dotted paper, paired with a fountain pen.</p>
+<p>Quite enjoying the experience, I tend to write quite a lot of
+manuscripts by hand first. Of course, anything that’s supposed to be
+permanent should be typed up properly!</p>
+<h2 id="digital-notes">Digital Notes</h2>
+<p>Not wanting to go insane, I use LaTeX for all of my digital digital note
+taking. My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
+Chikmagalur</a>’s—whose excellent post you should definitely check out—so I
+will not belabour the point too much here. The tl;dr is <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>,
+<a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>, and <a href="https://github.com/ymarco/auto-activating-snippets">aas</a>.</p>
+<p><img class="pure-img" src="./input.gif"></p>
+<p>In case you’re not used to <code>prettify-symbols-mode</code>: the inserted LaTeX
+code was</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">definition</span>} <span class="kw">\label</span>{<span class="ex">def:day-convolution</span>}</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  The <span class="fu">\emph</span>{Day convolution} of two functors <span class="ss">$F$</span> and <span class="ss">$G$</span> is</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ss">\[</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    F * G </span><span class="sc">\defeq</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ss">      </span><span class="sc">\int</span><span class="ss">^{C,D </span><span class="sc">\in</span><span class="ss"> </span><span class="sc">\cc</span><span class="ss">} </span><span class="sc">\cc</span><span class="ss">(C </span><span class="sc">\otimes</span><span class="ss"> D, </span><span class="sc">\blank</span><span class="ss">) </span><span class="sc">\otimes</span><span class="ss"> FC </span><span class="sc">\otimes</span><span class="ss"> GD.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  \]</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">definition</span>}</span></code></pre></div>
+<p>I do use some smaller packages not mentioned in Chikmagalur’s article,
+like <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a> and <a href="https://github.com/slotthe/change-env">change-env</a>. The former is for quickly
+changing between inline and display math, complete with slurping
+punctuation symbols into display math and barfing them out of inline
+math. For example, “<code>$1 + 1$.</code>” becomes “<code>\[1 + 1.\]</code>” (with line
+breaks) and back.</p>
+<p>The <code>change-env</code> package is for changing between different kinds of
+environments, including display math, while offering to rename labels
+across the project if necessary. When deleting a label from an
+environment, it also remembers this for the session!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p><img class="pure-img" src="./label-renaming.gif"></p>
+<p>One very neat feature of AUCTeX that I find myself using more and more
+often lately<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is the in-buffer preview. Usually when writing a draft
+I’m not that interested in how exactly something looks in the PDF—that
+part comes later, believe me. In cases like these, just calling
+<code>preview-buffer</code> is quite convenient and lets me use the screen real
+estate that a PDF viewer would have taken up for something else.</p>
+<p><img class="pure-img" src="./preview.gif"></p>
+<p>I always use pure LaTeX for writing papers, drafts, or presentations.
+However, I also take lots of notes in <a href="https://orgmode.org/">org-mode</a>, which, as a crude
+first approximation, is something like a markup language that’s <em>very</em>
+well integrated into Emacs.</p>
+<p>For the actual note-taking, I use the venerable <a href="https://www.orgroam.com/">org-roam</a>—a free
+software alternative to the proprietary Roam Research program—to jot
+down things that I’d like to remember for more than three days.
+Org-roam describes itself as a “plain-text personal knowledge management
+system”, which fits the bill pretty well. In short, it’s a note taking
+system in the spirit of the <a href="https://en.wikipedia.org/wiki/zettelkasten">Zettelkasten</a> method, which is essentially
+about having lots of notes with lots of backlinks to related concepts:</p>
+<p><img class="pure-img" src="./backlinks.png"></p>
+<p>In fact, using <a href="https://github.com/org-roam/org-roam-ui">org-roam-ui</a>, one can even visualise the entire
+Zettelkasten as an interactive and pretty graph in which notes become
+nodes and backlinks become edges!</p>
+<div class="pure-g">
+<div class="pure-u-1-2">
+<img class="pure-img" src="./org-roam-ui-close.png">
+</div>
+<div class="pure-u-1-2">
+<img class="pure-img" src="./org-roam-ui-far.png">
+</div>
+</div>
+<p>Org-roam <a href="https://github.com/org-roam/org-roam#configuration">suggests
+keybindings</a> for all
+of the most important concepts: creating notes, inserting them, showing
+all of the backlinks of a file, etc. An important extra that I’ve added
+is having two “types” of notes: <code>reference</code>s, where things that I
+learned but are otherwise known reside, and <code>novel</code>s, where I put my own
+ideas.</p>
+<p>As I’m predisposed to quite easily forget details, I regularly engage
+with my Zettelkasten, so as to keep things fresh in my mind. Reading
+through all of the notes that are relevant to what I’m currently working
+on, creating new backlinks, filling in gaps, even deleting old
+information and re-organising some local region of the graph. Indeed, I
+tag every new entry as a <code>draft</code> until further notice, forcing me to go
+back there especially. This results in pretty good recollection of the
+most important facts, even with my brain.</p>
+<h1 id="staying-up-to-date">Staying Up To Date</h1>
+<p>I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
+interest to me. Thankfully, the fields I’m subscribed to tend to be
+moving slow-ish and so I can manage to at least read the abstract of
+every paper that pops up in my feed. There is also <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/emacs/.config/emacs/lisp/rss.el#L61">a little bit of
+elisp</a>
+involved to print arXiv entries in a more readable way than the default
+formatting.</p>
+<p>When the abstract interests me, I usually directly download the paper
+into my library and open it with zathura. This is fully automated via
+<a href="https://github.com/slotthe/arxiv-citation">arXiv-citation</a>—more on that later. I merely have to press <code>C-c d</code>
+while looking at a paper and magic happens!</p>
+<p><img class="pure-img" src="./elfeed.gif"></p>
+<p>In the above gif, on the right-hand side you can see a score associated
+to each entry. While reading every abstract has worked quite well for
+me thus far, it’s nice to get the papers that are “probably interesting”
+high up, so that I’m more likely to notice them sooner rather than
+later. I use <a href="https://github.com/sp1ff/elfeed-score">elfeed-score</a> for this, which integrates seamlessly into
+the rest of the machinery. It compares certain features of the entry
+(like the title and abstract) with a list of regular expressions,
+increasing the total score of the entry every time it matches something.</p>
+<p>Speaking of the arXiv, in XMonad I have bound <code>M-s a</code> to look up the
+given string there. Likewise, <a href="https://zbmath.org/">zbmath</a> is searched with <code>M-s z</code>. When
+these commands get a “universal argument”—an Emacs concept that XMonad
+borrowed—they automatically start a search with the current selection
+instead. Briefly, pressing <code>M-u</code> before a command can modify it in
+different ways. All of my search commands act on the <a href="https://www.jwz.org/doc/x-cut-and-paste.html">primary
+selection</a> when given such an argument; <code>M-u M-s &lt;letter&gt;</code> will look up
+the currently selected text on the relevant “search engine”. One
+instance where this is very useful is for quickly switching between the
+arXiv and zbmath:</p>
+<p><img class="pure-img" src="./selected-search.gif"></p>
+<h2 id="citations">Citations</h2>
+<p>For citation management, I use a very simple system—no Zotero, JabRef,
+or similar technology. Concretely, this means that I have a blessed
+bibliography file somewhere within my home directory and I either
+symlink (when I’m writing something alone) or copy (when working with at
+least one coauthor) the file into the relevant project directory. In
+case of a copy operation, I only have to update a single variable in
+Emacs (<code>arXiv-citation-bibtex-files</code>), which is good enough for me and
+doesn’t seem to warrant a slightly more automated, yet probably much
+more complicated solution.</p>
+<p>Adding new citations is done via the now aptly named Emacs package
+<a href="https://github.com/slotthe/arxiv-citation">arXiv-citation</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
+plumbing</a>
+on the XMonad side to get Emacs going. The basic idea is that—given an
+arXiv or zbmath link—we first look up the paper on zbmath to see if it
+was published and, if not, just use the arXiv data to construct our own
+bibliography entry instead. By default, my keybinding for this acts on
+the primary selection, so I merely have to highlight the link, press
+<code>M-o a</code>, sit back, and enjoy the show. The following gif hopefully
+helps drive home the point, also showcasing the format of a not yet
+published paper and a published one.</p>
+<p><img class="pure-img" src="./arXiv-citation.gif"></p>
+<h1 id="final-thoughts">Final Thoughts</h1>
+<p>And that’s it! If nothing else, this post helped me to nail down some
+ideas that I had lying around and got me to finally clean up and publish
+many of the extensions talked about here—that’s already a win in my
+book.</p>
+<p>I’m sure that some details will change over the course of the next three
+years as I mature mathematically and my needs change, but overall I feel
+pretty comfortable with this setup.</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>If you’d like some examples: being employed at a university also
+means I have to worry a bit about efficiently dealing with
+bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
+calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
+as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
+universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
+<code>TRAMP</code>), … You get the idea.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>I will be using Emacs style notation throughout the entire
+article. This means that, for example, <code>C-x a</code> should be read as
+“hold down control and press x, then release both and press a”.
+You can of course safely ignore this, since the keys just serve
+illustrative purposes. An important note for Emacs users, lest
+anyone be confused: in XMonad, <code>M-</code> usually does not__ refer to
+the Meta key, but to the <code>modMask</code> that the user specified. This
+is indeed <code>&lt;Alt&gt;</code> by default, but many people understandably
+rebind this straight away to something that’s less likely to
+interfere with other programs. In my case, that’s the Super key,
+so <code>M-s</code> means <code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Although, admittedly, when drawing up very large diagrams I’m
+sometimes forced to switch to A4 paper in landscape mode.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>This is based on the hash of the contents of the environment—if
+that changes, the label is “lost”; though it can of course still
+be retrieved manually from the relevant hash map.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
+Emacs 29, making use of XInput 2.4 functionality. It makes
+scrolling through buffers that are quite dense with pictures
+rather smooth.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Ostensibly, this should be an XMonad module, as it does not
+necessarily have anything to do with Emacs itself. However, I had
+already written the elfeed integration and so the most annoying
+part (scraping the arXiv xml for certain bits) was already done.
+On the other hand, there are more Emacs than XMonad users, so
+perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer" class="no-print">
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a> <!-- TODO -->
+          &nbsp;|&nbsp;
+          <a href="../../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

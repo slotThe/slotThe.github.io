@@ -8,6 +8,7 @@ import Control.Arrow
 import Data.Monoid
 import Data.Text (Text)
 import Hakyll
+import Text.Pandoc.Highlighting
 import Text.Pandoc.Options
 import Text.Pandoc.Templates (compileTemplate)
 
@@ -17,7 +18,7 @@ main = hakyllWith config do
     route   idRoute
     compile compressCssCompiler
 
-  match ("posts/**.gif" .||. "posts/**.png") do
+  match ("posts/**.gif" .||. "posts/**.png" .||. "posts/**.jpg") do
     route   idRoute
     compile copyFileCompiler
 
@@ -35,13 +36,13 @@ main = hakyllWith config do
 
   match (fromList ["research.md", "free-software.md"]) do
     route $ setExtension "html"
-    compile $ tocPandocCompiler   -- with toc
+    compile $ myPandocCompiler   -- with toc
           >>= loadAndApplyTemplate "templates/default.html" defaultContext
           >>= relativizeUrls
 
   match allPosts do
     route $ setExtension "html"
-    compile $ tocPandocCompiler
+    compile $ myPandocCompiler
           >>= loadAndApplyTemplate "templates/post.html"    postCtx
           >>= loadAndApplyTemplate "templates/default.html" defaultContext
           >>= relativizeUrls
@@ -57,6 +58,10 @@ main = hakyllWith config do
           >>= loadAndApplyTemplate "templates/all-posts.html" allPostsCtx
           >>= loadAndApplyTemplate "templates/default.html"   allPostsCtx
           >>= relativizeUrls
+
+  create ["css/syntax.css"] do  -- Syntax highlighting; see below.
+    route idRoute
+    compile . makeItem $ styleToCss highlightTheme
 
   match "index.html" do
     route idRoute
@@ -81,19 +86,24 @@ postCtx :: Context String
 postCtx = dateField "date" "%B %e, %Y"
        <> defaultContext
 
--- https://svejcar.dev/posts/2019/11/27/table-of-contents-in-hakyll/
-tocPandocCompiler :: Compiler (Item String)
-tocPandocCompiler = pandocCompilerWith defaultHakyllReaderOptions
-                =<< tocPandocWriterOptions
+-- | Pandoc compiler with syntax highlighting and a table of contents.
+--
+-- Sources:
+--   <https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html syntax highlighting>,
+--   <https://svejcar.dev/posts/2019/11/27/table-of-contents-in-hakyll/ TOC>.
+myPandocCompiler :: Compiler (Item String)
+myPandocCompiler = pandocCompilerWith defaultHakyllReaderOptions
+               =<< myPandocWriterOptions
  where
-  tocPandocWriterOptions :: Compiler WriterOptions
-  tocPandocWriterOptions = do
+  myPandocWriterOptions :: Compiler WriterOptions
+  myPandocWriterOptions = do
     tmpl <- either (const Nothing) Just
         <$> unsafeCompiler (compileTemplate "" tmplSpec)
     pure defaultHakyllWriterOptions
         { writerTableOfContents = True
         , writerTOCDepth        = 3
         , writerTemplate        = tmpl
+        , writerHighlightStyle  = Just highlightTheme
         }
    where
     tmplSpec :: Text
@@ -104,3 +114,6 @@ tocPandocCompiler = pandocCompilerWith defaultHakyllReaderOptions
         , "</div>"
         , "$body$"
         ]
+
+highlightTheme :: Style
+highlightTheme = monochrome
