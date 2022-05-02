@@ -44,6 +44,7 @@ main = hakyllWith config do
     route $ setExtension "html"
     compile $ myPandocCompiler
           >>= loadAndApplyTemplate "templates/post.html"    postCtx
+          >>= saveSnapshot "post-content"
           >>= loadAndApplyTemplate "templates/default.html" defaultContext
           >>= relativizeUrls
 
@@ -62,6 +63,13 @@ main = hakyllWith config do
   create ["css/syntax.css"] do  -- Syntax highlighting; see below.
     route idRoute
     compile . makeItem $ styleToCss highlightTheme
+
+  create ["atom.xml"] do        -- Atom feed; see 'feedConfig' below.
+    route idRoute
+    compile do
+      lastPosts <- fmap (take 10) . recentFirst
+               =<< loadAllSnapshots "posts/**.md" "post-content"
+      renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
 
   match "index.html" do
     route idRoute
@@ -85,6 +93,15 @@ allPosts = "posts/**.md"
 postCtx :: Context String
 postCtx = dateField "date" "%B %e, %Y"
        <> defaultContext
+
+feedConfig :: FeedConfiguration
+feedConfig = FeedConfiguration
+  { feedTitle       = "Tony Zorman – Blog"
+  , feedDescription = "Maths, Haskell, Emacs, and whatever else comes to mind."
+  , feedAuthorName  = "Tony Zorman"
+  , feedAuthorEmail = "tonyzorman@mailbox.org"
+  , feedRoot        = "https://tony-zorman.com"
+  }
 
 -- | Pandoc compiler with syntax highlighting and a table of contents.
 --
