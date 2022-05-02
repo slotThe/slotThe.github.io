@@ -276,6 +276,15 @@ I'm sure that some details will change over the course of the next three
 years as I mature mathematically and my needs change, but overall I feel
 pretty comfortable with this setup.
 
+#### Addendum
+
+Thanks to everyone who reached out!  I received some inquiries as to my
+configurations, so here are the most important bits again, for your
+convenience:
+[my Emacs config](https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs),
+[my XMonad config](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad),
+[org-roam], [math-delimiters], [arXiv-citation], [change-env], [hmenu].
+
 [AUCTeX]: https://www.gnu.org/software/auctex/
 [CDLaTeX]: https://github.com/cdominik/cdlatex
 [Emacs]: https://www.gnu.org/software/emacs/
