@@ -8,6 +8,7 @@ import Control.Arrow
 import Data.Monoid
 import Data.Text (Text)
 import Hakyll
+import Text.HTML.TagSoup qualified as TS
 import Text.Pandoc.Highlighting
 import Text.Pandoc.Options
 import Text.Pandoc.Templates (compileTemplate)
@@ -43,6 +44,7 @@ main = hakyllWith config do
   match allPosts do
     route $ setExtension "html"
     compile $ myPandocCompiler
+          >>= mkTeaserSnapshot
           >>= loadAndApplyTemplate "templates/post.html"    postCtx
           >>= saveSnapshot "post-content"
           >>= loadAndApplyTemplate "templates/default.html" defaultContext
@@ -67,19 +69,18 @@ main = hakyllWith config do
   create ["atom.xml"] do        -- Atom feed; see 'feedConfig' below.
     route idRoute
     compile do
-      lastPosts <- fmap (take 10) . recentFirst
-               =<< loadAllSnapshots "posts/**.md" "post-content"
+      lastPosts <- recentFirst =<< loadAllSnapshots allPosts "post-content"
       renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
 
   match "index.html" do
     route idRoute
     compile do
-      posts <- recentFirst =<< loadAll allPosts
-      let indexCtx = listField "posts" postCtx (return posts)
-                  <> defaultContext
+      posts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
+      let teaserCtx = teaserField "teaser" "post-teaser" <> postCtx
+          indexCtx  = listField "posts" teaserCtx (return posts) <> defaultContext
       getResourceBody
         >>= applyAsTemplate indexCtx
-        >>= loadAndApplyTemplate "templates/default.html" indexCtx
+        >>= loadAndApplyTemplate "templates/default.html" defaultContext
         >>= relativizeUrls
 
   match "templates/*" $ compile templateBodyCompiler
@@ -131,6 +132,20 @@ myPandocCompiler = pandocCompilerWith defaultHakyllReaderOptions
         , "</div>"
         , "$body$"
         ]
+
+-- | Used for creating teasers, so the TOC doesn't show on the front
+-- page.
+suppressToc :: Item String -> Item String
+suppressToc = fmap (withTagList suppressor)
+ where
+  suppressor :: [TS.Tag String] -> [TS.Tag String]
+  suppressor tags = pre ++ post
+   where (pre, (_, post)) = second (second (drop 1) . break (== TS.TagClose "div"))
+                          . break (== TS.TagOpen "div" [("id", "contents")])
+                          $ tags
+
+mkTeaserSnapshot ::  Item String -> Compiler (Item String)
+mkTeaserSnapshot item = item <$ saveSnapshot "post-teaser" (suppressToc item)
 
 highlightTheme :: Style
 highlightTheme = monochrome

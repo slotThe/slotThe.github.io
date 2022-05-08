@@ -18,11 +18,12 @@ manuscripts!
 
 As basically my entire digital life happens in either [Emacs] or
 [XMonad], my setup is very heavily skewed in that direction; I will make
-use of these tools almost every step of the way.  As such, there is a
-lot of tangential almost relevant bits that I could cover here.
-However, since these aren't directly related to my _research_
-workflow—and there is a lot of great resources out there already—I
-decided to not do this here.[^1]
+use of these tools almost every step of the way.
+<!--more-->
+As such, there is a lot of tangential almost relevant bits that I could
+cover here.  However, since these aren't directly related to my
+_research_ workflow—and there is a lot of great resources out there
+already—I decided to not do this here.[^1]
 
 # High Level Structure
 
