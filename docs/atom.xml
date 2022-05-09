@@ -209,7 +209,7 @@ involved to print arXiv entries in a more readable way than the default
 formatting.</p>
 <p>When the abstract interests me, I usually directly download the paper
 into my library and open it with zathura. This is fully automated via
-<a href="https://github.com/slotthe/arxiv-citation">arXiv-citation</a>—more on that later. I merely have to press <code>C-c d</code>
+<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>—more on that later. I merely have to press <code>C-c d</code>
 while looking at a paper and magic happens!</p>
 <p><img class="pure-img" src="./elfeed.gif"></p>
 <p>In the above gif, on the right-hand side you can see a score associated
@@ -238,11 +238,11 @@ bibliography file somewhere within my home directory and I either
 symlink (when I’m writing something alone) or copy (when working with at
 least one coauthor) the file into the relevant project directory. In
 case of a copy operation, I only have to update a single variable in
-Emacs (<code>arXiv-citation-bibtex-files</code>), which is good enough for me and
+Emacs (<code>arxiv-citation-bibtex-files</code>), which is good enough for me and
 doesn’t seem to warrant a slightly more automated, yet probably much
 more complicated solution.</p>
 <p>Adding new citations is done via the now aptly named Emacs package
-<a href="https://github.com/slotthe/arxiv-citation">arXiv-citation</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
+<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
 plumbing</a>
 on the XMonad side to get Emacs going. The basic idea is that—given an
 arXiv or zbmath link—we first look up the paper on zbmath to see if it
@@ -267,7 +267,7 @@ configurations, so here are the most important bits again, for your
 convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">my Emacs config</a>,
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
-<a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arXiv-citation</a>, <a href="https://github.com/slotthe/change-env">change-env</a>, <a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
+<a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">change-env</a>, <a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

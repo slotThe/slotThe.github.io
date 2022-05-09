@@ -213,7 +213,7 @@ formatting.
 
 When the abstract interests me, I usually directly download the paper
 into my library and open it with zathura.  This is fully automated via
-[arXiv-citation]—more on that later.  I merely have to press `C-c d`
+[arxiv-citation]—more on that later.  I merely have to press `C-c d`
 while looking at a paper and magic happens!
 
 <img class="pure-img" src="./elfeed.gif">
@@ -248,12 +248,12 @@ bibliography file somewhere within my home directory and I either
 symlink (when I'm writing something alone) or copy (when working with at
 least one coauthor) the file into the relevant project directory.  In
 case of a copy operation, I only have to update a single variable in
-Emacs (`arXiv-citation-bibtex-files`), which is good enough for me and
+Emacs (`arxiv-citation-bibtex-files`), which is good enough for me and
 doesn't seem to warrant a slightly more automated, yet probably much
 more complicated solution.
 
 Adding new citations is done via the now aptly named Emacs package
-[arXiv-citation][^6], with [a bit of
+[arxiv-citation][^6], with [a bit of
 plumbing](https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576)
 on the XMonad side to get Emacs going.  The basic idea is that—given an
 arXiv or zbmath link—we first look up the paper on zbmath to see if it
@@ -284,7 +284,7 @@ configurations, so here are the most important bits again, for your
 convenience:
 [my Emacs config](https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs),
 [my XMonad config](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad),
-[org-roam], [math-delimiters], [arXiv-citation], [change-env], [hmenu].
+[org-roam], [math-delimiters], [arxiv-citation], [change-env], [hmenu].
 
 [AUCTeX]: https://www.gnu.org/software/auctex/
 [CDLaTeX]: https://github.com/cdominik/cdlatex
@@ -296,7 +296,7 @@ convenience:
 [XMonad]: https://xmonad.org/
 [Zettelkasten]: https://en.wikipedia.org/wiki/zettelkasten
 [aas]: https://github.com/ymarco/auto-activating-snippets
-[arXiv-citation]: https://github.com/slotthe/arxiv-citation
+[arxiv-citation]: https://github.com/slotthe/arxiv-citation
 [arXiv]: https://arxiv.org/
 [change-env]: https://github.com/slotthe/change-env
 [dmenu]: https://tools.suckless.org/dmenu/
