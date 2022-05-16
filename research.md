@@ -28,7 +28,7 @@ will guide you through that.
 ## Talks
 
 - *Pivotality, twisted centres and the anti-double of a Hopf monad* \
-  PSSL 106, Brno, 2022-05-14; based on [joint work with Sebastian Halbig].
+  Based on [joint work with Sebastian Halbig](https://arxiv.org/abs/2201.05361).
 
   Pairs in involution are an algebraic structure whose systematic study
   is motivated by their applications in knot theory, representation
@@ -40,10 +40,13 @@ will guide you through that.
   monads allows us to combine the algebraic and categorical perspective
   on such pairs.
 
-[joint work with Sebastian Halbig]: https://arxiv.org/abs/2201.05361
+  Version of this talk were given at:
+
+    - 2022-05-12, Seminar of the Czech Academy of Sciences, Prague; [slides](/talks/prague.pdf).
+    - 2022-05-15, PSSL 106, Brno; [slides](/talks/brno.pdf)
 
 - *Optics in functional programming—a categorical perspective* \
-  TU Dresden, 2022-01-10.  [Slides available].
+  TU Dresden, 2022-01-10; [slides](/talks/profunctor-optics.pdf).
 
   A talk about the categorical aspects of (profunctor) optics, as done
   by [Riley] and [Clark et.al.], as well as connections to earlier
