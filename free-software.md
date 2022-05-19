@@ -11,11 +11,15 @@ still actively maintained.
 
 ## XMonad
 
-I'm a maintainer  for [XMonad], a minimal X11 window  manager written in
+I'm a maintainer for [XMonad], a minimal X11 window manager written in
 Haskell.  In particular, this encompasses the `xmonad` repository, where
-the lean core of the  program resides, `xmonad-contrib`, containing lots
+the lean core of the program resides, `xmonad-contrib`, containing lots
 of user extensions for all kinds of different use-cases, as well as some
 auxillary packages like `X11`—Haskell bindings to Xlib.
+
+As I strongly believe in dogfooding, I'm an avid user of course!  My
+configuration can be found
+[here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad).
 
 <div class="pure-g">
  <div class="pure-u-1-2">
@@ -33,10 +37,6 @@ auxillary packages like `X11`—Haskell bindings to Xlib.
   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true">
  </div>
 </div>
-
-As I strongly believe in dogfooding, I'm an avid user of course!  My
-configuration can be found
-[here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad).
 
 [XMonad]: https://xmonad.org/
 
