@@ -1,5 +1,5 @@
 ---
-title: FOSS
+title: FLOSS
 ---
 
 Free software is quite dear to my heart and so I try to contribute as
