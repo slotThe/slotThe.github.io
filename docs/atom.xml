@@ -144,13 +144,13 @@ code was</p>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  \]</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">definition</span>}</span></code></pre></div>
 <p>I do use some smaller packages not mentioned in Chikmagalur’s article,
-like <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a> and <a href="https://github.com/slotthe/change-env">change-env</a>. The former is for quickly
-changing between inline and display math, complete with slurping
+like <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a> and <a href="https://github.com/slotthe/change-env">latex-change-env</a>. The former is for
+quickly changing between inline and display math, complete with slurping
 punctuation symbols into display math and barfing them out of inline
 math. For example, “<code>$1 + 1$.</code>” becomes “<code>\[1 + 1.\]</code>” (with line
 breaks) and back.</p>
-<p>The <code>change-env</code> package is for changing between different kinds of
-environments, including display math, while offering to rename labels
+<p>The <code>latex-change-env</code> package is for changing between different kinds
+of environments, including display math, while offering to rename labels
 across the project if necessary. When deleting a label from an
 environment, it also remembers this for the session!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p><img class="pure-img" src="./label-renaming.gif"></p>
@@ -267,7 +267,8 @@ configurations, so here are the most important bits again, for your
 convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">my Emacs config</a>,
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
-<a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">change-env</a>, <a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
+<a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
+<a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

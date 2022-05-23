@@ -134,14 +134,14 @@ code was
 ```
 
 I do use some smaller packages not mentioned in Chikmagalur's article,
-like [math-delimiters] and [change-env].  The former is for quickly
-changing between inline and display math, complete with slurping
+like [math-delimiters] and [latex-change-env].  The former is for
+quickly changing between inline and display math, complete with slurping
 punctuation symbols into display math and barfing them out of inline
 math.  For example, "`$1 + 1$.`" becomes "`\[1 + 1.\]`" (with line
 breaks) and back.
 
-The `change-env` package is for changing between different kinds of
-environments, including display math, while offering to rename labels
+The `latex-change-env` package is for changing between different kinds
+of environments, including display math, while offering to rename labels
 across the project if necessary.  When deleting a label from an
 environment, it also remembers this for the session![^4]
 
@@ -284,7 +284,8 @@ configurations, so here are the most important bits again, for your
 convenience:
 [my Emacs config](https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs),
 [my XMonad config](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad),
-[org-roam], [math-delimiters], [arxiv-citation], [change-env], [hmenu].
+[org-roam], [math-delimiters], [arxiv-citation], [latex-change-env],
+[hmenu].
 
 [AUCTeX]: https://www.gnu.org/software/auctex/
 [CDLaTeX]: https://github.com/cdominik/cdlatex
@@ -298,7 +299,7 @@ convenience:
 [aas]: https://github.com/ymarco/auto-activating-snippets
 [arxiv-citation]: https://github.com/slotthe/arxiv-citation
 [arXiv]: https://arxiv.org/
-[change-env]: https://github.com/slotthe/change-env
+[latex-change-env]: https://github.com/slotthe/change-env
 [dmenu]: https://tools.suckless.org/dmenu/
 [elfeed-score]: https://github.com/sp1ff/elfeed-score
 [elfeed]: https://github.com/skeeto/elfeed
