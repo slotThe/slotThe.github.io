@@ -14,8 +14,8 @@ and they are now available for everyone to try out; provided one has the
 git version of XMonad [installed](https://xmonad.org/INSTALL.html).[^5]
 
 I'd like to use this opportunity to both showcase the module—how and why
-one would use it—as well as talk a little bit about some implementation
-details.
+one would use it—and talk a little bit about its only redeeming
+implementation detail.
 
 <!--more-->
 

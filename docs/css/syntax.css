@@ -34,12 +34,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 code span.al { font-weight: bold; } /* Alert */
 code span.an { font-style: italic; } /* Annotation */
 code span.cf { font-weight: bold; } /* ControlFlow */
-code span.co { font-style: italic; } /* Comment */
+code span.co { color: #505050; font-style: italic; } /* Comment */
 code span.cv { font-style: italic; } /* CommentVar */
 code span.do { font-style: italic; } /* Documentation */
-code span.dt { text-decoration: underline; } /* DataType */
+code span.dt { background-color: #f8edff; } /* DataType */
 code span.er { font-weight: bold; } /* Error */
 code span.in { font-style: italic; } /* Information */
 code span.kw { font-weight: bold; } /* Keyword */
+code span.op { font-weight: bold; } /* Operator */
+code span.ot { font-weight: bold; } /* Other */
 code span.pp { font-weight: bold; } /* Preprocessor */
+code span.st { background-color: #f2f2f2; } /* String */
 code span.wa { font-style: italic; } /* Warning */

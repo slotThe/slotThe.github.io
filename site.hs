@@ -8,10 +8,12 @@ import Control.Arrow
 import Data.Monoid
 import Data.Text (Text)
 import Hakyll
+import Skylighting.Types hiding (Context)
 import Text.HTML.TagSoup qualified as TS
 import Text.Pandoc.Highlighting
 import Text.Pandoc.Options
 import Text.Pandoc.Templates (compileTemplate)
+import GHC.Exts qualified as Ext
 
 main :: IO ()
 main = hakyllWith config do
@@ -147,5 +149,22 @@ suppressToc = fmap (withTagList suppressor)
 mkTeaserSnapshot ::  Item String -> Compiler (Item String)
 mkTeaserSnapshot item = item <$ saveSnapshot "post-teaser" (suppressToc item)
 
+-- | In the spirit of the stimmung themes:
+-- https://github.com/motform/stimmung-themes
 highlightTheme :: Style
 highlightTheme = monochrome
+  { tokenStyles
+      = Ext.fromList
+          [ (CommentTok, defStyle{ tokenColor  = color 0x505050
+                                 , tokenItalic = True
+                                 })
+          , (DataTypeTok, defStyle{ tokenBackground = color 0xf8edff })
+          , (StringTok, defStyle{ tokenBackground = color 0xf2f2f2 })
+          , (OperatorTok, defStyle{ tokenBold = True })
+          , (OtherTok, defStyle{ tokenBold = True })
+          ]
+     <> tokenStyles monochrome
+  }
+ where
+  color :: Int -> Maybe Color
+  color = toColor
