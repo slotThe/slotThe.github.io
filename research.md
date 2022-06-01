@@ -43,7 +43,8 @@ will guide you through that.
   Version of this talk were given at:
 
     - 2022-05-12, Seminar of the Czech Academy of Sciences, Prague; [slides](/talks/prague.pdf).
-    - 2022-05-15, PSSL 106, Brno; [slides](/talks/brno.pdf)
+    - 2022-05-15, PSSL 106, Brno; [slides](/talks/brno.pdf).
+    - 2022-05-30, QGS: Quantum Group Seminar, Online.
 
 - *Optics in functional programming—a categorical perspective* \
   TU Dresden, 2022-01-10; [slides](/talks/profunctor-optics.pdf).
