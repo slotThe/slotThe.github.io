@@ -129,7 +129,7 @@ download preprints to a specified directory and open them.  Includes
 [elfeed]: https://github.com/skeeto/elfeed
 [arxiv-citation]: https://gitlab.com/slotThe/arxiv-citation
 
-### [change-env]
+### [latex-change-env]
 
 Provides a way to modify LaTeX environments, as well as the display math
 mode (seeing it as an environment of sorts).  This includes primitive
@@ -137,7 +137,7 @@ label handling: we remember the name of labels and can rename or
 remember them for later.  This means that we can restore old labels
 after deleting them—very convenient!
 
-[change-env]: https://gitlab.com/slotThe/change-env
+[latex-change-env]: https://gitlab.com/slotThe/change-env
 
 [^1]: As well as de-facto maintainer, as the author of kmonad is
       chronically ill and can't spend much time on the project.
