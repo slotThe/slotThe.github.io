@@ -120,7 +120,7 @@ kbd-mode is a major more for `.kbd` files.
 
 [kbd-mode]: https://github.com/kmonad/kbd-mode
 
-### [arxiv-citation]
+### [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
 
 Generate citation data for PDF files from the arXiv.  Additionally,
 download preprints to a specified directory and open them.  Includes
@@ -129,7 +129,7 @@ download preprints to a specified directory and open them.  Includes
 [elfeed]: https://github.com/skeeto/elfeed
 [arxiv-citation]: https://gitlab.com/slotThe/arxiv-citation
 
-### [latex-change-env]
+### [latex-change-env] ([MELPA](https://melpa.org/#/latex-change-env))
 
 Provides a way to modify LaTeX environments, as well as the display math
 mode (seeing it as an environment of sorts).  This includes primitive
