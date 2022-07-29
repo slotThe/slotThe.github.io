@@ -69,7 +69,7 @@ uses it with xmonad.
 The configuration I use is available
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs).
 
-[xmobar]: https://github.com/jaor/xmobar
+[xmobar]: https://codeberg.org/xmobar/xmobar
 
 ## Void Linux
 
