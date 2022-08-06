@@ -44,6 +44,30 @@
 <h1>Posts</h1>
 
   <div class="posts">
+    <h2>How to query-replace multiple matches!</h2>
+
+    
+<p>As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
+by default) can be used to replace occurences of one string with
+another. In comparison to other tools that are used for similar
+purposes—(a subset of) keyboard macros and multiple-cursors—the whole
+process after entering the <code>from</code> and <code>to</code> strings is interactive all
+the way through: it’s very fast to step through the individual matches
+and decide on the spot whether one would like to replace them or not.
+Needless to say, I like <code>query-replace</code> a lot! In true Emacs fashion,
+the function also takes way too many arguments: among other things, it
+can operate on the current region, backwards, or only on things
+surrounded by words boundaries.</p>
+<p>However, there is one crucial feature missing from its default
+functionality: the ability to create multiple <code>from → to</code> pairs. But
+this is Emacs, after all, which means that I can just write that
+<code>query-replace-many</code> function I’ve always wanted!</p>
+
+
+    <p><a href="./posts/query-replace/2022-08-06-query-replace-many.html">Read more</a> - August  6, 2022</p>
+  </div>
+
+  <div class="posts">
     <h2>Calling Emacs from XMonad</h2>
 
     
