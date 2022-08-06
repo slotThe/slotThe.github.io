@@ -95,8 +95,7 @@ allPosts :: Pattern
 allPosts = "posts/**.md"
 
 postCtx :: Context String
-postCtx = dateField "date" "%B %e, %Y"
-       <> defaultContext
+postCtx = dateField "date" "%F" <> defaultContext
 
 feedConfig :: FeedConfiguration
 feedConfig = FeedConfiguration
