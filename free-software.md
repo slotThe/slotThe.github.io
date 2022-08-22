@@ -7,9 +7,9 @@ much as I can to all kinds of different projects.  List below are either
 ones that I've stuck with for a while, or personal projects that are
 still actively maintained.
 
-# Contributor
+## Contributor
 
-## XMonad
+### XMonad
 
 I'm a maintainer for [XMonad], a minimal X11 window manager written in
 Haskell.  In particular, this encompasses the `xmonad` repository, where
@@ -40,7 +40,7 @@ configuration can be found
 
 [XMonad]: https://xmonad.org/
 
-## Kmonad
+### Kmonad
 
 I'm a contributor[^1] to kmonad, a keyboard remapping daemon in the
 spirit of [QMK].  However, instead of being firmware for a specific
@@ -59,7 +59,7 @@ facilitate more convenient Haskell and LaTeX programming—can be found
 [colemak-dh]: https://colemakmods.github.io/mod-dh/
 [kmonad]: https://github.com/kmonad/kmonad
 
-## Xmobar
+### Xmobar
 
 Since XMonad does not have a built-in status bar, one has to use a third
 party bar—[xmobar] is that bar!  As these programs have to work together
@@ -71,7 +71,7 @@ The configuration I use is available
 
 [xmobar]: https://codeberg.org/xmobar/xmobar
 
-## Void Linux
+### Void Linux
 
 I maintain a few packages for the [Void] GNU/Linux distribution:
 
@@ -91,7 +91,7 @@ Haskell package in case of an update—lots of fun!
 
 # Author
 
-## [hmenu]
+### [hmenu]
 
 I'm the author of hmenu, a wrapper for [dmenu] in the spirit of
 [yeganesh].  More concretely, it displays commands in order of usage
@@ -102,25 +102,25 @@ I'm the author of hmenu, a wrapper for [dmenu] in the spirit of
 [hmenu]: https://gitlab.com/slotThe/hmenu
 [yeganesh]: https://dmwit.com/yeganesh/
 
-## [vmensa]
+### [vmensa]
 
 CLI application to query and filter the menus of the different canteens
 at TU Dresden.
 
 [vmensa]: https://gitlab.com/slotThe/vmensa
 
-## Emacs
+### Emacs Modes
 
 I've written too many Emacs packages—and none of them popular, at that!
 
-### [kbd-mode]
+#### [kbd-mode]
 
 I wrote the Emacs integration for kmonad's configuration files—that is,
 kbd-mode is a major more for `.kbd` files.
 
 [kbd-mode]: https://github.com/kmonad/kbd-mode
 
-### [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
+#### [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
 
 Generate citation data for PDF files from the arXiv.  Additionally,
 download preprints to a specified directory and open them.  Includes
@@ -129,7 +129,7 @@ download preprints to a specified directory and open them.  Includes
 [elfeed]: https://github.com/skeeto/elfeed
 [arxiv-citation]: https://gitlab.com/slotThe/arxiv-citation
 
-### [latex-change-env] ([MELPA](https://melpa.org/#/latex-change-env))
+#### [latex-change-env] ([MELPA](https://melpa.org/#/latex-change-env))
 
 Provides a way to modify LaTeX environments, as well as the display math
 mode (seeing it as an environment of sorts).  This includes primitive

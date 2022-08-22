@@ -50,12 +50,7 @@
 <ul>
 <li><a href="#hmenu"><span>hmenu</span></a></li>
 <li><a href="#vmensa"><span>vmensa</span></a></li>
-<li><a href="#emacs">Emacs</a>
-<ul>
-<li><a href="#kbd-mode"><span>kbd-mode</span></a></li>
-<li><a href="#arxiv-citation-melpa"><span>arxiv-citation</span> (<span>MELPA</span>)</a></li>
-<li><a href="#latex-change-env-melpa"><span>latex-change-env</span> (<span>MELPA</span>)</a></li>
-</ul></li>
+<li><a href="#emacs-modes">Emacs Modes</a></li>
 </ul></li>
 </ul>
 </div>
@@ -63,8 +58,8 @@
 much as I can to all kinds of different projects. List below are either
 ones that I’ve stuck with for a while, or personal projects that are
 still actively maintained.</p>
-<h1 id="contributor">Contributor</h1>
-<h2 id="xmonad">XMonad</h2>
+<h2 id="contributor">Contributor</h2>
+<h3 id="xmonad">XMonad</h3>
 <p>I’m a maintainer for <a href="https://xmonad.org/">XMonad</a>, a minimal X11 window manager written in
 Haskell. In particular, this encompasses the <code>xmonad</code> repository, where
 the lean core of the program resides, <code>xmonad-contrib</code>, containing lots
@@ -89,7 +84,7 @@ configuration can be found
 <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true">
 </div>
 </div>
-<h2 id="kmonad">Kmonad</h2>
+<h3 id="kmonad">Kmonad</h3>
 <p>I’m a contributor<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to kmonad, a keyboard remapping daemon in the
 spirit of <a href="https://qmk.fm/">QMK</a>. However, instead of being firmware for a specific
 keyboard, it is implemented in software and thus works for any
@@ -100,14 +95,14 @@ keyboard—even your laptop keyboard!</p>
 <p>My personal keyboard configuration—<a href="https://colemakmods.github.io/mod-dh/">colemak-dh</a>, with some extras to
 facilitate more convenient Haskell and LaTeX programming—can be found
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd">here</a>.</p>
-<h2 id="xmobar">Xmobar</h2>
+<h3 id="xmobar">Xmobar</h3>
 <p>Since XMonad does not have a built-in status bar, one has to use a third
 party bar—<a href="https://codeberg.org/xmobar/xmobar">xmobar</a> is that bar! As these programs have to work together
 quite closely, one can’t help but also be a contributor to xmobar if one
 uses it with xmonad.</p>
 <p>The configuration I use is available
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs">here</a>.</p>
-<h2 id="void-linux">Void Linux</h2>
+<h3 id="void-linux">Void Linux</h3>
 <p>I maintain a few packages for the <a href="https://voidlinux.org/">Void</a> GNU/Linux distribution:</p>
 <pre class="console"><code>$ xmypkgs soliditsallgood@mailbox.org
 cgrep
@@ -118,24 +113,24 @@ pandoc</code></pre>
 <p>The fact that this includes GHC also means bumping/updating <em>every</em>
 Haskell package in case of an update—lots of fun!</p>
 <h1 id="author">Author</h1>
-<h2 id="hmenu"><a href="https://gitlab.com/slotThe/hmenu">hmenu</a></h2>
+<h3 id="hmenu"><a href="https://gitlab.com/slotThe/hmenu">hmenu</a></h3>
 <p>I’m the author of hmenu, a wrapper for <a href="https://tools.suckless.org/dmenu/">dmenu</a> in the spirit of
 <a href="https://dmwit.com/yeganesh/">yeganesh</a>. More concretely, it displays commands in order of usage
 (with an optional decay for frequency sorting) and can open programs or
 (given) files inside of your terminal or any chosen program.</p>
-<h2 id="vmensa"><a href="https://gitlab.com/slotThe/vmensa">vmensa</a></h2>
+<h3 id="vmensa"><a href="https://gitlab.com/slotThe/vmensa">vmensa</a></h3>
 <p>CLI application to query and filter the menus of the different canteens
 at TU Dresden.</p>
-<h2 id="emacs">Emacs</h2>
+<h3 id="emacs-modes">Emacs Modes</h3>
 <p>I’ve written too many Emacs packages—and none of them popular, at that!</p>
-<h3 id="kbd-mode"><a href="https://github.com/kmonad/kbd-mode">kbd-mode</a></h3>
+<h4 id="kbd-mode"><a href="https://github.com/kmonad/kbd-mode">kbd-mode</a></h4>
 <p>I wrote the Emacs integration for kmonad’s configuration files—that is,
 kbd-mode is a major more for <code>.kbd</code> files.</p>
-<h3 id="arxiv-citation-melpa"><a href="https://gitlab.com/slotThe/arxiv-citation">arxiv-citation</a> (<a href="https://melpa.org/#/arxiv-citation">MELPA</a>)</h3>
+<h4 id="arxiv-citation-melpa"><a href="https://gitlab.com/slotThe/arxiv-citation">arxiv-citation</a> (<a href="https://melpa.org/#/arxiv-citation">MELPA</a>)</h4>
 <p>Generate citation data for PDF files from the arXiv. Additionally,
 download preprints to a specified directory and open them. Includes
 <a href="https://github.com/skeeto/elfeed">elfeed</a> support.</p>
-<h3 id="latex-change-env-melpa"><a href="https://gitlab.com/slotThe/change-env">latex-change-env</a> (<a href="https://melpa.org/#/latex-change-env">MELPA</a>)</h3>
+<h4 id="latex-change-env-melpa"><a href="https://gitlab.com/slotThe/change-env">latex-change-env</a> (<a href="https://melpa.org/#/latex-change-env">MELPA</a>)</h4>
 <p>Provides a way to modify LaTeX environments, as well as the display math
 mode (seeing it as an environment of sorts). This includes primitive
 label handling: we remember the name of labels and can rename or
