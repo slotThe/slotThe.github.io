@@ -95,6 +95,18 @@ I'm the author of hmenu, a wrapper for [dmenu] in the spirit of
 CLI application to query and filter the menus of the different canteens
 at TU Dresden.
 
+### Haskell Libraries
+
+#### [optparse-applicative-cmdline-util] ([Hackage](https://hackage.haskell.org/package/optparse-applicative-cmdline-util))
+
+Utility functions for writing command line interfaces with
+[optparse-applicative].  This is used, for example, in [vmensa].
+
+#### [html-parse-util](https://gitlab.com/slotThe/html-parse-utils)
+
+A reimplementation of utility functions from Neil Mitchell's [TagSoup],
+as well as some extra functionality, for Ben Gamari's [html-parse], as
+this nicely supports `Text` and `Attoparsec`.
 
 ### Emacs Modes
 
@@ -120,12 +132,14 @@ remember them for later.  This means that we can restore old labels
 after deleting them—very convenient!
 
 [QMK]: https://qmk.fm/
+[TagSoup]: https://hackage.haskell.org/package/tagsoup
 [XMonad]: https://xmonad.org/
 [arxiv-citation]: https://gitlab.com/slotThe/arxiv-citation
 [colemak-dh]: https://colemakmods.github.io/mod-dh/
 [dmenu]: https://tools.suckless.org/dmenu/
 [elfeed]: https://github.com/skeeto/elfeed
 [hmenu]: https://gitlab.com/slotThe/hmenu
+[html-parse]: https://hackage.haskell.org/package/html-parse
 [kbd-mode]: https://github.com/kmonad/kbd-mode
 [kmonad]: https://github.com/kmonad/kmonad
 [latex-change-env]: https://gitlab.com/slotThe/change-env
