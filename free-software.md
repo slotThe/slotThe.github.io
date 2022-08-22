@@ -38,8 +38,6 @@ configuration can be found
  </div>
 </div>
 
-[XMonad]: https://xmonad.org/
-
 ### Kmonad
 
 I'm a contributor[^1] to kmonad, a keyboard remapping daemon in the
@@ -55,10 +53,6 @@ My personal keyboard configuration—[colemak-dh], with some extras to
 facilitate more convenient Haskell and LaTeX programming—can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd).
 
-[QMK]: https://qmk.fm/
-[colemak-dh]: https://colemakmods.github.io/mod-dh/
-[kmonad]: https://github.com/kmonad/kmonad
-
 ### Xmobar
 
 Since XMonad does not have a built-in status bar, one has to use a third
@@ -68,8 +62,6 @@ uses it with xmonad.
 
 The configuration I use is available
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs).
-
-[xmobar]: https://codeberg.org/xmobar/xmobar
 
 ### Void Linux
 
@@ -98,16 +90,11 @@ I'm the author of hmenu, a wrapper for [dmenu] in the spirit of
 (with an optional decay for frequency sorting) and can open programs or
 (given) files inside of your terminal or any chosen program.
 
-[dmenu]: https://tools.suckless.org/dmenu/
-[hmenu]: https://gitlab.com/slotThe/hmenu
-[yeganesh]: https://dmwit.com/yeganesh/
-
 ### [vmensa]
 
 CLI application to query and filter the menus of the different canteens
 at TU Dresden.
 
-[vmensa]: https://gitlab.com/slotThe/vmensa
 
 ### Emacs Modes
 
@@ -118,16 +105,11 @@ I've written too many Emacs packages—and none of them popular, at that!
 I wrote the Emacs integration for kmonad's configuration files—that is,
 kbd-mode is a major more for `.kbd` files.
 
-[kbd-mode]: https://github.com/kmonad/kbd-mode
-
 #### [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
 
 Generate citation data for PDF files from the arXiv.  Additionally,
 download preprints to a specified directory and open them.  Includes
 [elfeed] support.
-
-[elfeed]: https://github.com/skeeto/elfeed
-[arxiv-citation]: https://gitlab.com/slotThe/arxiv-citation
 
 #### [latex-change-env] ([MELPA](https://melpa.org/#/latex-change-env))
 
@@ -137,7 +119,21 @@ label handling: we remember the name of labels and can rename or
 remember them for later.  This means that we can restore old labels
 after deleting them—very convenient!
 
+[QMK]: https://qmk.fm/
+[XMonad]: https://xmonad.org/
+[arxiv-citation]: https://gitlab.com/slotThe/arxiv-citation
+[colemak-dh]: https://colemakmods.github.io/mod-dh/
+[dmenu]: https://tools.suckless.org/dmenu/
+[elfeed]: https://github.com/skeeto/elfeed
+[hmenu]: https://gitlab.com/slotThe/hmenu
+[kbd-mode]: https://github.com/kmonad/kbd-mode
+[kmonad]: https://github.com/kmonad/kmonad
 [latex-change-env]: https://gitlab.com/slotThe/change-env
+[optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
+[optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
+[vmensa]: https://gitlab.com/slotThe/vmensa
+[xmobar]: https://codeberg.org/xmobar/xmobar
+[yeganesh]: https://dmwit.com/yeganesh/
 
 [^1]: As well as de-facto maintainer, as the author of kmonad is
       chronically ill and can't spend much time on the project.
