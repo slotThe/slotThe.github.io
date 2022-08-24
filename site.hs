@@ -6,6 +6,7 @@ import Data.Text qualified as T
 import GHC.Exts  qualified as Ext
 
 import Control.Arrow
+import Data.Maybe
 import Data.Monoid
 import Data.Text (Text)
 import Hakyll
@@ -115,9 +116,13 @@ pandocCompilerNoToc = pandocCompiler
 -- Sources:
 --   + syntax highlighting: https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
 --   + TOC                : https://svejcar.dev/posts/2019/11/27/table-of-contents-in-hakyll/
+--   + TOC Toggling       : https://github.com/duplode/duplode.github.io/blob/sources/src/site.hs
 myPandocCompiler :: Compiler (Item String)
-myPandocCompiler = pandocCompilerWith defaultHakyllReaderOptions
-               =<< myPandocWriterOptions
+myPandocCompiler = do
+  tocWriter <- myPandocWriterOptions
+  noToc     <- getUnderlying >>= (`getMetadataField` "no-toc")
+  pandocCompilerWith defaultHakyllReaderOptions
+                     (maybe tocWriter (const defaultHakyllWriterOptions) noToc)
  where
   myPandocWriterOptions :: Compiler WriterOptions
   myPandocWriterOptions = do
