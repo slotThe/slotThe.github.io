@@ -102,7 +102,7 @@ at TU Dresden.
 Utility functions for writing command line interfaces with
 [optparse-applicative].  This is used, for example, in [vmensa].
 
-#### [html-parse-util](https://gitlab.com/slotThe/html-parse-utils)
+#### [html-parse-util] ([Hackage](https://hackage.haskell.org/package/html-parse-util))
 
 A reimplementation of utility functions from Neil Mitchell's [TagSoup],
 as well as some extra functionality, for Ben Gamari's [html-parse], as
@@ -139,6 +139,7 @@ after deleting them—very convenient!
 [dmenu]: https://tools.suckless.org/dmenu/
 [elfeed]: https://github.com/skeeto/elfeed
 [hmenu]: https://gitlab.com/slotThe/hmenu
+[html-parse-util]: https://github.com/slotThe/html-parse-util
 [html-parse]: https://hackage.haskell.org/package/html-parse
 [kbd-mode]: https://github.com/kmonad/kbd-mode
 [kmonad]: https://github.com/kmonad/kmonad
