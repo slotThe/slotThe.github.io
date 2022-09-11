@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>XMonad Module Showcase: X.A.TopicSpace – Tony Zorman</title>
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/skin.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../../posts.html">Posts</a></li>
+              <li><a href="../../research.html">Research</a></li>
+              <li><a href="../../free-software.html">FLOSS</a></li>
+              <li><a href="../../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <h1>XMonad Module Showcase: X.A.TopicSpace</h1>
+
+          <article>
+    <section class="header">
+        Posted on 2022-09-11
+        
+            by Tony Zorman
+        
+    </section>
+    <section>
+        <div id="contents">
+<p class="mini-header">Contents</p>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#examples">Examples</a>
+<ul>
+<li><a href="#basic-topics">Basic topics</a></li>
+<li><a href="#spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</a></li>
+<li><a href="#testing-this-website">Testing this website</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div>
+<p>One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
+However, it seems relatively unknown among the general XMonad community.
+I fear this is due to the fact that the module is quite old and formerly
+had a rather high barrier to entry. Despite having been given shiny
+<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">new documentation</a>, lots of people probably did not bother
+revisiting it and thus still don’t really understand why they might be
+interested in using topics instead of workspaces. Time to change that!</p>
+<!--more-->
+<h1 id="introduction">Introduction</h1>
+<p>First of all, this post is not to be seen as a tutorial on
+X.A.TopicSpace, but much rather as a showcase of how its functionality
+could be used day to day. If you like what you see, perhaps check out
+the <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">docs</a> and give it a spin yourself! I have already
+written an introduction to the module in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research
+workflow</a>:</p>
+<blockquote>
+<p>XMonad has a module called TopicSpace, which upgrades the X11
+workspace—virtual desktop—concept to so-called topics. These are
+workspaces with a “theme” associated to them; for example, I have a
+topic for every project that I’m currently working on. This results
+in a very clean separation of concerns. Plus, I always know where my
+windows are!</p>
+<p>Every topic has a directory and a “startup hook”, firing when the
+topic is switched to and empty, associated to it. While most
+convenient for programming related tasks—e.g., spawn <code>ghcid</code> in the
+relevant directory or automatically build and open this website—it’s
+also quite convenient for mathematical projects.</p>
+<p>I have set up special keybindings to bring up an Emacs session in the
+topic directory, or spawn a terminal there. Switching to topics is
+done fuzzily via the XMonad prompt, which means I only have to type a
+few characters to get to my destination. This makes it feasible to
+have 30 topics, instead of the usual 9 or so, in the first place. As
+a result, it’s rather fast to go from thinking about a certain problem
+to working on it.</p>
+</blockquote>
+<p>At a glance, this probably does not sound very impressive—so one can
+have a directory and some function associated to a workspace (hereafter
+also called “topic”), big deal. However, we will see that with a bit of
+creativity this can be used to great effect.</p>
+<h1 id="examples">Examples</h1>
+<h2 id="basic-topics">Basic topics</h2>
+<p>The most obvious application of all of this is to have workspaces that
+do one and only one thing. For example, I have a topic dedicated to
+connecting to a VPN, should the need arise. Naturally, I automatically
+want to execute <code>openvpn</code> and pick a random server whenever I happen to
+enter that workspace and it’s empty (i.e., <code>openvpn</code> is not already
+running).</p>
+<p>More such use cases include having a topic dedicated to my RSS feed
+reader, instant messaging, or IRC. Since I only show workspaces with
+windows on them in xmobar, I can just glance at my status bar to find
+out whether I currently have, for example, IRC open. No additional
+program for checking the status of things necessary! Obviously, this
+<em>modus operandi</em> takes a bit of discipline to uphold over the course of
+the day, but I find that such a separation of concerns greatly reduces
+mental load regarding what’s currently happening on my computer.
+Definitely worth it.</p>
+<p>In terms of code, this—as well as the following examples—heavily use the
+<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to XMonad.Util.Run, which allows one to
+spawn processes in a declarative and compositional way; I’ve <a href="../2022-05-25-calling-emacs-from-xmonad.html">written
+about this</a> in another post. For example, my RSS topic is
+specified thusly:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Actions.TopicSpace (inHome)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Util.Run</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  , inHome <span class="st">&quot;7:RSS&quot;</span> <span class="op">$</span> proc <span class="op">$</span> inEditor</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                        <span class="op">&gt;-&gt;</span> setFrameName <span class="st">&quot;elfeed&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                        <span class="op">&gt;-&gt;</span> execute (elispFun <span class="st">&quot;elfeed&quot;</span>)</span></code></pre></div>
+<p>Here, <code>inHome</code> is a little helper function that takes a topic name and
+an action, and creates a new topic with <code>$HOME</code> as its associated
+directory.</p>
+<p>You can find all of my topics (and there are a lot of them)
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L219-L265">here</a>.</p>
+<h2 id="spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</h2>
+<p>More generally, programming projects in the same language almost always
+require me to open the same set of standard tools, so it’s extremely
+convenient to directly spawn them upon first visit. This allows for
+very little friction before starting to work on whatever I wanted to
+work on.</p>
+<p>For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghcid">ghcid</a> in every Haskell project
+of mine—so why not automate this? Using what X.U.Run gives us, we can
+quickly throw together a function that executes the given instruction
+inside of a terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- 'topicConfig' is my personal topic configuration.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Execute a program in the topic directory (inside a terminal).</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">executeInTopic ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>executeInTopic p <span class="ot">=</span> proc <span class="op">$</span> (termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&gt;-&gt;</span> execute p</span></code></pre></div>
+<p>Similar functions can be created for spawning the terminal and editor:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- or X.U.Run.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn terminal in topic directory.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnTermInTopic ::</span> <span class="dt">X</span> ()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>spawnTermInTopic <span class="ot">=</span> proc <span class="op">$</span> termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn editor in the current topic directory.</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnEditorInTopic ::</span> <span class="dt">X</span> ()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>spawnEditorInTopic <span class="ot">=</span> proc <span class="op">$</span> inEditor <span class="op">&gt;-$</span> currentTopicDir topicConfig</span></code></pre></div>
+<p>Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
+<code>termInDir</code> are defined and may be customised.</p>
+<p>In my mathematical and other work-adjacent projects I keep it pretty
+simple; an editor there is mostly sufficient.</p>
+<p><img class="pure-img" src="../phd-workflow/topics.gif"></p>
+<p>But we can also get a little bit more fancy. Since the topic action is
+just a general <code>X</code> action, we can really do anything we want in there.
+In addition to spawning programs, all of my Haskell projects should
+default to the <code>Hacking</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> layout:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnHaskell ::</span> <span class="dt">X</span> ()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>spawnHaskell <span class="ot">=</span> sendMessage (<span class="dt">JumpToLayout</span> <span class="st">&quot;Hacking&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawnEditorInTopic</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> executeInTopic <span class="st">&quot;ghcid&quot;</span></span></code></pre></div>
+<p>And Voilà, we can now attach this action to all the topics that we want!</p>
+<p>Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
+actions. If you’re more comfortable with <code>do</code> notation, you can also
+write the above as</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnHaskell ::</span> <span class="dt">X</span> ()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>spawnHaskell <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  sendMessage (<span class="dt">JumpToLayout</span> <span class="st">&quot;Hacking&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  spawnEditorInTopic</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  executeInTopic <span class="st">&quot;ghcid&quot;</span></span></code></pre></div>
+<p>Furthermore, since the associated directory for a topic can easily be
+made <code>$HOME</code> by default (as we’ve seen, TopicSpace even exports the
+<code>inHome</code> function), spawning programs in certain topics can easily be
+made to replace the default keybindings!</p>
+<p>For the sake of completeness, I will showcase one slightly more
+complicated example. My main shell environment is <code>eshell</code> and getting
+sane behaviour there presents one with a few more obstacles than
+<code>spawnTermInTopic</code> did. It also uses <code>inProgram</code> instead of <code>inEditor</code>,
+allowing access to a different instance of the Emacs server.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn an eshell frame in the current topic directory.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnEshellInTopic ::</span> <span class="dt">X</span> ()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>spawnEshellInTopic <span class="ot">=</span> currentTopicDir topicConfig <span class="op">&gt;&gt;=</span> \dir <span class="ot">-&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inProgram <span class="st">&quot;emacsclient -a '' -c -s eshell&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> execute (progn [ <span class="st">&quot;eshell&quot;</span> <span class="op">&lt;&gt;</span> quote <span class="st">&quot;new-shell&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/cd&quot;</span> <span class="op">&lt;&gt;</span> asString dir</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/clear-scrollback&quot;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell-send-input&quot;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                        ])</span></code></pre></div>
+<p>All in all, we have something that looks a little bit like this:</p>
+<p><img class="pure-img" src="./haskell-topic.gif"></p>
+<h2 id="testing-this-website">Testing this website</h2>
+<p>Much in the same vein as my Haskell topics, I find the <code>website</code> topic
+to be extremely handy—you can probably guess what it’s used for. Its
+associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
+an Emacs frame in the topic directory, builds the website, and opens a
+browser window pointing to the local copy:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnWebsite ::</span> <span class="dt">X</span> ()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>spawnWebsite <span class="ot">=</span> switchToLayout <span class="st">&quot;Tall&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawnEditorInTopic</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> executeInTopic <span class="st">&quot;hakyll-build.sh --hold&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawn <span class="st">&quot;browser-new-window.sh localhost:8000&quot;</span></span></code></pre></div>
+<p>The whole thing looks like this:</p>
+<p><img class="pure-img" src="./website.gif"></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Hopefully these examples have convinced you to give TopicSpace a spin;
+perhaps you’ve even gotten some ideas of your own you’d like to try out.
+Although conceptually very simple, the module can be used in a variety
+of ways to automate boring tasks just that tiny bit more—definitely a
+win in my book!</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>In case you are interested:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hacking <span class="ot">=</span> renamed [<span class="dt">Replace</span> <span class="st">&quot;Hacking&quot;</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span> limitWindows <span class="dv">3</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span> magnify <span class="fl">1.3</span> (<span class="dt">NoMaster</span> <span class="dv">3</span>) <span class="dt">True</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">$</span> <span class="dt">ResizableTall</span> <span class="dv">1</span> (<span class="dv">3</span> <span class="op">%</span> <span class="dv">100</span>) (<span class="dv">13</span> <span class="op">%</span> <span class="dv">25</span>) []</span></code></pre></div>
+<p>As with the rest of my dotfiles, it’s available <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer" class="no-print">
+          <a href="../../atom.xml">RSS</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
