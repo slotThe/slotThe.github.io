@@ -1,6 +1,7 @@
 ---
 title: How to query-replace multiple matches!
 author: Tony Zorman
+tags: emacs
 ---
 
 As its name suggests, Emacs's `query-replace` function (bound to `M-%`

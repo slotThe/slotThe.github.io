@@ -2,6 +2,7 @@
 title: Rapidly Capture Ideas with XMonad and Emacs
 author: Tony Zorman
 no-toc: true
+tags: emacs, xmonad
 ---
 
 As I've said before, basically my entire digital life happens in either
@@ -15,7 +16,9 @@ much like [dmenu]—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one's current workflow.  The module recently got support for
 Org [priorities][priority], so I figured this was as good an excuse as
-any to talk about it.  <!--more-->
+any to talk about it.
+
+<!--more-->
 
 ## Motivation
 

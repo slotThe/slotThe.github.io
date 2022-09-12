@@ -1,6 +1,7 @@
 ---
 title: Calling Emacs from XMonad
 author: Tony Zorman
+tags: emacs, xmonad
 ---
 
 In the post about my [research workflow], I briefly mentioned having to

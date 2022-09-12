@@ -18,6 +18,10 @@ import Text.Pandoc.Templates (compileTemplate)
 
 main :: IO ()
 main = hakyllWith config do
+  match "templates/*" $ compile templateBodyCompiler
+
+  tags <- buildTags "posts/**" (fromCapture "tags/**.html")
+
   match "css/*" do
     route   idRoute
     compile compressCssCompiler
@@ -30,17 +34,29 @@ main = hakyllWith config do
     route   idRoute
     compile copyFileCompiler
 
+  create ["css/syntax.css"] do  -- Syntax highlighting; see below.
+    route idRoute
+    compile . makeItem $ styleToCss highlightTheme
+
+  create ["atom.xml"] do        -- Atom feed; see 'feedConfig' below.
+    route idRoute
+    compile do
+      lastPosts <- recentFirst =<< loadAllSnapshots allPosts "post-content"
+      renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
+
+  --- The "landing page"
   match "index.html" do
     route idRoute
     compile do
       posts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
       let teaserCtx = teaserField "teaser" "post-teaser" <> postCtx
-          indexCtx  = listField "posts" teaserCtx (return posts) <> defaultContext
+          indexCtx  = listField "posts" teaserCtx (pure posts) <> defaultContext
       getResourceBody
         >>= applyAsTemplate indexCtx
         >>= loadAndApplyTemplate "templates/default.html" defaultContext
         >>= relativizeUrls
 
+  --- Sidebar "about"ish sites.
   match (fromList ["research.md", "free-software.md"]) do
     route $ setExtension "html"
     compile $ myPandocCompiler
@@ -56,38 +72,25 @@ main = hakyllWith config do
                 <> defaultContext )
           >>= relativizeUrls
 
-  create ["posts.html"] do
-    route idRoute
-    compile do
-      posts <- recentFirst =<< loadAll allPosts
-      let allPostsCtx = listField "posts" postCtx (return posts)
-                     <> constField "title" "All Posts"
-                     <> defaultContext
-      makeItem ""
-          >>= loadAndApplyTemplate "templates/all-posts.html" allPostsCtx
-          >>= loadAndApplyTemplate "templates/default.html"   allPostsCtx
-          >>= relativizeUrls
-
+  --- Posts
   match allPosts do
     route $ setExtension "html"
+    let tagCtx = tagsField "tags" tags <> postCtx
     compile $ myPandocCompiler
           >>= mkTeaserSnapshot             -- For the previews on the main page.
-          >>= loadAndApplyTemplate "templates/post.html"    postCtx
+          >>= loadAndApplyTemplate "templates/post.html"    tagCtx
           >>= saveSnapshot "post-content"  -- For atom feed.
           >>= loadAndApplyTemplate "templates/default.html" defaultContext
           >>= relativizeUrls
 
-  create ["css/syntax.css"] do  -- Syntax highlighting; see below.
-    route idRoute
-    compile . makeItem $ styleToCss highlightTheme
+  --- Lists of posts
+  -- All posts
+  create ["posts.html"] $
+    mkPostList allPosts (constField "title" "All Posts")
 
-  create ["atom.xml"] do        -- Atom feed; see 'feedConfig' below.
-    route idRoute
-    compile do
-      lastPosts <- recentFirst =<< loadAllSnapshots allPosts "post-content"
-      renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
-
-  match "templates/*" $ compile templateBodyCompiler
+  -- Only posts tagged by a certain tag
+  tagsRules tags \tag taggedPosts ->
+    mkPostList taggedPosts (constField "title" ("Posts tagged \"" ++ tag ++ "\""))
 
 config :: Configuration
 config = defaultConfiguration{ destinationDirectory = "docs" }
@@ -106,6 +109,19 @@ feedConfig = FeedConfiguration
   , feedAuthorEmail = "tonyzorman@mailbox.org"
   , feedRoot        = "https://tony-zorman.com"
   }
+
+-- | Create a post list, filtering all posts according to @ptn@.
+mkPostList :: Pattern -> Context String -> Rules ()
+mkPostList ptn ctx = do
+  let ctx' = getPosts ptn <> ctx <> defaultContext
+  route idRoute
+  compile $ makeItem ""
+        >>= loadAndApplyTemplate "templates/all-posts.html" ctx'
+        >>= loadAndApplyTemplate "templates/default.html"   ctx'
+        >>= relativizeUrls
+ where
+  getPosts :: Pattern -> Context a
+  getPosts ptn = listField "posts" postCtx (recentFirst =<< loadAll ptn)
 
 -- | Emphasise that the default pandoc compiler does not have a TOC.
 pandocCompilerNoToc :: Compiler (Item String)

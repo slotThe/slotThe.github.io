@@ -1,6 +1,7 @@
 ---
 title: "XMonad Module Showcase: X.A.TopicSpace"
 author: Tony Zorman
+tags: xmonad
 ---
 
 One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
