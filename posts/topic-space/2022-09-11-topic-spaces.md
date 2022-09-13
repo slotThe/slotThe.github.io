@@ -1,6 +1,5 @@
 ---
 title: "XMonad Module Showcase: X.A.TopicSpace"
-author: Tony Zorman
 tags: xmonad
 ---
 

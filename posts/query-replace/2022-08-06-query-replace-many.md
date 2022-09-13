@@ -1,6 +1,5 @@
 ---
 title: How to query-replace multiple matches!
-author: Tony Zorman
 tags: emacs
 ---
 

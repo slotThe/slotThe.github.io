@@ -1,6 +1,5 @@
 ---
 title: Rapidly Capture Ideas with XMonad and Emacs
-author: Tony Zorman
 no-toc: true
 tags: emacs, xmonad
 ---

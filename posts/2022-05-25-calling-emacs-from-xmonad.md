@@ -1,6 +1,5 @@
 ---
 title: Calling Emacs from XMonad
-author: Tony Zorman
 tags: emacs, xmonad
 ---
 

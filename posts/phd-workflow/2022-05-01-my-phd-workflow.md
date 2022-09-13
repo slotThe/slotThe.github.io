@@ -1,6 +1,5 @@
 ---
 title: My PhD Research Workflow
-author: Tony Zorman
 tags: emacs, maths, xmonad
 ---
 
