@@ -110,15 +110,15 @@ feedConfig = FeedConfiguration
 -- | Create a post list, filtering all posts according to @ptn@.
 mkPostList :: Pattern -> Context String -> Rules ()
 mkPostList ptn ctx = do
-  let ctx' = getPosts ptn <> ctx <> defaultContext
+  let ctx' = getPosts <> ctx <> defaultContext
   route idRoute
   compile $ makeItem ""
         >>= loadAndApplyTemplate "templates/all-posts.html" ctx'
         >>= loadAndApplyTemplate "templates/default.html"   ctx'
         >>= relativizeUrls
  where
-  getPosts :: Pattern -> Context a
-  getPosts ptn = listField "posts" postCtx (recentFirst =<< loadAll ptn)
+  getPosts :: Context a
+  getPosts = listField "posts" postCtx (recentFirst =<< loadAll ptn)
 
 -- | Emphasise that the default pandoc compiler does not have a TOC.
 pandocCompilerNoToc :: Compiler (Item String)
@@ -146,6 +146,16 @@ myPandocCompiler = do
         , writerTOCDepth        = 3
         , writerTemplate        = tmpl
         , writerHighlightStyle  = Just highlightTheme
+        -- LaTeX rendering
+        , writerExtensions
+             = writerExtensions defaultHakyllWriterOptions
+            <> extensionsFromList
+                 [ Ext_tex_math_dollars
+                 , Ext_tex_math_double_backslash
+                 , Ext_latex_macros
+                 , Ext_inline_code_attributes
+                 ]
+        , writerHTMLMathMethod = MathJax ""
         }
    where
     tmplSpec :: Text
