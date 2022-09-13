@@ -5,9 +5,6 @@
 import Data.Text qualified as T
 import GHC.Exts  qualified as Ext
 
-import Control.Arrow
-import Data.Maybe
-import Data.Monoid
 import Data.Text (Text)
 import Hakyll
 import Skylighting.Types hiding (Context)
@@ -168,7 +165,7 @@ suppressToc = fmap (withTagList suppressor)
   suppressor :: [Tag String] -> [Tag String]
   suppressor tags = pre <> post
    where
-    (pre, (_, post)) = second (second (drop 1) . break (== TagClose "div"))
+    (pre, (_, post)) = fmap (fmap (drop 1) . break (== TagClose "div"))
                      . break (== TagOpen "div" [("id", "contents")])
                      $ tags
 
