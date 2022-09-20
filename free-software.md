@@ -68,7 +68,7 @@ The configuration I use is available
 I maintain a few packages for the [Void] GNU/Linux distribution:
 
 ``` console
-$ xmypkgs soliditsallgood@mailbox.org
+$ xmypkgs
 cgrep
 ghc
 ghc-bin
