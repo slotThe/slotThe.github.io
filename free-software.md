@@ -40,10 +40,10 @@ configuration can be found
 
 ### Kmonad
 
-I'm a contributor[^1] to kmonad, a keyboard remapping daemon in the
-spirit of [QMK].  However, instead of being firmware for a specific
-keyboard, it is implemented in software and thus works for any
-keyboard—even your laptop keyboard!
+I'm a contributor to kmonad, a keyboard remapping daemon in the spirit
+of [QMK].  However, instead of being firmware for a specific keyboard,
+it is implemented in software and thus works for any keyboard—even your
+laptop keyboard!
 
 <p style="text-align:center;">
  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=kmonad&repo=kmonad&show_owner=true" width="50%">
@@ -149,8 +149,3 @@ after deleting them—very convenient!
 [vmensa]: https://gitlab.com/slotThe/vmensa
 [xmobar]: https://codeberg.org/xmobar/xmobar
 [yeganesh]: https://dmwit.com/yeganesh/
-
-[^1]: As well as de-facto maintainer, as the author of kmonad is
-      chronically ill and can't spend much time on the project.
-      However, due to other constraints, I do not have as much time to
-      commit as I would in order to actually call myself a "maintainer".
