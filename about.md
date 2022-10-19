@@ -9,9 +9,10 @@ guitar, ride my bike around, or watch classic movies.
 
 My work in mathematics can broadly be characterised under the term
 "category theory and its applications".  In particular, I like thinking
-about things like [Hopf monads], [graphical calculi], and [operads].  If
-you're interested in my publications, you can check out my name on the
-[arXiv].  I've also given some talks, slides of which are available
+about things like [Hopf monads], [graphical calculi], [duoidal] and
+[linearly distributive] categories, as well as [operads].  If you're
+interested in my publications, you can check out my name on the [arXiv].
+I've also given some talks, slides of which are available
 [here](./research.html).
 
 If you want to get into contact, try any of the following channels:
@@ -29,8 +30,10 @@ If you want to get into contact, try any of the following channels:
 [Haskell]: https://www.haskell.org/
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
 [arXiv]: https://arxiv.org/search/math?searchtype=author&query=Zorman%2C+T
+[duoidal]: https://ncatlab.org/nlab/show/duoidal+category
 [free software]: ./free-software.html
 [graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
+[linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
 [operads]: https://ncatlab.org/nlab/show/string+diagram
 
 [^1]: I wish.
