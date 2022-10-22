@@ -5,7 +5,7 @@ tags: emacs
 
 Emacs is the "extensible text editor", and it wouldn't be fun if one
 didn't at least try to take advantage of that, right?  Having just
-written a [REAMDE][cfg:emacs:readme] for my Emacs configuration, I
+written a [README][cfg:emacs:readme] for my Emacs configuration, I
 thought it might be nice to somewhat expand on certain ideas and give a
 little context to some snippets that have accumulated over time.
 
