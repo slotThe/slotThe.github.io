@@ -23,7 +23,7 @@ main = hakyllWith config do
     route   idRoute
     compile compressCssCompiler
 
-  match ("posts/**.gif" .||. "posts/**.png" .||. "posts/**.jpg") do
+  match ("posts/**.gif" .||. "posts/**.png" .||. "posts/**.jpg" .||. "images/**") do
     route   idRoute
     compile copyFileCompiler
 
