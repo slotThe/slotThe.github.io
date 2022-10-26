@@ -57,7 +57,7 @@ hom-*objects* are objects in some "environmental" category
 $\mathcal{V}$.  This category is what replaces $\mathsf{Set}$, so it
 will usually be assumed to have some _very_ nice properties.  For the
 purposes of this blog post, I will assume that $(\mathcal{V}, \otimes,
-1)$ is a (small) complete and cocomplete symmetric monoidal
+1)$ is a (small) complete and cocomplete closed symmetric monoidal
 category.[^1] If you don't know what some of these words mean, you can
 read that as "it's an environment in which we can think about category
 theory in an effective way".
