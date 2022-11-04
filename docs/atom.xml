@@ -8,8 +8,98 @@
         <name>Tony Zorman</name>
         <email>tonyzorman@mailbox.org</email>
     </author>
-    <updated>2022-10-22T00:00:00Z</updated>
+    <updated>2022-11-05T00:00:00Z</updated>
     <entry>
+    <title>Adjusting preview.el for vertical monitors</title>
+    <link href="https://tony-zorman.com/posts/2022-11-05-vertical-previews.html" />
+    <id>https://tony-zorman.com/posts/2022-11-05-vertical-previews.html</id>
+    <published>2022-11-05T00:00:00Z</published>
+    <updated>2022-11-05T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <section class="header">
+      Posted on 2022-11-05
+      
+        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>
+      
+    </section>
+    <section>
+        <p>Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
+<code>preview.el</code> library (whether it be in a .tex buffer, or—via
+<a href="https://github.com/karthink/org-auctex">org-auctex</a>—in Org) things get <em>really</em> messed up when one or more
+monitors are set up in portrait mode.</p>
+<!--more-->
+<p>When you have two monitors oriented vertically, previews might end up
+looking something like this:</p>
+<p style="text-align:center;">
+<img class="pure-img" src="../images/vertical-preview/two-vertical.png">
+</p>
+<p>With the perhaps more common setup of one vertical and one horizontal
+monitor, you could instead get the charming</p>
+<p style="text-align:center;">
+<img class="pure-img" src="../images/vertical-preview/one-vertical.png">
+</p>
+<p>Imagine a whole page of this—things get pretty funky. Being a boring
+person, I would rather prefer the much more ordinary looking</p>
+<p style="text-align:center;">
+<img class="pure-img" src="../images/vertical-preview/normal.png">
+</p>
+<p>Thankfully, this isn’t so complicated. Looking into <code>preview.el</code>, we
+get the geometry of the frame from <code>preview-get-geometry</code>. At least,
+this is what <code>preview-generate-preview</code> calls before delegating the
+heavy lifting to some internal functions. After staring at the former
+function for a while, one can single out <code>preview-get-dpi</code> as the main
+culprit. It seems to calculate the “resolution” of the preview:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">defun</span><span class="fu"> preview-get-dpi </span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">let*</span> ((monitor-attrs (frame-monitor-attributes))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           (mm-dims (<span class="kw">cdr</span> (<span class="kw">assoc</span> &#39;mm-size monitor-attrs)))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           (mm-width (<span class="kw">nth</span> <span class="dv">0</span> mm-dims))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           (mm-height (<span class="kw">nth</span> <span class="dv">1</span> mm-dims))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>           (pixel-dims (cl-cdddr (<span class="kw">assoc</span> &#39;geometry monitor-attrs)))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           (pixel-width (<span class="kw">nth</span> <span class="dv">0</span> pixel-dims))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>           (pixel-height (<span class="kw">nth</span> <span class="dv">1</span> pixel-dims)))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      (<span class="kw">cons</span> (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> pixel-width) mm-width)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> pixel-height) mm-height))))</span></code></pre></div>
+<p>Monitor details are returned by the <code>frame-monitor-attributes</code> function;
+its output for a horizontal monitor is</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  &#39;((name . <span class="st">&quot;DP1&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (geometry <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1920</span> <span class="dv">1080</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (workarea <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1920</span> <span class="dv">1080</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (mm-size <span class="dv">530</span> <span class="dv">300</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (frames &lt;&lt;omitted&gt;&gt;)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    (source . <span class="st">&quot;XRandR 1.5&quot;</span>))</span></code></pre></div>
+<p>While the same monitor in “vertical-mode” returns</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  &#39;((name . <span class="st">&quot;DP1&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    (geometry <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1080</span> <span class="dv">1920</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    (workarea <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1080</span> <span class="dv">1920</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    (mm-size <span class="dv">530</span> <span class="dv">300</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    (frames &lt;&lt;omitted&gt;&gt;)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    (source . <span class="st">&quot;XRandR 1.5&quot;</span>))</span></code></pre></div>
+<p>Crucially, the physical width and height of the monitor don’t change,
+but the <em>geometry</em>—the pixel width and height—does; you can <code>C-h f display-monitor-attributes-list RET</code> for more information. This means
+that in portrait mode, we actually compare the pixel <em>width</em> of the
+monitor with its physical <em>height</em>, as well as its pixel height with its
+width. Naturally, and depending on the specific setup, this produces
+too narrow or too wide previews.</p>
+<p>The solution is to only compare the comparable values. Indeed,
+overriding the built-in <code>preview-get-dpi</code> function with</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">defun</span><span class="fu"> preview-get-dpi </span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (-let (((&amp;alist &#39;mm-size (mw mh)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    &#39;geometry (_ _ pw ph))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            (frame-monitor-attributes)))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      (<span class="kw">cons</span> (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> (<span class="kw">max</span> pw ph)) (<span class="kw">max</span> mw mh))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> (<span class="kw">min</span> pw ph)) (<span class="kw">min</span> mw mh)))))</span></code></pre></div>
+<p>produces the correct behaviour! This implicit assumption—that monitors
+are generally wider than they are tall—of <code>preview-get-dpi</code> should
+probably be fixed; I will report it as an Emacs bug.</p>
+<p>As an aside, this is an excellent opportunity to see the ergonomic
+benefits of the <a href="https://github.com/magnars/dash.el">dash.el</a> library. Compare the readability of the
+“fixed” implementation using <code>-let</code> to the original one above. I
+certainly know which of the two I’d rather write!</p>
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>A Potpourri of Emacs Tweaks</title>
     <link href="https://tony-zorman.com/posts/2022-10-22-emacs-potpourri.html" />
     <id>https://tony-zorman.com/posts/2022-10-22-emacs-potpourri.html</id>
