@@ -5,6 +5,8 @@
 import Data.Text qualified as T
 import GHC.Exts  qualified as Ext
 
+import Control.Monad
+import Data.Foldable
 import Data.Text (Text)
 import Hakyll
 import Skylighting.Types hiding (Context)
@@ -36,11 +38,20 @@ main = hakyllWith config do
     route idRoute
     compile . makeItem $ styleToCss highlightTheme
 
+  --- RSS
+  -- For all posts
   create ["atom.xml"] do        -- Atom feed; see 'feedConfig' below.
     route idRoute
     compile do
       lastPosts <- recentFirst =<< loadAllSnapshots allPosts "post-content"
       renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
+  -- For individual tags
+  tagsRules tags $ \tag taggedPosts ->
+    create [fromFilePath $ "atom-" <> tag <> ".xml"] do
+      route idRoute
+      compile do
+        lastPosts <- recentFirst =<< loadAllSnapshots taggedPosts "post-content"
+        renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
 
   --- The "landing page"
   match "index.html" do
@@ -88,6 +99,9 @@ main = hakyllWith config do
   -- Only posts tagged by a certain tag
   tagsRules tags \tag taggedPosts ->
     mkPostList taggedPosts (constField "title" ("Posts tagged \"" ++ tag ++ "\""))
+
+hasTag :: MonadMetadata f => String -> Item a -> f Bool
+hasTag tg = fmap (tg `elem`) . getTags . itemIdentifier
 
 config :: Configuration
 config = defaultConfiguration{ destinationDirectory = "docs" }
