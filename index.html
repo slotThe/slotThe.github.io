@@ -10,10 +10,12 @@ title: Hi!
 <h1>Posts</h1>
 $for(posts)$
   <div class="posts">
-    <h2>$title$</h2>
+    <b style="font-size:20px">$title$</b> $if(tags)$ ($tags$) $endif$
 
     $teaser$
 
-    <p><a href=$url$>Read more</a> - $date$</p>
+    <p>
+      <a href=$url$>Read more</a> – $date$
+    </p>
   </div>
 $endfor$

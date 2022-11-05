@@ -18,6 +18,7 @@ main = hakyllWith config do
   match "templates/*" $ compile templateBodyCompiler
 
   tags <- buildTags "posts/**" (fromCapture "tags/**.html")
+  let tagCtx = tagsField "tags" tags <> postCtx
 
   match "css/*" do
     route   idRoute
@@ -46,7 +47,7 @@ main = hakyllWith config do
     route idRoute
     compile do
       posts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
-      let teaserCtx = teaserField "teaser" "post-teaser" <> postCtx
+      let teaserCtx = teaserField "teaser" "post-teaser" <> tagCtx
           indexCtx  = listField "posts" teaserCtx (pure posts) <> defaultContext
       getResourceBody
         >>= applyAsTemplate indexCtx
@@ -72,7 +73,6 @@ main = hakyllWith config do
   --- Posts
   match allPosts do
     route $ setExtension "html"
-    let tagCtx = tagsField "tags" tags <> postCtx
     compile $ myPandocCompiler
           >>= mkTeaserSnapshot             -- For the previews on the main page.
           >>= loadAndApplyTemplate "templates/post.html"    tagCtx
@@ -83,7 +83,7 @@ main = hakyllWith config do
   --- Lists of posts
   -- All posts
   create ["posts.html"] $
-    mkPostList allPosts (constField "title" "All Posts")
+    mkPostList allPosts (constField "title" "All Posts" <> tagCtx)
 
   -- Only posts tagged by a certain tag
   tagsRules tags \tag taggedPosts ->
