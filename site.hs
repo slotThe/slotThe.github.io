@@ -115,9 +115,10 @@ main = hakyllWith config do
            "templates/post-list.html"
 
 listTagsCtx :: Context (String, [Identifier])
-listTagsCtx = listFieldWith "tag-posts" postCtx (traverse load . snd . itemBody)
-           <> metadataField
-           <> titleField "title"
+listTagsCtx
+   = listFieldWith "tag-posts" postCtx (recentFirst <=< (traverse load . snd . itemBody))
+  <> metadataField
+  <> titleField "title"
 
 defaultCtxWithTags :: Compiler [Item (String, [Identifier])] -> Context String
 defaultCtxWithTags getTags
