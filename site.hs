@@ -1,15 +1,17 @@
 {-# LANGUAGE BlockArguments      #-}
-{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE NamedFieldPuns      #-}
+{-# LANGUAGE OverloadedStrings   #-}
 
 import Data.Text qualified as T
 import GHC.Exts  qualified as Ext
 
+import Control.Arrow (first)
 import Control.Monad
 import Data.Foldable
 import Data.Text (Text)
 import Hakyll
-import Skylighting.Types hiding (Context)
+import Skylighting.Types hiding (Item, Context)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen))
 import Text.Pandoc.Highlighting
 import Text.Pandoc.Options
@@ -17,10 +19,8 @@ import Text.Pandoc.Templates (compileTemplate)
 
 main :: IO ()
 main = hakyllWith config do
+  --- Housekeeping
   match "templates/*" $ compile templateBodyCompiler
-
-  tags <- buildTags "posts/**" (fromCapture "tags/**.html")
-  let tagCtx = tagsField "tags" tags <> postCtx
 
   match "css/*" do
     route   idRoute
@@ -34,9 +34,14 @@ main = hakyllWith config do
     route   idRoute
     compile copyFileCompiler
 
-  create ["css/syntax.css"] do  -- Syntax highlighting; see below.
+  -- Syntax highlighting; see below
+  create ["css/syntax.css"] do
     route idRoute
     compile . makeItem $ styleToCss highlightTheme
+
+  --- Generate tags
+  tags@Tags{ tagsMap , tagsMakeId } <- buildTags "posts/**" (fromCapture "tags/**.html")
+  let tagCtx = tagsField "tags" tags <> postCtx
 
   --- RSS
   -- For all posts
@@ -81,7 +86,7 @@ main = hakyllWith config do
                 <> defaultContext )
           >>= relativizeUrls
 
-  --- Posts
+  --- An individual post
   match allPosts do
     route $ setExtension "html"
     compile $ myPandocCompiler
@@ -92,13 +97,33 @@ main = hakyllWith config do
           >>= relativizeUrls
 
   --- Lists of posts
+  -- For showing all posts, we want a list of all posts, followed by a
+  -- list of tags with associated posts.
+  -- https://stackoverflow.com/questions/52805193/in-hakyll-how-can-i-generate-a-tags-page
+  let getAllTags :: Compiler [Item (String, [Identifier])]
+      getAllTags = pure $ map (\tgs@(s, _) -> Item (tagsMakeId s) tgs) tagsMap
+      mkList :: Context String -> Identifier -> Rules ()
+      mkList = mkPostList getAllTags
   -- All posts
-  create ["posts.html"] $
-    mkPostList allPosts (constField "title" "All Posts" <> tagCtx)
-
+  create ["posts.html"] do
+    mkList (constField "title" "All posts") "templates/all-posts.html"
   -- Only posts tagged by a certain tag
-  tagsRules tags \tag taggedPosts ->
-    mkPostList taggedPosts (constField "title" ("Posts tagged \"" ++ tag ++ "\""))
+  tagsRules tags \tag taggedPosts -> do
+    let getPosts :: Context b
+        getPosts = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
+    mkList (getPosts <> constField "title" ("Posts tagged \"" ++ tag ++ "\""))
+           "templates/post-list.html"
+
+listTagsCtx :: Context (String, [Identifier])
+listTagsCtx = listFieldWith "tag-posts" postCtx (traverse load . snd . itemBody)
+           <> metadataField
+           <> titleField "title"
+
+defaultCtxWithTags :: Compiler [Item (String, [Identifier])] -> Context String
+defaultCtxWithTags getTags
+   = listField "tags"  listTagsCtx getTags
+  <> listField "posts" postCtx     (recentFirst =<< loadAll allPosts)
+  <> defaultContext
 
 hasTag :: MonadMetadata f => String -> Item a -> f Bool
 hasTag tg = fmap (tg `elem`) . getTags . itemIdentifier
@@ -122,17 +147,14 @@ feedConfig = FeedConfiguration
   }
 
 -- | Create a post list, filtering all posts according to @ptn@.
-mkPostList :: Pattern -> Context String -> Rules ()
-mkPostList ptn ctx = do
-  let ctx' = getPosts <> ctx <> defaultContext
+mkPostList :: Compiler [Item (String, [Identifier])] -> Context String -> Identifier -> Rules ()
+mkPostList tags ctx template = do
+  let ctx' = ctx <> defaultCtxWithTags tags
   route idRoute
   compile $ makeItem ""
-        >>= loadAndApplyTemplate "templates/all-posts.html" ctx'
-        >>= loadAndApplyTemplate "templates/default.html"   ctx'
+        >>= loadAndApplyTemplate template                 ctx'
+        >>= loadAndApplyTemplate "templates/default.html" ctx'
         >>= relativizeUrls
- where
-  getPosts :: Context a
-  getPosts = listField "posts" postCtx (recentFirst =<< loadAll ptn)
 
 -- | Emphasise that the default pandoc compiler does not have a TOC.
 pandocCompilerNoToc :: Compiler (Item String)
