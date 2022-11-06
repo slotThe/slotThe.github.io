@@ -100,43 +100,24 @@ main = hakyllWith config do
   -- For showing all posts, we want a list of all posts, followed by a
   -- list of tags with associated posts.
   -- https://stackoverflow.com/questions/52805193/in-hakyll-how-can-i-generate-a-tags-page
-  let getAllTags :: Compiler [Item (String, [Identifier])]
-      getAllTags = pure $ map (\tgs@(s, _) -> Item (tagsMakeId s) tgs) tagsMap
-      mkList :: Context String -> Identifier -> Rules ()
-      mkList = mkPostList getAllTags
+  let mkList :: Context String -> Identifier -> Rules ()
+      mkList = mkPostList (mkTagAssocs tagsMakeId tagsMap)
   -- All posts
   create ["posts.html"] do
-    mkList (constField "title" "All posts") "templates/all-posts.html"
+    let allPostsCtx = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
+    mkList (allPostsCtx <> constField "title" "All posts")
+           "templates/all-posts.html"
   -- Only posts tagged by a certain tag
   tagsRules tags \tag taggedPosts -> do
-    let getPosts :: Context b
-        getPosts = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
-    mkList (getPosts <> constField "title" ("Posts tagged \"" ++ tag ++ "\""))
+    let taggedPostCtx = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
+    mkList (taggedPostCtx <> constField "title" ("Posts tagged \"" ++ tag ++ "\""))
            "templates/post-list.html"
 
-listTagsCtx :: Context (String, [Identifier])
-listTagsCtx
-   = listFieldWith "tag-posts" postCtx (recentFirst <=< (traverse load . snd . itemBody))
-  <> metadataField
-  <> titleField "title"
-
-defaultCtxWithTags :: Compiler [Item (String, [Identifier])] -> Context String
-defaultCtxWithTags getTags
-   = listField "tags"  listTagsCtx getTags
-  <> listField "posts" postCtx     (recentFirst =<< loadAll allPosts)
-  <> defaultContext
-
-hasTag :: MonadMetadata f => String -> Item a -> f Bool
-hasTag tg = fmap (tg `elem`) . getTags . itemIdentifier
+-----------------------------------------------------------------------
+-- Config
 
 config :: Configuration
 config = defaultConfiguration{ destinationDirectory = "docs" }
-
-allPosts :: Pattern
-allPosts = "posts/**.md"
-
-postCtx :: Context String
-postCtx = dateField "date" "%F" <> defaultContext
 
 feedConfig :: FeedConfiguration
 feedConfig = FeedConfiguration
@@ -147,8 +128,66 @@ feedConfig = FeedConfiguration
   , feedRoot        = "https://tony-zorman.com"
   }
 
+-----------------------------------------------------------------------
+-- Contexts
+
+postCtx :: Context String
+postCtx = dateField "date" "%F" <> defaultContext
+
+-- | Augment the 'defaultContext' with a list of all tags, as well as
+-- all posts associated to a given tag.
+defaultCtxWithTags :: Compiler [Item [Identifier]] -> Context String
+defaultCtxWithTags tagAssocs = listField "tags" tagCtx tagAssocs <> defaultContext
+ where
+  tagCtx :: Context [Identifier]
+  tagCtx -- we are inside a tag context now.
+     = listFieldWith "posts" postCtx (recentFirst <=< traverse load . itemBody)
+    <> metadataField
+    <> titleField "title"
+
+-----------------------------------------------------------------------
+-- Theming
+
+-- | In the spirit of the stimmung-themes:
+--       https://github.com/motform/stimmung-themes
+highlightTheme :: Style
+highlightTheme = monochrome
+  { tokenStyles
+      = Ext.fromList
+          [ (CommentTok , defStyle{ tokenColor  = color 0x505050
+                                  , tokenItalic = True
+                                  })
+          , (DataTypeTok, defStyle{ tokenBackground = color 0xf8edff })
+          , (StringTok  , defStyle{ tokenBackground = color 0xf2f2f2 })
+          , (OperatorTok, defStyle{ tokenBold = True })
+          , (OtherTok   , defStyle{ tokenBold = True })
+          ]
+     <> tokenStyles monochrome
+  }
+ where
+  color :: Int -> Maybe Color
+  color = toColor
+
+-----------------------------------------------------------------------
+-- Util
+
+hasTag :: MonadMetadata f => String -> Item a -> f Bool
+hasTag tg = fmap (tg `elem`) . getTags . itemIdentifier
+
+allPosts :: Pattern
+allPosts = "posts/**.md"
+
+--- Tags
+
+-- | Associate every @s@ in @tagsMap@ to the list @[id]@.  In reality,
+-- @s@ is a tag and @[id]@ is a list of identifiers of posts that are
+-- tagged with that tag.
+mkTagAssocs :: (s -> Identifier) -> [(s, [id])] -> Compiler [Item [id]]
+mkTagAssocs tagsMakeId tagsMap = pure $
+  map (\(s, tgs) -> Item (tagsMakeId s) tgs) tagsMap
+
 -- | Create a post list, filtering all posts according to @ptn@.
-mkPostList :: Compiler [Item (String, [Identifier])] -> Context String -> Identifier -> Rules ()
+mkPostList :: Compiler [Item [Identifier]] -> Context String -> Identifier -> Rules ()
 mkPostList tags ctx template = do
   let ctx' = ctx <> defaultCtxWithTags tags
   route idRoute
@@ -156,6 +195,26 @@ mkPostList tags ctx template = do
         >>= loadAndApplyTemplate template                 ctx'
         >>= loadAndApplyTemplate "templates/default.html" ctx'
         >>= relativizeUrls
+
+--- Teasers
+
+mkTeaserSnapshot ::  Item String -> Compiler (Item String)
+mkTeaserSnapshot item = item <$ saveSnapshot "post-teaser" (suppressToc item)
+
+-- | Used for creating teasers, so the TOC doesn't show on the front
+-- page.
+suppressToc :: Item String -> Item String
+suppressToc = fmap (withTagList suppressor)
+ where
+  suppressor :: [Tag String] -> [Tag String]
+  suppressor tags = pre <> post
+   where
+    (pre, (_, post)) = fmap (fmap (drop 1) . break (== TagClose "div"))
+                     . break (== TagOpen "div" [("id", "contents")])
+                     $ tags
+
+-----------------------------------------------------------------------
+-- Compilers
 
 -- | Emphasise that the default pandoc compiler does not have a TOC.
 pandocCompilerNoToc :: Compiler (Item String)
@@ -203,38 +262,3 @@ myPandocCompiler = do
         , "</div>"
         , "$body$"
         ]
-
--- | Used for creating teasers, so the TOC doesn't show on the front
--- page.
-suppressToc :: Item String -> Item String
-suppressToc = fmap (withTagList suppressor)
- where
-  suppressor :: [Tag String] -> [Tag String]
-  suppressor tags = pre <> post
-   where
-    (pre, (_, post)) = fmap (fmap (drop 1) . break (== TagClose "div"))
-                     . break (== TagOpen "div" [("id", "contents")])
-                     $ tags
-
-mkTeaserSnapshot ::  Item String -> Compiler (Item String)
-mkTeaserSnapshot item = item <$ saveSnapshot "post-teaser" (suppressToc item)
-
--- | In the spirit of the stimmung-themes:
---       https://github.com/motform/stimmung-themes
-highlightTheme :: Style
-highlightTheme = monochrome
-  { tokenStyles
-      = Ext.fromList
-          [ (CommentTok , defStyle{ tokenColor  = color 0x505050
-                                  , tokenItalic = True
-                                  })
-          , (DataTypeTok, defStyle{ tokenBackground = color 0xf8edff })
-          , (StringTok  , defStyle{ tokenBackground = color 0xf2f2f2 })
-          , (OperatorTok, defStyle{ tokenBold = True })
-          , (OtherTok   , defStyle{ tokenBold = True })
-          ]
-     <> tokenStyles monochrome
-  }
- where
-  color :: Int -> Maybe Color
-  color = toColor
