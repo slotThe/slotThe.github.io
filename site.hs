@@ -183,10 +183,9 @@ allPosts = "posts/**.md"
 -- @s@ is a tag and @[id]@ is a list of identifiers of posts that are
 -- tagged with that tag.
 mkTagAssocs :: (s -> Identifier) -> [(s, [id])] -> Compiler [Item [id]]
-mkTagAssocs tagsMakeId tagsMap = pure $
-  map (\(s, tgs) -> Item (tagsMakeId s) tgs) tagsMap
+mkTagAssocs tagsMakeId = pure . map (\(s, tgs) -> Item (tagsMakeId s) tgs)
 
--- | Create a post list, filtering all posts according to @ptn@.
+-- | Create a post list.
 mkPostList :: Compiler [Item [Identifier]] -> Context String -> Identifier -> Rules ()
 mkPostList tags ctx template = do
   let ctx' = ctx <> defaultCtxWithTags tags
