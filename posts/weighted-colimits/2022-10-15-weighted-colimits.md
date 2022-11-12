@@ -1,7 +1,6 @@
 ---
 title: Understanding Weighted Colimits as Tensor Products of Modules
 tags: maths
-maths: true
 ---
 
 If you've been doing category theory for any amount of time, you'll
