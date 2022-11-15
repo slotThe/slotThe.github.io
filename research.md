@@ -2,9 +2,11 @@
 title: Research
 ---
 
-Most of my work is in applied category theory, where I study e.g. how
-algebraic notions lift into a more categorical framework and how much of
-the theory still works in that context.
+Most of my work is in "applied" category theory.  For example, I like to
+study how algebraic objects lift into more categorical frameworks and
+how much of the theory people have developed still works in that
+context.  When no one's looking, I also like to study categories for
+their own sake.
 
 ## Preprints
 

@@ -13,9 +13,9 @@ still actively maintained.
 
 I'm a maintainer for [XMonad], a minimal X11 window manager written in
 Haskell.  In particular, this encompasses the `xmonad` repository, where
-the lean core of the program resides, `xmonad-contrib`, containing lots
-of user extensions for all kinds of different use-cases, as well as some
-auxillary packages like `X11`—Haskell bindings to Xlib.
+the lean core of the program resides, `xmonad-contrib`—containing lots
+of user extensions for all kinds of different use-cases—as well as some
+auxillary packages like `X11`: Haskell bindings to Xlib.
 
 As I strongly believe in dogfooding, I'm an avid user of course!  My
 configuration can be found
