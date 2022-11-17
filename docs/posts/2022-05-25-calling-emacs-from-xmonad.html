@@ -47,14 +47,14 @@
         <div id="contents">
 <p class="mini-header">Contents</p>
 <ul>
-<li><a href="#main-use-cases">Main Use Cases</a>
+<li><a href="#main-use-cases" id="toc-main-use-cases">Main Use Cases</a>
 <ul>
-<li><a href="#scratchpads">Scratchpads</a></li>
-<li><a href="#calling-emacs-in-scripts">Calling Emacs in Scripts</a></li>
-<li><a href="#other-programs">Other Programs</a></li>
+<li><a href="#scratchpads" id="toc-scratchpads">Scratchpads</a></li>
+<li><a href="#calling-emacs-in-scripts" id="toc-calling-emacs-in-scripts">Calling Emacs in Scripts</a></li>
+<li><a href="#other-programs" id="toc-other-programs">Other Programs</a></li>
 </ul></li>
-<li><a href="#implementation-considerations">Implementation Considerations</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#implementation-considerations" id="toc-implementation-considerations">Implementation Considerations</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul>
 </div>
 <p>In the post about my <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
@@ -268,21 +268,21 @@ a solution! If you try this and find it useful, also let me know :)</p>
 XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
 cool tools like magit.sh<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Go nuts!</p>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>If you <em>really</em> want to try this feature but don’t want to bother
+<li id="fn1"><p>If you <em>really</em> want to try this feature but don’t want to bother
 installing any unreleased—though stable—version, message me in any
 way and maybe we’ll hurry up and cut 0.17.1 soon!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
+<li id="fn2"><p>Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
 and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
 that here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Really, for any <em>semigroup</em>, which is a slightly weaker notion of
+<li id="fn3"><p>Really, for any <em>semigroup</em>, which is a slightly weaker notion of
 an operation that is merely associative, but doesn’t necessarily
 have a unit.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>I suspect that the answer is “probably not”—that didn’t stop me,
+<li id="fn4"><p>I suspect that the answer is “probably not”—that didn’t stop me,
 however!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
+<li id="fn5"><p>Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
 maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

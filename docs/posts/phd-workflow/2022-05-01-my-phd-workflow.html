@@ -47,21 +47,21 @@
         <div id="contents">
 <p class="mini-header">Contents</p>
 <ul>
-<li><a href="#high-level-structure">High Level Structure</a>
+<li><a href="#high-level-structure" id="toc-high-level-structure">High Level Structure</a>
 <ul>
-<li><a href="#topics">Topics</a></li>
-<li><a href="#files">Files</a></li>
+<li><a href="#topics" id="toc-topics">Topics</a></li>
+<li><a href="#files" id="toc-files">Files</a></li>
 </ul></li>
-<li><a href="#note-taking">Note Taking</a>
+<li><a href="#note-taking" id="toc-note-taking">Note Taking</a>
 <ul>
-<li><a href="#handwritten-notes">Handwritten Notes</a></li>
-<li><a href="#digital-notes">Digital Notes</a></li>
+<li><a href="#handwritten-notes" id="toc-handwritten-notes">Handwritten Notes</a></li>
+<li><a href="#digital-notes" id="toc-digital-notes">Digital Notes</a></li>
 </ul></li>
-<li><a href="#staying-up-to-date">Staying Up To Date</a>
+<li><a href="#staying-up-to-date" id="toc-staying-up-to-date">Staying Up To Date</a>
 <ul>
-<li><a href="#citations">Citations</a></li>
+<li><a href="#citations" id="toc-citations">Citations</a></li>
 </ul></li>
-<li><a href="#final-thoughts">Final Thoughts</a></li>
+<li><a href="#final-thoughts" id="toc-final-thoughts">Final Thoughts</a></li>
 </ul>
 </div>
 <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
@@ -290,17 +290,17 @@ convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
 <a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>If you’d like some examples: being employed at a university also
+<li id="fn1"><p>If you’d like some examples: being employed at a university also
 means I have to worry a bit about efficiently dealing with
 bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
 calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
 as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
 universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
 <code>TRAMP</code>), … You get the idea.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>I will be using Emacs style notation throughout the entire
+<li id="fn2"><p>I will be using Emacs style notation throughout the entire
 article. This means that, for example, <code>C-x a</code> should be read as
 “hold down control and press x, then release both and press a”.
 You can of course safely ignore this, since the keys just serve
@@ -311,16 +311,16 @@ is indeed <code>&lt;Alt&gt;</code> by default, but many people understandably
 rebind this straight away to something that’s less likely to
 interfere with other programs. In my case, that’s the Super key,
 so <code>M-s</code> means <code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Although, admittedly, when drawing up very large diagrams I’m
+<li id="fn3"><p>Although, admittedly, when drawing up very large diagrams I’m
 sometimes forced to switch to A4 paper in landscape mode.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>This is based on the hash of the contents of the environment—if
+<li id="fn4"><p>This is based on the hash of the contents of the environment—if
 that changes, the label is “lost”; though it can of course still
 be retrieved manually from the relevant hash map.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
+<li id="fn5"><p>This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
 Emacs 29, making use of XInput 2.4 functionality. It makes
 scrolling through buffers that are quite dense with pictures
 rather smooth.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>Ostensibly, this should be an XMonad module, as it does not
+<li id="fn6"><p>Ostensibly, this should be an XMonad module, as it does not
 necessarily have anything to do with Emacs itself. However, I had
 already written the elfeed integration and so the most annoying
 part (scraping the arXiv xml for certain bits) was already done.
