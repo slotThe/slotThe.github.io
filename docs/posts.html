@@ -34,9 +34,14 @@
       </div>
       <div class="pure-u-3-4">
         <div id="content">
-          <h1>All posts</h1>
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+          
+            <h1>All posts <div class="floatright"><a href="atom.xml">feed</a></div></h1>
+          
 
-          <ul>
+          <h1>All posts <div class="floatright"><a href="atom.xml">feed</a></div></h1>
+<ul>
   
   <li>
     <a href="./posts/2022-11-05-vertical-previews.html">Adjusting preview.el for vertical monitors</a> – 2022-11-05
@@ -76,7 +81,11 @@
 <ul>
   
 </ul>
-<h2>emacs</h2>
+<h2>emacs
+  <div class="floatright">
+    <a href="atom-emacs.xml">feed</a>
+  </div>
+</h2>
 <ul>
   
   <li>
@@ -106,7 +115,11 @@
 </ul>
 
 </ul>
-<h2>maths</h2>
+<h2>maths
+  <div class="floatright">
+    <a href="atom-maths.xml">feed</a>
+  </div>
+</h2>
 <ul>
   
   <li>
@@ -120,7 +133,11 @@
 </ul>
 
 </ul>
-<h2>xmonad</h2>
+<h2>xmonad
+  <div class="floatright">
+    <a href="atom-xmonad.xml">feed</a>
+  </div>
+</h2>
 <ul>
   
   <li>

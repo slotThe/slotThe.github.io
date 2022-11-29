@@ -100,17 +100,18 @@ main = hakyllWith config do
   -- For showing all posts, we want a list of all posts, followed by a
   -- list of tags with associated posts.
   -- https://stackoverflow.com/questions/52805193/in-hakyll-how-can-i-generate-a-tags-page
-  let mkList :: Context String -> Identifier -> Rules ()
+  let mkList :: Context String -> String -> String -> Identifier -> Rules ()
       mkList = mkPostList (mkTagAssocs tagsMakeId tagsMap)
   -- All posts
   create ["posts.html"] do
-    let allPostsCtx = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
-    mkList (allPostsCtx <> constField "title" "All posts")
-           "templates/all-posts.html"
+    let allPostsCtx   = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
+    mkList allPostsCtx "All posts" "atom" "templates/all-posts.html"
   -- Only posts tagged by a certain tag
   tagsRules tags \tag taggedPosts -> do
     let taggedPostCtx = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
-    mkList (taggedPostCtx <> constField "title" ("Posts tagged \"" ++ tag ++ "\""))
+    mkList taggedPostCtx
+           ("Posts tagged " <> "\"" <> tag <> "\"")
+           ("../atom-" <> tag)
            "templates/post-list.html"
 
 -----------------------------------------------------------------------
@@ -185,15 +186,32 @@ allPosts = "posts/**.md"
 mkTagAssocs :: (s -> Identifier) -> [(s, [id])] -> Compiler [Item [id]]
 mkTagAssocs tagsMakeId = pure . map (\(s, tgs) -> Item (tagsMakeId s) tgs)
 
--- | Create a post list.
-mkPostList :: Compiler [Item [Identifier]] -> Context String -> Identifier -> Rules ()
-mkPostList tags ctx template = do
-  let ctx' = ctx <> defaultCtxWithTags tags
+-- | Create a post list and link to the relevant feed.
+mkPostList
+  :: Compiler [Item [Identifier]]
+  -> Context String
+  -> String         -- ^ Title of the page
+  -> String         -- ^ How the feed should be called
+  -> Identifier
+  -> Rules ()
+mkPostList tags ctx title feedName template = do
+  let ctx' = ctx
+          <> constField "title" title <> constField "titleWithFeed" addFeedInfo
+          <> defaultCtxWithTags tags
   route idRoute
   compile $ makeItem ""
         >>= loadAndApplyTemplate template                 ctx'
         >>= loadAndApplyTemplate "templates/default.html" ctx'
         >>= relativizeUrls
+ where
+  -- Add feed information to the right side of a line.
+  addFeedInfo :: String
+  addFeedInfo = mconcat
+    [ title <> " "
+    , "<div class=\"floatright\">"
+    ,   "<a href=\"" <> feedName <> ".xml\">feed</a>"
+    , "</div>"
+    ]
 
 --- Teasers
 

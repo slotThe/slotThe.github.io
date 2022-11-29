@@ -36,7 +36,13 @@
       </div>
       <div class="pure-u-3-4">
         <div id="content">
-          <h1>$title$</h1>
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+          $if(titleWithFeed)$
+            <h1>$titleWithFeed$</h1>
+          $else$
+            <h1>$title$</h1>
+          $endif$
 
           $body$
 
