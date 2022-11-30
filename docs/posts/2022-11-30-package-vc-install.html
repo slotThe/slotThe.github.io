@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>Exploring package-vc-install – Tony Zorman</title>
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">FLOSS</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+          
+            <h1>Exploring package-vc-install</h1>
+          
+
+          <article>
+    <section class="header">
+      Posted on 2022-11-30
+      
+        | <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
+      
+    </section>
+    <section>
+        <div id="contents">
+<p class="mini-header">Contents</p>
+<ul>
+<li><a href="#the-story-so-far" id="toc-the-story-so-far">The story so far</a></li>
+<li><a href="#customising-package-vc-install" id="toc-customising-package-vc-install">Customising <code>package-vc-install</code></a></li>
+<li><a href="#thats-all-folks" id="toc-thats-all-folks">That’s all folks!</a></li>
+</ul>
+</div>
+<p>The Emacs 29 release branch was just cut—and it’s chock full of new
+features! In this post, I want to talk about the new
+<code>package-vc-install</code> function, which allows one to install packages
+directly from their respective upstream source; for example, GitHub. It
+can be seen as a built-in alternative to things like quelpa or
+straight.el.</p>
+<!--more-->
+<h1 id="the-story-so-far">The story so far</h1>
+<p>I’ve been using <a href="https://github.com/quelpa/quelpa">quelpa</a> and <a href="https://github.com/quelpa/quelpa-use-package">quelpa-use-package</a> to install packages
+that are not on any popular archive straight from source. Especially
+the latter package resulted in an almost seemless integration with the
+rest of my configuration; for example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  :quelpa (math-delimiters :fetcher github :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span>))</span></code></pre></div>
+<p><a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=5fa2f116799b8a7c17ff6eedd6e1b1af077c116b">Recently</a>, Emacs added built-in capabilities for
+installing a package directly from its remote repository. Eager to
+shave yet another external package from my otherwise ever growing list,
+I took <code>package-vc.el</code> out for a spin: turns out, it almost perfectly
+covers the use-case for which I—and perhaps a few other people—used
+quelpa up until now!</p>
+<p>The most user-facing of these new functions is <code>package-vc-install</code>,
+with signature</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(package-vc-install PACKAGE &amp;optional NAME REV BACKEND)</span></code></pre></div>
+<p>In the simplest case, it takes a URL pointing to some online source as
+its argument and installs the respective package from there, guessing
+the name from the URL. In case that doesn’t work—or one wants more
+control, like requiring a specific revision—there are some other
+optional arguments available, see the function’s documentation.</p>
+<h1 id="customising-package-vc-install">Customising <code>package-vc-install</code></h1>
+<p>When a package is already installed, <code>package-vc-install</code> will ask the
+user to interactively confirm whether they really want to overwrite the
+existing directory. Naturally, this is not a good experience when
+trying to use this in a non-interactive fashion.</p>
+<p>There are a few ways one could go about fixing this. One of these is
+even documented in the manual: customise <code>package-vc-selected-packages</code>
+and then call <code>package-vc-install-selected-packages</code>, which works much
+like <code>package-install-selected-packages</code>. However, this feels
+unergonomic to me—at least considering that I want to use
+<code>package-vc-install</code> as a (hopefully) drop-in replacement for
+use-package’s <code>quelpa</code> keyword. Plus, I’d rather have the information
+that package X is not installed from *ELPA local to the use-package
+declaration of X itself.</p>
+<p>So, let’s take the easy way out and write a small wrapper:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(cl-defun slot/vc-install (&amp;key (fetcher <span class="st">&quot;github&quot;</span>) repo name rev backend)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Install a package from a remote if it's not already installed.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">This is a thin wrapper around `package-vc-install' in order to</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">make non-interactive usage more ergonomic.  Takes the following</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">named arguments:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">- FETCHER the remote where to get the package (e.g., </span><span class="sc">\&quot;</span><span class="st">gitlab</span><span class="sc">\&quot;</span><span class="st">).</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">  If omitted, this defaults to </span><span class="sc">\&quot;</span><span class="st">github</span><span class="sc">\&quot;</span><span class="st">.</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">- REPO should be the name of the repository (e.g.,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  </span><span class="sc">\&quot;</span><span class="st">slotThe/arXiv-citation</span><span class="sc">\&quot;</span><span class="st">.</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">- NAME, REV, and BACKEND are as in `package-vc-install' (which</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  see).&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((url (<span class="kw">format</span> <span class="st">&quot;https://www.%s.com/%s&quot;</span> fetcher repo))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>         (pac-name (<span class="kw">intern</span> (<span class="kw">or</span> name (file-name-base repo)))))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">unless</span> (package-installed-p pac-name)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      (package-vc-install url (<span class="kw">intern</span> name) rev backeng))))</span></code></pre></div>
+<p>This function can now be used under the <code>init</code> keyword of the
+use-package macro, almost without changing the shape of the declaration
+from above:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">;; Before</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  :quelpa (math-delimiters :fetcher github :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">;; After</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  :init (slot/vc-install :fetcher <span class="st">&quot;github&quot;</span> :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">;; OR (slot/vc-install :repo &quot;oantolin/math-delimiters&quot;)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>In case you think I cherry picked the example, <a href="https://gitlab.com/slotThe/dotfiles/-/commit/6d55ac184af125a117215a1bb812ad75c5b0ab03">here</a>
+is the full commit that exchanges quelpa for <code>slot/vc-install</code>.</p>
+<h1 id="thats-all-folks">That’s all folks!</h1>
+<p>Admittedly, my use of quelpa was rather primitive. I can imagine users
+more heavily invested in, for example, the <code>straight.el</code> ecosystem
+probably want a bit more out of their package manager than <code>package.el</code>
+can give them right now, even with the added convenience of
+<code>package-vc.el</code>. However, for me—and probably at least a few people out
+there—this is quite enough. After all, for anything more there’s always
+<a href="https://nixos.org/">nix</a> :)</p>
+
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer" class="no-print">
+          <a href="../atom.xml">RSS</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
