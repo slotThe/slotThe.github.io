@@ -79,9 +79,10 @@ named arguments:
 - NAME, REV, and BACKEND are as in `package-vc-install' (which
   see)."
   (let* ((url (format "https://www.%s.com/%s" fetcher repo))
-         (pac-name (intern (or name (file-name-base repo)))))
+         (iname (when name (intern name)))
+         (pac-name (or iname (intern (file-name-base repo)))))
     (unless (package-installed-p pac-name)
-      (package-vc-install url (intern name) rev backeng))))
+      (package-vc-install url iname rev backend))))
 ```
 
 This function can now be used under the `init` keyword of the

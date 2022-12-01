@@ -82,9 +82,10 @@ declaration of X itself.</p>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">- NAME, REV, and BACKEND are as in `package-vc-install' (which</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  see).&quot;</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((url (<span class="kw">format</span> <span class="st">&quot;https://www.%s.com/%s&quot;</span> fetcher repo))</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>         (pac-name (<span class="kw">intern</span> (<span class="kw">or</span> name (file-name-base repo)))))</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">unless</span> (package-installed-p pac-name)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      (package-vc-install url (<span class="kw">intern</span> name) rev backeng))))</span></code></pre></div>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>         (iname (<span class="kw">when</span> name (<span class="kw">intern</span> name)))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>         (pac-name (<span class="kw">or</span> iname (<span class="kw">intern</span> (file-name-base repo)))))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">unless</span> (package-installed-p pac-name)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      (package-vc-install url iname rev backend))))</span></code></pre></div>
 <p>This function can now be used under the <code>init</code> keyword of the
 use-package macro, almost without changing the shape of the declaration
 from above:</p>
