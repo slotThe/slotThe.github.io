@@ -19,18 +19,11 @@
     <section class="header">
       Posted on 2022-11-30
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#the-story-so-far" id="toc-the-story-so-far">The story so far</a></li>
-<li><a href="#customising-package-vc-install" id="toc-customising-package-vc-install">Customising <code>package-vc-install</code></a></li>
-<li><a href="#thats-all-folks" id="toc-thats-all-folks">That’s all folks!</a></li>
-</ul>
-</div>
+        
 <p>The Emacs 29 release branch was just cut—and it’s chock full of new
 features! In this post, I want to talk about the new
 <code>package-vc-install</code> function, which allows one to install packages
@@ -75,8 +68,8 @@ that package X is not installed from *ELPA local to the use-package
 declaration of X itself.</p>
 <p>So, let’s take the easy way out and write a small wrapper:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(cl-defun slot/vc-install (&amp;key (fetcher <span class="st">&quot;github&quot;</span>) repo name rev backend)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Install a package from a remote if it&#39;s not already installed.</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">This is a thin wrapper around `package-vc-install&#39; in order to</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Install a package from a remote if it's not already installed.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">This is a thin wrapper around `package-vc-install' in order to</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">make non-interactive usage more ergonomic.  Takes the following</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">named arguments:</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -86,7 +79,7 @@ declaration of X itself.</p>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">- REPO should be the name of the repository (e.g.,</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  </span><span class="sc">\&quot;</span><span class="st">slotThe/arXiv-citation</span><span class="sc">\&quot;</span><span class="st">.</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">- NAME, REV, and BACKEND are as in `package-vc-install&#39; (which</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">- NAME, REV, and BACKEND are as in `package-vc-install' (which</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  see).&quot;</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((url (<span class="kw">format</span> <span class="st">&quot;https://www.%s.com/%s&quot;</span> fetcher repo))</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>         (pac-name (<span class="kw">intern</span> (<span class="kw">or</span> name (file-name-base repo)))))</span>
@@ -129,7 +122,7 @@ there—this is quite enough. After all, for anything more there’s always
     <section class="header">
       Posted on 2022-11-05
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
     </section>
     <section>
@@ -161,24 +154,24 @@ function for a while, one can single out <code>preview-get-dpi</code> as the mai
 culprit. It seems to calculate the “resolution” of the preview:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">defun</span><span class="fu"> preview-get-dpi </span>()</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">let*</span> ((monitor-attrs (frame-monitor-attributes))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           (mm-dims (<span class="kw">cdr</span> (<span class="kw">assoc</span> &#39;mm-size monitor-attrs)))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           (mm-dims (<span class="kw">cdr</span> (<span class="kw">assoc</span> 'mm-size monitor-attrs)))</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           (mm-width (<span class="kw">nth</span> <span class="dv">0</span> mm-dims))</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           (mm-height (<span class="kw">nth</span> <span class="dv">1</span> mm-dims))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>           (pixel-dims (cl-cdddr (<span class="kw">assoc</span> &#39;geometry monitor-attrs)))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>           (pixel-dims (cl-cdddr (<span class="kw">assoc</span> 'geometry monitor-attrs)))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           (pixel-width (<span class="kw">nth</span> <span class="dv">0</span> pixel-dims))</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>           (pixel-height (<span class="kw">nth</span> <span class="dv">1</span> pixel-dims)))</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      (<span class="kw">cons</span> (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> pixel-width) mm-width)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> pixel-height) mm-height))))</span></code></pre></div>
 <p>Monitor details are returned by the <code>frame-monitor-attributes</code> function;
 its output for a horizontal monitor is</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  &#39;((name . <span class="st">&quot;DP1&quot;</span>)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  '((name . <span class="st">&quot;DP1&quot;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (geometry <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1920</span> <span class="dv">1080</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (workarea <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1920</span> <span class="dv">1080</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (mm-size <span class="dv">530</span> <span class="dv">300</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (frames &lt;&lt;omitted&gt;&gt;)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    (source . <span class="st">&quot;XRandR 1.5&quot;</span>))</span></code></pre></div>
 <p>While the same monitor in “vertical-mode” returns</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  &#39;((name . <span class="st">&quot;DP1&quot;</span>)</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  '((name . <span class="st">&quot;DP1&quot;</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    (geometry <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1080</span> <span class="dv">1920</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    (workarea <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1080</span> <span class="dv">1920</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    (mm-size <span class="dv">530</span> <span class="dv">300</span>)</span>
@@ -193,8 +186,8 @@ too narrow or too wide previews.</p>
 <p>The solution is to only compare the comparable values. Indeed,
 overriding the built-in <code>preview-get-dpi</code> function with</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">defun</span><span class="fu"> preview-get-dpi </span>()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (-let (((&amp;alist &#39;mm-size (mw mh)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    &#39;geometry (_ _ pw ph))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (-let (((&amp;alist 'mm-size (mw mh)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    'geometry (_ _ pw ph))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            (frame-monitor-attributes)))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      (<span class="kw">cons</span> (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> (<span class="kw">max</span> pw ph)) (<span class="kw">max</span> mw mh))</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> (<span class="kw">min</span> pw ph)) (<span class="kw">min</span> mw mh)))))</span></code></pre></div>
@@ -219,26 +212,11 @@ certainly know which of the two I’d rather write!</p>
     <section class="header">
       Posted on 2022-10-22
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#frame-inhibit-implied-resize" id="toc-frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
-<li><a href="#pixel-scroll-precision-mode" id="toc-pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
-<li><a href="#quickly-insert-images-in-org-roam" id="toc-quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code></a></li>
-<li><a href="#latex-for-the-lazy-mathematician" id="toc-latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician</a></li>
-<li><a href="#erc" id="toc-erc">ERC</a>
-<ul>
-<li><a href="#mark-the-current-frame-as-urgent" id="toc-mark-the-current-frame-as-urgent">Mark the current frame as urgent</a></li>
-<li><a href="#dont-highlight-quite-so-much" id="toc-dont-highlight-quite-so-much">Don’t highlight quite so much</a></li>
-</ul></li>
-<li><a href="#inserting-links" id="toc-inserting-links">Inserting links</a></li>
-<li><a href="#a-macro-for-repeat-mode" id="toc-a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
-</ul>
-</div>
+        
 <p>Emacs is the “extensible text editor”, and it wouldn’t be fun if one
 didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">README</a> for my Emacs configuration, I
@@ -325,16 +303,16 @@ functions. To be honest, they kind of delight me.</p>
 <p>First, the following is an override for the <code>self-insert-command</code>, which
 enables faster entry of one-character math symbols:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/LaTeX-self-insert </span>(&amp;optional arg <span class="kw">char</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;`self-insert-command&#39; for LaTeX mode.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;`self-insert-command' for LaTeX mode.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">If the previous word is just a single character, surround it with</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">dollar signs.  If already in math mode, do nothing.  If the</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">character is a single `a&#39;, do nothing.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">character is a single `a', do nothing.</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">If called with a single </span><span class="sc">\\</span><span class="st">[universal-argument], just call</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">`self-insert-command&#39;.&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">`self-insert-command'.&quot;</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  (interactive <span class="st">&quot;P&quot;</span>)</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  (pcase arg</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (&#39;(<span class="dv">4</span>) (self-insert-command <span class="dv">1</span>))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ('(<span class="dv">4</span>) (self-insert-command <span class="dv">1</span>))</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (_ (<span class="kw">let</span> ((ppoint (save-excursion (backward-word)       (point)))</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>             (ipoint (save-excursion (back-to-indentation) (point)))</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>             (word   (word-at-point)))</span>
@@ -405,7 +383,7 @@ hacking this behaviour into ERC wasn’t actually all that complicated.</p>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    (slot/mark-emacs-urgent)</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    (erc-beep-on-match match-type _nickuserhost message)))</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>(add-hook &#39;erc-text-matched-hook #&#39;slot/beep-on-match)</span></code></pre></div>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>(add-hook 'erc-text-matched-hook #'slot/beep-on-match)</span></code></pre></div>
 <p>And that’s really it! Now ERC correctly sends an urgency hint whenever
 I get highlighted. Note that, <a href="https://old.reddit.com/r/emacs/comments/xjyuni/weekly_tips_tricks_c_thread/ipfjlw0/">as we found out</a>, if
 you use a reparenting window manager (you probably do if you use a
@@ -423,7 +401,7 @@ WeeChat’s <code>highmon.pl</code>).</p>
 check the message for certain regular expression first and do nothing
 when they are present.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/erc-ignore-highlight </span>(msg)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Don&#39;t highlight me when these things happen.&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Don't highlight me when these things happen.&quot;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let</span> ((message (s-trim-left msg))</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        (channel (<span class="kw">or</span> (erc-default-target) <span class="st">&quot;&quot;</span>)))</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    (--any? (s-prefix? it message)</span>
@@ -445,7 +423,7 @@ when they are present.</p>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      (slot/mark-emacs-urgent)</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      (erc-beep-on-match match-type _nickuserhost message))))</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">;; As before, now add the appropriate hooks to `erc-text-matched-hook&#39;.</span></span></code></pre></div>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">;; As before, now add the appropriate hooks to `erc-text-matched-hook'.</span></span></code></pre></div>
 <p>If it works, it works, right?</p>
 <h1 id="inserting-links">Inserting links</h1>
 <p>Next to being a user, I also spend way too much time working on XMonad.
@@ -490,12 +468,12 @@ different link style is used, to accomodate for different platforms.</p>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="st">xmonad.&quot;</span></span>
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  (interactive <span class="st">&quot;P&quot;</span>)</span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  (-let* ((links</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>           (-concat &#39;((<span class="st">&quot;tutorial&quot;</span> . <span class="st">&quot;https://xmonad.org/TUTORIAL.html&quot;</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>           (-concat '((<span class="st">&quot;tutorial&quot;</span> . <span class="st">&quot;https://xmonad.org/TUTORIAL.html&quot;</span>)</span>
 <span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                      (<span class="st">&quot;install&quot;</span>  . <span class="st">&quot;https://xmonad.org/INSTALL.html&quot;</span>)</span>
 <span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                      (<span class="st">&quot;xmonad.hs&quot;</span>. <span class="st">&quot;https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs&quot;</span>))</span>
 <span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                    (slot/get-xmonad-modules)</span>
 <span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                    (slot/get-posts)))</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>          (choice (completing-read <span class="st">&quot;Link: &quot;</span> (<span class="kw">mapcar</span> #&#39;car links)))</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>          (choice (completing-read <span class="st">&quot;Link: &quot;</span> (<span class="kw">mapcar</span> #'car links)))</span>
 <span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>          ((name . link) (<span class="kw">assoc</span> choice links)))</span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    (insert <span class="st">&quot;[&quot;</span> name <span class="st">&quot;]&quot;</span>)</span>
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">if</span> arg</span>
@@ -516,11 +494,11 @@ the one below. Even <a href="https://github.com/jwiegley/use-package">use-packag
 now. However, obviously the one I wrote feels the most natural to <em>me</em>,
 so it’s being kept around regardless.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defmacro</span><span class="fu"> defrepeatmap </span>(sym pairs &amp;optional docstring)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;A macro for defining `repeat-map&#39;s.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;A macro for defining `repeat-map's.</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">Defines a new repeat-map called SYM with the given DOCSTRING.</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">The keys are derived via the list PAIRS, whose elements are cons</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">cells of the form (KEY . DEF), where KEY and DEF must fulfill the</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">same requirements as if given to `define-key&#39;.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">same requirements as if given to `define-key'.</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">If the key only consists of a single character; i.e., is already</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">bound and a repeat map is created afterwards, simply add it to</span></span>
@@ -539,18 +517,18 @@ so it’s being kept around regardless.</p>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>         kmap)</span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>       ,docstring)</span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>     <span class="co">;; Tell the keys they are in a repeat map.</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>     (--each (<span class="kw">mapcar</span> &#39;cdr (<span class="kw">cdr</span> ,sym))</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>       (put it &#39;repeat-map &#39;,sym))))</span></code></pre></div>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>     (--each (<span class="kw">mapcar</span> 'cdr (<span class="kw">cdr</span> ,sym))</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>       (put it 'repeat-map ',sym))))</span></code></pre></div>
 <p>The following would, for example, bind <code>mc/mark-next-like-this-word</code> to
 <code>M-s s</code> globally and to <code>s</code> in the created <code>mc-repeat-map</code>. Likewise,
 <code>mc/mark-next-word-like-this</code> is bound to <code>.</code> in that map, and so on.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(defrepeatmap mc-repeat-map</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    &#39;((<span class="st">&quot;M-s s&quot;</span> . mc/mark-next-like-this-word)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    '((<span class="st">&quot;M-s s&quot;</span> . mc/mark-next-like-this-word)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-M-.&quot;</span> . mc/mark-next-word-like-this)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-M-,&quot;</span> . mc/mark-previous-word-like-this)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-&gt;&quot;</span>   . mc/skip-to-next-like-this)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-&lt;&quot;</span>   . mc/skip-to-previous-like-this))</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;`repeat-mode&#39; keymap to repeat `multiple-cursors&#39; bindings.&quot;</span>)</span></code></pre></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;`repeat-mode' keymap to repeat `multiple-cursors' bindings.&quot;</span>)</span></code></pre></div>
 <p>This may be too implicit for many people, but for me it’s just right—and
 that’s sort of the point of all of this, right?</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
@@ -580,28 +558,11 @@ auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩
     <section class="header">
       Posted on 2022-10-15
       
-        | <a title="All pages tagged &#39;maths&#39;." href="/tags/maths.html">maths</a>
+        | <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#enriched-category-theory" id="toc-enriched-category-theory">Enriched Category Theory</a>
-<ul>
-<li><a href="#functors-and-natural-transformations" id="toc-functors-and-natural-transformations">Functors and Natural Transformations</a></li>
-</ul></li>
-<li><a href="#copowers" id="toc-copowers">Copowers</a></li>
-<li><a href="#weighted-colimits" id="toc-weighted-colimits">Weighted Colimits</a>
-<ul>
-<li><a href="#definition" id="toc-definition">Definition</a></li>
-<li><a href="#enriched-weighted-colimits" id="toc-enriched-weighted-colimits">Enriched Weighted Colimits</a></li>
-<li><a href="#examples" id="toc-examples">Examples</a></li>
-</ul></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
-<li><a href="#resources" id="toc-resources">(Re)sources</a></li>
-</ul>
-</div>
+        
 <p>If you’ve been doing category theory for any amount of time, you’ll
 probably have stumbled upon enriched category theory as a way of
 expressing categorical ideas internal to some context other than
@@ -1070,23 +1031,11 @@ any other set to it.<a href="#fnref4" class="footnote-back" role="doc-backlink">
     <section class="header">
       Posted on 2022-09-11
       
-        | <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#examples" id="toc-examples">Examples</a>
-<ul>
-<li><a href="#basic-topics" id="toc-basic-topics">Basic topics</a></li>
-<li><a href="#spawning-everything-in-the-topic-directory" id="toc-spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</a></li>
-<li><a href="#testing-this-website" id="toc-testing-this-website">Testing this website</a></li>
-</ul></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
-</ul>
-</div>
+        
 <p>One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
@@ -1170,14 +1119,14 @@ of mine—so why not automate this? Using what X.U.Run gives us, we can
 quickly throw together a function that executes the given instruction
 inside of a terminal:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &#39;topicConfig&#39; is my personal topic configuration.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- 'topicConfig' is my personal topic configuration.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Execute a program in the topic directory (inside a terminal).</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">executeInTopic ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>executeInTopic p <span class="ot">=</span> proc <span class="op">$</span> (termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&gt;-&gt;</span> execute p</span></code></pre></div>
 <p>Similar functions can be created for spawning the terminal and editor:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Whatever you&#39;re looking for, it&#39;s probably in X.A.TopicSpace</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- or X.U.Run.</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn terminal in topic directory.</span></span>
@@ -1221,7 +1170,7 @@ allowing access to a different instance of the Emacs server.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn an eshell frame in the current topic directory.</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnEshellInTopic ::</span> <span class="dt">X</span> ()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>spawnEshellInTopic <span class="ot">=</span> currentTopicDir topicConfig <span class="op">&gt;&gt;=</span> \dir <span class="ot">-&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inProgram <span class="st">&quot;emacsclient -a &#39;&#39; -c -s eshell&quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inProgram <span class="st">&quot;emacsclient -a '' -c -s eshell&quot;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> execute (progn [ <span class="st">&quot;eshell&quot;</span> <span class="op">&lt;&gt;</span> quote <span class="st">&quot;new-shell&quot;</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/cd&quot;</span> <span class="op">&lt;&gt;</span> asString dir</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/clear-scrollback&quot;</span></span>
@@ -1274,7 +1223,7 @@ win in my book!</p>
     <section class="header">
       Posted on 2022-08-27
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
@@ -1377,20 +1326,11 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
     <section class="header">
       Posted on 2022-08-06
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#motivation" id="toc-motivation">Motivation</a></li>
-<li><a href="#the-solution" id="toc-the-solution">The Solution</a>
-<ul>
-<li><a href="#the-code" id="toc-the-code">The Code</a></li>
-</ul></li>
-</ul>
-</div>
+        
 <p>As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
 by default) can be used to replace occurences of one string with
 another. In comparison to other tools that are used for similar
@@ -1457,21 +1397,21 @@ work, if you haven’t loaded these already (if you use any amount of
 packages at all, chances are that you have).</p>
 <!-- pandoc does not support emacs-lisp :< -->
 <div class="sourceCode" id="cb1"><pre class="sourceCode commonlisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/get-queries </span>(&amp;optional pairs)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Get multiple `query-replace&#39; pairs from the user.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Get multiple `query-replace' pairs from the user.</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">PAIRS is a list of replacement pairs of the form (FROM . TO).&quot;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  (-let* (((from to delim arg)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           (query-replace-read-args</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            (s-join <span class="st">&quot; &quot;</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                    (-non-nil</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                     (<span class="kw">list</span> <span class="st">&quot;Query replace many&quot;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                           (<span class="kw">cond</span> ((<span class="kw">eq</span> current-prefix-arg &#39;-) <span class="st">&quot;backward&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                           (<span class="kw">cond</span> ((<span class="kw">eq</span> current-prefix-arg '-) <span class="st">&quot;backward&quot;</span>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                 (current-prefix-arg         <span class="st">&quot;word&quot;</span>))</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                           (<span class="kw">when</span> (use-region-p) <span class="st">&quot;in region&quot;</span>))))</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">nil</span>))                       <span class="co">; no regexp-flag</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>          (from-to (<span class="kw">cons</span> (regexp-quote from)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                         (s-replace <span class="st">&quot;</span><span class="sc">\\</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="sc">\\\\</span><span class="st">&quot;</span> to))))</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; </span><span class="al">HACK</span><span class="co">: Since the default suggestion of replace.el will be</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; the last one we&#39;ve entered, an empty string will give us</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; the last one we've entered, an empty string will give us</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; exactly that.  Instead of trying to fight against this,</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; use it in order to signal an exit.</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">if</span> (-contains? pairs from-to)</span>
@@ -1480,11 +1420,11 @@ packages at all, chances are that you have).</p>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/query-replace-many</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    (pairs &amp;optional delimited start end backward region-noncontiguous-p)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Like `query-replace&#39;, but query for several replacements.</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Like `query-replace', but query for several replacements.</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="st">Query for replacement pairs until the users enters an empty</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">string (but see `slot/get-queries&#39;).</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">string (but see `slot/get-queries').</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="st">Refer to `query-replace&#39; and `perform-replace&#39; for what the other</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="st">Refer to `query-replace' and `perform-replace' for what the other</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="st">arguments actually mean.&quot;</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  (interactive</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>   (<span class="kw">let</span> ((common (slot/get-queries)))</span>
@@ -1494,7 +1434,7 @@ packages at all, chances are that you have).</p>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>           (<span class="kw">nth</span> <span class="dv">2</span> common)</span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>           (<span class="kw">if</span> (use-region-p) (region-noncontiguous-p)))))</span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  (perform-replace</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>   (concat <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(?:&quot;</span> (mapconcat #&#39;car pairs <span class="st">&quot;</span><span class="sc">\\</span><span class="st">|&quot;</span>) <span class="st">&quot;</span><span class="sc">\\</span><span class="st">)&quot;</span>) <span class="co">; build query</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>   (concat <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(?:&quot;</span> (mapconcat #'car pairs <span class="st">&quot;</span><span class="sc">\\</span><span class="st">|&quot;</span>) <span class="st">&quot;</span><span class="sc">\\</span><span class="st">)&quot;</span>) <span class="co">; build query</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>   (<span class="kw">cons</span> (<span class="kw">lambda</span> (pairs _count)</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>           (cl-loop for (from . to) in pairs</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">when</span> (string-match from (match-string <span class="dv">0</span>))</span>
@@ -1532,23 +1472,11 @@ out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></
     <section class="header">
       Posted on 2022-05-25
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#main-use-cases" id="toc-main-use-cases">Main Use Cases</a>
-<ul>
-<li><a href="#scratchpads" id="toc-scratchpads">Scratchpads</a></li>
-<li><a href="#calling-emacs-in-scripts" id="toc-calling-emacs-in-scripts">Calling Emacs in Scripts</a></li>
-<li><a href="#other-programs" id="toc-other-programs">Other Programs</a></li>
-</ul></li>
-<li><a href="#implementation-considerations" id="toc-implementation-considerations">Implementation Considerations</a></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
-</ul>
-</div>
+        
 <p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
@@ -1591,9 +1519,9 @@ with what you want and thread that information through to the end: “I
 want an editor with a certain frame name that also starts up notmuch”.</p>
 <p>In full, the above function would produce the string (broken into a few
 lines for better readability)</p>
-<pre><code>  &quot;emacsclient -c -a &#39;&#39;
-               -F &#39;(quote (name . \&quot;notmuch-scratch\&quot;))&#39;
-               --eval &#39;(notmuch)&#39;&quot;</code></pre>
+<pre><code>  &quot;emacsclient -c -a ''
+               -F '(quote (name . \&quot;notmuch-scratch\&quot;))'
+               --eval '(notmuch)'&quot;</code></pre>
 <p>which would be quite bothersome to type indeed.</p>
 <p>Because the type of <code>mailSession</code> is <code>X String</code> and not just <code>String</code>,
 the setup for this is a little bit different than usual when using
@@ -1651,9 +1579,9 @@ files</a>:</p>
         -L /home/slot/.config/emacs/elpa/s-20210616.619
         -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
         --batch
-        --eval &#39;(progn
+        --eval '(progn
                   (require (quote arxiv-citation))
-                  (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))&#39;</code></pre>
+                  (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))'</code></pre>
 <p>I certainly know which one I’d rather type—especially with ELPA
 directory names changing quite frequently! On that note,
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!</p>
@@ -1794,30 +1722,11 @@ maintain a slightly modified and POSIX shell compatible version
     <section class="header">
       Posted on 2022-05-01
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged &#39;maths&#39;." href="/tags/maths.html">maths</a>, <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#high-level-structure" id="toc-high-level-structure">High Level Structure</a>
-<ul>
-<li><a href="#topics" id="toc-topics">Topics</a></li>
-<li><a href="#files" id="toc-files">Files</a></li>
-</ul></li>
-<li><a href="#note-taking" id="toc-note-taking">Note Taking</a>
-<ul>
-<li><a href="#handwritten-notes" id="toc-handwritten-notes">Handwritten Notes</a></li>
-<li><a href="#digital-notes" id="toc-digital-notes">Digital Notes</a></li>
-</ul></li>
-<li><a href="#staying-up-to-date" id="toc-staying-up-to-date">Staying Up To Date</a>
-<ul>
-<li><a href="#citations" id="toc-citations">Citations</a></li>
-</ul></li>
-<li><a href="#final-thoughts" id="toc-final-thoughts">Final Thoughts</a></li>
-</ul>
-</div>
+        
 <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the

@@ -19,23 +19,11 @@
     <section class="header">
       Posted on 2022-09-11
       
-        | <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
-<li><a href="#examples" id="toc-examples">Examples</a>
-<ul>
-<li><a href="#basic-topics" id="toc-basic-topics">Basic topics</a></li>
-<li><a href="#spawning-everything-in-the-topic-directory" id="toc-spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</a></li>
-<li><a href="#testing-this-website" id="toc-testing-this-website">Testing this website</a></li>
-</ul></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
-</ul>
-</div>
+        
 <p>One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
@@ -119,14 +107,14 @@ of mine—so why not automate this? Using what X.U.Run gives us, we can
 quickly throw together a function that executes the given instruction
 inside of a terminal:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- &#39;topicConfig&#39; is my personal topic configuration.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- 'topicConfig' is my personal topic configuration.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Execute a program in the topic directory (inside a terminal).</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">executeInTopic ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>executeInTopic p <span class="ot">=</span> proc <span class="op">$</span> (termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&gt;-&gt;</span> execute p</span></code></pre></div>
 <p>Similar functions can be created for spawning the terminal and editor:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Whatever you&#39;re looking for, it&#39;s probably in X.A.TopicSpace</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- or X.U.Run.</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn terminal in topic directory.</span></span>
@@ -170,7 +158,7 @@ allowing access to a different instance of the Emacs server.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn an eshell frame in the current topic directory.</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnEshellInTopic ::</span> <span class="dt">X</span> ()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>spawnEshellInTopic <span class="ot">=</span> currentTopicDir topicConfig <span class="op">&gt;&gt;=</span> \dir <span class="ot">-&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inProgram <span class="st">&quot;emacsclient -a &#39;&#39; -c -s eshell&quot;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inProgram <span class="st">&quot;emacsclient -a '' -c -s eshell&quot;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> execute (progn [ <span class="st">&quot;eshell&quot;</span> <span class="op">&lt;&gt;</span> quote <span class="st">&quot;new-shell&quot;</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/cd&quot;</span> <span class="op">&lt;&gt;</span> asString dir</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/clear-scrollback&quot;</span></span>
@@ -223,7 +211,7 @@ win in my book!</p>
     <section class="header">
       Posted on 2022-08-27
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
@@ -326,23 +314,11 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
     <section class="header">
       Posted on 2022-05-25
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#main-use-cases" id="toc-main-use-cases">Main Use Cases</a>
-<ul>
-<li><a href="#scratchpads" id="toc-scratchpads">Scratchpads</a></li>
-<li><a href="#calling-emacs-in-scripts" id="toc-calling-emacs-in-scripts">Calling Emacs in Scripts</a></li>
-<li><a href="#other-programs" id="toc-other-programs">Other Programs</a></li>
-</ul></li>
-<li><a href="#implementation-considerations" id="toc-implementation-considerations">Implementation Considerations</a></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
-</ul>
-</div>
+        
 <p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
@@ -385,9 +361,9 @@ with what you want and thread that information through to the end: “I
 want an editor with a certain frame name that also starts up notmuch”.</p>
 <p>In full, the above function would produce the string (broken into a few
 lines for better readability)</p>
-<pre><code>  &quot;emacsclient -c -a &#39;&#39;
-               -F &#39;(quote (name . \&quot;notmuch-scratch\&quot;))&#39;
-               --eval &#39;(notmuch)&#39;&quot;</code></pre>
+<pre><code>  &quot;emacsclient -c -a ''
+               -F '(quote (name . \&quot;notmuch-scratch\&quot;))'
+               --eval '(notmuch)'&quot;</code></pre>
 <p>which would be quite bothersome to type indeed.</p>
 <p>Because the type of <code>mailSession</code> is <code>X String</code> and not just <code>String</code>,
 the setup for this is a little bit different than usual when using
@@ -445,9 +421,9 @@ files</a>:</p>
         -L /home/slot/.config/emacs/elpa/s-20210616.619
         -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
         --batch
-        --eval &#39;(progn
+        --eval '(progn
                   (require (quote arxiv-citation))
-                  (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))&#39;</code></pre>
+                  (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))'</code></pre>
 <p>I certainly know which one I’d rather type—especially with ELPA
 directory names changing quite frequently! On that note,
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!</p>
@@ -588,30 +564,11 @@ maintain a slightly modified and POSIX shell compatible version
     <section class="header">
       Posted on 2022-05-01
       
-        | <a title="All pages tagged &#39;emacs&#39;." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged &#39;maths&#39;." href="/tags/maths.html">maths</a>, <a title="All pages tagged &#39;xmonad&#39;." href="/tags/xmonad.html">xmonad</a>
+        | <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
     </section>
     <section>
-        <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
-<li><a href="#high-level-structure" id="toc-high-level-structure">High Level Structure</a>
-<ul>
-<li><a href="#topics" id="toc-topics">Topics</a></li>
-<li><a href="#files" id="toc-files">Files</a></li>
-</ul></li>
-<li><a href="#note-taking" id="toc-note-taking">Note Taking</a>
-<ul>
-<li><a href="#handwritten-notes" id="toc-handwritten-notes">Handwritten Notes</a></li>
-<li><a href="#digital-notes" id="toc-digital-notes">Digital Notes</a></li>
-</ul></li>
-<li><a href="#staying-up-to-date" id="toc-staying-up-to-date">Staying Up To Date</a>
-<ul>
-<li><a href="#citations" id="toc-citations">Citations</a></li>
-</ul></li>
-<li><a href="#final-thoughts" id="toc-final-thoughts">Final Thoughts</a></li>
-</ul>
-</div>
+        
 <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the

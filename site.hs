@@ -90,9 +90,9 @@ main = hakyllWith config do
   match allPosts do
     route $ setExtension "html"
     compile $ myPandocCompiler
-          >>= mkTeaserSnapshot             -- For the previews on the main page.
+          >>= mkSnapshotNoToc "post-teaser"   -- For the previews on the main page.
           >>= loadAndApplyTemplate "templates/post.html"    tagCtx
-          >>= saveSnapshot "post-content"  -- For atom feed.
+          >>= mkSnapshotNoToc "post-content"  -- For atom feed.
           >>= loadAndApplyTemplate "templates/default.html" defaultContext
           >>= relativizeUrls
 
@@ -213,18 +213,15 @@ mkPostList tags ctx title feedName template = do
     , "</div>"
     ]
 
---- Teasers
+--- Snapshots
 
-mkTeaserSnapshot ::  Item String -> Compiler (Item String)
-mkTeaserSnapshot item = item <$ saveSnapshot "post-teaser" (suppressToc item)
-
--- | Used for creating teasers, so the TOC doesn't show on the front
--- page.
-suppressToc :: Item String -> Item String
-suppressToc = fmap (withTagList suppressor)
+-- | Create a snapshot of the current layout of the site, but suppress
+-- the table of contents.
+mkSnapshotNoToc ::  String -> Item String -> Compiler (Item String)
+mkSnapshotNoToc name item = item <$ saveSnapshot name (withTagList supressToc <$> item)
  where
-  suppressor :: [Tag String] -> [Tag String]
-  suppressor tags = pre <> post
+  supressToc :: [Tag String] -> [Tag String]
+  supressToc tags = pre <> post
    where
     (pre, (_, post)) = fmap (fmap (drop 1) . break (== TagClose "div"))
                      . break (== TagOpen "div" [("id", "contents")])
