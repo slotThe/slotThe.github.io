@@ -5,7 +5,8 @@ title: About
 I'm a PhD student in mathematics at the Technical University of Dresden,
 Germany.  In my copious free time[^1] I like to hack on [free
 software]—especially anything involving [Haskell] or [Emacs]—play the
-guitar, ride my bike around, or watch classic movies.
+guitar, ride my bike around, or watch classic movies.  I also spend way
+too much money on (good) coffee and tea.
 
 My work in mathematics can broadly be characterised under the term
 "category theory and its applications".  In particular, I like thinking
