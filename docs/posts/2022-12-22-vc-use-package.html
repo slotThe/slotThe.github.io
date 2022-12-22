@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>Announcing: vc-use-package – Tony Zorman</title>
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">FLOSS</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+          
+            <h1>Announcing: vc-use-package</h1>
+          
+
+          <article>
+    <section class="header">
+      Posted on 2022-12-22
+      
+        | <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
+      
+    </section>
+    <section>
+        <p>I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
+is a first attempt at integrating the new (as of Emacs 29)
+<code>package-vc.el</code> with the now built-in use-package. I’ve already talked
+about how these two interact in my <a href="https://tony-zorman.com/posts/2022-11-30-package-vc-install.html">last post</a>—you can
+see this package as automating things juuuust a little more.</p>
+<!--more-->
+<h1 id="motivation">Motivation</h1>
+<p>For the last post, someone gave me some <a href="https://old.reddit.com/r/emacs/comments/z9i4ce/exploring_packagevcinstall_as_an_alternative_to/iygzeum/">feedback</a>:
+couldn’t we go a little further? In particular, they wanted a new <code>:vc</code>
+keyword for use-package, much like <a href="https://github.com/quelpa/quelpa">quelpa</a> has done with
+<a href="https://github.com/quelpa/quelpa-use-package">quelpa-use-package</a>. I already gave them a small working example in a
+follow-up comment, but figured this might actually interest enough
+people so that turning it into a proper package could be worth it; and
+here we are!</p>
+<p>The basic premise is really this simple—we create a handler for a new
+<code>:vc</code> use-package keyword. It can be used like so:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  :vc (:fetcher github :repo oantolin/math-delimiters))</span></code></pre></div>
+<p>One can specify most arguments that <code>package-vc-install</code> also accepts; for example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  :vc (:fetcher <span class="st">&quot;github&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       :rev <span class="st">&quot;master&quot;</span>         <span class="co">; also accepts the special `:last-release'</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       :backend Git))</span></code></pre></div>
+<p>Much like quelpa-use-package, there is some care needed concerning the
+interaction between this package and the <code>use-package-always-ensure</code>
+variable, but this should mostly be taken care of automatically. For
+more information (and manual controls), see the
+<a href="https://github.com/slotThe/vc-use-package#in-combination-with-use-package-always-ensure">README</a>.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>As I’ve said in the corresponding Reddit post, now that both
+<code>package-vc.el</code> and use-package are built-in, someone should really add
+this to Emacs proper. Alas, since I copied the idea and most of the
+initial implementation from quelpa-use-package—and thus copyright
+assignment is a bit iffy—it will not be me. Still, implementing this
+from scratch does not sound so hard. If anyone feels inspired to do
+exactly this, I’d be delighted!</p>
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer" class="no-print">
+          <a href="../atom.xml">RSS</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
