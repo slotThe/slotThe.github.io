@@ -131,6 +131,14 @@ label handling: we remember the name of labels and can rename or
 remember them for later.  This means that we can restore old labels
 after deleting them—very convenient!
 
+#### [vc-use-package]
+
+Creates a new `:vc` keyword for use-package.  Leveraging
+`package-vc.el`, installing packages from their direct upstream
+repositories (as opposed to, say, GNU ELPA) becomes very convenient.
+I've written about this package [here][post:vc-use-package] and about
+`package-vc.el` [here][post:package-vc-install].
+
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
 [XMonad]: https://xmonad.org/
@@ -146,6 +154,9 @@ after deleting them—very convenient!
 [latex-change-env]: https://gitlab.com/slotThe/change-env
 [optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
 [optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
+[post:package-vc-install]: https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
+[post:vc-use-package]: https://tony-zorman.com/posts/2022-12-22-vc-use-package.html
+[vc-use-package]: https://github.com/slotThe/vc-use-package
 [vmensa]: https://gitlab.com/slotThe/vmensa
 [xmobar]: https://codeberg.org/xmobar/xmobar
 [yeganesh]: https://dmwit.com/yeganesh/
