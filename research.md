@@ -14,8 +14,23 @@ As a general note: one can download the source code for every paper on
 the arXiv!  A simple click on "Other formats" on the relevant article
 will guide you through that.
 
-- *Pivotality, twisted centres and the anti-double of a Hopf monad.* \
-  Joint work with Sebastian Halbig; [arXiv link](https://arxiv.org/abs/2201.05361).
+- *[Duality in Monoidal Categories](https://arxiv.org/abs/2301.03545)* \
+   Joint work with Sebastian Halbig.
+
+   We compare closed and rigid monoidal categories.  Closedness is
+   defined by the tensor product having a right adjoint: the
+   internal-hom functor.  Rigidity on the other hand generalises the
+   concept of duals in the sense of finite-dimensional vector spaces.  A
+   consequence of these axioms is that the internal-hom functor is
+   implemented by tensoring with the respective duals.  This raises the
+   question: can one decide whether a closed monoidal category is rigid,
+   simply by verifying that the internal-hom is tensor-representable? At
+   the *Research School on Bicategories, Categorification and Quantum
+   Theory*, Heunen suggested that this is not the case.  In this note,
+   we will prove his claim by constructing an explicit counterexample.
+
+- *[Pivotality, twisted centres and the anti-double of a Hopf monad](https://arxiv.org/abs/2201.05361)* \
+  Joint work with Sebastian Halbig.
 
   Finite-dimensional Hopf algebras admit a correspondence between
   so-called pairs in involution, one-dimensional anti-Yetter–Drinfeld
