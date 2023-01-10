@@ -17,7 +17,9 @@ staticCompileMathJax () {
             # unicode character ≔ looks horribly squished in some fonts.
             # While writing it in markdown files is nice, replace it
             # with something semi-sensible for the generated page.
-            sed -e 's/≔/\\mathrel{\\vcenter{:}}=/' | \
+            sed -e 's/≔/\\mathrel{\\vcenter{:}}=/g' | \
+            # A poor person's macros!
+            sed -e 's/\\to/\\longrightarrow/g'      | \
 
             # Generate the maths
             ./mathjax-node-page/bin/mjpage --output SVG --width 80 --fontURL '/static/font/mathjax' | \

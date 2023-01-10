@@ -8,8 +8,154 @@
         <name>Tony Zorman</name>
         <email>tonyzorman@mailbox.org</email>
     </author>
-    <updated>2022-10-15T00:00:00Z</updated>
+    <updated>2023-01-10T00:00:00Z</updated>
     <entry>
+    <title>Duality in Monoidal Categories</title>
+    <link href="https://tony-zorman.com/posts/2023-01-10-duality-in-monoidal-categories.html" />
+    <id>https://tony-zorman.com/posts/2023-01-10-duality-in-monoidal-categories.html</id>
+    <published>2023-01-10T00:00:00Z</published>
+    <updated>2023-01-10T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <section class="header">
+      Posted on 2023-01-10
+      
+        | <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>
+      
+    </section>
+    <section>
+        
+<p>I have a new preprint <a href="https://arxiv.org/abs/2301.03545">on the arXiv</a>! It is joint work with
+Sebastian Halbig, and concerns itself with the interplay of different
+structures on monoidal categories that give rise to a notion of
+“duality”. At five pages, it is a very short paper; yet I’d still like
+to give a little teaser as to what kind of question we sought to answer.</p>
+<!--more-->
+<h1 id="setting-the-scene">Setting the Scene</h1>
+<p>We mainly concerned ourselves with three notions of <em>duality</em> for
+(non-symmetric!) <a href="https://ncatlab.org/nlab/show/monoidal+category">monoidal</a> categories: <a href="https://ncatlab.org/nlab/show/closed+monoidal+category">closed monoidal</a> categories,
+<a href="https://ncatlab.org/nlab/show/star-autonomous+category">*-autonomous</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> categories, and <a href="https://ncatlab.org/nlab/show/rigid+monoidal+category">rigid (monoidal)</a> categories. It
+is well-known that these concepts are all connected in the following
+way.</p>
+<blockquote>
+<ol type="1">
+<li><p>Every *-autonomous category is closed monoidal.
+For all <span class="math inline">\(x, y \in \mathcal{C}\)</span>, the internal-hom [x, y]
+is given by <span class="math inline">\(D^{-1}(Dy \otimes x)\)</span>, where <span class="math inline">\(D\)</span> is the duality
+functor.</p></li>
+<li><p>Every rigid monoidal category is *-autonomous. The internal-hom
+then simplifies to <span class="math inline">\([x, y] = y \otimes x^*\)</span>, where <span class="math inline">\({-}^*\)</span> is the
+duality functor.</p></li>
+</ol>
+</blockquote>
+<p>An obvious next question one could ask is: does this already
+characterise rigid and *-autonomous categories? More explicitly, are
+there any conditions one could impose on the internal-hom, such that
+closedness already implies rigidity? What about *-autonomy?</p>
+<h1 id="autonomy">*-Autonomy</h1>
+<p>We’ll start with a positive result for *-autonomy. So the question is
+this: given a closed monoidal category <span class="math inline">\(\mathcal{C}\)</span> in which the
+internal-hom is given by tensoring with another object, is this category
+already *-autonomous?</p>
+<p>More formally, is it true that <span class="math inline">\(\mathcal{C}\)</span> is *-autonomous if
+for all <span class="math inline">\(x \in \mathcal{C}\)</span>, there exists an object
+<span class="math inline">\(Dx \in \mathcal{C}\)</span>, such that there is an adjunction
+<span class="math display">\[
+  {-} \otimes x \dashv {-} \otimes Dx?
+\]</span></p>
+<p>Almost! In good cases, we can recover what we want from just a little
+extra condition:</p>
+<blockquote>
+<p>Let <span class="math inline">\(\mathcal{C}\)</span> be a monoidal category. Suppose that for all
+<span class="math inline">\(x \in \mathcal{C}\)</span> there exist objects
+<span class="math inline">\(Lx, Rx \in \mathcal{C}\)</span>, such that we have adjunctions
+<span class="math display">\[
+  {-} \otimes Lx  \dashv  {-} \otimes x  \dashv  {-} \otimes Rx.
+\]</span>
+Then <span class="math inline">\(\mathcal{C}\)</span> is *-autonomous.</p>
+</blockquote>
+<p>Using the notion of a *-autonomous category of <a href="https://zbmath.org/1370.18007">BD13</a>—that is, for
+every <span class="math inline">\(x \in \mathcal{C}\)</span> the functor <span class="math inline">\(\mathcal{C}({-} \otimes x, 1)\)</span> is
+representable by <span class="math inline">\(Dx\)</span>—this becomes an exercise in “Yoneda Yoga”. More
+precisely, one uses the fact that the Yoneda embedding is fully faithful
+a lot. Try it yourself!</p>
+<h1 id="rigidity">Rigidity</h1>
+<p>At first sight, it’s not even clear there is anything to show for
+rigidity. Something one is immediately tempted to do is to conjecture
+the following:</p>
+<blockquote>
+<p>A closed monoidal category <span class="math inline">\(\mathcal{C}\)</span> is rigid monoidal
+if for all <span class="math inline">\(x \in \mathcal{C}\)</span> we have
+<span class="math inline">\([x, {-}] \cong {-} \otimes Dx\)</span>, for some object assignment
+<span class="math inline">\(D \colon \mathrm{Ob}\,\mathcal{C} \to \mathrm{Ob}\,\mathcal{C}\)</span>.</p>
+</blockquote>
+<p>This seems sensible; after all, the snake identities of an adjunction
+look almost completely the same as the ones for a dual!<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> However, if
+one sits down and actually writes down the diagrams, something doesn’t
+quite fit. As a reminder, suppose we have an adjunction
+<span class="math inline">\(F\colon \mathcal{C} \leftrightarrows \mathcal{C} : \! U\)</span> with unit
+<span class="math inline">\(\eta \colon \mathrm{Id}_{\mathcal{C}} \Longrightarrow U F\)</span>
+and counit
+<span class="math inline">\(\varepsilon \colon F U \Longrightarrow \mathrm{Id}_{\mathcal{C}}\)</span>.
+The snake identities for this adjunction look like</p>
+<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction.png"></p>
+<p>In particular, we get two such diagrams if we apply everything to the
+monoidal unit <span class="math inline">\(1 \in \mathcal{C}\)</span>. Specialised to the adjunction
+<span class="math inline">\({-} \otimes x \dashv {-} \otimes Dx\)</span> the above then becomes</p>
+<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction-specialised.png"></p>
+<p>These are just the snake identities for duals if we make the definitions
+<span class="math inline">\(\mathrm{ev}_x ≔ \varepsilon_1\)</span> and <span class="math inline">\(\mathrm{coev}_x ≔ \eta_1\)</span>, right?
+Wrong! In the latter case we, for example, require that
+<span class="math display">\[
+  (x \otimes \varepsilon_1) \circ (\eta_1 \otimes x) = \mathrm{id}_x.
+\]</span>
+However, the above diagram does <em>not</em> say that! It says that the
+relation
+<span class="math display">\[
+  \varepsilon_x \circ (\eta_1 \otimes x) = \mathrm{id}_x
+\]</span>
+holds. This means that we would have to impose the additional
+conditions that <span class="math inline">\(\varepsilon\)</span> and <span class="math inline">\(\eta\)</span> are morphisms of modules; i.e.,
+<span class="math inline">\(\varepsilon_x \overset{\scriptsize{!}}{=} x \otimes \varepsilon_1 = x \otimes \mathrm{coev}_x\)</span>,
+as well as a dual statement. This is not the case in general.</p>
+<p>Finding a counterexample now works by exploiting exactly this fact: we
+write down a syntactic category <span class="math inline">\(\mathcal{D}\)</span> that is generated by a
+family of morphisms
+<span class="math display">\[
+  \eta_{m, n} \colon m \to m \otimes n \otimes n
+  \qquad \text{and} \qquad
+  \varepsilon_{m, n} \colon m \otimes n \otimes n \to m,
+\]</span>
+and impose relations guaranteeing the naturality of these arrows. There
+is a subcategory <span class="math inline">\(\mathcal{C}\)</span> of <span class="math inline">\(\mathcal{D}\)</span> in which we additionally
+require <span class="math inline">\(\eta\)</span> and <span class="math inline">\(\varepsilon\)</span> satisfy the snake equations of an
+adjunction. One can now show that the category <span class="math inline">\(\mathcal{C}\)</span> is closed
+monoidal, with the appealing adjunction
+<span class="math display">\[
+  {-} \otimes n \dashv {-} \otimes n.
+\]</span>
+However, it is not rigid! The proof exploits certain strong monoidal
+functors to the category of finite-dimensional vector spaces, and shows
+that the subset of arrows <em>in <span class="math inline">\(\mathcal{D}\)</span></em> that contains one of the
+snake identities for duals is (i) closed under exactly these relations,
+and (ii) all morphisms in this set have length at least two. Hence, if
+we project any morphism down to <span class="math inline">\(\mathcal{C}\)</span>, it can’t possibly be the
+identity, and thus the snake identities for duals do not hold. If you
+want more details, check <a href="https://arxiv.org/abs/2301.03545">the paper</a>!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Or rather, a non-symmetric variant of it called an <em>r-category</em> in
+<a href="https://zbmath.org/1370.18007">BD13</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This is not a coincidence; adjoints functors are duals—rather, an
+appropriate 2-categorical analogue—in <span class="math inline">\(\mathsf{Cat}\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Understanding Weighted Colimits as Tensor Products of Modules</title>
     <link href="https://tony-zorman.com/posts/weighted-colimits/2022-10-15-weighted-colimits.html" />
     <id>https://tony-zorman.com/posts/weighted-colimits/2022-10-15-weighted-colimits.html</id>
