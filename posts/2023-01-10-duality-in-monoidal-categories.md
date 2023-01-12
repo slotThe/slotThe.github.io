@@ -146,5 +146,6 @@ want more details, check [the paper]!
 [^1]: Or rather, a non-symmetric variant of it called an *r-category* in
       [BD13].
 
-[^2]: This is not a coincidence; adjoints functors are duals—rather, an
-      appropriate 2-categorical analogue—in $\mathsf{Cat}$.
+[^2]: This is not a coincidence; for example, adjoints in the monoidal
+      category $([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})$ are
+      exactly duals!.
