@@ -155,13 +155,11 @@ highlightTheme :: Style
 highlightTheme = monochrome
   { tokenStyles
       = Ext.fromList
-          [ (CommentTok , defStyle{ tokenColor  = color 0x505050
-                                  , tokenItalic = True
-                                  })
+          [ (CommentTok , defStyle{ tokenColor  = color 0x505050, tokenItalic = True })
           , (DataTypeTok, defStyle{ tokenBackground = color 0xf8edff })
-          , (StringTok  , defStyle{ tokenBackground = color 0xf2f2f2 })
+          , (StringTok  , defStyle{ tokenColor = color 0x505050 })
           , (OperatorTok, defStyle{ tokenBold = True })
-          , (OtherTok   , defStyle{ tokenBold = True })
+          , (OtherTok   , defStyle)
           ]
      <> tokenStyles monochrome
   }
