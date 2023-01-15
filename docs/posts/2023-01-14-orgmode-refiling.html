@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>Immediately Refile Notes with X.P.OrgMode – Tony Zorman</title>
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">FLOSS</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+          
+            <h1>Immediately Refile Notes with X.P.OrgMode</h1>
+          
+
+          <article>
+    <section class="header">
+      Posted on 2023-01-14
+      
+        | <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html">xmonad</a>
+      
+    </section>
+    <section>
+        <div id="contents">
+<p class="mini-header">Contents</p>
+<ul>
+<li><a href="#motivation" id="toc-motivation">Motivation</a></li>
+<li><a href="#showcase" id="toc-showcase">Showcase</a>
+<ul>
+<li><a href="#some-gory-details" id="toc-some-gory-details">Some Gory Details</a></li>
+</ul></li>
+<li><a href="#closing-thoughts" id="toc-closing-thoughts">Closing Thoughts</a></li>
+</ul>
+</div>
+<p>In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
+Org file. The functionality that the module provides has proven to be
+extremely useful to me, and really I couldn’t be happier with
+it. However, a user recently contacted me by email and told me that
+they’re missing but one feature: the ability to immediately refile
+notes.</p>
+<!--more-->
+<h1 id="motivation">Motivation</h1>
+<p>If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <em>below</em>
+another heading; i.e., such that it becomes a subheading there. This
+can be useful for structuring TODOs into separate categories: one might
+have projects called “Work”, “Life”, “XMonad”, and so on, where all
+related tasks live. Quite convenient!</p>
+<p>So far, X.P.OrgMode just dumped the created note at the end of the
+specified file, leaving you to pick up the pieces. This aligns with my
+personal workflow—while I extensively use refiling, I only do so at the
+end of the day after reviewing all tasks that have accumulated.
+However, it is conceivable that someone might want to refile certain
+tasks straight away when it’s pretty clear that (i) they’ll be kept, and
+(ii) they can be unambiguously assigned to a certain heading (e.g., an
+already scheduled work meeting with X).</p>
+<h1 id="showcase">Showcase</h1>
+<p>Long story short, this is now built into X.P.OrgMode. There are two new
+functions:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefile   ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span>           <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefileTo ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span></code></pre></div>
+<p>The former takes the same arguments as <a href="https://hackage.haskell.org/package/xmonad-contrib-0.17.1/docs/XMonad-Prompt-OrgMode.html#v:orgPrompt">orgPrompt</a> (which see), and is
+for popping up another prompt that asks for a heading. The latter
+refiles everything under the specified (as the second argument) heading.</p>
+<p>The way <code>orgPromptRefile</code> works is that, after querying for a TODO, it
+<em>always</em> inserts the note into the file and then <em>possibly</em> refiles it
+to another heading. This way, you don’t need to worry about losing
+notes when you abort the refiling prompt or enter a non-existent
+heading.</p>
+<p><img class="pure-img" src="../images/orgmode-refiling/refiling.gif"></p>
+<p>Note: Refiling is (near) instant; the delay you are seeing above is due
+to <code>auto-revert-mode</code>.</p>
+<h2 id="some-gory-details">Some Gory Details</h2>
+<p>All of the refiling is actually directly done by Emacs itself! More
+precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
+<a href="../posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
+might intuitively <em>feel</em> horrible, but that’s just another reason to
+share it:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">refile ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>refile (asString <span class="ot">-&gt;</span> parent) (asString <span class="ot">-&gt;</span> fp) <span class="ot">=</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inEmacs</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> asBatch</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> eval (progn</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                [ <span class="st">&quot;find-file&quot;</span> <span class="op">&lt;&gt;</span> fp</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;end-of-buffer&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;org-refile nil nil&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="op">&lt;&gt;</span> list [ parent, fp, <span class="st">&quot;nil&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                            , saveExcursion</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                               [<span class="st">&quot;org-find-exact-headline-in-buffer&quot;</span> <span class="op">&lt;&gt;</span> parent]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                            ]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;save-buffer&quot;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                ])</span></code></pre></div>
+<p>This—as you probably guessed already—just executes the following elisp
+snippet in Emacs’s batch mode:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">progn</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  (find-file «fp»)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  (end-of-buffer)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  (org-refile <span class="kw">nil</span> <span class="kw">nil</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>              (<span class="kw">list</span> «parent» «fp» <span class="kw">nil</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                    (save-excursion</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                      (org-find-exact-headline-in-buffer «parent»))))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  (save-buffer))</span></code></pre></div>
+<p>I know this seems insane, but letting Emacs do this work is actually
+much less brittle than the alternative. The Org maintainers certainly
+know best what refiling <em>means</em>, and thus also what it entails—if all of
+this logic is already written, why not take advantage of it? Plus, I
+now don’t have to keep track of subtle changes in newer versions of Org.</p>
+<h1 id="closing-thoughts">Closing Thoughts</h1>
+<p>Writing this was actually a lot of fun, and a great opportunity to play
+with the EDSL that X.U.Run exposes. I reckon there are a few places in
+my own XMonad configuration in which I could use these kinds of “Emacs
+scripts” to great effect!</p>
+<p>One other idea I’ve had is to integrate this into the language that
+plain old <code>orgPrompt</code> accepts. It could be prefixed by something like
+“<code>ref:</code>”, followed by a unique substring with which to identity a
+heading. This would have the disadvantage that—without the second
+prompt—one would not get any suggestions for headings. However, if you
+want to refile something you probably know where you want to put it;
+plus, it would not involve a possibly distracting second prompt.
+Actually, this sounds like a good first pull request: contributions
+welcome!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer" class="no-print">
+          <a href="../atom.xml">RSS</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
