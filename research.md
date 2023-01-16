@@ -14,7 +14,7 @@ As a general note: one can download the source code for every paper on
 the arXiv!  A simple click on "Other formats" on the relevant article
 will guide you through that.
 
-- *[Duality in Monoidal Categories](https://arxiv.org/abs/2301.03545)* \
+- *[Duality in Monoidal Categories]* \
    Joint work with Sebastian Halbig.
 
    We compare closed and rigid monoidal categories.  Closedness is
@@ -29,7 +29,7 @@ will guide you through that.
    Theory*, Heunen suggested that this is not the case.  In this note,
    we will prove his claim by constructing an explicit counterexample.
 
-- *[Pivotality, twisted centres and the anti-double of a Hopf monad](https://arxiv.org/abs/2201.05361)* \
+- *[Pivotality, twisted centres and the anti-double of a Hopf monad]* \
   Joint work with Sebastian Halbig.
 
   Finite-dimensional Hopf algebras admit a correspondence between
@@ -44,8 +44,24 @@ will guide you through that.
 
 ## Talks
 
+- *Duality in Monoidal Categories* \
+  2023-01-16, Seminar GMM, Dresden.
+
+  There are at least three categorical gadgets that capture various
+  notions of mathematical duality: closed monoidal, *-autonomous, and
+  rigid monoidal categories.  These concepts are all interlinked—rigid
+  monoidal categories are always *-autonomous, and they in turn are
+  necessarily closed monoidal.  In fact, the resulting internal-hom is
+  very well-behaved.  We will explore connections in the other
+  direction: does the shape of the internal-hom of a closed monoidal
+  category already characterise rigidity or *-autonomy?
+
+  Based on [joint work with Sebastian Halbig](https://arxiv.org/abs/2301.03545).
+
 - *Pivotality, twisted centres and the anti-double of a Hopf monad* \
-  Based on [joint work with Sebastian Halbig](https://arxiv.org/abs/2201.05361).
+  2022-05-12, Seminar of the Czech Academy of Sciences, Prague; [slides][slides:piv:prague]. \
+  2022-05-15, PSSL 106, Brno; [slides][slides:piv:brno]. \
+  2022-05-30, QGS: Quantum Group Seminar, Online. \
 
   Pairs in involution are an algebraic structure whose systematic study
   is motivated by their applications in knot theory, representation
@@ -57,36 +73,24 @@ will guide you through that.
   monads allows us to combine the algebraic and categorical perspective
   on such pairs.
 
-  Version of this talk were given at:
-
-    - 2022-05-12, Seminar of the Czech Academy of Sciences, Prague; [slides](/talks/prague.pdf).
-    - 2022-05-15, PSSL 106, Brno; [slides](/talks/brno.pdf).
-    - 2022-05-30, QGS: Quantum Group Seminar, Online.
+  Based on [joint work with Sebastian Halbig](https://arxiv.org/abs/2201.05361).
 
 - *Optics in functional programming—a categorical perspective* \
-  TU Dresden, 2022-01-10; [slides](/talks/profunctor-optics.pdf).
+   2022-01-10, Seminar GMM, Dresden; [slides][slides:profunctor].
 
   A talk about the categorical aspects of (profunctor) optics, as done
   by [Riley] and [Clark et.al.], as well as connections to earlier
   mathematical work by [Pastro and Street].
 
-[Clark et.al.]: https://arxiv.org/abs/2001.07488
-[Pastro and Street]: https://arxiv.org/abs/0711.1859
-[Riley]: https://arxiv.org/abs/1809.00738
-[Slides available]: ./talks/profunctor-optics.pdf
-
 - *Visual Category Theory* \
-  TU Dresden, 2021-07-26.
+  2021-07-26, Seminar GMM, Dresden.
 
   The defense of my master's thesis, concentrating on a
   higher-dimensional graphical calculus, as first introduced by
-  [Willerton] and extended in the thesis.  The "basic" [slides] are
-  available—the talk was given on a Wacom tablet and thus contained many
-  live drawings to illustrate the concepts.  These, however, are lost to
-  time.
-
-[Willerton]: https://arxiv.org/abs/0807.0658
-[slides]: ./talks/visual-category-theory.pdf
+  [Willerton] and extended in the thesis.  The "basic"
+  [slides][slides:visual-cat] are available—the talk was given on a
+  Wacom tablet and thus contained many live drawings to illustrate the
+  concepts.  These, however, are lost to time.
 
 ## Theses
 
@@ -102,3 +106,14 @@ will guide you through that.
 
   Bachelor's thesis with a focus on keis; objects arising naturally when
   trying to generalize the number of 3-colourings of a knot.
+
+[Clark et.al.]: https://arxiv.org/abs/2001.07488
+[Pastro and Street]: https://arxiv.org/abs/0711.1859
+[Riley]: https://arxiv.org/abs/1809.00738
+[Willerton]: https://arxiv.org/abs/0807.0658
+[slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
+[slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
+[slides:profunctor]: /talks/profunctor-optics.pdf
+[slides:visual-cat]: /talks/visual-category-theory.pdf
+[Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
+[Pivotality, twisted centres and the anti-double of a Hopf monad]: https://arxiv.org/abs/2201.05361
