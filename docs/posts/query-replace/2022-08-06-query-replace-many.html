@@ -48,17 +48,19 @@
       
     </section>
     <section>
+      
         <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
+          <p class="mini-header">Contents</p>
+          <ul>
 <li><a href="#motivation" id="toc-motivation">Motivation</a></li>
 <li><a href="#the-solution" id="toc-the-solution">The Solution</a>
 <ul>
 <li><a href="#the-code" id="toc-the-code">The Code</a></li>
 </ul></li>
 </ul>
-</div>
-<p>As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
+        </div>
+      
+        <p>As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
 by default) can be used to replace occurences of one string with
 another. In comparison to other tools that are used for similar
 purposes—(a subset of) keyboard macros and multiple-cursors—the whole
@@ -74,7 +76,7 @@ functionality: the ability to create multiple <code>from → to</code> pairs. Bu
 this is Emacs, after all, which means that I can just write that
 <code>query-replace-many</code> function I’ve always wanted!</p>
 <!--more-->
-<h1 id="motivation">Motivation</h1>
+<h1 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h1>
 <p>Originally, my motivation came through <a href="../../research.html">work</a>, where I <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">write a lot of
 LaTeX</a>. When polishing papers, it sometimes happens that I would like
 to change or unify the notation of certain objects in the current
@@ -93,7 +95,7 @@ alternative <code>query-replace-regexp</code> function and capture groups, but I
 unsure how many people know their elisp regular expressions well enough
 for that to be time efficient. I don’t, and almost certainly never
 will, so it seemed much easier to automate this instead!</p>
-<h1 id="the-solution">The Solution</h1>
+<h1 id="the-solution">The Solution<a href="#the-solution" id="sec-link" class="floatright">¶</a></h1>
 <p>Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
 enough. The high-level overview is this: we read in multiple queries
@@ -117,7 +119,7 @@ that’s actually matching currently. However, since this would seem to
 require some work and one of course sees what’s to be replaced by
 looking at the thing at point, I can very much live with this for the
 moment.</p>
-<h2 id="the-code">The Code</h2>
+<h2 id="the-code">The Code<a href="#the-code" id="sec-link" class="floatright">¶</a></h2>
 <p>Below is the full source code, in all of its hacky glory. Note that you
 will need to <code>require</code> the <code>s.el</code> and <code>dash.el</code> libraries for this to
 work, if you haven’t loaded these already (if you use any amount of
@@ -184,7 +186,6 @@ query that has already been entered in one way or another, we bail
 out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
     </section>
 </article>
 

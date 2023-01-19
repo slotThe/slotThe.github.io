@@ -48,9 +48,10 @@
       
     </section>
     <section>
+      
         <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
+          <p class="mini-header">Contents</p>
+          <ul>
 <li><a href="#main-use-cases" id="toc-main-use-cases">Main Use Cases</a>
 <ul>
 <li><a href="#scratchpads" id="toc-scratchpads">Scratchpads</a></li>
@@ -60,8 +61,9 @@
 <li><a href="#implementation-considerations" id="toc-implementation-considerations">Implementation Considerations</a></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul>
-</div>
-<p>In the post about my <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
+        </div>
+      
+        <p>In the post about my <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
@@ -73,14 +75,14 @@ git version of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<a
 one would use it—and talk a little bit about its only redeeming
 implementation detail.</p>
 <!--more-->
-<h1 id="main-use-cases">Main Use Cases</h1>
+<h1 id="main-use-cases">Main Use Cases<a href="#main-use-cases" id="sec-link" class="floatright">¶</a></h1>
 <p>Wouldn’t it be neat to have some kind of <a href="https://en.wikipedia.org/wiki/Domain-specific_language">EDSL</a> for spawning external
 processes? Something where one can just compose Haskell functions
 together, not having to worry about the actual underlying string
 manipulations? Something that’s composable, so that one does not have
 to write the same <code>"emacsclient -c -a '' …"</code> or <code>"alacritty --working-directory …"</code> prefix over and over again? Well, at least
 that’s what I thought on some rainy afternoon a few months ago.</p>
-<h2 id="scratchpads">Scratchpads</h2>
+<h2 id="scratchpads">Scratchpads<a href="#scratchpads" id="sec-link" class="floatright">¶</a></h2>
 <p>The first use case that I came up with was <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpad</a>s. The idea of
 these things is very simple: while we normally don’t like floating
 windows, it’s quite convenient to have some of them around that one can
@@ -141,7 +143,7 @@ your <code>manageHook</code>. For example, in the following I just provide the e
 <p>This works all the same with the above definition of <code>myScratchpads</code>.</p>
 <p>A full example of how a scratchpad setup would look using this machinery
 can be found in <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L414">my config</a>.</p>
-<h2 id="calling-emacs-in-scripts">Calling Emacs in Scripts</h2>
+<h2 id="calling-emacs-in-scripts">Calling Emacs in Scripts<a href="#calling-emacs-in-scripts" id="sec-link" class="floatright">¶</a></h2>
 <p>Spawning frames is nice and all, but how about something more
 complicated, like Emacs’s batch mode so that we can use it properly in
 scripts? No problem at all!</p>
@@ -169,7 +171,7 @@ files</a>:</p>
 <p>I certainly know which one I’d rather type—especially with ELPA
 directory names changing quite frequently! On that note,
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!</p>
-<h2 id="other-programs">Other Programs</h2>
+<h2 id="other-programs">Other Programs<a href="#other-programs" id="sec-link" class="floatright">¶</a></h2>
 <p>As this is my main use case for it, the new features of
 <code>XMonad.Util.Run</code> are quite specialised for Emacs. However, even for
 other programs they may well come in handy. Drawing from the point
@@ -195,7 +197,7 @@ directory:</p>
 <p>If you have or know of a use case you would like to support but which is
 awkward with the current set of functions and combinators do not
 hesitate to open a pull request or an issue!</p>
-<h1 id="implementation-considerations">Implementation Considerations</h1>
+<h1 id="implementation-considerations">Implementation Considerations<a href="#implementation-considerations" id="sec-link" class="floatright">¶</a></h1>
 <p>The implementation is actually very straightforward—no really, check out
 the
 <a href="https://github.com/xmonad/xmonad-contrib/blob/master/XMonad/Util/Run.hs#L303">source</a>
@@ -261,7 +263,7 @@ amenable to the threading idea.</p>
 <p>I haven’t benchmarked this, so it’s not entirely clear to me whether
 performance is actually relevant in this situation,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but using
 difference lists just feels right here, and so I did.</p>
-<h1 id="conclusion">Conclusion</h1>
+<h1 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h1>
 <p>I have to say that I’m quite satisfied with this API. In fact, if I
 look at the old code that only resided within my personal config, it’s
 even a bit more ergonomic in a few places, despite having essentially no
@@ -291,7 +293,6 @@ maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
     </section>
 </article>
 

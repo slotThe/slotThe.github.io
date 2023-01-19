@@ -1,5 +1,6 @@
 {-# LANGUAGE BlockArguments      #-}
 {-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE LambdaCase          #-}
 {-# LANGUAGE NamedFieldPuns      #-}
 {-# LANGUAGE OverloadedStrings   #-}
 
@@ -9,13 +10,16 @@ import GHC.Exts  qualified as Ext
 import Control.Arrow (first)
 import Control.Monad
 import Data.Foldable
+import Data.Maybe
 import Data.Text (Text)
 import Hakyll
 import Skylighting.Types hiding (Item, Context)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen))
+import Text.Pandoc.Definition (Block (Header), Inline (Link, Str), Pandoc)
 import Text.Pandoc.Highlighting
 import Text.Pandoc.Options
 import Text.Pandoc.Templates (compileTemplate)
+import Text.Pandoc.Walk (walk)
 
 main :: IO ()
 main = hakyllWith config do
@@ -73,9 +77,12 @@ main = hakyllWith config do
   --- Sidebar "about"ish sites.
   match (fromList ["research.md", "free-software.md"]) do
     route $ setExtension "html"
-    compile $ myPandocCompiler
-          >>= loadAndApplyTemplate "templates/default.html" defaultContext
-          >>= relativizeUrls
+    compile $ do
+      tocCtx <- getTocCtx defaultContext
+      myPandocCompiler
+        >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
+        >>= loadAndApplyTemplate "templates/default.html" defaultContext
+        >>= relativizeUrls
 
   match (fromList ["about.md", "impressum.md"]) do
     route   $ setExtension "html"
@@ -89,12 +96,14 @@ main = hakyllWith config do
   --- An individual post
   match allPosts do
     route $ setExtension "html"
-    compile $ myPandocCompiler
-          >>= mkSnapshotNoToc "post-teaser"   -- For the previews on the main page.
-          >>= loadAndApplyTemplate "templates/post.html"    tagCtx
-          >>= mkSnapshotNoToc "post-content"  -- For atom feed.
-          >>= loadAndApplyTemplate "templates/default.html" defaultContext
-          >>= relativizeUrls
+    compile $ do
+      tocCtx <- getTocCtx tagCtx
+      myPandocCompiler
+        >>= mkSnapshotNoToc "post-teaser"   -- For the previews on the main page.
+        >>= loadAndApplyTemplate "templates/post.html"     tocCtx
+        >>= mkSnapshotNoToc "post-content"  -- For atom feed.
+        >>= loadAndApplyTemplate "templates/default.html"  defaultContext
+        >>= relativizeUrls
 
   --- Lists of posts
   -- For showing all posts, we want a list of all posts, followed by a
@@ -145,6 +154,44 @@ defaultCtxWithTags tagAssocs = listField "tags" tagCtx tagAssocs <> defaultConte
      = listFieldWith "posts" postCtx (recentFirst <=< traverse load . itemBody)
     <> metadataField
     <> titleField "title"
+
+-- | Create a context that contains a table of contents.
+-- The main sources here are
+--
+--   + TOC         : https://svejcar.dev/posts/2019/11/27/table-of-contents-in-hakyll/
+--   + TOC toggling: https://github.com/duplode/duplode.github.io/blob/sources/src/site.hs
+--
+-- However, note that this is /not/ part of 'myPandocCompiler' for good
+-- reasons.  I also want section links as part of the heading (see
+-- 'myPandocCompiler'), but these should not show up in the table of
+-- contents for obvious reasons.
+--
+-- Hence, this function (i) creates a writer that has my preferred
+-- writer settings, (ii) already renders this with pandoc, and (iii)
+-- adds the finished thing as a constant field to the metadata of the
+-- current entry.  Additionally, the @no-toc@ option is honoured insofar
+-- as a @no-toc@ boolean field is introduced, which can be used from the
+-- post template (@.\/templates\/post.html@).
+--
+-- There is some CSS that makes section links only show on hover in
+getTocCtx :: Context a -> Compiler (Context a)
+getTocCtx ctx = do
+  noToc      <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "no-toc"))
+  writerOpts <- mkTocWriter defaultHakyllWriterOptions
+  toc        <- renderPandocWith defaultHakyllReaderOptions writerOpts =<< getResourceBody
+  pure $ mconcat [ ctx
+                 , constField "toc" (itemBody toc)
+                 , if noToc then boolField "no-toc" (pure noToc) else mempty
+                 ]
+ where
+  mkTocWriter :: WriterOptions -> Compiler WriterOptions
+  mkTocWriter writerOpts = do
+    tmpl <- either (const Nothing) Just <$> unsafeCompiler (compileTemplate "" "$toc$")
+    pure $ writerOpts
+      { writerTableOfContents = True
+      , writerTOCDepth        = 3
+      , writerTemplate        = tmpl
+      }
 
 -----------------------------------------------------------------------
 -- Theming
@@ -232,45 +279,32 @@ mkSnapshotNoToc name item = item <$ saveSnapshot name (withTagList supressToc <$
 pandocCompilerNoToc :: Compiler (Item String)
 pandocCompilerNoToc = pandocCompiler
 
--- | Pandoc compiler with syntax highlighting and a table of contents.
+-- | Pandoc compiler with syntax highlighting and section links.  Also
+-- see 'getTocCtx' for more table of contents related things.
 --
 -- Sources:
---   + syntax highlighting: https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
---   + TOC                : https://svejcar.dev/posts/2019/11/27/table-of-contents-in-hakyll/
---   + TOC Toggling       : https://github.com/duplode/duplode.github.io/blob/sources/src/site.hs
+--   + Syntax highlighting: https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
+--   + Section links      : https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
 myPandocCompiler :: Compiler (Item String)
-myPandocCompiler = do
-  tocWriter <- myPandocWriterOptions
-  noToc     <- getUnderlying >>= (`getMetadataField` "no-toc")
-  pandocCompilerWith defaultHakyllReaderOptions
-                     (maybe tocWriter (const defaultHakyllWriterOptions) noToc)
+myPandocCompiler =
+  pandocCompilerWithTransform defaultHakyllReaderOptions myWriter addSectionLinks
  where
-  myPandocWriterOptions :: Compiler WriterOptions
-  myPandocWriterOptions = do
-    tmpl <- either (const Nothing) Just
-        <$> unsafeCompiler (compileTemplate "" tmplSpec)
-    pure defaultHakyllWriterOptions
-        { writerTableOfContents = True
-        , writerTOCDepth        = 3
-        , writerTemplate        = tmpl
-        , writerHighlightStyle  = Just highlightTheme
-        -- LaTeX rendering
-        , writerExtensions
-             = writerExtensions defaultHakyllWriterOptions
-            <> extensionsFromList
-                 [ Ext_tex_math_dollars
-                 , Ext_tex_math_double_backslash
-                 , Ext_latex_macros
-                 , Ext_inline_code_attributes
-                 ]
-        , writerHTMLMathMethod = MathJax ""
-        }
-   where
-    tmplSpec :: Text
-    tmplSpec = T.unlines
-        [ "<div id=\"contents\">"
-        , "<p class=\"mini-header\">Contents</p>"
-        , "$toc$"
-        , "</div>"
-        , "$body$"
-        ]
+  addSectionLinks :: Pandoc -> Pandoc
+  addSectionLinks = walk \case
+    Header n attr@(idAttr, _, _) inlines ->
+      let link = Link ("sec-link", ["floatright"], []) [Str "¶"] ("#" <> idAttr, "")
+       in Header n attr (inlines <> [link])
+    block -> block
+
+  myWriter :: WriterOptions
+  myWriter = defaultHakyllWriterOptions
+    { writerHighlightStyle = Just highlightTheme
+    , writerHTMLMathMethod = MathJax ""
+    , writerExtensions
+         = writerExtensions defaultHakyllWriterOptions
+        <> extensionsFromList
+             [ Ext_tex_math_dollars
+             , Ext_latex_macros
+             , Ext_inline_code_attributes
+             ]
+    }

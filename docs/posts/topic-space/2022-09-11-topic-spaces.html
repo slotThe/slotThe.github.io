@@ -48,9 +48,10 @@
       
     </section>
     <section>
+      
         <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
+          <p class="mini-header">Contents</p>
+          <ul>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
 <li><a href="#examples" id="toc-examples">Examples</a>
 <ul>
@@ -60,8 +61,9 @@
 </ul></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul>
-</div>
-<p>One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
+        </div>
+      
+        <p>One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
@@ -69,7 +71,7 @@ had a rather high barrier to entry. Despite having been given shiny
 revisiting it and thus still don’t really understand why they might be
 interested in using topics instead of workspaces. Time to change that!</p>
 <!--more-->
-<h1 id="introduction">Introduction</h1>
+<h1 id="introduction">Introduction<a href="#introduction" id="sec-link" class="floatright">¶</a></h1>
 <p>First of all, this post is not to be seen as a tutorial on
 X.A.TopicSpace, but much rather as a showcase of how its functionality
 could be used day to day. If you like what you see, perhaps check out
@@ -100,8 +102,8 @@ to working on it.</p>
 have a directory and some function associated to a workspace (hereafter
 also called “topic”), big deal. However, we will see that with a bit of
 creativity this can be used to great effect.</p>
-<h1 id="examples">Examples</h1>
-<h2 id="basic-topics">Basic topics</h2>
+<h1 id="examples">Examples<a href="#examples" id="sec-link" class="floatright">¶</a></h1>
+<h2 id="basic-topics">Basic topics<a href="#basic-topics" id="sec-link" class="floatright">¶</a></h2>
 <p>The most obvious application of all of this is to have workspaces that
 do one and only one thing. For example, I have a topic dedicated to
 connecting to a VPN, should the need arise. Naturally, I automatically
@@ -133,7 +135,7 @@ an action, and creates a new topic with <code>$HOME</code> as its associated
 directory.</p>
 <p>You can find all of my topics (and there are a lot of them)
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L219-L265">here</a>.</p>
-<h2 id="spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</h2>
+<h2 id="spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory<a href="#spawning-everything-in-the-topic-directory" id="sec-link" class="floatright">¶</a></h2>
 <p>More generally, programming projects in the same language almost always
 require me to open the same set of standard tools, so it’s extremely
 convenient to directly spawn them upon first visit. This allows for
@@ -203,7 +205,7 @@ allowing access to a different instance of the Emacs server.</p>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                        ])</span></code></pre></div>
 <p>All in all, we have something that looks a little bit like this:</p>
 <p><img class="pure-img" src="./haskell-topic.gif"></p>
-<h2 id="testing-this-website">Testing this website</h2>
+<h2 id="testing-this-website">Testing this website<a href="#testing-this-website" id="sec-link" class="floatright">¶</a></h2>
 <p>Much in the same vein as my Haskell topics, I find the <code>website</code> topic
 to be extremely handy—you can probably guess what it’s used for. Its
 associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
@@ -216,7 +218,7 @@ browser window pointing to the local copy:</p>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawn <span class="st">&quot;browser-new-window.sh localhost:8000&quot;</span></span></code></pre></div>
 <p>The whole thing looks like this:</p>
 <p><img class="pure-img" src="./website.gif"></p>
-<h1 id="conclusion">Conclusion</h1>
+<h1 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h1>
 <p>Hopefully these examples have convinced you to give TopicSpace a spin;
 perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
@@ -233,7 +235,6 @@ win in my book!</p>
 <p>As with the rest of my dotfiles, it’s available <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
     </section>
 </article>
 

@@ -48,9 +48,10 @@
       
     </section>
     <section>
+      
         <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
+          <p class="mini-header">Contents</p>
+          <ul>
 <li><a href="#motivation" id="toc-motivation">Motivation</a></li>
 <li><a href="#showcase" id="toc-showcase">Showcase</a>
 <ul>
@@ -58,8 +59,9 @@
 </ul></li>
 <li><a href="#closing-thoughts" id="toc-closing-thoughts">Closing Thoughts</a></li>
 </ul>
-</div>
-<p>In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
+        </div>
+      
+        <p>In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
 extremely useful to me, and really I couldn’t be happier with
@@ -67,7 +69,7 @@ it. However, a user recently contacted me by email and told me that
 they’re missing but one feature: the ability to immediately refile
 notes.</p>
 <!--more-->
-<h1 id="motivation">Motivation</h1>
+<h1 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h1>
 <p>If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
@@ -81,7 +83,7 @@ However, it is conceivable that someone might want to refile certain
 tasks straight away when it’s pretty clear that (i) they’ll be kept, and
 (ii) they can be unambiguously assigned to a certain heading (e.g., an
 already scheduled work meeting with X).</p>
-<h1 id="showcase">Showcase</h1>
+<h1 id="showcase">Showcase<a href="#showcase" id="sec-link" class="floatright">¶</a></h1>
 <p>Long story short, this is now built into X.P.OrgMode. There are two new
 functions:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefile   ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span>           <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
@@ -97,7 +99,7 @@ heading.</p>
 <p><img class="pure-img" src="../images/orgmode-refiling/refiling.gif"></p>
 <p>Note: Refiling is (near) instant; the delay you are seeing above is due
 to <code>auto-revert-mode</code>.</p>
-<h2 id="some-gory-details">Some Gory Details</h2>
+<h2 id="some-gory-details">Some Gory Details<a href="#some-gory-details" id="sec-link" class="floatright">¶</a></h2>
 <p>All of the refiling is actually directly done by Emacs itself! More
 precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
 <a href="../posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
@@ -132,7 +134,7 @@ much less brittle than the alternative. The Org maintainers certainly
 know best what refiling <em>means</em>, and thus also what it entails—if all of
 this logic is already written, why not take advantage of it? Plus, I
 now don’t have to keep track of subtle changes in newer versions of Org.</p>
-<h1 id="closing-thoughts">Closing Thoughts</h1>
+<h1 id="closing-thoughts">Closing Thoughts<a href="#closing-thoughts" id="sec-link" class="floatright">¶</a></h1>
 <p>Writing this was actually a lot of fun, and a great opportunity to play
 with the EDSL that X.U.Run exposes. I reckon there are a few places in
 my own XMonad configuration in which I could use these kinds of “Emacs
@@ -152,7 +154,6 @@ welcome!</p>
 <li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
     </section>
 </article>
 

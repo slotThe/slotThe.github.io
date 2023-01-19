@@ -40,9 +40,10 @@
             <h1>FLOSS</h1>
           
 
-          <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
+          
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#contributor" id="toc-contributor">Contributor</a>
 <ul>
 <li><a href="#xmonad" id="toc-xmonad">XMonad</a></li>
@@ -58,13 +59,14 @@
 <li><a href="#emacs-modes" id="toc-emacs-modes">Emacs Modes</a></li>
 </ul></li>
 </ul>
-</div>
+  </div>
+
 <p>Free software is quite dear to my heart and so I try to contribute as
 much as I can to all kinds of different projects. List below are either
 ones that I’ve stuck with for a while, or personal projects that are
 still actively maintained.</p>
-<h2 id="contributor">Contributor</h2>
-<h3 id="xmonad">XMonad</h3>
+<h2 id="contributor">Contributor<a href="#contributor" id="sec-link" class="floatright">¶</a></h2>
+<h3 id="xmonad">XMonad<a href="#xmonad" id="sec-link" class="floatright">¶</a></h3>
 <p>I’m a maintainer for <a href="https://xmonad.org/">XMonad</a>, a minimal X11 window manager written in
 Haskell. In particular, this encompasses the <code>xmonad</code> repository, where
 the lean core of the program resides, <code>xmonad-contrib</code>—containing lots
@@ -89,7 +91,7 @@ configuration can be found
 <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true">
 </div>
 </div>
-<h3 id="kmonad">Kmonad</h3>
+<h3 id="kmonad">Kmonad<a href="#kmonad" id="sec-link" class="floatright">¶</a></h3>
 <p>I’m a contributor to kmonad, a keyboard remapping daemon in the spirit
 of <a href="https://qmk.fm/">QMK</a>. However, instead of being firmware for a specific keyboard,
 it is implemented in software and thus works for any keyboard—even your
@@ -100,14 +102,14 @@ laptop keyboard!</p>
 <p>My personal keyboard configuration—<a href="https://colemakmods.github.io/mod-dh/">colemak-dh</a>, with some extras to
 facilitate more convenient Haskell and LaTeX programming—can be found
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd">here</a>.</p>
-<h3 id="xmobar">Xmobar</h3>
+<h3 id="xmobar">Xmobar<a href="#xmobar" id="sec-link" class="floatright">¶</a></h3>
 <p>Since XMonad does not have a built-in status bar, one has to use a third
 party bar—<a href="https://codeberg.org/xmobar/xmobar">xmobar</a> is that bar! As these programs have to work together
 quite closely, one can’t help but also be a contributor to xmobar if one
 uses it with xmonad.</p>
 <p>The configuration I use is available
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs">here</a>.</p>
-<h3 id="void-linux">Void Linux</h3>
+<h3 id="void-linux">Void Linux<a href="#void-linux" id="sec-link" class="floatright">¶</a></h3>
 <p>I maintain a few packages for the <a href="https://voidlinux.org/">Void</a> GNU/Linux distribution:</p>
 <pre class="console"><code>$ xmypkgs
 cgrep
@@ -117,39 +119,39 @@ kmonad
 pandoc</code></pre>
 <p>The fact that this includes GHC also means bumping/updating <em>every</em>
 Haskell package in case of an update—lots of fun!</p>
-<h1 id="author">Author</h1>
-<h3 id="hmenu"><a href="https://gitlab.com/slotThe/hmenu">hmenu</a></h3>
+<h1 id="author">Author<a href="#author" id="sec-link" class="floatright">¶</a></h1>
+<h3 id="hmenu"><a href="https://gitlab.com/slotThe/hmenu">hmenu</a><a href="#hmenu" id="sec-link" class="floatright">¶</a></h3>
 <p>I’m the author of hmenu, a wrapper for <a href="https://tools.suckless.org/dmenu/">dmenu</a> in the spirit of
 <a href="https://dmwit.com/yeganesh/">yeganesh</a>. More concretely, it displays commands in order of usage
 (with an optional decay for frequency sorting) and can open programs or
 (given) files inside of your terminal or any chosen program.</p>
-<h3 id="vmensa"><a href="https://gitlab.com/slotThe/vmensa">vmensa</a></h3>
+<h3 id="vmensa"><a href="https://gitlab.com/slotThe/vmensa">vmensa</a><a href="#vmensa" id="sec-link" class="floatright">¶</a></h3>
 <p>CLI application to query and filter the menus of the different canteens
 at TU Dresden.</p>
-<h3 id="haskell-libraries">Haskell Libraries</h3>
-<h4 id="optparse-applicative-cmdline-util-hackage"><a href="https://github.com/slotThe/optparse-applicative-cmdline-util">optparse-applicative-cmdline-util</a> (<a href="https://hackage.haskell.org/package/optparse-applicative-cmdline-util">Hackage</a>)</h4>
+<h3 id="haskell-libraries">Haskell Libraries<a href="#haskell-libraries" id="sec-link" class="floatright">¶</a></h3>
+<h4 id="optparse-applicative-cmdline-util-hackage"><a href="https://github.com/slotThe/optparse-applicative-cmdline-util">optparse-applicative-cmdline-util</a> (<a href="https://hackage.haskell.org/package/optparse-applicative-cmdline-util">Hackage</a>)<a href="#optparse-applicative-cmdline-util-hackage" id="sec-link" class="floatright">¶</a></h4>
 <p>Utility functions for writing command line interfaces with
 <a href="https://hackage.haskell.org/package/optparse-applicative">optparse-applicative</a>. This is used, for example, in <a href="https://gitlab.com/slotThe/vmensa">vmensa</a>.</p>
-<h4 id="html-parse-util-hackage"><a href="https://github.com/slotThe/html-parse-util">html-parse-util</a> (<a href="https://hackage.haskell.org/package/html-parse-util">Hackage</a>)</h4>
+<h4 id="html-parse-util-hackage"><a href="https://github.com/slotThe/html-parse-util">html-parse-util</a> (<a href="https://hackage.haskell.org/package/html-parse-util">Hackage</a>)<a href="#html-parse-util-hackage" id="sec-link" class="floatright">¶</a></h4>
 <p>A reimplementation of utility functions from Neil Mitchell’s <a href="https://hackage.haskell.org/package/tagsoup">TagSoup</a>,
 as well as some extra functionality, for Ben Gamari’s <a href="https://hackage.haskell.org/package/html-parse">html-parse</a>, as
 this nicely supports <code>Text</code> and <code>Attoparsec</code>.</p>
-<h3 id="emacs-modes">Emacs Modes</h3>
+<h3 id="emacs-modes">Emacs Modes<a href="#emacs-modes" id="sec-link" class="floatright">¶</a></h3>
 <p>I’ve written too many Emacs packages—and none of them popular, at that!</p>
-<h4 id="kbd-mode"><a href="https://github.com/kmonad/kbd-mode">kbd-mode</a></h4>
+<h4 id="kbd-mode"><a href="https://github.com/kmonad/kbd-mode">kbd-mode</a><a href="#kbd-mode" id="sec-link" class="floatright">¶</a></h4>
 <p>I wrote the Emacs integration for kmonad’s configuration files—that is,
 kbd-mode is a major more for <code>.kbd</code> files.</p>
-<h4 id="arxiv-citation-melpa"><a href="https://gitlab.com/slotThe/arxiv-citation">arxiv-citation</a> (<a href="https://melpa.org/#/arxiv-citation">MELPA</a>)</h4>
+<h4 id="arxiv-citation-melpa"><a href="https://gitlab.com/slotThe/arxiv-citation">arxiv-citation</a> (<a href="https://melpa.org/#/arxiv-citation">MELPA</a>)<a href="#arxiv-citation-melpa" id="sec-link" class="floatright">¶</a></h4>
 <p>Generate citation data for PDF files from the arXiv. Additionally,
 download preprints to a specified directory and open them. Includes
 <a href="https://github.com/skeeto/elfeed">elfeed</a> support.</p>
-<h4 id="latex-change-env-melpa"><a href="https://gitlab.com/slotThe/change-env">latex-change-env</a> (<a href="https://melpa.org/#/latex-change-env">MELPA</a>)</h4>
+<h4 id="latex-change-env-melpa"><a href="https://gitlab.com/slotThe/change-env">latex-change-env</a> (<a href="https://melpa.org/#/latex-change-env">MELPA</a>)<a href="#latex-change-env-melpa" id="sec-link" class="floatright">¶</a></h4>
 <p>Provides a way to modify LaTeX environments, as well as the display math
 mode (seeing it as an environment of sorts). This includes primitive
 label handling: we remember the name of labels and can rename or
 remember them for later. This means that we can restore old labels
 after deleting them—very convenient!</p>
-<h4 id="vc-use-package"><a href="https://github.com/slotThe/vc-use-package">vc-use-package</a></h4>
+<h4 id="vc-use-package"><a href="https://github.com/slotThe/vc-use-package">vc-use-package</a><a href="#vc-use-package" id="sec-link" class="floatright">¶</a></h4>
 <p>Creates a new <code>:vc</code> keyword for use-package. Leveraging
 <code>package-vc.el</code>, installing packages from their direct upstream
 repositories (as opposed to, say, GNU ELPA) becomes very convenient.

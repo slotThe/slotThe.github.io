@@ -140,6 +140,8 @@ hr {
     }
 }
 
+/* Links */
+
 a:link {
     color: #5b3355;
     text-decoration: none;
@@ -154,4 +156,16 @@ a:visited {
     color: #5b3355;
     text-decoration: none;
     border-bottom: 1px dotted;
+}
+
+/* Section links */
+
+:is(h1, h2, h3, h4, h5) a#sec-link {
+    text-decoration: none;
+    color: grey;
+    visibility: hidden;
+}
+
+:is(h1, h2, h3, h4, h5):hover a#sec-link {
+    visibility: visible;
 }

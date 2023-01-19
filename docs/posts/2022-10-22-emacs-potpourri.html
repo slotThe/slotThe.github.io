@@ -48,9 +48,10 @@
       
     </section>
     <section>
+      
         <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
+          <p class="mini-header">Contents</p>
+          <ul>
 <li><a href="#frame-inhibit-implied-resize" id="toc-frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
 <li><a href="#pixel-scroll-precision-mode" id="toc-pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
 <li><a href="#quickly-insert-images-in-org-roam" id="toc-quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code></a></li>
@@ -63,8 +64,9 @@
 <li><a href="#inserting-links" id="toc-inserting-links">Inserting links</a></li>
 <li><a href="#a-macro-for-repeat-mode" id="toc-a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
 </ul>
-</div>
-<p>Emacs is the “extensible text editor”, and it wouldn’t be fun if one
+        </div>
+      
+        <p>Emacs is the “extensible text editor”, and it wouldn’t be fun if one
 didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">README</a> for my Emacs configuration, I
 thought it might be nice to somewhat expand on certain ideas and give a
@@ -76,7 +78,7 @@ the spirit of hosting my content somewhere that I actually control,<a href="#fn1
 I chose to showcase these again here, hoping that other people may also
 find some of this stuff useful.</p>
 <!--more-->
-<h1 id="frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></h1>
+<h1 id="frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code><a href="#frame-inhibit-implied-resize" id="sec-link" class="floatright">¶</a></h1>
 <p>This variable is interesting for all the people who, for one reason or
 another, care about the startup time of their Emacs session. Even more
 if one uses a tiling window manager, as then Emacs doesn’t get a say in
@@ -100,7 +102,7 @@ that this cuts my startup time from just over 1 second to about 0.8
 seconds. This may not seem like much, but it’s literally <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51">setting a
 single variable</a> in my <code>early-init.el</code>—pretty good
 value for money.</p>
-<h1 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></h1>
+<h1 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code><a href="#pixel-scroll-precision-mode" id="sec-link" class="floatright">¶</a></h1>
 <p>This is pretty old news by now, but I wanted to take the opportunity to
 again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a href="./phd-workflow/2022-05-01-my-phd-workflow.html">PhD
 student in maths</a>, which means that I write a lot of
@@ -116,7 +118,7 @@ difference for yourself:</p>
 <video width="100%" controls>
 <source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
 </video>
-<h1 id="quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code></h1>
+<h1 id="quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code><a href="#quickly-insert-images-in-org-roam" id="sec-link" class="floatright">¶</a></h1>
 <p>Speaking of inserting images into Org; how does one do that, exactly?
 Doing everything by hand seems like a slog: select an arbitrary
 rectangle on the screen, take a screenshot of it, move the resulting
@@ -143,7 +145,7 @@ thankfully, most of this can be nicely automated.</p>
 taking the screenshot. Pretty convenient. If <code>scrot</code> is too low-tech
 for you, then the above snippet probably also works with <code>flameshot</code> or
 a similar tool.</p>
-<h1 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician</h1>
+<h1 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician<a href="#latex-for-the-lazy-mathematician" id="sec-link" class="floatright">¶</a></h1>
 <p>I am pretty impatient when it comes to LaTeX entry. So impatient that I
 have created a few “now you’re really taking it too far”-type of
 functions. To be honest, they kind of delight me.</p>
@@ -200,13 +202,13 @@ LaTeX entry:</p>
 <p><img class="pure-img" src="../images/emacs-potpourri/latex-entry.gif"></p>
 <p>More examples can be found in the <a href="./phd-workflow/2022-05-01-my-phd-workflow.html#digital-notes">post</a> about
 my research workflow.</p>
-<h1 id="erc">ERC</h1>
+<h1 id="erc">ERC<a href="#erc" id="sec-link" class="floatright">¶</a></h1>
 <p>I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s
 really great so far, but some things felt a bit lackluster out of the
 box. As such, my <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el">ERC config</a> has already grown quite a
 bit.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The following are a few tweaks that improve my experience
 greatly.</p>
-<h2 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent</h2>
+<h2 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent<a href="#mark-the-current-frame-as-urgent" id="sec-link" class="floatright">¶</a></h2>
 <p>One feature I was dearly missing was the ability to set <a href="https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html">urgency
 hints</a> in the case I get highlighted/pinged. This is
 essentially the window telling your window manager or desktop
@@ -236,7 +238,7 @@ I get highlighted. Note that, <a href="https://old.reddit.com/r/emacs/comments/x
 you use a reparenting window manager (you probably do if you use a
 desktop environment) you might have to give <code>x-change-window-property</code>
 above an extra <code>t</code> argument.</p>
-<h2 id="dont-highlight-quite-so-much">Don’t highlight quite so much</h2>
+<h2 id="dont-highlight-quite-so-much">Don’t highlight quite so much<a href="#dont-highlight-quite-so-much" id="sec-link" class="floatright">¶</a></h2>
 <p>Having configured quite a few regular expressions for when I get
 highlighted, things can get quite overwhelming at times. For example,
 when ERC starts up it prints <code>/users</code> in every channel buffer. Of
@@ -272,7 +274,7 @@ when they are present.</p>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">;; As before, now add the appropriate hooks to `erc-text-matched-hook'.</span></span></code></pre></div>
 <p>If it works, it works, right?</p>
-<h1 id="inserting-links">Inserting links</h1>
+<h1 id="inserting-links">Inserting links<a href="#inserting-links" id="sec-link" class="floatright">¶</a></h1>
 <p>Next to being a user, I also spend way too much time working on XMonad.
 As such, I often help people coming into our IRC or posting on the
 subreddit with their problems. More often than not one needs to link to
@@ -328,7 +330,7 @@ different link style is used, to accomodate for different platforms.</p>
 <span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>      (save-excursion (insert <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">[&quot;</span> name <span class="st">&quot;]: &quot;</span> link)))))</span></code></pre></div>
 <p>I bind this to <code>C-c l</code> in <code>markdown-mode</code>; it looks like this:</p>
 <p><img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif"></p>
-<h1 id="a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></h1>
+<h1 id="a-macro-for-repeat-mode">A macro for <code>repeat-mode</code><a href="#a-macro-for-repeat-mode" id="sec-link" class="floatright">¶</a></h1>
 <p>I’ve written a macro for Emacs’s <code>repeat-mode</code>, which allows you to
 execute repeated commands without having to press the same prefix over
 and over again. For example, one can set this up for Org navigation
@@ -390,7 +392,6 @@ explicitly quantify over an argument.<a href="#fnref2" class="footnote-back" rol
 auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
     </section>
 </article>
 

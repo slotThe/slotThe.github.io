@@ -48,9 +48,10 @@
       
     </section>
     <section>
+      
         <div id="contents">
-<p class="mini-header">Contents</p>
-<ul>
+          <p class="mini-header">Contents</p>
+          <ul>
 <li><a href="#high-level-structure" id="toc-high-level-structure">High Level Structure</a>
 <ul>
 <li><a href="#topics" id="toc-topics">Topics</a></li>
@@ -67,8 +68,9 @@
 </ul></li>
 <li><a href="#final-thoughts" id="toc-final-thoughts">Final Thoughts</a></li>
 </ul>
-</div>
-<p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
+        </div>
+      
+        <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
 discussion.</p>
@@ -87,8 +89,8 @@ As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
 <em>research</em> workflow—and there is a lot of great resources out there
 already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h1 id="high-level-structure">High Level Structure</h1>
-<h2 id="topics">Topics</h2>
+<h1 id="high-level-structure">High Level Structure<a href="#high-level-structure" id="sec-link" class="floatright">¶</a></h1>
+<h2 id="topics">Topics<a href="#topics" id="sec-link" class="floatright">¶</a></h2>
 <p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/xmonad-actions-topicspace.html">TopicSpace</a>, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
@@ -109,7 +111,7 @@ it’s rather fast to go from thinking about a certain problem to working
 on it. When I’m already inside a project, I leverage Emacs’s built-in
 <code>project.el</code> library to search through files and the like.</p>
 <p><img class="pure-img" src="./topics.gif"></p>
-<h2 id="files">Files</h2>
+<h2 id="files">Files<a href="#files" id="sec-link" class="floatright">¶</a></h2>
 <p>Here I keep things relatively simple; I have a big “library” directory
 in which essentially all books or papers that I’ve ever read reside.
 This may sound a bit chaotic, but since I never interact with this
@@ -129,8 +131,8 @@ opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xo
 <p><img class="pure-img" src="./hmenu.gif"></p>
 <p>My bibliography is organised in a similar spirit; see
 <a href="#citations">Citations</a>.</p>
-<h1 id="note-taking">Note Taking</h1>
-<h2 id="handwritten-notes">Handwritten Notes</h2>
+<h1 id="note-taking">Note Taking<a href="#note-taking" id="sec-link" class="floatright">¶</a></h1>
+<h2 id="handwritten-notes">Handwritten Notes<a href="#handwritten-notes" id="sec-link" class="floatright">¶</a></h2>
 <p>For handwritten notes I… use real paper! A little elaboration is
 probably in order, having talked about <code>.xopp</code> files and xournalpp
 above. I do have a Wacom tablet lying around and I’m quite happy
@@ -152,7 +154,7 @@ thick dotted paper, paired with a fountain pen.</p>
 <p>Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first. Of course, anything that’s supposed to be
 permanent should be typed up properly!</p>
-<h2 id="digital-notes">Digital Notes</h2>
+<h2 id="digital-notes">Digital Notes<a href="#digital-notes" id="sec-link" class="floatright">¶</a></h2>
 <p>Not wanting to go insane, I use LaTeX for all of my digital digital note
 taking. My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
 Chikmagalur</a>’s—whose excellent post you should definitely check out—so I
@@ -224,7 +226,7 @@ information and re-organising some local region of the graph. Indeed, I
 tag every new entry as a <code>draft</code> until further notice, forcing me to go
 back there especially. This results in pretty good recollection of the
 most important facts, even with my brain.</p>
-<h1 id="staying-up-to-date">Staying Up To Date</h1>
+<h1 id="staying-up-to-date">Staying Up To Date<a href="#staying-up-to-date" id="sec-link" class="floatright">¶</a></h1>
 <p>I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
 interest to me. Thankfully, the fields I’m subscribed to tend to be
 moving slow-ish and so I can manage to at least read the abstract of
@@ -256,7 +258,7 @@ the currently selected text on the relevant “search engine”. One
 instance where this is very useful is for quickly switching between the
 arXiv and zbmath:</p>
 <p><img class="pure-img" src="./selected-search.gif"></p>
-<h2 id="citations">Citations</h2>
+<h2 id="citations">Citations<a href="#citations" id="sec-link" class="floatright">¶</a></h2>
 <p>For citation management, I use a very simple system—no Zotero, JabRef,
 or similar technology. Concretely, this means that I have a blessed
 bibliography file somewhere within my home directory and I either
@@ -278,7 +280,7 @@ the primary selection, so I merely have to highlight the link, press
 helps drive home the point, also showcasing the format of a not yet
 published paper and a published one.</p>
 <p><img class="pure-img" src="./arXiv-citation.gif"></p>
-<h1 id="final-thoughts">Final Thoughts</h1>
+<h1 id="final-thoughts">Final Thoughts<a href="#final-thoughts" id="sec-link" class="floatright">¶</a></h1>
 <p>And that’s it! If nothing else, this post helped me to nail down some
 ideas that I had lying around and got me to finally clean up and publish
 many of the extensions talked about here—that’s already a win in my
@@ -286,7 +288,7 @@ book.</p>
 <p>I’m sure that some details will change over the course of the next three
 years as I mature mathematically and my needs change, but overall I feel
 pretty comfortable with this setup.</p>
-<h4 id="addendum">Addendum</h4>
+<h4 id="addendum">Addendum<a href="#addendum" id="sec-link" class="floatright">¶</a></h4>
 <p>Thanks to everyone who reached out! I received some inquiries as to my
 configurations, so here are the most important bits again, for your
 convenience:
@@ -332,7 +334,6 @@ On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
     </section>
 </article>
 

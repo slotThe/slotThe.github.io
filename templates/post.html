@@ -6,6 +6,13 @@
       $endif$
     </section>
     <section>
+      $if(no-toc)$
+      $else$
+        <div id="contents">
+          <p class="mini-header">Contents</p>
+          $toc$
+        </div>
+      $endif$
         $body$
     </section>
 </article>
