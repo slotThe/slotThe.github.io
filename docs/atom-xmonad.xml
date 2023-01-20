@@ -34,7 +34,7 @@ it. However, a user recently contacted me by email and told me that
 they’re missing but one feature: the ability to immediately refile
 notes.</p>
 <!--more-->
-<h1 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="motivation">Motivation</h1>
 <p>If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
@@ -48,7 +48,7 @@ However, it is conceivable that someone might want to refile certain
 tasks straight away when it’s pretty clear that (i) they’ll be kept, and
 (ii) they can be unambiguously assigned to a certain heading (e.g., an
 already scheduled work meeting with X).</p>
-<h1 id="showcase">Showcase<a href="#showcase" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="showcase">Showcase</h1>
 <p>Long story short, this is now built into X.P.OrgMode. There are two new
 functions:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefile   ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span>           <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
@@ -64,7 +64,7 @@ heading.</p>
 <p><img class="pure-img" src="../images/orgmode-refiling/refiling.gif"></p>
 <p>Note: Refiling is (near) instant; the delay you are seeing above is due
 to <code>auto-revert-mode</code>.</p>
-<h2 id="some-gory-details">Some Gory Details<a href="#some-gory-details" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="some-gory-details">Some Gory Details</h2>
 <p>All of the refiling is actually directly done by Emacs itself! More
 precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
 <a href="/posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
@@ -99,7 +99,7 @@ much less brittle than the alternative. The Org maintainers certainly
 know best what refiling <em>means</em>, and thus also what it entails—if all of
 this logic is already written, why not take advantage of it? Plus, I
 now don’t have to keep track of subtle changes in newer versions of Org.</p>
-<h1 id="closing-thoughts">Closing Thoughts<a href="#closing-thoughts" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="closing-thoughts">Closing Thoughts</h1>
 <p>Writing this was actually a lot of fun, and a great opportunity to play
 with the EDSL that X.U.Run exposes. I reckon there are a few places in
 my own XMonad configuration in which I could use these kinds of “Emacs
@@ -148,7 +148,7 @@ had a rather high barrier to entry. Despite having been given shiny
 revisiting it and thus still don’t really understand why they might be
 interested in using topics instead of workspaces. Time to change that!</p>
 <!--more-->
-<h1 id="introduction">Introduction<a href="#introduction" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="introduction">Introduction</h1>
 <p>First of all, this post is not to be seen as a tutorial on
 X.A.TopicSpace, but much rather as a showcase of how its functionality
 could be used day to day. If you like what you see, perhaps check out
@@ -179,8 +179,8 @@ to working on it.</p>
 have a directory and some function associated to a workspace (hereafter
 also called “topic”), big deal. However, we will see that with a bit of
 creativity this can be used to great effect.</p>
-<h1 id="examples">Examples<a href="#examples" id="sec-link" class="floatright">¶</a></h1>
-<h2 id="basic-topics">Basic topics<a href="#basic-topics" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="examples">Examples</h1>
+<h2 id="basic-topics">Basic topics</h2>
 <p>The most obvious application of all of this is to have workspaces that
 do one and only one thing. For example, I have a topic dedicated to
 connecting to a VPN, should the need arise. Naturally, I automatically
@@ -212,7 +212,7 @@ an action, and creates a new topic with <code>$HOME</code> as its associated
 directory.</p>
 <p>You can find all of my topics (and there are a lot of them)
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L219-L265">here</a>.</p>
-<h2 id="spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory<a href="#spawning-everything-in-the-topic-directory" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</h2>
 <p>More generally, programming projects in the same language almost always
 require me to open the same set of standard tools, so it’s extremely
 convenient to directly spawn them upon first visit. This allows for
@@ -282,7 +282,7 @@ allowing access to a different instance of the Emacs server.</p>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                        ])</span></code></pre></div>
 <p>All in all, we have something that looks a little bit like this:</p>
 <p><img class="pure-img" src="./haskell-topic.gif"></p>
-<h2 id="testing-this-website">Testing this website<a href="#testing-this-website" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="testing-this-website">Testing this website</h2>
 <p>Much in the same vein as my Haskell topics, I find the <code>website</code> topic
 to be extremely handy—you can probably guess what it’s used for. Its
 associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
@@ -295,7 +295,7 @@ browser window pointing to the local copy:</p>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawn <span class="st">&quot;browser-new-window.sh localhost:8000&quot;</span></span></code></pre></div>
 <p>The whole thing looks like this:</p>
 <p><img class="pure-img" src="./website.gif"></p>
-<h1 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="conclusion">Conclusion</h1>
 <p>Hopefully these examples have convinced you to give TopicSpace a spin;
 perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
@@ -344,7 +344,7 @@ disrupting one’s current workflow. The module recently got support for
 Org <a href="https://orgmode.org/manual/Priorities.html">priorities</a>, so I figured this was as good an excuse as
 any to talk about it.</p>
 <!--more-->
-<h2 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="motivation">Motivation</h2>
 <p>One theme in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a> was how it’s possible
 to use org-mode (with all of its appendages, like <a href="https://www.orgroam.com/">org-roam</a>) to
 organise one’s thoughts. <code>XMonad.Prompt.OrgMode</code> was created as yet
@@ -360,7 +360,7 @@ or so working on that instead of doing what I was actually supposed to
 do. Having the idea written down in a known place—perhaps even with an
 automatic reminder in my <a href="https://orgmode.org/manual/Agenda-Views.html">agenda</a>—helps me get rid of that creeping
 anxiety that I’m forgetting things left and right.</p>
-<h2 id="functionality">Functionality<a href="#functionality" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="functionality">Functionality</h2>
 <p>The following showcases the core functionality of the module—taking
 notes!</p>
 <p><img class="pure-img" src="./simple-task.gif"></p>
@@ -383,7 +383,7 @@ selection to the body of the note.</p>
 <p>Of course, you can use all of this together as well—directly link to
 that one paper or blog post you wanted to read, or that one YouTube
 video you want to watch on the weekend!</p>
-<h2 id="sample-configuration">Sample Configuration<a href="#sample-configuration" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="sample-configuration">Sample Configuration</h2>
 <p>To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
 “normal” TODO notes on <code>M-o c</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and uses the selection when called
@@ -450,14 +450,14 @@ git version of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<a
 one would use it—and talk a little bit about its only redeeming
 implementation detail.</p>
 <!--more-->
-<h1 id="main-use-cases">Main Use Cases<a href="#main-use-cases" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="main-use-cases">Main Use Cases</h1>
 <p>Wouldn’t it be neat to have some kind of <a href="https://en.wikipedia.org/wiki/Domain-specific_language">EDSL</a> for spawning external
 processes? Something where one can just compose Haskell functions
 together, not having to worry about the actual underlying string
 manipulations? Something that’s composable, so that one does not have
 to write the same <code>"emacsclient -c -a '' …"</code> or <code>"alacritty --working-directory …"</code> prefix over and over again? Well, at least
 that’s what I thought on some rainy afternoon a few months ago.</p>
-<h2 id="scratchpads">Scratchpads<a href="#scratchpads" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="scratchpads">Scratchpads</h2>
 <p>The first use case that I came up with was <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpad</a>s. The idea of
 these things is very simple: while we normally don’t like floating
 windows, it’s quite convenient to have some of them around that one can
@@ -518,7 +518,7 @@ your <code>manageHook</code>. For example, in the following I just provide the e
 <p>This works all the same with the above definition of <code>myScratchpads</code>.</p>
 <p>A full example of how a scratchpad setup would look using this machinery
 can be found in <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L414">my config</a>.</p>
-<h2 id="calling-emacs-in-scripts">Calling Emacs in Scripts<a href="#calling-emacs-in-scripts" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="calling-emacs-in-scripts">Calling Emacs in Scripts</h2>
 <p>Spawning frames is nice and all, but how about something more
 complicated, like Emacs’s batch mode so that we can use it properly in
 scripts? No problem at all!</p>
@@ -546,7 +546,7 @@ files</a>:</p>
 <p>I certainly know which one I’d rather type—especially with ELPA
 directory names changing quite frequently! On that note,
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!</p>
-<h2 id="other-programs">Other Programs<a href="#other-programs" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="other-programs">Other Programs</h2>
 <p>As this is my main use case for it, the new features of
 <code>XMonad.Util.Run</code> are quite specialised for Emacs. However, even for
 other programs they may well come in handy. Drawing from the point
@@ -572,7 +572,7 @@ directory:</p>
 <p>If you have or know of a use case you would like to support but which is
 awkward with the current set of functions and combinators do not
 hesitate to open a pull request or an issue!</p>
-<h1 id="implementation-considerations">Implementation Considerations<a href="#implementation-considerations" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="implementation-considerations">Implementation Considerations</h1>
 <p>The implementation is actually very straightforward—no really, check out
 the
 <a href="https://github.com/xmonad/xmonad-contrib/blob/master/XMonad/Util/Run.hs#L303">source</a>
@@ -638,7 +638,7 @@ amenable to the threading idea.</p>
 <p>I haven’t benchmarked this, so it’s not entirely clear to me whether
 performance is actually relevant in this situation,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but using
 difference lists just feels right here, and so I did.</p>
-<h1 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="conclusion">Conclusion</h1>
 <p>I have to say that I’m quite satisfied with this API. In fact, if I
 look at the old code that only resided within my personal config, it’s
 even a bit more ergonomic in a few places, despite having essentially no
@@ -708,8 +708,8 @@ As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
 <em>research</em> workflow—and there is a lot of great resources out there
 already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h1 id="high-level-structure">High Level Structure<a href="#high-level-structure" id="sec-link" class="floatright">¶</a></h1>
-<h2 id="topics">Topics<a href="#topics" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="high-level-structure">High Level Structure</h1>
+<h2 id="topics">Topics</h2>
 <p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/xmonad-actions-topicspace.html">TopicSpace</a>, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
@@ -730,7 +730,7 @@ it’s rather fast to go from thinking about a certain problem to working
 on it. When I’m already inside a project, I leverage Emacs’s built-in
 <code>project.el</code> library to search through files and the like.</p>
 <p><img class="pure-img" src="./topics.gif"></p>
-<h2 id="files">Files<a href="#files" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="files">Files</h2>
 <p>Here I keep things relatively simple; I have a big “library” directory
 in which essentially all books or papers that I’ve ever read reside.
 This may sound a bit chaotic, but since I never interact with this
@@ -750,8 +750,8 @@ opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xo
 <p><img class="pure-img" src="./hmenu.gif"></p>
 <p>My bibliography is organised in a similar spirit; see
 <a href="#citations">Citations</a>.</p>
-<h1 id="note-taking">Note Taking<a href="#note-taking" id="sec-link" class="floatright">¶</a></h1>
-<h2 id="handwritten-notes">Handwritten Notes<a href="#handwritten-notes" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="note-taking">Note Taking</h1>
+<h2 id="handwritten-notes">Handwritten Notes</h2>
 <p>For handwritten notes I… use real paper! A little elaboration is
 probably in order, having talked about <code>.xopp</code> files and xournalpp
 above. I do have a Wacom tablet lying around and I’m quite happy
@@ -773,7 +773,7 @@ thick dotted paper, paired with a fountain pen.</p>
 <p>Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first. Of course, anything that’s supposed to be
 permanent should be typed up properly!</p>
-<h2 id="digital-notes">Digital Notes<a href="#digital-notes" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="digital-notes">Digital Notes</h2>
 <p>Not wanting to go insane, I use LaTeX for all of my digital digital note
 taking. My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
 Chikmagalur</a>’s—whose excellent post you should definitely check out—so I
@@ -845,7 +845,7 @@ information and re-organising some local region of the graph. Indeed, I
 tag every new entry as a <code>draft</code> until further notice, forcing me to go
 back there especially. This results in pretty good recollection of the
 most important facts, even with my brain.</p>
-<h1 id="staying-up-to-date">Staying Up To Date<a href="#staying-up-to-date" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="staying-up-to-date">Staying Up To Date</h1>
 <p>I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
 interest to me. Thankfully, the fields I’m subscribed to tend to be
 moving slow-ish and so I can manage to at least read the abstract of
@@ -877,7 +877,7 @@ the currently selected text on the relevant “search engine”. One
 instance where this is very useful is for quickly switching between the
 arXiv and zbmath:</p>
 <p><img class="pure-img" src="./selected-search.gif"></p>
-<h2 id="citations">Citations<a href="#citations" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="citations">Citations</h2>
 <p>For citation management, I use a very simple system—no Zotero, JabRef,
 or similar technology. Concretely, this means that I have a blessed
 bibliography file somewhere within my home directory and I either
@@ -899,7 +899,7 @@ the primary selection, so I merely have to highlight the link, press
 helps drive home the point, also showcasing the format of a not yet
 published paper and a published one.</p>
 <p><img class="pure-img" src="./arXiv-citation.gif"></p>
-<h1 id="final-thoughts">Final Thoughts<a href="#final-thoughts" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="final-thoughts">Final Thoughts</h1>
 <p>And that’s it! If nothing else, this post helped me to nail down some
 ideas that I had lying around and got me to finally clean up and publish
 many of the extensions talked about here—that’s already a win in my
@@ -907,7 +907,7 @@ book.</p>
 <p>I’m sure that some details will change over the course of the next three
 years as I mature mathematically and my needs change, but overall I feel
 pretty comfortable with this setup.</p>
-<h4 id="addendum">Addendum<a href="#addendum" id="sec-link" class="floatright">¶</a></h4>
+<h4 id="addendum">Addendum</h4>
 <p>Thanks to everyone who reached out! I received some inquiries as to my
 configurations, so here are the most important bits again, for your
 convenience:

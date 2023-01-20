@@ -32,7 +32,7 @@ structures on monoidal categories that give rise to a notion of
 “duality”. At five pages, it is a very short paper; yet I’d still like
 to give a little teaser as to what kind of question we sought to answer.</p>
 <!--more-->
-<h1 id="setting-the-scene">Setting the Scene<a href="#setting-the-scene" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="setting-the-scene">Setting the Scene</h1>
 <p>We mainly concerned ourselves with three notions of <em>duality</em> for
 (non-symmetric!) <a href="https://ncatlab.org/nlab/show/monoidal+category">monoidal</a> categories: <a href="https://ncatlab.org/nlab/show/closed+monoidal+category">closed monoidal</a> categories,
 <a href="https://ncatlab.org/nlab/show/star-autonomous+category">*-autonomous</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> categories, and <a href="https://ncatlab.org/nlab/show/rigid+monoidal+category">rigid (monoidal)</a> categories. It
@@ -53,7 +53,7 @@ duality functor.</p></li>
 characterise rigid and *-autonomous categories? More explicitly, are
 there any conditions one could impose on the internal-hom, such that
 closedness already implies rigidity? What about *-autonomy?</p>
-<h1 id="autonomy">*-Autonomy<a href="#autonomy" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="autonomy">*-Autonomy</h1>
 <p>We’ll start with a positive result for *-autonomy. So the question is
 this: given a closed monoidal category <span class="math inline">\(\mathcal{C}\)</span> in which the
 internal-hom is given by tensoring with another object, is this category
@@ -80,7 +80,7 @@ every <span class="math inline">\(x \in \mathcal{C}\)</span> the functor <span c
 representable by <span class="math inline">\(Dx\)</span>—this becomes an exercise in “Yoneda Yoga”. More
 precisely, one uses the fact that the Yoneda embedding is fully faithful
 a lot. Try it yourself!</p>
-<h1 id="rigidity">Rigidity<a href="#rigidity" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="rigidity">Rigidity</h1>
 <p>At first sight, it’s not even clear there is anything to show for
 rigidity. Something one is immediately tempted to do is to conjecture
 the following:</p>
@@ -211,7 +211,7 @@ linked <a href="#resources">at the end</a>. The key insights come from the
 mentioned blog posts by <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble</a> and <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John
 Baez</a>, as well as the accompanying (resulting) <a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab
 article</a>.</p>
-<h1 id="enriched-category-theory">Enriched Category Theory<a href="#enriched-category-theory" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="enriched-category-theory">Enriched Category Theory</h1>
 <p>As I said, we first turn our attention to <em>enriched</em> category theory.
 Before diving into the gory details, I will first discuss things a bit
 more intuitively. In short, one studies not ordinary categories—whose
@@ -270,7 +270,7 @@ category</a>, they absolutely should! Much like
 you can think of ordinary categories as multi-object monoids, a decent
 mental model for <span class="math inline">\(\mathcal{V}\)</span>-categories is to think of them as
 multi-object monoidal categories.</p>
-<h2 id="functors-and-natural-transformations">Functors and Natural Transformations<a href="#functors-and-natural-transformations" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="functors-and-natural-transformations">Functors and Natural Transformations</h2>
 <p>We furthermore need analogues for functors and natural
 transformations—they now also come with a <span class="math inline">\(\mathcal{V}\)</span>- prefix. The
 functor laws get a bit more complicated, as we can’t simply say that
@@ -301,7 +301,7 @@ other side:</p>
 <p><span class="math display">\[
   F b \otimes \mathcal{C}(a, b) \longrightarrow F a.
 \]</span></p>
-<h1 id="copowers">Copowers<a href="#copowers" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="copowers">Copowers</h1>
 <p>Before we get to the fun stuff, we have to talk about one more important
 technical detail: copowers. The basic idea is that in any ordinary
 monoidal category <span class="math inline">\((\mathcal{A}, \otimes_{\mathcal{A}}, 1_{\mathcal{A}})\)</span>, we have the tensor-hom adjunction (also called
@@ -338,7 +338,7 @@ coproducts, there is a canonical copower <span class="math inline">\(\cdot \colo
 <p>for all <span class="math inline">\(b \in \mathcal{A}\)</span>. Because of the closeness to the tensor
 product, people sometimes call copowers “tensors” and write them with
 the same symbol as they write the tensor product.</p>
-<h1 id="weighted-colimits">Weighted Colimits<a href="#weighted-colimits" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="weighted-colimits">Weighted Colimits</h1>
 <p>Onto the main dish. The key idea is to reframe an ordinary colimit in
 terms of “looking like a monoidal product”. The weighted colimit then
 becomes something akin to the tensor product over a k-algebra <span class="math inline">\(R\)</span>. We
@@ -455,7 +455,7 @@ being a colimit—it should support some sort of currying operation: given
 an arrow <span class="math inline">\(W \otimes_{\mathcal{J}} F \longrightarrow c\)</span>, for some object
 <span class="math inline">\(c \in \mathcal{C}\)</span>, we should be able to obtain an arrow <span class="math inline">\(W \implies \mathcal{C}(F, c)\)</span>. Now’s your time to guess what exactly a weighted
 colimit will be!</p>
-<h2 id="definition">Definition<a href="#definition" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="definition">Definition</h2>
 <p>Still in the non-enriched setting, let me now give you the formal
 definition of a weighted colimit. Suppose <span class="math inline">\(\mathcal{J}\)</span> to be a small
 category. Let <span class="math inline">\(W \colon \mathcal{J}^{\mathrm{op}} \longrightarrow \mathsf{Set}\)</span> be a presheaf—the <em>weight</em>—and suppose we have a functor
@@ -471,7 +471,7 @@ uniquely determined by a natural transformation <span class="math inline">\(W \i
 exactly the representation we arrived at above.</p>
 <p>A pair of an object <span class="math inline">\(c \in \mathcal{A}\)</span> and a natural transformation <span class="math inline">\(W \implies \mathcal{A}(F, c)\)</span> on their own; i.e., without the universal
 property, is what one would normally call a <em><span class="math inline">\(W\)</span>-weighted cocone</em>.</p>
-<h2 id="enriched-weighted-colimits">Enriched Weighted Colimits<a href="#enriched-weighted-colimits" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="enriched-weighted-colimits">Enriched Weighted Colimits</h2>
 <p>The enriched definition is now exactly the same! If <span class="math inline">\(\mathcal{J}\)</span> is a
 small <span class="math inline">\(\mathcal{V}\)</span>-category and we have <span class="math inline">\(\mathcal{V}\)</span>-functors <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> and <span class="math inline">\(W \colon \mathcal{J}^{\mathrm{op}} \longrightarrow \mathcal{V}\)</span>, then we can
 define the <em><span class="math inline">\(W\)</span>-weighted colimit of <span class="math inline">\(F\)</span></em> as an object <span class="math inline">\(W \otimes_{\mathcal{J}} F \in \mathcal{C}\)</span>, and a <span class="math inline">\(\mathcal{V}\)</span>-natural
@@ -485,7 +485,7 @@ define the <em><span class="math inline">\(W\)</span>-weighted colimit of <span 
 to the enriched setting. This may now be used to great effect: in case
 you know what this means, among other things weighted colimits can be
 used to define the right notion of enriched coend.</p>
-<h2 id="examples">Examples<a href="#examples" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="examples">Examples</h2>
 <p>It’s probably about time for some examples. For the first two, let us
 focus on cocones only; this is perhaps a little easier to understand
 than also throwing the universal property in there. I learned these
@@ -562,7 +562,7 @@ not-necessarily-commutative diagram.</p></li>
 arrow between 0 and 1 and not necessarily an isomorphism), we get an
 ordinary (non-invertible) 2-cell as the weighted cocone.</p></li>
 </ul>
-<h1 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="conclusion">Conclusion</h1>
 <p>And that’s it! I’ve found this intuition very helpful in trying to wrap
 my head around these concepts—hopefully other people will too. As a
 parting gift, I leave you with some more things to think about.</p>
@@ -576,7 +576,7 @@ about and play around with, and I would invite you to do just that.</p>
 cocontinuous functor <span class="math inline">\([\mathcal{J}^{\mathrm{op}}, \mathcal{V}]\)</span> to
 <span class="math inline">\(\mathcal{A}\)</span> by the assignment <span class="math inline">\(W \mapsto W \otimes_{\mathcal{J}} G\)</span>
 (note the tensor product of functors!).</p>
-<h1 id="resources">(Re)sources<a href="#resources" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="resources">(Re)sources</h1>
 <ul>
 <li><p>Monoidal Category Theory:</p>
 <ul>
@@ -667,8 +667,8 @@ As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
 <em>research</em> workflow—and there is a lot of great resources out there
 already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h1 id="high-level-structure">High Level Structure<a href="#high-level-structure" id="sec-link" class="floatright">¶</a></h1>
-<h2 id="topics">Topics<a href="#topics" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="high-level-structure">High Level Structure</h1>
+<h2 id="topics">Topics</h2>
 <p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/xmonad-actions-topicspace.html">TopicSpace</a>, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
@@ -689,7 +689,7 @@ it’s rather fast to go from thinking about a certain problem to working
 on it. When I’m already inside a project, I leverage Emacs’s built-in
 <code>project.el</code> library to search through files and the like.</p>
 <p><img class="pure-img" src="./topics.gif"></p>
-<h2 id="files">Files<a href="#files" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="files">Files</h2>
 <p>Here I keep things relatively simple; I have a big “library” directory
 in which essentially all books or papers that I’ve ever read reside.
 This may sound a bit chaotic, but since I never interact with this
@@ -709,8 +709,8 @@ opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xo
 <p><img class="pure-img" src="./hmenu.gif"></p>
 <p>My bibliography is organised in a similar spirit; see
 <a href="#citations">Citations</a>.</p>
-<h1 id="note-taking">Note Taking<a href="#note-taking" id="sec-link" class="floatright">¶</a></h1>
-<h2 id="handwritten-notes">Handwritten Notes<a href="#handwritten-notes" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="note-taking">Note Taking</h1>
+<h2 id="handwritten-notes">Handwritten Notes</h2>
 <p>For handwritten notes I… use real paper! A little elaboration is
 probably in order, having talked about <code>.xopp</code> files and xournalpp
 above. I do have a Wacom tablet lying around and I’m quite happy
@@ -732,7 +732,7 @@ thick dotted paper, paired with a fountain pen.</p>
 <p>Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first. Of course, anything that’s supposed to be
 permanent should be typed up properly!</p>
-<h2 id="digital-notes">Digital Notes<a href="#digital-notes" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="digital-notes">Digital Notes</h2>
 <p>Not wanting to go insane, I use LaTeX for all of my digital digital note
 taking. My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
 Chikmagalur</a>’s—whose excellent post you should definitely check out—so I
@@ -804,7 +804,7 @@ information and re-organising some local region of the graph. Indeed, I
 tag every new entry as a <code>draft</code> until further notice, forcing me to go
 back there especially. This results in pretty good recollection of the
 most important facts, even with my brain.</p>
-<h1 id="staying-up-to-date">Staying Up To Date<a href="#staying-up-to-date" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="staying-up-to-date">Staying Up To Date</h1>
 <p>I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
 interest to me. Thankfully, the fields I’m subscribed to tend to be
 moving slow-ish and so I can manage to at least read the abstract of
@@ -836,7 +836,7 @@ the currently selected text on the relevant “search engine”. One
 instance where this is very useful is for quickly switching between the
 arXiv and zbmath:</p>
 <p><img class="pure-img" src="./selected-search.gif"></p>
-<h2 id="citations">Citations<a href="#citations" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="citations">Citations</h2>
 <p>For citation management, I use a very simple system—no Zotero, JabRef,
 or similar technology. Concretely, this means that I have a blessed
 bibliography file somewhere within my home directory and I either
@@ -858,7 +858,7 @@ the primary selection, so I merely have to highlight the link, press
 helps drive home the point, also showcasing the format of a not yet
 published paper and a published one.</p>
 <p><img class="pure-img" src="./arXiv-citation.gif"></p>
-<h1 id="final-thoughts">Final Thoughts<a href="#final-thoughts" id="sec-link" class="floatright">¶</a></h1>
+<h1 id="final-thoughts">Final Thoughts</h1>
 <p>And that’s it! If nothing else, this post helped me to nail down some
 ideas that I had lying around and got me to finally clean up and publish
 many of the extensions talked about here—that’s already a win in my
@@ -866,7 +866,7 @@ book.</p>
 <p>I’m sure that some details will change over the course of the next three
 years as I mature mathematically and my needs change, but overall I feel
 pretty comfortable with this setup.</p>
-<h4 id="addendum">Addendum<a href="#addendum" id="sec-link" class="floatright">¶</a></h4>
+<h4 id="addendum">Addendum</h4>
 <p>Thanks to everyone who reached out! I received some inquiries as to my
 configurations, so here are the most important bits again, for your
 convenience:

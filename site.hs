@@ -13,8 +13,8 @@ import Data.Foldable
 import Data.Maybe
 import Data.Text (Text)
 import Hakyll
-import Skylighting.Types hiding (Item, Context)
-import Text.HTML.TagSoup (Tag (TagClose, TagOpen))
+import Skylighting.Types hiding (Context, Item)
+import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Definition (Block (Header), Inline (Link, Str), Pandoc)
 import Text.Pandoc.Highlighting
 import Text.Pandoc.Options
@@ -99,9 +99,9 @@ main = hakyllWith config do
     compile $ do
       tocCtx <- getTocCtx tagCtx
       myPandocCompiler
-        >>= mkSnapshotNoToc "post-teaser"   -- For the previews on the main page.
+        >>= mkCleanSnapshot "post-teaser"   -- For the previews on the main page.
         >>= loadAndApplyTemplate "templates/post.html"     tocCtx
-        >>= mkSnapshotNoToc "post-content"  -- For atom feed.
+        >>= mkCleanSnapshot "post-content"  -- For atom feed.
         >>= loadAndApplyTemplate "templates/default.html"  defaultContext
         >>= relativizeUrls
 
@@ -261,16 +261,25 @@ mkPostList tags ctx title feedName template = do
 --- Snapshots
 
 -- | Create a snapshot of the current layout of the site, but suppress
--- the table of contents.
-mkSnapshotNoToc ::  String -> Item String -> Compiler (Item String)
-mkSnapshotNoToc name item = item <$ saveSnapshot name (withTagList supressToc <$> item)
+-- some information.  This is used to create "clean" images of, for
+-- example, an article for the RSS feed.
+mkCleanSnapshot ::  String -> Item String -> Compiler (Item String)
+mkCleanSnapshot name item = item <$
+  saveSnapshot name (withTagList (noPilcrow . supressToc) <$> item)
  where
-  supressToc :: [Tag String] -> [Tag String]
-  supressToc tags = pre <> post
+  noPilcrow  = killTags (~== TagOpen ("a" :: String) [("id", "sec-link")]) (== TagClose "a")
+  supressToc = killTags (==  TagOpen "div"           [("id", "contents")]) (== TagClose "div")
+
+-- | Find @open@ and kill everything between it and @close@.
+killTags :: (Tag String -> Bool) -> (Tag String -> Bool) -> [Tag String] -> [Tag String]
+killTags open close = go
+ where
+  go :: [Tag String] -> [Tag String]
+  go tgs = case post of
+    [] -> pre
+    ps -> pre <> go ps
    where
-    (pre, (_, post)) = fmap (fmap (drop 1) . break (== TagClose "div"))
-                     . break (== TagOpen "div" [("id", "contents")])
-                     $ tags
+    (pre, (_, post)) = fmap (fmap (drop 1) . break close) . break open $ tgs
 
 -----------------------------------------------------------------------
 -- Compilers
