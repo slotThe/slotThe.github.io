@@ -309,11 +309,4 @@ myPandocCompiler =
   myWriter = defaultHakyllWriterOptions
     { writerHighlightStyle = Just highlightTheme
     , writerHTMLMathMethod = MathJax ""
-    , writerExtensions
-         = writerExtensions defaultHakyllWriterOptions
-        <> extensionsFromList
-             [ Ext_tex_math_dollars
-             , Ext_latex_macros
-             , Ext_inline_code_attributes
-             ]
     }
