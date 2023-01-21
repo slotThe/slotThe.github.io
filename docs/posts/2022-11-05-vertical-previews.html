@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+    <link rel="stylesheet" href="../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -76,31 +76,37 @@ this is what <code>preview-generate-preview</code> calls before delegating the
 heavy lifting to some internal functions. After staring at the former
 function for a while, one can single out <code>preview-get-dpi</code> as the main
 culprit. It seems to calculate the “resolution” of the preview:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">defun</span><span class="fu"> preview-get-dpi </span>()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">let*</span> ((monitor-attrs (frame-monitor-attributes))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           (mm-dims (<span class="kw">cdr</span> (<span class="kw">assoc</span> 'mm-size monitor-attrs)))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           (mm-width (<span class="kw">nth</span> <span class="dv">0</span> mm-dims))</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           (mm-height (<span class="kw">nth</span> <span class="dv">1</span> mm-dims))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>           (pixel-dims (cl-cdddr (<span class="kw">assoc</span> 'geometry monitor-attrs)))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           (pixel-width (<span class="kw">nth</span> <span class="dv">0</span> pixel-dims))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>           (pixel-height (<span class="kw">nth</span> <span class="dv">1</span> pixel-dims)))</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      (<span class="kw">cons</span> (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> pixel-width) mm-width)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> pixel-height) mm-height))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">preview-get-dpi</span><span class="w"> </span><span class="p">()</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">monitor-attrs</span><span class="w"> </span><span class="p">(</span><span class="nv">frame-monitor-attributes</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">mm-dims</span><span class="w"> </span><span class="p">(</span><span class="nf">cdr</span><span class="w"> </span><span class="p">(</span><span class="nf">assoc</span><span class="w"> </span><span class="ss">'mm-size</span><span class="w"> </span><span class="nv">monitor-attrs</span><span class="p">)))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">mm-width</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nv">mm-dims</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">mm-height</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">mm-dims</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">pixel-dims</span><span class="w"> </span><span class="p">(</span><span class="nv">cl-cdddr</span><span class="w"> </span><span class="p">(</span><span class="nf">assoc</span><span class="w"> </span><span class="ss">'geometry</span><span class="w"> </span><span class="nv">monitor-attrs</span><span class="p">)))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">pixel-width</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nv">pixel-dims</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">pixel-height</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">pixel-dims</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">cons</span><span class="w"> </span><span class="p">(</span><span class="nf">/</span><span class="w"> </span><span class="p">(</span><span class="nf">*</span><span class="w"> </span><span class="mf">25.4</span><span class="w"> </span><span class="nv">pixel-width</span><span class="p">)</span><span class="w"> </span><span class="nv">mm-width</span><span class="p">)</span>
+<span class="w">            </span><span class="p">(</span><span class="nf">/</span><span class="w"> </span><span class="p">(</span><span class="nf">*</span><span class="w"> </span><span class="mf">25.4</span><span class="w"> </span><span class="nv">pixel-height</span><span class="p">)</span><span class="w"> </span><span class="nv">mm-height</span><span class="p">))))</span>
+</pre></div>
+
 <p>Monitor details are returned by the <code>frame-monitor-attributes</code> function;
 its output for a horizontal monitor is</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  '((name . <span class="st">&quot;DP1&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (geometry <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1920</span> <span class="dv">1080</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (workarea <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1920</span> <span class="dv">1080</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (mm-size <span class="dv">530</span> <span class="dv">300</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (frames &lt;&lt;omitted&gt;&gt;)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    (source . <span class="st">&quot;XRandR 1.5&quot;</span>))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="o">'</span><span class="p">((</span><span class="nv">name</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;DP1&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">geometry</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1920</span><span class="w"> </span><span class="mi">1080</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">workarea</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1920</span><span class="w"> </span><span class="mi">1080</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">mm-size</span><span class="w"> </span><span class="mi">530</span><span class="w"> </span><span class="mi">300</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">frames</span><span class="w"> </span><span class="nv">&lt;&lt;omitted&gt;&gt;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">source</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;XRandR 1.5&quot;</span><span class="p">))</span>
+</pre></div>
+
 <p>While the same monitor in “vertical-mode” returns</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  '((name . <span class="st">&quot;DP1&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    (geometry <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1080</span> <span class="dv">1920</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    (workarea <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1080</span> <span class="dv">1920</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    (mm-size <span class="dv">530</span> <span class="dv">300</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    (frames &lt;&lt;omitted&gt;&gt;)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    (source . <span class="st">&quot;XRandR 1.5&quot;</span>))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="o">'</span><span class="p">((</span><span class="nv">name</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;DP1&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">geometry</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1080</span><span class="w"> </span><span class="mi">1920</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">workarea</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1080</span><span class="w"> </span><span class="mi">1920</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">mm-size</span><span class="w"> </span><span class="mi">530</span><span class="w"> </span><span class="mi">300</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">frames</span><span class="w"> </span><span class="nv">&lt;&lt;omitted&gt;&gt;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">source</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;XRandR 1.5&quot;</span><span class="p">))</span>
+</pre></div>
+
 <p>Crucially, the physical width and height of the monitor don’t change,
 but the <em>geometry</em>—the pixel width and height—does; you can <code>C-h f display-monitor-attributes-list RET</code> for more information. This means
 that in portrait mode, we actually compare the pixel <em>width</em> of the
@@ -109,12 +115,14 @@ width. Naturally, and depending on the specific setup, this produces
 too narrow or too wide previews.</p>
 <p>The solution is to only compare the comparable values. Indeed,
 overriding the built-in <code>preview-get-dpi</code> function with</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">defun</span><span class="fu"> preview-get-dpi </span>()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (-let (((&amp;alist 'mm-size (mw mh)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    'geometry (_ _ pw ph))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            (frame-monitor-attributes)))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      (<span class="kw">cons</span> (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> (<span class="kw">max</span> pw ph)) (<span class="kw">max</span> mw mh))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            (<span class="op">/</span> (<span class="op">*</span> <span class="fl">25.4</span> (<span class="kw">min</span> pw ph)) (<span class="kw">min</span> mw mh)))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">preview-get-dpi</span><span class="w"> </span><span class="p">()</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">-let</span><span class="w"> </span><span class="p">(((</span><span class="nv">&amp;alist</span><span class="w"> </span><span class="ss">'mm-size</span><span class="w"> </span><span class="p">(</span><span class="nv">mw</span><span class="w"> </span><span class="nv">mh</span><span class="p">)</span>
+<span class="w">                    </span><span class="ss">'geometry</span><span class="w"> </span><span class="p">(</span><span class="nv">_</span><span class="w"> </span><span class="nv">_</span><span class="w"> </span><span class="nv">pw</span><span class="w"> </span><span class="nv">ph</span><span class="p">))</span>
+<span class="w">            </span><span class="p">(</span><span class="nv">frame-monitor-attributes</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">cons</span><span class="w"> </span><span class="p">(</span><span class="nf">/</span><span class="w"> </span><span class="p">(</span><span class="nf">*</span><span class="w"> </span><span class="mf">25.4</span><span class="w"> </span><span class="p">(</span><span class="nf">max</span><span class="w"> </span><span class="nv">pw</span><span class="w"> </span><span class="nv">ph</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nf">max</span><span class="w"> </span><span class="nv">mw</span><span class="w"> </span><span class="nv">mh</span><span class="p">))</span>
+<span class="w">            </span><span class="p">(</span><span class="nf">/</span><span class="w"> </span><span class="p">(</span><span class="nf">*</span><span class="w"> </span><span class="mf">25.4</span><span class="w"> </span><span class="p">(</span><span class="nf">min</span><span class="w"> </span><span class="nv">pw</span><span class="w"> </span><span class="nv">ph</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nf">min</span><span class="w"> </span><span class="nv">mw</span><span class="w"> </span><span class="nv">mh</span><span class="p">)))))</span>
+</pre></div>
+
 <p>produces the correct behaviour! This implicit assumption—that monitors
 are generally wider than they are tall—of <code>preview-get-dpi</code> should
 probably be fixed; I will report it as an Emacs bug.</p>

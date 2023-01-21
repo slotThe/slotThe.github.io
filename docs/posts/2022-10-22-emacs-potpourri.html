@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+    <link rel="stylesheet" href="../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -126,20 +126,22 @@ picture into the correct directory, give it an appropriate name, and
 insert a link to it into the current buffer. This sounds like a lot of
 busywork for something that I ideally don’t want to think about at all;
 thankfully, most of this can be nicely automated.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/org-roam-insert-image </span>()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Select and insert an image at point.&quot;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  (interactive)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((file-name (<span class="kw">format</span> <span class="st">&quot;%s-%s.png&quot;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                            (file-name-sans-extension (buffer-name))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                            (cl-random (<span class="kw">expt</span> <span class="dv">2</span> <span class="dv">31</span>))))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>         (path (<span class="kw">format</span> <span class="st">&quot;%s/%s/%s&quot;</span> org-roam-directory <span class="st">&quot;images&quot;</span> file-name)))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; The mouse movement via xdotool is needed because otherwise, if</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; unclutter is active, the pointer will remain hidden.  Uff.</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (call-process <span class="st">&quot;xdotool&quot;</span> <span class="kw">nil</span> <span class="dv">0</span> <span class="kw">nil</span> <span class="st">&quot;mousemove_relative&quot;</span> <span class="st">&quot;--&quot;</span> <span class="st">&quot;-1&quot;</span> <span class="st">&quot;0&quot;</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">let</span> ((scrot-exit (call-process <span class="st">&quot;scrot&quot;</span> <span class="kw">nil</span> <span class="kw">nil</span> <span class="kw">nil</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;-z&quot;</span> <span class="st">&quot;-f&quot;</span> <span class="st">&quot;-s&quot;</span> <span class="st">&quot;--file&quot;</span> path)))</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      (<span class="kw">when</span> (<span class="op">=</span> scrot-exit <span class="dv">0</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        (insert (<span class="kw">format</span> <span class="st">&quot;[[../images/%s]]&quot;</span> file-name))))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/org-roam-insert-image</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Select and insert an image at point.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">file-name</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;%s-%s.png&quot;</span>
+<span class="w">                            </span><span class="p">(</span><span class="nv">file-name-sans-extension</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-name</span><span class="p">))</span>
+<span class="w">                            </span><span class="p">(</span><span class="nv">cl-random</span><span class="w"> </span><span class="p">(</span><span class="nf">expt</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">31</span><span class="p">))))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">path</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;%s/%s/%s&quot;</span><span class="w"> </span><span class="nv">org-roam-directory</span><span class="w"> </span><span class="s">&quot;images&quot;</span><span class="w"> </span><span class="nv">file-name</span><span class="p">)))</span>
+<span class="w">    </span><span class="c1">;; The mouse movement via xdotool is needed because otherwise, if</span>
+<span class="w">    </span><span class="c1">;; unclutter is active, the pointer will remain hidden.  Uff.</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">call-process</span><span class="w"> </span><span class="s">&quot;xdotool&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="s">&quot;mousemove_relative&quot;</span><span class="w"> </span><span class="s">&quot;--&quot;</span><span class="w"> </span><span class="s">&quot;-1&quot;</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">scrot-exit</span><span class="w"> </span><span class="p">(</span><span class="nf">call-process</span><span class="w"> </span><span class="s">&quot;scrot&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span>
+<span class="w">                                    </span><span class="s">&quot;-z&quot;</span><span class="w"> </span><span class="s">&quot;-f&quot;</span><span class="w"> </span><span class="s">&quot;-s&quot;</span><span class="w"> </span><span class="s">&quot;--file&quot;</span><span class="w"> </span><span class="nv">path</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="nv">scrot-exit</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;[[../images/%s]]&quot;</span><span class="w"> </span><span class="nv">file-name</span><span class="p">))))))</span>
+</pre></div>
+
 <p>All it needs is <code>xdotool</code> for moving the mouse (though, if you don’t use
 <code>unclutter</code> then this may well be deleted) and <code>scrot</code> for actually
 taking the screenshot. Pretty convenient. If <code>scrot</code> is too low-tech
@@ -151,32 +153,34 @@ have created a few “now you’re really taking it too far”-type of
 functions. To be honest, they kind of delight me.</p>
 <p>First, the following is an override for the <code>self-insert-command</code>, which
 enables faster entry of one-character math symbols:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/LaTeX-self-insert </span>(&amp;optional arg <span class="kw">char</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;`self-insert-command' for LaTeX mode.</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">If the previous word is just a single character, surround it with</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">dollar signs.  If already in math mode, do nothing.  If the</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">character is a single `a', do nothing.</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">If called with a single </span><span class="sc">\\</span><span class="st">[universal-argument], just call</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">`self-insert-command'.&quot;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  (interactive <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  (pcase arg</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ('(<span class="dv">4</span>) (self-insert-command <span class="dv">1</span>))</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (_ (<span class="kw">let</span> ((ppoint (save-excursion (backward-word)       (point)))</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>             (ipoint (save-excursion (back-to-indentation) (point)))</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>             (word   (word-at-point)))</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>         (<span class="kw">unless</span> (<span class="kw">or</span> (length&gt; word <span class="dv">1</span>)   <span class="co">; longer than a single character</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                     (<span class="kw">not</span> word)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                     (<span class="op">=</span> ipoint ppoint)  <span class="co">; the first thing on a new line</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                     (<span class="kw">equal</span> <span class="st">&quot;a&quot;</span> word)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                     (number-at-point)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                     (texmathp))</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>           (-let (((<span class="kw">open</span> . <span class="kw">close</span>) math-delimiters-inline))</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>             (backward-char)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>             (insert <span class="kw">open</span>)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>             (forward-char <span class="dv">1</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>             (insert <span class="kw">close</span>)))</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>         (self-insert-command <span class="dv">1</span> <span class="kw">char</span>)))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">char</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;</span><span class="ss">`self-insert-command'</span><span class="s"> for LaTeX mode.</span>
+<span class="s">If the previous word is just a single character, surround it with</span>
+<span class="s">dollar signs.  If already in math mode, do nothing.  If the</span>
+<span class="s">character is a single </span><span class="ss">`a'</span><span class="s">, do nothing.</span>
+
+<span class="s">If called with a single \\[universal-argument], just call</span>
+<span class="ss">`self-insert-command'</span><span class="s">.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">pcase</span><span class="w"> </span><span class="nv">arg</span>
+<span class="w">    </span><span class="p">(</span><span class="o">'</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">self-insert-command</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">_</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">ppoint</span><span class="w"> </span><span class="p">(</span><span class="k">save-excursion</span><span class="w"> </span><span class="p">(</span><span class="nv">backward-word</span><span class="p">)</span><span class="w">       </span><span class="p">(</span><span class="nf">point</span><span class="p">)))</span>
+<span class="w">             </span><span class="p">(</span><span class="nv">ipoint</span><span class="w"> </span><span class="p">(</span><span class="k">save-excursion</span><span class="w"> </span><span class="p">(</span><span class="nv">back-to-indentation</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point</span><span class="p">)))</span>
+<span class="w">             </span><span class="p">(</span><span class="nv">word</span><span class="w">   </span><span class="p">(</span><span class="nv">word-at-point</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">length&gt;</span><span class="w"> </span><span class="nv">word</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">   </span><span class="c1">; longer than a single character</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="nv">word</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="nv">ipoint</span><span class="w"> </span><span class="nv">ppoint</span><span class="p">)</span><span class="w">  </span><span class="c1">; the first thing on a new line</span>
+<span class="w">                     </span><span class="p">(</span><span class="nf">equal</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="nv">word</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">number-at-point</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">texmathp</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-let</span><span class="w"> </span><span class="p">(((</span><span class="nv">open</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">close</span><span class="p">)</span><span class="w"> </span><span class="nv">math-delimiters-inline</span><span class="p">))</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">backward-char</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">open</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">forward-char</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">close</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nf">self-insert-command</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">char</span><span class="p">)))))</span>
+</pre></div>
+
 <p>Bound to <code>&lt;SPC&gt;</code> (and also things like <code>.</code> and <code>-</code>), it enables one to
 write <code>"foo T&lt;SPC&gt;"</code> and have Emacs insert <code>"foo $T$ "</code> instead—very
 convenient, and much faster even than having a snippet to insert dollars
@@ -185,14 +189,16 @@ based on some condition.</p>
 often.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> I could also create an auto-expanding snippet for this, but
 wouldn’t it be <em>much better</em> to insert it on a double tap of the space
 bar instead? I think so!</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/LaTeX-space </span>(&amp;optional arg)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Insert a space; or not.</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">In case the previous character was already a space, insert</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="sc">\\</span><span class="st">blank instead.&quot;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  (interactive <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">if</span> (<span class="kw">and</span> (<span class="op">=</span> ?\s (char-before)) (texmathp))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      (insert <span class="st">&quot;</span><span class="sc">\\</span><span class="st">blank &quot;</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    (slot/LaTeX-self-insert arg ?\s)))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-space</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Insert a space; or not.</span>
+<span class="s">In case the previous character was already a space, insert</span>
+<span class="s">\\blank instead.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="sc">?\s</span><span class="w"> </span><span class="p">(</span><span class="nf">char-before</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nv">texmathp</span><span class="p">))</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;\\blank &quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="sc">?\s</span><span class="p">)))</span>
+</pre></div>
+
 <p>Now, writing something like <code>"C(&lt;SPC&gt;&lt;SPC&gt;,&lt;SPC&gt;&lt;SPC&gt;)"</code> in math-mode
 nicely inserts <code>"C( \blank , \blank )"</code>. Because the space bar is so
 easy to press, this is again marginally faster than having to write
@@ -215,24 +221,26 @@ essentially the window telling your window manager or desktop
 environment that it wants your attention. You can then execute an
 action based on this urgency hint. Thankfully, Emacs is extensible, so
 hacking this behaviour into ERC wasn’t actually all that complicated.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/mark-emacs-urgent </span>()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Mark the current frame as urgent.&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((WM-HINTS <span class="st">&quot;WM_HINTS&quot;</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         (hints (seq--into-list</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 <span class="co">;; By default this returns a string/vector.</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                 (x-window-property WM-HINTS <span class="kw">nil</span> WM-HINTS <span class="kw">nil</span> <span class="kw">nil</span> <span class="kw">t</span>))))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; Urgency flag: (1L &lt;&lt; 8) == 256</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; Source (as always): https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    (setcar hints (<span class="kw">logior</span> (<span class="kw">car</span> hints) (lsh <span class="dv">1</span> <span class="dv">8</span>)))</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    (x-change-window-property WM-HINTS hints <span class="kw">nil</span> WM-HINTS <span class="dv">32</span>)))</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/beep-on-match </span>(match-type _nickuserhost message)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Beep and mark the frame as urgent on highlight.&quot;</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let</span> ((visible-bell <span class="kw">nil</span>))</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    (slot/mark-emacs-urgent)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    (erc-beep-on-match match-type _nickuserhost message)))</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>(add-hook 'erc-text-matched-hook #'slot/beep-on-match)</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/mark-emacs-urgent</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Mark the current frame as urgent.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="s">&quot;WM_HINTS&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">hints</span><span class="w"> </span><span class="p">(</span><span class="nv">seq--into-list</span>
+<span class="w">                 </span><span class="c1">;; By default this returns a string/vector.</span>
+<span class="w">                 </span><span class="p">(</span><span class="nf">x-window-property</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">))))</span>
+<span class="w">    </span><span class="c1">;; Urgency flag: (1L &lt;&lt; 8) == 256</span>
+<span class="w">    </span><span class="c1">;; Source (as always): https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">setcar</span><span class="w"> </span><span class="nv">hints</span><span class="w"> </span><span class="p">(</span><span class="nf">logior</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">hints</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">lsh</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">8</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">x-change-window-property</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="nv">hints</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="mi">32</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/beep-on-match</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Beep and mark the frame as urgent on highlight.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">visible-bell</span><span class="w"> </span><span class="no">nil</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">slot/mark-emacs-urgent</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">erc-beep-on-match</span><span class="w"> </span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nv">add-hook</span><span class="w"> </span><span class="ss">'erc-text-matched-hook</span><span class="w"> </span><span class="nf">#'</span><span class="nv">slot/beep-on-match</span><span class="p">)</span>
+</pre></div>
+
 <p>And that’s really it! Now ERC correctly sends an urgency hint whenever
 I get highlighted. Note that, <a href="https://old.reddit.com/r/emacs/comments/xjyuni/weekly_tips_tricks_c_thread/ipfjlw0/">as we found out</a>, if
 you use a reparenting window manager (you probably do if you use a
@@ -249,30 +257,34 @@ WeeChat’s <code>highmon.pl</code>).</p>
 <p>Thankfully, however, there is a straightforward hack around this: just
 check the message for certain regular expression first and do nothing
 when they are present.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/erc-ignore-highlight </span>(msg)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Don't highlight me when these things happen.&quot;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let</span> ((message (s-trim-left msg))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        (channel (<span class="kw">or</span> (erc-default-target) <span class="st">&quot;&quot;</span>)))</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    (--any? (s-prefix? it message)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            `(<span class="st">&quot;*** Users on&quot;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;*** Your new nickname is&quot;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;*** Welcome to the&quot;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>              ,(concat <span class="st">&quot;*** &quot;</span> channel <span class="st">&quot;: topic set by&quot;</span>)))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="p">(</span><span class="nv">msg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Don't highlight me when these things happen.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">message</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim-left</span><span class="w"> </span><span class="nv">msg</span><span class="p">))</span>
+<span class="w">        </span><span class="p">(</span><span class="nv">channel</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">erc-default-target</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">--any?</span><span class="w"> </span><span class="p">(</span><span class="nv">s-prefix?</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">            </span><span class="o">`</span><span class="p">(</span><span class="s">&quot;*** Users on&quot;</span>
+<span class="w">              </span><span class="s">&quot;*** Your new nickname is&quot;</span>
+<span class="w">              </span><span class="s">&quot;*** Welcome to the&quot;</span>
+<span class="w">              </span><span class="o">,</span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;*** &quot;</span><span class="w"> </span><span class="nv">channel</span><span class="w"> </span><span class="s">&quot;: topic set by&quot;</span><span class="p">)))))</span>
+</pre></div>
+
 <p>All that’s left to do is to thread this function through to
 <code>erc-log-matches</code> and the above-defined <code>slot/beep-on-match</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/erc-log-matches </span>(match-type nickuserhost message)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Log matches to extra buffer, unless they are annoying.&quot;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">unless</span> (slot/erc-ignore-highlight message)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    (erc-log-matches match-type nickuserhost message)))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/beep-on-match </span>(match-type _nickuserhost message)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Beep and mark the frame as urgent on highlight.&quot;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let</span> ((visible-bell <span class="kw">nil</span>))</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">unless</span> (slot/erc-ignore-highlight message)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      (slot/mark-emacs-urgent)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      (erc-beep-on-match match-type _nickuserhost message))))</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">;; As before, now add the appropriate hooks to `erc-text-matched-hook'.</span></span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-log-matches</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Log matches to extra buffer, unless they are annoying.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">erc-log-matches</span><span class="w"> </span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/beep-on-match</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Beep and mark the frame as urgent on highlight.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">visible-bell</span><span class="w"> </span><span class="no">nil</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">slot/mark-emacs-urgent</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">erc-beep-on-match</span><span class="w"> </span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">))))</span>
+
+<span class="c1">;; As before, now add the appropriate hooks to `erc-text-matched-hook'.</span>
+</pre></div>
+
 <p>If it works, it works, right?</p>
 <h1 id="inserting-links">Inserting links<a href="#inserting-links" id="sec-link" class="floatright">¶</a></h1>
 <p>Next to being a user, I also spend way too much time working on XMonad.
@@ -284,50 +296,52 @@ don’t have to dig up these links again and again?</p>
 of my blog posts, as well as selected extra sites, like our tutorial and
 installation instructions. Depending on the given universal argument, a
 different link style is used, to accomodate for different platforms.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/get-xmonad-modules </span>()</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Get all XMonad modules in the form (NAME . DOC-URL).&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((xmonad-cabal <span class="st">&quot;~/repos/xmonad/xmonad-contrib/xmonad-contrib.cabal&quot;</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         (hackage <span class="st">&quot;https://hackage.haskell.org/package/xmonad-contrib/docs/&quot;</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         (modules (shell-command-to-string</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                   (<span class="kw">format</span> <span class="st">&quot;tail -n +50 %s | grep -E </span><span class="sc">\&quot;</span><span class="st"> XMonad</span><span class="sc">\\</span><span class="st">.*</span><span class="sc">\&quot;</span><span class="st">&quot;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                           xmonad-cabal))))</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    (-&gt;&gt; (s-lines modules)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         (-drop-last <span class="dv">1</span>)                 <span class="co">; empty line</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>         (--map (s-trim (s-replace <span class="st">&quot;exposed-modules:&quot;</span> <span class="st">&quot;&quot;</span> it)))</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>         (--map (<span class="kw">cons</span> it</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                      (<span class="kw">format</span> (concat hackage (s-replace <span class="st">&quot;.&quot;</span> <span class="st">&quot;-&quot;</span> it) <span class="st">&quot;.html&quot;</span>)))))))</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/get-posts </span>()</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Get all of my blog posts in the form (NAME . URL).&quot;</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((website <span class="st">&quot;https://tony-zorman.com/&quot;</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>         (base-path <span class="st">&quot;~/repos/slotThe.github.io/&quot;</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>         (posts (directory-files-recursively (concat base-path <span class="st">&quot;posts/&quot;</span>) <span class="st">&quot;.md$&quot;</span>)))</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    (--map (with-temp-buffer</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>             (insert-file-contents-literally it)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>             (search-forward <span class="st">&quot;title: &quot;</span>)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>             (<span class="kw">cons</span>                      <span class="co">; Name . URL</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>              (string-replace <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span> <span class="st">&quot;&quot;</span> (buffer-substring (point) (point-at-eol)))</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>              (concat website (<span class="kw">string-trim</span> it base-path <span class="st">&quot;.md&quot;</span>) <span class="st">&quot;.html&quot;</span>)))</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>           posts)))</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defun</span><span class="fu"> slot/often-used-links </span>(&amp;optional arg)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Choose a link and insert it into the buffer in .md format.</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="st">This is quite useful, since many people happen to have very</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="st">similar problems when, for example, first starting out with</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="st">xmonad.&quot;</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  (interactive <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  (-let* ((links</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>           (-concat '((<span class="st">&quot;tutorial&quot;</span> . <span class="st">&quot;https://xmonad.org/TUTORIAL.html&quot;</span>)</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                      (<span class="st">&quot;install&quot;</span>  . <span class="st">&quot;https://xmonad.org/INSTALL.html&quot;</span>)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                      (<span class="st">&quot;xmonad.hs&quot;</span>. <span class="st">&quot;https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs&quot;</span>))</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                    (slot/get-xmonad-modules)</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                    (slot/get-posts)))</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>          (choice (completing-read <span class="st">&quot;Link: &quot;</span> (<span class="kw">mapcar</span> #'car links)))</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>          ((name . link) (<span class="kw">assoc</span> choice links)))</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    (insert <span class="st">&quot;[&quot;</span> name <span class="st">&quot;]&quot;</span>)</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">if</span> arg</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>        (insert <span class="st">&quot;(&quot;</span> link <span class="st">&quot;)&quot;</span>)</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>      (save-excursion (insert <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">[&quot;</span> name <span class="st">&quot;]: &quot;</span> link)))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-xmonad-modules</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Get all XMonad modules in the form (NAME . DOC-URL).&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">xmonad-cabal</span><span class="w"> </span><span class="s">&quot;~/repos/xmonad/xmonad-contrib/xmonad-contrib.cabal&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">hackage</span><span class="w"> </span><span class="s">&quot;https://hackage.haskell.org/package/xmonad-contrib/docs/&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">modules</span><span class="w"> </span><span class="p">(</span><span class="nv">shell-command-to-string</span>
+<span class="w">                   </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;tail -n +50 %s | grep -E \&quot; XMonad\\.*\&quot;&quot;</span>
+<span class="w">                           </span><span class="nv">xmonad-cabal</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">-&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">s-lines</span><span class="w"> </span><span class="nv">modules</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">-drop-last</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">                 </span><span class="c1">; empty line</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">s-replace</span><span class="w"> </span><span class="s">&quot;exposed-modules:&quot;</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="nv">it</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nf">cons</span><span class="w"> </span><span class="nv">it</span>
+<span class="w">                      </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">hackage</span><span class="w"> </span><span class="p">(</span><span class="nv">s-replace</span><span class="w"> </span><span class="s">&quot;.&quot;</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;.html&quot;</span><span class="p">)))))))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-posts</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Get all of my blog posts in the form (NAME . URL).&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">website</span><span class="w"> </span><span class="s">&quot;https://tony-zorman.com/&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">base-path</span><span class="w"> </span><span class="s">&quot;~/repos/slotThe.github.io/&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">posts</span><span class="w"> </span><span class="p">(</span><span class="nv">directory-files-recursively</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">base-path</span><span class="w"> </span><span class="s">&quot;posts/&quot;</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;.md$&quot;</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">             </span><span class="p">(</span><span class="nv">insert-file-contents-literally</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="s">&quot;title: &quot;</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">cons</span><span class="w">                      </span><span class="c1">; Name . URL</span>
+<span class="w">              </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\&quot;&quot;</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-substring</span><span class="w"> </span><span class="p">(</span><span class="nf">point</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">point-at-eol</span><span class="p">)))</span>
+<span class="w">              </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">website</span><span class="w"> </span><span class="p">(</span><span class="nv">string-trim</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">base-path</span><span class="w"> </span><span class="s">&quot;.md&quot;</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;.html&quot;</span><span class="p">)))</span>
+<span class="w">           </span><span class="nv">posts</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/often-used-links</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Choose a link and insert it into the buffer in .md format.</span>
+<span class="s">This is quite useful, since many people happen to have very</span>
+<span class="s">similar problems when, for example, first starting out with</span>
+<span class="s">xmonad.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">-let*</span><span class="w"> </span><span class="p">((</span><span class="nv">links</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-concat</span><span class="w"> </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;tutorial&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;https://xmonad.org/TUTORIAL.html&quot;</span><span class="p">)</span>
+<span class="w">                      </span><span class="p">(</span><span class="s">&quot;install&quot;</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;https://xmonad.org/INSTALL.html&quot;</span><span class="p">)</span>
+<span class="w">                      </span><span class="p">(</span><span class="s">&quot;xmonad.hs&quot;</span><span class="o">.</span><span class="w"> </span><span class="s">&quot;https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs&quot;</span><span class="p">))</span>
+<span class="w">                    </span><span class="p">(</span><span class="nv">slot/get-xmonad-modules</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">(</span><span class="nv">slot/get-posts</span><span class="p">)))</span>
+<span class="w">          </span><span class="p">(</span><span class="nv">choice</span><span class="w"> </span><span class="p">(</span><span class="nf">completing-read</span><span class="w"> </span><span class="s">&quot;Link: &quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">mapcar</span><span class="w"> </span><span class="nf">#'car</span><span class="w"> </span><span class="nv">links</span><span class="p">)))</span>
+<span class="w">          </span><span class="p">((</span><span class="nv">name</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">link</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">assoc</span><span class="w"> </span><span class="nv">choice</span><span class="w"> </span><span class="nv">links</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="nv">arg</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="nv">link</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="k">save-excursion</span><span class="w"> </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;\n\n[&quot;</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="s">&quot;]: &quot;</span><span class="w"> </span><span class="nv">link</span><span class="p">)))))</span>
+</pre></div>
+
 <p>I bind this to <code>C-c l</code> in <code>markdown-mode</code>; it looks like this:</p>
 <p><img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif"></p>
 <h1 id="a-macro-for-repeat-mode">A macro for <code>repeat-mode</code><a href="#a-macro-for-repeat-mode" id="sec-link" class="floatright">¶</a></h1>
@@ -342,42 +356,46 @@ around that define different macros which probably work much better than
 the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword
 now. However, obviously the one I wrote feels the most natural to <em>me</em>,
 so it’s being kept around regardless.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">defmacro</span><span class="fu"> defrepeatmap </span>(sym pairs &amp;optional docstring)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;A macro for defining `repeat-map's.</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">Defines a new repeat-map called SYM with the given DOCSTRING.</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">The keys are derived via the list PAIRS, whose elements are cons</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">cells of the form (KEY . DEF), where KEY and DEF must fulfill the</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">same requirements as if given to `define-key'.</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">If the key only consists of a single character; i.e., is already</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">bound and a repeat map is created afterwards, simply add it to</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="st">the repeat-map SYM.  If not, globally bind KEY to DEF and only</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">insert the last character of DEF into the repeat map SYM.&quot;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">declare</span> (indent <span class="dv">1</span>) (<span class="kw">debug</span> <span class="kw">t</span>))</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  `(<span class="kw">progn</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>     (<span class="kw">defvar</span><span class="fu"> </span>,sym</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>       (<span class="kw">let</span> ((kmap (make-sparse-keymap)))</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>         (--each ,pairs</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>           (-let (((key . fun) it))</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>             (<span class="kw">if</span> (length= key <span class="dv">1</span>)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                 (define-key kmap (kbd key) fun)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>               (bind-key (kbd key) fun)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>               (define-key kmap (kbd (s-right <span class="dv">1</span> key)) fun))))</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>         kmap)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>       ,docstring)</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>     <span class="co">;; Tell the keys they are in a repeat map.</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>     (--each (<span class="kw">mapcar</span> 'cdr (<span class="kw">cdr</span> ,sym))</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>       (put it 'repeat-map ',sym))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defmacro</span><span class="w"> </span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="p">(</span><span class="nv">sym</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">docstring</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;A macro for defining </span><span class="ss">`repeat-map'</span><span class="s">s.</span>
+<span class="s">Defines a new repeat-map called SYM with the given DOCSTRING.</span>
+<span class="s">The keys are derived via the list PAIRS, whose elements are cons</span>
+<span class="s">cells of the form (KEY . DEF), where KEY and DEF must fulfill the</span>
+<span class="s">same requirements as if given to </span><span class="ss">`define-key'</span><span class="s">.</span>
+
+<span class="s">If the key only consists of a single character; i.e., is already</span>
+<span class="s">bound and a repeat map is created afterwards, simply add it to</span>
+<span class="s">the repeat-map SYM.  If not, globally bind KEY to DEF and only</span>
+<span class="s">insert the last character of DEF into the repeat map SYM.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">declare</span><span class="w"> </span><span class="p">(</span><span class="nv">indent</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">debug</span><span class="w"> </span><span class="no">t</span><span class="p">))</span>
+<span class="w">  </span><span class="o">`</span><span class="p">(</span><span class="k">progn</span>
+<span class="w">     </span><span class="p">(</span><span class="k">defvar</span><span class="w"> </span><span class="o">,</span><span class="nv">sym</span>
+<span class="w">       </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">kmap</span><span class="w"> </span><span class="p">(</span><span class="nf">make-sparse-keymap</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--each</span><span class="w"> </span><span class="o">,</span><span class="nv">pairs</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-let</span><span class="w"> </span><span class="p">(((</span><span class="nv">key</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">fun</span><span class="p">)</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">             </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nv">length=</span><span class="w"> </span><span class="nv">key</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">                 </span><span class="p">(</span><span class="nf">define-key</span><span class="w"> </span><span class="nv">kmap</span><span class="w"> </span><span class="p">(</span><span class="nv">kbd</span><span class="w"> </span><span class="nv">key</span><span class="p">)</span><span class="w"> </span><span class="nv">fun</span><span class="p">)</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">bind-key</span><span class="w"> </span><span class="p">(</span><span class="nv">kbd</span><span class="w"> </span><span class="nv">key</span><span class="p">)</span><span class="w"> </span><span class="nv">fun</span><span class="p">)</span>
+<span class="w">               </span><span class="p">(</span><span class="nf">define-key</span><span class="w"> </span><span class="nv">kmap</span><span class="w"> </span><span class="p">(</span><span class="nv">kbd</span><span class="w"> </span><span class="p">(</span><span class="nv">s-right</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">key</span><span class="p">))</span><span class="w"> </span><span class="nv">fun</span><span class="p">))))</span>
+<span class="w">         </span><span class="nv">kmap</span><span class="p">)</span>
+<span class="w">       </span><span class="o">,</span><span class="nv">docstring</span><span class="p">)</span>
+<span class="w">     </span><span class="c1">;; Tell the keys they are in a repeat map.</span>
+<span class="w">     </span><span class="p">(</span><span class="nv">--each</span><span class="w"> </span><span class="p">(</span><span class="nf">mapcar</span><span class="w"> </span><span class="ss">'cdr</span><span class="w"> </span><span class="p">(</span><span class="nf">cdr</span><span class="w"> </span><span class="o">,</span><span class="nv">sym</span><span class="p">))</span>
+<span class="w">       </span><span class="p">(</span><span class="nf">put</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="ss">'repeat-map</span><span class="w"> </span><span class="ss">',sym</span><span class="p">))))</span>
+</pre></div>
+
 <p>The following would, for example, bind <code>mc/mark-next-like-this-word</code> to
 <code>M-s s</code> globally and to <code>s</code> in the created <code>mc-repeat-map</code>. Likewise,
 <code>mc/mark-next-word-like-this</code> is bound to <code>.</code> in that map, and so on.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(defrepeatmap mc-repeat-map</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    '((<span class="st">&quot;M-s s&quot;</span> . mc/mark-next-like-this-word)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-M-.&quot;</span> . mc/mark-next-word-like-this)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-M-,&quot;</span> . mc/mark-previous-word-like-this)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-&gt;&quot;</span>   . mc/skip-to-next-like-this)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      (<span class="st">&quot;C-&lt;&quot;</span>   . mc/skip-to-previous-like-this))</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;`repeat-mode' keymap to repeat `multiple-cursors' bindings.&quot;</span>)</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="nv">mc-repeat-map</span>
+<span class="w">    </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;M-s s&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-like-this-word</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-M-.&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-word-like-this</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-M-,&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-previous-word-like-this</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-&gt;&quot;</span><span class="w">   </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/skip-to-next-like-this</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-&lt;&quot;</span><span class="w">   </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/skip-to-previous-like-this</span><span class="p">))</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="ss">`repeat-mode'</span><span class="s"> keymap to repeat </span><span class="ss">`multiple-cursors'</span><span class="s"> bindings.&quot;</span><span class="p">)</span>
+</pre></div>
+
 <p>This may be too implicit for many people, but for me it’s just right—and
 that’s sort of the point of all of this, right?</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">

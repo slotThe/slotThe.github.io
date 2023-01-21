@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+    <link rel="stylesheet" href="../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -86,8 +86,10 @@ already scheduled work meeting with X).</p>
 <h1 id="showcase">Showcase<a href="#showcase" id="sec-link" class="floatright">¶</a></h1>
 <p>Long story short, this is now built into X.P.OrgMode. There are two new
 functions:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefile   ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span>           <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefileTo ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">orgPromptRefile</span><span class="w">   </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w">           </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<span class="w">    </span><span class="n">orgPromptRefileTo</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+</pre></div>
+
 <p>The former takes the same arguments as <a href="https://hackage.haskell.org/package/xmonad-contrib-0.17.1/docs/XMonad-Prompt-OrgMode.html#v:orgPrompt">orgPrompt</a> (which see), and is
 for popping up another prompt that asks for a heading. The latter
 refiles everything under the specified (as the second argument) heading.</p>
@@ -105,30 +107,34 @@ precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-con
 <a href="../posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">refile ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>refile (asString <span class="ot">-&gt;</span> parent) (asString <span class="ot">-&gt;</span> fp) <span class="ot">=</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inEmacs</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> asBatch</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> eval (progn</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                [ <span class="st">&quot;find-file&quot;</span> <span class="op">&lt;&gt;</span> fp</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;end-of-buffer&quot;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;org-refile nil nil&quot;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="op">&lt;&gt;</span> list [ parent, fp, <span class="st">&quot;nil&quot;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                            , saveExcursion</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                               [<span class="st">&quot;org-find-exact-headline-in-buffer&quot;</span> <span class="op">&lt;&gt;</span> parent]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                            ]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;save-buffer&quot;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                ])</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="nf">refile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<span class="nf">refile</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">fp</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
+<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">asBatch</span>
+<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">progn</span>
+<span class="w">                </span><span class="p">[</span><span class="w"> </span><span class="s">&quot;find-file&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">fp</span>
+<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;end-of-buffer&quot;</span>
+<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org-refile nil nil&quot;</span>
+<span class="w">                    </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="n">fp</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nil&quot;</span>
+<span class="w">                            </span><span class="p">,</span><span class="w"> </span><span class="n">saveExcursion</span>
+<span class="w">                               </span><span class="p">[</span><span class="s">&quot;org-find-exact-headline-in-buffer&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">]</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;save-buffer&quot;</span>
+<span class="w">                </span><span class="p">])</span>
+</pre></div>
+
 <p>This—as you probably guessed already—just executes the following elisp
 snippet in Emacs’s batch mode:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">progn</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  (find-file «fp»)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  (end-of-buffer)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  (org-refile <span class="kw">nil</span> <span class="kw">nil</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>              (<span class="kw">list</span> «parent» «fp» <span class="kw">nil</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                    (save-excursion</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                      (org-find-exact-headline-in-buffer «parent»))))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  (save-buffer))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">find-file</span><span class="w"> </span><span class="err">«</span><span class="nv">fp</span><span class="err">»</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">org-refile</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span>
+<span class="w">              </span><span class="p">(</span><span class="nf">list</span><span class="w"> </span><span class="err">«</span><span class="nv">parent</span><span class="err">»</span><span class="w"> </span><span class="err">«</span><span class="nv">fp</span><span class="err">»</span><span class="w"> </span><span class="no">nil</span>
+<span class="w">                    </span><span class="p">(</span><span class="k">save-excursion</span>
+<span class="w">                      </span><span class="p">(</span><span class="nv">org-find-exact-headline-in-buffer</span><span class="w"> </span><span class="err">«</span><span class="nv">parent</span><span class="err">»</span><span class="p">))))</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">save-buffer</span><span class="p">))</span>
+</pre></div>
+
 <p>I know this seems insane, but letting Emacs do this work is actually
 much less brittle than the alternative. The Org maintainers certainly
 know best what refiling <em>means</em>, and thus also what it entails—if all of

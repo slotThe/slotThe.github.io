@@ -3,23 +3,19 @@
 {-# LANGUAGE LambdaCase          #-}
 {-# LANGUAGE NamedFieldPuns      #-}
 {-# LANGUAGE OverloadedStrings   #-}
+{-# LANGUAGE ViewPatterns        #-}
 
 import Data.Text qualified as T
-import GHC.Exts  qualified as Ext
 
-import Control.Arrow (first)
 import Control.Monad
-import Data.Foldable
 import Data.Maybe
-import Data.Text (Text)
 import Hakyll
-import Skylighting.Types hiding (Context, Item)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
-import Text.Pandoc.Definition (Block (Header), Inline (Link, Str), Pandoc)
-import Text.Pandoc.Highlighting
+import Text.Pandoc.Definition (Block (Header, CodeBlock, RawBlock), Inline (Link, Str), Pandoc)
 import Text.Pandoc.Options
 import Text.Pandoc.Templates (compileTemplate)
-import Text.Pandoc.Walk (walk)
+import Text.Pandoc.Walk (walk, walkM)
+import System.Process (readProcess)
 
 main :: IO ()
 main = hakyllWith config do
@@ -37,11 +33,6 @@ main = hakyllWith config do
   match "talks/*" do
     route   idRoute
     compile copyFileCompiler
-
-  -- Syntax highlighting; see below
-  create ["css/syntax.css"] do
-    route idRoute
-    compile . makeItem $ styleToCss highlightTheme
 
   --- Generate tags
   tags@Tags{ tagsMap , tagsMakeId } <- buildTags "posts/**" (fromCapture "tags/**.html")
@@ -194,31 +185,7 @@ getTocCtx ctx = do
       }
 
 -----------------------------------------------------------------------
--- Theming
-
--- | In the spirit of the stimmung-themes:
---       https://github.com/motform/stimmung-themes
-highlightTheme :: Style
-highlightTheme = monochrome
-  { tokenStyles
-      = Ext.fromList
-          [ (CommentTok , defStyle{ tokenColor  = color 0x505050, tokenItalic = True })
-          , (DataTypeTok, defStyle{ tokenBackground = color 0xf8edff })
-          , (StringTok  , defStyle{ tokenColor = color 0x505050 })
-          , (OperatorTok, defStyle{ tokenBold = True })
-          , (OtherTok   , defStyle)
-          ]
-     <> tokenStyles monochrome
-  }
- where
-  color :: Int -> Maybe Color
-  color = toColor
-
------------------------------------------------------------------------
 -- Util
-
-hasTag :: MonadMetadata f => String -> Item a -> f Bool
-hasTag tg = fmap (tg `elem`) . getTags . itemIdentifier
 
 allPosts :: Pattern
 allPosts = "posts/**.md"
@@ -288,16 +255,22 @@ killTags open close = go
 pandocCompilerNoToc :: Compiler (Item String)
 pandocCompilerNoToc = pandocCompiler
 
--- | Pandoc compiler with syntax highlighting and section links.  Also
--- see 'getTocCtx' for more table of contents related things.
---
--- Sources:
---   + Syntax highlighting: https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
---   + Section links      : https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
+-- | Pandoc compiler with syntax highlighting (via @pygmentize@) and
+-- section links.  Also see 'getTocCtx' for more table of contents
+-- related things, and @./build.sh@ for LaTeX-rendering.
 myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
-  pandocCompilerWithTransform defaultHakyllReaderOptions myWriter addSectionLinks
+  pandocCompilerWithTransformM
+    defaultHakyllReaderOptions
+    myWriter
+    (pygmentsHighlight . addSectionLinks)
  where
+  myWriter :: WriterOptions
+  myWriter = defaultHakyllWriterOptions
+    { writerHTMLMathMethod = MathJax ""
+    }
+
+  -- https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
   addSectionLinks :: Pandoc -> Pandoc
   addSectionLinks = walk \case
     Header n attr@(idAttr, _, _) inlines ->
@@ -305,8 +278,12 @@ myPandocCompiler =
        in Header n attr (inlines <> [link])
     block -> block
 
-  myWriter :: WriterOptions
-  myWriter = defaultHakyllWriterOptions
-    { writerHighlightStyle = Just highlightTheme
-    , writerHTMLMathMethod = MathJax ""
-    }
+  pygmentsHighlight :: Pandoc -> Compiler Pandoc
+  pygmentsHighlight = walkM \case
+    CodeBlock (_, listToMaybe -> mbLang, _) (T.unpack -> body) -> do
+      let lang = T.unpack (fromMaybe "text" mbLang)
+      RawBlock "html" . T.pack <$> unsafeCompiler (callPygs lang body)
+    block -> pure block
+   where
+    callPygs :: String -> String -> IO String
+    callPygs lang = readProcess "pygmentize" ["-l", lang, "-f", "html"]

@@ -48,10 +48,10 @@ frame with a special name for our scratchpad hooks to grab onto, and
 execute `notmuch`:
 
 ``` haskell
-  mailSession :: X String
-  mailSession = getInput $
-    inEditor >-> setFrameName mailInstName
-             >-> eval (function "notmuch")
+mailSession :: X String
+mailSession = getInput $
+  inEditor >-> setFrameName mailInstName
+           >-> eval (function "notmuch")
 ```
 
 You can read the `>->` operator a little like a pipe, where you start
@@ -62,9 +62,9 @@ In full, the above function would produce the string (broken into a few
 lines for better readability)
 
 ```
-  "emacsclient -c -a ''
-               -F '(quote (name . \"notmuch-scratch\"))'
-               --eval '(notmuch)'"
+"emacsclient -c -a ''
+             -F '(quote (name . \"notmuch-scratch\"))'
+             --eval '(notmuch)'"
 ```
 
 which would be quite bothersome to type indeed.
@@ -74,24 +74,24 @@ the setup for this is a little bit different than usual when using
 scratchpads.  You would use it like this:
 
 ``` haskell
-  myScratchpads :: X [NamedScratchpad]
-  myScratchpads = do
-    -- First, get the finished string.
-    mailSession <- getInput $
-      inEditor >-> setFrameName mailInst >-> eval (elispFun "notmuch")
-    -- Now we can insert it into our scratchpads as normal.
-    pure [ NS "Mail" mailSession (appName =? mailInst) quake ]
-   where
-    mailInst = "notmuch-scratch"
-    quake    = customFloating $ RationalRect 0 0 1 (4 / 5)
+myScratchpads :: X [NamedScratchpad]
+myScratchpads = do
+  -- First, get the finished string.
+  mailSession <- getInput $
+    inEditor >-> setFrameName mailInst >-> eval (elispFun "notmuch")
+  -- Now we can insert it into our scratchpads as normal.
+  pure [ NS "Mail" mailSession (appName =? mailInst) quake ]
+ where
+  mailInst = "notmuch-scratch"
+  quake    = customFloating $ RationalRect 0 0 1 (4 / 5)
 
-  -- The call to @namedScratchpadManageHook@ in the manageHook also
-  -- needs to be slightly adjusted.
-  myManageHook :: ManageHook
-  myManageHook = mconcat
-    [ …
-    , namedScratchpadManageHook =<< liftX myScratchpads
-    ]
+-- The call to @namedScratchpadManageHook@ in the manageHook also
+-- needs to be slightly adjusted.
+myManageHook :: ManageHook
+myManageHook = mconcat
+  [ …
+  , namedScratchpadManageHook =<< liftX myScratchpads
+  ]
 ```
 
 Normally you would also add your `myScratchpads` list to all calls of
@@ -125,27 +125,27 @@ citation entry in my bibliography
 files](/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations):
 
 ``` haskell
-  callArXiv :: String -> X ()
-  callArXiv fun = do
-    url <- getSelection  -- from X.U.XSelection
-    proc $ inEmacs
-       >-> withEmacsLibs [ ElpaLib "dash", ElpaLib "s"
-                         , ElpaLib "arxiv-citation"
-                         , Special "~/.config/emacs/private-stuff.el" ]
-       >-> asBatch
-       >-> eval (progn [require "arxiv-citation", fun <> asString url])
+callArXiv :: String -> X ()
+callArXiv fun = do
+  url <- getSelection  -- from X.U.XSelection
+  proc $ inEmacs
+     >-> withEmacsLibs [ ElpaLib "dash", ElpaLib "s"
+                       , ElpaLib "arxiv-citation"
+                       , Special "~/.config/emacs/private-stuff.el" ]
+     >-> asBatch
+     >-> eval (progn [require "arxiv-citation", fun <> asString url])
 ```
 
 When executed, this translates to something like
 
 ```
-  emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
-        -L /home/slot/.config/emacs/elpa/s-20210616.619
-        -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
-        --batch
-        --eval '(progn
-                  (require (quote arxiv-citation))
-                  (arXiv-citation "<url-in-the-primary-selection>"))'
+emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
+      -L /home/slot/.config/emacs/elpa/s-20210616.619
+      -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
+      --batch
+      --eval '(progn
+                (require (quote arxiv-citation))
+                (arXiv-citation "<url-in-the-primary-selection>"))'
 ```
 
 I certainly know which one I'd rather type—especially with ELPA
@@ -170,17 +170,17 @@ is spawning a terminal or an editor already in the current topic
 directory:
 
 ``` haskell
-  import XMonad.Actions.TopicSpace  -- for currentTopicDir and more
-  topicConfig = …
+import XMonad.Actions.TopicSpace  -- for currentTopicDir and more
+topicConfig = …
 
-  spawnTermInTopic :: X ()
-  spawnTermInTopic =
-    proc $ termInDir >-$ currentTopicDir topicConfig
+spawnTermInTopic :: X ()
+spawnTermInTopic =
+  proc $ termInDir >-$ currentTopicDir topicConfig
 
-  -- Optionally, modify the path to the editor with a function.
-  spawnEditorInTopic :: (String -> String) -> X ()
-  spawnEditorInTopic with =
-    proc $ inEditor >-$ with <$> currentTopicDir topicConfig
+-- Optionally, modify the path to the editor with a function.
+spawnEditorInTopic :: (String -> String) -> X ()
+spawnEditorInTopic with =
+  proc $ inEditor >-$ with <$> currentTopicDir topicConfig
 ```
 
 Quite convenient if you ask me.
@@ -219,8 +219,8 @@ set `"Emacs"` as our editor, the `inEditor` function would essentially
 be
 
 ``` haskell
-  inEditor :: String -> String
-  inEditor s = " Emacs " <> s
+inEditor :: String -> String
+inEditor s = " Emacs " <> s
 ```
 
 There are some further considerations to be made, since we are in the
@@ -240,9 +240,9 @@ However, the complexity characteristics of this operation are working
 against us here; the definition of `(<>)` on `String`[^1] is
 
 ``` haskell
-  (<>) :: String -> String -> String
-  []       <> ys =           ys
-  (x : xs) <> ys = x : xs <> ys
+(<>) :: String -> String -> String
+[]       <> ys =           ys
+(x : xs) <> ys = x : xs <> ys
 ```
 
 We are merely traversing the first string, leaving the second one

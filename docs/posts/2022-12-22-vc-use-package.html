@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+    <link rel="stylesheet" href="../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -66,14 +66,18 @@ people so that turning it into a proper package could be worth it; and
 here we are!</p>
 <p>The basic premise is really this simple—we create a handler for a new
 <code>:vc</code> use-package keyword. It can be used like so:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  :vc (:fetcher github :repo oantolin/math-delimiters))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:fetcher</span><span class="w"> </span><span class="nv">github</span><span class="w"> </span><span class="nb">:repo</span><span class="w"> </span><span class="nv">oantolin/math-delimiters</span><span class="p">))</span>
+</pre></div>
+
 <p>One can specify most arguments that <code>package-vc-install</code> also accepts; for example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  :vc (:fetcher <span class="st">&quot;github&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       :rev <span class="st">&quot;master&quot;</span>         <span class="co">; also accepts the special `:last-release'</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       :backend Git))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:fetcher</span><span class="w"> </span><span class="s">&quot;github&quot;</span>
+<span class="w">       </span><span class="nb">:repo</span><span class="w"> </span><span class="s">&quot;oantolin/math-delimiters&quot;</span>
+<span class="w">       </span><span class="nb">:rev</span><span class="w"> </span><span class="s">&quot;master&quot;</span><span class="w">         </span><span class="c1">; also accepts the special `:last-release'</span>
+<span class="w">       </span><span class="nb">:backend</span><span class="w"> </span><span class="nv">Git</span><span class="p">))</span>
+</pre></div>
+
 <p>Much like quelpa-use-package, there is some care needed concerning the
 interaction between this package and the <code>use-package-always-ensure</code>
 variable, but this should mostly be taken care of automatically. For

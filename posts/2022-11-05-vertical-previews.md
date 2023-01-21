@@ -39,7 +39,7 @@ heavy lifting to some internal functions.  After staring at the former
 function for a while, one can single out `preview-get-dpi` as the main
 culprit.  It seems to calculate the "resolution" of the preview:
 
-``` lisp
+``` emacs-lisp
   (defun preview-get-dpi ()
     (let* ((monitor-attrs (frame-monitor-attributes))
            (mm-dims (cdr (assoc 'mm-size monitor-attrs)))
@@ -55,7 +55,7 @@ culprit.  It seems to calculate the "resolution" of the preview:
 Monitor details are returned by the `frame-monitor-attributes` function;
 its output for a horizontal monitor is
 
-``` lisp
+``` emacs-lisp
   '((name . "DP1")
     (geometry 0 0 1920 1080)
     (workarea 0 0 1920 1080)
@@ -66,7 +66,7 @@ its output for a horizontal monitor is
 
 While the same monitor in "vertical-mode" returns
 
-``` lisp
+``` emacs-lisp
   '((name . "DP1")
     (geometry 0 0 1080 1920)
     (workarea 0 0 1080 1920)
@@ -86,7 +86,7 @@ too narrow or too wide previews.
 The solution is to only compare the comparable values.  Indeed,
 overriding the built-in `preview-get-dpi` function with
 
-``` lisp
+``` emacs-lisp
   (defun preview-get-dpi ()
     (-let (((&alist 'mm-size (mw mh)
                     'geometry (_ _ pw ph))

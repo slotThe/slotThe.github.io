@@ -84,8 +84,7 @@ will need to `require` the `s.el` and `dash.el` libraries for this to
 work, if you haven't loaded these already (if you use any amount of
 packages at all, chances are that you have).
 
-<!-- pandoc does not support emacs-lisp :< -->
-``` commonlisp
+``` emacs-lisp
 (defun slot/get-queries (&optional pairs)
   "Get multiple `query-replace' pairs from the user.
 PAIRS is a list of replacement pairs of the form (FROM . TO)."

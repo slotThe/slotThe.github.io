@@ -28,14 +28,14 @@ here we are!
 The basic premise is really this simple—we create a handler for a new
 `:vc` use-package keyword.  It can be used like so:
 
-``` lisp
+``` emacs-lisp
 (use-package math-delimiters
   :vc (:fetcher github :repo oantolin/math-delimiters))
 ```
 
 One can specify most arguments that `package-vc-install` also accepts; for example:
 
-``` lisp
+``` emacs-lisp
 (use-package math-delimiters
   :vc (:fetcher "github"
        :repo "oantolin/math-delimiters"

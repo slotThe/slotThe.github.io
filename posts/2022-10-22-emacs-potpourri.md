@@ -74,7 +74,7 @@ insert a link to it into the current buffer.  This sounds like a lot of
 busywork for something that I ideally don't want to think about at all;
 thankfully, most of this can be nicely automated.
 
-``` lisp
+``` emacs-lisp
 (defun slot/org-roam-insert-image ()
   "Select and insert an image at point."
   (interactive)
@@ -106,7 +106,7 @@ functions.  To be honest, they kind of delight me.
 First, the following is an override for the `self-insert-command`, which
 enables faster entry of one-character math symbols:
 
-``` lisp
+``` emacs-lisp
 (defun slot/LaTeX-self-insert (&optional arg char)
   "`self-insert-command' for LaTeX mode.
 If the previous word is just a single character, surround it with
@@ -145,7 +145,7 @@ often.[^3] I could also create an auto-expanding snippet for this, but
 wouldn't it be _much better_ to insert it on a double tap of the space
 bar instead?  I think so!
 
-``` lisp
+``` emacs-lisp
 (defun slot/LaTeX-space (&optional arg)
   "Insert a space; or not.
 In case the previous character was already a space, insert
@@ -186,7 +186,7 @@ environment that it wants your attention.  You can then execute an
 action based on this urgency hint.  Thankfully, Emacs is extensible, so
 hacking this behaviour into ERC wasn't actually all that complicated.
 
-``` lisp
+``` emacs-lisp
 (defun slot/mark-emacs-urgent ()
   "Mark the current frame as urgent."
   (let* ((WM-HINTS "WM_HINTS")
@@ -227,7 +227,7 @@ Thankfully, however, there is a straightforward hack around this: just
 check the message for certain regular expression first and do nothing
 when they are present.
 
-``` lisp
+``` emacs-lisp
 (defun slot/erc-ignore-highlight (msg)
   "Don't highlight me when these things happen."
   (let ((message (s-trim-left msg))
@@ -242,7 +242,7 @@ when they are present.
 All that's left to do is to thread this function through to
 `erc-log-matches` and the above-defined `slot/beep-on-match`:
 
-``` lisp
+``` emacs-lisp
 (defun slot/erc-log-matches (match-type nickuserhost message)
   "Log matches to extra buffer, unless they are annoying."
   (unless (slot/erc-ignore-highlight message)
@@ -273,7 +273,7 @@ of my blog posts, as well as selected extra sites, like our tutorial and
 installation instructions.  Depending on the given universal argument, a
 different link style is used, to accomodate for different platforms.
 
-``` lisp
+``` emacs-lisp
 (defun slot/get-xmonad-modules ()
   "Get all XMonad modules in the form (NAME . DOC-URL)."
   (let* ((xmonad-cabal "~/repos/xmonad/xmonad-contrib/xmonad-contrib.cabal")
@@ -339,7 +339,7 @@ the one below.  Even [use-package] now sports a `:repeat-map` keyword
 now.  However, obviously the one I wrote feels the most natural to _me_,
 so it's being kept around regardless.
 
-``` lisp
+``` emacs-lisp
 (defmacro defrepeatmap (sym pairs &optional docstring)
   "A macro for defining `repeat-map's.
 Defines a new repeat-map called SYM with the given DOCSTRING.
@@ -372,7 +372,7 @@ The following would, for example, bind `mc/mark-next-like-this-word` to
 `M-s s` globally and to `s` in the created `mc-repeat-map`.  Likewise,
 `mc/mark-next-word-like-this` is bound to `.` in that map, and so on.
 
-``` lisp
+``` emacs-lisp
 (defrepeatmap mc-repeat-map
     '(("M-s s" . mc/mark-next-like-this-word)
       ("C-M-." . mc/mark-next-word-like-this)

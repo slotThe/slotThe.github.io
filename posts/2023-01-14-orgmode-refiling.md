@@ -86,7 +86,7 @@ refile (asString -> parent) (asString -> fp) =
 This—as you probably guessed already—just executes the following elisp
 snippet in Emacs's batch mode:
 
-``` lisp
+``` emacs-lisp
 (progn
   (find-file «fp»)
   (end-of-buffer)

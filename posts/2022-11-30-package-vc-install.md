@@ -19,7 +19,7 @@ that are not on any popular archive straight from source.  Especially
 the latter package resulted in an almost seemless integration with the
 rest of my configuration; for example:
 
-``` lisp
+``` emacs-lisp
 (use-package math-delimiters
   :quelpa (math-delimiters :fetcher github :repo "oantolin/math-delimiters"))
 ```
@@ -34,7 +34,7 @@ quelpa up until now!
 The most user-facing of these new functions is `package-vc-install`,
 with signature
 
-``` lisp
+``` emacs-lisp
 (package-vc-install PACKAGE &optional NAME REV BACKEND)
 ```
 
@@ -63,7 +63,7 @@ declaration of X itself.
 
 So, let's take the easy way out and write a small wrapper:
 
-``` lisp
+``` emacs-lisp
 (cl-defun slot/vc-install (&key (fetcher "github") repo name rev backend)
   "Install a package from a remote if it's not already installed.
 This is a thin wrapper around `package-vc-install' in order to
@@ -89,7 +89,7 @@ This function can now be used under the `init` keyword of the
 use-package macro, almost without changing the shape of the declaration
 from above:
 
-``` lisp
+``` emacs-lisp
 ;; Before
 (use-package math-delimiters
   :quelpa (math-delimiters :fetcher github :repo "oantolin/math-delimiters"))

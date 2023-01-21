@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+    <link rel="stylesheet" href="../../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -106,23 +106,27 @@ video you want to watch on the weekend!</p>
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
 “normal” TODO notes on <code>M-o c</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and uses the selection when called
 with a universal argument:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- uses {-# LANGUAGE LambdaCase #-}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">orgKey ::</span> (<span class="dt">String</span>, <span class="dt">X</span> ())</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>orgKey <span class="ot">=</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;M-o c&quot;</span>, withPrefixArgument <span class="op">$</span> (<span class="ot">`uncurry`</span> orgSettings) <span class="op">.</span> \<span class="kw">case</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="dt">Raw</span> _ <span class="ot">-&gt;</span> orgPromptPrimary promptNoHist</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     _     <span class="ot">-&gt;</span> orgPrompt        promptNoHist)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  orgSettings <span class="ot">=</span> (<span class="st">&quot;TODO&quot;</span>, <span class="st">&quot;~/todos.org&quot;</span>)</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
+<span class="nf">orgKey</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)</span>
+<span class="nf">orgKey</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="p">(</span><span class="s">&quot;M-o c&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="p">(`</span><span class="n">uncurry</span><span class="p">`</span><span class="w"> </span><span class="n">orgSettings</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">     </span><span class="kt">Raw</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">orgPromptPrimary</span><span class="w"> </span><span class="n">promptNoHist</span>
+<span class="w">     </span><span class="kr">_</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">orgPrompt</span><span class="w">        </span><span class="n">promptNoHist</span><span class="p">)</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="n">orgSettings</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;TODO&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~/todos.org&quot;</span><span class="p">)</span>
+</pre></div>
+
 <p>I’ve found <code>M-u</code> to be quite convenient for XMonad’s universal argument
 key, mirroring the <code>C-u</code> convention from Emacs. In either case, simply
 add the <code>usePrefixArgument</code> combinator somewhere to your <code>main</code> function
 and give it your preferred keybinding. For example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> xmonad</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="op">.</span> usePrefixArgument <span class="st">&quot;M-u&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="op">$</span> def{ modMask <span class="ot">=</span> mod4Mask  <span class="co">-- use &lt;Super&gt; as mod</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>          }</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
+<span class="nf">main</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">xmonad</span>
+<span class="w">     </span><span class="o">.</span><span class="w"> </span><span class="n">usePrefixArgument</span><span class="w"> </span><span class="s">&quot;M-u&quot;</span>
+<span class="w">     </span><span class="o">$</span><span class="w"> </span><span class="n">def</span><span class="p">{</span><span class="w"> </span><span class="n">modMask</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">mod4Mask</span><span class="w">  </span><span class="c1">-- use &lt;Super&gt; as mod</span>
+<span class="w">          </span><span class="p">}</span>
+</pre></div>
+
 <p>If you’re anything like me, this will soon become an integral part of
 your workflow and you won’t want to live without it. If not, then
 perhaps you still don’t understand what all the fuss is about; in either

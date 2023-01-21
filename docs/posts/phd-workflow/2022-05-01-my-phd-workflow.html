@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+    <link rel="stylesheet" href="../../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -120,7 +120,9 @@ as-a-directory it is actually the easiest and cleanest solution for me.</p>
 descriptive way: <code>authors_title.pdf</code>, where <code>authors</code> is a list of last
 names of all authors separated by hyphens and <code>title</code> is the title of
 the work, also separated by hyphens. For example:</p>
-<pre><code>    pastro-street_double-of-a-monoidal-category.pdf</code></pre>
+<div class="highlight"><pre><span></span>    pastro-street_double-of-a-monoidal-category.pdf
+</pre></div>
+
 <p>Also in this directory are <code>.xopp</code> files, when I scribble on the
 relevant PDFs in <a href="https://xournalpp.github.io/">xournalpp</a>; more on that later.</p>
 <p>Instead of navigating to it, all interaction with the library is done
@@ -163,13 +165,15 @@ will not belabour the point too much here. The tl;dr is <a href="https://www.gnu
 <p><img class="pure-img" src="./input.gif"></p>
 <p>In case you’re not used to <code>prettify-symbols-mode</code>: the inserted LaTeX
 code was</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">definition</span>} <span class="kw">\label</span>{<span class="ex">def:day-convolution</span>}</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  The <span class="fu">\emph</span>{Day convolution} of two functors <span class="ss">$F$</span> and <span class="ss">$G$</span> is</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ss">\[</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    F * G </span><span class="sc">\defeq</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ss">      </span><span class="sc">\int</span><span class="ss">^{C,D </span><span class="sc">\in</span><span class="ss"> </span><span class="sc">\cc</span><span class="ss">} </span><span class="sc">\cc</span><span class="ss">(C </span><span class="sc">\otimes</span><span class="ss"> D, </span><span class="sc">\blank</span><span class="ss">) </span><span class="sc">\otimes</span><span class="ss"> FC </span><span class="sc">\otimes</span><span class="ss"> GD.</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  \]</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">definition</span>}</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="k">\begin</span><span class="nb">{</span>definition<span class="nb">}</span> <span class="k">\label</span><span class="nb">{</span>def:day-convolution<span class="nb">}</span>
+  The <span class="k">\emph</span><span class="nb">{</span>Day convolution<span class="nb">}</span> of two functors <span class="s">$</span><span class="nb">F</span><span class="s">$</span> and <span class="s">$</span><span class="nb">G</span><span class="s">$</span> is
+  <span class="sb">\[</span>
+<span class="nb">    F </span><span class="o">*</span><span class="nb"> G </span><span class="nv">\defeq</span>
+<span class="nb">      </span><span class="nv">\int</span><span class="nb">^{C,D </span><span class="nv">\in</span><span class="nb"> </span><span class="nv">\cc</span><span class="nb">} </span><span class="nv">\cc</span><span class="o">(</span><span class="nb">C </span><span class="nv">\otimes</span><span class="nb"> D, </span><span class="nv">\blank</span><span class="o">)</span><span class="nb"> </span><span class="nv">\otimes</span><span class="nb"> FC </span><span class="nv">\otimes</span><span class="nb"> GD.</span>
+<span class="nb">  </span><span class="s">\]</span>
+<span class="k">\end</span><span class="nb">{</span>definition<span class="nb">}</span>
+</pre></div>
+
 <p>I do use some smaller packages not mentioned in Chikmagalur’s article,
 like <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a> and <a href="https://github.com/slotthe/change-env">latex-change-env</a>. The former is for
 quickly changing between inline and display math, complete with slurping

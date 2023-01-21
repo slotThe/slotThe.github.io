@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+    <link rel="stylesheet" href="../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -70,8 +70,10 @@ straight.el.</p>
 that are not on any popular archive straight from source. Especially
 the latter package resulted in an almost seemless integration with the
 rest of my configuration; for example:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  :quelpa (math-delimiters :fetcher github :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span>))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<span class="w">  </span><span class="nb">:quelpa</span><span class="w"> </span><span class="p">(</span><span class="nv">math-delimiters</span><span class="w"> </span><span class="nb">:fetcher</span><span class="w"> </span><span class="nv">github</span><span class="w"> </span><span class="nb">:repo</span><span class="w"> </span><span class="s">&quot;oantolin/math-delimiters&quot;</span><span class="p">))</span>
+</pre></div>
+
 <p><a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=5fa2f116799b8a7c17ff6eedd6e1b1af077c116b">Recently</a>, Emacs added built-in capabilities for
 installing a package directly from its remote repository. Eager to
 shave yet another external package from my otherwise ever growing list,
@@ -80,7 +82,9 @@ covers the use-case for which I—and perhaps a few other people—used
 quelpa up until now!</p>
 <p>The most user-facing of these new functions is <code>package-vc-install</code>,
 with signature</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(package-vc-install PACKAGE &amp;optional NAME REV BACKEND)</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">package-vc-install</span><span class="w"> </span><span class="nv">PACKAGE</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">NAME</span><span class="w"> </span><span class="nv">REV</span><span class="w"> </span><span class="nv">BACKEND</span><span class="p">)</span>
+</pre></div>
+
 <p>In the simplest case, it takes a URL pointing to some online source as
 its argument and installs the respective package from there, guessing
 the name from the URL. In case that doesn’t work—or one wants more
@@ -101,37 +105,41 @@ use-package’s <code>quelpa</code> keyword. Plus, I’d rather have the informa
 that package X is not installed from *ELPA local to the use-package
 declaration of X itself.</p>
 <p>So, let’s take the easy way out and write a small wrapper:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(cl-defun slot/vc-install (&amp;key (fetcher <span class="st">&quot;github&quot;</span>) repo name rev backend)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Install a package from a remote if it's not already installed.</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">This is a thin wrapper around `package-vc-install' in order to</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">make non-interactive usage more ergonomic.  Takes the following</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">named arguments:</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">- FETCHER the remote where to get the package (e.g., </span><span class="sc">\&quot;</span><span class="st">gitlab</span><span class="sc">\&quot;</span><span class="st">).</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">  If omitted, this defaults to </span><span class="sc">\&quot;</span><span class="st">github</span><span class="sc">\&quot;</span><span class="st">.</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">- REPO should be the name of the repository (e.g.,</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  </span><span class="sc">\&quot;</span><span class="st">slotThe/arXiv-citation</span><span class="sc">\&quot;</span><span class="st">.</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">- NAME, REV, and BACKEND are as in `package-vc-install' (which</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  see).&quot;</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let*</span> ((url (<span class="kw">format</span> <span class="st">&quot;https://www.%s.com/%s&quot;</span> fetcher repo))</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>         (iname (<span class="kw">when</span> name (<span class="kw">intern</span> name)))</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>         (pac-name (<span class="kw">or</span> iname (<span class="kw">intern</span> (file-name-base repo)))))</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">unless</span> (package-installed-p pac-name)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      (package-vc-install url iname rev backend))))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">cl-defun</span><span class="w"> </span><span class="nv">slot/vc-install</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;key</span><span class="w"> </span><span class="p">(</span><span class="nv">fetcher</span><span class="w"> </span><span class="s">&quot;github&quot;</span><span class="p">)</span><span class="w"> </span><span class="nv">repo</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="nv">rev</span><span class="w"> </span><span class="nv">backend</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Install a package from a remote if it's not already installed.</span>
+<span class="s">This is a thin wrapper around </span><span class="ss">`package-vc-install'</span><span class="s"> in order to</span>
+<span class="s">make non-interactive usage more ergonomic.  Takes the following</span>
+<span class="s">named arguments:</span>
+
+<span class="s">- FETCHER the remote where to get the package (e.g., \&quot;gitlab\&quot;).</span>
+<span class="s">  If omitted, this defaults to \&quot;github\&quot;.</span>
+
+<span class="s">- REPO should be the name of the repository (e.g.,</span>
+<span class="s">  \&quot;slotThe/arXiv-citation\&quot;.</span>
+
+<span class="s">- NAME, REV, and BACKEND are as in </span><span class="ss">`package-vc-install'</span><span class="s"> (which</span>
+<span class="s">  see).&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">url</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;https://www.%s.com/%s&quot;</span><span class="w"> </span><span class="nv">fetcher</span><span class="w"> </span><span class="nv">repo</span><span class="p">))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">iname</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="p">(</span><span class="nf">intern</span><span class="w"> </span><span class="nv">name</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">pac-name</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="nv">iname</span><span class="w"> </span><span class="p">(</span><span class="nf">intern</span><span class="w"> </span><span class="p">(</span><span class="nv">file-name-base</span><span class="w"> </span><span class="nv">repo</span><span class="p">)))))</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">package-installed-p</span><span class="w"> </span><span class="nv">pac-name</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">package-vc-install</span><span class="w"> </span><span class="nv">url</span><span class="w"> </span><span class="nv">iname</span><span class="w"> </span><span class="nv">rev</span><span class="w"> </span><span class="nv">backend</span><span class="p">))))</span>
+</pre></div>
+
 <p>This function can now be used under the <code>init</code> keyword of the
 use-package macro, almost without changing the shape of the declaration
 from above:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode lisp"><code class="sourceCode commonlisp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">;; Before</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  :quelpa (math-delimiters :fetcher github :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span>))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">;; After</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>(<span class="kw">use-package</span> math-delimiters</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  :init (slot/vc-install :fetcher <span class="st">&quot;github&quot;</span> :repo <span class="st">&quot;oantolin/math-delimiters&quot;</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">;; OR (slot/vc-install :repo &quot;oantolin/math-delimiters&quot;)</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="c1">;; Before</span>
+<span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<span class="w">  </span><span class="nb">:quelpa</span><span class="w"> </span><span class="p">(</span><span class="nv">math-delimiters</span><span class="w"> </span><span class="nb">:fetcher</span><span class="w"> </span><span class="nv">github</span><span class="w"> </span><span class="nb">:repo</span><span class="w"> </span><span class="s">&quot;oantolin/math-delimiters&quot;</span><span class="p">))</span>
+
+<span class="c1">;; After</span>
+<span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<span class="w">  </span><span class="nb">:init</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/vc-install</span><span class="w"> </span><span class="nb">:fetcher</span><span class="w"> </span><span class="s">&quot;github&quot;</span><span class="w"> </span><span class="nb">:repo</span><span class="w"> </span><span class="s">&quot;oantolin/math-delimiters&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="c1">;; OR (slot/vc-install :repo &quot;oantolin/math-delimiters&quot;)</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+
 <p>In case you think I cherry picked the example, <a href="https://gitlab.com/slotThe/dotfiles/-/commit/6d55ac184af125a117215a1bb812ad75c5b0ab03">here</a>
 is the full commit that exchanges quelpa for <code>slot/vc-install</code>.</p>
 <h1 id="thats-all-folks">That’s all folks!<a href="#thats-all-folks" id="sec-link" class="floatright">¶</a></h1>

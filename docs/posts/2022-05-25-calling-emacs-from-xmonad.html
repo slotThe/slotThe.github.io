@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <link rel="stylesheet" type="text/css" href="../css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+    <link rel="stylesheet" href="../css/pygments.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -96,40 +96,46 @@ sounds exactly like what our EDSL should be good at, so let’s try that!</p>
 <p>Using the new features of <code>XMonad.Util.Run</code>, we could spawn an Emacs
 frame with a special name for our scratchpad hooks to grab onto, and
 execute <code>notmuch</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">  mailSession ::</span> <span class="dt">X</span> <span class="dt">String</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  mailSession <span class="ot">=</span> getInput <span class="op">$</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    inEditor <span class="op">&gt;-&gt;</span> setFrameName mailInstName</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>             <span class="op">&gt;-&gt;</span> eval (function <span class="st">&quot;notmuch&quot;</span>)</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="nf">mailSession</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="kt">String</span>
+<span class="nf">mailSession</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">getInput</span><span class="w"> </span><span class="o">$</span>
+<span class="w">  </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setFrameName</span><span class="w"> </span><span class="n">mailInstName</span>
+<span class="w">           </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">function</span><span class="w"> </span><span class="s">&quot;notmuch&quot;</span><span class="p">)</span>
+</pre></div>
+
 <p>You can read the <code>&gt;-&gt;</code> operator a little like a pipe, where you start
 with what you want and thread that information through to the end: “I
 want an editor with a certain frame name that also starts up notmuch”.</p>
 <p>In full, the above function would produce the string (broken into a few
 lines for better readability)</p>
-<pre><code>  &quot;emacsclient -c -a ''
-               -F '(quote (name . \&quot;notmuch-scratch\&quot;))'
-               --eval '(notmuch)'&quot;</code></pre>
+<div class="highlight"><pre><span></span>&quot;emacsclient -c -a ''
+             -F '(quote (name . \&quot;notmuch-scratch\&quot;))'
+             --eval '(notmuch)'&quot;
+</pre></div>
+
 <p>which would be quite bothersome to type indeed.</p>
 <p>Because the type of <code>mailSession</code> is <code>X String</code> and not just <code>String</code>,
 the setup for this is a little bit different than usual when using
 scratchpads. You would use it like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">  myScratchpads ::</span> <span class="dt">X</span> [<span class="dt">NamedScratchpad</span>]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  myScratchpads <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- First, get the finished string.</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    mailSession <span class="ot">&lt;-</span> getInput <span class="op">$</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      inEditor <span class="op">&gt;-&gt;</span> setFrameName mailInst <span class="op">&gt;-&gt;</span> eval (elispFun <span class="st">&quot;notmuch&quot;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Now we can insert it into our scratchpads as normal.</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pure</span> [ <span class="dt">NS</span> <span class="st">&quot;Mail&quot;</span> mailSession (appName <span class="op">=?</span> mailInst) quake ]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   <span class="kw">where</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    mailInst <span class="ot">=</span> <span class="st">&quot;notmuch-scratch&quot;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    quake    <span class="ot">=</span> customFloating <span class="op">$</span> <span class="dt">RationalRect</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> (<span class="dv">4</span> <span class="op">/</span> <span class="dv">5</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- The call to @namedScratchpadManageHook@ in the manageHook also</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- needs to be slightly adjusted.</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ot">  myManageHook ::</span> <span class="dt">ManageHook</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  myManageHook <span class="ot">=</span> <span class="fu">mconcat</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    [ …</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    , namedScratchpadManageHook <span class="op">=&lt;&lt;</span> liftX myScratchpads</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    ]</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="nf">myScratchpads</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="p">[</span><span class="kt">NamedScratchpad</span><span class="p">]</span>
+<span class="nf">myScratchpads</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="c1">-- First, get the finished string.</span>
+<span class="w">  </span><span class="n">mailSession</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getInput</span><span class="w"> </span><span class="o">$</span>
+<span class="w">    </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setFrameName</span><span class="w"> </span><span class="n">mailInst</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">elispFun</span><span class="w"> </span><span class="s">&quot;notmuch&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="c1">-- Now we can insert it into our scratchpads as normal.</span>
+<span class="w">  </span><span class="n">pure</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="kt">NS</span><span class="w"> </span><span class="s">&quot;Mail&quot;</span><span class="w"> </span><span class="n">mailSession</span><span class="w"> </span><span class="p">(</span><span class="n">appName</span><span class="w"> </span><span class="o">=?</span><span class="w"> </span><span class="n">mailInst</span><span class="p">)</span><span class="w"> </span><span class="n">quake</span><span class="w"> </span><span class="p">]</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="n">mailInst</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;notmuch-scratch&quot;</span>
+<span class="w">  </span><span class="n">quake</span><span class="w">    </span><span class="ow">=</span><span class="w"> </span><span class="n">customFloating</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="kt">RationalRect</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1">-- The call to @namedScratchpadManageHook@ in the manageHook also</span>
+<span class="c1">-- needs to be slightly adjusted.</span>
+<span class="nf">myManageHook</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">ManageHook</span>
+<span class="nf">myManageHook</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">mconcat</span>
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="err">…</span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">namedScratchpadManageHook</span><span class="w"> </span><span class="o">=&lt;&lt;</span><span class="w"> </span><span class="n">liftX</span><span class="w"> </span><span class="n">myScratchpads</span>
+<span class="w">  </span><span class="p">]</span>
+</pre></div>
+
 <p>Normally you would also add your <code>myScratchpads</code> list to all calls of
 <code>namedScratchpadAction</code>; e.g., when you define the keys to call your
 scratchpads. However, since the former lives in <code>X</code> now, this doesn’t
@@ -139,7 +145,9 @@ the first argument to <code>namedScratchpadAction</code> is actually unused and
 only there for backwards compatibility. This means that it’s not
 necessary to enter your scratchpads there at all if they are added to
 your <code>manageHook</code>. For example, in the following I just provide the empty list:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;M-C-t&quot;</span>, namedScratchpadAction [] <span class="st">&quot;Mail&quot;</span>)</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="s">&quot;M-C-t&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">namedScratchpadAction</span><span class="w"> </span><span class="kt">[]</span><span class="w"> </span><span class="s">&quot;Mail&quot;</span><span class="p">)</span>
+</pre></div>
+
 <p>This works all the same with the above definition of <code>myScratchpads</code>.</p>
 <p>A full example of how a scratchpad setup would look using this machinery
 can be found in <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L414">my config</a>.</p>
@@ -151,23 +159,27 @@ scripts? No problem at all!</p>
 currently selected text and call <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> with it to <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">produce a
 citation entry in my bibliography
 files</a>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">  callArXiv ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  callArXiv fun <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    url <span class="ot">&lt;-</span> getSelection  <span class="co">-- from X.U.XSelection</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    proc <span class="op">$</span> inEmacs</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="op">&gt;-&gt;</span> withEmacsLibs [ <span class="dt">ElpaLib</span> <span class="st">&quot;dash&quot;</span>, <span class="dt">ElpaLib</span> <span class="st">&quot;s&quot;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                         , <span class="dt">ElpaLib</span> <span class="st">&quot;arxiv-citation&quot;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                         , <span class="dt">Special</span> <span class="st">&quot;~/.config/emacs/private-stuff.el&quot;</span> ]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>       <span class="op">&gt;-&gt;</span> asBatch</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>       <span class="op">&gt;-&gt;</span> eval (progn [require <span class="st">&quot;arxiv-citation&quot;</span>, fun <span class="op">&lt;&gt;</span> asString url])</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="nf">callArXiv</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<span class="nf">callArXiv</span><span class="w"> </span><span class="n">fun</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">url</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getSelection</span><span class="w">  </span><span class="c1">-- from X.U.XSelection</span>
+<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
+<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">withEmacsLibs</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="kt">ElpaLib</span><span class="w"> </span><span class="s">&quot;dash&quot;</span><span class="p">,</span><span class="w"> </span><span class="kt">ElpaLib</span><span class="w"> </span><span class="s">&quot;s&quot;</span>
+<span class="w">                       </span><span class="p">,</span><span class="w"> </span><span class="kt">ElpaLib</span><span class="w"> </span><span class="s">&quot;arxiv-citation&quot;</span>
+<span class="w">                       </span><span class="p">,</span><span class="w"> </span><span class="kt">Special</span><span class="w"> </span><span class="s">&quot;~/.config/emacs/private-stuff.el&quot;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">asBatch</span>
+<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">progn</span><span class="w"> </span><span class="p">[</span><span class="n">require</span><span class="w"> </span><span class="s">&quot;arxiv-citation&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fun</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">asString</span><span class="w"> </span><span class="n">url</span><span class="p">])</span>
+</pre></div>
+
 <p>When executed, this translates to something like</p>
-<pre><code>  emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
-        -L /home/slot/.config/emacs/elpa/s-20210616.619
-        -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
-        --batch
-        --eval '(progn
-                  (require (quote arxiv-citation))
-                  (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))'</code></pre>
+<div class="highlight"><pre><span></span>emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
+      -L /home/slot/.config/emacs/elpa/s-20210616.619
+      -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
+      --batch
+      --eval '(progn
+                (require (quote arxiv-citation))
+                (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))'
+</pre></div>
+
 <p>I certainly know which one I’d rather type—especially with ELPA
 directory names changing quite frequently! On that note,
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!</p>
@@ -177,22 +189,26 @@ directory names changing quite frequently! On that note,
 other programs they may well come in handy. Drawing from the point
 about scratchpads again, here is a hypothetical one that spawns a ghci
 session:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  ghci <span class="ot">&lt;-</span> proc <span class="op">$</span> inTerm <span class="op">&gt;-&gt;</span> setXClass calcInstName <span class="op">&gt;-&gt;</span> execute <span class="st">&quot;ghci&quot;</span></span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="n">ghci</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inTerm</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setXClass</span><span class="w"> </span><span class="n">calcInstName</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="s">&quot;ghci&quot;</span>
+</pre></div>
+
 <p>Further, something that’s very useful when dealing with <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#topics">topic-based
 workspaces</a>
 is spawning a terminal or an editor already in the current topic
 directory:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">import</span> <span class="dt">XMonad.Actions.TopicSpace</span>  <span class="co">-- for currentTopicDir and more</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  topicConfig <span class="ot">=</span> …</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  spawnTermInTopic ::</span> <span class="dt">X</span> ()</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  spawnTermInTopic <span class="ot">=</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    proc <span class="op">$</span> termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Optionally, modify the path to the editor with a function.</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ot">  spawnEditorInTopic ::</span> (<span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span>) <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  spawnEditorInTopic with <span class="ot">=</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    proc <span class="op">$</span> inEditor <span class="op">&gt;-$</span> with <span class="op">&lt;$&gt;</span> currentTopicDir topicConfig</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">XMonad.Actions.TopicSpace</span><span class="w">  </span><span class="c1">-- for currentTopicDir and more</span>
+<span class="nf">topicConfig</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="err">…</span>
+
+<span class="nf">spawnTermInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<span class="nf">spawnTermInTopic</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">termInDir</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
+
+<span class="c1">-- Optionally, modify the path to the editor with a function.</span>
+<span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
+</pre></div>
+
 <p>Quite convenient if you ask me.</p>
 <p>If you have or know of a use case you would like to support but which is
 awkward with the current set of functions and combinators do not
@@ -206,49 +222,63 @@ if you don’t believe me!</p>
 <a href="https://github.com/spl/dlist#references">difference list</a>s. The basic idea of these things is that, instead of
 concatenating strings one by one, we create functions <code>String -&gt; String</code>
 and then use function composition to do the work for us:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Ordinary string concatenation</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Using difference lists:</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  string1, string2, string3,<span class="ot"> string4 ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  string1 s <span class="ot">=</span> <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> s</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  string2 s <span class="ot">=</span> …</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  string1 <span class="op">.</span> string2 <span class="op">.</span> string3 <span class="op">.</span> string4 <span class="op">$</span> <span class="st">&quot;&quot;</span></span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">-- Ordinary string concatenation</span>
+<span class="w">  </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
+
+<span class="w">  </span><span class="c1">-- Using difference lists:</span>
+<span class="w">  </span><span class="n">string1</span><span class="p">,</span><span class="w"> </span><span class="n">string2</span><span class="p">,</span><span class="w"> </span><span class="n">string3</span><span class="p">,</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<span class="w">  </span><span class="n">string1</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
+<span class="w">  </span><span class="n">string2</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="err">…</span>
+
+<span class="w">  </span><span class="n">string1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+</pre></div>
+
 <p>Note how we have to apply the entire thing to <code>""</code> at the end in order
 to actually get a string back. As a concrete example, assuming we have
 set <code>"Emacs"</code> as our editor, the <code>inEditor</code> function would essentially
 be</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ot">  inEditor ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  inEditor s <span class="ot">=</span> <span class="st">&quot; Emacs &quot;</span> <span class="op">&lt;&gt;</span> s</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="nf">inEditor</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<span class="nf">inEditor</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot; Emacs &quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
+</pre></div>
+
 <p>There are some further considerations to be made, since we are in the
 <code>X</code> monad and thus the type is actually <code>X (String -&gt; String)</code> instead
 of just <code>String -&gt; String</code>, but that isn’t too important for us here.</p>
 <p>Difference lists have some performance advantages over the traditional
 concatenation of strings. The concatenation <code>(&lt;&gt;)</code> on strings is left
 associative by default and so</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  ≡ ((<span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">    </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
+<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="p">((</span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
+</pre></div>
+
 <p>However, the complexity characteristics of this operation are working
 against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">  (&lt;&gt;) ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  []       <span class="op">&lt;&gt;</span> ys <span class="ot">=</span>           ys</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  (x <span class="op">:</span> xs) <span class="op">&lt;&gt;</span> ys <span class="ot">=</span> x <span class="op">:</span> xs <span class="op">&lt;&gt;</span> ys</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<span class="kt">[]</span><span class="w">       </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w">           </span><span class="n">ys</span>
+<span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span>
+</pre></div>
+
 <p>We are merely traversing the first string, leaving the second one
 completely untouched (and unevaluated!). All in all, this means that
 <code>s₁ &lt;&gt; s₂</code> is in <code>𝓞(|s₁|)</code>; given an expression of the form</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  ((<span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">((</span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
+</pre></div>
+
 <p>we will have to walk over <code>"string1"</code> three times! What we actually
 want is a right-associative ordering—exactly what function compositions
 gives us. Spelled out,</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>    string1 <span class="op">.</span> string2 <span class="op">.</span> string3 <span class="op">.</span> string4 <span class="op">$</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  ≡ string1 (string2 (string3 (string4 <span class="st">&quot;&quot;</span>)))</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  ≡ <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> (<span class="st">&quot;string2&quot;</span> <span class="op">&lt;&gt;</span> (<span class="st">&quot;string3&quot;</span> <span class="op">&lt;&gt;</span> (<span class="st">&quot;string4&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;&quot;</span>)))</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="n">string1</span><span class="w"> </span><span class="p">(</span><span class="n">string2</span><span class="w"> </span><span class="p">(</span><span class="n">string3</span><span class="w"> </span><span class="p">(</span><span class="n">string4</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
+<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string4&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
+</pre></div>
+
 <p>which yields the desired behaviour. In fact, this is so canonical that
 instead of using <code>(.)</code>, we could have also—perhaps a bit
 confusingly—used <code>(&lt;&gt;)</code> directly:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>    string1  <span class="op">.</span> string2  <span class="op">.</span> string3  <span class="op">.</span> string4</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  ≡ string1 <span class="op">&lt;&gt;</span> string2 <span class="op">&lt;&gt;</span> string3 <span class="op">&lt;&gt;</span> string4</span></code></pre></div>
+<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span>
+<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="n">string1</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string4</span>
+</pre></div>
+
 <p>This is the fact that the <em>endomorphisms</em> for any type <code>a</code>—the functions
 <code>a -&gt; a</code>—form a <em>monoid</em>. That is to say that they come equipped with
 an associative an unital operation: function composition. In Haskell,
