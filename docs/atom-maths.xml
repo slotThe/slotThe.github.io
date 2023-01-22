@@ -466,7 +466,7 @@ colimit of <span class="math inline">\(F\)</span></em> comprises an object <span
   \cong
   [\mathcal{J}^{\mathrm{op}}, \mathsf{Set}] (W, \mathcal{A}(F, a)).
 \]</span></p>
-<p>Note that, by the <a href="nlab:yoneda">Yoneda lemma</a>, the above isomorphism is
+<p>Note that, by the <a href="https://ncatlab.org/nlab/show/Yoneda+lemma">Yoneda lemma</a>, the above isomorphism is
 uniquely determined by a natural transformation <span class="math inline">\(W \implies \mathcal{A}(F, W \otimes_{\mathcal{J}} F)\)</span>. As promised, this is
 exactly the representation we arrived at above.</p>
 <p>A pair of an object <span class="math inline">\(c \in \mathcal{A}\)</span> and a natural transformation <span class="math inline">\(W \implies \mathcal{A}(F, c)\)</span> on their own; i.e., without the universal
@@ -669,7 +669,7 @@ cover here. However, since these aren’t directly related to my
 already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <h1 id="high-level-structure">High Level Structure</h1>
 <h2 id="topics">Topics</h2>
-<p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/xmonad-actions-topicspace.html">TopicSpace</a>, which upgrades the X11
+<p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results in

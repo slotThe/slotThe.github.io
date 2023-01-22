@@ -379,7 +379,7 @@ $$
   [\mathcal{J}^{\mathrm{op}}, \mathsf{Set}] (W, \mathcal{A}(F, a)).
 $$
 
-Note that, by the [Yoneda lemma](nlab:yoneda), the above isomorphism is
+Note that, by the [Yoneda lemma][nlab:yoneda], the above isomorphism is
 uniquely determined by a natural transformation $W \implies
 \mathcal{A}(F, W \otimes_{\mathcal{J}} F)$.  As promised, this is
 exactly the representation we arrived at above.

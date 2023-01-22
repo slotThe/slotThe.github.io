@@ -159,4 +159,4 @@ I've written about this package [here][post:vc-use-package] and about
 [vc-use-package]: https://github.com/slotThe/vc-use-package
 [vmensa]: https://gitlab.com/slotThe/vmensa
 [xmobar]: https://codeberg.org/xmobar/xmobar
-[yeganesh]: https://dmwit.com/yeganesh/
+[yeganesh]: https://hackage.haskell.org/package/yeganesh

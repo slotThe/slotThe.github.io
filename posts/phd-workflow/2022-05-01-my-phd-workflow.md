@@ -292,7 +292,7 @@ convenience:
 [Emacs]: https://www.gnu.org/software/emacs/
 [Gilles Castel]: https://castel.dev/post/research-workflow/
 [Karthik Chikmagalur]: https://karthinks.com/software/latex-input-for-impatient-scholars/
-[TopicSpace]: https://hackage.haskell.org/package/xmonad-contrib/docs/xmonad-actions-topicspace.html
+[TopicSpace]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html
 [XMonad's OrgMode prompt]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html
 [XMonad]: https://xmonad.org/
 [Zettelkasten]: https://en.wikipedia.org/wiki/zettelkasten
