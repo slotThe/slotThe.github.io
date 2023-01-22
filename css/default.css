@@ -22,6 +22,14 @@ div#footer {            /* Footer with RSS feed etc. */
     text-align: right;
 }
 
+hr {                    /* That line before the footnotes */
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid lavender;
+    margin: 1em 0; padding: 0;
+}
+
 /* Headings */
 
 h1 {
@@ -151,4 +159,10 @@ a:visited {
 
 :is(h1, h2, h3, h4, h5):hover a#sec-link {
     visibility: visible;
+}
+
+/* Code blocks */
+
+div .highlight {
+    padding-left: 1em;
 }
