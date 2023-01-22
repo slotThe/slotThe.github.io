@@ -1,31 +1,31 @@
-/* Based on: `$ pygmentize -S friendly_grayscale -f html` and tweaked
-   *heavily* after that.
+/* Based on: the `friendly_grayscale' and `algol_nu` styles, and tweaked
+   after that.
 
 Tweaks mostly inspired by the stimmung-themes: https://github.com/motform/stimmung-themes
 */
 
-/* pre { line-height: 125%; } */
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 .hll { background-color: #ffffcc }
-.c { color: #959595; font-style: italic } /* Comment */
+.c { color: #888888; font-style: italic } /* Comment */
 .err { border: 1px solid #898989 } /* Error */
 .k { font-weight: bold } /* Keyword */
 .o { font-weight: bold } /* Operator */
-.ch { color: #959595; font-style: italic } /* Comment.Hashbang */
-.cm { color: #505050; font-style: italic } /* Comment.Multiline */
-.cp { color: #575757 } /* Comment.Preproc */
-.cpf { color: #959595; font-style: italic } /* Comment.PreprocFile */
-.c1 { color: #505050; font-style: italic } /* Comment.Single */
-.cs { color: #959595; background-color: #F4F4F4 } /* Comment.Special */
+.p { } /* Punctuation */
+.ch { color: #666666; font-style: italic } /* Comment.Hashbang */
+.cm { color: #666666; font-style: italic } /* Comment.Multiline */
+.cp { color: #666666; font-weight: bold } /* Comment.Preproc */
+.cpf { color: #666666; font-style: italic } /* Comment.PreprocFile */
+.c1 { color: #666666; font-style: italic } /* Comment.Single */
+.cs { color: #666666; font-weight: bold } /* Comment.Special */
 .gd { color: #545454 } /* Generic.Deleted */
 .ge { font-style: italic } /* Generic.Emph */
 .gr { color: #898989 } /* Generic.Error */
 .gh { color: #373737; font-weight: bold } /* Generic.Heading */
 .gi { color: #7D7D7D } /* Generic.Inserted */
-.go { } /* Generic.Output */
+.go { color: #303030 } /* Generic.Output */
 .gp { font-weight: bold } /* Generic.Prompt */
 .gs { font-weight: bold } /* Generic.Strong */
 .gu { color: #5A5A5A; font-weight: bold } /* Generic.Subheading */
@@ -37,8 +37,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .kr { font-weight: bold } /* Keyword.Reserved */
 .kt { background-color: #f8edff } /* Keyword.Type */
 .m { color: #888888 } /* Literal.Number */
-.s { color: #505050 } /* Literal.String */
-.na { color: #707070 } /* Name.Attribute */
+.s { color: #454545 } /* Literal.String */
+.na { color: #303030 } /* Name.Attribute */
 .nb { font-weight: bold } /* Name.Builtin */
 .nc { color: #7E7E7E; font-weight: bold } /* Name.Class */
 .no { } /* Name.Constant */
@@ -57,15 +57,15 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .mh {  } /* Literal.Number.Hex */
 .mi {  } /* Literal.Number.Integer */
 .mo {  } /* Literal.Number.Oct */
-.sa { color: #717171 } /* Literal.String.Affix */
-.sb { color: #717171 } /* Literal.String.Backtick */
-.sc { color: #717171 } /* Literal.String.Char */
-.dl { color: #717171 } /* Literal.String.Delimiter */
-.sd { color: #717171; font-style: italic } /* Literal.String.Doc */
-.s2 { color: #717171 } /* Literal.String.Double */
-.se { color: #717171; font-weight: bold } /* Literal.String.Escape */
-.sh { color: #717171 } /* Literal.String.Heredoc */
-.si { color: #9F9F9F; font-style: italic } /* Literal.String.Interpol */
+.sa { color: #454545 } /* Literal.String.Affix */
+.sb { color: #454545 } /* Literal.String.Backtick */
+.sc { color: #454545 } /* Literal.String.Char */
+.dl { color: #454545 } /* Literal.String.Delimiter */
+.sd { color: #454545;  font-style: italic } /* Literal.String.Doc */
+.s2 { color: #454545 } /* Literal.String.Double */
+.se { color: #454545;  font-weight: bold } /* Literal.String.Escape */
+.sh { color: #454545 } /* Literal.String.Heredoc */
+.si { color: #9F9F9F } /* Literal.String.Interpol */
 .sx { color: #7E7E7E } /* Literal.String.Other */
 .sr { color: #575757 } /* Literal.String.Regex */
 .s1 { color: #717171 } /* Literal.String.Single */
