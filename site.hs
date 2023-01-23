@@ -10,12 +10,13 @@ import Data.Text qualified as T
 import Control.Monad
 import Data.Maybe
 import Hakyll
+import System.Process (readProcess)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Definition (Block (Header, CodeBlock, RawBlock), Inline (Link, Str), Pandoc)
 import Text.Pandoc.Options
+import Text.Pandoc.SideNote (usingSideNotes)
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Walk (walk, walkM)
-import System.Process (readProcess)
 
 main :: IO ()
 main = hakyllWith config do
@@ -255,15 +256,16 @@ killTags open close = go
 pandocCompilerNoToc :: Compiler (Item String)
 pandocCompilerNoToc = pandocCompiler
 
--- | Pandoc compiler with syntax highlighting (via @pygmentize@) and
--- section links.  Also see 'getTocCtx' for more table of contents
--- related things, and @./build.sh@ for LaTeX-rendering.
+-- | Pandoc compiler with syntax highlighting (via @pygmentize@),
+-- sidenotes instead of footnotes (see @css/sidenotes.css@), and section
+-- links.  Also see 'getTocCtx' for more table of contents related
+-- things, and @./build.sh@ for LaTeX-rendering.
 myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
   pandocCompilerWithTransformM
     defaultHakyllReaderOptions
     myWriter
-    (pygmentsHighlight . addSectionLinks)
+    (pygmentsHighlight . usingSideNotes . addSectionLinks)
  where
   myWriter :: WriterOptions
   myWriter = defaultHakyllWriterOptions

@@ -224,11 +224,5 @@ win in my book!
 [run-post]: ../2022-05-25-calling-emacs-from-xmonad.html
 [topic-space]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html
 
-[^1]: In case you are interested:
-``` haskell
-    hacking = renamed [Replace "Hacking"]
-            . limitWindows 3
-            . magnify 1.3 (NoMaster 3) True
-            $ ResizableTall 1 (3 % 100) (13 % 25) []
-```
-      As with the rest of my dotfiles, it's available [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341).
+[^1]: In case you are interested, it's available
+      [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341).

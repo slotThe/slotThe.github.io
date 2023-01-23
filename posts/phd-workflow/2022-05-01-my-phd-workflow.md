@@ -328,7 +328,7 @@ convenience:
       "hold down control and press x, then release both and press a".
       You can of course safely ignore this, since the keys just serve
       illustrative purposes.  An important note for Emacs users, lest
-      anyone be confused: in XMonad, `M-` usually does not__ refer to
+      anyone be confused: in XMonad, `M-` usually does __not__ refer to
       the Meta key, but to the `modMask` that the user specified.  This
       is indeed `<Alt>` by default, but many people understandably
       rebind this straight away to something that's less likely to

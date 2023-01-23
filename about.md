@@ -3,10 +3,16 @@ title: About
 ---
 
 I'm a PhD student in mathematics at the Technical University of Dresden,
-Germany.  In my copious free time[^1] I like to hack on [free
-software]—especially anything involving [Haskell] or [Emacs]—play the
-guitar, ride my bike around, or watch classic movies.  I also spend way
-too much money on (good) coffee and tea.
+Germany.  In my copious free time<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"> </label>
+<input type="checkbox" id="sn-1" class="margin-toggle"/>
+<span class="sidenote">
+I wish.
+</span>
+I like to hack on [free software]—especially anything involving
+[Haskell] or [Emacs]—play the guitar, ride my bike around, or watch
+classic movies.  I also spend way too much money on (good) coffee and
+tea.
 
 My work in mathematics can broadly be characterised under the term
 "category theory and its applications".  In particular, I like thinking
@@ -36,5 +42,3 @@ If you want to get into contact, try any of the following channels:
 [graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
 [linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
 [operads]: https://ncatlab.org/nlab/show/string+diagram
-
-[^1]: I wish.

@@ -10,8 +10,12 @@
     <!-- https://purecss.io/ -->
     <link rel="stylesheet" href="../../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../../css/skin.css" />
+    <!-- Default appearance -->
     <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+    <!-- Syntax highlighting -->
     <link rel="stylesheet" href="../../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../../css/sidenotes.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -54,7 +58,10 @@
 <a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.</p>
-<p>Specifically, I want to showcase a new<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> XMonad module:
+<p>Specifically, I want to showcase a new<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
+which will drop soon!<br />
+<br />
+</span></span> XMonad module:
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>. Building on top of XMonad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
@@ -104,7 +111,9 @@ video you want to watch on the weekend!</p>
 <h2 id="sample-configuration">Sample Configuration<a href="#sample-configuration" id="sec-link" class="floatright">¶</a></h2>
 <p>To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
-“normal” TODO notes on <code>M-o c</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and uses the selection when called
+“normal” TODO notes on <code>M-o c</code><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<br />
+<br />
+</span></span> and uses the selection when called
 with a universal argument:</p>
 <div class="highlight"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
 <span class="nf">orgKey</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)</span>
@@ -131,14 +140,6 @@ and give it your preferred keybinding. For example:</p>
 your workflow and you won’t want to live without it. If not, then
 perhaps you still don’t understand what all the fuss is about; in either
 case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</a>!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
-which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 

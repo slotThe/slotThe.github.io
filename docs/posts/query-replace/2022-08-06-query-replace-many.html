@@ -10,8 +10,12 @@
     <!-- https://purecss.io/ -->
     <link rel="stylesheet" href="../../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../../css/skin.css" />
+    <!-- Default appearance -->
     <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+    <!-- Syntax highlighting -->
     <link rel="stylesheet" href="../../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../../css/sidenotes.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -99,7 +103,18 @@ will, so it seemed much easier to automate this instead!</p>
 <p>Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
 enough. The high-level overview is this: we read in multiple queries
-until an empty input is given<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, build up a regular expression of the
+until an empty input is given<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
+model to have (since this is how the function behaves). The gory
+details are that we use the fact that <code>replace.el</code>’s default
+suggestion is always the last query that was entered by the user.
+What happens on an empty input is quite deep in the bowels of
+<code>query-replace-read-from</code>. Since replacing these massive internal
+functions sounds like a real pain, leaning on that functionality
+suddenly appears much more reasonable. Thus, when we get back a
+query that has already been entered in one way or another, we bail
+out.<br />
+<br />
+</span></span>, build up a regular expression of the
 form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
 replacing—test the current thing to be replaced against all of the
 queries to select the correct one.</p>
@@ -172,21 +187,6 @@ packages at all, chances are that you have).</p>
 <span class="w">   </span><span class="nv">delimited</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="nv">backward</span><span class="w"> </span><span class="nv">region-noncontiguous-p</span><span class="p">))</span>
 </pre></div>
 
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>This isn’t <em>quite</em> what’s actually done, but it’s the right mental
-model to have (since this is how the function behaves). The gory
-details are that we use the fact that <code>replace.el</code>’s default
-suggestion is always the last query that was entered by the user.
-What happens on an empty input is quite deep in the bowels of
-<code>query-replace-read-from</code>. Since replacing these massive internal
-functions sounds like a real pain, leaning on that functionality
-suddenly appears much more reasonable. Thus, when we get back a
-query that has already been entered in one way or another, we bail
-out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 

@@ -10,8 +10,12 @@
     <!-- https://purecss.io/ -->
     <link rel="stylesheet" href="../css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
     <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
     <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
   </head>
 
   <body class="pure-skin-solid">
@@ -112,12 +116,17 @@ gets worse as snippets get more complicated.</p>
 <p>These kinds of issues, combined with the fact that certain
 languages—like Emacs Lisp—don’t have any syntax definitions at all,
 annoyed me enough to look for an alternative way to highlight code on
-this website.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> There are of course many options to choose from; I
+this website.<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">All of this work for a mostly greyscale theme!<br />
+<br />
+</span></span> There are of course many options to choose from; I
 went with <code>pygmentize</code>, solely because I already had it installed. All
 that’s left is to tell pandoc and Hakyll to make use of it. As
 mentioned, this thankfully doesn’t turn out to be very difficult!</p>
 <h1 id="playing-with-pygmentize">Playing with <code>pygmentize</code><a href="#playing-with-pygmentize" id="sec-link" class="floatright">¶</a></h1>
-<p>Having never used <code>pygmentize</code> as a command line utility,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> I expected
+<p>Having never used <code>pygmentize</code> as a command line utility,<span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">So far, the only interaction I had with the program was through
+the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.<br />
+<br />
+</span></span> I expected
 this to take some work—possibly involving Python <em>shudder</em>—but all of
 the necessary pieces are already present in the CLI. First up, the <code>-f</code>
 option specifies the formatter to use, which will decide the shape of
@@ -231,7 +240,10 @@ is an instance</p>
 </pre></div>
 
 <p>which will be all that we need. The necessary code now just
-materialises in front of our eyes:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+materialises in front of our eyes:<span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">If all else fails, simply <a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">trace the sigils in the air and give
+them form</a>.<br />
+<br />
+</span></span></p>
 <div class="highlight"><pre><span></span><span class="c1">-- {-# LANGUAGE BlockArguments    #-}</span>
 <span class="c1">-- {-# LANGUAGE LambdaCase        #-}</span>
 <span class="c1">-- {-# LANGUAGE OverloadedStrings #-}</span>
@@ -320,16 +332,6 @@ other syntax highlighter that can produce HTML. However, for me these
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don’t agree with—at least for now.</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>All of this work for a mostly greyscale theme!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>So far, the only interaction I had with the program was through
-the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>If all else fails, simply <a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">trace the sigils in the air and give
-them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 

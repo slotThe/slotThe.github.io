@@ -22,7 +22,7 @@ is well-known that these concepts are all connected in the following
 way.
 
 > 1. Every \*-autonomous category is closed monoidal.
->    For all $x, y \in \mathcal{C}$, the internal-hom [x, y]
+>    For all $x, y \in \mathcal{C}$, the internal-hom $[x, y]$
 >    is given by $D^{-1}(Dy \otimes x)$, where $D$ is the duality
 >    functor.
 >

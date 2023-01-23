@@ -35,7 +35,9 @@ they’re missing but one feature: the ability to immediately refile
 notes.</p>
 <!--more-->
 <h1 id="motivation">Motivation</h1>
-<p>If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <em>below</em>
+<p>If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">A headline, possibly with an attached body.<br />
+<br />
+</span></span> <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
 have projects called “Work”, “Life”, “XMonad”, and so on, where all
@@ -119,12 +121,6 @@ want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions
 welcome!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 ]]></summary>
@@ -428,7 +424,11 @@ little context to some snippets that have accumulated over time.</p>
 <p>While there is a post about <a href="https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html">my version</a> of the
 <code>query-replace</code> function, most other tidbits have only seen the light of
 day in places like the “Weekly Tips, Tricks, &amp;c.” thread on Reddit. In
-the spirit of hosting my content somewhere that I actually control,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+the spirit of hosting my content somewhere that I actually control,<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">I am aware of the futility of this—Reddit is almost certainly
+going to be around longer than my personal site will. And yet,
+this feels more correct in some way.<br />
+<br />
+</span></span>
 I chose to showcase these again here, hoping that other people may also
 find some of this stuff useful.</p>
 <!--more-->
@@ -540,7 +540,10 @@ write <code>"foo T&lt;SPC&gt;"</code> and have Emacs insert <code>"foo $T$ "</co
 convenient, and much faster even than having a snippet to insert dollars
 based on some condition.</p>
 <p>The laziness continues with me not wanting to write <code>\blank</code> so
-often.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> I could also create an auto-expanding snippet for this, but
+often.<span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">This is a placeholder that’s often used when not wanting to
+explicitly quantify over an argument.<br />
+<br />
+</span></span> I could also create an auto-expanding snippet for this, but
 wouldn’t it be <em>much better</em> to insert it on a double tap of the space
 bar instead? I think so!</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-space</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
@@ -566,7 +569,10 @@ my research workflow.</p>
 <p>I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s
 really great so far, but some things felt a bit lackluster out of the
 box. As such, my <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el">ERC config</a> has already grown quite a
-bit.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The following are a few tweaks that improve my experience
+bit.<span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Though it’s still much smaller than whatever it is that WeeChat
+auto-generates :)<br />
+<br />
+</span></span> The following are a few tweaks that improve my experience
 greatly.</p>
 <h2 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent</h2>
 <p>One feature I was dearly missing was the ability to set <a href="https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html">urgency
@@ -752,18 +758,6 @@ so it’s being kept around regardless.</p>
 
 <p>This may be too implicit for many people, but for me it’s just right—and
 that’s sort of the point of all of this, right?</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>I am aware of the futility of this—Reddit is almost certainly
-going to be around longer than my personal site will. And yet,
-this feels more correct in some way.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>This is a placeholder that’s often used when not wanting to
-explicitly quantify over an argument.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Though it’s still much smaller than whatever it is that WeeChat
-auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 ]]></summary>
@@ -788,7 +782,10 @@ auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩
 <a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.</p>
-<p>Specifically, I want to showcase a new<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> XMonad module:
+<p>Specifically, I want to showcase a new<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
+which will drop soon!<br />
+<br />
+</span></span> XMonad module:
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>. Building on top of XMonad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
@@ -838,7 +835,9 @@ video you want to watch on the weekend!</p>
 <h2 id="sample-configuration">Sample Configuration</h2>
 <p>To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
-“normal” TODO notes on <code>M-o c</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and uses the selection when called
+“normal” TODO notes on <code>M-o c</code><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<br />
+<br />
+</span></span> and uses the selection when called
 with a universal argument:</p>
 <div class="highlight"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
 <span class="nf">orgKey</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)</span>
@@ -865,14 +864,6 @@ and give it your preferred keybinding. For example:</p>
 your workflow and you won’t want to live without it. If not, then
 perhaps you still don’t understand what all the fuss is about; in either
 case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</a>!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
-which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 ]]></summary>
@@ -933,7 +924,18 @@ will, so it seemed much easier to automate this instead!</p>
 <p>Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
 enough. The high-level overview is this: we read in multiple queries
-until an empty input is given<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, build up a regular expression of the
+until an empty input is given<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
+model to have (since this is how the function behaves). The gory
+details are that we use the fact that <code>replace.el</code>’s default
+suggestion is always the last query that was entered by the user.
+What happens on an empty input is quite deep in the bowels of
+<code>query-replace-read-from</code>. Since replacing these massive internal
+functions sounds like a real pain, leaning on that functionality
+suddenly appears much more reasonable. Thus, when we get back a
+query that has already been entered in one way or another, we bail
+out.<br />
+<br />
+</span></span>, build up a regular expression of the
 form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
 replacing—test the current thing to be replaced against all of the
 queries to select the correct one.</p>
@@ -1006,21 +1008,6 @@ packages at all, chances are that you have).</p>
 <span class="w">   </span><span class="nv">delimited</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="nv">backward</span><span class="w"> </span><span class="nv">region-noncontiguous-p</span><span class="p">))</span>
 </pre></div>
 
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>This isn’t <em>quite</em> what’s actually done, but it’s the right mental
-model to have (since this is how the function behaves). The gory
-details are that we use the fact that <code>replace.el</code>’s default
-suggestion is always the last query that was entered by the user.
-What happens on an empty input is quite deep in the bowels of
-<code>query-replace-read-from</code>. Since replacing these massive internal
-functions sounds like a real pain, leaning on that functionality
-suddenly appears much more reasonable. Thus, when we get back a
-query that has already been entered in one way or another, we bail
-out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 ]]></summary>
@@ -1049,7 +1036,11 @@ just me. After a little bit of deliberation and coming up with a
 generic enough API, I decided to turn it into an XMonad module!</p>
 <p>Yesterday these changes were merged into the <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a> repository
 and they are now available for everyone to try out; provided one has the
-git version of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+git version of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
+installing any unreleased—though stable—version, message me in any
+way and maybe we’ll hurry up and cut 0.17.1 soon!<br />
+<br />
+</span></span></p>
 <p>I’d like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
 implementation detail.</p>
@@ -1231,7 +1222,11 @@ associative by default and so</p>
 </pre></div>
 
 <p>However, the complexity characteristics of this operation are working
-against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is</p>
+against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
+and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
+that here.<br />
+<br />
+</span></span> is</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
 <span class="kt">[]</span><span class="w">       </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w">           </span><span class="n">ys</span>
 <span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span>
@@ -1263,14 +1258,21 @@ confusingly—used <code>(&lt;&gt;)</code> directly:</p>
 an associative an unital operation: function composition. In Haskell,
 <code>(&lt;&gt;)</code> is, in some sense,
 <a href="https://www.haskell.org/tutorial/classes.html">overloaded</a> so that it
-can be used with any monoidal composition one can think of!<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+can be used with any monoidal composition one can think of!<span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Really, for any <em>semigroup</em>, which is a slightly weaker notion of
+an operation that is merely associative, but doesn’t necessarily
+have a unit.<br />
+<br />
+</span></span></p>
 <p>The attentive reader may have concluded that the pipe operator that we
 called <code>(&gt;-&gt;)</code> above is really just <code>(&lt;&gt;)</code> in disguise, and that’s
 exactly right! I, however, thought that for people not familiar with
 Haskell, giving it a pipe-like appearance would be more conceptually
 amenable to the threading idea.</p>
 <p>I haven’t benchmarked this, so it’s not entirely clear to me whether
-performance is actually relevant in this situation,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but using
+performance is actually relevant in this situation,<span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">I suspect that the answer is “probably not”—that didn’t stop me,
+however!<br />
+<br />
+</span></span> but using
 difference lists just feels right here, and so I did.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>I have to say that I’m quite satisfied with this API. In fact, if I
@@ -1282,26 +1284,11 @@ a solution! If you try this and find it useful, also let me know :)</p>
 <p>Of course, technically none of this needs to live only inside your
 XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
-cool tools like magit.sh<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Go nuts!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>If you <em>really</em> want to try this feature but don’t want to bother
-installing any unreleased—though stable—version, message me in any
-way and maybe we’ll hurry up and cut 0.17.1 soon!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
-and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
-that here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Really, for any <em>semigroup</em>, which is a slightly weaker notion of
-an operation that is merely associative, but doesn’t necessarily
-have a unit.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>I suspect that the answer is “probably not”—that didn’t stop me,
-however!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
+cool tools like magit.sh<span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
 maintain a slightly modified and POSIX shell compatible version
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<br />
+<br />
+</span></span>. Go nuts!</p>
     </section>
 </article>
 ]]></summary>
@@ -1341,7 +1328,15 @@ use of these tools almost every step of the way.
 As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
 <em>research</em> workflow—and there is a lot of great resources out there
-already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+already—I decided to not do this here.<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you’d like some examples: being employed at a university also
+means I have to worry a bit about efficiently dealing with
+bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
+calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
+as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
+universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
+<code>TRAMP</code>), … You get the idea.<br />
+<br />
+</span></span></p>
 <h1 id="high-level-structure">High Level Structure</h1>
 <h2 id="topics">Topics</h2>
 <p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
@@ -1380,7 +1375,19 @@ the work, also separated by hyphens. For example:</p>
 relevant PDFs in <a href="https://xournalpp.github.io/">xournalpp</a>; more on that later.</p>
 <p>Instead of navigating to it, all interaction with the library is done
 via <a href="https://github.com/slotthe/hmenu">hmenu</a>, a small wrapper around <a href="https://tools.suckless.org/dmenu/">dmenu</a> to facilitate this kind of
-behaviour. I merely have to press <code>M-y</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and can then fuzzy search
+behaviour. I merely have to press <code>M-y</code><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">I will be using Emacs style notation throughout the entire
+article. This means that, for example, <code>C-x a</code> should be read as
+“hold down control and press x, then release both and press a”.
+You can of course safely ignore this, since the keys just serve
+illustrative purposes. An important note for Emacs users, lest
+anyone be confused: in XMonad, <code>M-</code> usually does <strong>not</strong> refer to
+the Meta key, but to the <code>modMask</code> that the user specified. This
+is indeed <code>&lt;Alt&gt;</code> by default, but many people understandably
+rebind this straight away to something that’s less likely to
+interfere with other programs. In my case, that’s the Super key,
+so <code>M-s</code> means <code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.<br />
+<br />
+</span></span> and can then fuzzy search
 through the directory. Once I’ve made a choice, PDFs are automatically
 opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.</p>
 <p><img class="pure-img" src="./hmenu.gif"></p>
@@ -1403,7 +1410,10 @@ abstraction between you and the maths. Chalkboards—but not whiteboards,
 with their ever empty markers—fall into this category as well,
 especially when collaborating with others.</p>
 <p>Not without my quirks (as I’m sure you’ve noticed), I’m a bit picky
-about the particular writing setup. It’s either completely white A5<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+about the particular writing setup. It’s either completely white A5<span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Although, admittedly, when drawing up very large diagrams I’m
+sometimes forced to switch to A4 paper in landscape mode.<br />
+<br />
+</span></span>
 paper, paired with a good (mechanical) pencil/a very fine pen, or very
 thick dotted paper, paired with a fountain pen.</p>
 <p>Quite enjoying the experience, I tend to write quite a lot of
@@ -1436,10 +1446,19 @@ breaks) and back.</p>
 <p>The <code>latex-change-env</code> package is for changing between different kinds
 of environments, including display math, while offering to rename labels
 across the project if necessary. When deleting a label from an
-environment, it also remembers this for the session!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+environment, it also remembers this for the session!<span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">This is based on the hash of the contents of the environment—if
+that changes, the label is “lost”; though it can of course still
+be retrieved manually from the relevant hash map.<br />
+<br />
+</span></span></p>
 <p><img class="pure-img" src="./label-renaming.gif"></p>
 <p>One very neat feature of AUCTeX that I find myself using more and more
-often lately<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is the in-buffer preview. Usually when writing a draft
+often lately<span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
+Emacs 29, making use of XInput 2.4 functionality. It makes
+scrolling through buffers that are quite dense with pictures
+rather smooth.<br />
+<br />
+</span></span> is the in-buffer preview. Usually when writing a draft
 I’m not that interested in how exactly something looks in the PDF—that
 part comes later, believe me. In cases like these, just calling
 <code>preview-buffer</code> is quite convenient and lets me use the screen real
@@ -1526,7 +1545,14 @@ Emacs (<code>arxiv-citation-bibtex-files</code>), which is good enough for me an
 doesn’t seem to warrant a slightly more automated, yet probably much
 more complicated solution.</p>
 <p>Adding new citations is done via the now aptly named Emacs package
-<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
+<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote">Ostensibly, this should be an XMonad module, as it does not
+necessarily have anything to do with Emacs itself. However, I had
+already written the elfeed integration and so the most annoying
+part (scraping the arXiv xml for certain bits) was already done.
+On the other hand, there are more Emacs than XMonad users, so
+perhaps doing it like this will help more people anyways.<br />
+<br />
+</span></span>, with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
 plumbing</a>
 on the XMonad side to get Emacs going. The basic idea is that—given an
 arXiv or zbmath link—we first look up the paper on zbmath to see if it
@@ -1553,44 +1579,6 @@ convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
 <a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1"><p>If you’d like some examples: being employed at a university also
-means I have to worry a bit about efficiently dealing with
-bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
-calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
-as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
-universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
-<code>TRAMP</code>), … You get the idea.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>I will be using Emacs style notation throughout the entire
-article. This means that, for example, <code>C-x a</code> should be read as
-“hold down control and press x, then release both and press a”.
-You can of course safely ignore this, since the keys just serve
-illustrative purposes. An important note for Emacs users, lest
-anyone be confused: in XMonad, <code>M-</code> usually does not__ refer to
-the Meta key, but to the <code>modMask</code> that the user specified. This
-is indeed <code>&lt;Alt&gt;</code> by default, but many people understandably
-rebind this straight away to something that’s less likely to
-interfere with other programs. In my case, that’s the Super key,
-so <code>M-s</code> means <code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Although, admittedly, when drawing up very large diagrams I’m
-sometimes forced to switch to A4 paper in landscape mode.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>This is based on the hash of the contents of the environment—if
-that changes, the label is “lost”; though it can of course still
-be retrieved manually from the relevant hash map.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
-Emacs 29, making use of XInput 2.4 functionality. It makes
-scrolling through buffers that are quite dense with pictures
-rather smooth.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>Ostensibly, this should be an XMonad module, as it does not
-necessarily have anything to do with Emacs itself. However, I had
-already written the elfeed integration and so the most annoying
-part (scraping the arXiv xml for certain bits) was already done.
-On the other hand, there are more Emacs than XMonad users, so
-perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
     </section>
 </article>
 ]]></summary>
