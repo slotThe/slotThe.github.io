@@ -221,9 +221,8 @@ materialises in front of our eyes:[^3]
 
 pygmentsHighlight :: Pandoc -> Compiler Pandoc
 pygmentsHighlight = walkM \case
-  CodeBlock (_, listToMaybe -> mbLang, _) (T.unpack -> body) -> do
-    let lang = T.unpack (fromMaybe "text" mbLang)
-    RawBlock "html" . T.pack <$> unsafeCompiler (pygs lang body)
+  CodeBlock (_, (T.unpack -> lang) : _, _) (T.unpack -> body) ->
+    RawBlock "html" . T.pack <$> unsafeCompiler (callPygs lang body)
   block -> pure block
  where
   pygs :: String -> String -> IO String
@@ -233,6 +232,24 @@ pygmentsHighlight = walkM \case
 Notice how _a priori_ this would have type `Pandoc -> IO Pandoc`, but
 since we want to use it from Hakyll I've already inserted a call to
 `unsafeCompiler` in the correct place.
+
+Further, the above code checks whether the block has an explicit
+language attached to it and, if not, leaves it alone; this was suggested
+by [LSLeary] on Reddit.  If you want to have a single `div` class for
+every code block—say, for some custom CSS—then you can replace
+
+``` haskell
+  CodeBlock (_, (T.unpack -> lang) : _, _) (T.unpack -> body) ->
+    RawBlock "html" . T.pack <$> unsafeCompiler (callPygs lang body)
+```
+
+with
+
+``` haskell
+  CodeBlock (_, listToMaybe -> mbLang, _) (T.unpack -> body) -> do
+    let lang = T.unpack (fromMaybe "text" mbLang)
+    RawBlock "html" . T.pack <$> unsafeCompiler (callPygs lang body)
+```
 
 ## Hakyll
 
@@ -294,6 +311,7 @@ under the sun, chasing that ever present epsilon of highlighting cases
 which I still don't agree with—at least for now.
 
 [KDE XML syntax definitions]: https://docs.kde.org/stable5/en/kate/katepart/highlight.html
+[LSLeary]: https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/
 [cfg:site]: https://github.com/slotThe/slotThe.github.io/blob/main/site.hs#L87
 [minted]: https://ctan.org/pkg/minted?lang=en
 [pandoc:walk]: https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html
