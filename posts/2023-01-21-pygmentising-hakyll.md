@@ -169,7 +169,7 @@ To get a feeling for how these `CodeBlock`s look, again consider our
 for this would look something like
 
 ``` haskell
-CodeBlock ["", ["haskell"], []]
+CodeBlock ("", ["haskell"], [])
           "fibs :: [Integer]\nfibs = 0 : scanl' (+) 1 fibs"
 ```
 

@@ -164,7 +164,7 @@ everything we need:</p>
 <p>To get a feeling for how these <code>CodeBlock</code>s look, again consider our
 <code>fibs</code> example from above. By default, the corresponding <code>CodeBlock</code>
 for this would look something like</p>
-<div class="highlight"><pre><span></span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;haskell&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;haskell&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span>
 <span class="w">          </span><span class="s">&quot;fibs :: [Integer]</span><span class="se">\n</span><span class="s">fibs = 0 : scanl' (+) 1 fibs&quot;</span>
 </pre></div>
 
