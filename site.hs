@@ -10,7 +10,6 @@ import Data.Text qualified as T
 import Control.Monad
 import Data.Maybe
 import Hakyll
-import System.Process (readProcess)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Definition (Block (Header, CodeBlock, RawBlock), Inline (Link, Str), Pandoc)
 import Text.Pandoc.Options
@@ -284,8 +283,8 @@ myPandocCompiler =
   pygmentsHighlight = walkM \case
     CodeBlock (_, listToMaybe -> mbLang, _) (T.unpack -> body) -> do
       let lang = T.unpack (fromMaybe "text" mbLang)
-      RawBlock "html" . T.pack <$> unsafeCompiler (callPygs lang body)
+      RawBlock "html" . T.pack <$> callPygs lang body
     block -> pure block
    where
-    callPygs :: String -> String -> IO String
-    callPygs lang = readProcess "pygmentize" ["-l", lang, "-f", "html"]
+    callPygs :: String -> String -> Compiler String
+    callPygs lang = unixFilter "pygmentize" ["-l", lang, "-f", "html"]

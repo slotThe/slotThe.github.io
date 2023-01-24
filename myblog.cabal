@@ -10,7 +10,6 @@ executable site
                   , pandoc
                   , pandoc-types >= 1.22.2.1
                   , pandoc-sidenote
-                  , process >= 1.6.16.0
                   , tagsoup
                   , text
   ghc-options:      -threaded -rtsopts -with-rtsopts=-N
