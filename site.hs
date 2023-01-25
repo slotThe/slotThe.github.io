@@ -10,10 +10,10 @@ import Data.Text qualified as T
 import Control.Monad
 import Data.Maybe
 import Hakyll
+import Sidenote (usingSidenotes)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Definition (Block (Header, CodeBlock, RawBlock), Inline (Link, Str), Pandoc)
 import Text.Pandoc.Options
-import Text.Pandoc.SideNote (usingSideNotes)
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Walk (walk, walkM)
 
@@ -256,20 +256,19 @@ pandocCompilerNoToc :: Compiler (Item String)
 pandocCompilerNoToc = pandocCompiler
 
 -- | Pandoc compiler with syntax highlighting (via @pygmentize@),
--- sidenotes instead of footnotes (see @css/sidenotes.css@), and section
--- links.  Also see 'getTocCtx' for more table of contents related
--- things, and @./build.sh@ for LaTeX-rendering.
+-- sidenotes instead of footnotes (see @css/sidenotes.css@ and
+-- @src/Sidenote.hs@), and section links.  Also see 'getTocCtx' for more
+-- table of contents related things, and @./build.sh@ for
+-- LaTeX-rendering.
 myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
   pandocCompilerWithTransformM
     defaultHakyllReaderOptions
     myWriter
-    (pygmentsHighlight . usingSideNotes . addSectionLinks)
+    (pure . usingSidenotes myWriter <=< pygmentsHighlight  . addSectionLinks)
  where
   myWriter :: WriterOptions
-  myWriter = defaultHakyllWriterOptions
-    { writerHTMLMathMethod = MathJax ""
-    }
+  myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
 
   -- https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
   addSectionLinks :: Pandoc -> Pandoc

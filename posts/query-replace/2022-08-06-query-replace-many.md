@@ -52,7 +52,7 @@ will, so it seemed much easier to automate this instead!
 Thankfully, since `replace.el` sports a decent API, writing a version of
 `query-replace` that accepts multiple arguments turns out to be easy
 enough.  The high-level overview is this: we read in multiple queries
-until an empty input is given[^1], build up a regular expression of the
+until an empty input is given,[^1] build up a regular expression of the
 form `"\\(?:query-1\\|query-2\\|…\\)"`, and—when it comes to
 replacing—test the current thing to be replaced against all of the
 queries to select the correct one.

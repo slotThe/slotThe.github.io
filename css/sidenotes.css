@@ -39,11 +39,30 @@ body {
     top: -0.5rem;
 }
 
-.sidenote:before {
+/* Properly position siednote number and adjust position of sidenote
+   paragraphs:
+    https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-670695382
+*/
+.sidenote::before {
     content: counter(sidenote-counter) " ";
     font-size: 0.8rem;
-    top: -0.5rem;
+    position: absolute;
+    right: calc(100% + 0.5em);
 }
+
+.sidenote p {
+    margin: 1em 0;
+}
+
+.sidenote p:first-child {
+    margin-top: 0.5rem;
+}
+
+.sidenote p:last-child {
+    margin-bottom: 0;
+}
+
+/* */
 
 input.margin-toggle {
     display: none;

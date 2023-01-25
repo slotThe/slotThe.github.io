@@ -9,9 +9,9 @@ that this was perhaps something that could be of use to more people than
 just me.  After a little bit of deliberation and coming up with a
 generic enough API, I decided to turn it into an XMonad module!
 
-Yesterday these changes were merged into the [xmonad-contrib] repository
-and they are now available for everyone to try out; provided one has the
-git version of XMonad [installed](https://xmonad.org/INSTALL.html).[^5]
+Yesterday these changes were merged into [xmonad-contrib], and they are
+now available for everyone to try out; provided one has the git version
+of XMonad [installed](https://xmonad.org/INSTALL.html).[^5]
 
 I'd like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
@@ -301,7 +301,7 @@ a solution!  If you try this and find it useful, also let me know :)
 Of course, technically none of this needs to live only inside your
 XMonad config at all.  In combination with the excellent [turtle]
 library, I reckon it would be quite easy to produce Haskell versions of
-cool tools like magit.sh[^4].  Go nuts!
+cool tools like magit.sh.[^4]  Go nuts!
 
 [EDSL]: https://en.wikipedia.org/wiki/Domain-specific_language
 [arxiv-citation]: https://github.com/slotthe/arxiv-citation

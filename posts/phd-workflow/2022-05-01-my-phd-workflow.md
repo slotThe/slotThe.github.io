@@ -253,7 +253,7 @@ doesn't seem to warrant a slightly more automated, yet probably much
 more complicated solution.
 
 Adding new citations is done via the now aptly named Emacs package
-[arxiv-citation][^6], with [a bit of
+[arxiv-citation][^6] with [a bit of
 plumbing](https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576)
 on the XMonad side to get Emacs going.  The basic idea is that—given an
 arXiv or zbmath link—we first look up the paper on zbmath to see if it

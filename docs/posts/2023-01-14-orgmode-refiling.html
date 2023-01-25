@@ -65,54 +65,64 @@
 </ul>
         </div>
       
-        <p>In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
+        <p></p>
+In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
 extremely useful to me, and really I couldn’t be happier with
 it. However, a user recently contacted me by email and told me that
 they’re missing but one feature: the ability to immediately refile
-notes.</p>
+notes.
 <!--more-->
 <h1 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h1>
-<p>If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">A headline, possibly with an attached body.<br />
-<br />
-</span></span> <em>below</em>
+<p></p>
+If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<!--
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
+A headline, possibly with an attached body.</span></span>
+ <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
 have projects called “Work”, “Life”, “XMonad”, and so on, where all
-related tasks live. Quite convenient!</p>
-<p>So far, X.P.OrgMode just dumped the created note at the end of the
+related tasks live. Quite convenient!
+<p></p>
+So far, X.P.OrgMode just dumped the created note at the end of the
 specified file, leaving you to pick up the pieces. This aligns with my
 personal workflow—while I extensively use refiling, I only do so at the
 end of the day after reviewing all tasks that have accumulated.
 However, it is conceivable that someone might want to refile certain
 tasks straight away when it’s pretty clear that (i) they’ll be kept, and
 (ii) they can be unambiguously assigned to a certain heading (e.g., an
-already scheduled work meeting with X).</p>
+already scheduled work meeting with X).
 <h1 id="showcase">Showcase<a href="#showcase" id="sec-link" class="floatright">¶</a></h1>
-<p>Long story short, this is now built into X.P.OrgMode. There are two new
-functions:</p>
+<p></p>
+Long story short, this is now built into X.P.OrgMode. There are two new
+functions:
 <div class="highlight"><pre><span></span><span class="w">    </span><span class="n">orgPromptRefile</span><span class="w">   </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w">           </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="w">    </span><span class="n">orgPromptRefileTo</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 </pre></div>
 
-<p>The former takes the same arguments as <a href="https://hackage.haskell.org/package/xmonad-contrib-0.17.1/docs/XMonad-Prompt-OrgMode.html#v:orgPrompt">orgPrompt</a> (which see), and is
+<p></p>
+The former takes the same arguments as <a href="https://hackage.haskell.org/package/xmonad-contrib-0.17.1/docs/XMonad-Prompt-OrgMode.html#v:orgPrompt">orgPrompt</a> (which see), and is
 for popping up another prompt that asks for a heading. The latter
-refiles everything under the specified (as the second argument) heading.</p>
-<p>The way <code>orgPromptRefile</code> works is that, after querying for a TODO, it
+refiles everything under the specified (as the second argument) heading.
+<p></p>
+The way <code>orgPromptRefile</code> works is that, after querying for a TODO, it
 <em>always</em> inserts the note into the file and then <em>possibly</em> refiles it
 to another heading. This way, you don’t need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent
-heading.</p>
-<p><img class="pure-img" src="../images/orgmode-refiling/refiling.gif"></p>
-<p>Note: Refiling is (near) instant; the delay you are seeing above is due
-to <code>auto-revert-mode</code>.</p>
+heading.
+<p></p>
+<img class="pure-img" src="../images/orgmode-refiling/refiling.gif">
+<p></p>
+Note: Refiling is (near) instant; the delay you are seeing above is due
+to <code>auto-revert-mode</code>.
 <h2 id="some-gory-details">Some Gory Details<a href="#some-gory-details" id="sec-link" class="floatright">¶</a></h2>
-<p>All of the refiling is actually directly done by Emacs itself! More
+<p></p>
+All of the refiling is actually directly done by Emacs itself! More
 precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
 <a href="../posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
-share it:</p>
+share it:
 <div class="highlight"><pre><span></span><span class="nf">refile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">refile</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">fp</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
@@ -129,8 +139,9 @@ share it:</p>
 <span class="w">                </span><span class="p">])</span>
 </pre></div>
 
-<p>This—as you probably guessed already—just executes the following elisp
-snippet in Emacs’s batch mode:</p>
+<p></p>
+This—as you probably guessed already—just executes the following elisp
+snippet in Emacs’s batch mode:
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">find-file</span><span class="w"> </span><span class="err">«</span><span class="nv">fp</span><span class="err">»</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
@@ -141,17 +152,20 @@ snippet in Emacs’s batch mode:</p>
 <span class="w">  </span><span class="p">(</span><span class="nv">save-buffer</span><span class="p">))</span>
 </pre></div>
 
-<p>I know this seems insane, but letting Emacs do this work is actually
+<p></p>
+I know this seems insane, but letting Emacs do this work is actually
 much less brittle than the alternative. The Org maintainers certainly
 know best what refiling <em>means</em>, and thus also what it entails—if all of
 this logic is already written, why not take advantage of it? Plus, I
-now don’t have to keep track of subtle changes in newer versions of Org.</p>
+now don’t have to keep track of subtle changes in newer versions of Org.
 <h1 id="closing-thoughts">Closing Thoughts<a href="#closing-thoughts" id="sec-link" class="floatright">¶</a></h1>
-<p>Writing this was actually a lot of fun, and a great opportunity to play
+<p></p>
+Writing this was actually a lot of fun, and a great opportunity to play
 with the EDSL that X.U.Run exposes. I reckon there are a few places in
 my own XMonad configuration in which I could use these kinds of “Emacs
-scripts” to great effect!</p>
-<p>One other idea I’ve had is to integrate this into the language that
+scripts” to great effect!
+<p></p>
+One other idea I’ve had is to integrate this into the language that
 plain old <code>orgPrompt</code> accepts. It could be prefixed by something like
 “<code>ref:</code>”, followed by a unique substring with which to identity a
 heading. This would have the disadvantage that—without the second
@@ -159,7 +173,7 @@ prompt—one would not get any suggestions for headings. However, if you
 want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions
-welcome!</p>
+welcome!
     </section>
 </article>
 

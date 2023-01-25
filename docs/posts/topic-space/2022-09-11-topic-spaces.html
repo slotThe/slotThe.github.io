@@ -67,54 +67,62 @@
 </ul>
         </div>
       
-        <p>One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
+        <p></p>
+One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">new documentation</a>, lots of people probably did not bother
 revisiting it and thus still don’t really understand why they might be
-interested in using topics instead of workspaces. Time to change that!</p>
+interested in using topics instead of workspaces. Time to change that!
 <!--more-->
 <h1 id="introduction">Introduction<a href="#introduction" id="sec-link" class="floatright">¶</a></h1>
-<p>First of all, this post is not to be seen as a tutorial on
+<p></p>
+First of all, this post is not to be seen as a tutorial on
 X.A.TopicSpace, but much rather as a showcase of how its functionality
 could be used day to day. If you like what you see, perhaps check out
 the <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">docs</a> and give it a spin yourself! I have already
 written an introduction to the module in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research
-workflow</a>:</p>
+workflow</a>:
 <blockquote>
-<p>XMonad has a module called TopicSpace, which upgrades the X11
+<p></p>
+XMonad has a module called TopicSpace, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results
 in a very clean separation of concerns. Plus, I always know where my
-windows are!</p>
-<p>Every topic has a directory and a “startup hook”, firing when the
+windows are!
+<p></p>
+Every topic has a directory and a “startup hook”, firing when the
 topic is switched to and empty, associated to it. While most
 convenient for programming related tasks—e.g., spawn <code>ghcid</code> in the
 relevant directory or automatically build and open this website—it’s
-also quite convenient for mathematical projects.</p>
-<p>I have set up special keybindings to bring up an Emacs session in the
+also quite convenient for mathematical projects.
+<p></p>
+I have set up special keybindings to bring up an Emacs session in the
 topic directory, or spawn a terminal there. Switching to topics is
 done fuzzily via the XMonad prompt, which means I only have to type a
 few characters to get to my destination. This makes it feasible to
 have 30 topics, instead of the usual 9 or so, in the first place. As
 a result, it’s rather fast to go from thinking about a certain problem
-to working on it.</p>
+to working on it.
 </blockquote>
-<p>At a glance, this probably does not sound very impressive—so one can
+<p></p>
+At a glance, this probably does not sound very impressive—so one can
 have a directory and some function associated to a workspace (hereafter
 also called “topic”), big deal. However, we will see that with a bit of
-creativity this can be used to great effect.</p>
+creativity this can be used to great effect.
 <h1 id="examples">Examples<a href="#examples" id="sec-link" class="floatright">¶</a></h1>
 <h2 id="basic-topics">Basic topics<a href="#basic-topics" id="sec-link" class="floatright">¶</a></h2>
-<p>The most obvious application of all of this is to have workspaces that
+<p></p>
+The most obvious application of all of this is to have workspaces that
 do one and only one thing. For example, I have a topic dedicated to
 connecting to a VPN, should the need arise. Naturally, I automatically
 want to execute <code>openvpn</code> and pick a random server whenever I happen to
 enter that workspace and it’s empty (i.e., <code>openvpn</code> is not already
-running).</p>
-<p>More such use cases include having a topic dedicated to my RSS feed
+running).
+<p></p>
+More such use cases include having a topic dedicated to my RSS feed
 reader, instant messaging, or IRC. Since I only show workspaces with
 windows on them in xmobar, I can just glance at my status bar to find
 out whether I currently have, for example, IRC open. No additional
@@ -122,12 +130,13 @@ program for checking the status of things necessary! Obviously, this
 <em>modus operandi</em> takes a bit of discipline to uphold over the course of
 the day, but I find that such a separation of concerns greatly reduces
 mental load regarding what’s currently happening on my computer.
-Definitely worth it.</p>
-<p>In terms of code, this—as well as the following examples—heavily use the
+Definitely worth it.
+<p></p>
+In terms of code, this—as well as the following examples—heavily use the
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to XMonad.Util.Run, which allows one to
 spawn processes in a declarative and compositional way; I’ve <a href="../2022-05-25-calling-emacs-from-xmonad.html">written
 about this</a> in another post. For example, my RSS topic is
-specified thusly:</p>
+specified thusly:
 <div class="highlight"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (inHome)</span>
 <span class="c1">-- import XMonad.Util.Run</span>
 
@@ -136,21 +145,25 @@ specified thusly:</p>
 <span class="w">                        </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="p">(</span><span class="n">elispFun</span><span class="w"> </span><span class="s">&quot;elfeed&quot;</span><span class="p">)</span>
 </pre></div>
 
-<p>Here, <code>inHome</code> is a little helper function that takes a topic name and
+<p></p>
+Here, <code>inHome</code> is a little helper function that takes a topic name and
 an action, and creates a new topic with <code>$HOME</code> as its associated
-directory.</p>
-<p>You can find all of my topics (and there are a lot of them)
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L219-L265">here</a>.</p>
+directory.
+<p></p>
+You can find all of my topics (and there are a lot of them)
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L219-L265">here</a>.
 <h2 id="spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory<a href="#spawning-everything-in-the-topic-directory" id="sec-link" class="floatright">¶</a></h2>
-<p>More generally, programming projects in the same language almost always
+<p></p>
+More generally, programming projects in the same language almost always
 require me to open the same set of standard tools, so it’s extremely
 convenient to directly spawn them upon first visit. This allows for
 very little friction before starting to work on whatever I wanted to
-work on.</p>
-<p>For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghcid">ghcid</a> in every Haskell project
+work on.
+<p></p>
+For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghcid">ghcid</a> in every Haskell project
 of mine—so why not automate this? Using what X.U.Run gives us, we can
 quickly throw together a function that executes the given instruction
-inside of a terminal:</p>
+inside of a terminal:
 <div class="highlight"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span>
 <span class="c1">-- 'topicConfig' is my personal topic configuration.</span>
 
@@ -160,7 +173,8 @@ inside of a terminal:</p>
 <span class="w">                      </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="n">p</span>
 </pre></div>
 
-<p>Similar functions can be created for spawning the terminal and editor:</p>
+<p></p>
+Similar functions can be created for spawning the terminal and editor:
 <div class="highlight"><pre><span></span><span class="c1">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span>
 <span class="c1">-- or X.U.Run.</span>
 
@@ -173,28 +187,43 @@ inside of a terminal:</p>
 <span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
 </pre></div>
 
-<p>Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
-<code>termInDir</code> are defined and may be customised.</p>
-<p>In my mathematical and other work-adjacent projects I keep it pretty
-simple; an editor there is mostly sufficient.</p>
-<p><img class="pure-img" src="../phd-workflow/topics.gif"></p>
-<p>But we can also get a little bit more fancy. Since the topic action is
+<p></p>
+Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
+<code>termInDir</code> are defined and may be customised.
+<p></p>
+In my mathematical and other work-adjacent projects I keep it pretty
+simple; an editor there is mostly sufficient.
+<p></p>
+<img class="pure-img" src="../phd-workflow/topics.gif">
+<p></p>
+But we can also get a little bit more fancy. Since the topic action is
 just a general <code>X</code> action, we can really do anything we want in there.
 In addition to spawning programs, all of my Haskell projects should
-default to the <code>Hacking</code><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In case you are interested, it’s available
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<br />
-<br />
-</span></span> layout:</p>
+default to the <code>Hacking</code><!--
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
+In case you are interested:
+<div class="highlight"><pre><span></span><span class="nf">hacking</span>
+<span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">renamed</span><span class="w"> </span><span class="p">[</span><span class="kt">Replace</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">limitWindows</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">magnify</span><span class="w"> </span><span class="mf">1.3</span><span class="w"> </span><span class="p">(</span><span class="kt">NoMaster</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kt">True</span>
+<span class="w">  </span><span class="o">$</span><span class="w"> </span><span class="kt">ResizableTall</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">13</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">25</span><span class="p">)</span><span class="w"> </span><span class="kt">[]</span>
+</pre></div>
+
+<p>As the rest of my dotfiles, it’s available
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</p></span></span>
+ layout:
 <div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;ghcid&quot;</span>
 </pre></div>
 
-<p>And Voilà, we can now attach this action to all the topics that we want!</p>
-<p>Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
+<p></p>
+And Voilà, we can now attach this action to all the topics that we want!
+<p></p>
+Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
 actions. If you’re more comfortable with <code>do</code> notation, you can also
-write the above as</p>
+write the above as
 <div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
@@ -202,15 +231,17 @@ write the above as</p>
 <span class="w">  </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;ghcid&quot;</span>
 </pre></div>
 
-<p>Furthermore, since the associated directory for a topic can easily be
+<p></p>
+Furthermore, since the associated directory for a topic can easily be
 made <code>$HOME</code> by default (as we’ve seen, TopicSpace even exports the
 <code>inHome</code> function), spawning programs in certain topics can easily be
-made to replace the default keybindings!</p>
-<p>For the sake of completeness, I will showcase one slightly more
+made to replace the default keybindings!
+<p></p>
+For the sake of completeness, I will showcase one slightly more
 complicated example. My main shell environment is <code>eshell</code> and getting
 sane behaviour there presents one with a few more obstacles than
 <code>spawnTermInTopic</code> did. It also uses <code>inProgram</code> instead of <code>inEditor</code>,
-allowing access to a different instance of the Emacs server.</p>
+allowing access to a different instance of the Emacs server.
 <div class="highlight"><pre><span></span><span class="c1">-- | Spawn an eshell frame in the current topic directory.</span>
 <span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="nf">\</span><span class="n">dir</span><span class="w"> </span><span class="ow">-&gt;</span>
@@ -222,14 +253,17 @@ allowing access to a different instance of the Emacs server.</p>
 <span class="w">                        </span><span class="p">])</span>
 </pre></div>
 
-<p>All in all, we have something that looks a little bit like this:</p>
-<p><img class="pure-img" src="./haskell-topic.gif"></p>
+<p></p>
+All in all, we have something that looks a little bit like this:
+<p></p>
+<img class="pure-img" src="./haskell-topic.gif">
 <h2 id="testing-this-website">Testing this website<a href="#testing-this-website" id="sec-link" class="floatright">¶</a></h2>
-<p>Much in the same vein as my Haskell topics, I find the <code>website</code> topic
+<p></p>
+Much in the same vein as my Haskell topics, I find the <code>website</code> topic
 to be extremely handy—you can probably guess what it’s used for. Its
 associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
 an Emacs frame in the topic directory, builds the website, and opens a
-browser window pointing to the local copy:</p>
+browser window pointing to the local copy:
 <div class="highlight"><pre><span></span><span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">switchToLayout</span><span class="w"> </span><span class="s">&quot;Tall&quot;</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
@@ -237,14 +271,17 @@ browser window pointing to the local copy:</p>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawn</span><span class="w"> </span><span class="s">&quot;browser-new-window.sh localhost:8000&quot;</span>
 </pre></div>
 
-<p>The whole thing looks like this:</p>
-<p><img class="pure-img" src="./website.gif"></p>
+<p></p>
+The whole thing looks like this:
+<p></p>
+<img class="pure-img" src="./website.gif">
 <h1 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h1>
-<p>Hopefully these examples have convinced you to give TopicSpace a spin;
+<p></p>
+Hopefully these examples have convinced you to give TopicSpace a spin;
 perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
 of ways to automate boring tasks just that tiny bit more—definitely a
-win in my book!</p>
+win in my book!
     </section>
 </article>
 

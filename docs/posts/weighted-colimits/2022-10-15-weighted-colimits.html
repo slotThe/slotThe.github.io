@@ -142,7 +142,8 @@
 </ul>
         </div>
       
-        <p>If you’ve been doing category theory for any amount of time, you’ll
+        <p></p>
+If you’ve been doing category theory for any amount of time, you’ll
 probably have stumbled upon enriched category theory as a way of
 expressing categorical ideas internal to some context other than
 <strong>Set</strong>. Reading into it, you might have come across these foreign
@@ -150,20 +151,23 @@ sounding concepts like weighted (co)limits and wondered what that was
 all about—and then got lost for a few days, trying to decipher what
 <a href="http://www.tac.mta.ca/tac/reprints/articles/10/tr10abs.html">Kelly</a> is talking about and why symbols resembling tensor
 products are suddenly being thrown around. At least that’s what
-happened to me.</p>
-<p>After scouring the internet for good resources, I found two really
+happened to me.
+<p></p>
+After scouring the internet for good resources, I found two really
 enlightening blog posts: one by <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble</a> and the
 other by <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John Baez</a>—and they’re too good not to share.
 Plus, people always say that you don’t understand a concept unless you
-can explain it to someone else, so here’s my shot at it!</p>
+can explain it to someone else, so here’s my shot at it!
 <!--more-->
-<p>I will assume familiarity with basic notions of category theory (limits,
+<p></p>
+I will assume familiarity with basic notions of category theory (limits,
 colimits, adjunctions, monoidal categories, …), as well as elementary
 abstract algebra (in particular, rings and modules). If you’re not
 comfortable with these and have a lot of time to kill, I recommend
 <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in Context</a> by Emily Riehl for the former and
-<a href="https://bookstore.ams.org/gsm-56/">A Course in Algebra</a> by Ernest Vinberg for the latter.</p>
-<p>Really, it’s good if you have heard about enriched category theory
+<a href="https://bookstore.ams.org/gsm-56/">A Course in Algebra</a> by Ernest Vinberg for the latter.
+<p></p>
+Really, it’s good if you have heard about enriched category theory
 before, as this is where weighted colimits tend to naturally crop; also
 because I can’t possibly do the topic justice in a single blog post. I
 will still try, of course, but be warned. However, weighted colimits
@@ -183,16 +187,18 @@ the enriched stuff just insert <span class="math inline"><span class="mjpage"><s
 </g>
 </svg></span></span> below—it will only get easier. Further, most of the <a href="#weighted-colimits">main
 part</a> of the text doesn’t use enrichment at all, so
-don’t be too alarmed.</p>
-<p>First and foremost I must note that—more-so than elsewhere—these are
+don’t be too alarmed.
+<p></p>
+First and foremost I must note that—more-so than elsewhere—these are
 very much not my own thoughts. I’m just retelling the story in order to
 understand it better myself. Sources and resources for everything are
 linked <a href="#resources">at the end</a>. The key insights come from the
 mentioned blog posts by <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble</a> and <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John
 Baez</a>, as well as the accompanying (resulting) <a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab
-article</a>.</p>
+article</a>.
 <h1 id="enriched-category-theory">Enriched Category Theory<a href="#enriched-category-theory" id="sec-link" class="floatright">¶</a></h1>
-<p>As I said, we first turn our attention to <em>enriched</em> category theory.
+<p></p>
+As I said, we first turn our attention to <em>enriched</em> category theory.
 Before diving into the gory details, I will first discuss things a bit
 more intuitively. In short, one studies not ordinary categories—whose
 hom<em>sets</em> are always sets—but so-called <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-3-Title">
@@ -228,12 +234,14 @@ purposes of this blog post, I will assume that <span class="math inline"><span c
  <use xlink:href="#MJMAIN-29" x="3217" y="0"></use>
 </g>
 </svg></span></span> is a (small) complete and cocomplete closed symmetric monoidal
-category.<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"><span class="sidenote">This is also sometimes called a <em>cosmos</em>.<br>
-<br>
-</span></span> If you don’t know what some of these words mean, you can
+category.<!--
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"><span class="sidenote"><p></p>
+This is also sometimes called a <em>cosmos</em>.</span></span>
+ If you don’t know what some of these words mean, you can
 read that as “it’s an environment in which we can think about category
-theory in an effective way”.</p>
-<p>In addition, I would also like to fix a <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-7-Title">
+theory in an effective way”.
+<p></p>
+In addition, I would also like to fix a <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-7-Title">
 <title id="MathJax-SVG-7-Title">\mathcal{V}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-56" x="0" y="0"></use>
@@ -324,8 +332,9 @@ black box—we can’t peek into it anymore! Writing <span class="math inline"><
 </svg></span></span> is no longer legal, so we somehow have to make due
 with not talking about individual morphisms. A little bit more care has
 to be taken for the precise definition of an enriched category to make
-sense. First, however, I will show you a few examples.</p>
-<p>Thankfully—lest the world explodes—categories enriched in <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.165ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1362.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-17-Title">
+sense. First, however, I will show you a few examples.
+<p></p>
+Thankfully—lest the world explodes—categories enriched in <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.165ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1362.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-17-Title">
 <title id="MathJax-SVG-17-Title">\mathsf{Set}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJSS-53" x="0" y="0"></use>
@@ -384,8 +393,9 @@ Namely, they have just a single object <span class="math inline"><span class="mj
  <use xlink:href="#MJMAIN-22C6" x="3419" y="0"></use>
  <use xlink:href="#MJMAIN-29" x="3920" y="0"></use>
 </g>
-</svg></span></span> forms an abelian group—more on that later.</p>
-<p>With these examples in mind, let us explore the technical definition of
+</svg></span></span> forms an abelian group—more on that later.
+<p></p>
+With these examples in mind, let us explore the technical definition of
 a category enriched over <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-24-Title">
 <title id="MathJax-SVG-24-Title">\mathcal{V}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -397,7 +407,7 @@ a category enriched over <span class="math inline"><span class="mjpage"><svg xml
  <use xlink:href="#MJCAL-43" x="0" y="0"></use>
 </g>
 </svg></span></span>
-consists of:</p>
+consists of:
 <ul>
 <li>A collection of objects <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.081ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1757.2 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-26-Title">
 <title id="MathJax-SVG-26-Title">\mathrm{ob}\, \mathcal{C}</title>
@@ -510,10 +520,13 @@ consists of:</p>
 </g>
 </svg></span></span>.</li>
 </ul>
-<p>Further, this data has to satisfy appropriate associativity and
-unitality conditions:</p>
-<p><img class="pure-img" src="./enriched.png"></p>
-<p>In the above diagrams, <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.488ex" height="1.676ex" style="vertical-align: -0.338ex;" viewBox="0 -576.1 640.5 721.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-34-Title">
+<p></p>
+Further, this data has to satisfy appropriate associativity and
+unitality conditions:
+<p></p>
+<img class="pure-img" src="./enriched.png">
+<p></p>
+In the above diagrams, <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.488ex" height="1.676ex" style="vertical-align: -0.338ex;" viewBox="0 -576.1 640.5 721.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-34-Title">
 <title id="MathJax-SVG-34-Title">\alpha</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-3B1" x="0" y="0"></use>
@@ -535,8 +548,9 @@ denote the associativity, left, and right unitality constraints of
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-56" x="0" y="0"></use>
 </g>
-</svg></span></span>.</p>
-<p>If these diagrams remind you of a <a href="https://ncatlab.org/nlab/show/monoidal+category">monoidal
+</svg></span></span>.
+<p></p>
+If these diagrams remind you of a <a href="https://ncatlab.org/nlab/show/monoidal+category">monoidal
 category</a>, they absolutely should! Much like
 you can think of ordinary categories as multi-object monoids, a decent
 mental model for <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-38-Title">
@@ -545,9 +559,10 @@ mental model for <span class="math inline"><span class="mjpage"><svg xmlns:xlink
  <use xlink:href="#MJCAL-56" x="0" y="0"></use>
 </g>
 </svg></span></span>-categories is to think of them as
-multi-object monoidal categories.</p>
+multi-object monoidal categories.
 <h2 id="functors-and-natural-transformations">Functors and Natural Transformations<a href="#functors-and-natural-transformations" id="sec-link" class="floatright">¶</a></h2>
-<p>We furthermore need analogues for functors and natural
+<p></p>
+We furthermore need analogues for functors and natural
 transformations—they now also come with a <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-39-Title">
 <title id="MathJax-SVG-39-Title">\mathcal{V}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -588,15 +603,17 @@ have about functors and natural transformations should carry over just
 fine. I will leave the technical definitions of enriched functors and
 natural transformations as exercises to the reader—they are relatively
 straightforward to write down and not all that important for what
-follows.</p>
-<p>The upshot of all of this is that, in order to do enriched category
+follows.
+<p></p>
+The upshot of all of this is that, in order to do enriched category
 theory, we not only need analogues for functors and natural
 transformations, but also for all the other basic notions of ordinary
 category theory. Since limits and colimits are among the most important
 constructions, people naturally started to think about how one could
 express them in the enriched language—this is precisely what lead to the
-development of weighted colimits!</p>
-<p>One interesting thing I want to highlight about enriched functors is the
+development of weighted colimits!
+<p></p>
+One interesting thing I want to highlight about enriched functors is the
 induced arrow on morphisms that an <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="10.639ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 4580.7 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-43-Title">
 <title id="MathJax-SVG-43-Title">F \colon \mathcal{C} \longrightarrow \mathcal{V}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -632,8 +649,9 @@ induced arrow on morphisms that an <span class="math inline"><span class="mjpage
 </g>
 </svg></span></span> is
 symmetric monoidal, we can use the tensor-hom adjunction and rewrite the
-above to look more like an action:</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="20.602ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 8870.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-46-Title">
+above to look more like an action:
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="20.602ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 8870.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-46-Title">
 <title id="MathJax-SVG-46-Title">
   \mathcal{C}(a, b) \otimes F a \longrightarrow F b.
 </title>
@@ -652,8 +670,9 @@ above to look more like an action:</p>
  <use xlink:href="#MJMATHI-62" x="8162" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="8591" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>Likewise, a <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-47-Title">
+</svg></span></span>
+<p></p>
+Likewise, a <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.529ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 658.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-47-Title">
 <title id="MathJax-SVG-47-Title">\mathcal{V}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-56" x="0" y="0"></use>
@@ -674,8 +693,9 @@ above to look more like an action:</p>
  <use xlink:href="#MJCAL-56" x="4771" y="0"></use>
 </g>
 </svg></span></span> comes equipped with an “action” from the
-other side:</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="20.602ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 8870.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-49-Title">
+other side:
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="20.602ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 8870.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-49-Title">
 <title id="MathJax-SVG-49-Title">
   F b \otimes \mathcal{C}(a, b) \longrightarrow F a.
 </title>
@@ -694,9 +714,10 @@ other side:</p>
  <use xlink:href="#MJMATHI-61" x="8062" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="8591" y="0"></use>
 </g>
-</svg></span></span></p>
+</svg></span></span>
 <h1 id="copowers">Copowers<a href="#copowers" id="sec-link" class="floatright">¶</a></h1>
-<p>Before we get to the fun stuff, we have to talk about one more important
+<p></p>
+Before we get to the fun stuff, we have to talk about one more important
 technical detail: copowers. The basic idea is that in any ordinary
 monoidal category <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="11.907ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 5126.8 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-50-Title">
 <title id="MathJax-SVG-50-Title">(\mathcal{A}, \otimes_{\mathcal{A}}, 1_{\mathcal{A}})</title>
@@ -730,8 +751,9 @@ monoidal category <span class="math inline"><span class="mjpage"><svg xmlns:xlin
  <use xlink:href="#MJMAIN-5D" x="5529" y="0"></use>
 </g>
 </svg></span></span>. In particular, this means
-that</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="45.545ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 19609.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-52-Title">
+that
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="45.545ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 19609.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-52-Title">
 <title id="MathJax-SVG-52-Title">
   \mathcal{A}(a \otimes_{\mathcal{A}} b, c) \cong \mathcal{A}(a, [b, c]),
   \qquad \text{for } a, b, c \in \mathcal{A}.
@@ -774,8 +796,9 @@ that</p>
  <use xlink:href="#MJCAL-41" x="18511" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="19331" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>If we’re in an enriched setting, we want to somehow “switch out” the
+</svg></span></span>
+<p></p>
+If we’re in an enriched setting, we want to somehow “switch out” the
 tensor product of the monoidal category with some action, say <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="13.625ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 5866.2 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-53-Title">
 <title id="MathJax-SVG-53-Title">\cdot \colon \mathcal{C} \times \mathcal{V} \longrightarrow \mathcal{C}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -819,8 +842,9 @@ while retaining this nice property. As such, the <em>copower</em> of <span class
  <use xlink:href="#MJCAL-43" x="1652" y="0"></use>
 </g>
 </svg></span></span>, there is a natural
-isomorphism</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="24.226ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 10430.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-58-Title">
+isomorphism
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="24.226ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 10430.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-58-Title">
 <title id="MathJax-SVG-58-Title">
   \mathcal{C}(c \cdot v, b) \cong \mathcal{V}(v, \mathcal{C}(c, b)).
 </title>
@@ -847,8 +871,9 @@ isomorphism</p>
  <use xlink:href="#MJMAIN-29" x="9762" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="10151" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>Above I have slightly abused notation; <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.989ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3439.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-59-Title">
+</svg></span></span>
+<p></p>
+Above I have slightly abused notation; <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.989ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3439.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-59-Title">
 <title id="MathJax-SVG-59-Title">\mathcal{V}({-}, {-})</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-56" x="0" y="0"></use>
@@ -896,8 +921,9 @@ in <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-56" x="0" y="0"></use>
 </g>
-</svg></span></span> now!</p>
-<p>The best thing about copowers is their existence when it comes to
+</svg></span></span> now!
+<p></p>
+The best thing about copowers is their existence when it comes to
 <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.165ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1362.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-65-Title">
 <title id="MathJax-SVG-65-Title">\mathsf{Set}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -926,15 +952,16 @@ coproducts, there is a canonical copower <span class="math inline"><span class="
  <use xlink:href="#MJMAIN-27F6" x="4406" y="0"></use>
  <use xlink:href="#MJCAL-41" x="6322" y="0"></use>
 </g>
-</svg></span></span>.<span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote">If the category <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.903ex" height="2.343ex" style="vertical-align: -0.338ex;" viewBox="0 -863.1 819.5 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-68-Title">
+</svg></span></span>.<!--
+--><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><p></p>
+If the category <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.903ex" height="2.343ex" style="vertical-align: -0.338ex;" viewBox="0 -863.1 819.5 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-68-Title">
 <title id="MathJax-SVG-68-Title">\mathcal{A}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-41" x="0" y="0"></use>
 </g>
 </svg></span></span> is locally small. I will ignore
-those kinds of technicalities for the purposes of this post.<br>
-<br>
-</span></span> For all <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.985ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 3438.1 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-69-Title">
+those kinds of technicalities for the purposes of this post.</span></span>
+ For all <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.985ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 3438.1 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-69-Title">
 <title id="MathJax-SVG-69-Title">X \in \mathsf{Set}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-58" x="0" y="0"></use>
@@ -952,8 +979,9 @@ those kinds of technicalities for the purposes of this post.<br>
  <use xlink:href="#MJMAIN-2208" x="807" y="0"></use>
  <use xlink:href="#MJCAL-41" x="1752" y="0"></use>
 </g>
-</svg></span></span>, it is given by</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="29.646ex" height="5.676ex" style="vertical-align: -3.171ex;" viewBox="0 -1078.4 12764 2443.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-71-Title">
+</svg></span></span>, it is given by
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="29.646ex" height="5.676ex" style="vertical-align: -3.171ex;" viewBox="0 -1078.4 12764 2443.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-71-Title">
 <title id="MathJax-SVG-71-Title">
   X \cdot a \mathrel{\vcenter{:}}=     \coprod_{x \in X} 1_{\mathcal{A}} \otimes_{\mathcal{A}} a
             \cong \coprod_{x \in X} a.
@@ -993,9 +1021,11 @@ those kinds of technicalities for the purposes of this post.<br>
  <use xlink:href="#MJMATHI-61" x="11956" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="12485" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>The fact that this is a copower follows from</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="57.132ex" height="5.676ex" style="vertical-align: -3.171ex;" viewBox="0 -1078.4 24598.5 2443.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-72-Title">
+</svg></span></span>
+<p></p>
+The fact that this is a copower follows from
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="57.132ex" height="5.676ex" style="vertical-align: -3.171ex;" viewBox="0 -1078.4 24598.5 2443.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-72-Title">
 <title id="MathJax-SVG-72-Title">
   \mathcal{A}(X \cdot a, b) = \mathcal{A}(\coprod_{x \in X} a, b)
   \cong \prod_{x \in X} \mathcal{A}(a, b) \cong \mathsf{Set}(X, \mathcal{A}(a, b)),
@@ -1057,8 +1087,9 @@ those kinds of technicalities for the purposes of this post.<br>
  <use xlink:href="#MJMAIN-29" x="23930" y="0"></use>
  <use xlink:href="#MJMAIN-2C" x="24320" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>for all <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.742ex" height="2.343ex" style="vertical-align: -0.338ex;" viewBox="0 -863.1 2472.1 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-73-Title">
+</svg></span></span>
+<p></p>
+for all <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.742ex" height="2.343ex" style="vertical-align: -0.338ex;" viewBox="0 -863.1 2472.1 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-73-Title">
 <title id="MathJax-SVG-73-Title">b \in \mathcal{A}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-62" x="0" y="0"></use>
@@ -1067,9 +1098,10 @@ those kinds of technicalities for the purposes of this post.<br>
 </g>
 </svg></span></span>. Because of the closeness to the tensor
 product, people sometimes call copowers “tensors” and write them with
-the same symbol as they write the tensor product.</p>
+the same symbol as they write the tensor product.
 <h1 id="weighted-colimits">Weighted Colimits<a href="#weighted-colimits" id="sec-link" class="floatright">¶</a></h1>
-<p>Onto the main dish. The key idea is to reframe an ordinary colimit in
+<p></p>
+Onto the main dish. The key idea is to reframe an ordinary colimit in
 terms of “looking like a monoidal product”. The weighted colimit then
 becomes something akin to the tensor product over a k-algebra <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.764ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 759.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-74-Title">
 <title id="MathJax-SVG-74-Title">R</title>
@@ -1077,8 +1109,9 @@ becomes something akin to the tensor product over a k-algebra <span class="math 
  <use xlink:href="#MJMATHI-52" x="0" y="0"></use>
 </g>
 </svg></span></span>. We
-like rings and modules, so let’s explore this further.</p>
-<p>To recap, when looking at bimodules <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.743ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 750.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-75-Title">
+like rings and modules, so let’s explore this further.
+<p></p>
+To recap, when looking at bimodules <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.743ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 750.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-75-Title">
 <title id="MathJax-SVG-75-Title">A</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-41" x="0" y="0"></use>
@@ -1125,8 +1158,9 @@ symbols <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://
 </g>
  <use xlink:href="#MJMATHI-42" x="2610" y="0"></use>
 </g>
-</svg></span></span>, as the coequaliser</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="40.187ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17302.8 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-83-Title">
+</svg></span></span>, as the coequaliser
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="40.187ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17302.8 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-83-Title">
 <title id="MathJax-SVG-83-Title">
   A \otimes_R B
   \mathrel{\vcenter{:}}= \mathrm{coeq} \left(
@@ -1163,8 +1197,9 @@ symbols <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://
 </g>
  <use xlink:href="#MJMAIN-2C" x="17024" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>where the two parallel arrows are induced by the left and right actions
+</svg></span></span>
+<p></p>
+where the two parallel arrows are induced by the left and right actions
 <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="16.029ex" height="2.343ex" style="vertical-align: -0.505ex;" viewBox="0 -791.3 6901.2 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-84-Title">
 <title id="MathJax-SVG-84-Title">\rhd \colon A \otimes R \longrightarrow A</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -1187,10 +1222,12 @@ symbols <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://
  <use xlink:href="#MJMAIN-27F6" x="4243" y="0"></use>
  <use xlink:href="#MJMATHI-42" x="6159" y="0"></use>
 </g>
-</svg></span></span>, respectively.</p>
-<p>For ease of notation, I will often write coequalisers like the above one
-as</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="80ex" height="2.843ex" style="vertical-align: -0.838ex; max-width: 48000px;" viewBox="0 -863.1 34444.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-86-Title">
+</svg></span></span>, respectively.
+<p></p>
+For ease of notation, I will often write coequalisers like the above one
+as
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="80ex" height="2.843ex" style="vertical-align: -0.838ex; max-width: 48000px;" viewBox="0 -863.1 34444.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-86-Title">
 <title id="MathJax-SVG-86-Title">
   A \otimes R \otimes B \rightrightarrows A \otimes   B
                         \longrightarrow   A \otimes_R B.
@@ -1228,8 +1265,9 @@ as</p>
 </g>
 </g>
 </g>
-</svg></span></span></p>
-<p>Categorifying this notion, the ring <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.764ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 759.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-87-Title">
+</svg></span></span>
+<p></p>
+Categorifying this notion, the ring <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.764ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 759.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-87-Title">
 <title id="MathJax-SVG-87-Title">R</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-52" x="0" y="0"></use>
@@ -1358,8 +1396,9 @@ we have that <span class="math inline"><span class="mjpage"><svg xmlns:xlink="ht
  <use xlink:href="#MJCAL-56" x="0" y="0"></use>
 </g>
 </svg></span></span>. Thus, we have
-induced arrows</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="31.378ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 13510.1 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-101-Title">
+induced arrows
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="31.378ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 13510.1 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-101-Title">
 <title id="MathJax-SVG-101-Title">
     A1 \otimes R(1,1) \otimes B1 \rightrightarrows A1 \otimes B1.
 </title>
@@ -1386,8 +1425,9 @@ induced arrows</p>
  <use xlink:href="#MJMAIN-2E" x="500" y="0"></use>
 </g>
 </g>
-</svg></span></span></p>
-<p>Let us forget about enrichment for a while and just study ordinary
+</svg></span></span>
+<p></p>
+Let us forget about enrichment for a while and just study ordinary
 categories now. The second observation we need is the well-known fact
 that any colimit can be represented as a coequaliser. Suppose
 <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.792ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 771.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-102-Title">
@@ -1404,8 +1444,9 @@ that any colimit can be represented as a coequaliser. Suppose
  <use xlink:href="#MJMAIN-27F6" x="2311" y="0"></use>
  <use xlink:href="#MJCAL-44" x="4228" y="0"></use>
 </g>
-</svg></span></span> we can express its colimit as</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="39.382ex" height="6.009ex" style="vertical-align: -3.505ex;" viewBox="0 -1078.4 16955.9 2587.3" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-104-Title">
+</svg></span></span> we can express its colimit as
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="39.382ex" height="6.009ex" style="vertical-align: -3.505ex;" viewBox="0 -1078.4 16955.9 2587.3" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-104-Title">
 <title id="MathJax-SVG-104-Title">
   \coprod_{a, b \in \mathcal{J}}
             \coprod_{f \in \mathcal{J}(a, b)} F a
@@ -1459,8 +1500,9 @@ that any colimit can be represented as a coequaliser. Suppose
  <use xlink:href="#MJMATHI-46" x="15927" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="16677" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>Note that we can use what we learned about (<span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.165ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1362.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-105-Title">
+</svg></span></span>
+<p></p>
+Note that we can use what we learned about (<span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.165ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1362.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-105-Title">
 <title id="MathJax-SVG-105-Title">\mathsf{Set}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJSS-53" x="0" y="0"></use>
@@ -1523,8 +1565,9 @@ as <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w
  <use xlink:href="#MJMATHI-62" x="2203" y="0"></use>
  <use xlink:href="#MJMAIN-29" x="2633" y="0"></use>
 </g>
-</svg></span></span> is a set in this case. Behold:</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="80ex" height="5.843ex" style="vertical-align: -2.338ex; max-width: 48000px;" viewBox="0 -1508.9 34444.3 2515.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-110-Title">
+</svg></span></span> is a set in this case. Behold:
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="80ex" height="5.843ex" style="vertical-align: -2.338ex; max-width: 48000px;" viewBox="0 -1508.9 34444.3 2515.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-110-Title">
 <title id="MathJax-SVG-110-Title">
   \coprod_{a, b \in \mathcal{J}} \mathcal{J}(a,b) \times F a
   \rightrightarrows \coprod_{b \in \mathcal{J}} F b
@@ -1585,15 +1628,18 @@ as <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w
 </g>
 </g>
 </g>
-</svg></span></span></p>
-<p>What’s left is to define the two parallel arrows.<span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">I mostly follow Trimble and the nLab here. A more explicit
+</svg></span></span>
+<p></p>
+What’s left is to define the two parallel arrows.<!--
+--><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote"><p></p>
+I mostly follow Trimble and the nLab here. A more explicit
 description (in the case of limits, but it should be easy enough
 to dualise) is given, for example, in <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in
-Context</a>, Theorem 3.2.13.<br>
-<br>
-</span></span></p>
+Context</a>, Theorem 3.2.13.</span></span>
 <ol type="1">
-<li><p>One arrow is induced by the “projection” <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="24.311ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 10467.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-111-Title">
+<li><p></p>
+
+One arrow is induced by the “projection” <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="24.311ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 10467.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-111-Title">
 <title id="MathJax-SVG-111-Title">\pi_2 \colon \mathcal{J}(a, b) \times F a \longrightarrow F a</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-3C0" x="0" y="0"></use>
@@ -1651,7 +1697,9 @@ functor <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://
  <use transform="scale(0.707)" xlink:href="#MJMAIN-32" x="806" y="-213"></use>
 </g>
 </svg></span></span> is actually the application of the
-unique map<span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><span class="sidenote">The one-element set <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.487ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 1501.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-115-Title">
+unique map<!--
+--><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><span class="sidenote"><p></p>
+The one-element set <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.487ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 1501.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-115-Title">
 <title id="MathJax-SVG-115-Title">\{\star\}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-7B" x="0" y="0"></use>
@@ -1667,9 +1715,8 @@ unique map<span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle 
  <use xlink:href="#MJSS-74" x="1001" y="0"></use>
 </g>
 </svg></span></span>, hence by definition there is exactly one arrow from
-any other set to it.<br>
-<br>
-</span></span>
+any other set to it.</span></span>
+
 <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.284ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7441.9 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-117-Title">
 <title id="MathJax-SVG-117-Title">! \colon \mathcal{J}(a, b) \longrightarrow \{\star\}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -1687,8 +1734,9 @@ any other set to it.<br>
  <use xlink:href="#MJMAIN-7D" x="6941" y="0"></use>
 </g>
 </svg></span></span>
-to that functor; i.e.,</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="41.433ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17839.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-118-Title">
+to that functor; i.e.,
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="41.433ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17839.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-118-Title">
 <title id="MathJax-SVG-118-Title">
 ! \times F a \colon \mathcal{J}(a,b) \times F a \longrightarrow \{\star\} \times F a \cong F a.
 </title>
@@ -1719,8 +1767,10 @@ to that functor; i.e.,</p>
  <use xlink:href="#MJMATHI-61" x="17031" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="17560" y="0"></use>
 </g>
-</svg></span></span></p></li>
-<li><p>The other arrow is induced by a collection of actions of
+</svg></span></span></li>
+<li><p></p>
+
+The other arrow is induced by a collection of actions of
 <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.95ex" height="2.343ex" style="vertical-align: -0.505ex;" viewBox="0 -791.3 839.5 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-119-Title">
 <title id="MathJax-SVG-119-Title">\mathcal{J}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -1745,8 +1795,9 @@ to that functor; i.e.,</p>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-4A" x="0" y="0"></use>
 </g>
-</svg></span></span>; i.e.,</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="74.859ex" height="8.176ex" style="vertical-align: -3.505ex;" viewBox="0 -2011.3 32230.7 3520.2" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-123-Title">
+</svg></span></span>; i.e.,
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="74.859ex" height="8.176ex" style="vertical-align: -3.505ex;" viewBox="0 -2011.3 32230.7 3520.2" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-123-Title">
 <title id="MathJax-SVG-123-Title">
 (\mathcal{J}(a,b) \times F a \longrightarrow F b)
 = \left( \coprod_{f \in \mathcal{J}(a,b)} F a \longrightarrow F b \right)
@@ -1821,9 +1872,10 @@ to that functor; i.e.,</p>
 </g>
  <use xlink:href="#MJMAIN-2E" x="31952" y="0"></use>
 </g>
-</svg></span></span></p></li>
+</svg></span></span></li>
 </ol>
-<p>So that’s the story with expressing colimits as coequalisers. What’s
+<p></p>
+So that’s the story with expressing colimits as coequalisers. What’s
 next is that we need to completely reframe this in terms of actions.
 For the second arrow we are already done: <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.741ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 749.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-124-Title">
 <title id="MathJax-SVG-124-Title">F</title>
@@ -1836,8 +1888,9 @@ For the second arrow we are already done: <span class="math inline"><span class=
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-4A" x="0" y="0"></use>
 </g>
-</svg></span></span>-module.</p>
-<p>Using the symmetry of the Cartesian product <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.808ex" height="1.509ex" style="vertical-align: 0.019ex; margin-bottom: -0.19ex;" viewBox="0 -576.1 778.5 649.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-126-Title">
+</svg></span></span>-module.
+<p></p>
+Using the symmetry of the Cartesian product <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.808ex" height="1.509ex" style="vertical-align: 0.019ex; margin-bottom: -0.19ex;" viewBox="0 -576.1 778.5 649.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-126-Title">
 <title id="MathJax-SVG-126-Title">\times</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-D7" x="0" y="0"></use>
@@ -1885,8 +1938,9 @@ that sends every object to the one-element set <span class="math inline"><span c
  <use xlink:href="#MJMAIN-22C6" x="500" y="0"></use>
  <use xlink:href="#MJMAIN-7D" x="1001" y="0"></use>
 </g>
-</svg></span></span>:</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="70.091ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 30178.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-131-Title">
+</svg></span></span>:
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="70.091ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 30178.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-131-Title">
 <title id="MathJax-SVG-131-Title">
   (\mathbb{T}b \times \mathcal{J}(a,b) \longrightarrow \mathbb{T}a)
   =     (\{\star \} \times \mathcal{J}(a,b) \longrightarrow \{\star\})
@@ -1939,10 +1993,12 @@ that sends every object to the one-element set <span class="math inline"><span c
  <use xlink:href="#MJMAIN-29" x="29510" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="29899" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>Putting these two observations together, we really have two induced
-arrows with type signature</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="32.554ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 14016.1 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-132-Title">
+</svg></span></span>
+<p></p>
+Putting these two observations together, we really have two induced
+arrows with type signature
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="32.554ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 14016.1 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-132-Title">
 <title id="MathJax-SVG-132-Title">
   \mathbb{T} b \times \mathcal{J}(a, b) \times F a \longrightarrow \mathbb{T} a \times F a.
 </title>
@@ -1967,14 +2023,16 @@ arrows with type signature</p>
  <use xlink:href="#MJMATHI-61" x="13208" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="13737" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>Inserting these into Equation <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.162ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 500.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-133-Title">
+</svg></span></span>
+<p></p>
+Inserting these into Equation <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.162ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 500.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-133-Title">
 <title id="MathJax-SVG-133-Title">2</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-32" x="0" y="0"></use>
 </g>
-</svg></span></span>, this yields</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="70.323ex" height="5.843ex" style="vertical-align: -3.338ex;" viewBox="0 -1078.4 30277.8 2515.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-134-Title">
+</svg></span></span>, this yields
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="70.323ex" height="5.843ex" style="vertical-align: -3.338ex;" viewBox="0 -1078.4 30277.8 2515.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-134-Title">
 <title id="MathJax-SVG-134-Title">
   \coprod_{a, b \in \mathcal{J}} \mathcal{J}(a,b) \times F a
     \cong             \coprod_{a, b \in \mathcal{J}} \mathbb{T} b \times \mathcal{J}(a, b) \times F a
@@ -2049,8 +2107,9 @@ arrows with type signature</p>
  <use xlink:href="#MJMATHI-61" x="29469" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="29999" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>This is exactly the way the tensor product of bimodules is defined in
+</svg></span></span>
+<p></p>
+This is exactly the way the tensor product of bimodules is defined in
 Equation <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.162ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 500.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-135-Title">
 <title id="MathJax-SVG-135-Title">1</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2093,8 +2152,9 @@ Using a <em>weight</em> <span class="math inline"><span class="mjpage"><svg xmln
  <use xlink:href="#MJAMS-54" x="0" y="0"></use>
 </g>
 </svg></span></span>, we would end up with
-something like</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="55.191ex" height="5.843ex" style="vertical-align: -3.338ex;" viewBox="0 -1078.4 23762.7 2515.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-141-Title">
+something like
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="55.191ex" height="5.843ex" style="vertical-align: -3.338ex;" viewBox="0 -1078.4 23762.7 2515.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-141-Title">
 <title id="MathJax-SVG-141-Title">
   \coprod_{a, b \in \mathcal{J}} W b \times \mathcal{J}(a, b) \times F a \rightrightarrows \coprod_{a \in \mathcal{J}} W a \times F a \longrightarrow W \otimes_{\mathcal{J}} F.
 </title>
@@ -2142,8 +2202,9 @@ something like</p>
  <use xlink:href="#MJMATHI-46" x="22734" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="23484" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>Because this looks like a tensor product—and it’s universal, due to it
+</svg></span></span>
+<p></p>
+Because this looks like a tensor product—and it’s universal, due to it
 being a colimit—it should support some sort of currying operation: given
 an arrow <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="14.73ex" height="2.676ex" style="vertical-align: -0.838ex;" viewBox="0 -791.3 6342.1 1152.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-142-Title">
 <title id="MathJax-SVG-142-Title">W \otimes_{\mathcal{J}} F \longrightarrow c</title>
@@ -2178,9 +2239,10 @@ an arrow <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http:/
  <use xlink:href="#MJMAIN-29" x="6349" y="0"></use>
 </g>
 </svg></span></span>. Now’s your time to guess what exactly a weighted
-colimit will be!</p>
+colimit will be!
 <h2 id="definition">Definition<a href="#definition" id="sec-link" class="floatright">¶</a></h2>
-<p>Still in the non-enriched setting, let me now give you the formal
+<p></p>
+Still in the non-enriched setting, let me now give you the formal
 definition of a weighted colimit. Suppose <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.95ex" height="2.343ex" style="vertical-align: -0.505ex;" viewBox="0 -791.3 839.5 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-145-Title">
 <title id="MathJax-SVG-145-Title">\mathcal{J}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2246,8 +2308,9 @@ colimit of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http
  <use xlink:href="#MJMAIN-2208" x="807" y="0"></use>
  <use xlink:href="#MJCAL-41" x="1752" y="0"></use>
 </g>
-</svg></span></span>) isomorphism</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="40.867ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17595.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-152-Title">
+</svg></span></span>) isomorphism
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="40.867ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17595.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-152-Title">
 <title id="MathJax-SVG-152-Title">
   \mathcal{A}(W \otimes_{\mathcal{J}} F, a)
   \cong
@@ -2293,8 +2356,9 @@ colimit of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http
  <use xlink:href="#MJMAIN-29" x="16927" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="17317" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>Note that, by the <a href="https://ncatlab.org/nlab/show/Yoneda+lemma">Yoneda lemma</a>, the above isomorphism is
+</svg></span></span>
+<p></p>
+Note that, by the <a href="https://ncatlab.org/nlab/show/Yoneda+lemma">Yoneda lemma</a>, the above isomorphism is
 uniquely determined by a natural transformation <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="23.936ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 10305.8 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-153-Title">
 <title id="MathJax-SVG-153-Title">W \implies \mathcal{A}(F, W \otimes_{\mathcal{J}} F)</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2313,8 +2377,9 @@ uniquely determined by a natural transformation <span class="math inline"><span 
  <use xlink:href="#MJMAIN-29" x="9916" y="0"></use>
 </g>
 </svg></span></span>. As promised, this is
-exactly the representation we arrived at above.</p>
-<p>A pair of an object <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.751ex" height="2.343ex" style="vertical-align: -0.338ex;" viewBox="0 -863.1 2476.1 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-154-Title">
+exactly the representation we arrived at above.
+<p></p>
+A pair of an object <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.751ex" height="2.343ex" style="vertical-align: -0.338ex;" viewBox="0 -863.1 2476.1 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-154-Title">
 <title id="MathJax-SVG-154-Title">c \in \mathcal{A}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-63" x="0" y="0"></use>
@@ -2339,9 +2404,10 @@ property, is what one would normally call a <em><span class="math inline"><span 
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-57" x="0" y="0"></use>
 </g>
-</svg></span></span>-weighted cocone</em>.</p>
+</svg></span></span>-weighted cocone</em>.
 <h2 id="enriched-weighted-colimits">Enriched Weighted Colimits<a href="#enriched-weighted-colimits" id="sec-link" class="floatright">¶</a></h2>
-<p>The enriched definition is now exactly the same! If <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.95ex" height="2.343ex" style="vertical-align: -0.505ex;" viewBox="0 -791.3 839.5 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-157-Title">
+<p></p>
+The enriched definition is now exactly the same! If <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.95ex" height="2.343ex" style="vertical-align: -0.505ex;" viewBox="0 -791.3 839.5 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-157-Title">
 <title id="MathJax-SVG-157-Title">\mathcal{J}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-4A" x="0" y="0"></use>
@@ -2417,8 +2483,9 @@ define the <em><span class="math inline"><span class="mjpage"><svg xmlns:xlink="
  <use xlink:href="#MJMAIN-2208" x="711" y="0"></use>
  <use xlink:href="#MJCAL-43" x="1656" y="0"></use>
 </g>
-</svg></span></span>) isomorphism</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="41.074ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17684.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-167-Title">
+</svg></span></span>) isomorphism
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="41.074ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17684.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-167-Title">
 <title id="MathJax-SVG-167-Title">
   \mathcal{C}(W \otimes_{\mathcal{J}} F, c)
   \cong
@@ -2462,18 +2529,22 @@ define the <em><span class="math inline"><span class="mjpage"><svg xmlns:xlink="
  <use xlink:href="#MJMAIN-29" x="17016" y="0"></use>
  <use xlink:href="#MJMAIN-2E" x="17406" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>This is the power of this definition—it extends in a straightforward way
+</svg></span></span>
+<p></p>
+This is the power of this definition—it extends in a straightforward way
 to the enriched setting. This may now be used to great effect: in case
 you know what this means, among other things weighted colimits can be
-used to define the right notion of enriched coend.</p>
+used to define the right notion of enriched coend.
 <h2 id="examples">Examples<a href="#examples" id="sec-link" class="floatright">¶</a></h2>
-<p>It’s probably about time for some examples. For the first two, let us
+<p></p>
+It’s probably about time for some examples. For the first two, let us
 focus on cocones only; this is perhaps a little easier to understand
 than also throwing the universal property in there. I learned these
-from Richard Garner during <a href="https://conferences.leeds.ac.uk/bcqt2022/">BCQT 2022</a>.</p>
+from Richard Garner during <a href="https://conferences.leeds.ac.uk/bcqt2022/">BCQT 2022</a>.
 <ol type="1">
-<li><p>Suppose our diagram category is the category with two objects and one
+<li><p></p>
+
+Suppose our diagram category is the category with two objects and one
 non-trivial morphism; i.e., <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.897ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7705.8 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-168-Title">
 <title id="MathJax-SVG-168-Title">\mathcal{J} \mathrel{\vcenter{:}}= \{ \varphi \colon a \longrightarrow b \}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2494,7 +2565,9 @@ non-trivial morphism; i.e., <span class="math inline"><span class="mjpage"><svg 
  <use xlink:href="#MJMATHI-57" x="0" y="0"></use>
 </g>
 </svg></span></span> picks
-out<span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"><span class="sidenote">By sending <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.23ex" height="1.676ex" style="vertical-align: -0.338ex;" viewBox="0 -576.1 529.5 721.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-170-Title">
+out<!--
+--><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"><span class="sidenote"><p></p>
+By sending <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.23ex" height="1.676ex" style="vertical-align: -0.338ex;" viewBox="0 -576.1 529.5 721.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-170-Title">
 <title id="MathJax-SVG-170-Title">a</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-61" x="0" y="0"></use>
@@ -2539,9 +2612,8 @@ out<span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenot
  <use xlink:href="#MJMAIN-31" x="5141" y="0"></use>
  <use xlink:href="#MJMAIN-7D" x="5642" y="0"></use>
 </g>
-</svg></span></span>.<br>
-<br>
-</span></span> the unique arrow <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="14.267ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 6142.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-176-Title">
+</svg></span></span>.</span></span>
+ the unique arrow <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="14.267ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 6142.7 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-176-Title">
 <title id="MathJax-SVG-176-Title">\{ 0, 1 \} \longrightarrow \{ 1 \}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-7B" x="0" y="0"></use>
@@ -2604,8 +2676,9 @@ out<span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenot
  <use xlink:href="#MJMAIN-27F6" x="1764" y="0"></use>
  <use xlink:href="#MJMATHI-79" x="3681" y="0"></use>
 </g>
-</svg></span></span>.</p>
-<p>Again by the Yoneda lemma we have that a cocone is given by a natural
+</svg></span></span>.
+<p></p>
+Again by the Yoneda lemma we have that a cocone is given by a natural
 transformation <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="15.651ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 6738.8 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-183-Title">
 <title id="MathJax-SVG-183-Title">W \implies \mathcal{C}(F, c)</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2635,10 +2708,13 @@ setting, an arrow <span class="math inline"><span class="mjpage"><svg xmlns:xlin
 </g>
 </svg></span></span> just picks
 out two morphisms. Thus, the whole thing amounts to the
-commutativity of the following diagram:</p>
-<p><img class="pure-img" src="./example-1.png"></p>
-<p>In more plain language, we have a commutative diagram of the form</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="38.362ex" height="4.343ex" style="vertical-align: -0.838ex; margin-top: -0.327ex;" viewBox="0 -1508.9 16516.7 1869.7" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-185-Title">
+commutativity of the following diagram:
+<p></p>
+<img class="pure-img" src="./example-1.png">
+<p></p>
+In more plain language, we have a commutative diagram of the form
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="38.362ex" height="4.343ex" style="vertical-align: -0.838ex; margin-top: -0.327ex;" viewBox="0 -1508.9 16516.7 1869.7" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-185-Title">
 <title id="MathJax-SVG-185-Title">
   (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;g\;\;} c)
   = (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;f\;\;} c),
@@ -2705,8 +2781,10 @@ commutativity of the following diagram:</p>
  <use xlink:href="#MJMAIN-29" x="15848" y="0"></use>
  <use xlink:href="#MJMAIN-2C" x="16238" y="0"></use>
 </g>
-</svg></span></span></p></li>
-<li><p>A slightly more complicated example is the following. Assume again
+</svg></span></span></li>
+<li><p></p>
+
+A slightly more complicated example is the following. Assume again
 that <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.251ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7427.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-186-Title">
 <title id="MathJax-SVG-186-Title">\mathcal{J} = \{ \varphi \colon a \longrightarrow b \}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2759,8 +2837,9 @@ above, only this time don’t work over <span class="math inline"><span class="m
  <use xlink:href="#MJSS-74" x="1121" y="0"></use>
 </g>
 </svg></span></span>. Suppose it picks out
-the arrow</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="18.242ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7854.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-192-Title">
+the arrow
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="18.242ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7854.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-192-Title">
 <title id="MathJax-SVG-192-Title">
 \{ 0 \;\; 1 \} \hookrightarrow \{ 0 \cong 1 \},
 </title>
@@ -2777,8 +2856,9 @@ the arrow</p>
  <use xlink:href="#MJMAIN-7D" x="7075" y="0"></use>
  <use xlink:href="#MJMAIN-2C" x="7575" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>where these are understood to be categories. Now, a weighted cocone
+</svg></span></span>
+<p></p>
+where these are understood to be categories. Now, a weighted cocone
 becomes something 2-categorical. We still pick out arrows <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.279ex" height="2.509ex" style="vertical-align: -0.671ex;" viewBox="0 -791.3 550.5 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-193-Title">
 <title id="MathJax-SVG-193-Title">f</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2792,9 +2872,11 @@ becomes something 2-categorical. We still pick out arrows <span class="math inli
 </g>
 </svg></span></span>, but since the category we are looking at is not the terminal
 one, but contains an isomorphism, the commutative diagram also
-becomes more complicated. Namely, we required the commutativity of</p>
-<p><img class="pure-img" src="./example-2.png"></p>
-<p>Instead of the requiring <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.401ex" height="2.509ex" style="vertical-align: -0.671ex;" viewBox="0 -791.3 1894.9 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-195-Title">
+becomes more complicated. Namely, we required the commutativity of
+<p></p>
+<img class="pure-img" src="./example-2.png">
+<p></p>
+Instead of the requiring <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.401ex" height="2.509ex" style="vertical-align: -0.671ex;" viewBox="0 -791.3 1894.9 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-195-Title">
 <title id="MathJax-SVG-195-Title">\theta \circ g</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-3B8" x="0" y="0"></use>
@@ -2809,8 +2891,10 @@ becomes more complicated. Namely, we required the commutativity of</p>
  <use xlink:href="#MJMATHI-66" x="1414" y="0"></use>
 </g>
 </svg></span></span>, we now only require the existence of an invertible 2-cell that
-mediates between the two.</p></li>
-<li><p>A subcategory <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.792ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 771.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-197-Title">
+mediates between the two.</li>
+<li><p></p>
+
+A subcategory <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.792ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 771.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-197-Title">
 <title id="MathJax-SVG-197-Title">\mathcal{D}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-44" x="0" y="0"></use>
@@ -2854,8 +2938,9 @@ super categories and are sometimes easier to reason about. For
 example, the category of finite-dimensional (left-)comodules of any
 (possibly infinite-dimensional) Hopf algebra is dense inside the
 category of all comodules, which makes them much easier to work with
-than modules.</p>
-<p>Formally, <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.792ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 771.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-204-Title">
+than modules.
+<p></p>
+Formally, <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.792ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 771.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-204-Title">
 <title id="MathJax-SVG-204-Title">\mathcal{D}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJCAL-44" x="0" y="0"></use>
@@ -2875,8 +2960,9 @@ Yoneda embedding along the inclusion functor <span class="math inline"><span cla
  <use xlink:href="#MJMAIN-21AA" x="1848" y="0"></use>
  <use xlink:href="#MJCAL-45" x="3253" y="0"></use>
 </g>
-</svg></span></span></p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="32.552ex" height="4.509ex" style="vertical-align: -0.838ex; margin-top: -0.346ex;" viewBox="0 -1580.7 14015.4 1941.5" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-207-Title">
+</svg></span></span>
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="32.552ex" height="4.509ex" style="vertical-align: -0.838ex; margin-top: -0.346ex;" viewBox="0 -1580.7 14015.4 1941.5" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-207-Title">
 <title id="MathJax-SVG-207-Title">
   \mathcal{E} \longrightarrow [\mathcal{E}^{\mathrm{op}}, \mathsf{Set}]
     \xrightarrow{\;[\iota, \mathsf{Set}]\;} [\mathcal{D}^{\mathrm{op}}, \mathsf{Set}]
@@ -2935,8 +3021,9 @@ Yoneda embedding along the inclusion functor <span class="math inline"><span cla
 </g>
  <use xlink:href="#MJMAIN-5D" x="13736" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>is still fully faithful. Another way of saying this is that every
+</svg></span></span>
+<p></p>
+is still fully faithful. Another way of saying this is that every
 object <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.235ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 2254.1 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-208-Title">
 <title id="MathJax-SVG-208-Title">e \in \mathcal{E}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -2961,8 +3048,9 @@ colimit of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http
  <use xlink:href="#MJMATHI-3B9" x="0" y="0"></use>
 </g>
 </svg></span></span>. Indeed, the isomorphism we have for a weighted
-colimit specialised to our situation looks like</p>
-<p><span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="34.577ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 14887.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-211-Title">
+colimit specialised to our situation looks like
+<p></p>
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="34.577ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 14887.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-211-Title">
 <title id="MathJax-SVG-211-Title">
  \mathcal{E}(e, a) \cong [\mathcal{D}^{\mathrm{op}}, \mathsf{Set}] (\mathcal{E}(\iota, e), \mathcal{E}(\iota, a)),
 </title>
@@ -3006,8 +3094,9 @@ colimit specialised to our situation looks like</p>
  <use xlink:href="#MJMAIN-29" x="14219" y="0"></use>
  <use xlink:href="#MJMAIN-2C" x="14608" y="0"></use>
 </g>
-</svg></span></span></p>
-<p>for all <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.382ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 2317.1 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-212-Title">
+</svg></span></span>
+<p></p>
+for all <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.382ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 2317.1 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-212-Title">
 <title id="MathJax-SVG-212-Title">a \in \mathcal{E}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMATHI-61" x="0" y="0"></use>
@@ -3015,11 +3104,13 @@ colimit specialised to our situation looks like</p>
  <use xlink:href="#MJCAL-45" x="1752" y="0"></use>
 </g>
 </svg></span></span>. This is exactly what it means for the
-above arrow to be fully faithful.</p></li>
+above arrow to be fully faithful.</li>
 </ol>
-<p><em>Exercise</em>: Try to find a weight such that one recovers a normal,
-unweighted, cocone.</p>
-<p><em>Exercise</em>: As you can imagine 1. and 2. can be used to produce all
+<p></p>
+<em>Exercise</em>: Try to find a weight such that one recovers a normal,
+unweighted, cocone.
+<p></p>
+<em>Exercise</em>: As you can imagine 1. and 2. can be used to produce all
 kinds of relations between <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.279ex" height="2.509ex" style="vertical-align: -0.671ex;" viewBox="0 -791.3 550.5 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-213-Title">
 <title id="MathJax-SVG-213-Title">f</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
@@ -3031,9 +3122,11 @@ kinds of relations between <span class="math inline"><span class="mjpage"><svg x
  <use xlink:href="#MJMATHI-67" x="0" y="0"></use>
 </g>
 </svg></span></span>. As such, prove the following
-statements:</p>
+statements:
 <ul>
-<li><p>A variant of 1.: in the case of the weight being <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.933ex" height="4.176ex" style="vertical-align: -0.838ex; margin-top: -0.309ex;" viewBox="0 -1437.2 7721.3 1798" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-215-Title">
+<li><p></p>
+
+A variant of 1.: in the case of the weight being <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.933ex" height="4.176ex" style="vertical-align: -0.838ex; margin-top: -0.309ex;" viewBox="0 -1437.2 7721.3 1798" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-215-Title">
 <title id="MathJax-SVG-215-Title">\{0, 1\} \xrightarrow{\;\;\mathrm{id}\;\;} \{0, 1\}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-7B" x="0" y="0"></use>
@@ -3063,8 +3156,10 @@ statements:</p>
  <use xlink:href="#MJMAIN-7D" x="7220" y="0"></use>
 </g>
 </svg></span></span>, we obtain a
-not-necessarily-commutative diagram.</p></li>
-<li><p>A variant of 2.: in the case that the weight is <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.14ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7379.6 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-216-Title">
+not-necessarily-commutative diagram.</li>
+<li><p></p>
+
+A variant of 2.: in the case that the weight is <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="17.14ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7379.6 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-216-Title">
 <title id="MathJax-SVG-216-Title">\{ 0 \} \hookrightarrow \{ 0 \longrightarrow 1 \}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-7B" x="0" y="0"></use>
@@ -3079,18 +3174,21 @@ not-necessarily-commutative diagram.</p></li>
 </g>
 </svg></span></span> (i.e., we only have an
 arrow between 0 and 1 and not necessarily an isomorphism), we get an
-ordinary (non-invertible) 2-cell as the weighted cocone.</p></li>
+ordinary (non-invertible) 2-cell as the weighted cocone.</li>
 </ul>
 <h1 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h1>
-<p>And that’s it! I’ve found this intuition very helpful in trying to wrap
+<p></p>
+And that’s it! I’ve found this intuition very helpful in trying to wrap
 my head around these concepts—hopefully other people will too. As a
-parting gift, I leave you with some more things to think about.</p>
-<p>First, one of the most important examples of weighted colimits—and
+parting gift, I leave you with some more things to think about.
+<p></p>
+First, one of the most important examples of weighted colimits—and
 coends, of course—is the <a href="https://ncatlab.org/nlab/show/tensor+product+of+functors">tensor product of
 functors</a>. If you ever wanted to be a
 <a href="https://ncatlab.org/nlab/show/co-Yoneda+lemma">ninja</a>, now is the time! It’s a fun operation to think
-about and play around with, and I would invite you to do just that.</p>
-<p>Lastly, the category of weights <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.887ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3395.9 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-217-Title">
+about and play around with, and I would invite you to do just that.
+<p></p>
+Lastly, the category of weights <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.887ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3395.9 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-217-Title">
 <title id="MathJax-SVG-217-Title">[\mathcal{J}^{\mathrm{op}}, \mathcal{V}]</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-5B" x="0" y="0"></use>
@@ -3155,39 +3253,68 @@ cocontinuous functor <span class="math inline"><span class="mjpage"><svg xmlns:x
  <use xlink:href="#MJMATHI-47" x="5569" y="0"></use>
 </g>
 </svg></span></span>
-(note the tensor product of functors!).</p>
+(note the tensor product of functors!).
 <h1 id="resources">(Re)sources<a href="#resources" id="sec-link" class="floatright">¶</a></h1>
 <ul>
-<li><p>Monoidal Category Theory:</p>
+<li><p></p>
+
+Monoidal Category Theory:
 <ul>
-<li><p>Saunders Mac Lane: “Natural associativity and commutativity”.
-In: Rice Univ. Stud. 49.4 (1963), pp.&nbsp;28–46. issn: 0035-4996.</p></li>
-<li><p>Pavel Etingof, Shlomo Gelaki, Dmitri Nikshych, and Victor Ostrik:
+<li><p></p>
+
+Saunders Mac Lane: “Natural associativity and commutativity”.
+In: Rice Univ. Stud. 49.4 (1963), pp.&nbsp;28–46. issn: 0035-4996.</li>
+<li><p></p>
+
+Pavel Etingof, Shlomo Gelaki, Dmitri Nikshych, and Victor Ostrik:
 “Tensor categories”. In: Vol. 205. Mathematical Surveys and
 Monographs. American Mathematical Society, Providence, RI, 2015,
-pp.&nbsp;xvi+343.</p></li>
-<li><p><a href="https://ncatlab.org/nlab/show/monoidal+category">nLab: monoidal category</a></p></li>
+pp.&nbsp;xvi+343.</li>
+<li><p></p>
+
+<a href="https://ncatlab.org/nlab/show/monoidal+category">nLab: monoidal category</a></li>
 </ul></li>
-<li><p>Enriched Category Theory:</p>
+<li><p></p>
+
+Enriched Category Theory:
 <ul>
-<li><p>Max Kelly: “Basic concepts of enriched category theory”. In: London
+<li><p></p>
+
+Max Kelly: “Basic concepts of enriched category theory”. In: London
 Math. Soc. Lec. Note Series 64, Cambridge Univ. Press 1982, 245
-pp.&nbsp;(ISBN:9780521287029).</p>
-<p>Republished as: Reprints in Theory and Applications of Categories,
-No. 10 (2005) pp.&nbsp;1-136 (<a href="http://www.tac.mta.ca/tac/reprints/articles/10/tr10abs.html">link</a>)</p></li>
-<li><p><a href="https://ncatlab.org/nlab/show/enriched+category">nLab: enriched category</a></p></li>
+pp.&nbsp;(ISBN:9780521287029).
+<p></p>
+Republished as: Reprints in Theory and Applications of Categories,
+No. 10 (2005) pp.&nbsp;1-136 (<a href="http://www.tac.mta.ca/tac/reprints/articles/10/tr10abs.html">link</a>)</li>
+<li><p></p>
+
+<a href="https://ncatlab.org/nlab/show/enriched+category">nLab: enriched category</a></li>
 </ul></li>
-<li><p>Copowers:</p>
+<li><p></p>
+
+Copowers:
 <ul>
 <li><a href="https://ncatlab.org/nlab/show/copower">nlab: copower</a></li>
 </ul></li>
-<li><p>Weighted Colimits:</p>
+<li><p></p>
+
+Weighted Colimits:
 <ul>
-<li><p><a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble on the n-Category Café</a></p></li>
-<li><p><a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John Baez on the n-Category Café</a></p></li>
-<li><p><a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab: weighted colimit</a></p></li>
-<li><p>Richard Garner: Bicategories; lecture series at <a href="https://conferences.leeds.ac.uk/bcqt2022/">BCQT 2022, Leeds</a>.</p></li>
-<li><p>Emily Riehl: “Weighted Limits and Colimits”; <a href="https://math.jhu.edu/~eriehl/weighted.pdf">lecture notes</a>.</p></li>
+<li><p></p>
+
+<a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble on the n-Category Café</a></li>
+<li><p></p>
+
+<a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John Baez on the n-Category Café</a></li>
+<li><p></p>
+
+<a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab: weighted colimit</a></li>
+<li><p></p>
+
+Richard Garner: Bicategories; lecture series at <a href="https://conferences.leeds.ac.uk/bcqt2022/">BCQT 2022, Leeds</a>.</li>
+<li><p></p>
+
+Emily Riehl: “Weighted Limits and Colimits”; <a href="https://math.jhu.edu/~eriehl/weighted.pdf">lecture notes</a>.</li>
 </ul></li>
 </ul>
     </section>

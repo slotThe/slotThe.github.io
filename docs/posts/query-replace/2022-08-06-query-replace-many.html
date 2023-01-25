@@ -64,7 +64,8 @@
 </ul>
         </div>
       
-        <p>As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
+        <p></p>
+As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
 by default) can be used to replace occurences of one string with
 another. In comparison to other tools that are used for similar
 purposes—(a subset of) keyboard macros and multiple-cursors—the whole
@@ -74,18 +75,21 @@ and decide on the spot whether one would like to replace them or not.
 Needless to say, I like <code>query-replace</code> a lot! In true Emacs fashion,
 the function also takes way too many arguments: among other things, it
 can operate on the current region, backwards, or only on things
-surrounded by words boundaries.</p>
-<p>However, there is one crucial feature missing from its default
+surrounded by words boundaries.
+<p></p>
+However, there is one crucial feature missing from its default
 functionality: the ability to create multiple <code>from → to</code> pairs. But
 this is Emacs, after all, which means that I can just write that
-<code>query-replace-many</code> function I’ve always wanted!</p>
+<code>query-replace-many</code> function I’ve always wanted!
 <!--more-->
 <h1 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h1>
-<p>Originally, my motivation came through <a href="../../research.html">work</a>, where I <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">write a lot of
+<p></p>
+Originally, my motivation came through <a href="../../research.html">work</a>, where I <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">write a lot of
 LaTeX</a>. When polishing papers, it sometimes happens that I would like
 to change or unify the notation of certain objects in the current
-equation/environment/file.</p>
-<p>When an alteration like this only encompasses a single action, like
+equation/environment/file.
+<p></p>
+When an alteration like this only encompasses a single action, like
 switching <code>T</code> to <code>H</code>, a simple <code>query-replace</code> after narrowing to the
 current region of interest is totally sufficient. For others, like
 changing <code>T</code> to <code>H</code> <em>and</em> <code>S</code> to <code>G</code>, this solution, along with
@@ -98,12 +102,15 @@ situation. It’s possible to cook up a manual solution using the
 alternative <code>query-replace-regexp</code> function and capture groups, but I’m
 unsure how many people know their elisp regular expressions well enough
 for that to be time efficient. I don’t, and almost certainly never
-will, so it seemed much easier to automate this instead!</p>
+will, so it seemed much easier to automate this instead!
 <h1 id="the-solution">The Solution<a href="#the-solution" id="sec-link" class="floatright">¶</a></h1>
-<p>Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
+<p></p>
+Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
 enough. The high-level overview is this: we read in multiple queries
-until an empty input is given<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
+until an empty input is given,<!--
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
+This isn’t <em>quite</em> what’s actually done, but it’s the right mental
 model to have (since this is how the function behaves). The gory
 details are that we use the fact that <code>replace.el</code>’s default
 suggestion is always the last query that was entered by the user.
@@ -112,33 +119,37 @@ What happens on an empty input is quite deep in the bowels of
 functions sounds like a real pain, leaning on that functionality
 suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
-out.<br />
-<br />
-</span></span>, build up a regular expression of the
+out.</span></span>
+ build up a regular expression of the
 form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
 replacing—test the current thing to be replaced against all of the
-queries to select the correct one.</p>
-<p>The beauty of this is that, since it’s really just a thin wrapper over
+queries to select the correct one.
+<p></p>
+The beauty of this is that, since it’s really just a thin wrapper over
 two functions from <code>replace.el</code> that do the heavy lifting, all of the
 modules regular functionality, like the keybindings and history, just
-work.</p>
-<p>For example, in the following I replace <code>T</code> with <code>U</code> and, at the same
+work.
+<p></p>
+For example, in the following I replace <code>T</code> with <code>U</code> and, at the same
 time, <code>U</code> with <code>T</code>. The first few matches are stepped through and the
 rest is just accepted wholesale. At the bottom, you can see the default
-<code>query-replace</code> interface when interacting with the query.</p>
-<p><img class="pure-img" src="./query-replace-many.gif"></p>
-<p>The only cosmetic imperfection of this is that, while the replacement
+<code>query-replace</code> interface when interacting with the query.
+<p></p>
+<img class="pure-img" src="./query-replace-many.gif">
+<p></p>
+The only cosmetic imperfection of this is that, while the replacement
 candidate itself is correctly updated, we see the whole regular
 expression <code>\(?U:\|T\)</code> as the thing to be replaced instead of the bit
 that’s actually matching currently. However, since this would seem to
 require some work and one of course sees what’s to be replaced by
 looking at the thing at point, I can very much live with this for the
-moment.</p>
+moment.
 <h2 id="the-code">The Code<a href="#the-code" id="sec-link" class="floatright">¶</a></h2>
-<p>Below is the full source code, in all of its hacky glory. Note that you
+<p></p>
+Below is the full source code, in all of its hacky glory. Note that you
 will need to <code>require</code> the <code>s.el</code> and <code>dash.el</code> libraries for this to
 work, if you haven’t loaded these already (if you use any amount of
-packages at all, chances are that you have).</p>
+packages at all, chances are that you have).
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-queries</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">pairs</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Get multiple </span><span class="ss">`query-replace'</span><span class="s"> pairs from the user.</span>
 <span class="s">PAIRS is a list of replacement pairs of the form (FROM . TO).&quot;</span>

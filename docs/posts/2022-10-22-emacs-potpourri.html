@@ -70,35 +70,42 @@
 </ul>
         </div>
       
-        <p>Emacs is the “extensible text editor”, and it wouldn’t be fun if one
+        <p></p>
+Emacs is the “extensible text editor”, and it wouldn’t be fun if one
 didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">README</a> for my Emacs configuration, I
 thought it might be nice to somewhat expand on certain ideas and give a
-little context to some snippets that have accumulated over time.</p>
-<p>While there is a post about <a href="https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html">my version</a> of the
+little context to some snippets that have accumulated over time.
+<p></p>
+While there is a post about <a href="https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html">my version</a> of the
 <code>query-replace</code> function, most other tidbits have only seen the light of
 day in places like the “Weekly Tips, Tricks, &amp;c.” thread on Reddit. In
-the spirit of hosting my content somewhere that I actually control,<span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">I am aware of the futility of this—Reddit is almost certainly
+the spirit of hosting my content somewhere that I actually control,<!--
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
+I am aware of the futility of this—Reddit is almost certainly
 going to be around longer than my personal site will. And yet,
-this feels more correct in some way.<br />
-<br />
-</span></span>
+this feels more correct in some way.</span></span>
+
 I chose to showcase these again here, hoping that other people may also
-find some of this stuff useful.</p>
+find some of this stuff useful.
 <!--more-->
 <h1 id="frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code><a href="#frame-inhibit-implied-resize" id="sec-link" class="floatright">¶</a></h1>
-<p>This variable is interesting for all the people who, for one reason or
+<p></p>
+This variable is interesting for all the people who, for one reason or
 another, care about the startup time of their Emacs session. Even more
 if one uses a tiling window manager, as then Emacs doesn’t get a say in
-how big its frame will be anyway. An excerpt from the documentation:</p>
+how big its frame will be anyway. An excerpt from the documentation:
 <blockquote>
-<p>Whether frames should be resized implicitly.</p>
-<p>If this option is nil, setting font, menu bar, tool bar, tab bar,
+<p></p>
+Whether frames should be resized implicitly.
+<p></p>
+If this option is nil, setting font, menu bar, tool bar, tab bar,
 internal borders, fringes or scroll bars of a specific frame may
 resize the frame in order to preserve the number of columns or lines
-it displays. If this option is t, no such resizing is done.</p>
+it displays. If this option is t, no such resizing is done.
 </blockquote>
-<p>I always wondered why startup time skyrocketed whenever I changed the
+<p></p>
+I always wondered why startup time skyrocketed whenever I changed the
 default font to something else—surely opening a font and using it can’t
 be that expensive! What I didn’t realise was that what I set was
 slightly larger than Emacs’s default font, which I reckon was some kind
@@ -109,9 +116,10 @@ trying to—futilely, since I use <a href="https://xmonad.org">XMonad</a>—resi
 that this cuts my startup time from just over 1 second to about 0.8
 seconds. This may not seem like much, but it’s literally <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51">setting a
 single variable</a> in my <code>early-init.el</code>—pretty good
-value for money.</p>
+value for money.
 <h1 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code><a href="#pixel-scroll-precision-mode" id="sec-link" class="floatright">¶</a></h1>
-<p>This is pretty old news by now, but I wanted to take the opportunity to
+<p></p>
+This is pretty old news by now, but I wanted to take the opportunity to
 again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a href="./phd-workflow/2022-05-01-my-phd-workflow.html">PhD
 student in maths</a>, which means that I write a lot of
 LaTeX and also use Org extensively for taking notes. While ordinary
@@ -122,18 +130,19 @@ in the file. However, now we have the problem that Emacs treats
 pictures as very large single characters—the result is a scrolling
 experience that’s very far from optimal. This is <em>exactly</em> where
 <code>pixel-scroll-precision-mode</code> comes in and saves the day, but see the
-difference for yourself:</p>
+difference for yourself:
 <video width="100%" controls>
 <source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
 </video>
 <h1 id="quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code><a href="#quickly-insert-images-in-org-roam" id="sec-link" class="floatright">¶</a></h1>
-<p>Speaking of inserting images into Org; how does one do that, exactly?
+<p></p>
+Speaking of inserting images into Org; how does one do that, exactly?
 Doing everything by hand seems like a slog: select an arbitrary
 rectangle on the screen, take a screenshot of it, move the resulting
 picture into the correct directory, give it an appropriate name, and
 insert a link to it into the current buffer. This sounds like a lot of
 busywork for something that I ideally don’t want to think about at all;
-thankfully, most of this can be nicely automated.</p>
+thankfully, most of this can be nicely automated.
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/org-roam-insert-image</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Select and insert an image at point.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
@@ -150,17 +159,20 @@ thankfully, most of this can be nicely automated.</p>
 <span class="w">        </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;[[../images/%s]]&quot;</span><span class="w"> </span><span class="nv">file-name</span><span class="p">))))))</span>
 </pre></div>
 
-<p>All it needs is <code>xdotool</code> for moving the mouse (though, if you don’t use
+<p></p>
+All it needs is <code>xdotool</code> for moving the mouse (though, if you don’t use
 <code>unclutter</code> then this may well be deleted) and <code>scrot</code> for actually
 taking the screenshot. Pretty convenient. If <code>scrot</code> is too low-tech
 for you, then the above snippet probably also works with <code>flameshot</code> or
-a similar tool.</p>
+a similar tool.
 <h1 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician<a href="#latex-for-the-lazy-mathematician" id="sec-link" class="floatright">¶</a></h1>
-<p>I am pretty impatient when it comes to LaTeX entry. So impatient that I
+<p></p>
+I am pretty impatient when it comes to LaTeX entry. So impatient that I
 have created a few “now you’re really taking it too far”-type of
-functions. To be honest, they kind of delight me.</p>
-<p>First, the following is an override for the <code>self-insert-command</code>, which
-enables faster entry of one-character math symbols:</p>
+functions. To be honest, they kind of delight me.
+<p></p>
+First, the following is an override for the <code>self-insert-command</code>, which
+enables faster entry of one-character math symbols:
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">char</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;</span><span class="ss">`self-insert-command'</span><span class="s"> for LaTeX mode.</span>
 <span class="s">If the previous word is just a single character, surround it with</span>
@@ -189,17 +201,20 @@ enables faster entry of one-character math symbols:</p>
 <span class="w">         </span><span class="p">(</span><span class="nf">self-insert-command</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">char</span><span class="p">)))))</span>
 </pre></div>
 
-<p>Bound to <code>&lt;SPC&gt;</code> (and also things like <code>.</code> and <code>-</code>), it enables one to
+<p></p>
+Bound to <code>&lt;SPC&gt;</code> (and also things like <code>.</code> and <code>-</code>), it enables one to
 write <code>"foo T&lt;SPC&gt;"</code> and have Emacs insert <code>"foo $T$ "</code> instead—very
 convenient, and much faster even than having a snippet to insert dollars
-based on some condition.</p>
-<p>The laziness continues with me not wanting to write <code>\blank</code> so
-often.<span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">This is a placeholder that’s often used when not wanting to
-explicitly quantify over an argument.<br />
-<br />
-</span></span> I could also create an auto-expanding snippet for this, but
+based on some condition.
+<p></p>
+The laziness continues with me not wanting to write <code>\blank</code> so
+often.<!--
+--><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote"><p></p>
+This is a placeholder that’s often used when not wanting to
+explicitly quantify over an argument.</span></span>
+ I could also create an auto-expanding snippet for this, but
 wouldn’t it be <em>much better</em> to insert it on a double tap of the space
-bar instead? I think so!</p>
+bar instead? I think so!
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-space</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Insert a space; or not.</span>
 <span class="s">In case the previous character was already a space, insert</span>
@@ -210,31 +225,38 @@ bar instead? I think so!</p>
 <span class="w">    </span><span class="p">(</span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="sc">?\s</span><span class="p">)))</span>
 </pre></div>
 
-<p>Now, writing something like <code>"C(&lt;SPC&gt;&lt;SPC&gt;,&lt;SPC&gt;&lt;SPC&gt;)"</code> in math-mode
+<p></p>
+Now, writing something like <code>"C(&lt;SPC&gt;&lt;SPC&gt;,&lt;SPC&gt;&lt;SPC&gt;)"</code> in math-mode
 nicely inserts <code>"C( \blank , \blank )"</code>. Because the space bar is so
 easy to press, this is again marginally faster than having to write
-something like <code>"C(bln,bln)"</code>.</p>
-<p>Together with auto-expanding snippets, this enables reasonably fast
-LaTeX entry:</p>
-<p><img class="pure-img" src="../images/emacs-potpourri/latex-entry.gif"></p>
-<p>More examples can be found in the <a href="./phd-workflow/2022-05-01-my-phd-workflow.html#digital-notes">post</a> about
-my research workflow.</p>
+something like <code>"C(bln,bln)"</code>.
+<p></p>
+Together with auto-expanding snippets, this enables reasonably fast
+LaTeX entry:
+<p></p>
+<img class="pure-img" src="../images/emacs-potpourri/latex-entry.gif">
+<p></p>
+More examples can be found in the <a href="./phd-workflow/2022-05-01-my-phd-workflow.html#digital-notes">post</a> about
+my research workflow.
 <h1 id="erc">ERC<a href="#erc" id="sec-link" class="floatright">¶</a></h1>
-<p>I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s
+<p></p>
+I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s
 really great so far, but some things felt a bit lackluster out of the
 box. As such, my <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el">ERC config</a> has already grown quite a
-bit.<span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Though it’s still much smaller than whatever it is that WeeChat
-auto-generates :)<br />
-<br />
-</span></span> The following are a few tweaks that improve my experience
-greatly.</p>
+bit.<!--
+--><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote"><p></p>
+Though it’s still much smaller than whatever it is that WeeChat
+auto-generates :)</span></span>
+ The following are a few tweaks that improve my experience
+greatly.
 <h2 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent<a href="#mark-the-current-frame-as-urgent" id="sec-link" class="floatright">¶</a></h2>
-<p>One feature I was dearly missing was the ability to set <a href="https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html">urgency
+<p></p>
+One feature I was dearly missing was the ability to set <a href="https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html">urgency
 hints</a> in the case I get highlighted/pinged. This is
 essentially the window telling your window manager or desktop
 environment that it wants your attention. You can then execute an
 action based on this urgency hint. Thankfully, Emacs is extensible, so
-hacking this behaviour into ERC wasn’t actually all that complicated.</p>
+hacking this behaviour into ERC wasn’t actually all that complicated.
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/mark-emacs-urgent</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Mark the current frame as urgent.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="s">&quot;WM_HINTS&quot;</span><span class="p">)</span>
@@ -255,22 +277,25 @@ hacking this behaviour into ERC wasn’t actually all that complicated.</p>
 <span class="p">(</span><span class="nv">add-hook</span><span class="w"> </span><span class="ss">'erc-text-matched-hook</span><span class="w"> </span><span class="nf">#'</span><span class="nv">slot/beep-on-match</span><span class="p">)</span>
 </pre></div>
 
-<p>And that’s really it! Now ERC correctly sends an urgency hint whenever
+<p></p>
+And that’s really it! Now ERC correctly sends an urgency hint whenever
 I get highlighted. Note that, <a href="https://old.reddit.com/r/emacs/comments/xjyuni/weekly_tips_tricks_c_thread/ipfjlw0/">as we found out</a>, if
 you use a reparenting window manager (you probably do if you use a
 desktop environment) you might have to give <code>x-change-window-property</code>
-above an extra <code>t</code> argument.</p>
+above an extra <code>t</code> argument.
 <h2 id="dont-highlight-quite-so-much">Don’t highlight quite so much<a href="#dont-highlight-quite-so-much" id="sec-link" class="floatright">¶</a></h2>
-<p>Having configured quite a few regular expressions for when I get
+<p></p>
+Having configured quite a few regular expressions for when I get
 highlighted, things can get quite overwhelming at times. For example,
 when ERC starts up it prints <code>/users</code> in every channel buffer. Of
 course, I’m a user in a channel that I’m in, so Emacs happily starts
 beeping and throwing around urgency hints—not a good experience. This
 also clutters the <code>ERC Keywords</code> buffer (which is built-in and akin to
-WeeChat’s <code>highmon.pl</code>).</p>
-<p>Thankfully, however, there is a straightforward hack around this: just
+WeeChat’s <code>highmon.pl</code>).
+<p></p>
+Thankfully, however, there is a straightforward hack around this: just
 check the message for certain regular expression first and do nothing
-when they are present.</p>
+when they are present.
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="p">(</span><span class="nv">msg</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Don't highlight me when these things happen.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">message</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim-left</span><span class="w"> </span><span class="nv">msg</span><span class="p">))</span>
@@ -282,8 +307,9 @@ when they are present.</p>
 <span class="w">              </span><span class="o">,</span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;*** &quot;</span><span class="w"> </span><span class="nv">channel</span><span class="w"> </span><span class="s">&quot;: topic set by&quot;</span><span class="p">)))))</span>
 </pre></div>
 
-<p>All that’s left to do is to thread this function through to
-<code>erc-log-matches</code> and the above-defined <code>slot/beep-on-match</code>:</p>
+<p></p>
+All that’s left to do is to thread this function through to
+<code>erc-log-matches</code> and the above-defined <code>slot/beep-on-match</code>:
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-log-matches</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Log matches to extra buffer, unless they are annoying.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
@@ -299,17 +325,20 @@ when they are present.</p>
 <span class="c1">;; As before, now add the appropriate hooks to `erc-text-matched-hook'.</span>
 </pre></div>
 
-<p>If it works, it works, right?</p>
+<p></p>
+If it works, it works, right?
 <h1 id="inserting-links">Inserting links<a href="#inserting-links" id="sec-link" class="floatright">¶</a></h1>
-<p>Next to being a user, I also spend way too much time working on XMonad.
+<p></p>
+Next to being a user, I also spend way too much time working on XMonad.
 As such, I often help people coming into our IRC or posting on the
 subreddit with their problems. More often than not one needs to link to
 the same resources over and over again—why not write something so that I
-don’t have to dig up these links again and again?</p>
-<p>I currently have a set-up where I can link to every XMonad module, all
+don’t have to dig up these links again and again?
+<p></p>
+I currently have a set-up where I can link to every XMonad module, all
 of my blog posts, as well as selected extra sites, like our tutorial and
 installation instructions. Depending on the given universal argument, a
-different link style is used, to accomodate for different platforms.</p>
+different link style is used, to accomodate for different platforms.
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-xmonad-modules</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Get all XMonad modules in the form (NAME . DOC-URL).&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">xmonad-cabal</span><span class="w"> </span><span class="s">&quot;~/repos/xmonad/xmonad-contrib/xmonad-contrib.cabal&quot;</span><span class="p">)</span>
@@ -356,20 +385,24 @@ different link style is used, to accomodate for different platforms.</p>
 <span class="w">      </span><span class="p">(</span><span class="k">save-excursion</span><span class="w"> </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;\n\n[&quot;</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="s">&quot;]: &quot;</span><span class="w"> </span><span class="nv">link</span><span class="p">)))))</span>
 </pre></div>
 
-<p>I bind this to <code>C-c l</code> in <code>markdown-mode</code>; it looks like this:</p>
-<p><img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif"></p>
+<p></p>
+I bind this to <code>C-c l</code> in <code>markdown-mode</code>; it looks like this:
+<p></p>
+<img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif">
 <h1 id="a-macro-for-repeat-mode">A macro for <code>repeat-mode</code><a href="#a-macro-for-repeat-mode" id="sec-link" class="floatright">¶</a></h1>
-<p>I’ve written a macro for Emacs’s <code>repeat-mode</code>, which allows you to
+<p></p>
+I’ve written a macro for Emacs’s <code>repeat-mode</code>, which allows you to
 execute repeated commands without having to press the same prefix over
 and over again. For example, one can set this up for Org navigation
 commands such that <code>C-c C-n n n</code> executes <code>org-next-visible-heading</code>
 three times. A great introduction to <code>repeat-mode</code> can be found
-<a href="https://karthinks.com/software/it-bears-repeating/">here</a>.</p>
-<p>There are <a href="https://tildegit.org/acdw/define-repeat-map.el">lots</a> of <a href="https://github.com/mmarshall540/repeaters">packages</a>
+<a href="https://karthinks.com/software/it-bears-repeating/">here</a>.
+<p></p>
+There are <a href="https://tildegit.org/acdw/define-repeat-map.el">lots</a> of <a href="https://github.com/mmarshall540/repeaters">packages</a>
 around that define different macros which probably work much better than
 the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword
 now. However, obviously the one I wrote feels the most natural to <em>me</em>,
-so it’s being kept around regardless.</p>
+so it’s being kept around regardless.
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defmacro</span><span class="w"> </span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="p">(</span><span class="nv">sym</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">docstring</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;A macro for defining </span><span class="ss">`repeat-map'</span><span class="s">s.</span>
 <span class="s">Defines a new repeat-map called SYM with the given DOCSTRING.</span>
@@ -398,9 +431,10 @@ so it’s being kept around regardless.</p>
 <span class="w">       </span><span class="p">(</span><span class="nf">put</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="ss">'repeat-map</span><span class="w"> </span><span class="ss">',sym</span><span class="p">))))</span>
 </pre></div>
 
-<p>The following would, for example, bind <code>mc/mark-next-like-this-word</code> to
+<p></p>
+The following would, for example, bind <code>mc/mark-next-like-this-word</code> to
 <code>M-s s</code> globally and to <code>s</code> in the created <code>mc-repeat-map</code>. Likewise,
-<code>mc/mark-next-word-like-this</code> is bound to <code>.</code> in that map, and so on.</p>
+<code>mc/mark-next-word-like-this</code> is bound to <code>.</code> in that map, and so on.
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="nv">mc-repeat-map</span>
 <span class="w">    </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;M-s s&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-like-this-word</span><span class="p">)</span>
 <span class="w">      </span><span class="p">(</span><span class="s">&quot;C-M-.&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-word-like-this</span><span class="p">)</span>
@@ -410,8 +444,9 @@ so it’s being kept around regardless.</p>
 <span class="w">    </span><span class="s">&quot;</span><span class="ss">`repeat-mode'</span><span class="s"> keymap to repeat </span><span class="ss">`multiple-cursors'</span><span class="s"> bindings.&quot;</span><span class="p">)</span>
 </pre></div>
 
-<p>This may be too implicit for many people, but for me it’s just right—and
-that’s sort of the point of all of this, right?</p>
+<p></p>
+This may be too implicit for many people, but for me it’s just right—and
+that’s sort of the point of all of this, right?
     </section>
 </article>
 
