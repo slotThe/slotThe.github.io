@@ -3,6 +3,7 @@
 {-# LANGUAGE LambdaCase          #-}
 {-# LANGUAGE NamedFieldPuns      #-}
 {-# LANGUAGE OverloadedStrings   #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE ViewPatterns        #-}
 
 import Data.Text qualified as T
@@ -104,11 +105,13 @@ main = hakyllWith config do
       mkList = mkPostList (mkTagAssocs tagsMakeId tagsMap)
   -- All posts
   create ["posts.html"] do
-    let allPostsCtx   = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
+    let allPostsCtx :: Context String
+          = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
     mkList allPostsCtx "All posts" "atom" "templates/all-posts.html"
   -- Only posts tagged by a certain tag
   tagsRules tags \tag taggedPosts -> do
-    let taggedPostCtx = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
+    let taggedPostCtx :: Context String
+          = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
     mkList taggedPostCtx
            ("Posts tagged " <> "\"" <> tag <> "\"")
            ("../atom-" <> tag)
