@@ -38,8 +38,7 @@ notes.
 <h1 id="motivation">Motivation</h1>
 <p></p>
 If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
-A headline, possibly with an attached body.</span></span>
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">A headline, possibly with an attached body.</span></span>
  <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
@@ -289,8 +288,7 @@ But we can also get a little bit more fancy. Since the topic action is
 just a general <code>X</code> action, we can really do anything we want in there.
 In addition to spawning programs, all of my Haskell projects should
 default to the <code>Hacking</code><!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
-In case you are interested:
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In case you are interested:
 <div class="highlight"><pre><span></span><span class="nf">hacking</span>
 <span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">renamed</span><span class="w"> </span><span class="p">[</span><span class="kt">Replace</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">]</span>
 <span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">limitWindows</span><span class="w"> </span><span class="mi">3</span>
@@ -398,8 +396,7 @@ towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.
 <p></p>
 Specifically, I want to showcase a new<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
-In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
 which will drop soon!</span></span>
  XMonad module:
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>. Building on top of XMonad’s prompt—which works
@@ -463,8 +460,7 @@ video you want to watch on the weekend!
 To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
 “normal” TODO notes on <code>M-o c</code><!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote"><p></p>
-Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</span></span>
+--><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</span></span>
  and uses the selection when called
 with a universal argument:
 <div class="highlight"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
@@ -525,8 +521,7 @@ generic enough API, I decided to turn it into an XMonad module!
 Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
 now available for everyone to try out; provided one has the git version
 of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
-If you <em>really</em> want to try this feature but don’t want to bother
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
 installing any unreleased—though stable—version, message me in any
 way and maybe we’ll hurry up and cut 0.17.1 soon!</span></span>
 <p></p>
@@ -737,8 +732,7 @@ associative by default and so
 <p></p>
 However, the complexity characteristics of this operation are working
 against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code><!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote"><p></p>
-Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
+--><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
 and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
 that here.</span></span>
  is
@@ -778,8 +772,7 @@ an associative an unital operation: function composition. In Haskell,
 <code>(&lt;&gt;)</code> is, in some sense,
 <a href="https://www.haskell.org/tutorial/classes.html">overloaded</a> so that it
 can be used with any monoidal composition one can think of!<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote"><p></p>
-Really, for any <em>semigroup</em>, which is a slightly weaker notion of
+--><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Really, for any <em>semigroup</em>, which is a slightly weaker notion of
 an operation that is merely associative, but doesn’t necessarily
 have a unit.</span></span>
 <p></p>
@@ -791,8 +784,7 @@ amenable to the threading idea.
 <p></p>
 I haven’t benchmarked this, so it’s not entirely clear to me whether
 performance is actually relevant in this situation,<!--
---><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote"><p></p>
-I suspect that the answer is “probably not”—that didn’t stop me,
+--><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">I suspect that the answer is “probably not”—that didn’t stop me,
 however!</span></span>
  but using
 difference lists just feels right here, and so I did.
@@ -809,8 +801,7 @@ Of course, technically none of this needs to live only inside your
 XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
 cool tools like magit.sh.<!--
---><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote"><p></p>
-Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
+--><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
 maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.</span></span>
  Go nuts!
@@ -857,8 +848,7 @@ As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
 <em>research</em> workflow—and there is a lot of great resources out there
 already—I decided to not do this here.<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote"><p></p>
-If you’d like some examples: being employed at a university also
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you’d like some examples: being employed at a university also
 means I have to worry a bit about efficiently dealing with
 bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
 calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
@@ -912,8 +902,7 @@ relevant PDFs in <a href="https://xournalpp.github.io/">xournalpp</a>; more on t
 Instead of navigating to it, all interaction with the library is done
 via <a href="https://github.com/slotthe/hmenu">hmenu</a>, a small wrapper around <a href="https://tools.suckless.org/dmenu/">dmenu</a> to facilitate this kind of
 behaviour. I merely have to press <code>M-y</code><!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote"><p></p>
-I will be using Emacs style notation throughout the entire
+--><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">I will be using Emacs style notation throughout the entire
 article. This means that, for example, <code>C-x a</code> should be read as
 “hold down control and press x, then release both and press a”.
 You can of course safely ignore this, since the keys just serve
@@ -953,8 +942,7 @@ especially when collaborating with others.
 <p></p>
 Not without my quirks (as I’m sure you’ve noticed), I’m a bit picky
 about the particular writing setup. It’s either completely white A5<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote"><p></p>
-Although, admittedly, when drawing up very large diagrams I’m
+--><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Although, admittedly, when drawing up very large diagrams I’m
 sometimes forced to switch to A4 paper in landscape mode.</span></span>
 
 paper, paired with a good (mechanical) pencil/a very fine pen, or very
@@ -996,8 +984,7 @@ The <code>latex-change-env</code> package is for changing between different kind
 of environments, including display math, while offering to rename labels
 across the project if necessary. When deleting a label from an
 environment, it also remembers this for the session!<!--
---><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote"><p></p>
-This is based on the hash of the contents of the environment—if
+--><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">This is based on the hash of the contents of the environment—if
 that changes, the label is “lost”; though it can of course still
 be retrieved manually from the relevant hash map.</span></span>
 <p></p>
@@ -1005,8 +992,7 @@ be retrieved manually from the relevant hash map.</span></span>
 <p></p>
 One very neat feature of AUCTeX that I find myself using more and more
 often lately<!--
---><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote"><p></p>
-This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
+--><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
 Emacs 29, making use of XInput 2.4 functionality. It makes
 scrolling through buffers that are quite dense with pictures
 rather smooth.</span></span>
@@ -1113,8 +1099,7 @@ more complicated solution.
 <p></p>
 Adding new citations is done via the now aptly named Emacs package
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><!--
---><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote"><p></p>
-Ostensibly, this should be an XMonad module, as it does not
+--><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote">Ostensibly, this should be an XMonad module, as it does not
 necessarily have anything to do with Emacs itself. However, I had
 already written the elfeed integration and so the most annoying
 part (scraping the arXiv xml for certain bits) was already done.

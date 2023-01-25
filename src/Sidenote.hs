@@ -63,12 +63,6 @@ mkSidenote = \case
                     ([Plain (inlines |> commentStart), block] <>) <$> go [] xs
       b       -> go (inlines |> b) xs
 
-  containsNote :: [Inline] -> Bool
-  containsNote = \case
-    []            -> False
-    (Note{} : _ ) -> True
-    (_      : xs) -> containsNote xs
-
   (|>) :: [a] -> a -> [a]
   xs |> x = xs <> [x]
 
@@ -76,18 +70,21 @@ renderSidenote :: [Block] -> Sidenote Block
 renderSidenote blocks = do
   SNS w i <- get <* modify' (\sns -> sns{ counter = succ (counter sns) })
   let
-    renderedBody = T.pack . itemBody $ writePandocWith w (Item "" (Pandoc mempty blocks))
     label = "<label for=\"sn-" <> T.pack (show i)
            <> "\" class=\"margin-toggle sidenote-number\">" <> "</label>"
     input = "<input type=\"checkbox\" id=\"sn-" <> T.pack (show i) <> "\" "
          <> "class=\"margin-toggle\"/>"
-    noteBody = "<span class=\"sidenote\">" <> renderedBody <> "</span>"
+    noteBody = "<span class=\"sidenote\">" <> renderBody w <> "</span>"
   pure . RawBlock "html" $
     mconcat [ commentEnd
             , "<span class=\"sidenote-wrapper\">"
             , label <> input <> noteBody
             , "</span>"
             ]
+ where
+  renderBody :: WriterOptions -> Text
+  renderBody w = T.pack . drop 1 . dropWhile (/= '\n') . itemBody
+               $ writePandocWith w (Item "" (Pandoc mempty blocks))
 
 commentStart :: Inline
 commentStart = RawInline "html" "<!--"
