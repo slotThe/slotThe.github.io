@@ -1613,6 +1613,7 @@ any other set to it.</span></span>
 <span class="math inline">\(! \colon \mathcal{J}(a, b) \longrightarrow \{\star\}\)</span>
 to that functor; i.e.,
 <p></p>
+
 <span class="math display">\[
 ! \times F a \colon \mathcal{J}(a,b) \times F a \longrightarrow \{\star\} \times F a \cong F a.
 \]</span></li>
@@ -1621,6 +1622,7 @@ to that functor; i.e.,
 The other arrow is induced by a collection of actions of
 <span class="math inline">\(\mathcal{J}\)</span> on <span class="math inline">\(F\)</span>, indexed by arrows <span class="math inline">\(f \colon a \longrightarrow b\)</span> in <span class="math inline">\(\mathcal{J}\)</span>; i.e.,
 <p></p>
+
 <span class="math display">\[
 (\mathcal{J}(a,b) \times F a \longrightarrow F b)
 = \left( \coprod_{f \in \mathcal{J}(a,b)} F a \longrightarrow F b \right)
@@ -1735,16 +1737,20 @@ out<!--
 <span class="math inline">\(\mathsf{Set}\)</span>. The functor <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> we would like to look at sends <span class="math inline">\(a, b \in \mathcal{J}\)</span> to
 <span class="math inline">\(x, y \in \mathcal{C}\)</span> and <span class="math inline">\(\varphi\)</span> to <span class="math inline">\(\theta \colon x \longrightarrow y\)</span>.
 <p></p>
+
 Again by the Yoneda lemma we have that a cocone is given by a natural
 transformation <span class="math inline">\(W \implies \mathcal{C}(F, c)\)</span>. In this restricted
 setting, an arrow <span class="math inline">\(Wa \longrightarrow \mathcal{A}(Fb, c)\)</span> just picks
 out two morphisms. Thus, the whole thing amounts to the
 commutativity of the following diagram:
 <p></p>
+
 <img class="pure-img" src="./example-1.png">
 <p></p>
+
 In more plain language, we have a commutative diagram of the form
 <p></p>
+
 <span class="math display">\[
   (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;g\;\;} c)
   = (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;f\;\;} c),
@@ -1758,18 +1764,22 @@ above, only this time don’t work over <span class="math inline">\(\mathsf{Set}
 <span class="math inline">\(\mathcal{A}^{\mathrm{op}}\)</span> to <span class="math inline">\(\mathsf{Cat}\)</span>. Suppose it picks out
 the arrow
 <p></p>
+
 <span class="math display">\[
 \{ 0 \;\; 1 \} \hookrightarrow \{ 0 \cong 1 \},
 \]</span>
 <p></p>
+
 where these are understood to be categories. Now, a weighted cocone
 becomes something 2-categorical. We still pick out arrows <span class="math inline">\(f\)</span> and
 <span class="math inline">\(g\)</span>, but since the category we are looking at is not the terminal
 one, but contains an isomorphism, the commutative diagram also
 becomes more complicated. Namely, we required the commutativity of
 <p></p>
+
 <img class="pure-img" src="./example-2.png">
 <p></p>
+
 Instead of the requiring <span class="math inline">\(\theta \circ g\)</span> to <em>equal</em> <span class="math inline">\(\theta \circ f\)</span>, we now only require the existence of an invertible 2-cell that
 mediates between the two.</li>
 <li><p></p>
@@ -1785,23 +1795,28 @@ example, the category of finite-dimensional (left-)comodules of any
 category of all comodules, which makes them much easier to work with
 than modules.
 <p></p>
+
 Formally, <span class="math inline">\(\mathcal{D}\)</span> is dense in <span class="math inline">\(\mathcal{E}\)</span> if the restricted
 Yoneda embedding along the inclusion functor <span class="math inline">\(\iota \colon \mathcal{D} \hookrightarrow \mathcal{E}\)</span>
 <p></p>
+
 <span class="math display">\[
   \mathcal{E} \longrightarrow [\mathcal{E}^{\mathrm{op}}, \mathsf{Set}]
     \xrightarrow{\;[\iota, \mathsf{Set}]\;} [\mathcal{D}^{\mathrm{op}}, \mathsf{Set}]
 \]</span>
 <p></p>
+
 is still fully faithful. Another way of saying this is that every
 object <span class="math inline">\(e \in \mathcal{E}\)</span> is the <span class="math inline">\(\mathcal{E}(\iota, e)\)</span>-weighted
 colimit of <span class="math inline">\(\iota\)</span>. Indeed, the isomorphism we have for a weighted
 colimit specialised to our situation looks like
 <p></p>
+
 <span class="math display">\[
  \mathcal{E}(e, a) \cong [\mathcal{D}^{\mathrm{op}}, \mathsf{Set}] (\mathcal{E}(\iota, e), \mathcal{E}(\iota, a)),
 \]</span>
 <p></p>
+
 for all <span class="math inline">\(a \in \mathcal{E}\)</span>. This is exactly what it means for the
 above arrow to be fully faithful.</li>
 </ol>
@@ -1848,15 +1863,18 @@ Monoidal Category Theory:
 <ul>
 <li><p></p>
 
+
 Saunders Mac Lane: “Natural associativity and commutativity”.
 In: Rice Univ. Stud. 49.4 (1963), pp. 28–46. issn: 0035-4996.</li>
 <li><p></p>
+
 
 Pavel Etingof, Shlomo Gelaki, Dmitri Nikshych, and Victor Ostrik:
 “Tensor categories”. In: Vol. 205. Mathematical Surveys and
 Monographs. American Mathematical Society, Providence, RI, 2015,
 pp. xvi+343.</li>
 <li><p></p>
+
 
 <a href="https://ncatlab.org/nlab/show/monoidal+category">nLab: monoidal category</a></li>
 </ul></li>
@@ -1866,13 +1884,17 @@ Enriched Category Theory:
 <ul>
 <li><p></p>
 
+
 Max Kelly: “Basic concepts of enriched category theory”. In: London
 Math. Soc. Lec. Note Series 64, Cambridge Univ. Press 1982, 245
 pp. (ISBN:9780521287029).
 <p></p>
+
+
 Republished as: Reprints in Theory and Applications of Categories,
 No. 10 (2005) pp. 1-136 (<a href="http://www.tac.mta.ca/tac/reprints/articles/10/tr10abs.html">link</a>)</li>
 <li><p></p>
+
 
 <a href="https://ncatlab.org/nlab/show/enriched+category">nLab: enriched category</a></li>
 </ul></li>
@@ -1888,17 +1910,22 @@ Weighted Colimits:
 <ul>
 <li><p></p>
 
+
 <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble on the n-Category Café</a></li>
 <li><p></p>
+
 
 <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John Baez on the n-Category Café</a></li>
 <li><p></p>
 
+
 <a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab: weighted colimit</a></li>
 <li><p></p>
 
+
 Richard Garner: Bicategories; lecture series at <a href="https://conferences.leeds.ac.uk/bcqt2022/">BCQT 2022, Leeds</a>.</li>
 <li><p></p>
+
 
 Emily Riehl: “Weighted Limits and Colimits”; <a href="https://math.jhu.edu/~eriehl/weighted.pdf">lecture notes</a>.</li>
 </ul></li>
@@ -2065,8 +2092,9 @@ default to the <code>Hacking</code><!--
 <span class="w">  </span><span class="o">$</span><span class="w"> </span><span class="kt">ResizableTall</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">13</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">25</span><span class="p">)</span><span class="w"> </span><span class="kt">[]</span>
 </pre></div>
 
-<p>As the rest of my dotfiles, it’s available
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</p></span></span>
+<p></p>
+As the rest of my dotfiles, it’s available
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</span></span>
  layout:
 <div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>

@@ -1,35 +1,41 @@
-{-# LANGUAGE FlexibleContexts  #-}
-{-# LANGUAGE LambdaCase        #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE BangPatterns             #-}
+{-# LANGUAGE LambdaCase               #-}
+{-# LANGUAGE OverloadedStrings        #-}
+{-# LANGUAGE StandaloneKindSignatures #-}
 {- |
    Module      : Sidenote
    Description : Convert pandoc footnotes to sidenotes
    Copyright   : (c) Tony Zorman, 2023
-   License     : AGPL
+   License     : GPL-3
    Maintainer  : Tony Zorman <soliditsallgood@mailbox.org>
 
 Heavily inspired by <https://github.com/jez/pandoc-sidenote/ pandoc-sidenote>.
 -}
 module Sidenote (usingSidenotes) where
 
-import Control.Monad.State
+import Control.Monad.State (State, foldM, get, modify', runState)
+import Data.Functor
+import Data.Kind (Type)
 import Data.Text (Text)
 import qualified Data.Text as T
-import qualified Debug.Trace
-import Hakyll
-import Text.Pandoc.Definition
-import Text.Pandoc.Options
+import Hakyll (Item (..), writePandocWith)
+import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc (..))
+import Text.Pandoc.Options (WriterOptions)
+import Text.Pandoc.Shared (tshow)
 import Text.Pandoc.Walk (walkM)
 
+type SidenoteState :: Type
 data SidenoteState = SNS
-  { writer  :: !WriterOptions
+  { _writer :: !WriterOptions
   , counter :: !Int
   }
 
+type Sidenote :: Type -> Type
 type Sidenote = State SidenoteState
 
 usingSidenotes :: WriterOptions -> Pandoc -> Pandoc
-usingSidenotes writer (Pandoc meta bs) = Pandoc meta (walkBlocks (SNS writer 0) bs)
+usingSidenotes writer (Pandoc meta blocks) =
+  Pandoc meta (walkBlocks (SNS writer 0) blocks)
  where
   walkBlocks :: SidenoteState -> [Block] -> [Block]
   walkBlocks sns = \case
@@ -37,60 +43,63 @@ usingSidenotes writer (Pandoc meta bs) = Pandoc meta (walkBlocks (SNS writer 0) 
     (b : bs) -> b' <> walkBlocks s' bs
      where (b', s') = walkM mkSidenote [b] `runState` sns
 
--- | Sidenotes can obviously appear in more places—this should be
--- completely filled-in at some point.
+-- Sidenotes can probably appear in more places; this should be
+-- filled-in at some point.
 mkSidenote :: [Block] -> Sidenote [Block]
-mkSidenote = \case
-  Para inlines : bs -> do
-    noteBlock <- go [] inlines
-    -- Simulate a paragraph by inserting a dummy block (this is
-    -- important in case two consecutive paragraphs have sidenotes).
-    ((Para [Str ""] : noteBlock) <>) <$> mkSidenote bs
-  OrderedList attrs blocks : bs -> do
-    listBlocks <- traverse mkSidenote blocks
-    (OrderedList attrs listBlocks :) <$> mkSidenote bs
-  BulletList blocks : bs -> do
-    listBlocks <- traverse mkSidenote blocks
-    (BulletList listBlocks :) <$> mkSidenote bs
-  blocks -> pure blocks
+mkSidenote = foldM (\acc b -> (acc <>) <$> single b) []
  where
-  go :: [Inline] -> [Inline] -> Sidenote [Block]
-  go inlines = \case
-    []       -> pure [Plain inlines]
-    (x : xs) -> case x of
-      Note bs -> do block <- renderSidenote bs
-                    -- See [Note Comment]
-                    ([Plain (inlines |> commentStart), block] <>) <$> go [] xs
-      b       -> go (inlines |> b) xs
+  -- Try to find and render a sidenote in a single block.
+  single :: Block -> Sidenote [Block]
+  single = \case
+    -- Simulate a paragraph by inserting a dummy block; this is needed
+    -- in case two consecutive paragraphs have sidenotes, or a paragraph
+    -- doesn't have one at all.
+    Para inlines         -> (Para [Str ""] :) <$> renderSidenote [] inlines
+    OrderedList attrs bs -> (:[]) . OrderedList attrs <$> traverse mkSidenote bs
+    BulletList        bs -> (:[]) . BulletList        <$> traverse mkSidenote bs
+    block                -> pure [block]
+
+renderSidenote :: [Inline] -> [Inline] -> Sidenote [Block]
+renderSidenote !inlines = \case
+  []           -> pure [Plain inlines]
+  Note bs : xs -> do block <- go bs
+                     mappend [Plain (inlines |> commentStart), block]
+                         <$> renderSidenote [] xs
+  b       : xs -> renderSidenote (inlines |> b) xs
+ where
+  go :: [Block] -> Sidenote Block
+  go blocks = do
+    SNS w i <- get <* modify' (\sns -> sns{ counter = 1 + counter sns })
+    pure . RawBlock "html" $
+      mconcat [ commentEnd     -- See [Note Comment]
+              , "<span class=\"sidenote-wrapper\">"
+              , label i <> input i <> sidenote (render w blocks)
+              , "</span>"
+              ]
+
+  render :: WriterOptions -> [Block] -> Text
+  render w = T.pack . drop 1 . dropWhile (/= '\n') . itemBody -- drop <p></p>\n
+           . writePandocWith w . Item "" . Pandoc mempty      -- render
+
+  commentEnd :: T.Text
+  commentEnd   = "-->"
+
+  commentStart :: Inline
+  commentStart = RawInline "html" "<!--"
 
   (|>) :: [a] -> a -> [a]
   xs |> x = xs <> [x]
 
-renderSidenote :: [Block] -> Sidenote Block
-renderSidenote blocks = do
-  SNS w i <- get <* modify' (\sns -> sns{ counter = succ (counter sns) })
-  let
-    label = "<label for=\"sn-" <> T.pack (show i)
-           <> "\" class=\"margin-toggle sidenote-number\">" <> "</label>"
-    input = "<input type=\"checkbox\" id=\"sn-" <> T.pack (show i) <> "\" "
-         <> "class=\"margin-toggle\"/>"
-    noteBody = "<span class=\"sidenote\">" <> renderBody w <> "</span>"
-  pure . RawBlock "html" $
-    mconcat [ commentEnd
-            , "<span class=\"sidenote-wrapper\">"
-            , label <> input <> noteBody
-            , "</span>"
-            ]
- where
-  renderBody :: WriterOptions -> Text
-  renderBody w = T.pack . drop 1 . dropWhile (/= '\n') . itemBody
-               $ writePandocWith w (Item "" (Pandoc mempty blocks))
+-- Extracted from @sidenotes.css@.
 
-commentStart :: Inline
-commentStart = RawInline "html" "<!--"
+label :: Int -> Text
+label i = "<label for=\"sn-" <> tshow i <> "\" class=\"margin-toggle sidenote-number\"></label>"
 
-commentEnd :: T.Text
-commentEnd   = "-->"
+input :: Int -> Text
+input i = "<input type=\"checkbox\" id=\"sn-" <> tshow i <> "\" class=\"margin-toggle\"/>"
+
+sidenote :: Text -> Text
+sidenote body = "<span class=\"sidenote\">" <> body <> "</span>"
 
 {- [Note Comment]
 
