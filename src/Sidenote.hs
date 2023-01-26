@@ -14,7 +14,6 @@ Heavily inspired by <https://github.com/jez/pandoc-sidenote/ pandoc-sidenote>.
 module Sidenote (usingSidenotes) where
 
 import Control.Monad.State (State, foldM, get, modify', runState)
-import Data.Functor
 import Data.Kind (Type)
 import Data.Text (Text)
 import qualified Data.Text as T
