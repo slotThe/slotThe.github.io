@@ -9,7 +9,9 @@
    License     : GPL-3
    Maintainer  : Tony Zorman <soliditsallgood@mailbox.org>
 
-Heavily inspired by <https://github.com/jez/pandoc-sidenote/ pandoc-sidenote>.
+Heavily inspired by
+<https://github.com/jez/pandoc-sidenote/ pandoc-sidenote>,
+licensed under MIT.
 -}
 module Sidenote (usingSidenotes) where
 
@@ -60,11 +62,11 @@ mkSidenote = foldM (\acc b -> (acc <>) <$> single b) []
 
 renderSidenote :: [Inline] -> [Inline] -> Sidenote [Block]
 renderSidenote !inlines = \case
-  []           -> pure [Plain inlines]
+  []           -> pure [plain inlines]
   Note bs : xs -> do block <- go bs
-                     mappend [Plain (inlines |> commentStart), block]
+                     mappend [plain (commentStart : inlines), block]
                          <$> renderSidenote [] xs
-  b       : xs -> renderSidenote (inlines |> b) xs
+  b       : xs -> renderSidenote (b : inlines) xs
  where
   go :: [Block] -> Sidenote Block
   go blocks = do
@@ -86,8 +88,8 @@ renderSidenote !inlines = \case
   commentStart :: Inline
   commentStart = RawInline "html" "<!--"
 
-  (|>) :: [a] -> a -> [a]
-  xs |> x = xs <> [x]
+  plain :: [Inline] -> Block
+  plain = Plain . reverse
 
 -- Extracted from @sidenotes.css@.
 
