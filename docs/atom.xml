@@ -8,8 +8,398 @@
         <name>Tony Zorman</name>
         <email>tonyzorman@mailbox.org</email>
     </author>
-    <updated>2023-01-21T00:00:00Z</updated>
+    <updated>2023-01-27T00:00:00Z</updated>
     <entry>
+    <title>Using Sidenotes with Hakyll</title>
+    <link href="https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html" />
+    <id>https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html</id>
+    <published>2023-01-27T00:00:00Z</published>
+    <updated>2023-01-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <section class="header">
+      Posted on 2023-01-27
+      
+        | <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>
+      
+    </section>
+    <section>
+      
+        
+      
+        <p></p>
+I’ve become quite enamoured with sidenotes recently, and so of course
+this website now has them as well! Thankfully, the integration with
+pandoc and Hakyll is quite straightforward, because other people have
+already done the hard work. Depending on your use-case, however, the
+existing libraries might not entirely fit the bill; for example, by
+default blocks that are more complicated than just paragraphs of pure
+text don’t work. In this post, I’d like to explain an alternative
+approach of integrating sidenotes into pandoc, which does enable the use
+of these features.
+<!--more-->
+<h1 id="introduction">Introduction</h1>
+<p></p>
+If you don’t know: sidenotes are footnotes, just on the side of the
+page!<!--
+--><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">For example, this is one.</span></span>
+ More specifically they are footnotes placed inside of the
+margins, in order to avoid having to click or scroll, breaking the flow
+of reading—a flick of the eyes is enough. This is very convenient,
+especially for longer entries with lots of asides that don’t necessarily
+fit the flow of the article. However, because websites are dynamic in
+size, a fallback option should be provided in case the margins are too
+small/nonexistent. In most cases, this amount to making sidenotes
+clickable again and, in one way or another, showing their content once
+clicked.
+<p></p>
+Gwern Branwen has written about many different sidenote implementations
+<a href="https://gwern.net/Sidenotes">here</a>. I settled on <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>,
+mainly because it seemed to be the most popular non-JS solution. Plus,
+there is the fantastic <a href="https://hackage.haskell.org/package/pandoc-sidenote">pandoc-sidenote</a>, which
+provides an appropriate pandoc filter. After extracting the relevant
+CSS into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
+<code>usingSidenotes</code> function into my pandoc compiler,<!--
+--><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Just like you would expect:
+<div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
+<span class="w">    </span><span class="n">defaultHakyllReaderOptions</span>
+<span class="w">    </span><span class="n">myWriter</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="n">pygmentsHighlight</span><span class="w"> </span><span class="c1">-- syntax highlight</span>
+<span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="n">usingSidenotes</span><span class="w">    </span><span class="c1">-- sidenotes</span>
+<span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="n">addSectionLinks</span><span class="w">   </span><span class="c1">-- link on hover</span>
+<span class="w">    </span><span class="p">)</span>
+</pre></div>
+</span></span>
+ things just
+worked!
+<p></p>
+There is but one problem with this setup: paragraphs. A sidenote
+roughly looks like the following:
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote-wrapper&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;sn-NAME&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;margin-toggle sidenote-number&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;sn-NAME&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;margin-toggle&quot;</span><span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote&quot;</span><span class="p">&gt;</span>
+    SIDENOTE
+  <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</pre></div>
+
+<p></p>
+As Chris MacKay—a Tufte CSS contributor—helpfully explains in an
+<a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-234316022">issue</a>, spans officially don’t play nice with
+paragraphs:
+<blockquote>
+<p></p>
+so marginnotes and sidenotes, as they are implemented now, are
+<code>&lt;span&gt;</code> elements inside paragraph <code>&lt;p&gt;</code> elements. Only inline
+elements are allowed inside paragraphs per the HTML standard.
+</blockquote>
+<p></p>
+I know what you’re thinking: people don’t usually let themselves be
+hampered by standards, do they?<!--
+--><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Just ask any person who’s ever worked on a window manager what
+creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</span></span>
+ Alas, the <code>pandoc-sidenote</code> package
+quite sensibly converts a given footnote into an approximation of the
+above HTML by using pandoc’s native <code>Span</code> data constructor. Here is a
+(heavily) simplified version of the relevant function.
+<div class="highlight"><pre><span></span><span class="nf">filterInline</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
+<span class="nf">filterInline</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">  </span><span class="c1">-- A @Note@ signifies a footnote.</span>
+<span class="w">  </span><span class="kt">Note</span><span class="w"> </span><span class="n">blocks</span><span class="w"> </span><span class="ow">-&gt;</span>
+<span class="w">    </span><span class="kr">let</span><span class="w"> </span><span class="c1">-- Note has a [Block], but Span needs [Inline]</span>
+<span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">coerceToInline</span><span class="w"> </span><span class="n">blocks</span>
+<span class="w">     </span><span class="kr">in</span><span class="w"> </span><span class="kt">Span</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;sidenote-wrapper&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span>
+<span class="w">             </span><span class="p">[</span><span class="w"> </span><span class="kt">RawInline</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="s">&quot;&lt;label for …&quot;</span>
+<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="kt">RawInline</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="s">&quot;&lt;input type …&quot;</span>
+<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="kt">Span</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;sidenote&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span><span class="w"> </span><span class="n">content</span>
+<span class="w">             </span><span class="p">]</span>
+<span class="w">  </span><span class="n">inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">inline</span>
+</pre></div>
+
+<p></p>
+Now, pandoc very much does <em>not</em> want you to put any kind of block
+inside of its <code>Span</code>s—that’s why its type is
+<div class="highlight"><pre><span></span><span class="kt">Span</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Attr</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
+</pre></div>
+
+<p></p>
+Notice the absence of a <code>[Block]</code> argument. This is why
+<code>coerceToInline</code> exists, which tries to convert as many blocks as it can
+to inline elements.
+<div class="highlight"><pre><span></span><span class="nf">coerceToInline</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span>
+<span class="nf">coerceToInline</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">concatMap</span><span class="w"> </span><span class="n">deBlock</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">walk</span><span class="w"> </span><span class="n">deNote</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="n">deBlock</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span>
+<span class="w">  </span><span class="n">deBlock</span><span class="w"> </span><span class="p">(</span><span class="kt">Plain</span><span class="w">     </span><span class="n">ls</span><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">ls</span>
+<span class="w">  </span><span class="c1">-- Simulate paragraphs with double LineBreak</span>
+<span class="w">  </span><span class="n">deBlock</span><span class="w"> </span><span class="p">(</span><span class="kt">Para</span><span class="w">      </span><span class="n">ls</span><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">ls</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">newline</span>
+<span class="w">  </span><span class="c1">-- See extension: line_blocks</span>
+<span class="w">  </span><span class="n">deBlock</span><span class="w"> </span><span class="p">(</span><span class="kt">LineBlock</span><span class="w"> </span><span class="n">lss</span><span class="w">   </span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">intercalate</span><span class="w"> </span><span class="p">[</span><span class="kt">LineBreak</span><span class="p">]</span><span class="w"> </span><span class="n">lss</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="n">newline</span>
+<span class="w">  </span><span class="c1">-- Pretend RawBlock is RawInline (might not work!)</span>
+<span class="w">  </span><span class="c1">-- Consider: raw &lt;div&gt; now inside RawInline... what happens?</span>
+<span class="w">  </span><span class="n">deBlock</span><span class="w"> </span><span class="p">(</span><span class="kt">RawBlock</span><span class="w"> </span><span class="n">fmt</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">[</span><span class="kt">RawInline</span><span class="w"> </span><span class="n">fmt</span><span class="w"> </span><span class="n">str</span><span class="p">]</span>
+<span class="w">  </span><span class="c1">-- lists, blockquotes, headers, hrs, and tables are all omitted</span>
+<span class="w">  </span><span class="c1">-- Think they shouldn't be? I'm open to sensible PR's.</span>
+<span class="w">  </span><span class="n">deBlock</span><span class="w"> </span><span class="kr">_</span><span class="w">                  </span><span class="ow">=</span><span class="w"> </span><span class="kt">[]</span>
+
+<span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
+<span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="p">(</span><span class="kt">Note</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Str</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="n">x</span><span class="w">        </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span>
+</pre></div>
+
+<p></p>
+The <code>coerceToInline</code> function behaves sensibly with respect to the
+simplest kinds of blocks, but already mentions that the <code>RawBlock → RawInline</code> transformation may have some caveats. For example,
+<a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">prerendering code blocks</a> puts one in exactly such a
+“now we have a <code>&lt;div&gt;</code> tag inside of a <code>RawInline</code> element” situation.
+Well, what happens?
+<span class="sidenote-wrapper">
+<label for="sn-2" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-2" class="margin-toggle" />
+<p><span class="sidenote">Now simulating <code>pandoc-sidenode</code>s behaviour, the following is a piece of code <em>in the sidenote:</em>
+<div class="highlight"><pre><span></span><span class="nf">a</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span> <span class="nf">
+a</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">42</span> </pre></div>
+</span></p>
+</span>
+<p></p>
+This is the next line in the main document; the above code block was
+supposed to be in the relevant sidenote, but “spilled” into the text
+instead. This is obviously not what we want.
+<p></p>
+The documentation mentions other things that are missing, and that pull
+requests are welcome, but for many blocks there just is no good
+alternative. For example, code blocks and inline code serve very
+different purposes most of the time. Pandoc itself has a
+<a href="https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Shared.html#v:blocksToInlines">function</a> of the same name that
+attempts to convert tables, figures, and the like, but this also yields
+some surprising behaviour when used instead of <code>pandoc-sidenote</code>s
+variant.<!--
+--><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">Whereas now, things like
+<ul>
+<li><p></p>
+
+tables
+<table style="width:66%;">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fruit</th>
+<th>Price</th>
+<th>Advantages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Oranges</td>
+<td>$2.10</td>
+<td><ul>
+<li>cures scurvy</li>
+<li>tasty</li>
+</ul></td>
+</tr>
+</tbody>
+</table></li>
+<li><p></p>
+
+quotes
+<blockquote>
+<p></p>
+they said that …
+</blockquote></li>
+<li><p></p>
+
+display maths
+<p></p>
+
+<span class="math display">\[
+\int^{a, b} \mathcal{C}(a \otimes b, {-}) \cdot Fa \otimes Gb
+\]</span></li>
+</ul>
+<p></p>
+and the like are no problem at all!</span></span>
+<p></p>
+So what to do? Well, life wouldn’t be fun if we didn’t at least try to
+hack our way around a standard, would it?
+<h1 id="rewriting-pandoc-sidenote">Rewriting <code>pandoc-sidenote</code></h1>
+<p></p>
+As I’ve learned while <a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">writing</a> about using
+<code>pygmentize</code> to syntax highlight code for this site, pandoc has quite
+good support for changing its AST in creative ways. A strategy unfolds:
+find every <code>Note</code> block in a document, somehow render its contents, and
+create a <code>RawBlock "html"</code> node instead of using pandoc’s built in
+<code>Span</code> .
+<p></p>
+For rendering HTML, pandoc has a
+<a href="https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Writers.html#v:writeHtml5String">writeHtml5String</a> function, which is
+conveniently wrapped by Hakyll in
+<a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:writePandocWith">writePandocWith</a>:
+<div class="highlight"><pre><span></span><span class="c1">-- | Write a document (as HTML) using pandoc, with the supplied options</span>
+<span class="nf">writePandocWith</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">WriterOptions</span><span class="w">  </span><span class="c1">-- ^ Writer options for pandoc</span>
+<span class="w">                </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w">    </span><span class="c1">-- ^ Document to write</span>
+<span class="w">                </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="w">    </span><span class="c1">-- ^ Resulting HTML</span>
+</pre></div>
+
+<p></p>
+Importantly, rendering takes some <code>WriterOptions</code>; since we don’t want
+to mess around with changing pure HTML afterwards, this is quite
+important for us.
+<p></p>
+Writing this filter now essentially works by the same strategy outlined
+in the last post: look through the Haddocks to find the types that we
+want, <a href="https://aphyr.com/posts/342-typing-the-technical-interview">seize some meaningless functions from the void, and imbue them
+with meaning</a>. The relevant bits
+from pandoc’s internal types are the following.
+<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="kt">Meta</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+
+<span class="kr">data</span><span class="w"> </span><span class="kt">Block</span>
+<span class="w">    </span><span class="ow">=</span><span class="w"> </span><span class="kt">Plain</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w">       </span><span class="c1">-- ^ Plain text, not a paragraph</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="kt">Para</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w">        </span><span class="c1">-- ^ Paragraph</span>
+<span class="w">    </span><span class="c1">-- …</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="kt">RawBlock</span><span class="w"> </span><span class="kt">Format</span><span class="w"> </span><span class="kt">Text</span><span class="w"> </span><span class="c1">-- ^ Raw block</span>
+
+<span class="kr">data</span><span class="w"> </span><span class="kt">Inline</span>
+<span class="w">    </span><span class="ow">=</span><span class="w"> </span><span class="kt">Str</span><span class="w"> </span><span class="kt">Text</span><span class="w">             </span><span class="c1">-- ^ Text (string)</span>
+<span class="w">    </span><span class="c1">-- …</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="kt">Note</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w">         </span><span class="c1">-- ^ Footnote or endnote</span>
+</pre></div>
+
+<p></p>
+While this document is <em>not</em> a literate Haskell file, the following is
+still here for convenience, in case you are left wondering where some of
+the functions come from.
+<div class="highlight"><pre><span></span><span class="cm">{-# LANGUAGE BangPatterns             #-}</span>
+<span class="cm">{-# LANGUAGE LambdaCase               #-}</span>
+<span class="cm">{-# LANGUAGE OverloadedStrings        #-}</span>
+<span class="cm">{-# LANGUAGE StandaloneKindSignatures #-}</span>
+
+<span class="kr">import</span><span class="w"> </span><span class="nn">Control.Monad.State</span><span class="w"> </span><span class="p">(</span><span class="kt">State</span><span class="p">,</span><span class="w"> </span><span class="nf">foldM</span><span class="p">,</span><span class="w"> </span><span class="nf">get</span><span class="p">,</span><span class="w"> </span><span class="nf">modify'</span><span class="p">,</span><span class="w"> </span><span class="nf">runState</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Data.Kind</span><span class="w"> </span><span class="p">(</span><span class="kt">Type</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w"> </span><span class="p">(</span><span class="kt">Text</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="k">qualified</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">T</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Hakyll</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="p">(</span><span class="o">..</span><span class="p">),</span><span class="w"> </span><span class="nf">writePandocWith</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Definition</span><span class="w"> </span><span class="p">(</span><span class="kt">Block</span><span class="w"> </span><span class="p">(</span><span class="o">..</span><span class="p">),</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="p">(</span><span class="o">..</span><span class="p">),</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="p">(</span><span class="o">..</span><span class="p">))</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Options</span><span class="w"> </span><span class="p">(</span><span class="kt">WriterOptions</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Shared</span><span class="w"> </span><span class="p">(</span><span class="nf">tshow</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Walk</span><span class="w"> </span><span class="p">(</span><span class="nf">walkM</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+Rendering the actual sidenote isn’t very complicated, and amounts to
+picking out the <code>Note</code> constructor, rendering it, and putting everything
+back together.<!--
+--><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
+which keeps track of the sidenote number, as well as the supplied
+<code>WriterOption</code>s; nothing fancy.</span></span>
+<div class="highlight"><pre><span></span><span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w">            </span><span class="c1">-- ^ Inlines from a single @Note@</span>
+<span class="w">               </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+<span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="kt">[]</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="n">go</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+<span class="w">  </span><span class="n">go</span><span class="w"> </span><span class="n">inlines</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="kt">[]</span><span class="w">           </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="p">[</span><span class="kt">Plain</span><span class="w"> </span><span class="n">inlines</span><span class="p">]</span>
+<span class="w">    </span><span class="kt">Note</span><span class="w"> </span><span class="n">bs</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">do</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">renderBlock</span><span class="w"> </span><span class="n">bs</span>
+<span class="w">                       </span><span class="p">([</span><span class="kt">Plain</span><span class="w"> </span><span class="n">inlines</span><span class="p">,</span><span class="w"> </span><span class="n">block</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="kt">[]</span><span class="w"> </span><span class="n">xs</span>
+<span class="w">    </span><span class="n">b</span><span class="w">       </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="p">(</span><span class="n">inlines</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">])</span><span class="w"> </span><span class="n">xs</span>
+
+<span class="w">  </span><span class="n">renderBlock</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="kt">Block</span>
+<span class="w">  </span><span class="n">renderBlock</span><span class="w"> </span><span class="n">blocks</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">    </span><span class="c1">-- Update sidenote counter and get the `WriterOption's.</span>
+<span class="w">    </span><span class="kt">SNS</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="o">&lt;*</span><span class="w"> </span><span class="n">modify'</span><span class="w"> </span><span class="p">(</span><span class="nf">\</span><span class="n">sns</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">sns</span><span class="p">{</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="n">sns</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="n">pure</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="c1">-- … all the opening html stuff</span>
+<span class="w">                             </span><span class="n">writePandocWith</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">mempty</span><span class="w"> </span><span class="n">blocks</span><span class="p">))</span>
+<span class="w">                             </span><span class="c1">-- … all the closing html stuff</span>
+</pre></div>
+
+<p></p>
+Finding notes is a bit more finicky, since they could potentially occur
+in a lot of places. Right now, for obvious reasons, I’ve settled on
+covering all cases that currently occur on this website. Importantly,
+we need to be a bit careful about inserting newlines for paragraphs (and
+when to omit this). This is because <code>Note</code>s are actually inline
+elements, and so we are replacing a single <code>Block</code> by a list of
+<code>Block</code>s, which incurs some additional formatting.
+<div class="highlight"><pre><span></span><span class="nf">mkSidenote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+<span class="nf">mkSidenote</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">foldM</span><span class="w"> </span><span class="p">(</span><span class="nf">\</span><span class="n">acc</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">acc</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="kt">[]</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="n">single</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+<span class="w">  </span><span class="n">single</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="c1">-- Simulate a paragraph by inserting a dummy block; this is needed</span>
+<span class="w">    </span><span class="c1">-- in case two consecutive paragraphs have sidenotes, or a paragraph</span>
+<span class="w">    </span><span class="c1">-- doesn't have one at all.</span>
+<span class="w">    </span><span class="kt">Para</span><span class="w"> </span><span class="n">inlines</span><span class="w">         </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Para</span><span class="w"> </span><span class="p">[</span><span class="kt">Str</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">]</span><span class="w"> </span><span class="kt">:</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">renderSidenote</span><span class="w"> </span><span class="n">inlines</span>
+<span class="w">    </span><span class="kt">OrderedList</span><span class="w"> </span><span class="n">attrs</span><span class="w"> </span><span class="n">bs</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">:[]</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">OrderedList</span><span class="w"> </span><span class="n">attrs</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">traverse</span><span class="w"> </span><span class="n">mkSidenote</span><span class="w"> </span><span class="n">bs</span>
+<span class="w">    </span><span class="kt">BulletList</span><span class="w">        </span><span class="n">bs</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">:[]</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">BulletList</span><span class="w">        </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">traverse</span><span class="w"> </span><span class="n">mkSidenote</span><span class="w"> </span><span class="n">bs</span>
+<span class="w">    </span><span class="n">block</span><span class="w">                </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="p">[</span><span class="n">block</span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+Putting everything together, we apply this transformation to every block
+in a document:
+<div class="highlight"><pre><span></span><span class="nf">usingSidenotes</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">WriterOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Pandoc</span>
+<span class="nf">usingSidenotes</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">meta</span><span class="w"> </span><span class="n">blocks</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">meta</span><span class="w"> </span><span class="p">(</span><span class="n">walkBlocks</span><span class="w"> </span><span class="p">(</span><span class="kt">SNS</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">blocks</span><span class="p">)</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="n">walkBlocks</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SidenoteState</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+<span class="w">  </span><span class="n">walkBlocks</span><span class="w"> </span><span class="n">sns</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="kt">[]</span><span class="w">       </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">[]</span>
+<span class="w">    </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">bs</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">b'</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">walkBlocks</span><span class="w"> </span><span class="n">s'</span><span class="w"> </span><span class="n">bs</span>
+<span class="w">     </span><span class="kr">where</span><span class="w"> </span><span class="p">(</span><span class="n">b'</span><span class="p">,</span><span class="w"> </span><span class="n">s'</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">runState</span><span class="w"> </span><span class="p">(</span><span class="n">walkM</span><span class="w"> </span><span class="n">mkSidenote</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">])</span><span class="w"> </span><span class="n">sns</span>
+</pre></div>
+
+<p></p>
+This can now be used much like the <code>usingSidenotes</code> function from
+<code>pandoc-sidenote</code>, only that it needs to know your <code>WriterOption</code>s.
+More importantly, it should be the last of the transformations that you
+do to pandoc’s AST, since <code>usingSidenotes</code> completely renders the
+footnote, which is not what you want in case you—like me—do other
+creative transformations, such as separately generating HTML for
+<code>CodeBlock</code>s. In my configuration, I now have
+<div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
+<span class="w">    </span><span class="n">defaultHakyllReaderOptions</span>
+<span class="w">    </span><span class="n">myWriter</span>
+<span class="w">    </span><span class="p">(</span><span class="n">pure</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">usingSidenotes</span><span class="w"> </span><span class="n">myWriter</span><span class="w"> </span><span class="o">&lt;=&lt;</span><span class="w"> </span><span class="n">pygmentsHighlight</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">addSectionLinks</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+Tufte CSS needs to be changed minimally to support this extended
+functionality, but thankfully Said Achmiz has already documented what
+needs to be done <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-671102819">here</a>. This is
+already included in my <code>sidenotes.css</code>, so if you’re just copying that
+then you should be fine.
+<h1 id="conclusion">Conclusion</h1>
+<p></p>
+Being perfectly honest, I’m not very satisfied with this solution. It
+does work, but pre-rendering everything and not using pandoc’s built in
+constructors feels like a big hack. More importantly though, since what
+I’ve done here amounts to a complete rewrite,<!--
+--><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote">Not only that, but it’s almost certainly also a regression in
+certain aspects; even after handling of margin notes is restored,
+which I’ve completely ignored for now.</span></span>
+ I can’t contribute
+this upstream—at least I don’t see a way. I sort of don’t want to
+advertise this solution as an alternative to <code>pandoc-sidenote</code>, as that
+package handles the concept of sidenotes in a much better way,
+philosophically. Hence, there is no standalone repository for
+<a href="https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs">Sidenote.hs</a> and <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> at
+this point.
+<p></p>
+Really, I would be delighted if someone told me that I just used
+<code>pandoc-sidenote</code> (or another program involved) wrongly, and this is
+actually very easy to achieve using <code>${METHOD}</code>. Until then, I’ll
+continue to be blissfully unaware of HTML standards :)
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Pygmentising Hakyll's Syntax Highlighting</title>
     <link href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html" />
     <id>https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html</id>
