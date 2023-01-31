@@ -1,6 +1,6 @@
 ---
 title: "XMonad Module Showcase: X.A.TopicSpace"
-tags: xmonad
+tags: haskell, xmonad
 ---
 
 One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
@@ -25,7 +25,7 @@ an introduction to the module in the post about my [research workflow]:
 > workspace—virtual desktop—concept to so-called topics.  These are
 > workspaces with a "theme" associated to them; for example, I have a
 > topic for every project that I'm currently working on.  This results
-> in a very clean separation of concerns.  Plus, I always know where my
+> in a clean separation of concerns.  Plus, I always know where my
 > windows are!
 >
 > Every topic has a directory and a "startup hook", firing when the

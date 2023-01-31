@@ -1,6 +1,6 @@
 ---
 title: Immediately Refile Notes with X.P.OrgMode
-tags: emacs, xmonad
+tags: emacs, haskell, xmonad
 ---
 
 In a [previous post][orgmode-post] I talked about using

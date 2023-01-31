@@ -1,6 +1,6 @@
 ---
 title: Calling Emacs from XMonad
-tags: emacs, xmonad
+tags: emacs, haskell, xmonad
 ---
 
 In the post about my [research workflow], I briefly mentioned having to
