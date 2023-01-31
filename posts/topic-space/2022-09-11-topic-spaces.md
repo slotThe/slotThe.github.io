@@ -15,12 +15,11 @@ interested in using topics instead of workspaces.  Time to change that!
 
 # Introduction
 
-First of all, this post is not to be seen as a tutorial on
-X.A.TopicSpace, but much rather as a showcase of how its functionality
-could be used day to day.  If you like what you see, perhaps check out
-the [docs][topic-space] and give it a spin yourself!  I have already
-written an introduction to the module in the post about my [research
-workflow]:
+First, this post is not to be seen as a tutorial on X.A.TopicSpace, but
+much rather as a showcase of how its functionality could be used day to
+day.  If you like what you see, perhaps check out the
+[docs][topic-space] and give it a spin yourself!  I have already written
+an introduction to the module in the post about my [research workflow]:
 
 > XMonad has a module called TopicSpace, which upgrades the X11
 > workspace—virtual desktop—concept to so-called topics.  These are
@@ -137,10 +136,10 @@ simple; an editor there is mostly sufficient.
 
 <img class="pure-img" src="../phd-workflow/topics.gif">
 
-But we can also get a little bit more fancy.  Since the topic action is
-just a general `X` action, we can really do anything we want in there.
-In addition to spawning programs, all of my Haskell projects should
-default to the `Hacking`[^1] layout:
+We can also get a little bit more fancy.  Since the topic action is just
+a general `X` action, we can really do anything we want in there.  In
+addition to spawning programs, all of my Haskell projects should default
+to the `Hacking`[^1] layout:
 
 ``` haskell
 spawnHaskell :: X ()

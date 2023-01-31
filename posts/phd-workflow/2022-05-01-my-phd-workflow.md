@@ -17,8 +17,8 @@ is a surprisingly effective way to catch errors in handwritten
 manuscripts!
 
 As basically my entire digital life happens in either [Emacs] or
-[XMonad], my setup is very heavily skewed in that direction; I will make
-use of these tools almost every step of the way.
+[XMonad], my setup is heavily skewed in that direction; I will make use
+of these tools almost every step of the way.
 <!--more-->
 As such, there is a lot of tangential almost relevant bits that I could
 cover here.  However, since these aren't directly related to my
@@ -33,8 +33,8 @@ XMonad has a module called [TopicSpace], which upgrades the X11
 workspace—virtual desktop—concept to so-called topics.  These are
 workspaces with a "theme" associated to them; for example, I have a
 topic for every project that I'm currently working on.  This results in
-a very clean separation of concerns.  Plus, I always know where my
-windows are!
+a clean separation of concerns.  Plus, I always know where my windows
+are!
 
 Every topic has a directory and a "startup hook", firing when the topic
 is switched to and empty, associated to it.  While most convenient for
@@ -85,7 +85,7 @@ My bibliography is organised in a similar spirit; see
 
 ## Handwritten Notes
 
-For handwritten notes I... use real paper!  A little elaboration is
+For handwritten notes I… use real paper!  A little elaboration is
 probably in order, having talked about `.xopp` files and xournalpp
 above.  I do have a Wacom tablet lying around and I'm quite happy
 annotating PDFs with it.  In lieu of printing everything out, this
@@ -103,8 +103,8 @@ especially when collaborating with others.
 
 Not without my quirks (as I'm sure you've noticed), I'm a bit picky
 about the particular writing setup.  It's either completely white A5[^3]
-paper, paired with a good (mechanical) pencil/a very fine pen, or very
-thick dotted paper, paired with a fountain pen.
+paper, paired with a good (mechanical) pencil/a fine pen, or thick
+dotted paper, paired with a fountain pen.
 
 Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first.  Of course, anything that's supposed to be
@@ -112,8 +112,8 @@ permanent should be typed up properly!
 
 ## Digital Notes
 
-Not wanting to go insane, I use LaTeX for all of my digital digital note
-taking.  My writing setup for `.tex` files is pretty similar to [Karthik
+Not wanting to go insane, I use LaTeX for all of my digital note taking.
+My writing setup for `.tex` files is pretty similar to [Karthik
 Chikmagalur]'s—whose excellent post you should definitely check out—so I
 will not belabour the point too much here.  The tl;dr is [AUCTeX],
 [CDLaTeX], and [aas].
@@ -147,10 +147,10 @@ environment, it also remembers this for the session![^4]
 
 <img class="pure-img" src="./label-renaming.gif">
 
-One very neat feature of AUCTeX that I find myself using more and more
-often lately[^5] is the in-buffer preview.  Usually when writing a draft
-I'm not that interested in how exactly something looks in the PDF—that
-part comes later, believe me.  In cases like these, just calling
+One neat feature of AUCTeX that I find myself using more and more often
+lately[^5] is the in-buffer preview.  Usually when writing a draft I'm
+not that interested in how exactly something looks in the PDF—that part
+comes later, believe me.  In cases like these, just calling
 `preview-buffer` is quite convenient and lets me use the screen real
 estate that a PDF viewer would have taken up for something else.
 
@@ -235,8 +235,8 @@ instead.  Briefly, pressing `M-u` before a command can modify it in
 different ways.  All of my search commands act on the [primary
 selection] when given such an argument; `M-u M-s <letter>` will look up
 the currently selected text on the relevant "search engine".  One
-instance where this is very useful is for quickly switching between the
-arXiv and zbmath:
+instance where this is useful is for quickly switching between the arXiv
+and zbmath:
 
 <img class="pure-img" src="./selected-search.gif">
 
@@ -260,9 +260,9 @@ arXiv or zbmath link—we first look up the paper on zbmath to see if it
 was published and, if not, just use the arXiv data to construct our own
 bibliography entry instead.  By default, my keybinding for this acts on
 the primary selection, so I merely have to highlight the link, press
-`M-o a`, sit back, and enjoy the show.  The following gif hopefully
-helps drive home the point, also showcasing the format of a not yet
-published paper and a published one.
+`M-o a`, sit back, and enjoy the show.  The following gif should help
+drive home the point, also showcasing the format of a not yet published
+paper and a published one.
 
 <img class="pure-img" src="./arXiv-citation.gif">
 
@@ -323,20 +323,20 @@ convenience:
       universities internal nextcloud server ([khalel] and `davfs2` or
       `TRAMP`), …  You get the idea.
 
-[^2]: I will be using Emacs style notation throughout the entire
-      article.  This means that, for example, `C-x a` should be read as
-      "hold down control and press x, then release both and press a".
-      You can of course safely ignore this, since the keys just serve
-      illustrative purposes.  An important note for Emacs users, lest
-      anyone be confused: in XMonad, `M-` usually does __not__ refer to
-      the Meta key, but to the `modMask` that the user specified.  This
-      is indeed `<Alt>` by default, but many people understandably
-      rebind this straight away to something that's less likely to
-      interfere with other programs.  In my case, that's the Super key,
-      so `M-s` means `<Super>-s` and not `<Alt>-s`.
+[^2]: I will be using Emacs style notation throughout the article.  This
+      means that, for example, `C-x a` should be read as "hold down
+      control and press x, then release both and press a".  You can of
+      course safely ignore this, since the keys just serve illustrative
+      purposes.  An important note for Emacs users, lest anyone be
+      confused: in XMonad, `M-` usually does __not__ refer to the Meta
+      key, but to the `modMask` that the user specified.  This is indeed
+      `<Alt>` by default, but many people understandably rebind this
+      straight away to something that's less likely to interfere with
+      other programs.  In my case, that's the Super key, so `M-s` means
+      `<Super>-s` and not `<Alt>-s`.
 
-[^3]: Although, admittedly, when drawing up very large diagrams I'm
-      sometimes forced to switch to A4 paper in landscape mode.
+[^3]: Although, admittedly, when drawing up large diagrams I'm sometimes
+      forced to switch to A4 paper in landscape mode.
 
 [^4]: This is based on the hash of the contents of the environment—if
       that changes, the label is "lost"; though it can of course still

@@ -32,11 +32,11 @@ that's what I thought on some rainy afternoon a few months ago.
 ## Scratchpads
 
 The first use case that I came up with was [scratchpad]s.  The idea of
-these things is very simple: while we normally don't like floating
-windows, it's quite convenient to have some of them around that one can
-bring to the current workspace, as well as hide, with a single
-keybinding.  This is very useful for things like email, a calendar, a
-daily agenda, a calculator, etc.
+these things is simple: while we normally don't like floating windows,
+it's quite convenient to have some of them around that one can bring to
+the current workspace, as well as hide, with a single keybinding.  This
+is useful for things like email, a calendar, a daily agenda, a
+calculator, etc.
 
 For scratchpads to work reliably, windows need to have some unique
 characteristic they can be recognised by, like a special [class or
@@ -164,7 +164,7 @@ session:
   ghci <- proc $ inTerm >-> setXClass calcInstName >-> execute "ghci"
 ```
 
-Further, something that's very useful when dealing with [topic-based
+Further, something that's useful when dealing with [topic-based
 workspaces](/posts/phd-workflow/2022-05-01-my-phd-workflow.html#topics)
 is spawning a terminal or an editor already in the current topic
 directory:

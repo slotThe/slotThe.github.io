@@ -30,10 +30,9 @@
 In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
-extremely useful to me, and really I couldn’t be happier with
-it. However, a user recently contacted me by email and told me that
-they’re missing but one feature: the ability to immediately refile
-notes.
+extremely useful to me, and really I couldn’t be happier with it.
+However, a user recently contacted me by email and told me that they’re
+missing but one feature: the ability to immediately refile notes.
 <!--more-->
 <h1 id="motivation">Motivation</h1>
 <p></p>
@@ -66,7 +65,7 @@ The former takes the same arguments as <a href="https://hackage.haskell.org/pack
 for popping up another prompt that asks for a heading. The latter
 refiles everything under the specified (as the second argument) heading.
 <p></p>
-The way <code>orgPromptRefile</code> works is that, after querying for a TODO, it
+The way <code>orgPromptRefile</code> works is that, after querying for a <code>TODO</code>, it
 <em>always</em> inserts the note into the file and then <em>possibly</em> refiles it
 to another heading. This way, you don’t need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent
@@ -166,12 +165,11 @@ interested in using topics instead of workspaces. Time to change that!
 <!--more-->
 <h1 id="introduction">Introduction</h1>
 <p></p>
-First of all, this post is not to be seen as a tutorial on
-X.A.TopicSpace, but much rather as a showcase of how its functionality
-could be used day to day. If you like what you see, perhaps check out
-the <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">docs</a> and give it a spin yourself! I have already
-written an introduction to the module in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research
-workflow</a>:
+First, this post is not to be seen as a tutorial on X.A.TopicSpace, but
+much rather as a showcase of how its functionality could be used day to
+day. If you like what you see, perhaps check out the
+<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">docs</a> and give it a spin yourself! I have already written
+an introduction to the module in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a>:
 <blockquote>
 <p></p>
 XMonad has a module called TopicSpace, which upgrades the X11
@@ -284,10 +282,10 @@ simple; an editor there is mostly sufficient.
 <p></p>
 <img class="pure-img" src="../phd-workflow/topics.gif">
 <p></p>
-But we can also get a little bit more fancy. Since the topic action is
-just a general <code>X</code> action, we can really do anything we want in there.
-In addition to spawning programs, all of my Haskell projects should
-default to the <code>Hacking</code><!--
+We can also get a little bit more fancy. Since the topic action is just
+a general <code>X</code> action, we can really do anything we want in there. In
+addition to spawning programs, all of my Haskell projects should default
+to the <code>Hacking</code><!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In case you are interested:
 <div class="highlight"><pre><span></span><span class="nf">hacking</span>
 <span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">renamed</span><span class="w"> </span><span class="p">[</span><span class="kt">Replace</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">]</span>
@@ -460,7 +458,7 @@ video you want to watch on the weekend!
 <p></p>
 To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
-“normal” TODO notes on <code>M-o c</code><!--
+“normal” <code>TODO</code> notes on <code>M-o c</code><!--
 --><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</span></span>
  and uses the selection when called
 with a universal argument:
@@ -541,11 +539,11 @@ that’s what I thought on some rainy afternoon a few months ago.
 <h2 id="scratchpads">Scratchpads</h2>
 <p></p>
 The first use case that I came up with was <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpad</a>s. The idea of
-these things is very simple: while we normally don’t like floating
-windows, it’s quite convenient to have some of them around that one can
-bring to the current workspace, as well as hide, with a single
-keybinding. This is very useful for things like email, a calendar, a
-daily agenda, a calculator, etc.
+these things is simple: while we normally don’t like floating windows,
+it’s quite convenient to have some of them around that one can bring to
+the current workspace, as well as hide, with a single keybinding. This
+is useful for things like email, a calendar, a daily agenda, a
+calculator, etc.
 <p></p>
 For scratchpads to work reliably, windows need to have some unique
 characteristic they can be recognised by, like a special <a href="https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS">class or
@@ -664,7 +662,7 @@ session:
 </pre></div>
 
 <p></p>
-Further, something that’s very useful when dealing with <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#topics">topic-based
+Further, something that’s useful when dealing with <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#topics">topic-based
 workspaces</a>
 is spawning a terminal or an editor already in the current topic
 directory:
@@ -842,8 +840,8 @@ is a surprisingly effective way to catch errors in handwritten
 manuscripts!
 <p></p>
 As basically my entire digital life happens in either <a href="https://www.gnu.org/software/emacs/">Emacs</a> or
-<a href="https://xmonad.org/">XMonad</a>, my setup is very heavily skewed in that direction; I will make
-use of these tools almost every step of the way.
+<a href="https://xmonad.org/">XMonad</a>, my setup is heavily skewed in that direction; I will make use
+of these tools almost every step of the way.
 <!--more-->
 As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
@@ -863,8 +861,8 @@ XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-c
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results in
-a very clean separation of concerns. Plus, I always know where my
-windows are!
+a clean separation of concerns. Plus, I always know where my windows
+are!
 <p></p>
 Every topic has a directory and a “startup hook”, firing when the topic
 is switched to and empty, associated to it. While most convenient for
@@ -903,17 +901,17 @@ relevant PDFs in <a href="https://xournalpp.github.io/">xournalpp</a>; more on t
 Instead of navigating to it, all interaction with the library is done
 via <a href="https://github.com/slotthe/hmenu">hmenu</a>, a small wrapper around <a href="https://tools.suckless.org/dmenu/">dmenu</a> to facilitate this kind of
 behaviour. I merely have to press <code>M-y</code><!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">I will be using Emacs style notation throughout the entire
-article. This means that, for example, <code>C-x a</code> should be read as
-“hold down control and press x, then release both and press a”.
-You can of course safely ignore this, since the keys just serve
-illustrative purposes. An important note for Emacs users, lest
-anyone be confused: in XMonad, <code>M-</code> usually does <strong>not</strong> refer to
-the Meta key, but to the <code>modMask</code> that the user specified. This
-is indeed <code>&lt;Alt&gt;</code> by default, but many people understandably
-rebind this straight away to something that’s less likely to
-interfere with other programs. In my case, that’s the Super key,
-so <code>M-s</code> means <code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.</span></span>
+--><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">I will be using Emacs style notation throughout the article. This
+means that, for example, <code>C-x a</code> should be read as “hold down
+control and press x, then release both and press a”. You can of
+course safely ignore this, since the keys just serve illustrative
+purposes. An important note for Emacs users, lest anyone be
+confused: in XMonad, <code>M-</code> usually does <strong>not</strong> refer to the Meta
+key, but to the <code>modMask</code> that the user specified. This is indeed
+<code>&lt;Alt&gt;</code> by default, but many people understandably rebind this
+straight away to something that’s less likely to interfere with
+other programs. In my case, that’s the Super key, so <code>M-s</code> means
+<code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.</span></span>
  and can then fuzzy search
 through the directory. Once I’ve made a choice, PDFs are automatically
 opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.
@@ -943,19 +941,19 @@ especially when collaborating with others.
 <p></p>
 Not without my quirks (as I’m sure you’ve noticed), I’m a bit picky
 about the particular writing setup. It’s either completely white A5<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Although, admittedly, when drawing up very large diagrams I’m
-sometimes forced to switch to A4 paper in landscape mode.</span></span>
+--><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Although, admittedly, when drawing up large diagrams I’m sometimes
+forced to switch to A4 paper in landscape mode.</span></span>
 
-paper, paired with a good (mechanical) pencil/a very fine pen, or very
-thick dotted paper, paired with a fountain pen.
+paper, paired with a good (mechanical) pencil/a fine pen, or thick
+dotted paper, paired with a fountain pen.
 <p></p>
 Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first. Of course, anything that’s supposed to be
 permanent should be typed up properly!
 <h2 id="digital-notes">Digital Notes</h2>
 <p></p>
-Not wanting to go insane, I use LaTeX for all of my digital digital note
-taking. My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
+Not wanting to go insane, I use LaTeX for all of my digital note taking.
+My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
 Chikmagalur</a>’s—whose excellent post you should definitely check out—so I
 will not belabour the point too much here. The tl;dr is <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>,
 <a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>, and <a href="https://github.com/ymarco/auto-activating-snippets">aas</a>.
@@ -991,15 +989,15 @@ be retrieved manually from the relevant hash map.</span></span>
 <p></p>
 <img class="pure-img" src="./label-renaming.gif">
 <p></p>
-One very neat feature of AUCTeX that I find myself using more and more
-often lately<!--
+One neat feature of AUCTeX that I find myself using more and more often
+lately<!--
 --><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
 Emacs 29, making use of XInput 2.4 functionality. It makes
 scrolling through buffers that are quite dense with pictures
 rather smooth.</span></span>
- is the in-buffer preview. Usually when writing a draft
-I’m not that interested in how exactly something looks in the PDF—that
-part comes later, believe me. In cases like these, just calling
+ is the in-buffer preview. Usually when writing a draft I’m
+not that interested in how exactly something looks in the PDF—that part
+comes later, believe me. In cases like these, just calling
 <code>preview-buffer</code> is quite convenient and lets me use the screen real
 estate that a PDF viewer would have taken up for something else.
 <p></p>
@@ -1082,8 +1080,8 @@ instead. Briefly, pressing <code>M-u</code> before a command can modify it in
 different ways. All of my search commands act on the <a href="https://www.jwz.org/doc/x-cut-and-paste.html">primary
 selection</a> when given such an argument; <code>M-u M-s &lt;letter&gt;</code> will look up
 the currently selected text on the relevant “search engine”. One
-instance where this is very useful is for quickly switching between the
-arXiv and zbmath:
+instance where this is useful is for quickly switching between the arXiv
+and zbmath:
 <p></p>
 <img class="pure-img" src="./selected-search.gif">
 <h2 id="citations">Citations</h2>
@@ -1113,9 +1111,9 @@ arXiv or zbmath link—we first look up the paper on zbmath to see if it
 was published and, if not, just use the arXiv data to construct our own
 bibliography entry instead. By default, my keybinding for this acts on
 the primary selection, so I merely have to highlight the link, press
-<code>M-o a</code>, sit back, and enjoy the show. The following gif hopefully
-helps drive home the point, also showcasing the format of a not yet
-published paper and a published one.
+<code>M-o a</code>, sit back, and enjoy the show. The following gif should help
+drive home the point, also showcasing the format of a not yet published
+paper and a published one.
 <p></p>
 <img class="pure-img" src="./arXiv-citation.gif">
 <h1 id="final-thoughts">Final Thoughts</h1>

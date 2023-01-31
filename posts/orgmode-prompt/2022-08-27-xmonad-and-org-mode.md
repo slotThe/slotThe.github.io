@@ -74,7 +74,7 @@ video you want to watch on the weekend!
 
 To round things off—and quickly showcase another cool (and new!)
 module, [XMonad.Actions.Prefix]—here is a sample keybinding that takes
-"normal" TODO notes on `M-o c`[^2] and uses the selection when called
+"normal" `TODO` notes on `M-o c`[^2] and uses the selection when called
 with a universal argument:
 
 ``` haskell

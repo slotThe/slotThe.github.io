@@ -30,7 +30,7 @@ how big its frame will be anyway.  An excerpt from the documentation:
 > If this option is nil, setting font, menu bar, tool bar, tab bar,
 > internal borders, fringes or scroll bars of a specific frame may
 > resize the frame in order to preserve the number of columns or lines
-> it displays. If this option is t, no such resizing is done.
+> it displays.  If this option is t, no such resizing is done.
 
 I always wondered why startup time skyrocketed whenever I changed the
 default font to something else—surely opening a font and using it can't
@@ -407,7 +407,7 @@ that's sort of the point of all of this, right?
 
 [^2]: I am aware of the futility of this—Reddit is almost certainly
       going to be around longer than my personal site will.  And yet,
-      this feels more correct in some way.
+      this feels "more correct" in some way.
 
 [^3]: This is a placeholder that's often used when not wanting to
       explicitly quantify over an argument.

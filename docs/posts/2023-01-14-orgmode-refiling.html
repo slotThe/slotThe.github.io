@@ -69,10 +69,9 @@
 In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
-extremely useful to me, and really I couldn’t be happier with
-it. However, a user recently contacted me by email and told me that
-they’re missing but one feature: the ability to immediately refile
-notes.
+extremely useful to me, and really I couldn’t be happier with it.
+However, a user recently contacted me by email and told me that they’re
+missing but one feature: the ability to immediately refile notes.
 <!--more-->
 <h1 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h1>
 <p></p>
@@ -105,7 +104,7 @@ The former takes the same arguments as <a href="https://hackage.haskell.org/pack
 for popping up another prompt that asks for a heading. The latter
 refiles everything under the specified (as the second argument) heading.
 <p></p>
-The way <code>orgPromptRefile</code> works is that, after querying for a TODO, it
+The way <code>orgPromptRefile</code> works is that, after querying for a <code>TODO</code>, it
 <em>always</em> inserts the note into the file and then <em>possibly</em> refiles it
 to another heading. This way, you don’t need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent

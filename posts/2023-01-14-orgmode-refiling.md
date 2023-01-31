@@ -6,10 +6,9 @@ tags: emacs, xmonad
 In a [previous post][orgmode-post] I talked about using
 [XMonad.Prompt.OrgMode] to rapidly capture thoughts and ideas into an
 Org file.  The functionality that the module provides has proven to be
-extremely useful to me, and really I couldn't be happier with
-it. However, a user recently contacted me by email and told me that
-they're missing but one feature: the ability to immediately refile
-notes.
+extremely useful to me, and really I couldn't be happier with it.
+However, a user recently contacted me by email and told me that they're
+missing but one feature: the ability to immediately refile notes.
 
 [XMonad.Prompt.OrgMode]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html
 [orgmode-post]: /posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
@@ -47,7 +46,7 @@ The former takes the same arguments as [orgPrompt] (which see), and is
 for popping up another prompt that asks for a heading.  The latter
 refiles everything under the specified (as the second argument) heading.
 
-The way `orgPromptRefile` works is that, after querying for a TODO, it
+The way `orgPromptRefile` works is that, after querying for a `TODO`, it
 *always* inserts the note into the file and then *possibly* refiles it
 to another heading.  This way, you don't need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent

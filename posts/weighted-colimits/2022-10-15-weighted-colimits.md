@@ -71,9 +71,9 @@ unitality of morphisms—ought to hold in this new setting.  As you can
 imagine, this makes certain things more complicated.  The fact that
 $\mathcal{C}(a,b)$ is an object in $\mathcal{V}$ means that it is now a
 black box—we can't peek into it anymore!  Writing $f \in
-\mathcal{C}(a,b)$ is no longer legal, so we somehow have to make due
-with not talking about individual morphisms.  A little bit more care has
-to be taken for the precise definition of an enriched category to make
+\mathcal{C}(a,b)$ is no longer legal, so we somehow have to make do with
+not talking about individual morphisms.  A little bit more care has to
+be taken for the precise definition of an enriched category to make
 sense.  First, however, I will show you a few examples.
 
 Thankfully—lest the world explodes—categories enriched in $\mathsf{Set}$
@@ -343,14 +343,14 @@ $$
 $$
 
 This is exactly the way the tensor product of bimodules is defined in
-Equation $1$, hence it is very tempting to write the resulting
-coequaliser as $1 \otimes_{\mathcal{J}} F$.  As such, a colimit of a
-functor $F$ over $\mathcal{J}$ can be seen as a tensor product of
-functors with the terminal functor.  Now, the terminal functor is not
-very interesting; what if we replace it with something more complicated?
-Well, that's exactly the point where weighted colimits come into play!
-Using a *weight* $W$ instead of $\mathbb{T}$, we would end up with
-something like
+Equation $1$, hence it is tempting to write the resulting coequaliser as
+$1 \otimes_{\mathcal{J}} F$.  As such, a colimit of a functor $F$ over
+$\mathcal{J}$ can be seen as a tensor product of functors with the
+terminal functor.  Now, the terminal functor is not very interesting;
+what if we replace it with something more complicated?  Well, that's
+exactly the point where weighted colimits come into play!  Using a
+*weight* $W$ instead of $\mathbb{T}$, we would end up with something
+like
 
 $$
   \coprod_{a, b \in \mathcal{J}} W b \times \mathcal{J}(a, b) \times F a \rightrightarrows \coprod_{a \in \mathcal{J}} W a \times F a \longrightarrow W \otimes_{\mathcal{J}} F.
