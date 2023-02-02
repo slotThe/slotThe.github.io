@@ -312,7 +312,7 @@ which I still don't agree with—at least for now.
 
 [KDE XML syntax definitions]: https://docs.kde.org/stable5/en/kate/katepart/highlight.html
 [LSLeary]: https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/
-[cfg:site]: https://github.com/slotThe/slotThe.github.io/blob/main/site.hs#L87
+[cfg:site]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L87
 [minted]: https://ctan.org/pkg/minted?lang=en
 [pandoc:walk]: https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html
 [pandocCompilerWithTransformM]: https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:pandocCompilerWithTransformM
