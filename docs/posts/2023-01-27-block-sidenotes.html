@@ -160,11 +160,11 @@ clickable again and, in one way or another, showing their content once
 clicked.
 <p></p>
 Gwern Branwen has written about many different sidenote implementations
-<a href="https://gwern.net/Sidenotes">here</a>. I settled on <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>,
+<a href="https://gwern.net/Sidenotes">here</a>. I settled on <a href="https://github.com/edwardtufte/tufte-css">Tufte <span class="small-caps">css</span></a>,
 mainly because it seemed to be the most popular non-JS solution. Plus,
 there is the fantastic <a href="https://hackage.haskell.org/package/pandoc-sidenote">pandoc-sidenote</a>, which
 provides an appropriate pandoc filter. After extracting the relevant
-CSS into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
+<span class="small-caps">css</span> into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
 <code>usingSidenotes</code> function into my pandoc compiler,<!--
 --><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote">Just like you would expect:
 <div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
@@ -193,14 +193,14 @@ roughly looks like the following:
 </pre></div>
 
 <p></p>
-As Chris MacKay—a Tufte CSS contributor—helpfully explains in an
+As Chris MacKay—a Tufte <span class="small-caps">css</span> contributor—helpfully explains in an
 <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-234316022">issue</a>, spans officially don’t play nice with
 paragraphs:
 <blockquote>
 <p></p>
 so marginnotes and sidenotes, as they are implemented now, are
 <code>&lt;span&gt;</code> elements inside paragraph <code>&lt;p&gt;</code> elements. Only inline
-elements are allowed inside paragraphs per the HTML standard.
+elements are allowed inside paragraphs per the <span class="small-caps">html</span> standard.
 </blockquote>
 <p></p>
 I know what you’re thinking: people don’t usually let themselves be
@@ -209,7 +209,7 @@ hampered by standards, do they?<!--
 creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</span></span>
  Alas, the <code>pandoc-sidenote</code> package
 quite sensibly converts a given footnote into an approximation of the
-above HTML by using pandoc’s native <code>Span</code> data constructor. Here is a
+above <span class="small-caps">html</span> by using pandoc’s native <code>Span</code> data constructor. Here is a
 (heavily) simplified version of the relevant function.
 <div class="highlight"><pre><span></span><span class="nf">filterInline</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
 <span class="nf">filterInline</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
@@ -361,12 +361,12 @@ hack our way around a standard, would it?
 <p></p>
 As I’ve learned while <a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">writing</a> about using
 <code>pygmentize</code> to syntax highlight code for this site, pandoc has quite
-good support for changing its AST in creative ways. A strategy unfolds:
+good support for changing its <span class="small-caps">ast</span> in creative ways. A strategy unfolds:
 find every <code>Note</code> block in a document, somehow render its contents, and
 create a <code>RawBlock "html"</code> node instead of using pandoc’s built in
 <code>Span</code> .
 <p></p>
-For rendering HTML, pandoc has a
+For rendering <span class="small-caps">html</span>, pandoc has a
 <a href="https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Writers.html#v:writeHtml5String">writeHtml5String</a> function, which is
 conveniently wrapped by Hakyll in
 <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:writePandocWith">writePandocWith</a>:
@@ -378,7 +378,7 @@ conveniently wrapped by Hakyll in
 
 <p></p>
 Importantly, rendering takes some <code>WriterOptions</code>; since we don’t want
-to mess around with changing pure HTML afterwards, this is quite
+to mess around with changing pure <span class="small-caps">html</span> afterwards, this is quite
 important for us.
 <p></p>
 Writing this filter now essentially works by the same strategy outlined
@@ -487,9 +487,9 @@ in a document:
 This can now be used much like the <code>usingSidenotes</code> function from
 <code>pandoc-sidenote</code>, only that it needs to know your <code>WriterOption</code>s.
 More importantly, it should be the last of the transformations that you
-do to pandoc’s AST, since <code>usingSidenotes</code> completely renders the
+do to pandoc’s <span class="small-caps">ast</span>, since <code>usingSidenotes</code> completely renders the
 footnote, which is not what you want in case you—like me—do other
-creative transformations, such as separately generating HTML for
+creative transformations, such as separately generating <span class="small-caps">html</span> for
 <code>CodeBlock</code>s. In my configuration, I now have
 <div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
@@ -500,7 +500,7 @@ creative transformations, such as separately generating HTML for
 </pre></div>
 
 <p></p>
-Tufte CSS needs to be changed minimally to support this extended
+Tufte <span class="small-caps">css</span> needs to be changed minimally to support this extended
 functionality, but thankfully Said Achmiz has already documented what
 needs to be done <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-671102819">here</a>. This is
 already included in my <code>sidenotes.css</code>, so if you’re just copying that
@@ -525,7 +525,7 @@ this point.
 Really, I would be delighted if someone told me that I just used
 <code>pandoc-sidenote</code> (or another program involved) wrongly, and this is
 actually very easy to achieve using <code>${METHOD}</code>. Until then, I’ll
-continue to be blissfully unaware of HTML standards :)
+continue to be blissfully unaware of <span class="small-caps">html</span> standards :)
     </section>
 </article>
 

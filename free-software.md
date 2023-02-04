@@ -21,22 +21,24 @@ As I strongly believe in dogfooding, I'm an avid user of course!  My
 configuration can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad).
 
-<div class="pure-g">
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true">
+<p>
+ <div class="pure-g">
+  <div class="pure-u-1-2">
+   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true">
+  </div>
+  <div class="pure-u-1-2">
+   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true">
+  </div>
  </div>
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true">
+ <div class="pure-g">
+  <div class="pure-u-1-2">
+   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true">
+  </div>
+  <div class="pure-u-1-2">
+   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true">
+  </div>
  </div>
-</div>
-<div class="pure-g">
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true">
- </div>
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true">
- </div>
-</div>
+</p>
 
 ### Kmonad
 
@@ -58,7 +60,7 @@ facilitate more convenient Haskell and LaTeX programming—can be found
 Since XMonad does not have a built-in status bar, one has to use a third
 party bar—[xmobar] is that bar!  As these programs have to work together
 quite closely, one can't help but also be a contributor to xmobar if one
-uses it with xmonad.
+uses it with XMonad.
 
 The configuration I use is available
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs).

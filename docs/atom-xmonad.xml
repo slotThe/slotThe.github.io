@@ -28,7 +28,7 @@
       
         <p></p>
 In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
 extremely useful to me, and really I couldn’t be happier with it.
 However, a user recently contacted me by email and told me that they’re
@@ -41,7 +41,7 @@ If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">r
  <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
-have projects called “Work”, “Life”, “XMonad”, and so on, where all
+have projects called “Work”, “Life”, “<span class="small-caps">xm</span>onad”, and so on, where all
 related tasks live. Quite convenient!
 <p></p>
 So far, X.P.OrgMode just dumped the created note at the end of the
@@ -78,7 +78,7 @@ to <code>auto-revert-mode</code>.
 <h2 id="some-gory-details">Some Gory Details</h2>
 <p></p>
 All of the refiling is actually directly done by Emacs itself! More
-precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
+precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html"><span class="small-caps">xm</span>onad.Util.Run</a> defines—which I’ve also
 <a href="/posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:
@@ -121,7 +121,7 @@ now don’t have to keep track of subtle changes in newer versions of Org.
 <p></p>
 Writing this was actually a lot of fun, and a great opportunity to play
 with the EDSL that X.U.Run exposes. I reckon there are a few places in
-my own XMonad configuration in which I could use these kinds of “Emacs
+my own <span class="small-caps">xm</span>onad configuration in which I could use these kinds of “Emacs
 scripts” to great effect!
 <p></p>
 One other idea I’ve had is to integrate this into the language that
@@ -155,8 +155,8 @@ welcome!
         
       
         <p></p>
-One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
-However, it seems relatively unknown among the general XMonad community.
+One of my favourite—and most used—modules is <span class="small-caps">xm</span>onad.Actions.TopicSpace.
+However, it seems relatively unknown among the general <span class="small-caps">xm</span>onad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">new documentation</a>, lots of people probably did not bother
@@ -172,7 +172,7 @@ day. If you like what you see, perhaps check out the
 an introduction to the module in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a>:
 <blockquote>
 <p></p>
-XMonad has a module called TopicSpace, which upgrades the X11
+<span class="small-caps">xm</span>onad has a module called TopicSpace, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results
@@ -187,7 +187,7 @@ also quite convenient for mathematical projects.
 <p></p>
 I have set up special keybindings to bring up an Emacs session in the
 topic directory, or spawn a terminal there. Switching to topics is
-done fuzzily via the XMonad prompt, which means I only have to type a
+done fuzzily via the <span class="small-caps">xm</span>onad prompt, which means I only have to type a
 few characters to get to my destination. This makes it feasible to
 have 30 topics, instead of the usual 9 or so, in the first place. As
 a result, it’s rather fast to go from thinking about a certain problem
@@ -219,7 +219,7 @@ mental load regarding what’s currently happening on my computer.
 Definitely worth it.
 <p></p>
 In terms of code, this—as well as the following examples—heavily use the
-<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to XMonad.Util.Run, which allows one to
+<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to <span class="small-caps">xm</span>onad.Util.Run, which allows one to
 spawn processes in a declarative and compositional way; I’ve <a href="../2022-05-25-calling-emacs-from-xmonad.html">written
 about this</a> in another post. For example, my RSS topic is
 specified thusly:
@@ -274,7 +274,7 @@ Similar functions can be created for spawning the terminal and editor:
 </pre></div>
 
 <p></p>
-Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
+Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL"><span class="small-caps">xm</span>onad.Util.Run</a> to see how <code>inEditor</code> and
 <code>termInDir</code> are defined and may be customised.
 <p></p>
 In my mathematical and other work-adjacent projects I keep it pretty
@@ -390,15 +390,15 @@ win in my book!
       
         <p></p>
 As I’ve said before, basically my entire digital life happens in either
-<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
+<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.
 <p></p>
 Specifically, I want to showcase a new<!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
 which will drop soon!</span></span>
- XMonad module:
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>. Building on top of XMonad’s prompt—which works
+ <span class="small-caps">xm</span>onad module:
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one’s current workflow. The module recently got support for
@@ -411,7 +411,7 @@ One theme in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workfl
 to use org-mode (with all of its appendages, like <a href="https://www.orgroam.com/">org-roam</a>) to
 organise one’s thoughts. <code>XMonad.Prompt.OrgMode</code> was created as yet
 another link in that chain. Unlike when writing tiny <a href="../2022-05-25-calling-emacs-from-xmonad.html">Emacs Lisp
-scripts in XMonad</a>, this does not involve any
+scripts in <span class="small-caps">xm</span>onad</a>, this does not involve any
 custom elisp code one has to run; all of it is taken care of by the
 module itself.
 <p></p>
@@ -457,7 +457,7 @@ video you want to watch on the weekend!
 <h2 id="sample-configuration">Sample Configuration</h2>
 <p></p>
 To round things off—and quickly showcase another cool (and new!)
-module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
+module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html"><span class="small-caps">xm</span>onad.Actions.Prefix</a>—here is a sample keybinding that takes
 “normal” <code>TODO</code> notes on <code>M-o c</code><!--
 --><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</span></span>
  and uses the selection when called
@@ -473,7 +473,7 @@ with a universal argument:
 </pre></div>
 
 <p></p>
-I’ve found <code>M-u</code> to be quite convenient for XMonad’s universal argument
+I’ve found <code>M-u</code> to be quite convenient for <span class="small-caps">xm</span>onad’s universal argument
 key, mirroring the <code>C-u</code> convention from Emacs. In either case, simply
 add the <code>usePrefixArgument</code> combinator somewhere to your <code>main</code> function
 and give it your preferred keybinding. For example:
@@ -512,14 +512,14 @@ case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</
       
         <p></p>
 In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
-call Emacs—or other external programs—from within XMonad. I figured
+call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
-generic enough API, I decided to turn it into an XMonad module!
+generic enough API, I decided to turn it into an <span class="small-caps">xm</span>onad module!
 <p></p>
 Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
 now available for everyone to try out; provided one has the git version
-of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
+of <span class="small-caps">xm</span>onad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
 installing any unreleased—though stable—version, message me in any
 way and maybe we’ll hurry up and cut 0.17.1 soon!</span></span>
@@ -648,9 +648,9 @@ When executed, this translates to something like
 </pre></div>
 
 <p></p>
-I certainly know which one I’d rather type—especially with ELPA
+I certainly know which one I’d rather type—especially with <span class="small-caps">elpa</span>
 directory names changing quite frequently! On that note,
-<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!
+<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on <span class="small-caps">melpa</span> now; yay!
 <h2 id="other-programs">Other Programs</h2>
 <p></p>
 As this is my main use case for it, the new features of
@@ -797,7 +797,7 @@ this and find something missing, do let me know and we’ll probably find
 a solution! If you try this and find it useful, also let me know :)
 <p></p>
 Of course, technically none of this needs to live only inside your
-XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
+<span class="small-caps">xm</span>onad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
 cool tools like magit.sh.<!--
 --><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
@@ -840,7 +840,7 @@ is a surprisingly effective way to catch errors in handwritten
 manuscripts!
 <p></p>
 As basically my entire digital life happens in either <a href="https://www.gnu.org/software/emacs/">Emacs</a> or
-<a href="https://xmonad.org/">XMonad</a>, my setup is heavily skewed in that direction; I will make use
+<a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>, my setup is heavily skewed in that direction; I will make use
 of these tools almost every step of the way.
 <!--more-->
 As such, there is a lot of tangential almost relevant bits that I could
@@ -851,13 +851,13 @@ already—I decided to not do this here.<!--
 means I have to worry a bit about efficiently dealing with
 bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
 calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
-as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
+as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad’s OrgMode prompt</a>), accessing the
 universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
 <code>TRAMP</code>), … You get the idea.</span></span>
 <h1 id="high-level-structure">High Level Structure</h1>
 <h2 id="topics">Topics</h2>
 <p></p>
-XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
+<span class="small-caps">xm</span>onad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results in
@@ -872,7 +872,7 @@ for mathematical projects.
 <p></p>
 I have set up special keybindings to bring up an Emacs session in the
 topic directory, or spawn a terminal there. Switching to topics is done
-fuzzily via the XMonad prompt, which means I only have to type a few
+fuzzily via the <span class="small-caps">xm</span>onad prompt, which means I only have to type a few
 characters to get to my destination. This makes it feasible to have 30
 topics, instead of the usual 9 or so, in the first place. As a result,
 it’s rather fast to go from thinking about a certain problem to working
@@ -896,7 +896,7 @@ the work, also separated by hyphens. For example:
 
 <p></p>
 Also in this directory are <code>.xopp</code> files, when I scribble on the
-relevant PDFs in <a href="https://xournalpp.github.io/">xournalpp</a>; more on that later.
+relevant <span class="small-caps">pdf</span>s in <a href="https://xournalpp.github.io/">xournalpp</a>; more on that later.
 <p></p>
 Instead of navigating to it, all interaction with the library is done
 via <a href="https://github.com/slotthe/hmenu">hmenu</a>, a small wrapper around <a href="https://tools.suckless.org/dmenu/">dmenu</a> to facilitate this kind of
@@ -906,14 +906,14 @@ means that, for example, <code>C-x a</code> should be read as “hold down
 control and press x, then release both and press a”. You can of
 course safely ignore this, since the keys just serve illustrative
 purposes. An important note for Emacs users, lest anyone be
-confused: in XMonad, <code>M-</code> usually does <strong>not</strong> refer to the Meta
+confused: in <span class="small-caps">xm</span>onad, <code>M-</code> usually does <strong>not</strong> refer to the Meta
 key, but to the <code>modMask</code> that the user specified. This is indeed
 <code>&lt;Alt&gt;</code> by default, but many people understandably rebind this
 straight away to something that’s less likely to interfere with
 other programs. In my case, that’s the Super key, so <code>M-s</code> means
 <code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.</span></span>
  and can then fuzzy search
-through the directory. Once I’ve made a choice, PDFs are automatically
+through the directory. Once I’ve made a choice, <span class="small-caps">pdf</span>s are automatically
 opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.
 <p></p>
 <img class="pure-img" src="./hmenu.gif">
@@ -926,7 +926,7 @@ My bibliography is organised in a similar spirit; see
 For handwritten notes I… use real paper! A little elaboration is
 probably in order, having talked about <code>.xopp</code> files and xournalpp
 above. I do have a Wacom tablet lying around and I’m quite happy
-annotating PDFs with it. In lieu of printing everything out, this
+annotating <span class="small-caps">pdf</span>s with it. In lieu of printing everything out, this
 alleviates a little bit of the usual pain with reading papers, like
 coming back to one three weeks later and getting stuck on the same
 calculation as last time. I do love those annotations!
@@ -996,10 +996,10 @@ Emacs 29, making use of XInput 2.4 functionality. It makes
 scrolling through buffers that are quite dense with pictures
 rather smooth.</span></span>
  is the in-buffer preview. Usually when writing a draft I’m
-not that interested in how exactly something looks in the PDF—that part
+not that interested in how exactly something looks in the <span class="small-caps">pdf</span>—that part
 comes later, believe me. In cases like these, just calling
 <code>preview-buffer</code> is quite convenient and lets me use the screen real
-estate that a PDF viewer would have taken up for something else.
+estate that a <span class="small-caps">pdf</span> viewer would have taken up for something else.
 <p></p>
 <img class="pure-img" src="./preview.gif">
 <p></p>
@@ -1072,9 +1072,9 @@ the rest of the machinery. It compares certain features of the entry
 (like the title and abstract) with a list of regular expressions,
 increasing the total score of the entry every time it matches something.
 <p></p>
-Speaking of the arXiv, in XMonad I have bound <code>M-s a</code> to look up the
+Speaking of the arXiv, in <span class="small-caps">xm</span>onad I have bound <code>M-s a</code> to look up the
 given string there. Likewise, <a href="https://zbmath.org/">zbmath</a> is searched with <code>M-s z</code>. When
-these commands get a “universal argument”—an Emacs concept that XMonad
+these commands get a “universal argument”—an Emacs concept that <span class="small-caps">xm</span>onad
 borrowed—they automatically start a search with the current selection
 instead. Briefly, pressing <code>M-u</code> before a command can modify it in
 different ways. All of my search commands act on the <a href="https://www.jwz.org/doc/x-cut-and-paste.html">primary
@@ -1098,15 +1098,15 @@ more complicated solution.
 <p></p>
 Adding new citations is done via the now aptly named Emacs package
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><!--
---><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote">Ostensibly, this should be an XMonad module, as it does not
+--><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote">Ostensibly, this should be an <span class="small-caps">xm</span>onad module, as it does not
 necessarily have anything to do with Emacs itself. However, I had
 already written the elfeed integration and so the most annoying
 part (scraping the arXiv xml for certain bits) was already done.
-On the other hand, there are more Emacs than XMonad users, so
+On the other hand, there are more Emacs than <span class="small-caps">xm</span>onad users, so
 perhaps doing it like this will help more people anyways.</span></span>
  with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
 plumbing</a>
-on the XMonad side to get Emacs going. The basic idea is that—given an
+on the <span class="small-caps">xm</span>onad side to get Emacs going. The basic idea is that—given an
 arXiv or zbmath link—we first look up the paper on zbmath to see if it
 was published and, if not, just use the arXiv data to construct our own
 bibliography entry instead. By default, my keybinding for this acts on
@@ -1132,7 +1132,7 @@ Thanks to everyone who reached out! I received some inquiries as to my
 configurations, so here are the most important bits again, for your
 convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">my Emacs config</a>,
-<a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
+<a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my <span class="small-caps">xm</span>onad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
 <a href="https://github.com/slotthe/hmenu">hmenu</a>.
     </section>

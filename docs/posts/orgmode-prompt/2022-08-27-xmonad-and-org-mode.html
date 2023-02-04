@@ -57,15 +57,15 @@
       
         <p></p>
 As I’ve said before, basically my entire digital life happens in either
-<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
+<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.
 <p></p>
 Specifically, I want to showcase a new<!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
 which will drop soon!</span></span>
- XMonad module:
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>. Building on top of XMonad’s prompt—which works
+ <span class="small-caps">xm</span>onad module:
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one’s current workflow. The module recently got support for
@@ -78,7 +78,7 @@ One theme in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workfl
 to use org-mode (with all of its appendages, like <a href="https://www.orgroam.com/">org-roam</a>) to
 organise one’s thoughts. <code>XMonad.Prompt.OrgMode</code> was created as yet
 another link in that chain. Unlike when writing tiny <a href="../2022-05-25-calling-emacs-from-xmonad.html">Emacs Lisp
-scripts in XMonad</a>, this does not involve any
+scripts in <span class="small-caps">xm</span>onad</a>, this does not involve any
 custom elisp code one has to run; all of it is taken care of by the
 module itself.
 <p></p>
@@ -124,7 +124,7 @@ video you want to watch on the weekend!
 <h2 id="sample-configuration">Sample Configuration<a href="#sample-configuration" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 To round things off—and quickly showcase another cool (and new!)
-module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
+module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html"><span class="small-caps">xm</span>onad.Actions.Prefix</a>—here is a sample keybinding that takes
 “normal” <code>TODO</code> notes on <code>M-o c</code><!--
 --><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</span></span>
  and uses the selection when called
@@ -140,7 +140,7 @@ with a universal argument:
 </pre></div>
 
 <p></p>
-I’ve found <code>M-u</code> to be quite convenient for XMonad’s universal argument
+I’ve found <code>M-u</code> to be quite convenient for <span class="small-caps">xm</span>onad’s universal argument
 key, mirroring the <code>C-u</code> convention from Emacs. In either case, simply
 add the <code>usePrefixArgument</code> combinator somewhere to your <code>main</code> function
 and give it your preferred keybinding. For example:

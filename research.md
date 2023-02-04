@@ -24,8 +24,8 @@ will guide you through that.
    consequence of these axioms is that the internal-hom functor is
    implemented by tensoring with the respective duals.  This raises the
    question: can one decide whether a closed monoidal category is rigid,
-   simply by verifying that the internal-hom is tensor-representable? At
-   the *Research School on Bicategories, Categorification and Quantum
+   simply by verifying that the internal-hom is tensor-representable?
+   At the *Research School on Bicategories, Categorification and Quantum
    Theory*, Heunen suggested that this is not the case.  In this note,
    we will prove his claim by constructing an explicit counterexample.
 

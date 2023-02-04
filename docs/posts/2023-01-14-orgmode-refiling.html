@@ -68,7 +68,7 @@
       
         <p></p>
 In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
 extremely useful to me, and really I couldn’t be happier with it.
 However, a user recently contacted me by email and told me that they’re
@@ -81,7 +81,7 @@ If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">r
  <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
-have projects called “Work”, “Life”, “XMonad”, and so on, where all
+have projects called “Work”, “Life”, “<span class="small-caps">xm</span>onad”, and so on, where all
 related tasks live. Quite convenient!
 <p></p>
 So far, X.P.OrgMode just dumped the created note at the end of the
@@ -118,7 +118,7 @@ to <code>auto-revert-mode</code>.
 <h2 id="some-gory-details">Some Gory Details<a href="#some-gory-details" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 All of the refiling is actually directly done by Emacs itself! More
-precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
+precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html"><span class="small-caps">xm</span>onad.Util.Run</a> defines—which I’ve also
 <a href="../posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:
@@ -161,7 +161,7 @@ now don’t have to keep track of subtle changes in newer versions of Org.
 <p></p>
 Writing this was actually a lot of fun, and a great opportunity to play
 with the EDSL that X.U.Run exposes. I reckon there are a few places in
-my own XMonad configuration in which I could use these kinds of “Emacs
+my own <span class="small-caps">xm</span>onad configuration in which I could use these kinds of “Emacs
 scripts” to great effect!
 <p></p>
 One other idea I’ve had is to integrate this into the language that

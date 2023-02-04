@@ -78,12 +78,12 @@ of these features.
     <p></p>
 By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
-examples the HTML this produces is unsatisfactory. Thankfully, the two
+examples the <span class="small-caps">html</span> this produces is unsatisfactory. Thankfully, the two
 programs are almost infinitely customisable, and changing pretty much
 any setting doesn’t usually involve a lot of work—this is no exception.
 Using <code>pygmentize</code> as an example, I will show you how you can swap out
 pandoc’s native syntax highlighting with pretty much any third party
-tool that can output HTML.
+tool that can output <span class="small-caps">html</span>.
 
 
     <p>
@@ -96,7 +96,7 @@ tool that can output HTML.
 
     <p></p>
 In a <a href="./posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
 extremely useful to me, and really I couldn’t be happier with it.
 However, a user recently contacted me by email and told me that they’re
@@ -184,7 +184,7 @@ little context to some snippets that have accumulated over time.
 <p></p>
 While there is a post about <a href="https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html">my version</a> of the
 <code>query-replace</code> function, most other tidbits have only seen the light of
-day in places like the “Weekly Tips, Tricks, &amp;c.” thread on Reddit. In
+day in places like the “Weekly Tips, Tricks, &c.” thread on Reddit. In
 the spirit of hosting my content somewhere that I actually control,<!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">I am aware of the futility of this—Reddit is almost certainly
 going to be around longer than my personal site will. And yet,
@@ -229,8 +229,8 @@ can explain it to someone else, so here’s my shot at it!
     <b style="font-size:20px">XMonad Module Showcase: X.A.TopicSpace</b>  (<a title="All pages tagged 'haskell'." href="./tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="./tags/xmonad.html">xmonad</a>) 
 
     <p></p>
-One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
-However, it seems relatively unknown among the general XMonad community.
+One of my favourite—and most used—modules is <span class="small-caps">xm</span>onad.Actions.TopicSpace.
+However, it seems relatively unknown among the general <span class="small-caps">xm</span>onad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">new documentation</a>, lots of people probably did not bother
@@ -248,15 +248,15 @@ interested in using topics instead of workspaces. Time to change that!
 
     <p></p>
 As I’ve said before, basically my entire digital life happens in either
-<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
+<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.
 <p></p>
 Specifically, I want to showcase a new<!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
 which will drop soon!</span></span>
- XMonad module:
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>. Building on top of XMonad’s prompt—which works
+ <span class="small-caps">xm</span>onad module:
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one’s current workflow. The module recently got support for
@@ -301,14 +301,14 @@ this is Emacs, after all, which means that I can just write that
 
     <p></p>
 In the post about my <a href="./posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
-call Emacs—or other external programs—from within XMonad. I figured
+call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
-generic enough API, I decided to turn it into an XMonad module!
+generic enough API, I decided to turn it into an <span class="small-caps">xm</span>onad module!
 <p></p>
 Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
 now available for everyone to try out; provided one has the git version
-of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
+of <span class="small-caps">xm</span>onad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
 installing any unreleased—though stable—version, message me in any
 way and maybe we’ll hurry up and cut 0.17.1 soon!</span></span>
@@ -341,7 +341,7 @@ is a surprisingly effective way to catch errors in handwritten
 manuscripts!
 <p></p>
 As basically my entire digital life happens in either <a href="https://www.gnu.org/software/emacs/">Emacs</a> or
-<a href="https://xmonad.org/">XMonad</a>, my setup is heavily skewed in that direction; I will make use
+<a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>, my setup is heavily skewed in that direction; I will make use
 of these tools almost every step of the way.
 
 

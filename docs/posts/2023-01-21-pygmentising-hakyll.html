@@ -71,19 +71,19 @@
         <p></p>
 By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
-examples the HTML this produces is unsatisfactory. Thankfully, the two
+examples the <span class="small-caps">html</span> this produces is unsatisfactory. Thankfully, the two
 programs are almost infinitely customisable, and changing pretty much
 any setting doesn’t usually involve a lot of work—this is no exception.
 Using <code>pygmentize</code> as an example, I will show you how you can swap out
 pandoc’s native syntax highlighting with pretty much any third party
-tool that can output HTML.
+tool that can output <span class="small-caps">html</span>.
 <!--more-->
 <h1 id="the-problem">The Problem<a href="#the-problem" id="sec-link" class="floatright">¶</a></h1>
 <p></p>
 Pandoc uses the <a href="https://hackage.haskell.org/package/skylighting">skylighting</a> library to generate syntax highlighting
-for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.org/stable5/en/kate/katepart/highlight.html">KDE XML syntax
+for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.org/stable5/en/kate/katepart/highlight.html"><span class="small-caps">kde</span> <span class="small-caps">xml</span> syntax
 definitions</a> for the respective tokenisers. However, even for simple
-examples I don’t agree with the HTML this generates. Consider the
+examples I don’t agree with the <span class="small-caps">html</span> this generates. Consider the
 following Haskell code block.
 <div class="highlight"><pre><span></span><span class="nf">fibs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Integer</span><span class="p">]</span>
 <span class="nf">fibs</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">scanl'</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">fibs</span>
@@ -135,7 +135,7 @@ Having never used <code>pygmentize</code> as a command line utility,<!--
 the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.</span></span>
  I expected
 this to take some work—possibly involving Python <em>shudder</em>—but all of
-the necessary pieces are already present in the CLI. First up, the <code>-f</code>
+the necessary pieces are already present in the <span class="small-caps">cli</span>. First up, the <code>-f</code>
 option specifies the formatter to use, which will decide the shape of
 the output.
 <div class="highlight"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-L<span class="w"> </span>formatter<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>html
@@ -150,7 +150,7 @@ We can test how this highlighting looks straight away; executing
 </pre></div>
 
 <p></p>
-produces an HTML output along the lines of
+produces an <span class="small-caps">html</span> output along the lines of
 <div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
@@ -174,7 +174,7 @@ produces an HTML output along the lines of
 
 <p></p>
 This looks much better! The class names are kind of obtuse, but
-<code>pygmentize</code> can also give you nicely annotated CSS styles for its
+<code>pygmentize</code> can also give you nicely annotated <span class="small-caps">css</span> styles for its
 supported colour schemes. For example, the following is a small excerpt
 of the output:
 <div class="highlight"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-S<span class="w"> </span>emacs<span class="w"> </span>-f<span class="w"> </span>html
@@ -237,7 +237,7 @@ A strategy begins to form: look for all occurences of a <code>CodeBlock</code> i
 the <code>Pandoc</code> type, and replace it with a <code>RawBlock "html"</code> such that it
 isn’t touched anymore. Doing so will not pose very many
 challenges—pandoc has really great capabilities for
-<a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html">walking</a> its AST in order to facilitate exactly these
+<a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html">walking</a> its <span class="small-caps">ast</span> in order to facilitate exactly these
 kinds of changes. Unsurprisingly, the <code>Walkable</code> class resides over all
 things walkable; an abbreviated definition looks like this:
 <div class="highlight"><pre><span></span><span class="kr">class</span><span class="w"> </span><span class="kt">Walkable</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="kr">where</span>
@@ -292,7 +292,7 @@ since we want to use it from Hakyll I’ve already inserted a call to
 Further, the above code checks whether the block has an explicit
 language attached to it and, if not, leaves it alone; this was suggested
 by <a href="https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/">LSLeary</a> on Reddit. If you want to have a single <code>div</code> class for
-every code block—say, for some custom CSS—then you can replace
+every code block—say, for some custom <span class="small-caps">css</span>—then you can replace
 <div class="highlight"><pre><span></span><span class="w">  </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">lang</span><span class="p">)</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span>
 <span class="w">    </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="p">(</span><span class="n">callPygs</span><span class="w"> </span><span class="n">lang</span><span class="w"> </span><span class="n">body</span><span class="p">)</span>
 </pre></div>
@@ -319,7 +319,7 @@ there is also <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/
 
 <p></p>
 Basically, in additions to reader and writer options, it also takes a
-monadic transformation of pandoc’s AST and builds an appropriate
+monadic transformation of pandoc’s <span class="small-caps">ast</span> and builds an appropriate
 <code>Compiler</code> from that.
 <div class="highlight"><pre><span></span><span class="c1">-- import Hakyll</span>
 <span class="c1">-- import Text.Pandoc.Options</span>
@@ -354,7 +354,7 @@ That’s it! To my eyes, syntax highlighting looks much better now, and
 on the way I—and perhaps you as well—even learned a little bit about how
 pandoc internally represents its documents. Time well spent. As I said
 in the beginning, in principle one could swap out <code>pygmentize</code> for any
-other syntax highlighter that can produce HTML. However, for me these
+other syntax highlighter that can produce <span class="small-caps">html</span>. However, for me these
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don’t agree with—at least for now.

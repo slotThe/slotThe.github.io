@@ -53,11 +53,11 @@ clickable again and, in one way or another, showing their content once
 clicked.
 <p></p>
 Gwern Branwen has written about many different sidenote implementations
-<a href="https://gwern.net/Sidenotes">here</a>. I settled on <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>,
+<a href="https://gwern.net/Sidenotes">here</a>. I settled on <a href="https://github.com/edwardtufte/tufte-css">Tufte <span class="small-caps">css</span></a>,
 mainly because it seemed to be the most popular non-JS solution. Plus,
 there is the fantastic <a href="https://hackage.haskell.org/package/pandoc-sidenote">pandoc-sidenote</a>, which
 provides an appropriate pandoc filter. After extracting the relevant
-CSS into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
+<span class="small-caps">css</span> into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
 <code>usingSidenotes</code> function into my pandoc compiler,<!--
 --><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Just like you would expect:
 <div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
@@ -86,14 +86,14 @@ roughly looks like the following:
 </pre></div>
 
 <p></p>
-As Chris MacKay—a Tufte CSS contributor—helpfully explains in an
+As Chris MacKay—a Tufte <span class="small-caps">css</span> contributor—helpfully explains in an
 <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-234316022">issue</a>, spans officially don’t play nice with
 paragraphs:
 <blockquote>
 <p></p>
 so marginnotes and sidenotes, as they are implemented now, are
 <code>&lt;span&gt;</code> elements inside paragraph <code>&lt;p&gt;</code> elements. Only inline
-elements are allowed inside paragraphs per the HTML standard.
+elements are allowed inside paragraphs per the <span class="small-caps">html</span> standard.
 </blockquote>
 <p></p>
 I know what you’re thinking: people don’t usually let themselves be
@@ -102,7 +102,7 @@ hampered by standards, do they?<!--
 creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</span></span>
  Alas, the <code>pandoc-sidenote</code> package
 quite sensibly converts a given footnote into an approximation of the
-above HTML by using pandoc’s native <code>Span</code> data constructor. Here is a
+above <span class="small-caps">html</span> by using pandoc’s native <code>Span</code> data constructor. Here is a
 (heavily) simplified version of the relevant function.
 <div class="highlight"><pre><span></span><span class="nf">filterInline</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
 <span class="nf">filterInline</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
@@ -230,12 +230,12 @@ hack our way around a standard, would it?
 <p></p>
 As I’ve learned while <a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">writing</a> about using
 <code>pygmentize</code> to syntax highlight code for this site, pandoc has quite
-good support for changing its AST in creative ways. A strategy unfolds:
+good support for changing its <span class="small-caps">ast</span> in creative ways. A strategy unfolds:
 find every <code>Note</code> block in a document, somehow render its contents, and
 create a <code>RawBlock "html"</code> node instead of using pandoc’s built in
 <code>Span</code> .
 <p></p>
-For rendering HTML, pandoc has a
+For rendering <span class="small-caps">html</span>, pandoc has a
 <a href="https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Writers.html#v:writeHtml5String">writeHtml5String</a> function, which is
 conveniently wrapped by Hakyll in
 <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:writePandocWith">writePandocWith</a>:
@@ -247,7 +247,7 @@ conveniently wrapped by Hakyll in
 
 <p></p>
 Importantly, rendering takes some <code>WriterOptions</code>; since we don’t want
-to mess around with changing pure HTML afterwards, this is quite
+to mess around with changing pure <span class="small-caps">html</span> afterwards, this is quite
 important for us.
 <p></p>
 Writing this filter now essentially works by the same strategy outlined
@@ -356,9 +356,9 @@ in a document:
 This can now be used much like the <code>usingSidenotes</code> function from
 <code>pandoc-sidenote</code>, only that it needs to know your <code>WriterOption</code>s.
 More importantly, it should be the last of the transformations that you
-do to pandoc’s AST, since <code>usingSidenotes</code> completely renders the
+do to pandoc’s <span class="small-caps">ast</span>, since <code>usingSidenotes</code> completely renders the
 footnote, which is not what you want in case you—like me—do other
-creative transformations, such as separately generating HTML for
+creative transformations, such as separately generating <span class="small-caps">html</span> for
 <code>CodeBlock</code>s. In my configuration, I now have
 <div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
@@ -369,7 +369,7 @@ creative transformations, such as separately generating HTML for
 </pre></div>
 
 <p></p>
-Tufte CSS needs to be changed minimally to support this extended
+Tufte <span class="small-caps">css</span> needs to be changed minimally to support this extended
 functionality, but thankfully Said Achmiz has already documented what
 needs to be done <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-671102819">here</a>. This is
 already included in my <code>sidenotes.css</code>, so if you’re just copying that
@@ -394,7 +394,7 @@ this point.
 Really, I would be delighted if someone told me that I just used
 <code>pandoc-sidenote</code> (or another program involved) wrongly, and this is
 actually very easy to achieve using <code>${METHOD}</code>. Until then, I’ll
-continue to be blissfully unaware of HTML standards :)
+continue to be blissfully unaware of <span class="small-caps">html</span> standards :)
     </section>
 </article>
 ]]></summary>
@@ -419,19 +419,19 @@ continue to be blissfully unaware of HTML standards :)
         <p></p>
 By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
-examples the HTML this produces is unsatisfactory. Thankfully, the two
+examples the <span class="small-caps">html</span> this produces is unsatisfactory. Thankfully, the two
 programs are almost infinitely customisable, and changing pretty much
 any setting doesn’t usually involve a lot of work—this is no exception.
 Using <code>pygmentize</code> as an example, I will show you how you can swap out
 pandoc’s native syntax highlighting with pretty much any third party
-tool that can output HTML.
+tool that can output <span class="small-caps">html</span>.
 <!--more-->
 <h1 id="the-problem">The Problem</h1>
 <p></p>
 Pandoc uses the <a href="https://hackage.haskell.org/package/skylighting">skylighting</a> library to generate syntax highlighting
-for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.org/stable5/en/kate/katepart/highlight.html">KDE XML syntax
+for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.org/stable5/en/kate/katepart/highlight.html"><span class="small-caps">kde</span> <span class="small-caps">xml</span> syntax
 definitions</a> for the respective tokenisers. However, even for simple
-examples I don’t agree with the HTML this generates. Consider the
+examples I don’t agree with the <span class="small-caps">html</span> this generates. Consider the
 following Haskell code block.
 <div class="highlight"><pre><span></span><span class="nf">fibs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Integer</span><span class="p">]</span>
 <span class="nf">fibs</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">scanl'</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">fibs</span>
@@ -483,7 +483,7 @@ Having never used <code>pygmentize</code> as a command line utility,<!--
 the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.</span></span>
  I expected
 this to take some work—possibly involving Python <em>shudder</em>—but all of
-the necessary pieces are already present in the CLI. First up, the <code>-f</code>
+the necessary pieces are already present in the <span class="small-caps">cli</span>. First up, the <code>-f</code>
 option specifies the formatter to use, which will decide the shape of
 the output.
 <div class="highlight"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-L<span class="w"> </span>formatter<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>html
@@ -498,7 +498,7 @@ We can test how this highlighting looks straight away; executing
 </pre></div>
 
 <p></p>
-produces an HTML output along the lines of
+produces an <span class="small-caps">html</span> output along the lines of
 <div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
@@ -522,7 +522,7 @@ produces an HTML output along the lines of
 
 <p></p>
 This looks much better! The class names are kind of obtuse, but
-<code>pygmentize</code> can also give you nicely annotated CSS styles for its
+<code>pygmentize</code> can also give you nicely annotated <span class="small-caps">css</span> styles for its
 supported colour schemes. For example, the following is a small excerpt
 of the output:
 <div class="highlight"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-S<span class="w"> </span>emacs<span class="w"> </span>-f<span class="w"> </span>html
@@ -585,7 +585,7 @@ A strategy begins to form: look for all occurences of a <code>CodeBlock</code> i
 the <code>Pandoc</code> type, and replace it with a <code>RawBlock "html"</code> such that it
 isn’t touched anymore. Doing so will not pose very many
 challenges—pandoc has really great capabilities for
-<a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html">walking</a> its AST in order to facilitate exactly these
+<a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html">walking</a> its <span class="small-caps">ast</span> in order to facilitate exactly these
 kinds of changes. Unsurprisingly, the <code>Walkable</code> class resides over all
 things walkable; an abbreviated definition looks like this:
 <div class="highlight"><pre><span></span><span class="kr">class</span><span class="w"> </span><span class="kt">Walkable</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="kr">where</span>
@@ -640,7 +640,7 @@ since we want to use it from Hakyll I’ve already inserted a call to
 Further, the above code checks whether the block has an explicit
 language attached to it and, if not, leaves it alone; this was suggested
 by <a href="https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/">LSLeary</a> on Reddit. If you want to have a single <code>div</code> class for
-every code block—say, for some custom CSS—then you can replace
+every code block—say, for some custom <span class="small-caps">css</span>—then you can replace
 <div class="highlight"><pre><span></span><span class="w">  </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">lang</span><span class="p">)</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span>
 <span class="w">    </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="p">(</span><span class="n">callPygs</span><span class="w"> </span><span class="n">lang</span><span class="w"> </span><span class="n">body</span><span class="p">)</span>
 </pre></div>
@@ -667,7 +667,7 @@ there is also <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/
 
 <p></p>
 Basically, in additions to reader and writer options, it also takes a
-monadic transformation of pandoc’s AST and builds an appropriate
+monadic transformation of pandoc’s <span class="small-caps">ast</span> and builds an appropriate
 <code>Compiler</code> from that.
 <div class="highlight"><pre><span></span><span class="c1">-- import Hakyll</span>
 <span class="c1">-- import Text.Pandoc.Options</span>
@@ -702,7 +702,7 @@ That’s it! To my eyes, syntax highlighting looks much better now, and
 on the way I—and perhaps you as well—even learned a little bit about how
 pandoc internally represents its documents. Time well spent. As I said
 in the beginning, in principle one could swap out <code>pygmentize</code> for any
-other syntax highlighter that can produce HTML. However, for me these
+other syntax highlighter that can produce <span class="small-caps">html</span>. However, for me these
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don’t agree with—at least for now.
@@ -729,7 +729,7 @@ which I still don’t agree with—at least for now.
       
         <p></p>
 In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about using
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a> to rapidly capture thoughts and ideas into an
 Org file. The functionality that the module provides has proven to be
 extremely useful to me, and really I couldn’t be happier with it.
 However, a user recently contacted me by email and told me that they’re
@@ -742,7 +742,7 @@ If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">r
  <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring TODOs into separate categories: one might
-have projects called “Work”, “Life”, “XMonad”, and so on, where all
+have projects called “Work”, “Life”, “<span class="small-caps">xm</span>onad”, and so on, where all
 related tasks live. Quite convenient!
 <p></p>
 So far, X.P.OrgMode just dumped the created note at the end of the
@@ -779,7 +779,7 @@ to <code>auto-revert-mode</code>.
 <h2 id="some-gory-details">Some Gory Details</h2>
 <p></p>
 All of the refiling is actually directly done by Emacs itself! More
-precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
+precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html"><span class="small-caps">xm</span>onad.Util.Run</a> defines—which I’ve also
 <a href="/posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:
@@ -822,7 +822,7 @@ now don’t have to keep track of subtle changes in newer versions of Org.
 <p></p>
 Writing this was actually a lot of fun, and a great opportunity to play
 with the EDSL that X.U.Run exposes. I reckon there are a few places in
-my own XMonad configuration in which I could use these kinds of “Emacs
+my own <span class="small-caps">xm</span>onad configuration in which I could use these kinds of “Emacs
 scripts” to great effect!
 <p></p>
 One other idea I’ve had is to integrate this into the language that
@@ -856,8 +856,8 @@ welcome!
         
       
         <p></p>
-One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
-However, it seems relatively unknown among the general XMonad community.
+One of my favourite—and most used—modules is <span class="small-caps">xm</span>onad.Actions.TopicSpace.
+However, it seems relatively unknown among the general <span class="small-caps">xm</span>onad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">new documentation</a>, lots of people probably did not bother
@@ -873,7 +873,7 @@ day. If you like what you see, perhaps check out the
 an introduction to the module in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a>:
 <blockquote>
 <p></p>
-XMonad has a module called TopicSpace, which upgrades the X11
+<span class="small-caps">xm</span>onad has a module called TopicSpace, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results
@@ -888,7 +888,7 @@ also quite convenient for mathematical projects.
 <p></p>
 I have set up special keybindings to bring up an Emacs session in the
 topic directory, or spawn a terminal there. Switching to topics is
-done fuzzily via the XMonad prompt, which means I only have to type a
+done fuzzily via the <span class="small-caps">xm</span>onad prompt, which means I only have to type a
 few characters to get to my destination. This makes it feasible to
 have 30 topics, instead of the usual 9 or so, in the first place. As
 a result, it’s rather fast to go from thinking about a certain problem
@@ -920,7 +920,7 @@ mental load regarding what’s currently happening on my computer.
 Definitely worth it.
 <p></p>
 In terms of code, this—as well as the following examples—heavily use the
-<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to XMonad.Util.Run, which allows one to
+<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to <span class="small-caps">xm</span>onad.Util.Run, which allows one to
 spawn processes in a declarative and compositional way; I’ve <a href="../2022-05-25-calling-emacs-from-xmonad.html">written
 about this</a> in another post. For example, my RSS topic is
 specified thusly:
@@ -975,7 +975,7 @@ Similar functions can be created for spawning the terminal and editor:
 </pre></div>
 
 <p></p>
-Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
+Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL"><span class="small-caps">xm</span>onad.Util.Run</a> to see how <code>inEditor</code> and
 <code>termInDir</code> are defined and may be customised.
 <p></p>
 In my mathematical and other work-adjacent projects I keep it pretty
@@ -1092,14 +1092,14 @@ win in my book!
       
         <p></p>
 In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
-call Emacs—or other external programs—from within XMonad. I figured
+call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
-generic enough API, I decided to turn it into an XMonad module!
+generic enough API, I decided to turn it into an <span class="small-caps">xm</span>onad module!
 <p></p>
 Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
 now available for everyone to try out; provided one has the git version
-of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
+of <span class="small-caps">xm</span>onad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
 installing any unreleased—though stable—version, message me in any
 way and maybe we’ll hurry up and cut 0.17.1 soon!</span></span>
@@ -1228,9 +1228,9 @@ When executed, this translates to something like
 </pre></div>
 
 <p></p>
-I certainly know which one I’d rather type—especially with ELPA
+I certainly know which one I’d rather type—especially with <span class="small-caps">elpa</span>
 directory names changing quite frequently! On that note,
-<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!
+<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on <span class="small-caps">melpa</span> now; yay!
 <h2 id="other-programs">Other Programs</h2>
 <p></p>
 As this is my main use case for it, the new features of
@@ -1377,7 +1377,7 @@ this and find something missing, do let me know and we’ll probably find
 a solution! If you try this and find it useful, also let me know :)
 <p></p>
 Of course, technically none of this needs to live only inside your
-XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
+<span class="small-caps">xm</span>onad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
 cool tools like magit.sh.<!--
 --><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
