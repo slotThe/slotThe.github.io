@@ -227,13 +227,13 @@ a:visited {
   Section links
 */
 
-:is(h1, h2, h3) a#sec-link {
+:is(h1, h2, h3, h4) a#sec-link {
     text-decoration: none;
     color: grey;
     visibility: hidden;
 }
 
-:is(h1, h2, h3):hover a#sec-link {
+:is(h1, h2, h3, h4):hover a#sec-link {
     visibility: visible;
 }
 
