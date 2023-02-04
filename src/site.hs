@@ -9,11 +9,13 @@
 import Data.Text qualified as T
 
 import Control.Monad
+import Data.List (foldl')
 import Data.Maybe
+import Data.Text (Text)
 import Hakyll
 import Sidenote (usingSidenotes)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
-import Text.Pandoc.Definition (Block (Header, CodeBlock, RawBlock), Inline (Link, Str), Pandoc)
+import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc)
 import Text.Pandoc.Options
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Walk (walk, walkM)
@@ -257,15 +259,15 @@ pandocCompilerNoToc = pandocCompiler
 
 -- | Pandoc compiler with syntax highlighting (via @pygmentize@),
 -- sidenotes instead of footnotes (see @css/sidenotes.css@ and
--- @src/Sidenote.hs@), and section links.  Also see 'getTocCtx' for more
--- table of contents related things, and @./build.sh@ for
--- LaTeX-rendering.
+-- @src/Sidenote.hs@), automatic small-caps for certain abbreviations,
+-- and section links.  Also see 'getTocCtx' for more table of contents
+-- related things, and @./build.sh@ for LaTeX-rendering.
 myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
   pandocCompilerWithTransformM
     defaultHakyllReaderOptions
     myWriter
-    (pure . usingSidenotes myWriter <=< pygmentsHighlight  . addSectionLinks)
+    (pure . usingSidenotes myWriter <=< pygmentsHighlight  . addSectionLinks . smallCaps)
  where
   myWriter :: WriterOptions
   myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
@@ -287,3 +289,17 @@ myPandocCompiler =
    where
     callPygs :: String -> String -> Compiler String
     callPygs lang = unixFilter "pygmentize" ["-l", lang, "-f", "html"]
+
+  -- This is very manual, but for now that's "good enough".
+  smallCaps :: Pandoc -> Pandoc
+  smallCaps = walk \case
+    Str t -> RawInline "html" $
+      T.replace "XMonad" "<span class=\"small-caps\">xm</span>onad" $
+        foldl' replace t ["HTML", "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST", "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS", "PSSL"]
+    inline -> inline
+   where
+    replace :: Text -> Text -> Text
+    replace haystack needle =
+      T.replace needle
+                ("<span class=\"small-caps\">" <> T.toLower needle <> "</span>")
+                haystack
