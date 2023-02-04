@@ -3,17 +3,44 @@ body {
     font-size: 19px;
     font-family: var(--proportional-fonts);
     line-height: 1.4;
-    max-width: 960px;
     text-align: justify;
     text-justify: inter-word;
-    hyphens: auto;
+    hyphens: auto;            /* Justification -> hyphenation */
 }
 
-.pure-g [class *="pure-u"] {
+div#content {           /* body width */
+    margin-right: 1em;
+    max-width: 720px;
+    max-width: 45rem;
+}
+
+/* On bigger screens, move the body text closer towards the centre */
+@media (min-width: 1367px) {
+    body{
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 1366px) {  /* Adjust size for smaller screens */
+    body{
+        max-width: 960px;
+    }
+}
+
+span.small-caps {
+    font-variant: small-caps;
+}
+
+/**********************************************************************
+  Further font settings
+*/
+
+.pure-g [class *="pure-u"] {                 /* body */
     font-family: var(--proportional-fonts);
 }
 
-.pure-g-r [class *="pure-u"] {
+.pure-g-r [class *="pure-u"] {               /* body */
     font-family: var(--proportional-fonts);
 }
 
@@ -28,25 +55,23 @@ code {                  /* Inline code */
     font-family: var(--monospace-fonts);
 }
 
-blockquote {            /* Blockquotes */
+blockquote {            /* Block quotes */
     font-size: 0.95em;
     line-height: 1.3;
 }
 
-div#content {           /* Site body */
-    margin-right: 1em;
-    max-width: 720px;
-    max-width: 45rem;
-}
+/**********************************************************************
+  Footer
+*/
 
 div#footer {            /* Footer with RSS feed etc. */
     border-top: solid 1px lavender;
-    justify-content: space-between;
     color: #555;
-    font-size: 0.78em;
+    font-size: 0.76em;
     margin-top: 30px;
     padding: 9px 1em 12px 1em;
     text-align: right;
+    max-width: 45rem;   /* Same as in div#content */
 }
 
 hr {                    /* That line before the footnotes */
@@ -57,7 +82,9 @@ hr {                    /* That line before the footnotes */
     margin: 1em 0; padding: 0;
 }
 
-/* Headings */
+/**********************************************************************
+  Headings
+*/
 
 h1 {
     font-size: 1.25em;
@@ -74,15 +101,19 @@ h3 {
     line-height: 1.2;
 }
 
-/* Right hand side navigation */
+/**********************************************************************
+  Left hand side navigation
+*/
 
 div#navigation {
     text-align: right;
     padding-left: 1em;
-    padding-right: 1em;
+    padding-right: 3em;
     padding-top: 1em;
     padding-bottom: 1em;
-    position: fixed;
+    position: static;
+    float: right;
+    display: inline-block;
 }
 
 div#navigation a {
@@ -103,10 +134,22 @@ div#navigation span.menu-subtitle {
     font-style: italic;
 }
 
+/* On slightly smaller screens, left-align the navigation. */
+@media (max-width: 1366px) {
+    div#navigation {
+        float: none;
+        padding-right: 1em;
+    }
+}
+
+/* On much smaller screens; i.e., mobile or heavily zoomed in, put the
+   navigation at the top instead.
+*/
 @media (max-width: 767px) {
     div#navigation {
         position: static;
         text-align: center;
+        display: block;
     }
 
     div#navigation > .pure-menu.pure-menu-open > ul > li {
@@ -120,7 +163,9 @@ div#navigation span.menu-subtitle {
     }
 }
 
-/* Table of contents */
+/**********************************************************************
+  Table of contents
+*/
 
 div#contents {
     background-color: #fbf9fb;
@@ -154,22 +199,23 @@ div#contents li + li {
     font-weight: bold;
 }
 
-/* Links */
+/**********************************************************************
+  Links
+*/
 
 a:link {
     color: #5b3355;
     text-decoration: none;
-    border-bottom: 1px dotted;
 }
 
 a:hover {
     color: #999;
+    border-bottom: 1px dotted;   /* Show an underline on hover */
 }
 
 a:visited {
     color: #5b3355;
     text-decoration: none;
-    border-bottom: 1px dotted;
 }
 
 .floatright {           /* Feed links float to the right. */
@@ -177,19 +223,23 @@ a:visited {
     font-size: 15px;
 }
 
-/* Section links */
+/**********************************************************************
+  Section links
+*/
 
-:is(h1, h2, h3, h4, h5) a#sec-link {
+:is(h1, h2, h3) a#sec-link {
     text-decoration: none;
     color: grey;
     visibility: hidden;
 }
 
-:is(h1, h2, h3, h4, h5):hover a#sec-link {
+:is(h1, h2, h3):hover a#sec-link {
     visibility: visible;
 }
 
-/* Code blocks */
+/**********************************************************************
+  Code blocks
+*/
 
 div .highlight {
     padding-left: 1em;
