@@ -1,11 +1,30 @@
 body {
     color: black;
-    font-size: 16px;
-    hyphens: auto;
-    line-height: 1.5;
+    font-size: 17px;
+    font-family: var(--proportional-fonts);
+    line-height: 1.4;
     max-width: 960px;
     text-align: justify;
     text-justify: inter-word;
+    hyphens: auto;
+}
+
+.pure-g [class *="pure-u"] {
+    font-family: var(--proportional-fonts);
+}
+
+.pure-g-r [class *="pure-u"] {
+    font-family: var(--proportional-fonts);
+}
+
+pre {                   /* Block code */
+    font-size: 0.95em;
+    font-family: var(--monospace-fonts);
+}
+
+code {                  /* Inline code */
+    font-size: 0.95em;
+    font-family: var(--monospace-fonts);
 }
 
 div#content {           /* Site body */
@@ -18,9 +37,9 @@ div#footer {            /* Footer with RSS feed etc. */
     border-top: solid 1px lavender;
     justify-content: space-between;
     color: #555;
-    font-size: 12px;
+    font-size: 0.78em;
     margin-top: 30px;
-    padding: 12px 1em 12px 1em;
+    padding: 9px 1em 12px 1em;
     text-align: right;
 }
 
@@ -35,18 +54,18 @@ hr {                    /* That line before the footnotes */
 /* Headings */
 
 h1 {
-    font-size: 24px;
-    line-height: 1.2;
+    font-size: 26px;
+    line-height: 1.0;
 }
 
 h2 {
-    font-size: 20px;
-    line-height: 1.2;
+    font-size: 22px;
+    line-height: 1.0;
 }
 
 h3 {
-    font-size: 16px;
-    line-height: 1.2;
+    font-size: 17px;
+    line-height: 1.0;
 }
 
 /* Right hand side navigation */
@@ -61,19 +80,19 @@ div#navigation {
 }
 
 div#navigation a {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
     text-decoration: none;
     text-transform: none;
 }
 
 div#navigation .menu-title {
-    font-size: 18px;
-    font-family: monospace;
+    font-size: 17px;
+    font-family: var(--monospace-fonts);
 }
 
 div#navigation span.menu-subtitle {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: normal;
     font-style: italic;
 }

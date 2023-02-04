@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+/* Fonts taken from: https://github.com/gwern/gwern.net/tree/master/css
+
+I like the `IBM Plex' font much more than `Source Sans Pro' but, alas,
+the former does not have small caps glyphs.
+
+*/
+
+:root {
+    --proportional-fonts: "Source Sans Pro", sans-serif;
+    --monospace-fonts: "Iosevka Custom", monospace;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../fonts/SourceSansPro-BASIC-Regular.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-weight: normal;
+    font-style: italic;
+    src: url('../fonts/SourceSansPro-BASIC-RegularItalic.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-style: normal;
+    src: url('../fonts/SourceSansPro-BASIC-Semibold.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-style: italic;
+    src: url('../fonts/SourceSansPro-BASIC-SemiboldItalic.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Iosevka Custom';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../fonts/iosevka-custom-regular.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Iosevka Custom';
+    font-weight: normal;
+    font-style: italic;
+    src: url('../fonts/iosevka-custom-italic.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Iosevka Custom';
+    font-weight: bold;
+    font-style: normal;
+    src: url('../fonts/iosevka-custom-bold.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Iosevka Custom';
+    font-weight: bold;
+    font-style: italic;
+    src: url('../fonts/iosevka-custom-bolditalic.ttf') format('truetype');
+    font-display: swap;
+}
