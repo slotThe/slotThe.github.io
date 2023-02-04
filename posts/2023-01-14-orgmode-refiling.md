@@ -3,12 +3,13 @@ title: Immediately Refile Notes with X.P.OrgMode
 tags: emacs, haskell, xmonad
 ---
 
-In a [previous post][orgmode-post] I talked about using
-[XMonad.Prompt.OrgMode] to rapidly capture thoughts and ideas into an
-Org file.  The functionality that the module provides has proven to be
-extremely useful to me, and really I couldn't be happier with it.
-However, a user recently contacted me by email and told me that they're
-missing but one feature: the ability to immediately refile notes.
+In a [previous post][orgmode-post] I talked about
+[XMonad.Prompt.OrgMode], an XMonad module to rapidly capture thoughts
+and ideas into an Org file.  The functionality that the module provides
+has proven to be extremely useful to me, and really I couldn't be
+happier with it.  However, a user recently contacted me by email and
+told me that they're missing but one feature: the ability to immediately
+refile notes.
 
 [XMonad.Prompt.OrgMode]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html
 [orgmode-post]: /posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html
