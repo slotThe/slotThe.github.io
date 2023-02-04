@@ -1,6 +1,6 @@
 body {
     color: black;
-    font-size: 17px;
+    font-size: 19px;
     font-family: var(--proportional-fonts);
     line-height: 1.4;
     max-width: 960px;
@@ -18,6 +18,7 @@ body {
 }
 
 pre {                   /* Block code */
+    text-align: left;
     font-size: 0.95em;
     font-family: var(--monospace-fonts);
 }
@@ -25,6 +26,11 @@ pre {                   /* Block code */
 code {                  /* Inline code */
     font-size: 0.95em;
     font-family: var(--monospace-fonts);
+}
+
+blockquote {            /* Blockquotes */
+    font-size: 0.95em;
+    line-height: 1.3;
 }
 
 div#content {           /* Site body */
@@ -54,18 +60,18 @@ hr {                    /* That line before the footnotes */
 /* Headings */
 
 h1 {
-    font-size: 26px;
-    line-height: 1.0;
+    font-size: 1.25em;
+    line-height: 1.2;
 }
 
 h2 {
-    font-size: 22px;
-    line-height: 1.0;
+    font-size: 1.15em;
+    line-height: 1.2;
 }
 
 h3 {
-    font-size: 17px;
-    line-height: 1.0;
+    font-size: 1.1em;
+    line-height: 1.2;
 }
 
 /* Right hand side navigation */
@@ -134,7 +140,7 @@ div#contents {
 }
 
 div#contents ul {
-    font-size: 90%;
+    font-size: 85%;
     margin-top: 0.5em;
     padding-left: 1em;
     line-height: 1.2;
