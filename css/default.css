@@ -88,16 +88,17 @@ hr {                    /* That line before the footnotes */
 
 h1 {
     font-size: 1.25em;
-    line-height: 1.2;
 }
 
 h2 {
     font-size: 1.15em;
-    line-height: 1.2;
 }
 
 h3 {
     font-size: 1.1em;
+}
+
+:is(h1, h2, h3, h4) {
     line-height: 1.2;
 }
 
