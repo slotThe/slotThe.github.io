@@ -22,10 +22,16 @@ For various definitions of "notable".
   embedded in the HTML.  This is both faster when loading the page, and
   does not require any JavaScript on the client side.
 
++ [Automatic smallcaps][site:impl:smallcaps] for certain abbreviations,
+  like `HTML` or `GNU`.  As such, a font that actually supports this
+  (instead of rescaling capital letters) is [also provided][site:impl:fonts].
+
 + [Pilcrows][wiki:pilcrow] when hovering over a section title, linking
   to the respective section.
 
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
+[site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
+[site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
 [site:pygmentise]: https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html
 [site:sidenotes-hs]: https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs
 [site:sidenotes]: https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html
