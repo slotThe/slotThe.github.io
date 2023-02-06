@@ -21,7 +21,7 @@ refile notes.
 If you don't know, [refiling] is the act of moving an entry[^1] *below*
 another heading; i.e., such that it becomes a subheading there.  This
 can be useful for structuring TODOs into separate categories: one might
-have projects called "Work", "Life", "XMonad", and so on, where all
+have projects called "work", "life", "XMonad", and so on, where all
 related tasks live.  Quite convenient!
 
 So far, X.P.OrgMode just dumped the created note at the end of the
@@ -47,7 +47,7 @@ The former takes the same arguments as [orgPrompt] (which see), and is
 for popping up another prompt that asks for a heading.  The latter
 refiles everything under the specified (as the second argument) heading.
 
-The way `orgPromptRefile` works is that, after querying for a `TODO`, it
+The way `orgPromptRefile` works is that, after querying for a TODO, it
 *always* inserts the note into the file and then *possibly* refiles it
 to another heading.  This way, you don't need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent

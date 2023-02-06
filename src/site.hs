@@ -293,13 +293,24 @@ myPandocCompiler =
   -- This is very manual, but for now that's "good enough".
   smallCaps :: Pandoc -> Pandoc
   smallCaps = walk \case
-    Str t -> RawInline "html" $
-      T.replace "XMonad" "<span class=\"small-caps\">xm</span>onad" $
-        foldl' replace t ["HTML", "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST", "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS", "PSSL"]
+    Str t -> RawInline "html"
+           $ replaceXMonad
+           $ foldl' (replace T.toLower)
+                    t
+                    ["HTML", "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST", "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS", "PSSL", "TODO", "EDSL", "DSL"]
     inline -> inline
    where
-    replace :: Text -> Text -> Text
-    replace haystack needle =
-      T.replace needle
-                ("<span class=\"small-caps\">" <> T.toLower needle <> "</span>")
-                haystack
+    replace :: (Text -> Text) -> Text -> Text -> Text
+    replace trans haystack needle = T.replace needle (sc (trans needle)) haystack
+
+    sc :: Text -> Text
+    sc s = "<span class=\"small-caps\">" <> s <> "</span>"
+
+    -- Big hack, in order to replace "XMonad." and "XMonad," with its
+    -- small-caps variants, but leave things like
+    -- "XMonad.Prompt.OrgMode" alone.
+    replaceXMonad :: Text -> Text
+    replaceXMonad s =
+      if "XMonad" `T.isPrefixOf` s && T.length s < 9
+      then sc "xm" <> T.drop 2 s
+      else s

@@ -68,7 +68,7 @@
       
         <p></p>
 In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad.Prompt.OrgMode</a>, an <span class="small-caps">xm</span>onad module to rapidly capture thoughts
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an <span class="small-caps">xm</span>onad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
 has proven to be extremely useful to me, and really I couldn’t be
 happier with it. However, a user recently contacted me by email and
@@ -81,8 +81,8 @@ If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">r
 --><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">A headline, possibly with an attached body.</span></span>
  <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
-can be useful for structuring TODOs into separate categories: one might
-have projects called “Work”, “Life”, “<span class="small-caps">xm</span>onad”, and so on, where all
+can be useful for structuring <span class="small-caps">todo</span>s into separate categories: one might
+have projects called “work”, “life”, “<span class="small-caps">xm</span>onad”, and so on, where all
 related tasks live. Quite convenient!
 <p></p>
 So far, X.P.OrgMode just dumped the created note at the end of the
@@ -106,7 +106,7 @@ The former takes the same arguments as <a href="https://hackage.haskell.org/pack
 for popping up another prompt that asks for a heading. The latter
 refiles everything under the specified (as the second argument) heading.
 <p></p>
-The way <code>orgPromptRefile</code> works is that, after querying for a <code>TODO</code>, it
+The way <code>orgPromptRefile</code> works is that, after querying for a <span class="small-caps">todo</span>, it
 <em>always</em> inserts the note into the file and then <em>possibly</em> refiles it
 to another heading. This way, you don’t need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent
@@ -119,7 +119,7 @@ to <code>auto-revert-mode</code>.
 <h2 id="some-gory-details">Some Gory Details<a href="#some-gory-details" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 All of the refiling is actually directly done by Emacs itself! More
-precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html"><span class="small-caps">xm</span>onad.Util.Run</a> defines—which I’ve also
+precisely, the <span class="small-caps">edsl</span> that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
 <a href="../posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:
@@ -161,7 +161,7 @@ now don’t have to keep track of subtle changes in newer versions of Org.
 <h1 id="closing-thoughts">Closing Thoughts<a href="#closing-thoughts" id="sec-link" class="floatright">¶</a></h1>
 <p></p>
 Writing this was actually a lot of fun, and a great opportunity to play
-with the EDSL that X.U.Run exposes. I reckon there are a few places in
+with the <span class="small-caps">edsl</span> that X.U.Run exposes. I reckon there are a few places in
 my own <span class="small-caps">xm</span>onad configuration in which I could use these kinds of “Emacs
 scripts” to great effect!
 <p></p>
