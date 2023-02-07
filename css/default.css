@@ -16,15 +16,22 @@ div#content {           /* body width */
 
 /* On bigger screens, move the body text closer towards the centre */
 @media (min-width: 1367px) {
-    body{
+    body {
         margin-left: auto;
         margin-right: auto;
     }
 }
 
 @media (max-width: 1366px) {  /* Adjust size for smaller screens */
-    body{
+    body {
         max-width: 960px;
+        margin-right: 3em;
+    }
+}
+
+@media (max-width: 768px) {  /* Ease up on this again for *very* small screens */
+    body {
+        margin-right: 0;
     }
 }
 
@@ -33,7 +40,7 @@ span.small-caps {
 }
 
 /**********************************************************************
-  Further font settings
+  FURTHER FONT SETTINGS
 */
 
 .pure-g [class *="pure-u"] {                 /* body */
@@ -61,13 +68,13 @@ blockquote {            /* Block quotes */
 }
 
 /**********************************************************************
-  Footer
+  FOOTER
 */
 
 div#footer {            /* Footer with RSS feed etc. */
     border-top: solid 1px lavender;
     color: #555;
-    font-size: 0.76em;
+    font-size: 0.78em;
     margin-top: 30px;
     padding: 9px 1em 12px 1em;
     text-align: right;
@@ -83,7 +90,7 @@ hr {                    /* That line before the footnotes */
 }
 
 /**********************************************************************
-  Headings
+  HEADINGS
 */
 
 h1 {
@@ -103,7 +110,7 @@ h3 {
 }
 
 /**********************************************************************
-  Left hand side navigation
+  LEFT HAND SIDE NAVIGATION
 */
 
 div#navigation {
@@ -165,7 +172,7 @@ div#navigation span.menu-subtitle {
 }
 
 /**********************************************************************
-  Table of contents
+  TABLE OF CONTENTS
 */
 
 div#contents {
@@ -201,7 +208,7 @@ div#contents li + li {
 }
 
 /**********************************************************************
-  Links
+  LINKS
 */
 
 a:link {
@@ -225,7 +232,7 @@ a:visited {
 }
 
 /**********************************************************************
-  Section links
+  SECTION LINKS
 */
 
 :is(h1, h2, h3, h4) a#sec-link {
@@ -239,7 +246,7 @@ a:visited {
 }
 
 /**********************************************************************
-  Code blocks
+  CODE BLOCKS
 */
 
 div .highlight {
