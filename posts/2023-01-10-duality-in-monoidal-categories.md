@@ -60,7 +60,7 @@ extra condition:
 > $$
 > Then $\mathcal{C}$ is \*-autonomous.
 
-Using the notion of a \*-autonomous category of [BD13]—that is, for
+Using the notion of a \*-autonomous category of [[BD13]]—that is, for
 every $x \in \mathcal{C}$ the functor $\mathcal{C}({-} \otimes x, 1)$ is
 representable by $Dx$—this becomes an exercise in "Yoneda Yoga".  More
 precisely, one uses the fact that the Yoneda embedding is fully faithful
@@ -137,14 +137,14 @@ identity, and thus the snake identities for duals do not hold.  If you
 want more details, check [the paper]!
 
 [\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
-[BD13]: https://zbmath.org/1370.18007
+[[BD13]]: https://zbmath.org/1370.18007
 [closed monoidal]: https://ncatlab.org/nlab/show/closed+monoidal+category
 [monoidal]: https://ncatlab.org/nlab/show/monoidal+category
 [rigid (monoidal)]: https://ncatlab.org/nlab/show/rigid+monoidal+category
 [the paper]: https://arxiv.org/abs/2301.03545
 
 [^1]: Or rather, a non-symmetric variant of it called an *r-category* in
-      [BD13].
+      [[BD13]].
 
 [^2]: This is not a coincidence; for example, adjoints in the monoidal
       category $([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})$ are
