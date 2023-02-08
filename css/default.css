@@ -1,3 +1,16 @@
+/* Apply a more natural box layout model to all elements, but allow
+   components to change; c.f., [1] and [2].
+   Source: https://github.com/sindresorhus/modern-normalize/pull/56
+   [1]: https://www.paulirish.com/2012/box-sizing-border-box-ftw/
+   [2]: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+*/
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 body {
     color: black;
     font-size: 19px;
@@ -8,35 +21,32 @@ body {
     hyphens: auto;            /* Justification -> hyphenation */
 }
 
+span.small-caps {
+    font-variant: small-caps;
+}
+
 div#content {           /* body width */
     margin-right: 1em;
     max-width: 720px;
     max-width: 45rem;
 }
 
-/* On bigger screens, move the body text closer towards the centre */
-@media (min-width: 1367px) {
+@media (min-width: 1367px) { /* On bigger screens, move the body text closer towards the centre */
     body {
         margin-left: auto;
         margin-right: auto;
     }
 }
-
 @media (max-width: 1366px) {  /* Adjust size for smaller screens */
     body {
         max-width: 960px;
         margin-right: 3em;
     }
 }
-
 @media (max-width: 768px) {  /* Ease up on this again for *very* small screens */
     body {
         margin-right: 0;
     }
-}
-
-span.small-caps {
-    font-variant: small-caps;
 }
 
 /**********************************************************************
