@@ -43,10 +43,7 @@ span.small-caps {
   FURTHER FONT SETTINGS
 */
 
-.pure-g [class *="pure-u"] {                 /* body */
-    font-family: var(--proportional-fonts);
-}
-
+.pure-g [class *="pure-u"],
 .pure-g-r [class *="pure-u"] {               /* body */
     font-family: var(--proportional-fonts);
 }
@@ -115,9 +112,9 @@ h3 {
 
 div#navigation {
     text-align: right;
-    padding-left: 1em;
+    padding-left: 1.25em;
     padding-right: 3em;
-    padding-top: 1em;
+    padding-top: 1.25em;
     padding-bottom: 1em;
     position: static;
     float: right;
@@ -193,9 +190,6 @@ media queries to hide what we don't want to see.
 div#contents,
 div#contents-big {
     padding-top: 0.25em;
-    padding-bottom: 0.25em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
     max-width: 240px;
     max-width: 15rem;
     max-width: 30%;
@@ -236,12 +230,18 @@ a:link > code,     /* iosevka has no proper small caps support: github.com/be5in
 a:visited > code {
     font-variant: normal;
 }
+/* The "↑" link in the TOC */
+a#up-arrow {
+    float: right;
+    font-size: 0.9em;
+    margin-right: 0.5em;
+}
 
 /* Bigger screens */
 div#contents-big {
     clear: both;        /* Don't collide with the sidebar. */
-    margin-right: 2.9em;
-    margin-left: 0.7em;
+    margin-right: 1.7em;
+    margin-left: 0.25em;
     position: sticky;
     top: 0;
     left: 100%;
@@ -250,6 +250,9 @@ div#contents-big {
 /* Smaller screens */
 div#contents {
     background-color: #fbf9fb;
+    padding-bottom: 0.25em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
     margin-left: 0.75em;
     margin-bottom: 0.75em;
     float: right;
