@@ -7,9 +7,9 @@ much as I can to all kinds of different projects.  List below are either
 ones that I've stuck with for a while, or personal projects that are
 still actively maintained.
 
-## Contributor
+# Contributor
 
-### XMonad
+## XMonad
 
 I'm a maintainer for [XMonad], a minimal X11 window manager written in
 Haskell.  In particular, this encompasses the `xmonad` repository, where
@@ -40,7 +40,7 @@ configuration can be found
  </div>
 </p>
 
-### Kmonad
+## Kmonad
 
 I'm a contributor to kmonad, a keyboard remapping daemon in the spirit
 of [QMK].  However, instead of being firmware for a specific keyboard,
@@ -55,7 +55,7 @@ My personal keyboard configuration—[colemak-dh], with some extras to
 facilitate more convenient Haskell and LaTeX programming—can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd).
 
-### Xmobar
+## Xmobar
 
 Since XMonad does not have a built-in status bar, one has to use a third
 party bar—[xmobar] is that bar!  As these programs have to work together
@@ -65,7 +65,7 @@ uses it with XMonad.
 The configuration I use is available
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs).
 
-### Void Linux
+## Void Linux
 
 I maintain a few packages for the [Void] GNU/Linux distribution:
 
@@ -85,19 +85,19 @@ Haskell package in case of an update—lots of fun!
 
 # Author
 
-### [hmenu]
+## [hmenu]
 
 I'm the author of hmenu, a wrapper for [dmenu] in the spirit of
 [yeganesh].  More concretely, it displays commands in order of usage
 (with an optional decay for frequency sorting) and can open programs or
 (given) files inside of your terminal or any chosen program.
 
-### [vmensa]
+## [vmensa]
 
 CLI application to query and filter the menus of the different canteens
 at TU Dresden.
 
-### Haskell Libraries
+## Haskell Libraries
 
 #### [optparse-applicative-cmdline-util] ([Hackage](https://hackage.haskell.org/package/optparse-applicative-cmdline-util))
 
@@ -110,7 +110,7 @@ A reimplementation of utility functions from Neil Mitchell's [TagSoup],
 as well as some extra functionality, for Ben Gamari's [html-parse], as
 this nicely supports `Text` and `Attoparsec`.
 
-### Emacs Modes
+## Emacs Modes
 
 I've written too many Emacs packages—and none of them popular, at that!
 

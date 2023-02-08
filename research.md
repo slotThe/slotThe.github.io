@@ -8,7 +8,7 @@ how much of the theory people have developed still works in that
 context.  When no one's looking, I also like to study categories for
 their own sake.
 
-## Preprints
+# Preprints
 
 As a general note: one can download the source code for every paper on
 the arXiv!  A simple click on "Other formats" on the relevant article
@@ -42,7 +42,7 @@ will guide you through that.
   connection with the pivotality of Drinfeld centres and their
   underlying categories is discussed.
 
-## Talks
+# Talks
 
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden.
@@ -92,7 +92,7 @@ will guide you through that.
   Wacom tablet and thus contained many live drawings to illustrate the
   concepts.  These, however, are lost to time.
 
-## Theses
+# Theses
 
 - *Comodules for Categories*
 
