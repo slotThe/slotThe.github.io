@@ -23,10 +23,14 @@
       
     </section>
     <section>
-      
-        
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<p></p>
 In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an <span class="small-caps">xm</span>onad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
@@ -134,6 +138,8 @@ want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions
 welcome!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -152,9 +158,13 @@ welcome!
       
     </section>
     <section>
-      
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<p></p>
 I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
 is a first attempt at integrating the new (as of Emacs 29)
 <code>package-vc.el</code> with the now built-in use-package. I’ve already talked
@@ -201,6 +211,8 @@ initial implementation from quelpa-use-package—and thus copyright
 assignment is a bit iffy—it will not be me. Still, implementing this
 from scratch does not sound so hard. If anyone feels inspired to do
 exactly this, I’d be delighted!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -219,10 +231,14 @@ exactly this, I’d be delighted!
       
     </section>
     <section>
-      
-        
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<p></p>
 The Emacs 29 release branch was just cut—and it’s chock full of new
 features! In this post, I want to talk about the new
 <code>package-vc-install</code> function, which allows one to install packages
@@ -325,6 +341,8 @@ can give them right now, even with the added convenience of
 <code>package-vc.el</code>. However, for me—and probably at least a few people out
 there—this is quite enough. After all, for anything more there’s always
 <a href="https://nixos.org/">nix</a> :)
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -343,9 +361,13 @@ there—this is quite enough. After all, for anything more there’s always
       
     </section>
     <section>
-      
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<p></p>
 Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
 <code>preview.el</code> library (whether it be in a .tex buffer, or—via
 <a href="https://github.com/karthink/org-auctex">org-auctex</a>—in Org) things get <em>really</em> messed up when one or more
@@ -436,6 +458,8 @@ As an aside, this is an excellent opportunity to see the ergonomic
 benefits of the <a href="https://github.com/magnars/dash.el">dash.el</a> library. Compare the readability of the
 “fixed” implementation using <code>-let</code> to the original one above. I
 certainly know which of the two I’d rather write!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -454,10 +478,14 @@ certainly know which of the two I’d rather write!
       
     </section>
     <section>
-      
-        
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<p></p>
 Emacs is the “extensible text editor”, and it wouldn’t be fun if one
 didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">README</a> for my Emacs configuration, I
@@ -831,6 +859,8 @@ The following would, for example, bind <code>mc/mark-next-like-this-word</code> 
 <p></p>
 This may be too implicit for many people, but for me it’s just right—and
 that’s sort of the point of all of this, right?
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -849,9 +879,13 @@ that’s sort of the point of all of this, right?
       
     </section>
     <section>
-      
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<p></p>
 As I’ve said before, basically my entire digital life happens in either
 <a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
@@ -952,6 +986,8 @@ If you’re anything like me, this will soon become an integral part of
 your workflow and you won’t want to live without it. If not, then
 perhaps you still don’t understand what all the fuss is about; in either
 case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</a>!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -970,10 +1006,14 @@ case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</
       
     </section>
     <section>
-      
-        
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<p></p>
 As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
 by default) can be used to replace occurences of one string with
 another. In comparison to other tools that are used for similar
@@ -1106,6 +1146,8 @@ packages at all, chances are that you have).
 <span class="w">   </span><span class="nv">delimited</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="nv">backward</span><span class="w"> </span><span class="nv">region-noncontiguous-p</span><span class="p">))</span>
 </pre></div>
 
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -1124,10 +1166,14 @@ packages at all, chances are that you have).
       
     </section>
     <section>
-      
-        
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<p></p>
 In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
 that this was perhaps something that could be of use to more people than
@@ -1421,6 +1467,8 @@ cool tools like magit.sh.<!--
 maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.</span></span>
  Go nuts!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>
@@ -1439,10 +1487,14 @@ maintain a slightly modified and POSIX shell compatible version
       
     </section>
     <section>
-      
-        
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<p></p>
 After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
@@ -1752,6 +1804,8 @@ convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my <span class="small-caps">xm</span>onad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
 <a href="https://github.com/slotthe/hmenu">hmenu</a>.
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 ]]></summary>

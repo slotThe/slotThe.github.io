@@ -36,6 +36,23 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#examples" id="toc-examples">Examples</a>
+<ul>
+<li><a href="#basic-topics" id="toc-basic-topics">Basic topics</a></li>
+<li><a href="#spawning-everything-in-the-topic-directory" id="toc-spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</a></li>
+<li><a href="#testing-this-website" id="toc-testing-this-website">Testing this website</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,10 +70,14 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
 <li><a href="#examples" id="toc-examples">Examples</a>
 <ul>
@@ -66,9 +87,9 @@
 </ul></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
 However, it seems relatively unknown among the general <span class="small-caps">xm</span>onad community.
 I fear this is due to the fact that the module is quite old and formerly
@@ -282,13 +303,18 @@ perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
 of ways to automate boring tasks just that tiny bit more—definitely a
 win in my book!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

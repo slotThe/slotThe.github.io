@@ -36,6 +36,18 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#preprints" id="toc-preprints">Preprints</a></li>
+<li><a href="#talks" id="toc-talks">Talks</a></li>
+<li><a href="#theses" id="toc-theses">Theses</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -45,7 +57,9 @@
             <h1>Research</h1>
           
 
-          
+          <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
   <div id="contents">
     <p class="mini-header">Contents</p>
     <ul>
@@ -61,7 +75,7 @@ study how algebraic objects lift into more categorical frameworks and
 how much of the theory people have developed still works in that
 context. When no one’s looking, I also like to study categories for
 their own sake.
-<h2 id="preprints">Preprints<a href="#preprints" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="preprints">Preprints<a href="#preprints" id="sec-link" class="floatright">¶</a></h1>
 <p></p>
 As a general note: one can download the source code for every paper on
 the arXiv! A simple click on “Other formats” on the relevant article
@@ -100,7 +114,7 @@ anti-Drinfeld double of a Hopf monad. As an application the
 connection with the pivotality of Drinfeld centres and their
 underlying categories is discussed.</li>
 </ul>
-<h2 id="talks">Talks<a href="#talks" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="talks">Talks<a href="#talks" id="sec-link" class="floatright">¶</a></h1>
 <ul>
 <li><p></p>
 
@@ -162,7 +176,7 @@ higher-dimensional graphical calculus, as first introduced by
 Wacom tablet and thus contained many live drawings to illustrate the
 concepts. These, however, are lost to time.</li>
 </ul>
-<h2 id="theses">Theses<a href="#theses" id="sec-link" class="floatright">¶</a></h2>
+<h1 id="theses">Theses<a href="#theses" id="sec-link" class="floatright">¶</a></h1>
 <ul>
 <li><p></p>
 
@@ -186,7 +200,10 @@ trying to generalize the number of 3-colourings of a knot.</li>
 
         </div>
         <div id="footer">
-          <a href="./atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="./atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

@@ -36,6 +36,30 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#high-level-structure" id="toc-high-level-structure">High Level Structure</a>
+<ul>
+<li><a href="#topics" id="toc-topics">Topics</a></li>
+<li><a href="#files" id="toc-files">Files</a></li>
+</ul></li>
+<li><a href="#note-taking" id="toc-note-taking">Note Taking</a>
+<ul>
+<li><a href="#handwritten-notes" id="toc-handwritten-notes">Handwritten Notes</a></li>
+<li><a href="#digital-notes" id="toc-digital-notes">Digital Notes</a></li>
+</ul></li>
+<li><a href="#staying-up-to-date" id="toc-staying-up-to-date">Staying Up To Date</a>
+<ul>
+<li><a href="#citations" id="toc-citations">Citations</a></li>
+</ul></li>
+<li><a href="#final-thoughts" id="toc-final-thoughts">Final Thoughts</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,10 +77,14 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#high-level-structure" id="toc-high-level-structure">High Level Structure</a>
 <ul>
 <li><a href="#topics" id="toc-topics">Topics</a></li>
@@ -73,9 +101,9 @@
 </ul></li>
 <li><a href="#final-thoughts" id="toc-final-thoughts">Final Thoughts</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
@@ -385,13 +413,18 @@ convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my <span class="small-caps">xm</span>onad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
 <a href="https://github.com/slotthe/hmenu">hmenu</a>.
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

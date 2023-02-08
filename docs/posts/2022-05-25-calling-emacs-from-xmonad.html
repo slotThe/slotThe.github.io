@@ -36,6 +36,23 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#main-use-cases" id="toc-main-use-cases">Main Use Cases</a>
+<ul>
+<li><a href="#scratchpads" id="toc-scratchpads">Scratchpads</a></li>
+<li><a href="#calling-emacs-in-scripts" id="toc-calling-emacs-in-scripts">Calling Emacs in Scripts</a></li>
+<li><a href="#other-programs" id="toc-other-programs">Other Programs</a></li>
+</ul></li>
+<li><a href="#implementation-considerations" id="toc-implementation-considerations">Implementation Considerations</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,10 +70,14 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#main-use-cases" id="toc-main-use-cases">Main Use Cases</a>
 <ul>
 <li><a href="#scratchpads" id="toc-scratchpads">Scratchpads</a></li>
@@ -66,9 +87,9 @@
 <li><a href="#implementation-considerations" id="toc-implementation-considerations">Implementation Considerations</a></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 In the post about my <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
 that this was perhaps something that could be of use to more people than
@@ -362,13 +383,18 @@ cool tools like magit.sh.<!--
 maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.</span></span>
  Go nuts!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

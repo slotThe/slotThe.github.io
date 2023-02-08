@@ -106,6 +106,28 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#enriched-category-theory" id="toc-enriched-category-theory">Enriched Category Theory</a>
+<ul>
+<li><a href="#functors-and-natural-transformations" id="toc-functors-and-natural-transformations">Functors and Natural Transformations</a></li>
+</ul></li>
+<li><a href="#copowers" id="toc-copowers">Copowers</a></li>
+<li><a href="#weighted-colimits" id="toc-weighted-colimits">Weighted Colimits</a>
+<ul>
+<li><a href="#definition" id="toc-definition">Definition</a></li>
+<li><a href="#enriched-weighted-colimits" id="toc-enriched-weighted-colimits">Enriched Weighted Colimits</a></li>
+<li><a href="#examples" id="toc-examples">Examples</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#resources" id="toc-resources">(Re)sources</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -123,10 +145,14 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#enriched-category-theory" id="toc-enriched-category-theory">Enriched Category Theory</a>
 <ul>
 <li><a href="#functors-and-natural-transformations" id="toc-functors-and-natural-transformations">Functors and Natural Transformations</a></li>
@@ -141,9 +167,9 @@
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 <li><a href="#resources" id="toc-resources">(Re)sources</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 If you’ve been doing category theory for any amount of time, you’ll
 probably have stumbled upon enriched category theory as a way of
 expressing categorical ideas internal to some context other than
@@ -3340,13 +3366,18 @@ Richard Garner: Bicategories; lecture series at <a href="https://conferences.lee
 Emily Riehl: “Weighted Limits and Colimits”; <a href="https://math.jhu.edu/~eriehl/weighted.pdf">lecture notes</a>.</li>
 </ul></li>
 </ul>
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

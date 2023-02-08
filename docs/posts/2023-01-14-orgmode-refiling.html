@@ -36,6 +36,21 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#motivation" id="toc-motivation">Motivation</a></li>
+<li><a href="#showcase" id="toc-showcase">Showcase</a>
+<ul>
+<li><a href="#some-gory-details" id="toc-some-gory-details">Some Gory Details</a></li>
+</ul></li>
+<li><a href="#closing-thoughts" id="toc-closing-thoughts">Closing Thoughts</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,10 +68,14 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#motivation" id="toc-motivation">Motivation</a></li>
 <li><a href="#showcase" id="toc-showcase">Showcase</a>
 <ul>
@@ -64,9 +83,9 @@
 </ul></li>
 <li><a href="#closing-thoughts" id="toc-closing-thoughts">Closing Thoughts</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 In a <a href="../posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an <span class="small-caps">xm</span>onad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
@@ -174,13 +193,18 @@ want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions
 welcome!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

@@ -36,6 +36,10 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+        
+        
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,9 +57,13 @@
       
     </section>
     <section>
-      
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<p></p>
 Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
 <code>preview.el</code> library (whether it be in a .tex buffer, or—via
 <a href="https://github.com/karthink/org-auctex">org-auctex</a>—in Org) things get <em>really</em> messed up when one or more
@@ -146,13 +154,18 @@ As an aside, this is an excellent opportunity to see the ergonomic
 benefits of the <a href="https://github.com/magnars/dash.el">dash.el</a> library. Compare the readability of the
 “fixed” implementation using <code>-let</code> to the original one above. I
 certainly know which of the two I’d rather write!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

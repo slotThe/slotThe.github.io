@@ -36,6 +36,18 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#the-story-so-far" id="toc-the-story-so-far">The story so far</a></li>
+<li><a href="#customising-package-vc-install" id="toc-customising-package-vc-install">Customising <code>package-vc-install</code></a></li>
+<li><a href="#thats-all-folks" id="toc-thats-all-folks">That’s all folks!</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,17 +65,21 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#the-story-so-far" id="toc-the-story-so-far">The story so far</a></li>
 <li><a href="#customising-package-vc-install" id="toc-customising-package-vc-install">Customising <code>package-vc-install</code></a></li>
 <li><a href="#thats-all-folks" id="toc-thats-all-folks">That’s all folks!</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 The Emacs 29 release branch was just cut—and it’s chock full of new
 features! In this post, I want to talk about the new
 <code>package-vc-install</code> function, which allows one to install packages
@@ -166,13 +182,18 @@ can give them right now, even with the added convenience of
 <code>package-vc.el</code>. However, for me—and probably at least a few people out
 there—this is quite enough. After all, for anything more there’s always
 <a href="https://nixos.org/">nix</a> :)
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

@@ -36,6 +36,29 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#contributor" id="toc-contributor">Contributor</a>
+<ul>
+<li><a href="#xmonad" id="toc-xmonad">XMonad</a></li>
+<li><a href="#kmonad" id="toc-kmonad">Kmonad</a></li>
+<li><a href="#xmobar" id="toc-xmobar">Xmobar</a></li>
+<li><a href="#void-linux" id="toc-void-linux">Void Linux</a></li>
+</ul></li>
+<li><a href="#author" id="toc-author">Author</a>
+<ul>
+<li><a href="#hmenu" id="toc-hmenu">hmenu</a></li>
+<li><a href="#vmensa" id="toc-vmensa">vmensa</a></li>
+<li><a href="#haskell-libraries" id="toc-haskell-libraries">Haskell Libraries</a></li>
+<li><a href="#emacs-modes" id="toc-emacs-modes">Emacs Modes</a></li>
+</ul></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -45,7 +68,9 @@
             <h1>FLOSS</h1>
           
 
-          
+          <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
   <div id="contents">
     <p class="mini-header">Contents</p>
     <ul>
@@ -71,8 +96,8 @@ Free software is quite dear to my heart and so I try to contribute as
 much as I can to all kinds of different projects. List below are either
 ones that I’ve stuck with for a while, or personal projects that are
 still actively maintained.
-<h2 id="contributor">Contributor<a href="#contributor" id="sec-link" class="floatright">¶</a></h2>
-<h3 id="xmonad"><span class="small-caps">xm</span>onad<a href="#xmonad" id="sec-link" class="floatright">¶</a></h3>
+<h1 id="contributor">Contributor<a href="#contributor" id="sec-link" class="floatright">¶</a></h1>
+<h2 id="xmonad"><span class="small-caps">xm</span>onad<a href="#xmonad" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 I’m a maintainer for <a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>, a minimal X11 window manager written in
 Haskell. In particular, this encompasses the <code>xmonad</code> repository, where
@@ -101,7 +126,7 @@ configuration can be found
 </div>
 </div>
 </p>
-<h3 id="kmonad">Kmonad<a href="#kmonad" id="sec-link" class="floatright">¶</a></h3>
+<h2 id="kmonad">Kmonad<a href="#kmonad" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 I’m a contributor to kmonad, a keyboard remapping daemon in the spirit
 of <a href="https://qmk.fm/"><span class="small-caps">qmk</span></a>. However, instead of being firmware for a specific keyboard,
@@ -114,7 +139,7 @@ laptop keyboard!
 My personal keyboard configuration—<a href="https://colemakmods.github.io/mod-dh/">colemak-dh</a>, with some extras to
 facilitate more convenient Haskell and LaTeX programming—can be found
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd">here</a>.
-<h3 id="xmobar">Xmobar<a href="#xmobar" id="sec-link" class="floatright">¶</a></h3>
+<h2 id="xmobar">Xmobar<a href="#xmobar" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 Since <span class="small-caps">xm</span>onad does not have a built-in status bar, one has to use a third
 party bar—<a href="https://codeberg.org/xmobar/xmobar">xmobar</a> is that bar! As these programs have to work together
@@ -123,7 +148,7 @@ uses it with <span class="small-caps">xm</span>onad.
 <p></p>
 The configuration I use is available
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs">here</a>.
-<h3 id="void-linux">Void Linux<a href="#void-linux" id="sec-link" class="floatright">¶</a></h3>
+<h2 id="void-linux">Void Linux<a href="#void-linux" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 I maintain a few packages for the <a href="https://voidlinux.org/">Void</a> <span class="small-caps">gnu</span>/Linux distribution:
 <div class="highlight"><pre><span></span><span class="gp">$ </span>xmypkgs
@@ -138,17 +163,17 @@ I maintain a few packages for the <a href="https://voidlinux.org/">Void</a> <spa
 The fact that this includes <span class="small-caps">ghc</span> also means bumping/updating <em>every</em>
 Haskell package in case of an update—lots of fun!
 <h1 id="author">Author<a href="#author" id="sec-link" class="floatright">¶</a></h1>
-<h3 id="hmenu"><a href="https://gitlab.com/slotThe/hmenu">hmenu</a><a href="#hmenu" id="sec-link" class="floatright">¶</a></h3>
+<h2 id="hmenu"><a href="https://gitlab.com/slotThe/hmenu">hmenu</a><a href="#hmenu" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 I’m the author of hmenu, a wrapper for <a href="https://tools.suckless.org/dmenu/">dmenu</a> in the spirit of
 <a href="https://hackage.haskell.org/package/yeganesh">yeganesh</a>. More concretely, it displays commands in order of usage
 (with an optional decay for frequency sorting) and can open programs or
 (given) files inside of your terminal or any chosen program.
-<h3 id="vmensa"><a href="https://gitlab.com/slotThe/vmensa">vmensa</a><a href="#vmensa" id="sec-link" class="floatright">¶</a></h3>
+<h2 id="vmensa"><a href="https://gitlab.com/slotThe/vmensa">vmensa</a><a href="#vmensa" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 <span class="small-caps">cli</span> application to query and filter the menus of the different canteens
 at TU Dresden.
-<h3 id="haskell-libraries">Haskell Libraries<a href="#haskell-libraries" id="sec-link" class="floatright">¶</a></h3>
+<h2 id="haskell-libraries">Haskell Libraries<a href="#haskell-libraries" id="sec-link" class="floatright">¶</a></h2>
 <h4 id="optparse-applicative-cmdline-util-hackage"><a href="https://github.com/slotThe/optparse-applicative-cmdline-util">optparse-applicative-cmdline-util</a> (<a href="https://hackage.haskell.org/package/optparse-applicative-cmdline-util">Hackage</a>)<a href="#optparse-applicative-cmdline-util-hackage" id="sec-link" class="floatright">¶</a></h4>
 <p></p>
 Utility functions for writing command line interfaces with
@@ -158,7 +183,7 @@ Utility functions for writing command line interfaces with
 A reimplementation of utility functions from Neil Mitchell’s <a href="https://hackage.haskell.org/package/tagsoup">TagSoup</a>,
 as well as some extra functionality, for Ben Gamari’s <a href="https://hackage.haskell.org/package/html-parse">html-parse</a>, as
 this nicely supports <code>Text</code> and <code>Attoparsec</code>.
-<h3 id="emacs-modes">Emacs Modes<a href="#emacs-modes" id="sec-link" class="floatright">¶</a></h3>
+<h2 id="emacs-modes">Emacs Modes<a href="#emacs-modes" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 I’ve written too many Emacs packages—and none of them popular, at that!
 <h4 id="kbd-mode"><a href="https://github.com/kmonad/kbd-mode">kbd-mode</a><a href="#kbd-mode" id="sec-link" class="floatright">¶</a></h4>
@@ -188,7 +213,10 @@ I’ve written about this package <a href="https://tony-zorman.com/posts/2022-12
 
         </div>
         <div id="footer">
-          <a href="./atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="./atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

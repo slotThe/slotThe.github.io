@@ -106,6 +106,18 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#rewriting-pandoc-sidenote" id="toc-rewriting-pandoc-sidenote">Rewriting <code>pandoc-sidenote</code></a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -123,17 +135,21 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
 <li><a href="#rewriting-pandoc-sidenote" id="toc-rewriting-pandoc-sidenote">Rewriting <code>pandoc-sidenote</code></a></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 I’ve become quite enamoured with sidenotes recently, and so of course
 this website now has them as well! Thankfully, the integration with
 pandoc and Hakyll is quite straightforward, because other people have
@@ -526,13 +542,18 @@ Really, I would be delighted if someone told me that I just used
 <code>pandoc-sidenote</code> (or another program involved) wrongly, and this is
 actually very easy to achieve using <code>${METHOD}</code>. Until then, I’ll
 continue to be blissfully unaware of <span class="small-caps">html</span> standards :)
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

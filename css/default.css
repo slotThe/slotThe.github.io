@@ -294,6 +294,23 @@ a:visited {
     font-size: 15px;
 }
 
+/* A little "TOP" indicator at the bottom of the page, but only if the
+   page is not wide enough to support a TOC in the left margin (which
+   includes such a thing). */
+a#to-top {
+    font-variant: small-caps;
+    float: left;
+    position: static;
+    font-size: 16px;
+    margin-top: -2px;
+}
+@media (min-width: 769px) {
+    a#to-top {
+        position: fixed;
+        visibility: hidden;
+    }
+}
+
 /**********************************************************************
   SECTION LINKS
 */

@@ -36,6 +36,23 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#the-problem" id="toc-the-problem">The Problem</a></li>
+<li><a href="#playing-with-pygmentize" id="toc-playing-with-pygmentize">Playing with <code>pygmentize</code></a></li>
+<li><a href="#integration" id="toc-integration">Integration</a>
+<ul>
+<li><a href="#pandoc" id="toc-pandoc">Pandoc</a></li>
+<li><a href="#hakyll" id="toc-hakyll">Hakyll</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,10 +70,14 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#the-problem" id="toc-the-problem">The Problem</a></li>
 <li><a href="#playing-with-pygmentize" id="toc-playing-with-pygmentize">Playing with <code>pygmentize</code></a></li>
 <li><a href="#integration" id="toc-integration">Integration</a>
@@ -66,9 +87,9 @@
 </ul></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
 examples the <span class="small-caps">html</span> this produces is unsatisfactory. Thankfully, the two
@@ -358,13 +379,18 @@ other syntax highlighter that can produce <span class="small-caps">html</span>. 
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don’t agree with—at least for now.
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

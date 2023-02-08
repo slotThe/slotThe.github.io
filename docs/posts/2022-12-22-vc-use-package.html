@@ -36,6 +36,10 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+        
+        
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,9 +57,13 @@
       
     </section>
     <section>
-      
-      
-        <p></p>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<p></p>
 I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
 is a first attempt at integrating the new (as of Emacs 29)
 <code>package-vc.el</code> with the now built-in use-package. I’ve already talked
@@ -102,13 +110,18 @@ initial implementation from quelpa-use-package—and thus copyright
 assignment is a bit iffy—it will not be me. Still, implementing this
 from scratch does not sound so hard. If anyone feels inspired to do
 exactly this, I’d be delighted!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

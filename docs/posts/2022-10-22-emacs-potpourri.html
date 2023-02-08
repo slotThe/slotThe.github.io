@@ -36,6 +36,26 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#frame-inhibit-implied-resize" id="toc-frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
+<li><a href="#pixel-scroll-precision-mode" id="toc-pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
+<li><a href="#quickly-insert-images-in-org-roam" id="toc-quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code></a></li>
+<li><a href="#latex-for-the-lazy-mathematician" id="toc-latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician</a></li>
+<li><a href="#erc" id="toc-erc">ERC</a>
+<ul>
+<li><a href="#mark-the-current-frame-as-urgent" id="toc-mark-the-current-frame-as-urgent">Mark the current frame as urgent</a></li>
+<li><a href="#dont-highlight-quite-so-much" id="toc-dont-highlight-quite-so-much">Don’t highlight quite so much</a></li>
+</ul></li>
+<li><a href="#inserting-links" id="toc-inserting-links">Inserting links</a></li>
+<li><a href="#a-macro-for-repeat-mode" id="toc-a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -53,10 +73,14 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#frame-inhibit-implied-resize" id="toc-frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
 <li><a href="#pixel-scroll-precision-mode" id="toc-pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
 <li><a href="#quickly-insert-images-in-org-roam" id="toc-quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code></a></li>
@@ -69,9 +93,9 @@
 <li><a href="#inserting-links" id="toc-inserting-links">Inserting links</a></li>
 <li><a href="#a-macro-for-repeat-mode" id="toc-a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 Emacs is the “extensible text editor”, and it wouldn’t be fun if one
 didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">README</a> for my Emacs configuration, I
@@ -445,13 +469,18 @@ The following would, for example, bind <code>mc/mark-next-like-this-word</code> 
 <p></p>
 This may be too implicit for many people, but for me it’s just right—and
 that’s sort of the point of all of this, right?
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;

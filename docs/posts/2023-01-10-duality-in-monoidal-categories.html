@@ -106,6 +106,18 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            <ul>
+<li><a href="#setting-the-scene" id="toc-setting-the-scene">Setting the Scene</a></li>
+<li><a href="#autonomy" id="toc-autonomy">*-Autonomy</a></li>
+<li><a href="#rigidity" id="toc-rigidity">Rigidity</a></li>
+</ul>
+          </div>
+         
       </div>
       <div class="pure-u-3-4">
         <div id="content">
@@ -123,17 +135,21 @@
       
     </section>
     <section>
-      
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          <ul>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
 <li><a href="#setting-the-scene" id="toc-setting-the-scene">Setting the Scene</a></li>
 <li><a href="#autonomy" id="toc-autonomy">*-Autonomy</a></li>
 <li><a href="#rigidity" id="toc-rigidity">Rigidity</a></li>
 </ul>
-        </div>
-      
-        <p></p>
+  </div>
+
+<p></p>
 I have a new preprint <a href="https://arxiv.org/abs/2301.03545">on the arXiv</a>! It is joint work with
 Sebastian Halbig, and concerns itself with the interplay of different
 structures on monoidal categories that give rise to a notion of
@@ -770,13 +786,18 @@ we project any morphism down to <span class="math inline"><span class="mjpage"><
 </svg></span></span>, it can’t possibly be the
 identity, and thus the snake identities for duals do not hold. If you
 want more details, check <a href="https://arxiv.org/abs/2301.03545">the paper</a>!
+
+      <!-- Body is included in the above file -->
     </section>
 </article>
 
 
         </div>
         <div id="footer">
-          <a href="../atom.xml">RSS</a>
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
           &nbsp;|&nbsp;
           <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
           &nbsp;|&nbsp;
