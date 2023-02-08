@@ -72,7 +72,7 @@ main = hakyllWith config do
       tocCtx <- getTocCtx defaultContext
       myPandocCompiler
         >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
-        >>= loadAndApplyTemplate "templates/default.html" defaultContext
+        >>= loadAndApplyTemplate "templates/default.html" tocCtx
         >>= relativizeUrls
 
   match (fromList ["about.md", "impressum.md"]) do
@@ -93,7 +93,7 @@ main = hakyllWith config do
         >>= mkCleanSnapshot "post-teaser"   -- For the previews on the main page.
         >>= loadAndApplyTemplate "templates/post.html"     tocCtx
         >>= mkCleanSnapshot "post-content"  -- For atom feed.
-        >>= loadAndApplyTemplate "templates/default.html"  defaultContext
+        >>= loadAndApplyTemplate "templates/default.html"  tocCtx
         >>= relativizeUrls
 
   --- Lists of posts

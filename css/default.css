@@ -173,17 +173,29 @@ div#navigation span.menu-subtitle {
 
 /**********************************************************************
   TABLE OF CONTENTS
+
+There are two table of contents:
+
+  + For bigger screens, it contained in the left margin and `sticky';
+    i.e., moves along with the user as they scroll.
+
+  + For smaller screens, it is embedded within the text, at the very top
+    of the page.
+
+Because I don't know how else to do this without JS, there are simply
+two div classes: `contents' and `contents-big'.  The former is defined
+in the `default.html' template, while the latter is in `post.html' and
+`toc.html`.  *Both are always embedded in the page*, we just use some
+media queries to hide what we don't want to see.
 */
 
-div#contents {
-    background-color: #fbf9fb;
-    margin-left: 0.75em;
-    margin-bottom: 0.75em;
+/* Settings that are the same regardless of size */
+div#contents,
+div#contents-big {
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    float: right;
     max-width: 240px;
     max-width: 15rem;
     max-width: 30%;
@@ -191,20 +203,71 @@ div#contents {
     min-width: 180px;
     text-align: left;
 }
-
-div#contents ul {
+div#contents ul,
+div#contents-big ul {
     font-size: 85%;
     margin-top: 0.5em;
     padding-left: 1em;
     line-height: 1.2;
 }
-
-div#contents li + li {
+div#contents li + li,
+div#contents-big li + li {
     margin-top: 0.5em;
 }
-
 .mini-header {
     font-weight: bold;
+}
+
+/* Change the appearance of links in the TOC, so as to lower its
+   intrusivity, since it is now visible most of the time. */
+div#contents-big a:link,
+div#contents a:link {
+    color: black;
+    font-variant: small-caps;
+    text-decoration: none;
+}
+div#contents-big a:visited,
+div#contents a:link {
+    color: black;
+    font-variant: small-caps;
+    text-decoration: none;
+}
+a:link > code,     /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
+a:visited > code {
+    font-variant: normal;
+}
+
+/* Bigger screens */
+div#contents-big {
+    clear: both;        /* Don't collide with the sidebar. */
+    margin-right: 2.9em;
+    margin-left: 0.7em;
+    position: sticky;
+    top: 0;
+    left: 100%;
+}
+
+/* Smaller screens */
+div#contents {
+    background-color: #fbf9fb;
+    margin-left: 0.75em;
+    margin-bottom: 0.75em;
+    float: right;
+    position: static;
+}
+
+/* Toggling between the two TOCs */
+@media (min-width: 769px) {
+    div#contents {
+        position: fixed;         /* Don't collide with anything */
+        visibility: hidden;
+    }
+}
+@media (max-width: 768px) {
+    div#contents-big {
+        position: fixed;         /* Don't collide with anything */
+        visibility: hidden;
+    }
 }
 
 /**********************************************************************

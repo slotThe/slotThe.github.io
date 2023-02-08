@@ -38,6 +38,15 @@
             </ul>
           </div>
         </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+        $if(no-toc)$
+        $else$ $if(toc)$
+          <div id="contents-big">
+            <p class="mini-header">Contents <a class="floatright" href="#">↑</a></p>
+            $toc$
+          </div>
+        $endif$ $endif$
       </div>
       <div class="pure-u-3-4">
         <div id="content">

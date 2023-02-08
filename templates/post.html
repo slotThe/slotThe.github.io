@@ -6,13 +6,9 @@
       $endif$
     </section>
     <section>
-      $if(no-toc)$
-      $else$
-        <div id="contents">
-          <p class="mini-header">Contents</p>
-          $toc$
-        </div>
-      $endif$
-        $body$
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      $partial("templates/toc.html")$
+      <!-- Body is included in the above file -->
     </section>
 </article>
