@@ -13,8 +13,8 @@ body {
 .marginnote {
     float: right;
     clear: right;
-    margin-right: -57%;
-    width: 50%;
+    margin-right: -56%;
+    width: 49%;
     margin-top: 0.3rem;
     margin-bottom: 0;
     font-size: 0.93rem;
@@ -93,7 +93,10 @@ label.margin-toggle:not(.sidenote-number) {
     height: 100%;
 }
 
-@media (max-width: 1300px) {
+/* The first condition is for the case of a left-aligned layout (on a
+   smaller screen), and the second condition for a more centered layout
+   on a larger screen.  It's a bit awkward, sadly :/ */
+@media (max-width: 1365px) or ((min-width: 1367px) and (max-width: 1592px)) {
     label.margin-toggle:not(.sidenote-number) {
         display: inline;
     }
