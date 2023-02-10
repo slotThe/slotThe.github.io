@@ -219,12 +219,13 @@ div#contents ul,
 div#contents-big ul {
     font-size: 85%;
     margin-top: 0.5em;
+    margin-bottom: 0.5em;
     padding-left: 1em;
     line-height: 1.2;
 }
 div#contents li + li,
 div#contents-big li + li {
-    margin-top: 0.5em;
+    margin-top: 0.25em;
 }
 .mini-header {
     font-weight: bold;
