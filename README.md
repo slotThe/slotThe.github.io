@@ -2,10 +2,13 @@
 
 Odds and ends—hopefully at least some interesting blog posts!
 
-The setup here is _heavily_ inspired by [duplone.github.io], see
-[BSD-3](/BSD-3.txt).
+The base setup is based on [duplone.github.io], see [BSD-3](/BSD-3.txt).
+Further—less direct—inspirations include [gwern.net][gwern.net] and
+[Practical Typography][practical-typography].
 
 [duplone.github.io]: https://github.com/duplode/duplode.github.io/
+[gwern.net]: https://gwern.net/
+[practical-typography]: https://practicaltypography.com/
 
 ## Notable Features
 
