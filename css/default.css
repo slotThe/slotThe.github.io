@@ -63,11 +63,13 @@ pre {                   /* Block code */
     text-align: left;
     font-size: 0.92em;
     font-family: var(--monospace-fonts);
+    font-variant-numeric: normal;  /* No oldstyle figures in code */
 }
 
 code {                  /* Inline code */
     font-size: 0.95em;
     font-family: var(--monospace-fonts);
+    font-variant-numeric: normal;  /* No oldstyle figures in code */
 }
 
 blockquote {            /* Block quotes */
