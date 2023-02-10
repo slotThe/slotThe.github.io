@@ -103,6 +103,9 @@ hr {                    /* That line before the footnotes */
 
 h1 {                    /* Reserved for title */
     font-size: 1.5em;
+    font-variant: small-caps;
+    font-variant-numeric: normal;  /* No oldstyle figures for all-caps titles */
+    text-align: center;
 }
 
 h2 {                    /* First "real" header */
@@ -309,6 +312,7 @@ a:visited {
 
 .floatright {           /* Feed links float to the right. */
     float: right;
+    font-variant: normal;
     font-size: 15px;
 }
 
