@@ -18,7 +18,7 @@ body {
     line-height: 1.4;
     text-align: justify;
     text-justify: inter-word;
-    hyphens: auto;            /* Justification -> hyphenation */
+    hyphens: auto;            /* justification ⇒ hyphenation */
 }
 
 span.small-caps {
@@ -100,19 +100,23 @@ hr {                    /* That line before the footnotes */
   HEADINGS
 */
 
-h1 {
+h1 {                    /* Reserved for title */
+    font-size: 1.5em;
+}
+
+h2 {                    /* First "real" header */
     font-size: 1.25em;
 }
 
-h2 {
+h3 {
     font-size: 1.15em;
 }
 
-h3 {
+h4 {
     font-size: 1.1em;
 }
 
-:is(h1, h2, h3, h4) {
+h2, h3, h4 {
     line-height: 1.2;
 }
 

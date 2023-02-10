@@ -101,7 +101,7 @@ functionality: the ability to create multiple <code>from → to</code> pairs. Bu
 this is Emacs, after all, which means that I can just write that
 <code>query-replace-many</code> function I’ve always wanted!
 <!--more-->
-<h1 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h1>
+<h2 id="motivation">Motivation<a href="#motivation" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 Originally, my motivation came through <a href="../../research.html">work</a>, where I <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">write a lot of
 LaTeX</a>. When polishing papers, it sometimes happens that I would like
@@ -122,7 +122,7 @@ alternative <code>query-replace-regexp</code> function and capture groups, but I
 unsure how many people know their elisp regular expressions well enough
 for that to be time efficient. I don’t, and almost certainly never
 will, so it seemed much easier to automate this instead!
-<h1 id="the-solution">The Solution<a href="#the-solution" id="sec-link" class="floatright">¶</a></h1>
+<h2 id="the-solution">The Solution<a href="#the-solution" id="sec-link" class="floatright">¶</a></h2>
 <p></p>
 Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
@@ -162,7 +162,7 @@ that’s actually matching currently. However, since this would seem to
 require some work and one of course sees what’s to be replaced by
 looking at the thing at point, I can very much live with this for the
 moment.
-<h2 id="the-code">The Code<a href="#the-code" id="sec-link" class="floatright">¶</a></h2>
+<h3 id="the-code">The Code<a href="#the-code" id="sec-link" class="floatright">¶</a></h3>
 <p></p>
 Below is the full source code, in all of its hacky glory. Note that you
 will need to <code>require</code> the <code>s.el</code> and <code>dash.el</code> libraries for this to

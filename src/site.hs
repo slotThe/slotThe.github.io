@@ -17,6 +17,7 @@ import Sidenote (usingSidenotes)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc)
 import Text.Pandoc.Options
+import Text.Pandoc.Shared (headerShift)
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Walk (walk, walkM)
 
@@ -180,6 +181,8 @@ getTocCtx ctx = do
   mkTocWriter :: WriterOptions -> Compiler WriterOptions
   mkTocWriter writerOpts = do
     tmpl <- either (const Nothing) Just <$> unsafeCompiler (compileTemplate "" "$toc$")
+    -- Headings will NOT be shifted down by this point because this
+    -- happens before `myPandocCompiler'.
     pure $ writerOpts
       { writerTableOfContents = True
       , writerTOCDepth        = 3
@@ -267,7 +270,12 @@ myPandocCompiler =
   pandocCompilerWithTransformM
     defaultHakyllReaderOptions
     myWriter
-    (pure . usingSidenotes myWriter <=< pygmentsHighlight  . addSectionLinks . smallCaps)
+    (   pure . usingSidenotes myWriter  -- needs to be last because it renders html
+    <=< pygmentsHighlight
+    .   addSectionLinks
+    .   smallCaps
+    .   headerShift 1                   -- only the `title' should be <h1>
+    )
  where
   myWriter :: WriterOptions
   myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
