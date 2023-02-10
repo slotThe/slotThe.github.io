@@ -2,17 +2,36 @@
 title: Research
 ---
 
-Most of my work is in "applied" category theory.  For example, I like to
-study how algebraic objects lift into more categorical frameworks and
-how much of the theory people have developed still works in that
-context.  When no one's looking, I also like to study categories for
-their own sake.
+<label for="mn-1" class="margin-toggle">&#8853;</label>
+<input type="checkbox" id="mn-1" class="margin-toggle"/>
+<span class="marginnote">
+  I may be found on the [arXiv] and [zbmath].
+</span>
+My research interests can broadly be characterised under the term
+"category theory and its applications".  For example, I like to study
+how algebraic objects lift into more categorical frameworks and how much
+of the theory people have developed still works in that context.  When
+no one's looking, I also like to study categories for their own sake.
+Objects and concepts I like to think about include [Hopf monads],
+[graphical calculi], [duoidal] and [linearly distributive] categories,
+as well as [operads].
 
-# Preprints
+[Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
+[arXiv]: https://arxiv.org/search/math?searchtype=author&query=Zorman%2C+Tony
+[duoidal]: https://ncatlab.org/nlab/show/duoidal+category
+[graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
+[linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
+[operads]: https://ncatlab.org/nlab/show/string+diagram
+[zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
 
-As a general note: one can download the source code for every paper on
-the arXiv!  A simple click on "Other formats" on the relevant article
-will guide you through that.
+# Preprints <!--
+--><label for="mn-2" class="margin-toggle">&#8853;</label>
+<input type="checkbox" id="mn-2" class="margin-toggle"/>
+<span class="marginnote">
+  A general note: one can download the source code for every paper on the
+  arXiv.  Clicking on "Other formats" on the relevant article will guide
+  one through that.
+</span>
 
 - *[Duality in Monoidal Categories]* \
    Joint work with Sebastian Halbig.
