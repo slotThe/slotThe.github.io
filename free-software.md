@@ -99,47 +99,47 @@ at TU Dresden.
 
 ## Haskell Libraries
 
-#### [optparse-applicative-cmdline-util] ([Hackage](https://hackage.haskell.org/package/optparse-applicative-cmdline-util))
++ [optparse-applicative-cmdline-util] ([Hackage](https://hackage.haskell.org/package/optparse-applicative-cmdline-util))
 
-Utility functions for writing command line interfaces with
-[optparse-applicative].  This is used, for example, in [vmensa].
+  Utility functions for writing command line interfaces with
+  [optparse-applicative].  This is used, for example, in [vmensa].
 
-#### [html-parse-util] ([Hackage](https://hackage.haskell.org/package/html-parse-util))
++ [html-parse-util] ([Hackage](https://hackage.haskell.org/package/html-parse-util))
 
-A reimplementation of utility functions from Neil Mitchell's [TagSoup],
-as well as some extra functionality, for Ben Gamari's [html-parse], as
-this nicely supports `Text` and `Attoparsec`.
+  A reimplementation of utility functions from Neil Mitchell's
+  [TagSoup], as well as some extra functionality, for Ben Gamari's
+  [html-parse], as this nicely supports `Text` and `Attoparsec`.
 
-## Emacs Modes
+## Emacs modes
 
 I've written too many Emacs packages—and none of them popular, at that!
 
-#### [kbd-mode]
++ [kbd-mode]
 
-I wrote the Emacs integration for kmonad's configuration files—that is,
-kbd-mode is a major more for `.kbd` files.
+  I wrote the Emacs integration for kmonad's configuration files—that
+  is, kbd-mode is a major more for `.kbd` files.
 
-#### [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
++ [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
 
-Generate citation data for PDF files from the arXiv.  Additionally,
-download preprints to a specified directory and open them.  Includes
-[elfeed] support.
+  Generate citation data for PDF files from the arXiv.  Additionally,
+  download preprints to a specified directory and open them.  Includes
+  [elfeed] support.
 
-#### [latex-change-env] ([MELPA](https://melpa.org/#/latex-change-env))
++ [latex-change-env] ([MELPA](https://melpa.org/#/latex-change-env))
 
-Provides a way to modify LaTeX environments, as well as the display math
-mode (seeing it as an environment of sorts).  This includes primitive
-label handling: we remember the name of labels and can rename or
-remember them for later.  This means that we can restore old labels
-after deleting them—very convenient!
+  Provides a way to modify LaTeX environments, as well as the display
+  math mode (seeing it as an environment of sorts).  This includes
+  primitive label handling: we remember the name of labels and can
+  rename or remember them for later.  This means that we can restore old
+  labels after deleting them—very convenient!
 
-#### [vc-use-package]
++ [vc-use-package]
 
-Creates a new `:vc` keyword for use-package.  Leveraging
-`package-vc.el`, installing packages from their direct upstream
-repositories (as opposed to, say, GNU ELPA) becomes very convenient.
-I've written about this package [here][post:vc-use-package] and about
-`package-vc.el` [here][post:package-vc-install].
+  Creates a new `:vc` keyword for use-package.  Leveraging
+  `package-vc.el`, installing packages from their direct upstream
+  repositories (as opposed to, say, GNU ELPA) becomes very convenient.
+  I've written about this package [here][post:vc-use-package] and about
+  `package-vc.el` [here][post:package-vc-install].
 
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
