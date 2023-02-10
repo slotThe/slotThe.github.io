@@ -60,10 +60,11 @@ main = hakyllWith config do
     compile do
       posts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
       let teaserCtx = teaserField "teaser" "post-teaser" <> tagCtx
-          indexCtx  = listField "posts" teaserCtx (pure posts) <> defaultContext
+          indexCtx :: Context String
+                    = listField "posts" teaserCtx (pure posts) <> bodyField "body"
       getResourceBody
-        >>= applyAsTemplate indexCtx
-        >>= loadAndApplyTemplate "templates/default.html" defaultContext
+        >>= applyAsTemplate                               indexCtx
+        >>= loadAndApplyTemplate "templates/default.html" indexCtx
         >>= relativizeUrls
 
   --- Sidebar "about"ish sites.

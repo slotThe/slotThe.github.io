@@ -5,10 +5,15 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     $if(noindex)$
-    <meta name="robots" content="noindex">
+      <meta name="robots" content="noindex">
     $endif$
 
-    <title>$title$ – Tony Zorman</title>
+    $if(title)$
+      <title>$title$ – Tony Zorman</title>
+    $else$
+      <title>Tony Zorman</title>
+    $endif$
+
     <!-- https://purecss.io/ -->
     <link rel="stylesheet" href="/css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="/css/skin.css" />
@@ -54,9 +59,9 @@
                but this shouldn't mangle the above header title. -->
           $if(titleWithFeed)$
             <h1>$titleWithFeed$</h1>
-          $else$
+          $else$ $if(title)$
             <h1>$title$</h1>
-          $endif$
+          $endif$ $endif$
 
           $body$
 
