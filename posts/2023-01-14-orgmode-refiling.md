@@ -58,7 +58,7 @@ heading.
 Note: Refiling is (near) instant; the delay you are seeing above is due
 to `auto-revert-mode`.
 
-## Some Gory Details
+## Some gory details
 
 All of the refiling is actually directly done by Emacs itself!  More
 precisely, the EDSL that [XMonad.Util.Run] defines—which I've also
@@ -103,7 +103,7 @@ know best what refiling *means*, and thus also what it entails—if all of
 this logic is already written, why not take advantage of it?  Plus, I
 now don't have to keep track of subtle changes in newer versions of Org.
 
-# Closing Thoughts
+# Closing thoughts
 
 Writing this was actually a lot of fun, and a great opportunity to play
 with the EDSL that X.U.Run exposes.  I reckon there are a few places in

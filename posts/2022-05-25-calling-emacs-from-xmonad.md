@@ -19,7 +19,7 @@ implementation detail.
 
 <!--more-->
 
-# Main Use Cases
+# Main use cases
 
 Wouldn't it be neat to have some kind of [EDSL] for spawning external
 processes?  Something where one can just compose Haskell functions
@@ -113,7 +113,7 @@ This works all the same with the above definition of `myScratchpads`.
 A full example of how a scratchpad setup would look using this machinery
 can be found in [my config](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L414).
 
-## Calling Emacs in Scripts
+## Calling Emacs in scripts
 
 Spawning frames is nice and all, but how about something more
 complicated, like Emacs's batch mode so that we can use it properly in
@@ -152,7 +152,7 @@ I certainly know which one I'd rather type—especially with ELPA
 directory names changing quite frequently!  On that note,
 [arxiv-citation] is on MELPA now; yay!
 
-## Other Programs
+## Other programs
 
 As this is my main use case for it, the new features of
 `XMonad.Util.Run` are quite specialised for Emacs.  However, even for
@@ -189,7 +189,7 @@ If you have or know of a use case you would like to support but which is
 awkward with the current set of functions and combinators do not
 hesitate to open a pull request or an issue!
 
-# Implementation Considerations
+# Implementation considerations
 
 The implementation is actually very straightforward—no really, check out
 the

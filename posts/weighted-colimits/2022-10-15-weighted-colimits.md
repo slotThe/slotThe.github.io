@@ -46,7 +46,7 @@ mentioned blog posts by [Todd Trimble][trimble:blog] and [John
 Baez][baez:blog], as well as the accompanying (resulting) [nLab
 article][nlab:weighted-colimit].
 
-# Enriched Category Theory
+# Enriched category theory
 
 As I said, we first turn our attention to *enriched* category theory.
 Before diving into the gory details, I will first discuss things a bit
@@ -116,7 +116,7 @@ you can think of ordinary categories as multi-object monoids, a decent
 mental model for $\mathcal{V}$-categories is to think of them as
 multi-object monoidal categories.
 
-## Functors and Natural Transformations
+## Functors and natural transformations
 
 We furthermore need analogues for functors and natural
 transformations—they now also come with a $\mathcal{V}$- prefix.  The
@@ -211,7 +211,7 @@ for all $b \in \mathcal{A}$.  Because of the closeness to the tensor
 product, people sometimes call copowers "tensors" and write them with
 the same symbol as they write the tensor product.
 
-# Weighted Colimits
+# Weighted colimits
 
 Onto the main dish.  The key idea is to reframe an ordinary colimit in
 terms of "looking like a monoidal product".  The weighted colimit then
@@ -388,7 +388,7 @@ A pair of an object $c \in \mathcal{A}$ and a natural transformation $W
 \implies \mathcal{A}(F, c)$ on their own; i.e., without the universal
 property, is what one would normally call a *$W$-weighted cocone*.
 
-## Enriched Weighted Colimits
+## Enriched weighted colimits
 
 The enriched definition is now exactly the same!  If $\mathcal{J}$ is a
 small $\mathcal{V}$-category and we have $\mathcal{V}$-functors $F

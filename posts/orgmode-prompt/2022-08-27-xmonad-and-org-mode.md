@@ -70,7 +70,7 @@ Of course, you can use all of this together as well—directly link to
 that one paper or blog post you wanted to read, or that one YouTube
 video you want to watch on the weekend!
 
-## Sample Configuration
+## Sample configuration
 
 To round things off—and quickly showcase another cool (and new!)
 module, [XMonad.Actions.Prefix]—here is a sample keybinding that takes

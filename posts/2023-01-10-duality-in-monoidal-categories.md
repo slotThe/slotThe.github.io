@@ -13,7 +13,7 @@ to give a little teaser as to what kind of question we sought to answer.
 
 <!--more-->
 
-# Setting the Scene
+# Setting the scene
 
 We mainly concerned ourselves with three notions of *duality* for
 (non-symmetric!)  [monoidal] categories: [closed monoidal] categories,
@@ -35,7 +35,7 @@ characterise rigid and \*-autonomous categories?  More explicitly, are
 there any conditions one could impose on the internal-hom, such that
 closedness already implies rigidity?  What about \*-autonomy?
 
-# \*-Autonomy
+# \*-autonomy
 
 We'll start with a positive result for \*-autonomy.  So the question is
 this: given a closed monoidal category $\mathcal{C}$ in which the

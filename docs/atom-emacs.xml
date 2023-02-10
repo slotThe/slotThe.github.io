@@ -80,7 +80,7 @@ heading.
 <p></p>
 Note: Refiling is (near) instant; the delay you are seeing above is due
 to <code>auto-revert-mode</code>.
-<h3 id="some-gory-details">Some Gory Details</h3>
+<h3 id="some-gory-details">Some gory details</h3>
 <p></p>
 All of the refiling is actually directly done by Emacs itself! More
 precisely, the <span class="small-caps">edsl</span> that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
@@ -122,7 +122,7 @@ much less brittle than the alternative. The Org maintainers certainly
 know best what refiling <em>means</em>, and thus also what it entails—if all of
 this logic is already written, why not take advantage of it? Plus, I
 now don’t have to keep track of subtle changes in newer versions of Org.
-<h2 id="closing-thoughts">Closing Thoughts</h2>
+<h2 id="closing-thoughts">Closing thoughts</h2>
 <p></p>
 Writing this was actually a lot of fun, and a great opportunity to play
 with the <span class="small-caps">edsl</span> that X.U.Run exposes. I reckon there are a few places in
@@ -548,7 +548,7 @@ difference for yourself:
 <video width="100%" controls>
 <source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
 </video>
-<h2 id="quickly-insert-images-in-org-roam">Quickly Insert images in <code>org-roam</code></h2>
+<h2 id="quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code></h2>
 <p></p>
 Speaking of inserting images into Org; how does one do that, exactly?
 Doing everything by hand seems like a slog: select an arbitrary
@@ -951,7 +951,7 @@ selection to the body of the note.
 Of course, you can use all of this together as well—directly link to
 that one paper or blog post you wanted to read, or that one YouTube
 video you want to watch on the weekend!
-<h3 id="sample-configuration">Sample Configuration</h3>
+<h3 id="sample-configuration">Sample configuration</h3>
 <p></p>
 To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
@@ -1052,7 +1052,7 @@ alternative <code>query-replace-regexp</code> function and capture groups, but I
 unsure how many people know their elisp regular expressions well enough
 for that to be time efficient. I don’t, and almost certainly never
 will, so it seemed much easier to automate this instead!
-<h2 id="the-solution">The Solution</h2>
+<h2 id="the-solution">The solution</h2>
 <p></p>
 Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
@@ -1092,7 +1092,7 @@ that’s actually matching currently. However, since this would seem to
 require some work and one of course sees what’s to be replaced by
 looking at the thing at point, I can very much live with this for the
 moment.
-<h3 id="the-code">The Code</h3>
+<h3 id="the-code">The code</h3>
 <p></p>
 Below is the full source code, in all of its hacky glory. Note that you
 will need to <code>require</code> the <code>s.el</code> and <code>dash.el</code> libraries for this to
@@ -1191,7 +1191,7 @@ I’d like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
 implementation detail.
 <!--more-->
-<h2 id="main-use-cases">Main Use Cases</h2>
+<h2 id="main-use-cases">Main use cases</h2>
 <p></p>
 Wouldn’t it be neat to have some kind of <a href="https://en.wikipedia.org/wiki/Domain-specific_language"><span class="small-caps">edsl</span></a> for spawning external
 processes? Something where one can just compose Haskell functions
@@ -1278,7 +1278,7 @@ This works all the same with the above definition of <code>myScratchpads</code>.
 <p></p>
 A full example of how a scratchpad setup would look using this machinery
 can be found in <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L414">my config</a>.
-<h3 id="calling-emacs-in-scripts">Calling Emacs in Scripts</h3>
+<h3 id="calling-emacs-in-scripts">Calling Emacs in scripts</h3>
 <p></p>
 Spawning frames is nice and all, but how about something more
 complicated, like Emacs’s batch mode so that we can use it properly in
@@ -1314,7 +1314,7 @@ When executed, this translates to something like
 I certainly know which one I’d rather type—especially with <span class="small-caps">elpa</span>
 directory names changing quite frequently! On that note,
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on <span class="small-caps">melpa</span> now; yay!
-<h3 id="other-programs">Other Programs</h3>
+<h3 id="other-programs">Other programs</h3>
 <p></p>
 As this is my main use case for it, the new features of
 <code>XMonad.Util.Run</code> are quite specialised for Emacs. However, even for
@@ -1348,7 +1348,7 @@ Quite convenient if you ask me.
 If you have or know of a use case you would like to support but which is
 awkward with the current set of functions and combinators do not
 hesitate to open a pull request or an issue!
-<h2 id="implementation-considerations">Implementation Considerations</h2>
+<h2 id="implementation-considerations">Implementation considerations</h2>
 <p></p>
 The implementation is actually very straightforward—no really, check out
 the
@@ -1523,7 +1523,7 @@ calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> an
 as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad’s OrgMode prompt</a>), accessing the
 universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
 <code>TRAMP</code>), … You get the idea.</span></span>
-<h2 id="high-level-structure">High Level Structure</h2>
+<h2 id="high-level-structure">High level structure</h2>
 <h3 id="topics">Topics</h3>
 <p></p>
 <span class="small-caps">xm</span>onad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
@@ -1589,8 +1589,8 @@ opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xo
 <p></p>
 My bibliography is organised in a similar spirit; see
 <a href="#citations">Citations</a>.
-<h2 id="note-taking">Note Taking</h2>
-<h3 id="handwritten-notes">Handwritten Notes</h3>
+<h2 id="note-taking">Note taking</h2>
+<h3 id="handwritten-notes">Handwritten notes</h3>
 <p></p>
 For handwritten notes I… use real paper! A little elaboration is
 probably in order, having talked about <code>.xopp</code> files and xournalpp
@@ -1619,7 +1619,7 @@ dotted paper, paired with a fountain pen.
 Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first. Of course, anything that’s supposed to be
 permanent should be typed up properly!
-<h3 id="digital-notes">Digital Notes</h3>
+<h3 id="digital-notes">Digital notes</h3>
 <p></p>
 Not wanting to go insane, I use LaTeX for all of my digital note taking.
 My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
@@ -1715,7 +1715,7 @@ information and re-organising some local region of the graph. Indeed, I
 tag every new entry as a <code>draft</code> until further notice, forcing me to go
 back there especially. This results in pretty good recollection of the
 most important facts, even with my brain.
-<h2 id="staying-up-to-date">Staying Up To Date</h2>
+<h2 id="staying-up-to-date">Staying up to date</h2>
 <p></p>
 I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
 interest to me. Thankfully, the fields I’m subscribed to tend to be
@@ -1785,7 +1785,7 @@ drive home the point, also showcasing the format of a not yet published
 paper and a published one.
 <p></p>
 <img class="pure-img" src="./arXiv-citation.gif">
-<h2 id="final-thoughts">Final Thoughts</h2>
+<h2 id="final-thoughts">Final thoughts</h2>
 <p></p>
 And that’s it! If nothing else, this post helped me to nail down some
 ideas that I had lying around and got me to finally clean up and publish

@@ -37,7 +37,7 @@ structures on monoidal categories that give rise to a notion of
 “duality”. At five pages, it is a very short paper; yet I’d still like
 to give a little teaser as to what kind of question we sought to answer.
 <!--more-->
-<h2 id="setting-the-scene">Setting the Scene</h2>
+<h2 id="setting-the-scene">Setting the scene</h2>
 <p></p>
 We mainly concerned ourselves with three notions of <em>duality</em> for
 (non-symmetric!) <a href="https://ncatlab.org/nlab/show/monoidal+category">monoidal</a> categories: <a href="https://ncatlab.org/nlab/show/closed+monoidal+category">closed monoidal</a> categories,
@@ -67,7 +67,7 @@ An obvious next question one could ask is: does this already
 characterise rigid and *-autonomous categories? More explicitly, are
 there any conditions one could impose on the internal-hom, such that
 closedness already implies rigidity? What about *-autonomy?
-<h2 id="autonomy">*-Autonomy</h2>
+<h2 id="autonomy">*-autonomy</h2>
 <p></p>
 We’ll start with a positive result for *-autonomy. So the question is
 this: given a closed monoidal category <span class="math inline">\(\mathcal{C}\)</span> in which the
@@ -243,7 +243,7 @@ linked <a href="#resources">at the end</a>. The key insights come from the
 mentioned blog posts by <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble</a> and <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John
 Baez</a>, as well as the accompanying (resulting) <a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab
 article</a>.
-<h2 id="enriched-category-theory">Enriched Category Theory</h2>
+<h2 id="enriched-category-theory">Enriched category theory</h2>
 <p></p>
 As I said, we first turn our attention to <em>enriched</em> category theory.
 Before diving into the gory details, I will first discuss things a bit
@@ -312,7 +312,7 @@ category</a>, they absolutely should! Much like
 you can think of ordinary categories as multi-object monoids, a decent
 mental model for <span class="math inline">\(\mathcal{V}\)</span>-categories is to think of them as
 multi-object monoidal categories.
-<h3 id="functors-and-natural-transformations">Functors and Natural Transformations</h3>
+<h3 id="functors-and-natural-transformations">Functors and natural transformations</h3>
 <p></p>
 We furthermore need analogues for functors and natural
 transformations—they now also come with a <span class="math inline">\(\mathcal{V}\)</span>- prefix. The
@@ -399,7 +399,7 @@ The fact that this is a copower follows from
 for all <span class="math inline">\(b \in \mathcal{A}\)</span>. Because of the closeness to the tensor
 product, people sometimes call copowers “tensors” and write them with
 the same symbol as they write the tensor product.
-<h2 id="weighted-colimits">Weighted Colimits</h2>
+<h2 id="weighted-colimits">Weighted colimits</h2>
 <p></p>
 Onto the main dish. The key idea is to reframe an ordinary colimit in
 terms of “looking like a monoidal product”. The weighted colimit then
@@ -575,7 +575,7 @@ exactly the representation we arrived at above.
 <p></p>
 A pair of an object <span class="math inline">\(c \in \mathcal{A}\)</span> and a natural transformation <span class="math inline">\(W \implies \mathcal{A}(F, c)\)</span> on their own; i.e., without the universal
 property, is what one would normally call a <em><span class="math inline">\(W\)</span>-weighted cocone</em>.
-<h3 id="enriched-weighted-colimits">Enriched Weighted Colimits</h3>
+<h3 id="enriched-weighted-colimits">Enriched weighted colimits</h3>
 <p></p>
 The enriched definition is now exactly the same! If <span class="math inline">\(\mathcal{J}\)</span> is a
 small <span class="math inline">\(\mathcal{V}\)</span>-category and we have <span class="math inline">\(\mathcal{V}\)</span>-functors <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> and <span class="math inline">\(W \colon \mathcal{J}^{\mathrm{op}} \longrightarrow \mathcal{V}\)</span>, then we can
@@ -859,7 +859,7 @@ calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> an
 as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad’s OrgMode prompt</a>), accessing the
 universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
 <code>TRAMP</code>), … You get the idea.</span></span>
-<h2 id="high-level-structure">High Level Structure</h2>
+<h2 id="high-level-structure">High level structure</h2>
 <h3 id="topics">Topics</h3>
 <p></p>
 <span class="small-caps">xm</span>onad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
@@ -925,8 +925,8 @@ opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xo
 <p></p>
 My bibliography is organised in a similar spirit; see
 <a href="#citations">Citations</a>.
-<h2 id="note-taking">Note Taking</h2>
-<h3 id="handwritten-notes">Handwritten Notes</h3>
+<h2 id="note-taking">Note taking</h2>
+<h3 id="handwritten-notes">Handwritten notes</h3>
 <p></p>
 For handwritten notes I… use real paper! A little elaboration is
 probably in order, having talked about <code>.xopp</code> files and xournalpp
@@ -955,7 +955,7 @@ dotted paper, paired with a fountain pen.
 Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first. Of course, anything that’s supposed to be
 permanent should be typed up properly!
-<h3 id="digital-notes">Digital Notes</h3>
+<h3 id="digital-notes">Digital notes</h3>
 <p></p>
 Not wanting to go insane, I use LaTeX for all of my digital note taking.
 My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
@@ -1051,7 +1051,7 @@ information and re-organising some local region of the graph. Indeed, I
 tag every new entry as a <code>draft</code> until further notice, forcing me to go
 back there especially. This results in pretty good recollection of the
 most important facts, even with my brain.
-<h2 id="staying-up-to-date">Staying Up To Date</h2>
+<h2 id="staying-up-to-date">Staying up to date</h2>
 <p></p>
 I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
 interest to me. Thankfully, the fields I’m subscribed to tend to be
@@ -1121,7 +1121,7 @@ drive home the point, also showcasing the format of a not yet published
 paper and a published one.
 <p></p>
 <img class="pure-img" src="./arXiv-citation.gif">
-<h2 id="final-thoughts">Final Thoughts</h2>
+<h2 id="final-thoughts">Final thoughts</h2>
 <p></p>
 And that’s it! If nothing else, this post helped me to nail down some
 ideas that I had lying around and got me to finally clean up and publish

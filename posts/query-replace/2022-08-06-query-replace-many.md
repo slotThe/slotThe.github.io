@@ -47,7 +47,7 @@ will, so it seemed much easier to automate this instead!
 [write a lot of LaTeX]: ../phd-workflow/2022-05-01-my-phd-workflow.html
 [work]: ../../research.html
 
-# The Solution
+# The solution
 
 Thankfully, since `replace.el` sports a decent API, writing a version of
 `query-replace` that accepts multiple arguments turns out to be easy
@@ -77,7 +77,7 @@ require some work and one of course sees what's to be replaced by
 looking at the thing at point, I can very much live with this for the
 moment.
 
-## The Code
+## The code
 
 Below is the full source code, in all of its hacky glory.  Note that you
 will need to `require` the `s.el` and `dash.el` libraries for this to

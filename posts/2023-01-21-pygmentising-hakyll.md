@@ -14,7 +14,7 @@ tool that can output HTML.
 
 <!--more-->
 
-# The Problem
+# The problem
 
 Pandoc uses the [skylighting] library to generate syntax highlighting
 for a given block of code.  Skylighting, in turn, uses [KDE XML syntax

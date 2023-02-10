@@ -64,7 +64,7 @@ difference for yourself:
   <source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
 </video>
 
-# Quickly Insert images in `org-roam`
+# Quickly insert images in `org-roam`
 
 Speaking of inserting images into Org; how does one do that, exactly?
 Doing everything by hand seems like a slog: select an arbitrary

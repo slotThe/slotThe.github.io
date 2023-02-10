@@ -25,7 +25,7 @@ cover here.  However, since these aren't directly related to my
 _research_ workflow—and there is a lot of great resources out there
 already—I decided to not do this here.[^1]
 
-# High Level Structure
+# High level structure
 
 ## Topics
 
@@ -81,9 +81,9 @@ opened in [zathura] and `.xopp` files are opened in xournalpp.
 My bibliography is organised in a similar spirit; see
 [Citations](#citations).
 
-# Note Taking
+# Note taking
 
-## Handwritten Notes
+## Handwritten notes
 
 For handwritten notes I… use real paper!  A little elaboration is
 probably in order, having talked about `.xopp` files and xournalpp
@@ -110,7 +110,7 @@ Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first.  Of course, anything that's supposed to be
 permanent should be typed up properly!
 
-## Digital Notes
+## Digital notes
 
 Not wanting to go insane, I use LaTeX for all of my digital note taking.
 My writing setup for `.tex` files is pretty similar to [Karthik
@@ -201,7 +201,7 @@ tag every new entry as a `draft` until further notice, forcing me to go
 back there especially.  This results in pretty good recollection of the
 most important facts, even with my brain.
 
-# Staying Up To Date
+# Staying up to date
 
 I use [elfeed] to query the [arXiv] for new preprints that are of
 interest to me.  Thankfully, the fields I'm subscribed to tend to be
@@ -266,7 +266,7 @@ paper and a published one.
 
 <img class="pure-img" src="./arXiv-citation.gif">
 
-# Final Thoughts
+# Final thoughts
 
 And that's it!  If nothing else, this post helped me to nail down some
 ideas that I had lying around and got me to finally clean up and publish
