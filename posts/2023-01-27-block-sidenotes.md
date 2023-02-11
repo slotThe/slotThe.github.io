@@ -120,8 +120,8 @@ simplest kinds of blocks, but already mentions that the `RawBlock
 Well, what happens?
 ```{=html}
 <span class="sidenote-wrapper">
-<label for="sn-2" class="margin-toggle sidenote-number"></label>
-<input type="checkbox" id="sn-2" class="margin-toggle" />
+<label for="sn-test" class="margin-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-test" class="margin-toggle" />
 <p><span class="sidenote">Now simulating <code>pandoc-sidenode</code>s behaviour, the following is a piece of code <em>in the sidenote:</em>
 <div class="highlight"><pre><span></span><span class="nf">a</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span> <span class="nf">
 a</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">42</span> </pre></div>
