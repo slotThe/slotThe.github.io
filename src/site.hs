@@ -175,7 +175,7 @@ getTocCtx ctx = do
   writerOpts <- mkTocWriter defaultHakyllWriterOptions
   toc        <- renderPandocWith defaultHakyllReaderOptions writerOpts =<< getResourceBody
   pure $ mconcat [ ctx
-                 , constField "toc" (itemBody toc)
+                 , constField "toc" (killLinkIds (itemBody toc))
                  , if noToc then boolField "no-toc" (pure noToc) else mempty
                  ]
  where
@@ -189,6 +189,22 @@ getTocCtx ctx = do
       , writerTOCDepth        = 3
       , writerTemplate        = tmpl
       }
+
+  -- Pandoc now IDs for its table of contents.[1, 2] However, since the
+  -- site has two TOCs (where only one is shown at a given time via
+  -- CSS), this results in two elements having the same identifier,
+  -- which is invalid HTML.  This may or may not matter, but it's
+  -- certainly better to fix it.
+  --
+  -- [1]: https://github.com/jgm/pandoc/issues/7907
+  -- [2]: https://github.com/jgm/pandoc/pull/7913
+  killLinkIds :: String -> String
+  killLinkIds = T.unpack . mconcat . go . T.splitOn "id=\"toc-" . T.pack
+   where
+    go :: [Text] -> [Text]
+    go = \case
+      []     -> []
+      x : xs -> x : map (T.drop 1 . T.dropWhile (/= '\"')) xs
 
 -----------------------------------------------------------------------
 -- Util
