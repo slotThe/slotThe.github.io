@@ -345,13 +345,13 @@ a#to-top {
   SECTION LINKS
 */
 
-:is(h1, h2, h3, h4, h5, h6) a#sec-link {
+:is(h1, h2, h3, h4, h5, h6) .sec-link {
     text-decoration: none;
     color: grey;
     visibility: hidden;
 }
 
-:is(h1, h2, h3, h4, h5, h6):hover a#sec-link {
+:is(h1, h2, h3, h4, h5, h6):hover .sec-link {
     visibility: visible;
 }
 

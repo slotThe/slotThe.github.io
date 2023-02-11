@@ -102,7 +102,7 @@ Using <code>pygmentize</code> as an example, I will show you how you can swap ou
 pandoc’s native syntax highlighting with pretty much any third party
 tool that can output <span class="small-caps">html</span>.
 <!--more-->
-<h2 id="the-problem">The problem<a href="#the-problem" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="the-problem">The problem<a href="#the-problem" class="floatright sec-link">¶</a></h2>
 <p></p>
 Pandoc uses the <a href="https://hackage.haskell.org/package/skylighting">skylighting</a> library to generate syntax highlighting
 for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.org/stable5/en/kate/katepart/highlight.html"><span class="small-caps">kde</span> <span class="small-caps">xml</span> syntax
@@ -152,7 +152,7 @@ this website.<!--
 went with <code>pygmentize</code>, solely because I already had it installed. All
 that’s left is to tell pandoc and Hakyll to make use of it. As
 mentioned, this thankfully doesn’t turn out to be very difficult!
-<h2 id="playing-with-pygmentize">Playing with <code>pygmentize</code><a href="#playing-with-pygmentize" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="playing-with-pygmentize">Playing with <code>pygmentize</code><a href="#playing-with-pygmentize" class="floatright sec-link">¶</a></h2>
 <p></p>
 Having never used <code>pygmentize</code> as a command line utility,<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">So far, the only interaction I had with the program was through
@@ -216,13 +216,13 @@ You can redirect this into a <code>pygments.css</code> file, link to it (e.g., f
 your <code>default.html</code> template), and be on your way. The annotation also
 makes it very easy to change that file after the fact, in case
 <code>pygmentize</code> does not have the theme that you want.
-<h2 id="integration">Integration<a href="#integration" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="integration">Integration<a href="#integration" class="floatright sec-link">¶</a></h2>
 <p></p>
 The idea of what we want to do is quite simple: for every code block in
 a given post, shell out to <code>pygmentize</code>, and use its output to replace
 the block, somehow making sure pandoc doesn’t touch it afterwards.
 Let’s solve this step by step.
-<h3 id="pandoc">Pandoc<a href="#pandoc" id="sec-link" class="floatright">¶</a></h3>
+<h3 id="pandoc">Pandoc<a href="#pandoc" class="floatright sec-link">¶</a></h3>
 <p></p>
 Pandoc has an aptly named <code>Pandoc</code> type, which represents the internal
 structure of a document.
@@ -328,7 +328,7 @@ with
 <span class="w">    </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="p">(</span><span class="n">callPygs</span><span class="w"> </span><span class="n">lang</span><span class="w"> </span><span class="n">body</span><span class="p">)</span>
 </pre></div>
 
-<h3 id="hakyll">Hakyll<a href="#hakyll" id="sec-link" class="floatright">¶</a></h3>
+<h3 id="hakyll">Hakyll<a href="#hakyll" class="floatright sec-link">¶</a></h3>
 <p></p>
 Thankfully, integrating <code>pygmentsHighlight</code> into Hakyll is not very
 complicated either. In addition to the normal <code>pandocCompiler</code> or
@@ -372,7 +372,7 @@ for example:
 
 <p></p>
 For a full working example, see <a href="https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L87">my configuration</a>.
-<h2 id="conclusion">Conclusion<a href="#conclusion" id="sec-link" class="floatright">¶</a></h2>
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatright sec-link">¶</a></h2>
 <p></p>
 That’s it! To my eyes, syntax highlighting looks much better now, and
 on the way I—and perhaps you as well—even learned a little bit about how

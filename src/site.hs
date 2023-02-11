@@ -240,8 +240,8 @@ mkCleanSnapshot ::  String -> Item String -> Compiler (Item String)
 mkCleanSnapshot name item = item <$
   saveSnapshot name (withTagList (noPilcrow . supressToc) <$> item)
  where
-  noPilcrow  = killTags (~== TagOpen ("a" :: String) [("id", "sec-link")]) (== TagClose "a")
-  supressToc = killTags (==  TagOpen "div"           [("id", "contents")]) (== TagClose "div")
+  noPilcrow  = killTags (~== TagOpen ("a" :: String) [("class", "floatright sec-link")]) (== TagClose "a")
+  supressToc = killTags (==  TagOpen "div"           [("id"   , "contents")])            (== TagClose "div")
 
 -- | Find @open@ and kill everything between it and @close@.
 killTags :: (Tag String -> Bool) -> (Tag String -> Bool) -> [Tag String] -> [Tag String]
@@ -285,7 +285,7 @@ myPandocCompiler =
   addSectionLinks :: Pandoc -> Pandoc
   addSectionLinks = walk \case
     Header n attr@(idAttr, _, _) inlines ->
-      let link = Link ("sec-link", ["floatright"], []) [Str "¶"] ("#" <> idAttr, "")
+      let link = Link ("", ["floatright", "sec-link"], []) [Str "¶"] ("#" <> idAttr, "")
        in Header n attr (inlines <> [link])
     block -> block
 
