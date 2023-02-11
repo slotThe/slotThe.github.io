@@ -87,13 +87,15 @@ and counit
 $\varepsilon \colon F U \Longrightarrow \mathrm{Id}_{\mathcal{C}}$.
 The snake identities for this adjunction look like
 
-<img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction.png">
+<img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction.png"
+     alt="Usual snake identities of an adjunction">
 
 In particular, we get two such diagrams if we apply everything to the
 monoidal unit $1 \in \mathcal{C}$.  Specialised to the adjunction
 ${-} \otimes x \dashv {-} \otimes Dx$ the above then becomes
 
-<img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction-specialised.png">
+<img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction-specialised.png"
+     alt="Snake identities of an adjunction, specialised to this use-case">
 
 These are just the snake identities for duals if we make the definitions
 $\mathrm{ev}_x ≔ \varepsilon_1$ and $\mathrm{coev}_x ≔ \eta_1$, right?

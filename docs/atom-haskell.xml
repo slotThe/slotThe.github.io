@@ -789,7 +789,7 @@ to another heading. This way, you don’t need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent
 heading.
 <p></p>
-<img class="pure-img" src="../images/orgmode-refiling/refiling.gif">
+<img class="pure-img" src="../images/orgmode-refiling/refiling.gif" alt="Entering a TODO, and refiling it to an appropriate place">
 <p></p>
 Note: Refiling is (near) instant; the delay you are seeing above is due
 to <code>auto-revert-mode</code>.
@@ -1004,7 +1004,7 @@ Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-c
 In my mathematical and other work-adjacent projects I keep it pretty
 simple; an editor there is mostly sufficient.
 <p></p>
-<img class="pure-img" src="../phd-workflow/topics.gif">
+<img class="pure-img" src="../phd-workflow/topics.gif" alt="Navigating to an empty topic, Emacs pops up">
 <p></p>
 We can also get a little bit more fancy. Since the topic action is just
 a general <code>X</code> action, we can really do anything we want in there. In
@@ -1066,7 +1066,7 @@ allowing access to a different instance of the Emacs server.
 <p></p>
 All in all, we have something that looks a little bit like this:
 <p></p>
-<img class="pure-img" src="./haskell-topic.gif">
+<img class="pure-img" src="./haskell-topic.gif" alt="Switching to a Haskell topic, then using project.el to navigate the project">
 <h3 id="testing-this-website">Testing this website</h3>
 <p></p>
 Much in the same vein as my Haskell topics, I find the <code>website</code> topic
@@ -1084,7 +1084,7 @@ browser window pointing to the local copy:
 <p></p>
 The whole thing looks like this:
 <p></p>
-<img class="pure-img" src="./website.gif">
+<img class="pure-img" src="./website.gif" alt="Switching to an empty topic; various things automatically start up">
 <h2 id="conclusion">Conclusion</h2>
 <p></p>
 Hopefully these examples have convinced you to give TopicSpace a spin;

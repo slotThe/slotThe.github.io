@@ -51,7 +51,7 @@ it's rather fast to go from thinking about a certain problem to working
 on it.  When I'm already inside a project, I leverage Emacs's built-in
 `project.el` library to search through files and the like.
 
-<img class="pure-img" src="./topics.gif">
+<img class="pure-img" src="./topics.gif" alt="Navigation example">
 
 ## Files
 
@@ -76,7 +76,7 @@ behaviour.  I merely have to press `M-y`[^2] and can then fuzzy search
 through the directory.  Once I've made a choice, PDFs are automatically
 opened in [zathura] and `.xopp` files are opened in xournalpp.
 
-<img class="pure-img" src="./hmenu.gif">
+<img class="pure-img" src="./hmenu.gif" alt="example hmenu usage">
 
 My bibliography is organised in a similar spirit; see
 [Citations](#citations).
@@ -118,7 +118,7 @@ Chikmagalur]'s—whose excellent post you should definitely check out—so I
 will not belabour the point too much here.  The tl;dr is [AUCTeX],
 [CDLaTeX], and [aas].
 
-<img class="pure-img" src="./input.gif">
+<img class="pure-img" src="./input.gif" alt="LaTeX input example">
 
 In case you're not used to `prettify-symbols-mode`: the inserted LaTeX
 code was
@@ -145,7 +145,7 @@ of environments, including display math, while offering to rename labels
 across the project if necessary.  When deleting a label from an
 environment, it also remembers this for the session![^4]
 
-<img class="pure-img" src="./label-renaming.gif">
+<img class="pure-img" src="./label-renaming.gif" alt="latex-change-env showcase">
 
 One neat feature of AUCTeX that I find myself using more and more often
 lately[^5] is the in-buffer preview.  Usually when writing a draft I'm
@@ -154,7 +154,7 @@ comes later, believe me.  In cases like these, just calling
 `preview-buffer` is quite convenient and lets me use the screen real
 estate that a PDF viewer would have taken up for something else.
 
-<img class="pure-img" src="./preview.gif">
+<img class="pure-img" src="./preview.gif" alt="latex-preview showcase">
 
 I always use pure LaTeX for writing papers, drafts, or presentations.
 However, I also take lots of notes in [org-mode], which, as a crude
@@ -169,7 +169,7 @@ system", which fits the bill pretty well.  In short, it's a note taking
 system in the spirit of the [Zettelkasten] method, which is essentially
 about having lots of notes with lots of backlinks to related concepts:
 
-<img class="pure-img" src="./backlinks.png">
+<img class="pure-img" src="./backlinks.png" alt="org-roam showcase">
 
 In fact, using [org-roam-ui], one can even visualise the entire
 Zettelkasten as an interactive and pretty graph in which notes become
@@ -177,10 +177,10 @@ nodes and backlinks become edges!
 
 <div class="pure-g">
  <div class="pure-u-1-2">
-  <img class="pure-img" src="./org-roam-ui-close.png">
+  <img class="pure-img" src="./org-roam-ui-close.png" alt="org-roam-ui example zoomed-in">
  </div>
  <div class="pure-u-1-2">
-  <img class="pure-img" src="./org-roam-ui-far.png">
+  <img class="pure-img" src="./org-roam-ui-far.png" alt="org-roam-ui example zoomed-out">
  </div>
 </div>
 
@@ -216,7 +216,7 @@ into my library and open it with zathura.  This is fully automated via
 [arxiv-citation]—more on that later.  I merely have to press `C-c d`
 while looking at a paper and magic happens!
 
-<img class="pure-img" src="./elfeed.gif">
+<img class="pure-img" src="./elfeed.gif" alt="elfeed showcase">
 
 In the above gif, on the right-hand side you can see a score associated
 to each entry.  While reading every abstract has worked quite well for
@@ -238,7 +238,7 @@ the currently selected text on the relevant "search engine".  One
 instance where this is useful is for quickly switching between the arXiv
 and zbmath:
 
-<img class="pure-img" src="./selected-search.gif">
+<img class="pure-img" src="./selected-search.gif" alt="XMonad.Actions.Search showcase">
 
 ## Citations
 
@@ -264,7 +264,7 @@ the primary selection, so I merely have to highlight the link, press
 drive home the point, also showcasing the format of a not yet published
 paper and a published one.
 
-<img class="pure-img" src="./arXiv-citation.gif">
+<img class="pure-img" src="./arXiv-citation.gif" alt="arXiv-citation showcase">
 
 # Final thoughts
 

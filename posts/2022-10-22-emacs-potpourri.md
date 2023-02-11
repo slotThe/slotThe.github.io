@@ -60,9 +60,11 @@ experience that's very far from optimal.  This is _exactly_ where
 `pixel-scroll-precision-mode` comes in and saves the day, but see the
 difference for yourself:
 
-<video width="100%" controls>
-  <source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
-</video>
+<p>
+  <video width="100%" controls>
+    <source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
+  </video>
+</p>
 
 # Quickly insert images in `org-roam`
 
@@ -164,7 +166,8 @@ something like `"C(bln,bln)"`.
 Together with auto-expanding snippets, this enables reasonably fast
 LaTeX entry:
 
-<img class="pure-img" src="../images/emacs-potpourri/latex-entry.gif">
+<img class="pure-img" src="../images/emacs-potpourri/latex-entry.gif"
+     alt="Fast LaTeX entry with various kinds of macros and abbreviations">
 
 More examples can be found in the [post][posts:phd-workflow:entry] about
 my research workflow.
@@ -322,7 +325,8 @@ xmonad."
 
 I bind this to `C-c l` in `markdown-mode`; it looks like this:
 
-<img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif">
+<img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif"
+      alt="link entry in markdown-mode, with an interactive prompt">
 
 # A macro for `repeat-mode`
 

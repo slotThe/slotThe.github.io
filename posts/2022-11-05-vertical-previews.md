@@ -15,21 +15,24 @@ When you have two monitors oriented vertically, previews might end up
 looking something like this:
 
 <p style="text-align:center;">
-  <img class="pure-img" src="../images/vertical-preview/two-vertical.png">
+  <img class="pure-img" src="../images/vertical-preview/two-vertical.png"
+       alt="preview with two vertical monitors, horribly squished vertically">
 </p>
 
 With the perhaps more common setup of one vertical and one horizontal
 monitor, you could instead get the charming
 
 <p style="text-align:center;">
-  <img class="pure-img" src="../images/vertical-preview/one-vertical.png">
+  <img class="pure-img" src="../images/vertical-preview/one-vertical.png"
+       alt="preview with one vertical monitor, horribly squished horizontally">
 </p>
 
 Imagine a whole page of this—things get pretty funky.  Being a boring
 person, I would rather prefer the much more ordinary looking
 
 <p style="text-align:center;">
-  <img class="pure-img" src="../images/vertical-preview/normal.png">
+  <img class="pure-img" src="../images/vertical-preview/normal.png"
+       alt="normal preview, prefectly legible">
 </p>
 
 Thankfully, this isn't so complicated.  Looking into `preview.el`, we

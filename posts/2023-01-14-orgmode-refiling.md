@@ -53,7 +53,8 @@ to another heading.  This way, you don't need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent
 heading.
 
-<img class="pure-img" src="../images/orgmode-refiling/refiling.gif">
+<img class="pure-img" src="../images/orgmode-refiling/refiling.gif"
+     alt="Entering a TODO, and refiling it to an appropriate place">
 
 Note: Refiling is (near) instant; the delay you are seeing above is due
 to `auto-revert-mode`.

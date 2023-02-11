@@ -67,7 +67,7 @@ time, `U` with `T`.  The first few matches are stepped through and the
 rest is just accepted wholesale.  At the bottom, you can see the default
 `query-replace` interface when interacting with the query.
 
-<img class="pure-img" src="./query-replace-many.gif">
+<img class="pure-img" src="./query-replace-many.gif" alt="query-replace-many functionality showcase">
 
 The only cosmetic imperfection of this is that, while the replacement
 candidate itself is correctly updated, we see the whole regular

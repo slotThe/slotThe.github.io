@@ -134,7 +134,8 @@ Check the documentation of [XMonad.Util.Run] to see how `inEditor` and
 In my mathematical and other work-adjacent projects I keep it pretty
 simple; an editor there is mostly sufficient.
 
-<img class="pure-img" src="../phd-workflow/topics.gif">
+<img class="pure-img" src="../phd-workflow/topics.gif"
+     alt="Navigating to an empty topic, Emacs pops up">
 
 We can also get a little bit more fancy.  Since the topic action is just
 a general `X` action, we can really do anything we want in there.  In
@@ -187,7 +188,8 @@ spawnEshellInTopic = currentTopicDir topicConfig >>= \dir ->
 
 All in all, we have something that looks a little bit like this:
 
-<img class="pure-img" src="./haskell-topic.gif">
+<img class="pure-img" src="./haskell-topic.gif"
+     alt="Switching to a Haskell topic, then using project.el to navigate the project">
 
 ## Testing this website
 
@@ -207,7 +209,8 @@ spawnWebsite = switchToLayout "Tall"
 
 The whole thing looks like this:
 
-<img class="pure-img" src="./website.gif">
+<img class="pure-img" src="./website.gif"
+     alt="Switching to an empty topic; various things automatically start up">
 
 # Conclusion
 

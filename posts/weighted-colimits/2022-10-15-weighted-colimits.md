@@ -104,7 +104,7 @@ consists of:
 Further, this data has to satisfy appropriate associativity and
 unitality conditions:
 
-  <img class="pure-img" src="./enriched.png">
+  <img class="pure-img" src="./enriched.png" alt="axioms for an enriched category">
 
 In the above diagrams, $\alpha$, $\lambda$, and $\rho$ respectively
 denote the associativity, left, and right unitality constraints of
@@ -431,7 +431,7 @@ from Richard Garner during [BCQT 2022][leeds].
    out two morphisms.  Thus, the whole thing amounts to the
    commutativity of the following diagram:
 
-     <img class="pure-img" src="./example-1.png">
+     <img class="pure-img" src="./example-1.png" alt="necessary commutative diagram">
 
    In more plain language, we have a commutative diagram of the form
 
@@ -457,7 +457,7 @@ from Richard Garner during [BCQT 2022][leeds].
    one, but contains an isomorphism, the commutative diagram also
    becomes more complicated.  Namely, we required the commutativity of
 
-     <img class="pure-img" src="./example-2.png">
+     <img class="pure-img" src="./example-2.png" alt="necessary commutative diagram">
 
    Instead of the requiring $\theta \circ g$ to _equal_ $\theta \circ
    f$, we now only require the existence of an invertible 2-cell that

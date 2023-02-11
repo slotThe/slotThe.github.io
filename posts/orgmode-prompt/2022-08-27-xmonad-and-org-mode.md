@@ -43,7 +43,7 @@ anxiety that I'm forgetting things left and right.
 The following showcases the core functionality of the module—taking
 notes!
 
-<img class="pure-img" src="./simple-task.gif">
+<img class="pure-img" src="./simple-task.gif" alt="capturing a single task">
 
 In case you _really_ don't want to forget something, there is also the
 ability to create `DEADLINE` and `SCHEDULED` tasks.  Optionally, you can
@@ -52,7 +52,7 @@ you add the org file in which the TODOs are placed to the
 `org-agenda-files` variable, then this will immediately show these tasks
 in your agenda!
 
-<img class="pure-img" src="./deadline-task.gif">
+<img class="pure-img" src="./deadline-task.gif" alt="capturing a deadline">
 
 How exactly one may specify the `SCHEDULED` and `DEADLINE` keywords, as
 well as a date, time, and priority is covered in detail in the
@@ -64,7 +64,8 @@ the body or the header of the task.  If it's a URL, create a link (i.e.,
 it will be of the form `[[link][input-text]]`); if not, just add the
 selection to the body of the note.
 
-<img class="pure-img" src="selection-tasks.png">
+<img class="pure-img" src="selection-tasks.png"
+     alt="visual representation of the above paragraph, showing various states of notes">
 
 Of course, you can use all of this together as well—directly link to
 that one paper or blog post you wanted to read, or that one YouTube
