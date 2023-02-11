@@ -206,7 +206,7 @@ roughly looks like the following:
   <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">"sn-NAME"</span> <span class="na">class</span><span class="o">=</span><span class="s">"margin-toggle sidenote-number"</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"checkbox"</span> <span class="na">id</span><span class="o">=</span><span class="s">"sn-NAME"</span> <span class="na">class</span><span class="o">=</span><span class="s">"margin-toggle"</span><span class="p">/&gt;</span>
   <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote"</span><span class="p">&gt;</span>
-    SIDENOTE
+    SIDENOTEn
   <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </pre></div>
@@ -524,13 +524,51 @@ functionality, but thankfully Said Achmiz has already documented what
 needs to be done <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-671102819">here</a>. This is
 already included in my <code>sidenotes.css</code>, so if you’re just copying that
 then you should be fine.
+<p></p>
+<strong>Update (11feb2023)</strong>: Even better, as Gwern Branwen
+<a href="https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-1426123545">mentions</a>, we don’t even need to use
+<code>span</code>s anymore!
+<blockquote>
+<p></p>
+It’s true that <code>Span</code> nodes are often unsuited for doing anything
+interesting involving a <code>Block</code> or <code>[Block]</code>, but that’s precisely
+what <code>Div</code> is for: it’s the <code>Block</code>-level equivalent of the <code>Inline</code>
+<code>Span</code>. And if you are rendering blocks into an <span class="small-caps">html</span> <code>&lt;span&gt;</code> wrapper,
+that would seem to be bad <span class="small-caps">html</span> practice:
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/span"><code>&lt;span&gt;</code></a>
+is defined as being inline and containing inline stuff (which is why
+Pandoc makes it expressed as an <code>Inline</code>), in contrast to
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div"><code>&lt;div&gt;</code></a>
+block containers.
+</blockquote>
+<p></p>
+So far, I had assumed that there was a reason why Tufte <span class="small-caps">css</span> used <code>span</code>
+elements instead of <code>div</code>s in their sidenote, but this does not seem to
+be the case.<!--
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"><div class="sidenote">At least not to my current knowledge.</div>
+ Instead of writing
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote"</span><span class="p">&gt;</span>
+  «sidenote»
+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</pre></div>
+
+<p></p>
+one may well use
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote"</span><span class="p">&gt;</span>
+  «sidenote»
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+
+<p></p>
+instead—since we render directly to <span class="small-caps">html</span> now, that door opened for us.
+This means no more standard violations!
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatright sec-link">¶</a></h2>
 <p></p>
 Being perfectly honest, I’m not very satisfied with this solution. It
 does work, but pre-rendering everything and not using pandoc’s built in
 constructors feels like a big hack. More importantly though, since what
 I’ve done here amounts to a complete rewrite,<!--
---><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"><div class="sidenote">Not only that, but it’s almost certainly also a regression in
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle"><div class="sidenote">Not only that, but it’s almost certainly also a regression in
 certain aspects; even after handling of margin notes is restored,
 which I’ve completely ignored for now.</div>
  I can’t contribute
@@ -541,10 +579,11 @@ philosophically. Hence, there is no standalone repository for
 <a href="https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs">Sidenote.hs</a> and <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> at
 this point.
 <p></p>
-Really, I would be delighted if someone told me that I just used
-<code>pandoc-sidenote</code> (or another program involved) wrongly, and this is
-actually very easy to achieve using <code>${METHOD}</code>. Until then, I’ll
-continue to be blissfully unaware of <span class="small-caps">html</span> standards :)
+Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also <a href="https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553">thought about this
+issue</a>, and concluded that perhaps
+a custom pandoc <code>Writer</code> would be the most elegant solution to this
+problem. However, since using pandoc’s <span class="small-caps">html</span>5 writer is quite hard-coded
+into Hakyll, I don’t think that <code>Sidenote.hs</code> will go down that path.
 
       <!-- Body is included in the above file -->
     </section>

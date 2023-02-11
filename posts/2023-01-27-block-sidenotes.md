@@ -45,7 +45,7 @@ roughly looks like the following:
   <label for="sn-NAME" class="margin-toggle sidenote-number"> </label>
   <input type="checkbox" id="sn-NAME" class="margin-toggle"/>
   <span class="sidenote">
-    SIDENOTE
+    SIDENOTEn
   </span>
 </span>
 ```
@@ -305,11 +305,48 @@ needs to be done [here][github:tufte-css:paragraph-fixes].  This is
 already included in my `sidenotes.css`, so if you're just copying that
 then you should be fine.
 
-[blog:pygmentising]: https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html
-[hackage:pandoc:writeHtml5String]: https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Writers.html#v:writeHtml5String
-[hackage:hakyll:writePandocWith]: https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:writePandocWith
+**Update (11feb2023)**: Even better, as Gwern Branwen
+[mentions][github:pandoc-sidenote:div], we don't even need to use
+`span`s anymore!
+
+> It's true that `Span` nodes are often unsuited for doing anything
+> interesting involving a `Block` or `[Block]`, but that's precisely
+> what `Div` is for: it's the `Block`-level equivalent of the `Inline`
+> `Span`. And if you are rendering blocks into an HTML `<span>` wrapper,
+> that would seem to be bad HTML practice:
+> [`<span>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/span)
+> is defined as being inline and containing inline stuff (which is why
+> Pandoc makes it expressed as an `Inline`), in contrast to
+> [`<div>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div)
+> block containers.
+
+So far, I had assumed that there was a reason why Tufte CSS used `span`
+elements instead of `div`s in their sidenote, but this does not seem to
+be the case.[^7] Instead of writing
+
+``` html
+<span class="sidenote">
+  «sidenote»
+</span>
+```
+
+one may well use
+
+``` html
+<div class="sidenote">
+  «sidenote»
+</div>
+```
+
+instead—since we render directly to HTML now, that door opened for us.
+This means no more standard violations!
+
 [aphyr:typing-the-technical-interview]: https://aphyr.com/posts/342-typing-the-technical-interview
+[blog:pygmentising]: https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html
+[github:pandoc-sidenote:div]: https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-1426123545
 [github:tufte-css:paragraph-fixes]: https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-671102819
+[hackage:hakyll:writePandocWith]: https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:writePandocWith
+[hackage:pandoc:writeHtml5String]: https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Writers.html#v:writeHtml5String
 
 # Conclusion
 
@@ -324,10 +361,14 @@ philosophically.  Hence, there is no standalone repository for
 [Sidenote.hs][site:sidenotes-hs] and [sidenotes.css][site:sidenotes] at
 this point.
 
-Really, I would be delighted if someone told me that I just used
-`pandoc-sidenote` (or another program involved) wrongly, and this is
-actually very easy to achieve using `${METHOD}`.  Until then, I'll
-continue to be blissfully unaware of HTML standards :)
+Jake Zimmerman—the author of `pandoc-sidenote`—also [thought about this
+issue][github:pandoc-sidenote:custom-writer], and concluded that perhaps
+a custom pandoc `Writer` would be the most elegant solution to this
+problem.  However, since using pandoc's HTML5 writer is quite hard-coded
+into Hakyll, I don't think that `Sidenote.hs` will go down that path.
+
+[github:pandoc-sidenote:custom-writer]: https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553
+[site:sidenotes-hs]: https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs
 
 [^1]: For example, this is one.
 
@@ -382,4 +423,4 @@ continue to be blissfully unaware of HTML standards :)
       certain aspects; even after handling of margin notes is restored,
       which I've completely ignored for now.
 
-[site:sidenotes-hs]: https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs
+[^7]: At least not to my current knowledge.
