@@ -1,6 +1,8 @@
 {-# LANGUAGE BangPatterns             #-}
+{-# LANGUAGE DerivingStrategies       #-}
 {-# LANGUAGE LambdaCase               #-}
 {-# LANGUAGE OverloadedStrings        #-}
+{-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE StandaloneKindSignatures #-}
 {- |
    Module      : Sidenote
@@ -24,6 +26,10 @@ import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc (..))
 import Text.Pandoc.Options (WriterOptions)
 import Text.Pandoc.Shared (tshow)
 import Text.Pandoc.Walk (walkM)
+
+type NoteType :: Type
+data NoteType = Sidenote | Marginnote
+  deriving stock (Show, Eq)
 
 type SidenoteState :: Type
 data SidenoteState = SNS
@@ -71,10 +77,16 @@ renderSidenote !inlines = \case
   go :: [Block] -> Sidenote Block
   go blocks = do
     SNS w i <- get <* modify' (\sns -> sns{ counter = 1 + counter sns })
+    let (typ, noteText) = getNoteType (render w blocks)
     pure . RawBlock "html" $
       mconcat [ commentEnd     -- See [Note Comment]
-              , label i <> input i <> sidenote (render w blocks)
+              , label typ i <> input i <> note typ noteText
               ]
+
+  getNoteType :: Text -> (NoteType, Text)
+  getNoteType t
+    | "{-} " `T.isPrefixOf` t = (Marginnote, T.drop 4 t)
+    | otherwise               = (Sidenote  , t)
 
   render :: WriterOptions -> [Block] -> Text
   render w = T.pack . drop 1 . dropWhile (/= '\n') . itemBody -- drop <p></p>\n
@@ -91,14 +103,21 @@ renderSidenote !inlines = \case
 
 -- Extracted from @sidenotes.css@.
 
-label :: Int -> Text
-label i = "<label for=\"sn-" <> tshow i <> "\" class=\"margin-toggle sidenote-number\"></label>"
+label :: NoteType -> Int -> Text
+label nt i = "<label for=\"sn-" <> tshow i <> "\" class=\"margin-toggle" <> sidenoteNumber <> "\">" <> altSymbol <> "</label>"
+ where
+  sidenoteNumber :: Text = case nt of
+    Sidenote   -> " sidenote-number"
+    Marginnote -> ""
+  altSymbol :: Text = case nt of
+    Sidenote   -> ""
+    Marginnote -> "&#8853;"
 
 input :: Int -> Text
 input i = "<input type=\"checkbox\" id=\"sn-" <> tshow i <> "\" class=\"margin-toggle\"/>"
 
-sidenote :: Text -> Text
-sidenote body = "<div class=\"sidenote\">" <> body <> "</div>"
+note :: NoteType -> Text -> Text
+note nt body = "<div class=\"" <> T.toLower (tshow nt) <> "\">" <> body <> "</div>"
 
 {- [Note Comment]
 

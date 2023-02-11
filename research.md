@@ -1,12 +1,7 @@
 ---
 title: Research
 ---
-
-<label for="mn-1" class="margin-toggle">&#8853;</label>
-<input type="checkbox" id="mn-1" class="margin-toggle"/>
-<span class="marginnote">
-  I may be found on the [arXiv] and [zbmath].
-</span>
+[^1]
 My research interests can broadly be characterised under the term
 "category theory and its applications".  For example, I like to study
 how algebraic objects lift into more categorical frameworks and how much
@@ -24,14 +19,8 @@ as well as [operads].
 [operads]: https://ncatlab.org/nlab/show/string+diagram
 [zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
 
-# Preprints <!--
---><label for="mn-2" class="margin-toggle">&#8853;</label>
-<input type="checkbox" id="mn-2" class="margin-toggle"/>
-<span class="marginnote">
-  A general note: one can download the source code for every paper on the
-  arXiv.  Clicking on "Other formats" on the relevant article will guide
-  one through that.
-</span>
+# Preprints
+[^2]
 
 - *[Duality in Monoidal Categories]* \
    Joint work with Sebastian Halbig.
@@ -136,3 +125,9 @@ as well as [operads].
 [slides:visual-cat]: /talks/visual-category-theory.pdf
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
 [Pivotality, twisted centres and the anti-double of a Hopf monad]: https://arxiv.org/abs/2201.05361
+
+[^1]: {-} I may be found on the [arXiv] and [zbmath].
+
+[^2]: {-} A general note: one can download the source code for every
+          paper on the arXiv.  Clicking on "Other formats" on the
+          relevant article will guide one through that.
