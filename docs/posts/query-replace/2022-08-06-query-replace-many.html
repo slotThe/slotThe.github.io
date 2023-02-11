@@ -131,7 +131,7 @@ Thankfully, since <code>replace.el</code> sports a decent API, writing a version
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
 enough. The high-level overview is this: we read in multiple queries
 until an empty input is given,<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
 model to have (since this is how the function behaves). The gory
 details are that we use the fact that <code>replace.el</code>’s default
 suggestion is always the last query that was entered by the user.
@@ -140,7 +140,7 @@ What happens on an empty input is quite deep in the bowels of
 functions sounds like a real pain, leaning on that functionality
 suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
-out.</span></span>
+out.</div>
  build up a regular expression of the
 form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
 replacing—test the current thing to be replaced against all of the

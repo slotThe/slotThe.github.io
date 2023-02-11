@@ -73,9 +73,7 @@ renderSidenote !inlines = \case
     SNS w i <- get <* modify' (\sns -> sns{ counter = 1 + counter sns })
     pure . RawBlock "html" $
       mconcat [ commentEnd     -- See [Note Comment]
-              , "<span class=\"sidenote-wrapper\">"
               , label i <> input i <> sidenote (render w blocks)
-              , "</span>"
               ]
 
   render :: WriterOptions -> [Block] -> Text
@@ -100,7 +98,7 @@ input :: Int -> Text
 input i = "<input type=\"checkbox\" id=\"sn-" <> tshow i <> "\" class=\"margin-toggle\"/>"
 
 sidenote :: Text -> Text
-sidenote body = "<span class=\"sidenote\">" <> body <> "</span>"
+sidenote body = "<div class=\"sidenote\">" <> body <> "</div>"
 
 {- [Note Comment]
 

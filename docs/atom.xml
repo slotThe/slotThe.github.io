@@ -45,7 +45,7 @@ of these features.
 <p></p>
 If you don’t know: sidenotes are footnotes, just on the side of the
 page!<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">For example, this is one.</span></span>
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">For example, this is one.</div>
  More specifically they are footnotes placed inside of the
 margins, in order to avoid having to click or scroll, breaking the flow
 of reading—a flick of the eyes is enough. This is very convenient,
@@ -63,7 +63,7 @@ there is the fantastic <a href="https://hackage.haskell.org/package/pandoc-siden
 provides an appropriate pandoc filter. After extracting the relevant
 <span class="small-caps">css</span> into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
 <code>usingSidenotes</code> function into my pandoc compiler,<!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Just like you would expect:
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Just like you would expect:
 <div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
@@ -74,7 +74,7 @@ provides an appropriate pandoc filter. After extracting the relevant
 <span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="n">addSectionLinks</span><span class="w">   </span><span class="c1">-- link on hover</span>
 <span class="w">    </span><span class="p">)</span>
 </pre></div>
-</span></span>
+</div>
  things just
 worked!
 <p></p>
@@ -102,8 +102,8 @@ elements are allowed inside paragraphs per the <span class="small-caps">html</sp
 <p></p>
 I know what you’re thinking: people don’t usually let themselves be
 hampered by standards, do they?<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Just ask any person who’s ever worked on a window manager what
-creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</span></span>
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Just ask any person who’s ever worked on a window manager what
+creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</div>
  Alas, the <code>pandoc-sidenote</code> package
 quite sensibly converts a given footnote into an approximation of the
 above <span class="small-caps">html</span> by using pandoc’s native <code>Span</code> data constructor. Here is a
@@ -180,7 +180,7 @@ different purposes most of the time. Pandoc itself has a
 attempts to convert tables, figures, and the like, but this also yields
 some surprising behaviour when used instead of <code>pandoc-sidenote</code>s
 variant.<!--
---><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">Whereas now, things like
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">Whereas now, things like
 <ul>
 <li><p></p>
 
@@ -226,7 +226,7 @@ display maths
 \]</span></li>
 </ul>
 <p></p>
-and the like are no problem at all!</span></span>
+and the like are no problem at all!</div>
 <p></p>
 So what to do? Well, life wouldn’t be fun if we didn’t at least try to
 hack our way around a standard, would it?
@@ -297,9 +297,9 @@ the functions come from.
 Rendering the actual sidenote isn’t very complicated, and amounts to
 picking out the <code>Note</code> constructor, rendering it, and putting everything
 back together.<!--
---><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
 which keeps track of the sidenote number, as well as the supplied
-<code>WriterOption</code>s; nothing fancy.</span></span>
+<code>WriterOption</code>s; nothing fancy.</div>
 <div class="highlight"><pre><span></span><span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w">            </span><span class="c1">-- ^ Inlines from a single @Note@</span>
 <span class="w">               </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 <span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="kt">[]</span>
@@ -384,9 +384,9 @@ Being perfectly honest, I’m not very satisfied with this solution. It
 does work, but pre-rendering everything and not using pandoc’s built in
 constructors feels like a big hack. More importantly though, since what
 I’ve done here amounts to a complete rewrite,<!--
---><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote">Not only that, but it’s almost certainly also a regression in
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Not only that, but it’s almost certainly also a regression in
 certain aspects; even after handling of margin notes is restored,
-which I’ve completely ignored for now.</span></span>
+which I’ve completely ignored for now.</div>
  I can’t contribute
 this upstream—at least I don’t see a way. I sort of don’t want to
 advertise this solution as an alternative to <code>pandoc-sidenote</code>, as that
@@ -481,7 +481,7 @@ These kinds of issues, combined with the fact that certain
 languages—like Emacs Lisp—don’t have any syntax definitions at all,
 annoyed me enough to look for an alternative way to highlight code on
 this website.<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">All of this work for a mostly greyscale theme!</span></span>
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">All of this work for a mostly greyscale theme!</div>
  There are of course many options to choose from; I
 went with <code>pygmentize</code>, solely because I already had it installed. All
 that’s left is to tell pandoc and Hakyll to make use of it. As
@@ -489,8 +489,8 @@ mentioned, this thankfully doesn’t turn out to be very difficult!
 <h2 id="playing-with-pygmentize">Playing with <code>pygmentize</code></h2>
 <p></p>
 Having never used <code>pygmentize</code> as a command line utility,<!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">So far, the only interaction I had with the program was through
-the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.</span></span>
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">So far, the only interaction I had with the program was through
+the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.</div>
  I expected
 this to take some work—possibly involving Python <em>shudder</em>—but all of
 the necessary pieces are already present in the <span class="small-caps">cli</span>. First up, the <code>-f</code>
@@ -618,8 +618,8 @@ is an instance
 <p></p>
 which will be all that we need. The necessary code now just
 materialises in front of our eyes:<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">If all else fails, simply <a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">trace the sigils in the air and give
-them form</a>.</span></span>
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">If all else fails, simply <a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">trace the sigils in the air and give
+them form</a>.</div>
 <div class="highlight"><pre><span></span><span class="c1">-- {-# LANGUAGE BlockArguments    #-}</span>
 <span class="c1">-- {-# LANGUAGE LambdaCase        #-}</span>
 <span class="c1">-- {-# LANGUAGE OverloadedStrings #-}</span>
@@ -755,7 +755,7 @@ refile notes.
 <h2 id="motivation">Motivation</h2>
 <p></p>
 If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">A headline, possibly with an attached body.</span></span>
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">A headline, possibly with an attached body.</div>
  <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
 can be useful for structuring <span class="small-caps">todo</span>s into separate categories: one might
@@ -890,8 +890,8 @@ to give a little teaser as to what kind of question we sought to answer.
 We mainly concerned ourselves with three notions of <em>duality</em> for
 (non-symmetric!) <a href="https://ncatlab.org/nlab/show/monoidal+category">monoidal</a> categories: <a href="https://ncatlab.org/nlab/show/closed+monoidal+category">closed monoidal</a> categories,
 <a href="https://ncatlab.org/nlab/show/star-autonomous+category">*-autonomous</a><!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">Or rather, a non-symmetric variant of it called an <em>r-category</em> in
-<a href="https://zbmath.org/1370.18007">[BD13]</a>.</span></span>
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Or rather, a non-symmetric variant of it called an <em>r-category</em> in
+<a href="https://zbmath.org/1370.18007">[BD13]</a>.</div>
  categories, and <a href="https://ncatlab.org/nlab/show/rigid+monoidal+category">rigid (monoidal)</a> categories. It
 is well-known that these concepts are all connected in the following
 way.
@@ -962,9 +962,9 @@ if for all <span class="math inline">\(x \in \mathcal{C}\)</span> we have
 <p></p>
 This seems sensible; after all, the snake identities of an adjunction
 look almost completely the same as the ones for a dual!<!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">This is not a coincidence; for example, adjoints in the monoidal
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">This is not a coincidence; for example, adjoints in the monoidal
 category <span class="math inline">\(([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})\)</span> are
-exactly duals!.</span></span>
+exactly duals!.</div>
  However, if
 one sits down and actually writes down the diagrams, something doesn’t
 quite fit. As a reminder, suppose we have an adjunction
@@ -1380,9 +1380,9 @@ While there is a post about <a href="https://tony-zorman.com/posts/query-replace
 <code>query-replace</code> function, most other tidbits have only seen the light of
 day in places like the “Weekly Tips, Tricks, &c.” thread on Reddit. In
 the spirit of hosting my content somewhere that I actually control,<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">I am aware of the futility of this—Reddit is almost certainly
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">I am aware of the futility of this—Reddit is almost certainly
 going to be around longer than my personal site will. And yet,
-this feels “more correct” in some way.</span></span>
+this feels “more correct” in some way.</div>
 
 I chose to showcase these again here, hoping that other people may also
 find some of this stuff useful.
@@ -1507,8 +1507,8 @@ based on some condition.
 <p></p>
 The laziness continues with me not wanting to write <code>\blank</code> so
 often.<!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">This is a placeholder that’s often used when not wanting to
-explicitly quantify over an argument.</span></span>
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">This is a placeholder that’s often used when not wanting to
+explicitly quantify over an argument.</div>
  I could also create an auto-expanding snippet for this, but
 wouldn’t it be <em>much better</em> to insert it on a double tap of the space
 bar instead? I think so!
@@ -1541,8 +1541,8 @@ I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/
 really great so far, but some things felt a bit lackluster out of the
 box. As such, my <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el">ERC config</a> has already grown quite a
 bit.<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Though it’s still much smaller than whatever it is that WeeChat
-auto-generates :)</span></span>
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Though it’s still much smaller than whatever it is that WeeChat
+auto-generates :)</div>
  The following are a few tweaks that improve my experience
 greatly.
 <h3 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent</h3>
@@ -1823,7 +1823,7 @@ hom-<em>objects</em> are objects in some “environmental” category
 will usually be assumed to have some <em>very</em> nice properties. For the
 purposes of this blog post, I will assume that <span class="math inline">\((\mathcal{V}, \otimes, 1)\)</span> is a (small) complete and cocomplete closed symmetric monoidal
 category.<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">This is also sometimes called a <em>cosmos</em>.</span></span>
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">This is also sometimes called a <em>cosmos</em>.</div>
  If you don’t know what some of these words mean, you can
 read that as “it’s an environment in which we can think about category
 theory in an effective way”.
@@ -1949,8 +1949,8 @@ in <span class="math inline">\(\mathcal{V}\)</span> now!
 The best thing about copowers is their existence when it comes to
 <span class="math inline">\(\mathsf{Set}\)</span> and ordinary categories. If <span class="math inline">\(\mathcal{A}\)</span> has all
 coproducts, there is a canonical copower <span class="math inline">\(\cdot \colon \mathsf{Set} \times \mathcal{A} \longrightarrow \mathcal{A}\)</span>.<!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">If the category <span class="math inline">\(\mathcal{A}\)</span> is locally small. I will ignore
-those kinds of technicalities for the purposes of this post.</span></span>
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">If the category <span class="math inline">\(\mathcal{A}\)</span> is locally small. I will ignore
+those kinds of technicalities for the purposes of this post.</div>
  For all <span class="math inline">\(X \in \mathsf{Set}\)</span> and <span class="math inline">\(a \in \mathcal{A}\)</span>, it is given by
 <p></p>
 <span class="math display">\[
@@ -2036,10 +2036,10 @@ as <span class="math inline">\(\mathcal{J}(a,b)\)</span> is a set in this case. 
 \]</span>
 <p></p>
 What’s left is to define the two parallel arrows.<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">I mostly follow Trimble and the nLab here. A more explicit
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">I mostly follow Trimble and the nLab here. A more explicit
 description (in the case of limits, but it should be easy enough
 to dualise) is given, for example, in <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in
-Context</a>, Theorem 3.2.13.</span></span>
+Context</a>, Theorem 3.2.13.</div>
 <ol type="1">
 <li><p></p>
 
@@ -2048,9 +2048,9 @@ One arrow is induced by the “projection” <span class="math inline">\(\pi_2 \
 existence of such an arrow is not immediately clear. We have a
 functor <span class="math inline">\({-} \times F j \colon \mathsf{Set} \longrightarrow \mathcal{C}\)</span> and so <span class="math inline">\(\pi_2\)</span> is actually the application of the
 unique map<!--
---><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">The one-element set <span class="math inline">\(\{\star\}\)</span> is the terminal object in
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">The one-element set <span class="math inline">\(\{\star\}\)</span> is the terminal object in
 <span class="math inline">\(\mathsf{Set}\)</span>, hence by definition there is exactly one arrow from
-any other set to it.</span></span>
+any other set to it.</div>
 
 <span class="math inline">\(! \colon \mathcal{J}(a, b) \longrightarrow \{\star\}\)</span>
 to that functor; i.e.,
@@ -2173,8 +2173,8 @@ from Richard Garner during <a href="https://conferences.leeds.ac.uk/bcqt2022/">B
 Suppose our diagram category is the category with two objects and one
 non-trivial morphism; i.e., <span class="math inline">\(\mathcal{J} ≔ \{ \varphi \colon a \longrightarrow b \}\)</span>. Further, assume that the weight <span class="math inline">\(W\)</span> picks
 out<!--
---><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">By sending <span class="math inline">\(a\)</span> to <span class="math inline">\(\{0, 1\}\)</span>, <span class="math inline">\(b\)</span> to <span class="math inline">\(\{ 1 \}\)</span>, and <span class="math inline">\(\varphi\)</span> to
-<span class="math inline">\(\{0, 1\} \longrightarrow \{1\}\)</span>.</span></span>
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">By sending <span class="math inline">\(a\)</span> to <span class="math inline">\(\{0, 1\}\)</span>, <span class="math inline">\(b\)</span> to <span class="math inline">\(\{ 1 \}\)</span>, and <span class="math inline">\(\varphi\)</span> to
+<span class="math inline">\(\{0, 1\} \longrightarrow \{1\}\)</span>.</div>
  the unique arrow <span class="math inline">\(\{ 0, 1 \} \longrightarrow \{ 1 \}\)</span> in
 <span class="math inline">\(\mathsf{Set}\)</span>. The functor <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> we would like to look at sends <span class="math inline">\(a, b \in \mathcal{J}\)</span> to
 <span class="math inline">\(x, y \in \mathcal{C}\)</span> and <span class="math inline">\(\varphi\)</span> to <span class="math inline">\(\theta \colon x \longrightarrow y\)</span>.
@@ -2531,7 +2531,7 @@ We can also get a little bit more fancy. Since the topic action is just
 a general <code>X</code> action, we can really do anything we want in there. In
 addition to spawning programs, all of my Haskell projects should default
 to the <code>Hacking</code><!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In case you are interested:
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In case you are interested:
 <div class="highlight"><pre><span></span><span class="nf">hacking</span>
 <span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">renamed</span><span class="w"> </span><span class="p">[</span><span class="kt">Replace</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">]</span>
 <span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">limitWindows</span><span class="w"> </span><span class="mi">3</span>
@@ -2541,7 +2541,7 @@ to the <code>Hacking</code><!--
 
 <p></p>
 As the rest of my dotfiles, it’s available
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</span></span>
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</div>
  layout:
 <div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
@@ -2646,8 +2646,8 @@ towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.
 <p></p>
 Specifically, I want to showcase a new<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
-which will drop soon!</span></span>
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
+which will drop soon!</div>
  <span class="small-caps">xm</span>onad module:
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
@@ -2710,7 +2710,7 @@ video you want to watch on the weekend!
 To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
 “normal” <code>TODO</code> notes on <code>M-o c</code><!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</span></span>
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</div>
  and uses the selection when called
 with a universal argument:
 <div class="highlight"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
@@ -2812,7 +2812,7 @@ Thankfully, since <code>replace.el</code> sports a decent API, writing a version
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
 enough. The high-level overview is this: we read in multiple queries
 until an empty input is given,<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
 model to have (since this is how the function behaves). The gory
 details are that we use the fact that <code>replace.el</code>’s default
 suggestion is always the last query that was entered by the user.
@@ -2821,7 +2821,7 @@ What happens on an empty input is quite deep in the bowels of
 functions sounds like a real pain, leaning on that functionality
 suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
-out.</span></span>
+out.</div>
  build up a regular expression of the
 form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
 replacing—test the current thing to be replaced against all of the
@@ -2937,9 +2937,9 @@ generic enough API, I decided to turn it into an <span class="small-caps">xm</sp
 Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
 now available for everyone to try out; provided one has the git version
 of <span class="small-caps">xm</span>onad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
 installing any unreleased—though stable—version, message me in any
-way and maybe we’ll hurry up and cut 0.17.1 soon!</span></span>
+way and maybe we’ll hurry up and cut 0.17.1 soon!</div>
 <p></p>
 I’d like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
@@ -3148,9 +3148,9 @@ associative by default and so
 <p></p>
 However, the complexity characteristics of this operation are working
 against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code><!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
 and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
-that here.</span></span>
+that here.</div>
  is
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
 <span class="kt">[]</span><span class="w">       </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w">           </span><span class="n">ys</span>
@@ -3188,9 +3188,9 @@ an associative an unital operation: function composition. In Haskell,
 <code>(&lt;&gt;)</code> is, in some sense,
 <a href="https://www.haskell.org/tutorial/classes.html">overloaded</a> so that it
 can be used with any monoidal composition one can think of!<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Really, for any <em>semigroup</em>, which is a slightly weaker notion of
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Really, for any <em>semigroup</em>, which is a slightly weaker notion of
 an operation that is merely associative, but doesn’t necessarily
-have a unit.</span></span>
+have a unit.</div>
 <p></p>
 The attentive reader may have concluded that the pipe operator that we
 called <code>(&gt;-&gt;)</code> above is really just <code>(&lt;&gt;)</code> in disguise, and that’s
@@ -3200,8 +3200,8 @@ amenable to the threading idea.
 <p></p>
 I haven’t benchmarked this, so it’s not entirely clear to me whether
 performance is actually relevant in this situation,<!--
---><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">I suspect that the answer is “probably not”—that didn’t stop me,
-however!</span></span>
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">I suspect that the answer is “probably not”—that didn’t stop me,
+however!</div>
  but using
 difference lists just feels right here, and so I did.
 <h2 id="conclusion">Conclusion</h2>
@@ -3217,9 +3217,9 @@ Of course, technically none of this needs to live only inside your
 <span class="small-caps">xm</span>onad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
 cool tools like magit.sh.<!--
---><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
 maintain a slightly modified and POSIX shell compatible version
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.</span></span>
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.</div>
  Go nuts!
 
       <!-- Body is included in the above file -->
@@ -3270,13 +3270,13 @@ As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
 <em>research</em> workflow—and there is a lot of great resources out there
 already—I decided to not do this here.<!--
---><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">If you’d like some examples: being employed at a university also
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you’d like some examples: being employed at a university also
 means I have to worry a bit about efficiently dealing with
 bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
 calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
 as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad’s OrgMode prompt</a>), accessing the
 universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
-<code>TRAMP</code>), … You get the idea.</span></span>
+<code>TRAMP</code>), … You get the idea.</div>
 <h2 id="high-level-structure">High level structure</h2>
 <h3 id="topics">Topics</h3>
 <p></p>
@@ -3324,7 +3324,7 @@ relevant <span class="small-caps">pdf</span>s in <a href="https://xournalpp.gith
 Instead of navigating to it, all interaction with the library is done
 via <a href="https://github.com/slotthe/hmenu">hmenu</a>, a small wrapper around <a href="https://tools.suckless.org/dmenu/">dmenu</a> to facilitate this kind of
 behaviour. I merely have to press <code>M-y</code><!--
---><span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><span class="sidenote">I will be using Emacs style notation throughout the article. This
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">I will be using Emacs style notation throughout the article. This
 means that, for example, <code>C-x a</code> should be read as “hold down
 control and press x, then release both and press a”. You can of
 course safely ignore this, since the keys just serve illustrative
@@ -3334,7 +3334,7 @@ key, but to the <code>modMask</code> that the user specified. This is indeed
 <code>&lt;Alt&gt;</code> by default, but many people understandably rebind this
 straight away to something that’s less likely to interfere with
 other programs. In my case, that’s the Super key, so <code>M-s</code> means
-<code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.</span></span>
+<code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.</div>
  and can then fuzzy search
 through the directory. Once I’ve made a choice, <span class="small-caps">pdf</span>s are automatically
 opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.
@@ -3364,8 +3364,8 @@ especially when collaborating with others.
 <p></p>
 Not without my quirks (as I’m sure you’ve noticed), I’m a bit picky
 about the particular writing setup. It’s either completely white A5<!--
---><span class="sidenote-wrapper"><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><span class="sidenote">Although, admittedly, when drawing up large diagrams I’m sometimes
-forced to switch to A4 paper in landscape mode.</span></span>
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Although, admittedly, when drawing up large diagrams I’m sometimes
+forced to switch to A4 paper in landscape mode.</div>
 
 paper, paired with a good (mechanical) pencil/a fine pen, or thick
 dotted paper, paired with a fountain pen.
@@ -3406,18 +3406,18 @@ The <code>latex-change-env</code> package is for changing between different kind
 of environments, including display math, while offering to rename labels
 across the project if necessary. When deleting a label from an
 environment, it also remembers this for the session!<!--
---><span class="sidenote-wrapper"><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><span class="sidenote">This is based on the hash of the contents of the environment—if
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">This is based on the hash of the contents of the environment—if
 that changes, the label is “lost”; though it can of course still
-be retrieved manually from the relevant hash map.</span></span>
+be retrieved manually from the relevant hash map.</div>
 <p></p>
 <img class="pure-img" src="./label-renaming.gif">
 <p></p>
 One neat feature of AUCTeX that I find myself using more and more often
 lately<!--
---><span class="sidenote-wrapper"><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><span class="sidenote">This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
 Emacs 29, making use of XInput 2.4 functionality. It makes
 scrolling through buffers that are quite dense with pictures
-rather smooth.</span></span>
+rather smooth.</div>
  is the in-buffer preview. Usually when writing a draft I’m
 not that interested in how exactly something looks in the <span class="small-caps">pdf</span>—that part
 comes later, believe me. In cases like these, just calling
@@ -3521,12 +3521,12 @@ more complicated solution.
 <p></p>
 Adding new citations is done via the now aptly named Emacs package
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><!--
---><span class="sidenote-wrapper"><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><span class="sidenote">Ostensibly, this should be an <span class="small-caps">xm</span>onad module, as it does not
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Ostensibly, this should be an <span class="small-caps">xm</span>onad module, as it does not
 necessarily have anything to do with Emacs itself. However, I had
 already written the elfeed integration and so the most annoying
 part (scraping the arXiv xml for certain bits) was already done.
 On the other hand, there are more Emacs than <span class="small-caps">xm</span>onad users, so
-perhaps doing it like this will help more people anyways.</span></span>
+perhaps doing it like this will help more people anyways.</div>
  with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
 plumbing</a>
 on the <span class="small-caps">xm</span>onad side to get Emacs going. The basic idea is that—given an
