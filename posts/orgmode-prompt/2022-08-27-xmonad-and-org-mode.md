@@ -10,7 +10,7 @@ towards working on the two configurations separately, or—as we'll do
 today—bringing them ever closed together.
 
 Specifically, I want to showcase a new[^1] XMonad module:
-[XMonad.Prompt.OrgMode].  Building on top of XMonad's prompt—which works
+[XMonad.Prompt.Org&shy;Mode].  Building on top of XMonad's prompt—which works
 much like [dmenu]—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one's current workflow.  The module recently got support for
@@ -110,6 +110,7 @@ case, I'd like to [hear from you](mailto:soliditsallgood@mailbox.org)!
 [Emacs]: https://www.gnu.org/software/emacs/
 [XMonad.Actions.Prefix]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html
 [XMonad.Prompt.OrgMode]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html
+[XMonad.Prompt.Org&shy;Mode]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html
 [XMonad.Prompt]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt.html
 [XMonad.Util.Run]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html
 [XMonad]: https://xmonad.org/
