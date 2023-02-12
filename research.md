@@ -11,14 +11,14 @@ include [Hopf monads], [graphical calculi], [duoidal] and [linearly
 distributive] categories, as well as [operads].
 
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
-[arXiv]: https://arxiv.org/search/math?searchtype=author&query=Zorman%2C+Tony
+[\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
+[arXiv]: https://arxiv.org/a/zorman_t_1
 [duoidal]: https://ncatlab.org/nlab/show/duoidal+category
 [graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
 [linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
 [operads]: https://ncatlab.org/nlab/show/string+diagram
-[zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
 [rigid]: https://ncatlab.org/nlab/show/rigid+monoidal+category
-[\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
+[zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
 
 # Preprints
 [^2]

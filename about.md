@@ -29,7 +29,7 @@ If you want to get into contact, try any of the following channels:
 [Emacs]: https://www.gnu.org/software/emacs/
 [Haskell]: https://www.haskell.org/
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
-[arXiv]: https://arxiv.org/search/math?searchtype=author&query=Zorman%2C+T
+[arXiv]: https://arxiv.org/a/zorman_t_1
 [duoidal]: https://ncatlab.org/nlab/show/duoidal+category
 [free software]: ./free-software.html
 [graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
