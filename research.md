@@ -1,15 +1,14 @@
 ---
 title: Research
 ---
-[^1]
-My research interests can broadly be characterised under the term
-"category theory and its applications".  For example, I like to study
-how algebraic objects lift into more categorical frameworks and how much
-of the theory people have developed still works in that context.  When
-no one's looking, I also like to study categories for their own sake.
-Objects and concepts I like to think about include [Hopf monads],
-[graphical calculi], [duoidal] and [linearly distributive] categories,
-as well as [operads].
+[^1] My research interests can broadly be characterised under the term
+"category theory"—in particular, I like anything involving *dualities*,
+like [rigid] monoidal or [\*-autonomous] categories.  Further, I enjoy
+studying how algebraic gadgets lift into more categorical frameworks,
+and how much theory still works in that context.  When no one's looking,
+I also like to study categories for their own sake.  Some more keywords
+include [Hopf monads], [graphical calculi], [duoidal] and [linearly
+distributive] categories, as well as [operads].
 
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
 [arXiv]: https://arxiv.org/search/math?searchtype=author&query=Zorman%2C+Tony
@@ -18,6 +17,8 @@ as well as [operads].
 [linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
 [operads]: https://ncatlab.org/nlab/show/string+diagram
 [zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
+[rigid]: https://ncatlab.org/nlab/show/rigid+monoidal+category
+[\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
 
 # Preprints
 [^2]

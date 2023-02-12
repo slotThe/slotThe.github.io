@@ -79,7 +79,7 @@ main = hakyllWith config do
 
   match (fromList ["about.md", "impressum.md"]) do
     route   $ setExtension "html"
-    compile $ pandocCompilerNoToc
+    compile $ myPandocCompiler
           >>= loadAndApplyTemplate
                 "templates/default.html"
                 (  boolField "noindex" (pure True)  -- pls no index
@@ -272,10 +272,6 @@ killTags open close = go
 
 -----------------------------------------------------------------------
 -- Compilers
-
--- | Emphasise that the default pandoc compiler does not have a TOC.
-pandocCompilerNoToc :: Compiler (Item String)
-pandocCompilerNoToc = pandocCompiler
 
 -- | Pandoc compiler with syntax highlighting (via @pygmentize@),
 -- sidenotes instead of footnotes (see @css/sidenotes.css@ and
