@@ -103,6 +103,11 @@ hr {                    /* That line before the footnotes */
   HEADINGS
 */
 
+.header {               /* Header below the title: "Posted on XXX | «tags»"… */
+    font-size: 0.95em;
+    font-style: italic;
+}
+
 h1 {                    /* Reserved for title */
     font-size: 1.5em;
     font-variant: small-caps;
