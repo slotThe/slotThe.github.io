@@ -10,6 +10,36 @@ the former does not have small caps glyphs.
 :root {
     --proportional-fonts: "Source Sans Pro", sans-serif;
     --monospace-fonts: "Iosevka Custom", monospace;
+    --serif-fonts: "Source Serif Pro", serif;
+}
+
+@font-face {
+    font-family: 'Source Serif Pro';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../fonts/SourceSerifPro-BASIC-Regular.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Serif Pro';
+    font-weight: normal;
+    font-style: italic;
+    src: url('../fonts/SourceSerifPro-BASIC-RegularItalic.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Serif Pro';
+    font-weight: bold;
+    font-style: normal;
+    src: url('../fonts/SourceSerifPro-BASIC-Semibold.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Serif Pro';
+    font-weight: bold;
+    font-style: italic;
+    src: url('../fonts/SourceSansPro-BASIC-SemiboldItalic.ttf') format('truetype');
+    font-display: swap;
 }
 
 @font-face {
