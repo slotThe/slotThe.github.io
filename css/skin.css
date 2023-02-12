@@ -47,7 +47,7 @@ body {
     display: block;
     color: inherit;
     line-height: 1.5em;
-    padding: 0.35em 1.4em;
+    /* padding: 0.35em 1.4em; */
     text-decoration: none;
     white-space: nowrap;
 }
@@ -67,7 +67,7 @@ body {
     /* height: 2.4em; removed for Skin Builder */
 }
 
-.pure-skin-solid .pure-menu li a { padding: 0.35em 1.4em; }
+.pure-skin-solid .pure-menu li a { /* padding: 0.35em 1.4em; */ }
 
 .pure-skin-solid .pure-menu-can-have-children > .pure-menu-label:after {
     content: '\25B8';

@@ -13,7 +13,7 @@ html {
 
 body {
     color: black;
-    font-size: 19px;
+    font-size: 21px;
     font-family: var(--proportional-fonts);
     font-variant-numeric: oldstyle-nums;
     line-height: 1.4;
@@ -151,19 +151,19 @@ div#navigation {
 }
 
 div#navigation a {
-    font-size: 17px;
+    font-size: 19px;
     font-weight: bold;
     text-decoration: none;
     text-transform: none;
 }
 
 div#navigation .menu-title {
-    font-size: 17px;
+    font-size: 19px;
     font-family: var(--monospace-fonts);
 }
 
 div#navigation span.menu-subtitle {
-    font-size: 17px;
+    font-size: 19px;
     font-weight: normal;
     font-style: italic;
 }
@@ -218,6 +218,7 @@ media queries to hide what we don't want to see.
 /* Settings that are the same regardless of size */
 div#contents,
 div#contents-big {
+    font-size: 19px;
     padding-top: 0.25em;
     max-width: 240px;
     max-width: 15rem;
