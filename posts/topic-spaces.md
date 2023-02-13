@@ -1,5 +1,6 @@
 ---
 title: "XMonad Module Showcase: X.A.TopicSpace"
+date: 2022-09-11
 tags: haskell, xmonad
 ---
 
@@ -188,7 +189,7 @@ spawnEshellInTopic = currentTopicDir topicConfig >>= \dir ->
 
 All in all, we have something that looks a little bit like this:
 
-<img class="pure-img" src="./haskell-topic.gif"
+<img class="pure-img" src="../images/topic-space/haskell-topic.gif"
      alt="Switching to a Haskell topic, then using project.el to navigate the project">
 
 ## Testing this website
@@ -209,7 +210,7 @@ spawnWebsite = switchToLayout "Tall"
 
 The whole thing looks like this:
 
-<img class="pure-img" src="./website.gif"
+<img class="pure-img" src="../images/topic-space/website.gif"
      alt="Switching to an empty topic; various things automatically start up">
 
 # Conclusion
@@ -222,8 +223,8 @@ win in my book!
 
 [XMonad.Util.Run]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL
 [ghcid]: https://github.com/ndmitchell/ghcid
-[research workflow]: ../phd-workflow/2022-05-01-my-phd-workflow.html
-[run-post]: ../2022-05-25-calling-emacs-from-xmonad.html
+[research workflow]: ./my-phd-workflow.html
+[run-post]: ./calling-emacs-from-xmonad.html
 [topic-space]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html
 
 [^1]: In case you are interested:

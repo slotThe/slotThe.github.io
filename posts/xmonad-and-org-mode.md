@@ -1,5 +1,6 @@
 ---
 title: Rapidly Capture Ideas with XMonad and Emacs
+date: 2022-08-27
 no-toc: true
 tags: emacs, xmonad
 ---
@@ -43,7 +44,7 @@ anxiety that I'm forgetting things left and right.
 The following showcases the core functionality of the module—taking
 notes!
 
-<img class="pure-img" src="./simple-task.gif" alt="capturing a single task">
+<img class="pure-img" src="../images/orgmode-prompt/simple-task.gif" alt="capturing a single task">
 
 In case you _really_ don't want to forget something, there is also the
 ability to create `DEADLINE` and `SCHEDULED` tasks.  Optionally, you can
@@ -52,7 +53,7 @@ you add the org file in which the TODOs are placed to the
 `org-agenda-files` variable, then this will immediately show these tasks
 in your agenda!
 
-<img class="pure-img" src="./deadline-task.gif" alt="capturing a deadline">
+<img class="pure-img" src="../images/orgmode-prompt/deadline-task.gif" alt="capturing a deadline">
 
 How exactly one may specify the `SCHEDULED` and `DEADLINE` keywords, as
 well as a date, time, and priority is covered in detail in the

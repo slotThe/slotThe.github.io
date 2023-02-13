@@ -1,5 +1,6 @@
 ---
 title: How to query-replace multiple matches!
+date: 2022-08-06
 tags: emacs
 ---
 
@@ -44,7 +45,7 @@ unsure how many people know their elisp regular expressions well enough
 for that to be time efficient.  I don't, and almost certainly never
 will, so it seemed much easier to automate this instead!
 
-[write a lot of LaTeX]: ../phd-workflow/2022-05-01-my-phd-workflow.html
+[write a lot of LaTeX]: ./my-phd-workflow.html
 [work]: ../../research.html
 
 # The solution
@@ -67,7 +68,7 @@ time, `U` with `T`.  The first few matches are stepped through and the
 rest is just accepted wholesale.  At the bottom, you can see the default
 `query-replace` interface when interacting with the query.
 
-<img class="pure-img" src="./query-replace-many.gif" alt="query-replace-many functionality showcase">
+<img class="pure-img" src="../images/query-replace/query-replace-many.gif" alt="query-replace-many functionality showcase">
 
 The only cosmetic imperfection of this is that, while the replacement
 candidate itself is correctly updated, we see the whole regular

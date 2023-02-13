@@ -1,5 +1,6 @@
 ---
 title: Adjusting preview.el for vertical monitors
+date: 2022-11-05
 tags: emacs
 no-toc: true
 ---

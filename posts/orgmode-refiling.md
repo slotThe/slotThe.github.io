@@ -1,5 +1,6 @@
 ---
 title: Immediately Refile Notes with X.P.OrgMode
+date: 2023-01-14
 tags: emacs, haskell, xmonad
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: A Potpourri of Emacs Tweaks
+date: 2022-10-22
 tags: emacs
 ---
 

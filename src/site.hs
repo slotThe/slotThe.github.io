@@ -35,6 +35,9 @@ main = hakyllWith config do
     route   idRoute
     compile copyFileCompiler
 
+  --- Redirects
+  version "redirects" $ createRedirects redirects
+
   --- Generate tags
   tags@Tags{ tagsMap , tagsMakeId } <- buildTags "posts/**" (fromCapture "tags/**.html")
   let tagCtx = tagsField "tags" tags <> postCtx
@@ -335,3 +338,33 @@ myPandocCompiler =
       if "XMonad" `T.isPrefixOf` s && T.length s < 9
       then sc "xm" <> T.drop 2 s
       else s
+
+-----------------------------------------------------------------------
+-- Redirects
+
+redirects :: [(Identifier, String)]
+redirects =
+    [ -- We used to have the date in the title, as well as extra
+      -- directories for individual posts; not anymore!
+      ("posts/phd-workflow/2022-05-01-my-phd-workflow.html", "../my-phd-workflow.html")
+    , ("posts/2022-05-25-calling-emacs-from-xmonad.html", "calling-emacs-from-xmonad.html")
+    , ("posts/query-replace/2022-08-06-query-replace-many.html", "../query-replace-many.html")
+    , ("posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html", "../xmonad-and-org-mode.html")
+    , ("posts/topic-space/2022-09-11-topic-spaces.html", "../topic-spaces.html")
+    , ("posts/weighted-colimits/2022-10-15-weighted-colimits.html", "../weighted-colimits.html")
+    , ("posts/2022-10-22-emacs-potpourri.html", "emacs-potpourri.html")
+    , ("posts/2022-11-05-vertical-previews.html", "vertical-previews.html")
+    , ("posts/2022-11-30-package-vc-install.html", "package-vc-install.html")
+    , ("posts/2022-12-22-vc-use-package.html", "vc-use-package.html")
+    , ("posts/2023-01-10-duality-in-monoidal-categories.html", "duality-in-monoidal-categories.html")
+    , ("posts/2023-01-14-orgmode-refiling.html", "orgmode-refiling.html")
+    , ("posts/2023-01-21-pygmentising-hakyll.html", "pygmentising-hakyll.html")
+    , ("posts/2023-01-27-block-sidenotes.html", "block-sidenotes.html")
+    -- The previous state of things was quite horrible, so people may
+    -- have been confused.
+    , ("posts/2022-05-01-my-phd-workflow.html", "my-phd-workflow.html")
+    , ("posts/2022-08-06-query-replace-many.html", "query-replace-many.html")
+    , ("posts/2022-08-27-xmonad-and-org-mode.html", "xmonad-and-org-mode.html")
+    , ("posts/2022-09-11-topic-spaces.html", "topic-spaces.html")
+    , ("posts/2022-10-15-weighted-colimits.html", "weighted-colimits.html")
+    ]

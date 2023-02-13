@@ -1,5 +1,6 @@
 ---
 title: Calling Emacs from XMonad
+date: 2022-05-25
 tags: emacs, haskell, xmonad
 ---
 

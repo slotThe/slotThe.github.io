@@ -1,5 +1,6 @@
 ---
 title: Exploring package-vc-install
+date: 2022-11-30
 tags: emacs
 ---
 

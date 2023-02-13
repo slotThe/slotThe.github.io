@@ -1,5 +1,6 @@
 ---
 title: "Announcing: vc-use-package"
+date: 2022-12-22
 tags: emacs
 no-toc: true
 ---

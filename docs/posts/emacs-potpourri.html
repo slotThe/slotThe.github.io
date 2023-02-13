@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>A Potpourri of Emacs Tweaks · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
+<li><a href="#pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
+<li><a href="#quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code></a></li>
+<li><a href="#latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician</a></li>
+<li><a href="#erc">ERC</a>
+<ul>
+<li><a href="#mark-the-current-frame-as-urgent">Mark the current frame as urgent</a></li>
+<li><a href="#dont-highlight-quite-so-much">Don’t highlight quite so much</a></li>
+</ul></li>
+<li><a href="#inserting-links">Inserting links</a></li>
+<li><a href="#a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>A Potpourri of Emacs Tweaks</h1>
+           
+
+          <article>
+    <section class="header">
+      Posted on 2022-10-22
+      
+        | <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
+      
+    </section>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
+<li><a href="#pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
+<li><a href="#quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code></a></li>
+<li><a href="#latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician</a></li>
+<li><a href="#erc">ERC</a>
+<ul>
+<li><a href="#mark-the-current-frame-as-urgent">Mark the current frame as urgent</a></li>
+<li><a href="#dont-highlight-quite-so-much">Don’t highlight quite so much</a></li>
+</ul></li>
+<li><a href="#inserting-links">Inserting links</a></li>
+<li><a href="#a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
+</ul>
+  </div>
+
+<p></p>
+Emacs is the “extensible text editor”, and it wouldn’t be fun if one
+didn’t at least try to take advantage of that, right? Having just
+written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">README</a> for my Emacs configuration, I
+thought it might be nice to somewhat expand on certain ideas and give a
+little context to some snippets that have accumulated over time.
+<p></p>
+While there is a post about <a href="https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html">my version</a> of the
+<code>query-replace</code> function, most other tidbits have only seen the light of
+day in places like the “Weekly Tips, Tricks, &c.” thread on Reddit. In
+the spirit of hosting my content somewhere that I actually control,<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">I am aware of the futility of this—Reddit is almost certainly
+going to be around longer than my personal site will. And yet,
+this feels “more correct” in some way.</div>
+
+I chose to showcase these again here, hoping that other people may also
+find some of this stuff useful.
+<!--more-->
+<h2 id="frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code><a href="#frame-inhibit-implied-resize" class="floatright sec-link">¶</a></h2>
+<p></p>
+This variable is interesting for all the people who, for one reason or
+another, care about the startup time of their Emacs session. Even more
+if one uses a tiling window manager, as then Emacs doesn’t get a say in
+how big its frame will be anyway. An excerpt from the documentation:
+<blockquote>
+<p></p>
+Whether frames should be resized implicitly.
+<p></p>
+If this option is nil, setting font, menu bar, tool bar, tab bar,
+internal borders, fringes or scroll bars of a specific frame may
+resize the frame in order to preserve the number of columns or lines
+it displays. If this option is t, no such resizing is done.
+</blockquote>
+<p></p>
+I always wondered why startup time skyrocketed whenever I changed the
+default font to something else—surely opening a font and using it can’t
+be that expensive! What I didn’t realise was that what I set was
+slightly larger than Emacs’s default font, which I reckon was some kind
+of monospace fallback on my system. Setting
+<code>frame-inhibit-implied-resize</code> to <code>t</code> will thusly prevent Emacs from
+trying to—futilely, since I use <a href="https://xmonad.org"><span class="small-caps">xm</span>onad</a>—resize its frame in order to
+“preserve the number of columns or lines it displays”. The upshot is
+that this cuts my startup time from just over 1 second to about 0.8
+seconds. This may not seem like much, but it’s literally <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51">setting a
+single variable</a> in my <code>early-init.el</code>—pretty good
+value for money.
+<h2 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code><a href="#pixel-scroll-precision-mode" class="floatright sec-link">¶</a></h2>
+<p></p>
+This is pretty old news by now, but I wanted to take the opportunity to
+again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a href="./phd-workflow/2022-05-01-my-phd-workflow.html">PhD
+student in maths</a>, which means that I write a lot of
+LaTeX and also use Org extensively for taking notes. While ordinary
+LaTeX entry in Org works quite well, commutative diagrams are a pain
+more often than not. In fact, It’s much easier to draw them with a tool
+like <a href="https://q.uiver.app/">quiver</a>, make a screenshot, and then include the resulting picture
+in the file. However, now we have the problem that Emacs treats
+pictures as very large single characters—the result is a scrolling
+experience that’s very far from optimal. This is <em>exactly</em> where
+<code>pixel-scroll-precision-mode</code> comes in and saves the day, but see the
+difference for yourself:
+<p>
+<video width="100%" controls>
+<source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code><a href="#quickly-insert-images-in-org-roam" class="floatright sec-link">¶</a></h2>
+<p></p>
+Speaking of inserting images into Org; how does one do that, exactly?
+Doing everything by hand seems like a slog: select an arbitrary
+rectangle on the screen, take a screenshot of it, move the resulting
+picture into the correct directory, give it an appropriate name, and
+insert a link to it into the current buffer. This sounds like a lot of
+busywork for something that I ideally don’t want to think about at all;
+thankfully, most of this can be nicely automated.
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/org-roam-insert-image</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Select and insert an image at point.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">file-name</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;%s-%s.png&quot;</span>
+<span class="w">                            </span><span class="p">(</span><span class="nv">file-name-sans-extension</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-name</span><span class="p">))</span>
+<span class="w">                            </span><span class="p">(</span><span class="nv">cl-random</span><span class="w"> </span><span class="p">(</span><span class="nf">expt</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">31</span><span class="p">))))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">path</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;%s/%s/%s&quot;</span><span class="w"> </span><span class="nv">org-roam-directory</span><span class="w"> </span><span class="s">&quot;images&quot;</span><span class="w"> </span><span class="nv">file-name</span><span class="p">)))</span>
+<span class="w">    </span><span class="c1">;; The mouse movement via xdotool is needed because otherwise, if</span>
+<span class="w">    </span><span class="c1">;; unclutter is active, the pointer will remain hidden.  Uff.</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">call-process</span><span class="w"> </span><span class="s">&quot;xdotool&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="s">&quot;mousemove_relative&quot;</span><span class="w"> </span><span class="s">&quot;--&quot;</span><span class="w"> </span><span class="s">&quot;-1&quot;</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">scrot-exit</span><span class="w"> </span><span class="p">(</span><span class="nf">call-process</span><span class="w"> </span><span class="s">&quot;scrot&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span>
+<span class="w">                                    </span><span class="s">&quot;-z&quot;</span><span class="w"> </span><span class="s">&quot;-f&quot;</span><span class="w"> </span><span class="s">&quot;-s&quot;</span><span class="w"> </span><span class="s">&quot;--file&quot;</span><span class="w"> </span><span class="nv">path</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="nv">scrot-exit</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;[[../images/%s]]&quot;</span><span class="w"> </span><span class="nv">file-name</span><span class="p">))))))</span>
+</pre></div>
+
+<p></p>
+All it needs is <code>xdotool</code> for moving the mouse (though, if you don’t use
+<code>unclutter</code> then this may well be deleted) and <code>scrot</code> for actually
+taking the screenshot. Pretty convenient. If <code>scrot</code> is too low-tech
+for you, then the above snippet probably also works with <code>flameshot</code> or
+a similar tool.
+<h2 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician<a href="#latex-for-the-lazy-mathematician" class="floatright sec-link">¶</a></h2>
+<p></p>
+I am pretty impatient when it comes to LaTeX entry. So impatient that I
+have created a few “now you’re really taking it too far”-type of
+functions. To be honest, they kind of delight me.
+<p></p>
+First, the following is an override for the <code>self-insert-command</code>, which
+enables faster entry of one-character math symbols:
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">char</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;</span><span class="ss">`self-insert-command'</span><span class="s"> for LaTeX mode.</span>
+<span class="s">If the previous word is just a single character, surround it with</span>
+<span class="s">dollar signs.  If already in math mode, do nothing.  If the</span>
+<span class="s">character is a single </span><span class="ss">`a'</span><span class="s">, do nothing.</span>
+
+<span class="s">If called with a single \\[universal-argument], just call</span>
+<span class="ss">`self-insert-command'</span><span class="s">.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">pcase</span><span class="w"> </span><span class="nv">arg</span>
+<span class="w">    </span><span class="p">(</span><span class="o">'</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">self-insert-command</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">_</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">ppoint</span><span class="w"> </span><span class="p">(</span><span class="k">save-excursion</span><span class="w"> </span><span class="p">(</span><span class="nv">backward-word</span><span class="p">)</span><span class="w">       </span><span class="p">(</span><span class="nf">point</span><span class="p">)))</span>
+<span class="w">             </span><span class="p">(</span><span class="nv">ipoint</span><span class="w"> </span><span class="p">(</span><span class="k">save-excursion</span><span class="w"> </span><span class="p">(</span><span class="nv">back-to-indentation</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point</span><span class="p">)))</span>
+<span class="w">             </span><span class="p">(</span><span class="nv">word</span><span class="w">   </span><span class="p">(</span><span class="nv">word-at-point</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">length&gt;</span><span class="w"> </span><span class="nv">word</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">   </span><span class="c1">; longer than a single character</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="nv">word</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="nv">ipoint</span><span class="w"> </span><span class="nv">ppoint</span><span class="p">)</span><span class="w">  </span><span class="c1">; the first thing on a new line</span>
+<span class="w">                     </span><span class="p">(</span><span class="nf">equal</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="nv">word</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">number-at-point</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="nv">texmathp</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-let</span><span class="w"> </span><span class="p">(((</span><span class="nv">open</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">close</span><span class="p">)</span><span class="w"> </span><span class="nv">math-delimiters-inline</span><span class="p">))</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">backward-char</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">open</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">forward-char</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">close</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nf">self-insert-command</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">char</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+Bound to <code>&lt;SPC&gt;</code> (and also things like <code>.</code> and <code>-</code>), it enables one to
+write <code>"foo T&lt;SPC&gt;"</code> and have Emacs insert <code>"foo $T$ "</code> instead—very
+convenient, and much faster even than having a snippet to insert dollars
+based on some condition.
+<p></p>
+The laziness continues with me not wanting to write <code>\blank</code> so
+often.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">This is a placeholder that’s often used when not wanting to
+explicitly quantify over an argument.</div>
+ I could also create an auto-expanding snippet for this, but
+wouldn’t it be <em>much better</em> to insert it on a double tap of the space
+bar instead? I think so!
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-space</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Insert a space; or not.</span>
+<span class="s">In case the previous character was already a space, insert</span>
+<span class="s">\\blank instead.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="sc">?\s</span><span class="w"> </span><span class="p">(</span><span class="nf">char-before</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nv">texmathp</span><span class="p">))</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;\\blank &quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="sc">?\s</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+Now, writing something like <code>"C(&lt;SPC&gt;&lt;SPC&gt;,&lt;SPC&gt;&lt;SPC&gt;)"</code> in math-mode
+nicely inserts <code>"C( \blank , \blank )"</code>. Because the space bar is so
+easy to press, this is again marginally faster than having to write
+something like <code>"C(bln,bln)"</code>.
+<p></p>
+Together with auto-expanding snippets, this enables reasonably fast
+LaTeX entry:
+<p></p>
+<img class="pure-img" src="../images/emacs-potpourri/latex-entry.gif" alt="Fast LaTeX entry with various kinds of macros and abbreviations">
+<p></p>
+More examples can be found in the <a href="./phd-workflow/2022-05-01-my-phd-workflow.html#digital-notes">post</a> about
+my research workflow.
+<h2 id="erc">ERC<a href="#erc" class="floatright sec-link">¶</a></h2>
+<p></p>
+I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s
+really great so far, but some things felt a bit lackluster out of the
+box. As such, my <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el">ERC config</a> has already grown quite a
+bit.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Though it’s still much smaller than whatever it is that WeeChat
+auto-generates :)</div>
+ The following are a few tweaks that improve my experience
+greatly.
+<h3 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent<a href="#mark-the-current-frame-as-urgent" class="floatright sec-link">¶</a></h3>
+<p></p>
+One feature I was dearly missing was the ability to set <a href="https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html">urgency
+hints</a> in the case I get highlighted/pinged. This is
+essentially the window telling your window manager or desktop
+environment that it wants your attention. You can then execute an
+action based on this urgency hint. Thankfully, Emacs is extensible, so
+hacking this behaviour into ERC wasn’t actually all that complicated.
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/mark-emacs-urgent</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Mark the current frame as urgent.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="s">&quot;WM_HINTS&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">hints</span><span class="w"> </span><span class="p">(</span><span class="nv">seq--into-list</span>
+<span class="w">                 </span><span class="c1">;; By default this returns a string/vector.</span>
+<span class="w">                 </span><span class="p">(</span><span class="nf">x-window-property</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">))))</span>
+<span class="w">    </span><span class="c1">;; Urgency flag: (1L &lt;&lt; 8) == 256</span>
+<span class="w">    </span><span class="c1">;; Source (as always): https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">setcar</span><span class="w"> </span><span class="nv">hints</span><span class="w"> </span><span class="p">(</span><span class="nf">logior</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">hints</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">lsh</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">8</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">x-change-window-property</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="nv">hints</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="mi">32</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/beep-on-match</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Beep and mark the frame as urgent on highlight.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">visible-bell</span><span class="w"> </span><span class="no">nil</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">slot/mark-emacs-urgent</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">erc-beep-on-match</span><span class="w"> </span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nv">add-hook</span><span class="w"> </span><span class="ss">'erc-text-matched-hook</span><span class="w"> </span><span class="nf">#'</span><span class="nv">slot/beep-on-match</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+And that’s really it! Now ERC correctly sends an urgency hint whenever
+I get highlighted. Note that, <a href="https://old.reddit.com/r/emacs/comments/xjyuni/weekly_tips_tricks_c_thread/ipfjlw0/">as we found out</a>, if
+you use a reparenting window manager (you probably do if you use a
+desktop environment) you might have to give <code>x-change-window-property</code>
+above an extra <code>t</code> argument.
+<h3 id="dont-highlight-quite-so-much">Don’t highlight quite so much<a href="#dont-highlight-quite-so-much" class="floatright sec-link">¶</a></h3>
+<p></p>
+Having configured quite a few regular expressions for when I get
+highlighted, things can get quite overwhelming at times. For example,
+when ERC starts up it prints <code>/users</code> in every channel buffer. Of
+course, I’m a user in a channel that I’m in, so Emacs happily starts
+beeping and throwing around urgency hints—not a good experience. This
+also clutters the <code>ERC Keywords</code> buffer (which is built-in and akin to
+WeeChat’s <code>highmon.pl</code>).
+<p></p>
+Thankfully, however, there is a straightforward hack around this: just
+check the message for certain regular expression first and do nothing
+when they are present.
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="p">(</span><span class="nv">msg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Don't highlight me when these things happen.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">message</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim-left</span><span class="w"> </span><span class="nv">msg</span><span class="p">))</span>
+<span class="w">        </span><span class="p">(</span><span class="nv">channel</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">erc-default-target</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">--any?</span><span class="w"> </span><span class="p">(</span><span class="nv">s-prefix?</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">            </span><span class="o">`</span><span class="p">(</span><span class="s">&quot;*** Users on&quot;</span>
+<span class="w">              </span><span class="s">&quot;*** Your new nickname is&quot;</span>
+<span class="w">              </span><span class="s">&quot;*** Welcome to the&quot;</span>
+<span class="w">              </span><span class="o">,</span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;*** &quot;</span><span class="w"> </span><span class="nv">channel</span><span class="w"> </span><span class="s">&quot;: topic set by&quot;</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+All that’s left to do is to thread this function through to
+<code>erc-log-matches</code> and the above-defined <code>slot/beep-on-match</code>:
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-log-matches</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Log matches to extra buffer, unless they are annoying.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">erc-log-matches</span><span class="w"> </span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/beep-on-match</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Beep and mark the frame as urgent on highlight.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">visible-bell</span><span class="w"> </span><span class="no">nil</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">slot/mark-emacs-urgent</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">erc-beep-on-match</span><span class="w"> </span><span class="nv">match-type</span><span class="w"> </span><span class="nv">_nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">))))</span>
+
+<span class="c1">;; As before, now add the appropriate hooks to `erc-text-matched-hook'.</span>
+</pre></div>
+
+<p></p>
+If it works, it works, right?
+<h2 id="inserting-links">Inserting links<a href="#inserting-links" class="floatright sec-link">¶</a></h2>
+<p></p>
+Next to being a user, I also spend way too much time working on <span class="small-caps">xm</span>onad.
+As such, I often help people coming into our IRC or posting on the
+subreddit with their problems. More often than not one needs to link to
+the same resources over and over again—why not write something so that I
+don’t have to dig up these links again and again?
+<p></p>
+I currently have a set-up where I can link to every <span class="small-caps">xm</span>onad module, all
+of my blog posts, as well as selected extra sites, like our tutorial and
+installation instructions. Depending on the given universal argument, a
+different link style is used, to accomodate for different platforms.
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-xmonad-modules</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Get all XMonad modules in the form (NAME . DOC-URL).&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">xmonad-cabal</span><span class="w"> </span><span class="s">&quot;~/repos/xmonad/xmonad-contrib/xmonad-contrib.cabal&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">hackage</span><span class="w"> </span><span class="s">&quot;https://hackage.haskell.org/package/xmonad-contrib/docs/&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">modules</span><span class="w"> </span><span class="p">(</span><span class="nv">shell-command-to-string</span>
+<span class="w">                   </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;tail -n +50 %s | grep -E \&quot; XMonad\\.*\&quot;&quot;</span>
+<span class="w">                           </span><span class="nv">xmonad-cabal</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">-&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">s-lines</span><span class="w"> </span><span class="nv">modules</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">-drop-last</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">                 </span><span class="c1">; empty line</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">s-replace</span><span class="w"> </span><span class="s">&quot;exposed-modules:&quot;</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="nv">it</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nf">cons</span><span class="w"> </span><span class="nv">it</span>
+<span class="w">                      </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">hackage</span><span class="w"> </span><span class="p">(</span><span class="nv">s-replace</span><span class="w"> </span><span class="s">&quot;.&quot;</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;.html&quot;</span><span class="p">)))))))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-posts</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Get all of my blog posts in the form (NAME . URL).&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">website</span><span class="w"> </span><span class="s">&quot;https://tony-zorman.com/&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">base-path</span><span class="w"> </span><span class="s">&quot;~/repos/slotThe.github.io/&quot;</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">posts</span><span class="w"> </span><span class="p">(</span><span class="nv">directory-files-recursively</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">base-path</span><span class="w"> </span><span class="s">&quot;posts/&quot;</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;.md$&quot;</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">             </span><span class="p">(</span><span class="nv">insert-file-contents-literally</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="s">&quot;title: &quot;</span><span class="p">)</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">cons</span><span class="w">                      </span><span class="c1">; Name . URL</span>
+<span class="w">              </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\&quot;&quot;</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-substring</span><span class="w"> </span><span class="p">(</span><span class="nf">point</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">point-at-eol</span><span class="p">)))</span>
+<span class="w">              </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">website</span><span class="w"> </span><span class="p">(</span><span class="nv">string-trim</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">base-path</span><span class="w"> </span><span class="s">&quot;.md&quot;</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;.html&quot;</span><span class="p">)))</span>
+<span class="w">           </span><span class="nv">posts</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/often-used-links</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Choose a link and insert it into the buffer in .md format.</span>
+<span class="s">This is quite useful, since many people happen to have very</span>
+<span class="s">similar problems when, for example, first starting out with</span>
+<span class="s">xmonad.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">-let*</span><span class="w"> </span><span class="p">((</span><span class="nv">links</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-concat</span><span class="w"> </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;tutorial&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;https://xmonad.org/TUTORIAL.html&quot;</span><span class="p">)</span>
+<span class="w">                      </span><span class="p">(</span><span class="s">&quot;install&quot;</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;https://xmonad.org/INSTALL.html&quot;</span><span class="p">)</span>
+<span class="w">                      </span><span class="p">(</span><span class="s">&quot;xmonad.hs&quot;</span><span class="o">.</span><span class="w"> </span><span class="s">&quot;https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs&quot;</span><span class="p">))</span>
+<span class="w">                    </span><span class="p">(</span><span class="nv">slot/get-xmonad-modules</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">(</span><span class="nv">slot/get-posts</span><span class="p">)))</span>
+<span class="w">          </span><span class="p">(</span><span class="nv">choice</span><span class="w"> </span><span class="p">(</span><span class="nf">completing-read</span><span class="w"> </span><span class="s">&quot;Link: &quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">mapcar</span><span class="w"> </span><span class="nf">#'car</span><span class="w"> </span><span class="nv">links</span><span class="p">)))</span>
+<span class="w">          </span><span class="p">((</span><span class="nv">name</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">link</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">assoc</span><span class="w"> </span><span class="nv">choice</span><span class="w"> </span><span class="nv">links</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="nv">arg</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="nv">link</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="k">save-excursion</span><span class="w"> </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="s">&quot;\n\n[&quot;</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="s">&quot;]: &quot;</span><span class="w"> </span><span class="nv">link</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+I bind this to <code>C-c l</code> in <code>markdown-mode</code>; it looks like this:
+<p></p>
+<img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif" alt="link entry in markdown-mode, with an interactive prompt">
+<h2 id="a-macro-for-repeat-mode">A macro for <code>repeat-mode</code><a href="#a-macro-for-repeat-mode" class="floatright sec-link">¶</a></h2>
+<p></p>
+I’ve written a macro for Emacs’s <code>repeat-mode</code>, which allows you to
+execute repeated commands without having to press the same prefix over
+and over again. For example, one can set this up for Org navigation
+commands such that <code>C-c C-n n n</code> executes <code>org-next-visible-heading</code>
+three times. A great introduction to <code>repeat-mode</code> can be found
+<a href="https://karthinks.com/software/it-bears-repeating/">here</a>.
+<p></p>
+There are <a href="https://tildegit.org/acdw/define-repeat-map.el">lots</a> of <a href="https://github.com/mmarshall540/repeaters">packages</a>
+around that define different macros which probably work much better than
+the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword
+now. However, obviously the one I wrote feels the most natural to <em>me</em>,
+so it’s being kept around regardless.
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defmacro</span><span class="w"> </span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="p">(</span><span class="nv">sym</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">docstring</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;A macro for defining </span><span class="ss">`repeat-map'</span><span class="s">s.</span>
+<span class="s">Defines a new repeat-map called SYM with the given DOCSTRING.</span>
+<span class="s">The keys are derived via the list PAIRS, whose elements are cons</span>
+<span class="s">cells of the form (KEY . DEF), where KEY and DEF must fulfill the</span>
+<span class="s">same requirements as if given to </span><span class="ss">`define-key'</span><span class="s">.</span>
+
+<span class="s">If the key only consists of a single character; i.e., is already</span>
+<span class="s">bound and a repeat map is created afterwards, simply add it to</span>
+<span class="s">the repeat-map SYM.  If not, globally bind KEY to DEF and only</span>
+<span class="s">insert the last character of DEF into the repeat map SYM.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">declare</span><span class="w"> </span><span class="p">(</span><span class="nv">indent</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">debug</span><span class="w"> </span><span class="no">t</span><span class="p">))</span>
+<span class="w">  </span><span class="o">`</span><span class="p">(</span><span class="k">progn</span>
+<span class="w">     </span><span class="p">(</span><span class="k">defvar</span><span class="w"> </span><span class="o">,</span><span class="nv">sym</span>
+<span class="w">       </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">kmap</span><span class="w"> </span><span class="p">(</span><span class="nf">make-sparse-keymap</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--each</span><span class="w"> </span><span class="o">,</span><span class="nv">pairs</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-let</span><span class="w"> </span><span class="p">(((</span><span class="nv">key</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">fun</span><span class="p">)</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">             </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nv">length=</span><span class="w"> </span><span class="nv">key</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">                 </span><span class="p">(</span><span class="nf">define-key</span><span class="w"> </span><span class="nv">kmap</span><span class="w"> </span><span class="p">(</span><span class="nv">kbd</span><span class="w"> </span><span class="nv">key</span><span class="p">)</span><span class="w"> </span><span class="nv">fun</span><span class="p">)</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">bind-key</span><span class="w"> </span><span class="p">(</span><span class="nv">kbd</span><span class="w"> </span><span class="nv">key</span><span class="p">)</span><span class="w"> </span><span class="nv">fun</span><span class="p">)</span>
+<span class="w">               </span><span class="p">(</span><span class="nf">define-key</span><span class="w"> </span><span class="nv">kmap</span><span class="w"> </span><span class="p">(</span><span class="nv">kbd</span><span class="w"> </span><span class="p">(</span><span class="nv">s-right</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">key</span><span class="p">))</span><span class="w"> </span><span class="nv">fun</span><span class="p">))))</span>
+<span class="w">         </span><span class="nv">kmap</span><span class="p">)</span>
+<span class="w">       </span><span class="o">,</span><span class="nv">docstring</span><span class="p">)</span>
+<span class="w">     </span><span class="c1">;; Tell the keys they are in a repeat map.</span>
+<span class="w">     </span><span class="p">(</span><span class="nv">--each</span><span class="w"> </span><span class="p">(</span><span class="nf">mapcar</span><span class="w"> </span><span class="ss">'cdr</span><span class="w"> </span><span class="p">(</span><span class="nf">cdr</span><span class="w"> </span><span class="o">,</span><span class="nv">sym</span><span class="p">))</span>
+<span class="w">       </span><span class="p">(</span><span class="nf">put</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="ss">'repeat-map</span><span class="w"> </span><span class="ss">',sym</span><span class="p">))))</span>
+</pre></div>
+
+<p></p>
+The following would, for example, bind <code>mc/mark-next-like-this-word</code> to
+<code>M-s s</code> globally and to <code>s</code> in the created <code>mc-repeat-map</code>. Likewise,
+<code>mc/mark-next-word-like-this</code> is bound to <code>.</code> in that map, and so on.
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="nv">mc-repeat-map</span>
+<span class="w">    </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;M-s s&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-like-this-word</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-M-.&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-word-like-this</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-M-,&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-previous-word-like-this</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-&gt;&quot;</span><span class="w">   </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/skip-to-next-like-this</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;C-&lt;&quot;</span><span class="w">   </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/skip-to-previous-like-this</span><span class="p">))</span>
+<span class="w">    </span><span class="s">&quot;</span><span class="ss">`repeat-mode'</span><span class="s"> keymap to repeat </span><span class="ss">`multiple-cursors'</span><span class="s"> bindings.&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+This may be too implicit for many people, but for me it’s just right—and
+that’s sort of the point of all of this, right?
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

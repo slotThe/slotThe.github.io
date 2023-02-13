@@ -11,8 +11,8 @@
     <updated>2023-01-27T00:00:00Z</updated>
     <entry>
     <title>Using Sidenotes with Hakyll</title>
-    <link href="https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html" />
-    <id>https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html</id>
+    <link href="https://tony-zorman.com/posts/block-sidenotes.html" />
+    <id>https://tony-zorman.com/posts/block-sidenotes.html</id>
     <published>2023-01-27T00:00:00Z</published>
     <updated>2023-01-27T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
@@ -446,8 +446,8 @@ into Hakyll, I don’t think that <code>Sidenote.hs</code> will go down that pat
 </entry>
 <entry>
     <title>Pygmentising Hakyll's Syntax Highlighting</title>
-    <link href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html" />
-    <id>https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html</id>
+    <link href="https://tony-zorman.com/posts/pygmentising-hakyll.html" />
+    <id>https://tony-zorman.com/posts/pygmentising-hakyll.html</id>
     <published>2023-01-21T00:00:00Z</published>
     <updated>2023-01-21T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
@@ -763,8 +763,8 @@ which I still don’t agree with—at least for now.
 </entry>
 <entry>
     <title>Immediately Refile Notes with X.P.OrgMode</title>
-    <link href="https://tony-zorman.com/posts/2023-01-14-orgmode-refiling.html" />
-    <id>https://tony-zorman.com/posts/2023-01-14-orgmode-refiling.html</id>
+    <link href="https://tony-zorman.com/posts/orgmode-refiling.html" />
+    <id>https://tony-zorman.com/posts/orgmode-refiling.html</id>
     <published>2023-01-14T00:00:00Z</published>
     <updated>2023-01-14T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
@@ -898,8 +898,8 @@ welcome!
 </entry>
 <entry>
     <title>XMonad Module Showcase: X.A.TopicSpace</title>
-    <link href="https://tony-zorman.com/posts/topic-space/2022-09-11-topic-spaces.html" />
-    <id>https://tony-zorman.com/posts/topic-space/2022-09-11-topic-spaces.html</id>
+    <link href="https://tony-zorman.com/posts/topic-spaces.html" />
+    <id>https://tony-zorman.com/posts/topic-spaces.html</id>
     <published>2022-09-11T00:00:00Z</published>
     <updated>2022-09-11T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
@@ -932,7 +932,7 @@ First, this post is not to be seen as a tutorial on X.A.TopicSpace, but
 much rather as a showcase of how its functionality could be used day to
 day. If you like what you see, perhaps check out the
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">docs</a> and give it a spin yourself! I have already written
-an introduction to the module in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a>:
+an introduction to the module in the post about my <a href="./my-phd-workflow.html">research workflow</a>:
 <blockquote>
 <p></p>
 <span class="small-caps">xm</span>onad has a module called TopicSpace, which upgrades the X11
@@ -983,7 +983,7 @@ Definitely worth it.
 <p></p>
 In terms of code, this—as well as the following examples—heavily use the
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to XMonad.Util.Run, which allows one to
-spawn processes in a declarative and compositional way; I’ve <a href="../2022-05-25-calling-emacs-from-xmonad.html">written
+spawn processes in a declarative and compositional way; I’ve <a href="./calling-emacs-from-xmonad.html">written
 about this</a> in another post. For example, my RSS topic is
 specified thusly:
 <div class="highlight"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (inHome)</span>
@@ -1105,7 +1105,7 @@ allowing access to a different instance of the Emacs server.
 <p></p>
 All in all, we have something that looks a little bit like this:
 <p></p>
-<img class="pure-img" src="./haskell-topic.gif" alt="Switching to a Haskell topic, then using project.el to navigate the project">
+<img class="pure-img" src="../images/topic-space/haskell-topic.gif" alt="Switching to a Haskell topic, then using project.el to navigate the project">
 <h3 id="testing-this-website">Testing this website</h3>
 <p></p>
 Much in the same vein as my Haskell topics, I find the <code>website</code> topic
@@ -1123,7 +1123,7 @@ browser window pointing to the local copy:
 <p></p>
 The whole thing looks like this:
 <p></p>
-<img class="pure-img" src="./website.gif" alt="Switching to an empty topic; various things automatically start up">
+<img class="pure-img" src="../images/topic-space/website.gif" alt="Switching to an empty topic; various things automatically start up">
 <h2 id="conclusion">Conclusion</h2>
 <p></p>
 Hopefully these examples have convinced you to give TopicSpace a spin;
@@ -1139,8 +1139,8 @@ win in my book!
 </entry>
 <entry>
     <title>Calling Emacs from XMonad</title>
-    <link href="https://tony-zorman.com/posts/2022-05-25-calling-emacs-from-xmonad.html" />
-    <id>https://tony-zorman.com/posts/2022-05-25-calling-emacs-from-xmonad.html</id>
+    <link href="https://tony-zorman.com/posts/calling-emacs-from-xmonad.html" />
+    <id>https://tony-zorman.com/posts/calling-emacs-from-xmonad.html</id>
     <published>2022-05-25T00:00:00Z</published>
     <updated>2022-05-25T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>

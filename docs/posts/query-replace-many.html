@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>How to query-replace multiple matches! · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#the-solution">The solution</a>
+<ul>
+<li><a href="#the-code">The code</a></li>
+</ul></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>How to query-replace multiple matches!</h1>
+           
+
+          <article>
+    <section class="header">
+      Posted on 2022-08-06
+      
+        | <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
+      
+    </section>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#the-solution">The solution</a>
+<ul>
+<li><a href="#the-code">The code</a></li>
+</ul></li>
+</ul>
+  </div>
+
+<p></p>
+As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
+by default) can be used to replace occurences of one string with
+another. In comparison to other tools that are used for similar
+purposes—(a subset of) keyboard macros and multiple-cursors—the whole
+process after entering the <code>from</code> and <code>to</code> strings is interactive all
+the way through: it’s very fast to step through the individual matches
+and decide on the spot whether one would like to replace them or not.
+Needless to say, I like <code>query-replace</code> a lot! In true Emacs fashion,
+the function also takes way too many arguments: among other things, it
+can operate on the current region, backwards, or only on things
+surrounded by words boundaries.
+<p></p>
+However, there is one crucial feature missing from its default
+functionality: the ability to create multiple <code>from → to</code> pairs. But
+this is Emacs, after all, which means that I can just write that
+<code>query-replace-many</code> function I’ve always wanted!
+<!--more-->
+<h2 id="motivation">Motivation<a href="#motivation" class="floatright sec-link">¶</a></h2>
+<p></p>
+Originally, my motivation came through <a href="../../research.html">work</a>, where I <a href="./my-phd-workflow.html">write a lot of
+LaTeX</a>. When polishing papers, it sometimes happens that I would like
+to change or unify the notation of certain objects in the current
+equation/environment/file.
+<p></p>
+When an alteration like this only encompasses a single action, like
+switching <code>T</code> to <code>H</code>, a simple <code>query-replace</code> after narrowing to the
+current region of interest is totally sufficient. For others, like
+changing <code>T</code> to <code>H</code> <em>and</em> <code>S</code> to <code>G</code>, this solution, along with
+multiple-cursors and other tools people usually go for, would already be
+unsatisfactory—the whole region would need to be traversed twice. Now
+imagine that you want to change <code>T</code> to <code>U</code> <em>and</em> <code>U</code> to <code>T</code>: chaos!
+Save having to give some sort of temporary name to one of the objects,
+which would be even slower, <code>query-replace</code> is quite useless in this
+situation. It’s possible to cook up a manual solution using the
+alternative <code>query-replace-regexp</code> function and capture groups, but I’m
+unsure how many people know their elisp regular expressions well enough
+for that to be time efficient. I don’t, and almost certainly never
+will, so it seemed much easier to automate this instead!
+<h2 id="the-solution">The solution<a href="#the-solution" class="floatright sec-link">¶</a></h2>
+<p></p>
+Thankfully, since <code>replace.el</code> sports a decent API, writing a version of
+<code>query-replace</code> that accepts multiple arguments turns out to be easy
+enough. The high-level overview is this: we read in multiple queries
+until an empty input is given,<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">This isn’t <em>quite</em> what’s actually done, but it’s the right mental
+model to have (since this is how the function behaves). The gory
+details are that we use the fact that <code>replace.el</code>’s default
+suggestion is always the last query that was entered by the user.
+What happens on an empty input is quite deep in the bowels of
+<code>query-replace-read-from</code>. Since replacing these massive internal
+functions sounds like a real pain, leaning on that functionality
+suddenly appears much more reasonable. Thus, when we get back a
+query that has already been entered in one way or another, we bail
+out.</div>
+ build up a regular expression of the
+form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
+replacing—test the current thing to be replaced against all of the
+queries to select the correct one.
+<p></p>
+The beauty of this is that, since it’s really just a thin wrapper over
+two functions from <code>replace.el</code> that do the heavy lifting, all of the
+modules regular functionality, like the keybindings and history, just
+work.
+<p></p>
+For example, in the following I replace <code>T</code> with <code>U</code> and, at the same
+time, <code>U</code> with <code>T</code>. The first few matches are stepped through and the
+rest is just accepted wholesale. At the bottom, you can see the default
+<code>query-replace</code> interface when interacting with the query.
+<p></p>
+<img class="pure-img" src="../images/query-replace/query-replace-many.gif" alt="query-replace-many functionality showcase">
+<p></p>
+The only cosmetic imperfection of this is that, while the replacement
+candidate itself is correctly updated, we see the whole regular
+expression <code>\(?U:\|T\)</code> as the thing to be replaced instead of the bit
+that’s actually matching currently. However, since this would seem to
+require some work and one of course sees what’s to be replaced by
+looking at the thing at point, I can very much live with this for the
+moment.
+<h3 id="the-code">The code<a href="#the-code" class="floatright sec-link">¶</a></h3>
+<p></p>
+Below is the full source code, in all of its hacky glory. Note that you
+will need to <code>require</code> the <code>s.el</code> and <code>dash.el</code> libraries for this to
+work, if you haven’t loaded these already (if you use any amount of
+packages at all, chances are that you have).
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-queries</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">pairs</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Get multiple </span><span class="ss">`query-replace'</span><span class="s"> pairs from the user.</span>
+<span class="s">PAIRS is a list of replacement pairs of the form (FROM . TO).&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">-let*</span><span class="w"> </span><span class="p">(((</span><span class="nv">from</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">delim</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">query-replace-read-args</span>
+<span class="w">            </span><span class="p">(</span><span class="nv">s-join</span><span class="w"> </span><span class="s">&quot; &quot;</span>
+<span class="w">                    </span><span class="p">(</span><span class="nv">-non-nil</span>
+<span class="w">                     </span><span class="p">(</span><span class="nf">list</span><span class="w"> </span><span class="s">&quot;Query replace many&quot;</span>
+<span class="w">                           </span><span class="p">(</span><span class="k">cond</span><span class="w"> </span><span class="p">((</span><span class="nf">eq</span><span class="w"> </span><span class="nv">current-prefix-arg</span><span class="w"> </span><span class="ss">'-</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;backward&quot;</span><span class="p">)</span>
+<span class="w">                                 </span><span class="p">(</span><span class="nv">current-prefix-arg</span><span class="w">         </span><span class="s">&quot;word&quot;</span><span class="p">))</span>
+<span class="w">                           </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nv">use-region-p</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;in region&quot;</span><span class="p">))))</span>
+<span class="w">            </span><span class="no">nil</span><span class="p">))</span><span class="w">                       </span><span class="c1">; no regexp-flag</span>
+<span class="w">          </span><span class="p">(</span><span class="nv">from-to</span><span class="w"> </span><span class="p">(</span><span class="nf">cons</span><span class="w"> </span><span class="p">(</span><span class="nf">regexp-quote</span><span class="w"> </span><span class="nv">from</span><span class="p">)</span>
+<span class="w">                         </span><span class="p">(</span><span class="nv">s-replace</span><span class="w"> </span><span class="s">&quot;\\&quot;</span><span class="w"> </span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="nv">to</span><span class="p">))))</span>
+<span class="w">    </span><span class="c1">;; HACK: Since the default suggestion of replace.el will be</span>
+<span class="w">    </span><span class="c1">;; the last one we've entered, an empty string will give us</span>
+<span class="w">    </span><span class="c1">;; exactly that.  Instead of trying to fight against this,</span>
+<span class="w">    </span><span class="c1">;; use it in order to signal an exit.</span>
+<span class="w">    </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nv">-contains?</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="nv">from-to</span><span class="p">)</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">list</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="nv">delim</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">slot/get-queries</span><span class="w"> </span><span class="p">(</span><span class="nb">push</span><span class="w"> </span><span class="nv">from-to</span><span class="w"> </span><span class="nv">pairs</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/query-replace-many</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">delimited</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="nv">backward</span><span class="w"> </span><span class="nv">region-noncontiguous-p</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Like </span><span class="ss">`query-replace'</span><span class="s">, but query for several replacements.</span>
+<span class="s">Query for replacement pairs until the users enters an empty</span>
+<span class="s">string (but see </span><span class="ss">`slot/get-queries'</span><span class="s">).</span>
+
+<span class="s">Refer to </span><span class="ss">`query-replace'</span><span class="s"> and </span><span class="ss">`perform-replace'</span><span class="s"> for what the other</span>
+<span class="s">arguments actually mean.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span>
+<span class="w">   </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">common</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/get-queries</span><span class="p">)))</span>
+<span class="w">     </span><span class="p">(</span><span class="nf">list</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nv">common</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">common</span><span class="p">)</span>
+<span class="w">           </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nv">use-region-p</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">region-beginning</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nv">use-region-p</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">region-end</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">common</span><span class="p">)</span>
+<span class="w">           </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nv">use-region-p</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">region-noncontiguous-p</span><span class="p">)))))</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">perform-replace</span>
+<span class="w">   </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;\\(?:&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">mapconcat</span><span class="w"> </span><span class="nf">#'car</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="s">&quot;\\|&quot;</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;\\)&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">; build query</span>
+<span class="w">   </span><span class="p">(</span><span class="nf">cons</span><span class="w"> </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">pairs</span><span class="w"> </span><span class="nv">_count</span><span class="p">)</span>
+<span class="w">           </span><span class="p">(</span><span class="nb">cl-loop</span><span class="w"> </span><span class="nv">for</span><span class="w"> </span><span class="p">(</span><span class="nv">from</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">to</span><span class="p">)</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">pairs</span>
+<span class="w">                    </span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">string-match</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="p">(</span><span class="nv">match-string</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
+<span class="w">                    </span><span class="nb">return</span><span class="w"> </span><span class="nv">to</span><span class="p">))</span>
+<span class="w">         </span><span class="nv">pairs</span><span class="p">)</span>
+<span class="w">   </span><span class="nb">:query</span><span class="w"> </span><span class="nb">:regexp</span>
+<span class="w">   </span><span class="nv">delimited</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="nv">backward</span><span class="w"> </span><span class="nv">region-noncontiguous-p</span><span class="p">))</span>
+</pre></div>
+
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

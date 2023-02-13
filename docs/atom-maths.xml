@@ -11,8 +11,8 @@
     <updated>2023-01-10T00:00:00Z</updated>
     <entry>
     <title>Duality in Monoidal Categories</title>
-    <link href="https://tony-zorman.com/posts/2023-01-10-duality-in-monoidal-categories.html" />
-    <id>https://tony-zorman.com/posts/2023-01-10-duality-in-monoidal-categories.html</id>
+    <link href="https://tony-zorman.com/posts/duality-in-monoidal-categories.html" />
+    <id>https://tony-zorman.com/posts/duality-in-monoidal-categories.html</id>
     <published>2023-01-10T00:00:00Z</published>
     <updated>2023-01-10T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
@@ -182,8 +182,8 @@ want more details, check <a href="https://arxiv.org/abs/2301.03545">the paper</a
 </entry>
 <entry>
     <title>Understanding Weighted Colimits as Tensor Products of Modules</title>
-    <link href="https://tony-zorman.com/posts/weighted-colimits/2022-10-15-weighted-colimits.html" />
-    <id>https://tony-zorman.com/posts/weighted-colimits/2022-10-15-weighted-colimits.html</id>
+    <link href="https://tony-zorman.com/posts/weighted-colimits.html" />
+    <id>https://tony-zorman.com/posts/weighted-colimits.html</id>
     <published>2022-10-15T00:00:00Z</published>
     <updated>2022-10-15T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
@@ -301,7 +301,7 @@ consists of:
 Further, this data has to satisfy appropriate associativity and
 unitality conditions:
 <p></p>
-<img class="pure-img" src="./enriched.png" alt="axioms for an enriched category">
+<img class="pure-img" src="../images/weighted-colimits/enriched.png" alt="axioms for an enriched category">
 <p></p>
 In the above diagrams, <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\lambda\)</span>, and <span class="math inline">\(\rho\)</span> respectively
 denote the associativity, left, and right unitality constraints of
@@ -618,7 +618,7 @@ out two morphisms. Thus, the whole thing amounts to the
 commutativity of the following diagram:
 <p></p>
 
-<img class="pure-img" src="./example-1.png" alt="necessary commutative diagram">
+<img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram">
 <p></p>
 
 In more plain language, we have a commutative diagram of the form
@@ -650,7 +650,7 @@ one, but contains an isomorphism, the commutative diagram also
 becomes more complicated. Namely, we required the commutativity of
 <p></p>
 
-<img class="pure-img" src="./example-2.png" alt="necessary commutative diagram">
+<img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram">
 <p></p>
 
 Instead of the requiring <span class="math inline">\(\theta \circ g\)</span> to <em>equal</em> <span class="math inline">\(\theta \circ f\)</span>, we now only require the existence of an invertible 2-cell that
@@ -811,8 +811,8 @@ Emily Riehl: “Weighted Limits and Colimits”; <a href="https://math.jhu.edu/~
 </entry>
 <entry>
     <title>My PhD Research Workflow</title>
-    <link href="https://tony-zorman.com/posts/phd-workflow/2022-05-01-my-phd-workflow.html" />
-    <id>https://tony-zorman.com/posts/phd-workflow/2022-05-01-my-phd-workflow.html</id>
+    <link href="https://tony-zorman.com/posts/my-phd-workflow.html" />
+    <id>https://tony-zorman.com/posts/my-phd-workflow.html</id>
     <published>2022-05-01T00:00:00Z</published>
     <updated>2022-05-01T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
@@ -884,7 +884,7 @@ it’s rather fast to go from thinking about a certain problem to working
 on it. When I’m already inside a project, I leverage Emacs’s built-in
 <code>project.el</code> library to search through files and the like.
 <p></p>
-<img class="pure-img" src="./topics.gif" alt="Navigation example">
+<img class="pure-img" src="../images/phd-workflow/topics.gif" alt="Navigation example">
 <h3 id="files">Files</h3>
 <p></p>
 Here I keep things relatively simple; I have a big “library” directory
@@ -921,7 +921,7 @@ other programs. In my case, that’s the Super key, so <code>M-s</code> means
 through the directory. Once I’ve made a choice, <span class="small-caps">pdf</span>s are automatically
 opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.
 <p></p>
-<img class="pure-img" src="./hmenu.gif" alt="example hmenu usage">
+<img class="pure-img" src="../images/phd-workflow/hmenu.gif" alt="example hmenu usage">
 <p></p>
 My bibliography is organised in a similar spirit; see
 <a href="#citations">Citations</a>.
@@ -963,7 +963,7 @@ Chikmagalur</a>’s—whose excellent post you should definitely check out—so 
 will not belabour the point too much here. The tl;dr is <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>,
 <a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>, and <a href="https://github.com/ymarco/auto-activating-snippets">aas</a>.
 <p></p>
-<img class="pure-img" src="./input.gif" alt="LaTeX input example">
+<img class="pure-img" src="../images/phd-workflow/input.gif" alt="LaTeX input example">
 <p></p>
 In case you’re not used to <code>prettify-symbols-mode</code>: the inserted LaTeX
 code was
@@ -992,7 +992,7 @@ environment, it also remembers this for the session!<!--
 that changes, the label is “lost”; though it can of course still
 be retrieved manually from the relevant hash map.</div>
 <p></p>
-<img class="pure-img" src="./label-renaming.gif" alt="latex-change-env showcase">
+<img class="pure-img" src="../images/phd-workflow/label-renaming.gif" alt="latex-change-env showcase">
 <p></p>
 One neat feature of AUCTeX that I find myself using more and more often
 lately<!--
@@ -1006,7 +1006,7 @@ comes later, believe me. In cases like these, just calling
 <code>preview-buffer</code> is quite convenient and lets me use the screen real
 estate that a <span class="small-caps">pdf</span> viewer would have taken up for something else.
 <p></p>
-<img class="pure-img" src="./preview.gif" alt="latex-preview showcase">
+<img class="pure-img" src="../images/phd-workflow/preview.gif" alt="latex-preview showcase">
 <p></p>
 I always use pure LaTeX for writing papers, drafts, or presentations.
 However, I also take lots of notes in <a href="https://orgmode.org/">org-mode</a>, which, as a crude
@@ -1021,17 +1021,17 @@ system”, which fits the bill pretty well. In short, it’s a note taking
 system in the spirit of the <a href="https://en.wikipedia.org/wiki/zettelkasten">Zettelkasten</a> method, which is essentially
 about having lots of notes with lots of backlinks to related concepts:
 <p></p>
-<img class="pure-img" src="./backlinks.png" alt="org-roam showcase">
+<img class="pure-img" src="../images/phd-workflow/backlinks.png" alt="org-roam showcase">
 <p></p>
 In fact, using <a href="https://github.com/org-roam/org-roam-ui">org-roam-ui</a>, one can even visualise the entire
 Zettelkasten as an interactive and pretty graph in which notes become
 nodes and backlinks become edges!
 <div class="pure-g">
 <div class="pure-u-1-2">
-<img class="pure-img" src="./org-roam-ui-close.png" alt="org-roam-ui example zoomed-in">
+<img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.png" alt="org-roam-ui example zoomed-in">
 </div>
 <div class="pure-u-1-2">
-<img class="pure-img" src="./org-roam-ui-far.png" alt="org-roam-ui example zoomed-out">
+<img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.png" alt="org-roam-ui example zoomed-out">
 </div>
 </div>
 <p></p>
@@ -1066,7 +1066,7 @@ into my library and open it with zathura. This is fully automated via
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>—more on that later. I merely have to press <code>C-c d</code>
 while looking at a paper and magic happens!
 <p></p>
-<img class="pure-img" src="./elfeed.gif" alt="elfeed showcase">
+<img class="pure-img" src="../images/phd-workflow/elfeed.gif" alt="elfeed showcase">
 <p></p>
 In the above gif, on the right-hand side you can see a score associated
 to each entry. While reading every abstract has worked quite well for
@@ -1088,7 +1088,7 @@ the currently selected text on the relevant “search engine”. One
 instance where this is useful is for quickly switching between the arXiv
 and zbmath:
 <p></p>
-<img class="pure-img" src="./selected-search.gif" alt="XMonad.Actions.Search showcase">
+<img class="pure-img" src="../images/phd-workflow/selected-search.gif" alt="XMonad.Actions.Search showcase">
 <h3 id="citations">Citations</h3>
 <p></p>
 For citation management, I use a very simple system—no Zotero, JabRef,
@@ -1120,7 +1120,7 @@ the primary selection, so I merely have to highlight the link, press
 drive home the point, also showcasing the format of a not yet published
 paper and a published one.
 <p></p>
-<img class="pure-img" src="./arXiv-citation.gif" alt="arXiv-citation showcase">
+<img class="pure-img" src="../images/phd-workflow/arXiv-citation.gif" alt="arXiv-citation showcase">
 <h2 id="final-thoughts">Final thoughts</h2>
 <p></p>
 And that’s it! If nothing else, this post helped me to nail down some

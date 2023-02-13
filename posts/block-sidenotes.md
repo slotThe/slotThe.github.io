@@ -1,5 +1,6 @@
 ---
 title: Using Sidenotes with Hakyll
+date: 2023-01-27
 tags: haskell
 ---
 
