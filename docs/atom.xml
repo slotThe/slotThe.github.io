@@ -2106,11 +2106,11 @@ The other arrow is induced by a collection of actions of
 <span class="math inline">\(\mathcal{J}\)</span> on <span class="math inline">\(F\)</span>, indexed by arrows <span class="math inline">\(f \colon a \longrightarrow b\)</span> in <span class="math inline">\(\mathcal{J}\)</span>; i.e.,
 <p></p>
 
-<span class="math display">\[
+<span class="math display">\[\begin{align*}
 (\mathcal{J}(a,b) \times F a \longrightarrow F b)
-= \left( \coprod_{f \in \mathcal{J}(a,b)} F a \longrightarrow F b \right)
-= \langle Ff \colon Fa \longrightarrow F b \rangle_{f \in \mathcal{J}(a,b)}.
-\]</span></li>
+&amp;= \left( \coprod_{f \in \mathcal{J}(a,b)} F a \longrightarrow F b \right) \\
+&amp;= \langle Ff \colon Fa \longrightarrow F b \rangle_{f \in \mathcal{J}(a,b)}.
+\end{align*}\]</span></li>
 </ol>
 <p></p>
 So that’s the story with expressing colimits as coequalisers. What’s
