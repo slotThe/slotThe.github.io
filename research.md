@@ -12,7 +12,6 @@ distributive] categories, as well as [operads].
 
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
 [\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
-[arXiv]: https://arxiv.org/a/zorman_t_1
 [duoidal]: https://ncatlab.org/nlab/show/duoidal+category
 [graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
 [linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
@@ -21,7 +20,8 @@ distributive] categories, as well as [operads].
 [zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
 
 # Preprints
-[^2]
+
+All of my preprints are readily available on the [arXiv].[^2]
 
 - *[Duality in Monoidal Categories]* \
    Joint work with Sebastian Halbig.
@@ -50,6 +50,8 @@ distributive] categories, as well as [operads].
   anti-Drinfeld double of a Hopf monad.  As an application the
   connection with the pivotality of Drinfeld centres and their
   underlying categories is discussed.
+
+[arXiv]: https://arxiv.org/a/zorman_t_1
 
 # Talks
 
