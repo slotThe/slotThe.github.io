@@ -1,6 +1,7 @@
 ---
 title: My PhD Research Workflow
 date: 2022-05-01
+last-modified: 2022-05-23
 tags: emacs, maths, xmonad
 ---
 

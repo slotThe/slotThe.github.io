@@ -1,6 +1,7 @@
 ---
 title: Duality in Monoidal Categories
 date: 2023-01-10
+last-modified: 2023-01-12
 tags: maths
 ---
 

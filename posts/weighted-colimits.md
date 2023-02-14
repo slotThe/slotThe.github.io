@@ -1,6 +1,7 @@
 ---
 title: Understanding Weighted Colimits as Tensor Products of Modules
 date: 2022-10-15
+last-modified: 2022-10-26
 tags: maths
 ---
 

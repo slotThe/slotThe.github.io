@@ -1,8 +1,11 @@
 <article>
     <section class="header">
       Posted on $date$
+      $if(last-modified)$
+        &thinsp;·&nbsp; last modified: $last-modified$
+      $endif$
       $if(tags)$
-        | $tags$
+        &thinsp;·&nbsp; $tags$
       $endif$
     </section>
     <section>

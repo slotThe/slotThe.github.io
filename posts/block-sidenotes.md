@@ -1,6 +1,7 @@
 ---
 title: Using Sidenotes with Hakyll
 date: 2023-01-27
+last-modified: 2023-02-11
 tags: haskell
 ---
 
@@ -306,9 +307,8 @@ needs to be done [here][github:tufte-css:paragraph-fixes].  This is
 already included in my `sidenotes.css`, so if you're just copying that
 then you should be fine.
 
-**Update (11feb2023)**: Even better, as Gwern Branwen
-[mentions][github:pandoc-sidenote:div], we don't even need to use
-`span`s anymore!
+Even better, as Gwern Branwen [mentions][github:pandoc-sidenote:div], we
+don't even need to use `span`s anymore!
 
 > It's true that `Span` nodes are often unsuited for doing anything
 > interesting involving a `Block` or `[Block]`, but that's precisely

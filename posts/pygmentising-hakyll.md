@@ -1,6 +1,7 @@
 ---
 title: Pygmentising Hakyll's Syntax Highlighting
 date: 2023-01-21
+last-modified: 2023-01-23
 tags: haskell
 ---
 
