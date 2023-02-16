@@ -4,7 +4,7 @@ date: 2022-09-11
 tags: haskell, xmonad
 ---
 
-One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
+One of my favourite—and most used—modules is `XMonad.​Actions.​TopicSpace`.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry.  Despite having been given shiny
@@ -16,7 +16,7 @@ interested in using topics instead of workspaces.  Time to change that!
 
 # Introduction
 
-First, this post is not to be seen as a tutorial on X.A.TopicSpace, but
+First, this post is not to be seen as a tutorial on `X.A.TopicSpace`, but
 much rather as a showcase of how its functionality could be used day to
 day.  If you like what you see, perhaps check out the
 [docs][topic-space] and give it a spin yourself!  I have already written
@@ -165,9 +165,9 @@ spawnHaskell = do
 ```
 
 Furthermore, since the associated directory for a topic can easily be
-made `$HOME` by default (as we've seen, TopicSpace even exports the
-`inHome` function), spawning programs in certain topics can easily be
-made to replace the default keybindings!
+made `$HOME` by default (as we've seen, `X.A.TopicSpace` even exports
+the `inHome` function), spawning programs in certain topics can easily
+be made to replace the default keybindings!
 
 For the sake of completeness, I will showcase one slightly more
 complicated example.  My main shell environment is `eshell` and getting
@@ -215,7 +215,7 @@ The whole thing looks like this:
 
 # Conclusion
 
-Hopefully these examples have convinced you to give TopicSpace a spin;
+Hopefully these examples have convinced you to give `X.A.TopicSpace` a spin;
 perhaps you've even gotten some ideas of your own you'd like to try out.
 Although conceptually very simple, the module can be used in a variety
 of ways to automate boring tasks just that tiny bit more—definitely a

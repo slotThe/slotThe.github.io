@@ -2457,7 +2457,7 @@ Emily Riehl: “Weighted Limits and Colimits”; <a href="https://math.jhu.edu/~
   
 
 <p></p>
-One of my favourite—and most used—modules is XMonad.Actions.TopicSpace.
+One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
 However, it seems relatively unknown among the general <span class="small-caps">xm</span>onad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
@@ -2467,7 +2467,7 @@ interested in using topics instead of workspaces. Time to change that!
 <!--more-->
 <h2 id="introduction">Introduction</h2>
 <p></p>
-First, this post is not to be seen as a tutorial on X.A.TopicSpace, but
+First, this post is not to be seen as a tutorial on <code>X.A.TopicSpace</code>, but
 much rather as a showcase of how its functionality could be used day to
 day. If you like what you see, perhaps check out the
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">docs</a> and give it a spin yourself! I have already written
@@ -2621,9 +2621,9 @@ write the above as
 
 <p></p>
 Furthermore, since the associated directory for a topic can easily be
-made <code>$HOME</code> by default (as we’ve seen, TopicSpace even exports the
-<code>inHome</code> function), spawning programs in certain topics can easily be
-made to replace the default keybindings!
+made <code>$HOME</code> by default (as we’ve seen, <code>X.A.TopicSpace</code> even exports
+the <code>inHome</code> function), spawning programs in certain topics can easily
+be made to replace the default keybindings!
 <p></p>
 For the sake of completeness, I will showcase one slightly more
 complicated example. My main shell environment is <code>eshell</code> and getting
@@ -2665,7 +2665,7 @@ The whole thing looks like this:
 <img class="pure-img" src="../images/topic-space/website.gif" alt="Switching to an empty topic; various things automatically start up">
 <h2 id="conclusion">Conclusion</h2>
 <p></p>
-Hopefully these examples have convinced you to give TopicSpace a spin;
+Hopefully these examples have convinced you to give <code>X.A.TopicSpace</code> a spin;
 perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
 of ways to automate boring tasks just that tiny bit more—definitely a
@@ -2707,7 +2707,7 @@ Specifically, I want to showcase a new<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
 which will drop soon!</div>
  <span class="small-caps">xm</span>onad module:
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.Org­Mode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.​Prompt.​Org­Mode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one’s current workflow. The module recently got support for
