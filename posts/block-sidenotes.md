@@ -1,7 +1,7 @@
 ---
 title: Using Sidenotes with Hakyll
 date: 2023-01-27
-last-modified: 2023-02-11
+last-modified: 2023-02-16
 tags: haskell
 ---
 
@@ -351,24 +351,21 @@ This means no more standard violations!
 
 # Conclusion
 
-Being perfectly honest, I'm not very satisfied with this solution.  It
-does work, but pre-rendering everything and not using pandoc's built in
-constructors feels like a big hack.  More importantly though, since what
-I've done here amounts to a complete rewrite,[^6] I can't contribute
-this upstream—at least I don't see a way.  I sort of don't want to
-advertise this solution as an alternative to `pandoc-sidenote`, as that
-package handles the concept of sidenotes in a much better way,
-philosophically.  Hence, there is no standalone repository for
-[Sidenote.hs][site:sidenotes-hs] and [sidenotes.css][site:sidenotes] at
-this point.
+Being perfectly honest, I'm not very satisfied with the module.
+It does work, but pre-rendering everything and not using pandoc's built in constructors feels like a big hack.
 
-Jake Zimmerman—the author of `pandoc-sidenote`—also [thought about this
-issue][github:pandoc-sidenote:custom-writer], and concluded that perhaps
-a custom pandoc `Writer` would be the most elegant solution to this
-problem.  However, since using pandoc's HTML5 writer is quite hard-coded
-into Hakyll, I don't think that `Sidenote.hs` will go down that path.
+However, this solution seems to be quite comfortable from a Hakyll
+perspective,[^8] and people have told me that the functionality provided
+is still useful to them.  Since what I've done here amounts to a
+complete rewrite—and almost certainly a regression in places—I don't
+think that this will ever replace `Text.​Pandoc.​SideNote` wholesale.
+However, I have now created a [pull request][github:pandoc-sidenote:html-pr],
+which adds a module called `Text.​Pandoc.​SideNoteHTML` as an alternative.
+This keeps backwards compatibility, yet still allows people to make use
+of the alternative filter.
 
 [github:pandoc-sidenote:custom-writer]: https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553
+[github:pandoc-sidenote:html-pr]: https://github.com/jez/pandoc-sidenote/pull/26
 [site:sidenotes-hs]: https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs
 
 [^1]: For example, this is one.
@@ -421,7 +418,14 @@ into Hakyll, I don't think that `Sidenote.hs` will go down that path.
       `WriterOption`s; nothing fancy.
 
 [^6]: Not only that, but it's almost certainly also a regression in
-      certain aspects; even after handling of margin notes is restored,
-      which I've completely ignored for now.
+      certain aspects.
 
 [^7]: At least not to my current knowledge.
+
+
+[^8]: Jake Zimmerman—the author of `pandoc-sidenote`—also
+      [thought about this issue][github:pandoc-sidenote:custom-writer],
+      and concluded that perhaps a custom pandoc `Writer` would be the
+      most elegant solution to this problem.  However, since using
+      pandoc's HTML5 writer is quite hard-coded into Hakyll, I don't think
+      that I will go down that path.

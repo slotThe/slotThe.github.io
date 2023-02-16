@@ -19,7 +19,7 @@
     <section class="header">
       Posted on 2023-01-27
       
-        &thinsp;·&nbsp; last modified: 2023-02-11
+        &thinsp;·&nbsp; last modified: 2023-02-16
       
       
         &thinsp;·&nbsp; <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>
@@ -420,26 +420,25 @@ instead—since we render directly to <span class="small-caps">html</span> now, 
 This means no more standard violations!
 <h2 id="conclusion">Conclusion</h2>
 <p></p>
-Being perfectly honest, I’m not very satisfied with this solution. It
-does work, but pre-rendering everything and not using pandoc’s built in
-constructors feels like a big hack. More importantly though, since what
-I’ve done here amounts to a complete rewrite,<!--
---><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Not only that, but it’s almost certainly also a regression in
-certain aspects; even after handling of margin notes is restored,
-which I’ve completely ignored for now.</div>
- I can’t contribute
-this upstream—at least I don’t see a way. I sort of don’t want to
-advertise this solution as an alternative to <code>pandoc-sidenote</code>, as that
-package handles the concept of sidenotes in a much better way,
-philosophically. Hence, there is no standalone repository for
-<a href="https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs">Sidenote.hs</a> and <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> at
-this point.
+Being perfectly honest, I’m not very satisfied with the module.
+It does work, but pre-rendering everything and not using pandoc’s built in constructors feels like a big hack.
 <p></p>
-Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also <a href="https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553">thought about this
-issue</a>, and concluded that perhaps
-a custom pandoc <code>Writer</code> would be the most elegant solution to this
-problem. However, since using pandoc’s <span class="small-caps">html</span>5 writer is quite hard-coded
-into Hakyll, I don’t think that <code>Sidenote.hs</code> will go down that path.
+However, this solution seems to be quite comfortable from a Hakyll
+perspective,<!--
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also
+<a href="https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553">thought about this issue</a>,
+and concluded that perhaps a custom pandoc <code>Writer</code> would be the
+most elegant solution to this problem. However, since using
+pandoc’s <span class="small-caps">html</span>5 writer is quite hard-coded into Hakyll, I don’t think
+that I will go down that path.</div>
+ and people have told me that the functionality provided
+is still useful to them. Since what I’ve done here amounts to a
+complete rewrite—and almost certainly a regression in places—I don’t
+think that this will ever replace <code>Text.​Pandoc.​SideNote</code> wholesale.
+However, I have now created a <a href="https://github.com/jez/pandoc-sidenote/pull/26">pull request</a>,
+which adds a module called <code>Text.​Pandoc.​SideNoteHTML</code> as an alternative.
+This keeps backwards compatibility, yet still allows people to make use
+of the alternative filter.
 
       <!-- Body is included in the above file -->
     </section>
