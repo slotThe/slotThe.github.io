@@ -94,10 +94,15 @@ main = hakyllWith config do
     route $ setExtension "html"
     compile $ do
       tocCtx <- getTocCtx tagCtx
+      -- Atom feeds get their own compiler, since the website uses a lot
+      -- of stuff (sidenotes, small-caps…) that doesn't work in feeds.
+      void $ pandocRssCompiler
+         >>= loadAndApplyTemplate "templates/post.html"    tocCtx
+         >>= mkCleanSnapshot "post-content"  -- For atom feed.
+      -- Actual compiler for the website
       myPandocCompiler
         >>= mkCleanSnapshot "post-teaser"   -- For the previews on the main page.
         >>= loadAndApplyTemplate "templates/post.html"     tocCtx
-        >>= mkCleanSnapshot "post-content"  -- For atom feed.
         >>= loadAndApplyTemplate "templates/default.html"  tocCtx
         >>= relativizeUrls
 
@@ -129,7 +134,7 @@ config = defaultConfiguration{ destinationDirectory = "docs" }
 
 feedConfig :: FeedConfiguration
 feedConfig = FeedConfiguration
-  { feedTitle       = "Tony Zorman – Blog"
+  { feedTitle       = "Tony Zorman · Blog"
   , feedDescription = "Maths, Haskell, Emacs, and whatever else comes to mind."
   , feedAuthorName  = "Tony Zorman"
   , feedAuthorEmail = "tonyzorman@mailbox.org"
@@ -276,6 +281,21 @@ killTags open close = go
 -----------------------------------------------------------------------
 -- Compilers
 
+myWriter :: WriterOptions
+myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
+
+-- | A simple pandoc compiler for RSS/Atom feeds, with none of the
+-- fanciness that 'myPandocCompiler' has.
+pandocRssCompiler :: Compiler (Item String)
+pandocRssCompiler = pandocCompilerWorker pure
+
+pandocCompilerWorker :: (Pandoc -> Compiler Pandoc) -> Compiler (Item String)
+pandocCompilerWorker =
+  pandocCompilerWithTransformM
+    defaultHakyllReaderOptions
+    myWriter
+    . (. headerShift 1)                   -- only the `title' should be <h1>
+
 -- | Pandoc compiler with syntax highlighting (via @pygmentize@),
 -- sidenotes instead of footnotes (see @css/sidenotes.css@ and
 -- @src/Sidenote.hs@), automatic small-caps for certain abbreviations,
@@ -283,19 +303,13 @@ killTags open close = go
 -- related things, and @./build.sh@ for LaTeX-rendering.
 myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
-  pandocCompilerWithTransformM
-    defaultHakyllReaderOptions
-    myWriter
+  pandocCompilerWorker
     (   pure . usingSidenotes myWriter  -- needs to be last because it renders html
     <=< pygmentsHighlight
     .   addSectionLinks
     .   smallCaps
-    .   headerShift 1                   -- only the `title' should be <h1>
     )
  where
-  myWriter :: WriterOptions
-  myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
-
   -- https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
   addSectionLinks :: Pandoc -> Pandoc
   addSectionLinks = walk \case

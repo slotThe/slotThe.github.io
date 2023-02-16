@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>Tony Zorman – Blog</title>
+    <title>Tony Zorman · Blog</title>
     <link href="https://tony-zorman.com/atom-xmonad.xml" rel="self" />
     <link href="https://tony-zorman.com" />
     <id>https://tony-zorman.com/atom-xmonad.xml</id>
@@ -31,106 +31,85 @@
 
   
 
-<p></p>
-In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an <span class="small-caps">xm</span>onad module to rapidly capture thoughts
+<p>In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an XMonad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
 has proven to be extremely useful to me, and really I couldn’t be
 happier with it. However, a user recently contacted me by email and
 told me that they’re missing but one feature: the ability to immediately
-refile notes.
+refile notes.</p>
 <!--more-->
 <h2 id="motivation">Motivation</h2>
-<p></p>
-If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">A headline, possibly with an attached body.</div>
- <em>below</em>
+<p>If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <em>below</em>
 another heading; i.e., such that it becomes a subheading there. This
-can be useful for structuring <span class="small-caps">todo</span>s into separate categories: one might
-have projects called “work”, “life”, “<span class="small-caps">xm</span>onad”, and so on, where all
-related tasks live. Quite convenient!
-<p></p>
-So far, X.P.OrgMode just dumped the created note at the end of the
+can be useful for structuring TODOs into separate categories: one might
+have projects called “work”, “life”, “XMonad”, and so on, where all
+related tasks live. Quite convenient!</p>
+<p>So far, X.P.OrgMode just dumped the created note at the end of the
 specified file, leaving you to pick up the pieces. This aligns with my
 personal workflow—while I extensively use refiling, I only do so at the
 end of the day after reviewing all tasks that have accumulated.
 However, it is conceivable that someone might want to refile certain
 tasks straight away when it’s pretty clear that (i) they’ll be kept, and
 (ii) they can be unambiguously assigned to a certain heading (e.g., an
-already scheduled work meeting with X).
+already scheduled work meeting with X).</p>
 <h2 id="showcase">Showcase</h2>
-<p></p>
-Long story short, this is now built into X.P.OrgMode. There are two new
-functions:
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">orgPromptRefile</span><span class="w">   </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w">           </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="w">    </span><span class="n">orgPromptRefileTo</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-</pre></div>
-
-<p></p>
-The former takes the same arguments as <a href="https://hackage.haskell.org/package/xmonad-contrib-0.17.1/docs/XMonad-Prompt-OrgMode.html#v:orgPrompt">orgPrompt</a> (which see), and is
+<p>Long story short, this is now built into X.P.OrgMode. There are two new
+functions:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefile   ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span>           <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">    orgPromptRefileTo ::</span> <span class="dt">XPConfig</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span></code></pre></div>
+<p>The former takes the same arguments as <a href="https://hackage.haskell.org/package/xmonad-contrib-0.17.1/docs/XMonad-Prompt-OrgMode.html#v:orgPrompt">orgPrompt</a> (which see), and is
 for popping up another prompt that asks for a heading. The latter
-refiles everything under the specified (as the second argument) heading.
-<p></p>
-The way <code>orgPromptRefile</code> works is that, after querying for a <span class="small-caps">todo</span>, it
+refiles everything under the specified (as the second argument) heading.</p>
+<p>The way <code>orgPromptRefile</code> works is that, after querying for a TODO, it
 <em>always</em> inserts the note into the file and then <em>possibly</em> refiles it
 to another heading. This way, you don’t need to worry about losing
 notes when you abort the refiling prompt or enter a non-existent
-heading.
-<p></p>
-<img class="pure-img" src="../images/orgmode-refiling/refiling.gif" alt="Entering a TODO, and refiling it to an appropriate place">
-<p></p>
-Note: Refiling is (near) instant; the delay you are seeing above is due
-to <code>auto-revert-mode</code>.
+heading.</p>
+<p><img class="pure-img" src="../images/orgmode-refiling/refiling.gif" alt="Entering a TODO, and refiling it to an appropriate place"></p>
+<p>Note: Refiling is (near) instant; the delay you are seeing above is due
+to <code>auto-revert-mode</code>.</p>
 <h3 id="some-gory-details">Some gory details</h3>
-<p></p>
-All of the refiling is actually directly done by Emacs itself! More
-precisely, the <span class="small-caps">edsl</span> that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
+<p>All of the refiling is actually directly done by Emacs itself! More
+precisely, the EDSL that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
 <a href="/posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
-share it:
-<div class="highlight"><pre><span></span><span class="nf">refile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">refile</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">fp</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
-<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
-<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">asBatch</span>
-<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">progn</span>
-<span class="w">                </span><span class="p">[</span><span class="w"> </span><span class="s">&quot;find-file&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">fp</span>
-<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;end-of-buffer&quot;</span>
-<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;org-refile nil nil&quot;</span>
-<span class="w">                    </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="n">fp</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nil&quot;</span>
-<span class="w">                            </span><span class="p">,</span><span class="w"> </span><span class="n">saveExcursion</span>
-<span class="w">                               </span><span class="p">[</span><span class="s">&quot;org-find-exact-headline-in-buffer&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">]</span>
-<span class="w">                            </span><span class="p">]</span>
-<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;save-buffer&quot;</span>
-<span class="w">                </span><span class="p">])</span>
-</pre></div>
-
-<p></p>
-This—as you probably guessed already—just executes the following elisp
-snippet in Emacs’s batch mode:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
-<span class="w">  </span><span class="p">(</span><span class="nv">find-file</span><span class="w"> </span><span class="err">«</span><span class="nv">fp</span><span class="err">»</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="nv">org-refile</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span>
-<span class="w">              </span><span class="p">(</span><span class="nf">list</span><span class="w"> </span><span class="err">«</span><span class="nv">parent</span><span class="err">»</span><span class="w"> </span><span class="err">«</span><span class="nv">fp</span><span class="err">»</span><span class="w"> </span><span class="no">nil</span>
-<span class="w">                    </span><span class="p">(</span><span class="k">save-excursion</span>
-<span class="w">                      </span><span class="p">(</span><span class="nv">org-find-exact-headline-in-buffer</span><span class="w"> </span><span class="err">«</span><span class="nv">parent</span><span class="err">»</span><span class="p">))))</span>
-<span class="w">  </span><span class="p">(</span><span class="nv">save-buffer</span><span class="p">))</span>
-</pre></div>
-
-<p></p>
-I know this seems insane, but letting Emacs do this work is actually
+share it:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">refile ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>refile (asString <span class="ot">-&gt;</span> parent) (asString <span class="ot">-&gt;</span> fp) <span class="ot">=</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inEmacs</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> asBatch</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> eval (progn</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                [ <span class="st">&quot;find-file&quot;</span> <span class="op">&lt;&gt;</span> fp</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;end-of-buffer&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;org-refile nil nil&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="op">&lt;&gt;</span> list [ parent, fp, <span class="st">&quot;nil&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                            , saveExcursion</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                               [<span class="st">&quot;org-find-exact-headline-in-buffer&quot;</span> <span class="op">&lt;&gt;</span> parent]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                            ]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                , <span class="st">&quot;save-buffer&quot;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                ])</span></code></pre></div>
+<p>This—as you probably guessed already—just executes the following elisp
+snippet in Emacs’s batch mode:</p>
+<pre class="emacs-lisp"><code>(progn
+  (find-file «fp»)
+  (end-of-buffer)
+  (org-refile nil nil
+              (list «parent» «fp» nil
+                    (save-excursion
+                      (org-find-exact-headline-in-buffer «parent»))))
+  (save-buffer))</code></pre>
+<p>I know this seems insane, but letting Emacs do this work is actually
 much less brittle than the alternative. The Org maintainers certainly
 know best what refiling <em>means</em>, and thus also what it entails—if all of
 this logic is already written, why not take advantage of it? Plus, I
-now don’t have to keep track of subtle changes in newer versions of Org.
+now don’t have to keep track of subtle changes in newer versions of Org.</p>
 <h2 id="closing-thoughts">Closing thoughts</h2>
-<p></p>
-Writing this was actually a lot of fun, and a great opportunity to play
-with the <span class="small-caps">edsl</span> that X.U.Run exposes. I reckon there are a few places in
-my own <span class="small-caps">xm</span>onad configuration in which I could use these kinds of “Emacs
-scripts” to great effect!
-<p></p>
-One other idea I’ve had is to integrate this into the language that
+<p>Writing this was actually a lot of fun, and a great opportunity to play
+with the EDSL that X.U.Run exposes. I reckon there are a few places in
+my own XMonad configuration in which I could use these kinds of “Emacs
+scripts” to great effect!</p>
+<p>One other idea I’ve had is to integrate this into the language that
 plain old <code>orgPrompt</code> accepts. It could be prefixed by something like
 “<code>ref:</code>”, followed by a unique substring with which to identity a
 heading. This would have the disadvantage that—without the second
@@ -138,7 +117,13 @@ prompt—one would not get any suggestions for headings. However, if you
 want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions
-welcome!
+welcome!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
       <!-- Body is included in the above file -->
     </section>
@@ -167,61 +152,53 @@ welcome!
 
   
 
-<p></p>
-One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
-However, it seems relatively unknown among the general <span class="small-caps">xm</span>onad community.
+<p>One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
+However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">new documentation</a>, lots of people probably did not bother
 revisiting it and thus still don’t really understand why they might be
-interested in using topics instead of workspaces. Time to change that!
+interested in using topics instead of workspaces. Time to change that!</p>
 <!--more-->
 <h2 id="introduction">Introduction</h2>
-<p></p>
-First, this post is not to be seen as a tutorial on <code>X.A.TopicSpace</code>, but
+<p>First, this post is not to be seen as a tutorial on <code>X.A.TopicSpace</code>, but
 much rather as a showcase of how its functionality could be used day to
 day. If you like what you see, perhaps check out the
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">docs</a> and give it a spin yourself! I have already written
-an introduction to the module in the post about my <a href="./my-phd-workflow.html">research workflow</a>:
+an introduction to the module in the post about my <a href="./my-phd-workflow.html">research workflow</a>:</p>
 <blockquote>
-<p></p>
-<span class="small-caps">xm</span>onad has a module called TopicSpace, which upgrades the X11
+<p>XMonad has a module called TopicSpace, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results
 in a clean separation of concerns. Plus, I always know where my
-windows are!
-<p></p>
-Every topic has a directory and a “startup hook”, firing when the
+windows are!</p>
+<p>Every topic has a directory and a “startup hook”, firing when the
 topic is switched to and empty, associated to it. While most
 convenient for programming related tasks—e.g., spawn <code>ghcid</code> in the
 relevant directory or automatically build and open this website—it’s
-also quite convenient for mathematical projects.
-<p></p>
-I have set up special keybindings to bring up an Emacs session in the
+also quite convenient for mathematical projects.</p>
+<p>I have set up special keybindings to bring up an Emacs session in the
 topic directory, or spawn a terminal there. Switching to topics is
-done fuzzily via the <span class="small-caps">xm</span>onad prompt, which means I only have to type a
+done fuzzily via the XMonad prompt, which means I only have to type a
 few characters to get to my destination. This makes it feasible to
 have 30 topics, instead of the usual 9 or so, in the first place. As
 a result, it’s rather fast to go from thinking about a certain problem
-to working on it.
+to working on it.</p>
 </blockquote>
-<p></p>
-At a glance, this probably does not sound very impressive—so one can
+<p>At a glance, this probably does not sound very impressive—so one can
 have a directory and some function associated to a workspace (hereafter
 also called “topic”), big deal. However, we will see that with a bit of
-creativity this can be used to great effect.
+creativity this can be used to great effect.</p>
 <h2 id="examples">Examples</h2>
 <h3 id="basic-topics">Basic topics</h3>
-<p></p>
-The most obvious application of all of this is to have workspaces that
+<p>The most obvious application of all of this is to have workspaces that
 do one and only one thing. For example, I have a topic dedicated to
 connecting to a VPN, should the need arise. Naturally, I automatically
 want to execute <code>openvpn</code> and pick a random server whenever I happen to
 enter that workspace and it’s empty (i.e., <code>openvpn</code> is not already
-running).
-<p></p>
-More such use cases include having a topic dedicated to my RSS feed
+running).</p>
+<p>More such use cases include having a topic dedicated to my RSS feed
 reader, instant messaging, or IRC. Since I only show workspaces with
 windows on them in xmobar, I can just glance at my status bar to find
 out whether I currently have, for example, IRC open. No additional
@@ -229,158 +206,125 @@ program for checking the status of things necessary! Obviously, this
 <em>modus operandi</em> takes a bit of discipline to uphold over the course of
 the day, but I find that such a separation of concerns greatly reduces
 mental load regarding what’s currently happening on my computer.
-Definitely worth it.
-<p></p>
-In terms of code, this—as well as the following examples—heavily use the
+Definitely worth it.</p>
+<p>In terms of code, this—as well as the following examples—heavily use the
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to XMonad.Util.Run, which allows one to
 spawn processes in a declarative and compositional way; I’ve <a href="./calling-emacs-from-xmonad.html">written
 about this</a> in another post. For example, my RSS topic is
-specified thusly:
-<div class="highlight"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (inHome)</span>
-<span class="c1">-- import XMonad.Util.Run</span>
-
-<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">inHome</span><span class="w"> </span><span class="s">&quot;7:RSS&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEditor</span>
-<span class="w">                        </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setFrameName</span><span class="w"> </span><span class="s">&quot;elfeed&quot;</span>
-<span class="w">                        </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="p">(</span><span class="n">elispFun</span><span class="w"> </span><span class="s">&quot;elfeed&quot;</span><span class="p">)</span>
-</pre></div>
-
-<p></p>
-Here, <code>inHome</code> is a little helper function that takes a topic name and
+specified thusly:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Actions.TopicSpace (inHome)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Util.Run</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  , inHome <span class="st">&quot;7:RSS&quot;</span> <span class="op">$</span> proc <span class="op">$</span> inEditor</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                        <span class="op">&gt;-&gt;</span> setFrameName <span class="st">&quot;elfeed&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                        <span class="op">&gt;-&gt;</span> execute (elispFun <span class="st">&quot;elfeed&quot;</span>)</span></code></pre></div>
+<p>Here, <code>inHome</code> is a little helper function that takes a topic name and
 an action, and creates a new topic with <code>$HOME</code> as its associated
-directory.
-<p></p>
-You can find all of my topics (and there are a lot of them)
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L219-L265">here</a>.
+directory.</p>
+<p>You can find all of my topics (and there are a lot of them)
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L219-L265">here</a>.</p>
 <h3 id="spawning-everything-in-the-topic-directory">Spawning <em>everything</em> in the topic directory</h3>
-<p></p>
-More generally, programming projects in the same language almost always
+<p>More generally, programming projects in the same language almost always
 require me to open the same set of standard tools, so it’s extremely
 convenient to directly spawn them upon first visit. This allows for
 very little friction before starting to work on whatever I wanted to
-work on.
-<p></p>
-For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghcid">ghcid</a> in every Haskell project
+work on.</p>
+<p>For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghcid">ghcid</a> in every Haskell project
 of mine—so why not automate this? Using what X.U.Run gives us, we can
 quickly throw together a function that executes the given instruction
-inside of a terminal:
-<div class="highlight"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span>
-<span class="c1">-- 'topicConfig' is my personal topic configuration.</span>
-
-<span class="c1">-- | Execute a program in the topic directory (inside a terminal).</span>
-<span class="nf">executeInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">executeInTopic</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="p">(</span><span class="n">termInDir</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span><span class="p">)</span>
-<span class="w">                      </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="n">p</span>
-</pre></div>
-
-<p></p>
-Similar functions can be created for spawning the terminal and editor:
-<div class="highlight"><pre><span></span><span class="c1">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span>
-<span class="c1">-- or X.U.Run.</span>
-
-<span class="c1">-- | Spawn terminal in topic directory.</span>
-<span class="nf">spawnTermInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnTermInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">termInDir</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
-
-<span class="c1">-- | Spawn editor in the current topic directory.</span>
-<span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
-</pre></div>
-
-<p></p>
-Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
-<code>termInDir</code> are defined and may be customised.
-<p></p>
-In my mathematical and other work-adjacent projects I keep it pretty
-simple; an editor there is mostly sufficient.
-<p></p>
-<img class="pure-img" src="../phd-workflow/topics.gif" alt="Navigating to an empty topic, Emacs pops up">
-<p></p>
-We can also get a little bit more fancy. Since the topic action is just
+inside of a terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- 'topicConfig' is my personal topic configuration.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Execute a program in the topic directory (inside a terminal).</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">executeInTopic ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>executeInTopic p <span class="ot">=</span> proc <span class="op">$</span> (termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&gt;-&gt;</span> execute p</span></code></pre></div>
+<p>Similar functions can be created for spawning the terminal and editor:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- or X.U.Run.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn terminal in topic directory.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnTermInTopic ::</span> <span class="dt">X</span> ()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>spawnTermInTopic <span class="ot">=</span> proc <span class="op">$</span> termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn editor in the current topic directory.</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnEditorInTopic ::</span> <span class="dt">X</span> ()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>spawnEditorInTopic <span class="ot">=</span> proc <span class="op">$</span> inEditor <span class="op">&gt;-$</span> currentTopicDir topicConfig</span></code></pre></div>
+<p>Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
+<code>termInDir</code> are defined and may be customised.</p>
+<p>In my mathematical and other work-adjacent projects I keep it pretty
+simple; an editor there is mostly sufficient.</p>
+<p><img class="pure-img" src="../phd-workflow/topics.gif" alt="Navigating to an empty topic, Emacs pops up"></p>
+<p>We can also get a little bit more fancy. Since the topic action is just
 a general <code>X</code> action, we can really do anything we want in there. In
 addition to spawning programs, all of my Haskell projects should default
-to the <code>Hacking</code><!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In case you are interested:
-<div class="highlight"><pre><span></span><span class="nf">hacking</span>
-<span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">renamed</span><span class="w"> </span><span class="p">[</span><span class="kt">Replace</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">limitWindows</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">magnify</span><span class="w"> </span><span class="mf">1.3</span><span class="w"> </span><span class="p">(</span><span class="kt">NoMaster</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kt">True</span>
-<span class="w">  </span><span class="o">$</span><span class="w"> </span><span class="kt">ResizableTall</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">13</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">25</span><span class="p">)</span><span class="w"> </span><span class="kt">[]</span>
-</pre></div>
-
-<p></p>
-As the rest of my dotfiles, it’s available
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</div>
- layout:
-<div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
-<span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
-<span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;ghcid&quot;</span>
-</pre></div>
-
-<p></p>
-And Voilà, we can now attach this action to all the topics that we want!
-<p></p>
-Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
+to the <code>Hacking</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> layout:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnHaskell ::</span> <span class="dt">X</span> ()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>spawnHaskell <span class="ot">=</span> sendMessage (<span class="dt">JumpToLayout</span> <span class="st">&quot;Hacking&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawnEditorInTopic</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> executeInTopic <span class="st">&quot;ghcid&quot;</span></span></code></pre></div>
+<p>And Voilà, we can now attach this action to all the topics that we want!</p>
+<p>Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
 actions. If you’re more comfortable with <code>do</code> notation, you can also
-write the above as
-<div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
-<span class="w">  </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="n">spawnEditorInTopic</span>
-<span class="w">  </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;ghcid&quot;</span>
-</pre></div>
-
-<p></p>
-Furthermore, since the associated directory for a topic can easily be
+write the above as</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnHaskell ::</span> <span class="dt">X</span> ()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>spawnHaskell <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  sendMessage (<span class="dt">JumpToLayout</span> <span class="st">&quot;Hacking&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  spawnEditorInTopic</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  executeInTopic <span class="st">&quot;ghcid&quot;</span></span></code></pre></div>
+<p>Furthermore, since the associated directory for a topic can easily be
 made <code>$HOME</code> by default (as we’ve seen, <code>X.A.TopicSpace</code> even exports
 the <code>inHome</code> function), spawning programs in certain topics can easily
-be made to replace the default keybindings!
-<p></p>
-For the sake of completeness, I will showcase one slightly more
+be made to replace the default keybindings!</p>
+<p>For the sake of completeness, I will showcase one slightly more
 complicated example. My main shell environment is <code>eshell</code> and getting
 sane behaviour there presents one with a few more obstacles than
 <code>spawnTermInTopic</code> did. It also uses <code>inProgram</code> instead of <code>inEditor</code>,
-allowing access to a different instance of the Emacs server.
-<div class="highlight"><pre><span></span><span class="c1">-- | Spawn an eshell frame in the current topic directory.</span>
-<span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="nf">\</span><span class="n">dir</span><span class="w"> </span><span class="ow">-&gt;</span>
-<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inProgram</span><span class="w"> </span><span class="s">&quot;emacsclient -a '' -c -s eshell&quot;</span>
-<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="p">(</span><span class="n">progn</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s">&quot;eshell&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="s">&quot;new-shell&quot;</span>
-<span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eshell/cd&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">asString</span><span class="w"> </span><span class="n">dir</span>
-<span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eshell/clear-scrollback&quot;</span>
-<span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eshell-send-input&quot;</span>
-<span class="w">                        </span><span class="p">])</span>
-</pre></div>
-
-<p></p>
-All in all, we have something that looks a little bit like this:
-<p></p>
-<img class="pure-img" src="../images/topic-space/haskell-topic.gif" alt="Switching to a Haskell topic, then using project.el to navigate the project">
+allowing access to a different instance of the Emacs server.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- | Spawn an eshell frame in the current topic directory.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnEshellInTopic ::</span> <span class="dt">X</span> ()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>spawnEshellInTopic <span class="ot">=</span> currentTopicDir topicConfig <span class="op">&gt;&gt;=</span> \dir <span class="ot">-&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inProgram <span class="st">&quot;emacsclient -a '' -c -s eshell&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> execute (progn [ <span class="st">&quot;eshell&quot;</span> <span class="op">&lt;&gt;</span> quote <span class="st">&quot;new-shell&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/cd&quot;</span> <span class="op">&lt;&gt;</span> asString dir</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell/clear-scrollback&quot;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">&quot;eshell-send-input&quot;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                        ])</span></code></pre></div>
+<p>All in all, we have something that looks a little bit like this:</p>
+<p><img class="pure-img" src="../images/topic-space/haskell-topic.gif" alt="Switching to a Haskell topic, then using project.el to navigate the project"></p>
 <h3 id="testing-this-website">Testing this website</h3>
-<p></p>
-Much in the same vein as my Haskell topics, I find the <code>website</code> topic
+<p>Much in the same vein as my Haskell topics, I find the <code>website</code> topic
 to be extremely handy—you can probably guess what it’s used for. Its
 associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
 an Emacs frame in the topic directory, builds the website, and opens a
-browser window pointing to the local copy:
-<div class="highlight"><pre><span></span><span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">switchToLayout</span><span class="w"> </span><span class="s">&quot;Tall&quot;</span>
-<span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
-<span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;hakyll-build.sh --hold&quot;</span>
-<span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawn</span><span class="w"> </span><span class="s">&quot;browser-new-window.sh localhost:8000&quot;</span>
-</pre></div>
-
-<p></p>
-The whole thing looks like this:
-<p></p>
-<img class="pure-img" src="../images/topic-space/website.gif" alt="Switching to an empty topic; various things automatically start up">
+browser window pointing to the local copy:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnWebsite ::</span> <span class="dt">X</span> ()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>spawnWebsite <span class="ot">=</span> switchToLayout <span class="st">&quot;Tall&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawnEditorInTopic</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> executeInTopic <span class="st">&quot;hakyll-build.sh --hold&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">*&gt;</span> spawn <span class="st">&quot;browser-new-window.sh localhost:8000&quot;</span></span></code></pre></div>
+<p>The whole thing looks like this:</p>
+<p><img class="pure-img" src="../images/topic-space/website.gif" alt="Switching to an empty topic; various things automatically start up"></p>
 <h2 id="conclusion">Conclusion</h2>
-<p></p>
-Hopefully these examples have convinced you to give <code>X.A.TopicSpace</code> a spin;
+<p>Hopefully these examples have convinced you to give <code>X.A.TopicSpace</code> a spin;
 perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
 of ways to automate boring tasks just that tiny bit more—definitely a
-win in my book!
+win in my book!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>In case you are interested:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hacking</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">=</span> renamed [<span class="dt">Replace</span> <span class="st">&quot;Hacking&quot;</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> limitWindows <span class="dv">3</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span> magnify <span class="fl">1.3</span> (<span class="dt">NoMaster</span> <span class="dv">3</span>) <span class="dt">True</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">$</span> <span class="dt">ResizableTall</span> <span class="dv">1</span> (<span class="dv">3</span> <span class="op">%</span> <span class="dv">100</span>) (<span class="dv">13</span> <span class="op">%</span> <span class="dv">25</span>) []</span></code></pre></div>
+<p>As the rest of my dotfiles, it’s available
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
       <!-- Body is included in the above file -->
     </section>
@@ -408,107 +352,91 @@ win in my book!
      small for the one in the `default.html' template -->
 
 
-<p></p>
-As I’ve said before, basically my entire digital life happens in either
-<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>. Thus, a lot of time spent on my setup either goes
+<p>As I’ve said before, basically my entire digital life happens in either
+<a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
-today—bringing them ever closed together.
-<p></p>
-Specifically, I want to showcase a new<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
-which will drop soon!</div>
- <span class="small-caps">xm</span>onad module:
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.​Prompt.​Org­Mode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
+today—bringing them ever closed together.</p>
+<p>Specifically, I want to showcase a new<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> XMonad module:
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.​Prompt.​Org­Mode</a>. Building on top of XMonad’s prompt—which works
 much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one’s current workflow. The module recently got support for
 Org <a href="https://orgmode.org/manual/Priorities.html">priorities</a>, so I figured this was as good an excuse as
-any to talk about it.
+any to talk about it.</p>
 <!--more-->
 <h3 id="motivation">Motivation</h3>
-<p></p>
-One theme in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a> was how it’s possible
+<p>One theme in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a> was how it’s possible
 to use org-mode (with all of its appendages, like <a href="https://www.orgroam.com/">org-roam</a>) to
 organise one’s thoughts. <code>XMonad.Prompt.OrgMode</code> was created as yet
 another link in that chain. Unlike when writing tiny <a href="../2022-05-25-calling-emacs-from-xmonad.html">Emacs Lisp
-scripts in <span class="small-caps">xm</span>onad</a>, this does not involve any
+scripts in XMonad</a>, this does not involve any
 custom elisp code one has to run; all of it is taken care of by the
-module itself.
-<p></p>
-The upshot of all of this is a tool to quickly and unobtrusively jot
+module itself.</p>
+<p>The upshot of all of this is a tool to quickly and unobtrusively jot
 down an idea—quiet the monkey mind—and then get back to work straight
 away. For me, having something like this is very important, lest I get
 distracted by some thought about another project and spend the next hour
 or so working on that instead of doing what I was actually supposed to
 do. Having the idea written down in a known place—perhaps even with an
 automatic reminder in my <a href="https://orgmode.org/manual/Agenda-Views.html">agenda</a>—helps me get rid of that creeping
-anxiety that I’m forgetting things left and right.
+anxiety that I’m forgetting things left and right.</p>
 <h3 id="functionality">Functionality</h3>
-<p></p>
-The following showcases the core functionality of the module—taking
-notes!
-<p></p>
-<img class="pure-img" src="../images/orgmode-prompt/simple-task.gif" alt="capturing a single task">
-<p></p>
-In case you <em>really</em> don’t want to forget something, there is also the
+<p>The following showcases the core functionality of the module—taking
+notes!</p>
+<p><img class="pure-img" src="../images/orgmode-prompt/simple-task.gif" alt="capturing a single task"></p>
+<p>In case you <em>really</em> don’t want to forget something, there is also the
 ability to create <code>DEADLINE</code> and <code>SCHEDULED</code> tasks. Optionally, you can
 also specify a <a href="https://orgmode.org/manual/Priorities.html">priority</a>, depending on the importance of the note. If
-you add the org file in which the <span class="small-caps">todo</span>s are placed to the
+you add the org file in which the TODOs are placed to the
 <code>org-agenda-files</code> variable, then this will immediately show these tasks
-in your agenda!
-<p></p>
-<img class="pure-img" src="../images/orgmode-prompt/deadline-task.gif" alt="capturing a deadline">
-<p></p>
-How exactly one may specify the <code>SCHEDULED</code> and <code>DEADLINE</code> keywords, as
+in your agenda!</p>
+<p><img class="pure-img" src="../images/orgmode-prompt/deadline-task.gif" alt="capturing a deadline"></p>
+<p>How exactly one may specify the <code>SCHEDULED</code> and <code>DEADLINE</code> keywords, as
 well as a date, time, and priority is covered in detail in the
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">documentation</a> for <code>X.P.OrgMode</code>.
-<p></p>
-Last but not least, it’s possible to capture the current (primary)
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">documentation</a> for <code>X.P.OrgMode</code>.</p>
+<p>Last but not least, it’s possible to capture the current (primary)
 selection and, depending on the type of thing in it, use that as either
 the body or the header of the task. If it’s a URL, create a link (i.e.,
 it will be of the form <code>[[link][input-text]]</code>); if not, just add the
-selection to the body of the note.
-<p></p>
-<img class="pure-img" src="selection-tasks.png" alt="visual representation of the above paragraph, showing various states of notes">
-<p></p>
-Of course, you can use all of this together as well—directly link to
+selection to the body of the note.</p>
+<p><img class="pure-img" src="selection-tasks.png" alt="visual representation of the above paragraph, showing various states of notes"></p>
+<p>Of course, you can use all of this together as well—directly link to
 that one paper or blog post you wanted to read, or that one YouTube
-video you want to watch on the weekend!
+video you want to watch on the weekend!</p>
 <h3 id="sample-configuration">Sample configuration</h3>
-<p></p>
-To round things off—and quickly showcase another cool (and new!)
+<p>To round things off—and quickly showcase another cool (and new!)
 module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
-“normal” <code>TODO</code> notes on <code>M-o c</code><!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</div>
- and uses the selection when called
-with a universal argument:
-<div class="highlight"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
-<span class="nf">orgKey</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)</span>
-<span class="nf">orgKey</span><span class="w"> </span><span class="ow">=</span>
-<span class="w">  </span><span class="p">(</span><span class="s">&quot;M-o c&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="p">(`</span><span class="n">uncurry</span><span class="p">`</span><span class="w"> </span><span class="n">orgSettings</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
-<span class="w">     </span><span class="kt">Raw</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">orgPromptPrimary</span><span class="w"> </span><span class="n">promptNoHist</span>
-<span class="w">     </span><span class="kr">_</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">orgPrompt</span><span class="w">        </span><span class="n">promptNoHist</span><span class="p">)</span>
-<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="n">orgSettings</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;TODO&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~/todos.org&quot;</span><span class="p">)</span>
-</pre></div>
-
-<p></p>
-I’ve found <code>M-u</code> to be quite convenient for <span class="small-caps">xm</span>onad’s universal argument
+“normal” <code>TODO</code> notes on <code>M-o c</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and uses the selection when called
+with a universal argument:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- uses {-# LANGUAGE LambdaCase #-}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">orgKey ::</span> (<span class="dt">String</span>, <span class="dt">X</span> ())</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>orgKey <span class="ot">=</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;M-o c&quot;</span>, withPrefixArgument <span class="op">$</span> (<span class="ot">`uncurry`</span> orgSettings) <span class="op">.</span> \<span class="kw">case</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="dt">Raw</span> _ <span class="ot">-&gt;</span> orgPromptPrimary promptNoHist</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     _     <span class="ot">-&gt;</span> orgPrompt        promptNoHist)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  orgSettings <span class="ot">=</span> (<span class="st">&quot;TODO&quot;</span>, <span class="st">&quot;~/todos.org&quot;</span>)</span></code></pre></div>
+<p>I’ve found <code>M-u</code> to be quite convenient for XMonad’s universal argument
 key, mirroring the <code>C-u</code> convention from Emacs. In either case, simply
 add the <code>usePrefixArgument</code> combinator somewhere to your <code>main</code> function
-and give it your preferred keybinding. For example:
-<div class="highlight"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">main</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">xmonad</span>
-<span class="w">     </span><span class="o">.</span><span class="w"> </span><span class="n">usePrefixArgument</span><span class="w"> </span><span class="s">&quot;M-u&quot;</span>
-<span class="w">     </span><span class="o">$</span><span class="w"> </span><span class="n">def</span><span class="p">{</span><span class="w"> </span><span class="n">modMask</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">mod4Mask</span><span class="w">  </span><span class="c1">-- use &lt;Super&gt; as mod</span>
-<span class="w">          </span><span class="p">}</span>
-</pre></div>
-
-<p></p>
-If you’re anything like me, this will soon become an integral part of
+and give it your preferred keybinding. For example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> xmonad</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="op">.</span> usePrefixArgument <span class="st">&quot;M-u&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="op">$</span> def{ modMask <span class="ot">=</span> mod4Mask  <span class="co">-- use &lt;Super&gt; as mod</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>          }</span></code></pre></div>
+<p>If you’re anything like me, this will soon become an integral part of
 your workflow and you won’t want to live without it. If not, then
 perhaps you still don’t understand what all the fuss is about; in either
-case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</a>!
+case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</a>!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
+which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
       <!-- Body is included in the above file -->
     </section>
@@ -537,95 +465,74 @@ case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</
 
   
 
-<p></p>
-In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
-call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
+<p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
+call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
-generic enough API, I decided to turn it into an <span class="small-caps">xm</span>onad module!
-<p></p>
-Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
+generic enough API, I decided to turn it into an XMonad module!</p>
+<p>Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
 now available for everyone to try out; provided one has the git version
-of <span class="small-caps">xm</span>onad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
-installing any unreleased—though stable—version, message me in any
-way and maybe we’ll hurry up and cut 0.17.1 soon!</div>
-<p></p>
-I’d like to use this opportunity to both showcase the module—how and why
+of XMonad <a href="https://xmonad.org/INSTALL.html">installed</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>I’d like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
-implementation detail.
+implementation detail.</p>
 <!--more-->
 <h2 id="main-use-cases">Main use cases</h2>
-<p></p>
-Wouldn’t it be neat to have some kind of <a href="https://en.wikipedia.org/wiki/Domain-specific_language"><span class="small-caps">edsl</span></a> for spawning external
+<p>Wouldn’t it be neat to have some kind of <a href="https://en.wikipedia.org/wiki/Domain-specific_language">EDSL</a> for spawning external
 processes? Something where one can just compose Haskell functions
 together, not having to worry about the actual underlying string
 manipulations? Something that’s composable, so that one does not have
 to write the same <code>"emacsclient -c -a '' …"</code> or <code>"alacritty --working-directory …"</code> prefix over and over again? Well, at least
-that’s what I thought on some rainy afternoon a few months ago.
+that’s what I thought on some rainy afternoon a few months ago.</p>
 <h3 id="scratchpads">Scratchpads</h3>
-<p></p>
-The first use case that I came up with was <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpad</a>s. The idea of
+<p>The first use case that I came up with was <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpad</a>s. The idea of
 these things is simple: while we normally don’t like floating windows,
 it’s quite convenient to have some of them around that one can bring to
 the current workspace, as well as hide, with a single keybinding. This
 is useful for things like email, a calendar, a daily agenda, a
-calculator, etc.
-<p></p>
-For scratchpads to work reliably, windows need to have some unique
+calculator, etc.</p>
+<p>For scratchpads to work reliably, windows need to have some unique
 characteristic they can be recognised by, like a special <a href="https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS">class or
 instance name</a>. Endowing an application with additional properties
-sounds exactly like what our <span class="small-caps">edsl</span> should be good at, so let’s try that!
-<p></p>
-Using the new features of <code>XMonad.Util.Run</code>, we could spawn an Emacs
+sounds exactly like what our EDSL should be good at, so let’s try that!</p>
+<p>Using the new features of <code>XMonad.Util.Run</code>, we could spawn an Emacs
 frame with a special name for our scratchpad hooks to grab onto, and
-execute <code>notmuch</code>:
-<div class="highlight"><pre><span></span><span class="nf">mailSession</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="kt">String</span>
-<span class="nf">mailSession</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">getInput</span><span class="w"> </span><span class="o">$</span>
-<span class="w">  </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setFrameName</span><span class="w"> </span><span class="n">mailInstName</span>
-<span class="w">           </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">function</span><span class="w"> </span><span class="s">&quot;notmuch&quot;</span><span class="p">)</span>
-</pre></div>
-
-<p></p>
-You can read the <code>&gt;-&gt;</code> operator a little like a pipe, where you start
+execute <code>notmuch</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">mailSession ::</span> <span class="dt">X</span> <span class="dt">String</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mailSession <span class="ot">=</span> getInput <span class="op">$</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  inEditor <span class="op">&gt;-&gt;</span> setFrameName mailInstName</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           <span class="op">&gt;-&gt;</span> eval (function <span class="st">&quot;notmuch&quot;</span>)</span></code></pre></div>
+<p>You can read the <code>&gt;-&gt;</code> operator a little like a pipe, where you start
 with what you want and thread that information through to the end: “I
-want an editor with a certain frame name that also starts up notmuch”.
-<p></p>
-In full, the above function would produce the string (broken into a few
-lines for better readability)
-<div class="highlight"><pre><span></span>&quot;emacsclient -c -a ''
+want an editor with a certain frame name that also starts up notmuch”.</p>
+<p>In full, the above function would produce the string (broken into a few
+lines for better readability)</p>
+<pre><code>&quot;emacsclient -c -a ''
              -F '(quote (name . \&quot;notmuch-scratch\&quot;))'
-             --eval '(notmuch)'&quot;
-</pre></div>
-
-<p></p>
-which would be quite bothersome to type indeed.
-<p></p>
-Because the type of <code>mailSession</code> is <code>X String</code> and not just <code>String</code>,
+             --eval '(notmuch)'&quot;</code></pre>
+<p>which would be quite bothersome to type indeed.</p>
+<p>Because the type of <code>mailSession</code> is <code>X String</code> and not just <code>String</code>,
 the setup for this is a little bit different than usual when using
-scratchpads. You would use it like this:
-<div class="highlight"><pre><span></span><span class="nf">myScratchpads</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="p">[</span><span class="kt">NamedScratchpad</span><span class="p">]</span>
-<span class="nf">myScratchpads</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
-<span class="w">  </span><span class="c1">-- First, get the finished string.</span>
-<span class="w">  </span><span class="n">mailSession</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getInput</span><span class="w"> </span><span class="o">$</span>
-<span class="w">    </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setFrameName</span><span class="w"> </span><span class="n">mailInst</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">elispFun</span><span class="w"> </span><span class="s">&quot;notmuch&quot;</span><span class="p">)</span>
-<span class="w">  </span><span class="c1">-- Now we can insert it into our scratchpads as normal.</span>
-<span class="w">  </span><span class="n">pure</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="kt">NS</span><span class="w"> </span><span class="s">&quot;Mail&quot;</span><span class="w"> </span><span class="n">mailSession</span><span class="w"> </span><span class="p">(</span><span class="n">appName</span><span class="w"> </span><span class="o">=?</span><span class="w"> </span><span class="n">mailInst</span><span class="p">)</span><span class="w"> </span><span class="n">quake</span><span class="w"> </span><span class="p">]</span>
-<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="n">mailInst</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;notmuch-scratch&quot;</span>
-<span class="w">  </span><span class="n">quake</span><span class="w">    </span><span class="ow">=</span><span class="w"> </span><span class="n">customFloating</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="kt">RationalRect</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
-
-<span class="c1">-- The call to @namedScratchpadManageHook@ in the manageHook also</span>
-<span class="c1">-- needs to be slightly adjusted.</span>
-<span class="nf">myManageHook</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">ManageHook</span>
-<span class="nf">myManageHook</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">mconcat</span>
-<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="err">…</span>
-<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">namedScratchpadManageHook</span><span class="w"> </span><span class="o">=&lt;&lt;</span><span class="w"> </span><span class="n">liftX</span><span class="w"> </span><span class="n">myScratchpads</span>
-<span class="w">  </span><span class="p">]</span>
-</pre></div>
-
-<p></p>
-Normally you would also add your <code>myScratchpads</code> list to all calls of
+scratchpads. You would use it like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">myScratchpads ::</span> <span class="dt">X</span> [<span class="dt">NamedScratchpad</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>myScratchpads <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- First, get the finished string.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  mailSession <span class="ot">&lt;-</span> getInput <span class="op">$</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    inEditor <span class="op">&gt;-&gt;</span> setFrameName mailInst <span class="op">&gt;-&gt;</span> eval (elispFun <span class="st">&quot;notmuch&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Now we can insert it into our scratchpads as normal.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pure</span> [ <span class="dt">NS</span> <span class="st">&quot;Mail&quot;</span> mailSession (appName <span class="op">=?</span> mailInst) quake ]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  mailInst <span class="ot">=</span> <span class="st">&quot;notmuch-scratch&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  quake    <span class="ot">=</span> customFloating <span class="op">$</span> <span class="dt">RationalRect</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> (<span class="dv">4</span> <span class="op">/</span> <span class="dv">5</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- The call to @namedScratchpadManageHook@ in the manageHook also</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- needs to be slightly adjusted.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ot">myManageHook ::</span> <span class="dt">ManageHook</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>myManageHook <span class="ot">=</span> <span class="fu">mconcat</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  [ …</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  , namedScratchpadManageHook <span class="op">=&lt;&lt;</span> liftX myScratchpads</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  ]</span></code></pre></div>
+<p>Normally you would also add your <code>myScratchpads</code> list to all calls of
 <code>namedScratchpadAction</code>; e.g., when you define the keys to call your
 scratchpads. However, since the former lives in <code>X</code> now, this doesn’t
 work anymore! Thankfully,
@@ -633,204 +540,161 @@ work anymore! Thankfully,
 the first argument to <code>namedScratchpadAction</code> is actually unused and
 only there for backwards compatibility. This means that it’s not
 necessary to enter your scratchpads there at all if they are added to
-your <code>manageHook</code>. For example, in the following I just provide the empty list:
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="s">&quot;M-C-t&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">namedScratchpadAction</span><span class="w"> </span><span class="kt">[]</span><span class="w"> </span><span class="s">&quot;Mail&quot;</span><span class="p">)</span>
-</pre></div>
-
-<p></p>
-This works all the same with the above definition of <code>myScratchpads</code>.
-<p></p>
-A full example of how a scratchpad setup would look using this machinery
-can be found in <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L414">my config</a>.
+your <code>manageHook</code>. For example, in the following I just provide the empty list:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;M-C-t&quot;</span>, namedScratchpadAction [] <span class="st">&quot;Mail&quot;</span>)</span></code></pre></div>
+<p>This works all the same with the above definition of <code>myScratchpads</code>.</p>
+<p>A full example of how a scratchpad setup would look using this machinery
+can be found in <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L414">my config</a>.</p>
 <h3 id="calling-emacs-in-scripts">Calling Emacs in scripts</h3>
-<p></p>
-Spawning frames is nice and all, but how about something more
+<p>Spawning frames is nice and all, but how about something more
 complicated, like Emacs’s batch mode so that we can use it properly in
-scripts? No problem at all!
-<p></p>
-For example, I have the following snippet in my config to get the
+scripts? No problem at all!</p>
+<p>For example, I have the following snippet in my config to get the
 currently selected text and call <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> with it to <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">produce a
 citation entry in my bibliography
-files</a>:
-<div class="highlight"><pre><span></span><span class="nf">callArXiv</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">callArXiv</span><span class="w"> </span><span class="n">fun</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
-<span class="w">  </span><span class="n">url</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getSelection</span><span class="w">  </span><span class="c1">-- from X.U.XSelection</span>
-<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
-<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">withEmacsLibs</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="kt">ElpaLib</span><span class="w"> </span><span class="s">&quot;dash&quot;</span><span class="p">,</span><span class="w"> </span><span class="kt">ElpaLib</span><span class="w"> </span><span class="s">&quot;s&quot;</span>
-<span class="w">                       </span><span class="p">,</span><span class="w"> </span><span class="kt">ElpaLib</span><span class="w"> </span><span class="s">&quot;arxiv-citation&quot;</span>
-<span class="w">                       </span><span class="p">,</span><span class="w"> </span><span class="kt">Special</span><span class="w"> </span><span class="s">&quot;~/.config/emacs/private-stuff.el&quot;</span><span class="w"> </span><span class="p">]</span>
-<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">asBatch</span>
-<span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">progn</span><span class="w"> </span><span class="p">[</span><span class="n">require</span><span class="w"> </span><span class="s">&quot;arxiv-citation&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fun</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">asString</span><span class="w"> </span><span class="n">url</span><span class="p">])</span>
-</pre></div>
-
-<p></p>
-When executed, this translates to something like
-<div class="highlight"><pre><span></span>emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
+files</a>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">callArXiv ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>callArXiv fun <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span> getSelection  <span class="co">-- from X.U.XSelection</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inEmacs</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> withEmacsLibs [ <span class="dt">ElpaLib</span> <span class="st">&quot;dash&quot;</span>, <span class="dt">ElpaLib</span> <span class="st">&quot;s&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                       , <span class="dt">ElpaLib</span> <span class="st">&quot;arxiv-citation&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                       , <span class="dt">Special</span> <span class="st">&quot;~/.config/emacs/private-stuff.el&quot;</span> ]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> asBatch</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>     <span class="op">&gt;-&gt;</span> eval (progn [require <span class="st">&quot;arxiv-citation&quot;</span>, fun <span class="op">&lt;&gt;</span> asString url])</span></code></pre></div>
+<p>When executed, this translates to something like</p>
+<pre><code>emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
       -L /home/slot/.config/emacs/elpa/s-20210616.619
       -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
       --batch
       --eval '(progn
                 (require (quote arxiv-citation))
-                (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))'
-</pre></div>
-
-<p></p>
-I certainly know which one I’d rather type—especially with <span class="small-caps">elpa</span>
+                (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))'</code></pre>
+<p>I certainly know which one I’d rather type—especially with ELPA
 directory names changing quite frequently! On that note,
-<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on <span class="small-caps">melpa</span> now; yay!
+<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on MELPA now; yay!</p>
 <h3 id="other-programs">Other programs</h3>
-<p></p>
-As this is my main use case for it, the new features of
+<p>As this is my main use case for it, the new features of
 <code>XMonad.Util.Run</code> are quite specialised for Emacs. However, even for
 other programs they may well come in handy. Drawing from the point
 about scratchpads again, here is a hypothetical one that spawns a ghci
-session:
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="n">ghci</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inTerm</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setXClass</span><span class="w"> </span><span class="n">calcInstName</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="s">&quot;ghci&quot;</span>
-</pre></div>
-
-<p></p>
-Further, something that’s useful when dealing with <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#topics">topic-based
+session:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  ghci <span class="ot">&lt;-</span> proc <span class="op">$</span> inTerm <span class="op">&gt;-&gt;</span> setXClass calcInstName <span class="op">&gt;-&gt;</span> execute <span class="st">&quot;ghci&quot;</span></span></code></pre></div>
+<p>Further, something that’s useful when dealing with <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#topics">topic-based
 workspaces</a>
 is spawning a terminal or an editor already in the current topic
-directory:
-<div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">XMonad.Actions.TopicSpace</span><span class="w">  </span><span class="c1">-- for currentTopicDir and more</span>
-<span class="nf">topicConfig</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="err">…</span>
-
-<span class="nf">spawnTermInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnTermInTopic</span><span class="w"> </span><span class="ow">=</span>
-<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">termInDir</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
-
-<span class="c1">-- Optionally, modify the path to the editor with a function.</span>
-<span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
-<span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="ow">=</span>
-<span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
-</pre></div>
-
-<p></p>
-Quite convenient if you ask me.
-<p></p>
-If you have or know of a use case you would like to support but which is
+directory:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">XMonad.Actions.TopicSpace</span>  <span class="co">-- for currentTopicDir and more</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>topicConfig <span class="ot">=</span> …</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnTermInTopic ::</span> <span class="dt">X</span> ()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>spawnTermInTopic <span class="ot">=</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> termInDir <span class="op">&gt;-$</span> currentTopicDir topicConfig</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Optionally, modify the path to the editor with a function.</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ot">spawnEditorInTopic ::</span> (<span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span>) <span class="ot">-&gt;</span> <span class="dt">X</span> ()</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>spawnEditorInTopic with <span class="ot">=</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  proc <span class="op">$</span> inEditor <span class="op">&gt;-$</span> with <span class="op">&lt;$&gt;</span> currentTopicDir topicConfig</span></code></pre></div>
+<p>Quite convenient if you ask me.</p>
+<p>If you have or know of a use case you would like to support but which is
 awkward with the current set of functions and combinators do not
-hesitate to open a pull request or an issue!
+hesitate to open a pull request or an issue!</p>
 <h2 id="implementation-considerations">Implementation considerations</h2>
-<p></p>
-The implementation is actually very straightforward—no really, check out
+<p>The implementation is actually very straightforward—no really, check out
 the
 <a href="https://github.com/xmonad/xmonad-contrib/blob/master/XMonad/Util/Run.hs#L303">source</a>
-if you don’t believe me!
-<p></p>
-One concept that’s still worth touching upon is the internal use of
+if you don’t believe me!</p>
+<p>One concept that’s still worth touching upon is the internal use of
 <a href="https://github.com/spl/dlist#references">difference list</a>s. The basic idea of these things is that, instead of
 concatenating strings one by one, we create functions <code>String -&gt; String</code>
-and then use function composition to do the work for us:
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">-- Ordinary string concatenation</span>
-<span class="w">  </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
-
-<span class="w">  </span><span class="c1">-- Using difference lists:</span>
-<span class="w">  </span><span class="n">string1</span><span class="p">,</span><span class="w"> </span><span class="n">string2</span><span class="p">,</span><span class="w"> </span><span class="n">string3</span><span class="p">,</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
-<span class="w">  </span><span class="n">string1</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
-<span class="w">  </span><span class="n">string2</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="err">…</span>
-
-<span class="w">  </span><span class="n">string1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-</pre></div>
-
-<p></p>
-Note how we have to apply the entire thing to <code>""</code> at the end in order
+and then use function composition to do the work for us:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Ordinary string concatenation</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Using difference lists:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  string1, string2, string3,<span class="ot"> string4 ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  string1 s <span class="ot">=</span> <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> s</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  string2 s <span class="ot">=</span> …</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  string1 <span class="op">.</span> string2 <span class="op">.</span> string3 <span class="op">.</span> string4 <span class="op">$</span> <span class="st">&quot;&quot;</span></span></code></pre></div>
+<p>Note how we have to apply the entire thing to <code>""</code> at the end in order
 to actually get a string back. As a concrete example, assuming we have
 set <code>"Emacs"</code> as our editor, the <code>inEditor</code> function would essentially
-be
-<div class="highlight"><pre><span></span><span class="nf">inEditor</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
-<span class="nf">inEditor</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot; Emacs &quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
-</pre></div>
-
-<p></p>
-There are some further considerations to be made, since we are in the
+be</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ot">inEditor ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>inEditor s <span class="ot">=</span> <span class="st">&quot; Emacs &quot;</span> <span class="op">&lt;&gt;</span> s</span></code></pre></div>
+<p>There are some further considerations to be made, since we are in the
 <code>X</code> monad and thus the type is actually <code>X (String -&gt; String)</code> instead
-of just <code>String -&gt; String</code>, but that isn’t too important for us here.
-<p></p>
-Difference lists have some performance advantages over the traditional
+of just <code>String -&gt; String</code>, but that isn’t too important for us here.</p>
+<p>Difference lists have some performance advantages over the traditional
 concatenation of strings. The concatenation <code>(&lt;&gt;)</code> on strings is left
-associative by default and so
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
-<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="p">((</span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
-</pre></div>
-
-<p></p>
-However, the complexity characteristics of this operation are working
-against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code><!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
-and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
-that here.</div>
- is
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
-<span class="kt">[]</span><span class="w">       </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w">           </span><span class="n">ys</span>
-<span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span>
-</pre></div>
-
-<p></p>
-We are merely traversing the first string, leaving the second one
+associative by default and so</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  ≡ ((<span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span></code></pre></div>
+<p>However, the complexity characteristics of this operation are working
+against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">(&lt;&gt;) ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>[]       <span class="op">&lt;&gt;</span> ys <span class="ot">=</span>           ys</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>(x <span class="op">:</span> xs) <span class="op">&lt;&gt;</span> ys <span class="ot">=</span> x <span class="op">:</span> xs <span class="op">&lt;&gt;</span> ys</span></code></pre></div>
+<p>We are merely traversing the first string, leaving the second one
 completely untouched (and unevaluated!). All in all, this means that
-<code>s₁ &lt;&gt; s₂</code> is in <code>𝓞(|s₁|)</code>; given an expression of the form
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">((</span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
-</pre></div>
-
-<p></p>
-we will have to walk over <code>"string1"</code> three times! What we actually
+<code>s₁ &lt;&gt; s₂</code> is in <code>𝓞(|s₁|)</code>; given an expression of the form</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  ((<span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;string2&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string3&quot;</span>) <span class="op">&lt;&gt;</span> <span class="st">&quot;string4&quot;</span></span></code></pre></div>
+<p>we will have to walk over <code>"string1"</code> three times! What we actually
 want is a right-associative ordering—exactly what function compositions
-gives us. Spelled out,
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="n">string1</span><span class="w"> </span><span class="p">(</span><span class="n">string2</span><span class="w"> </span><span class="p">(</span><span class="n">string3</span><span class="w"> </span><span class="p">(</span><span class="n">string4</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
-<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string4&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
-</pre></div>
-
-<p></p>
-which yields the desired behaviour. In fact, this is so canonical that
+gives us. Spelled out,</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>    string1 <span class="op">.</span> string2 <span class="op">.</span> string3 <span class="op">.</span> string4 <span class="op">$</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  ≡ string1 (string2 (string3 (string4 <span class="st">&quot;&quot;</span>)))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  ≡ <span class="st">&quot;string1&quot;</span> <span class="op">&lt;&gt;</span> (<span class="st">&quot;string2&quot;</span> <span class="op">&lt;&gt;</span> (<span class="st">&quot;string3&quot;</span> <span class="op">&lt;&gt;</span> (<span class="st">&quot;string4&quot;</span> <span class="op">&lt;&gt;</span> <span class="st">&quot;&quot;</span>)))</span></code></pre></div>
+<p>which yields the desired behaviour. In fact, this is so canonical that
 instead of using <code>(.)</code>, we could have also—perhaps a bit
-confusingly—used <code>(&lt;&gt;)</code> directly:
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span>
-<span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="n">string1</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string4</span>
-</pre></div>
-
-<p></p>
-This is the fact that the <em>endomorphisms</em> for any type <code>a</code>—the functions
+confusingly—used <code>(&lt;&gt;)</code> directly:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>    string1  <span class="op">.</span> string2  <span class="op">.</span> string3  <span class="op">.</span> string4</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  ≡ string1 <span class="op">&lt;&gt;</span> string2 <span class="op">&lt;&gt;</span> string3 <span class="op">&lt;&gt;</span> string4</span></code></pre></div>
+<p>This is the fact that the <em>endomorphisms</em> for any type <code>a</code>—the functions
 <code>a -&gt; a</code>—form a <em>monoid</em>. That is to say that they come equipped with
 an associative an unital operation: function composition. In Haskell,
 <code>(&lt;&gt;)</code> is, in some sense,
 <a href="https://www.haskell.org/tutorial/classes.html">overloaded</a> so that it
-can be used with any monoidal composition one can think of!<!--
---><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Really, for any <em>semigroup</em>, which is a slightly weaker notion of
-an operation that is merely associative, but doesn’t necessarily
-have a unit.</div>
-<p></p>
-The attentive reader may have concluded that the pipe operator that we
+can be used with any monoidal composition one can think of!<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>The attentive reader may have concluded that the pipe operator that we
 called <code>(&gt;-&gt;)</code> above is really just <code>(&lt;&gt;)</code> in disguise, and that’s
 exactly right! I, however, thought that for people not familiar with
 Haskell, giving it a pipe-like appearance would be more conceptually
-amenable to the threading idea.
-<p></p>
-I haven’t benchmarked this, so it’s not entirely clear to me whether
-performance is actually relevant in this situation,<!--
---><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">I suspect that the answer is “probably not”—that didn’t stop me,
-however!</div>
- but using
-difference lists just feels right here, and so I did.
+amenable to the threading idea.</p>
+<p>I haven’t benchmarked this, so it’s not entirely clear to me whether
+performance is actually relevant in this situation,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but using
+difference lists just feels right here, and so I did.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p></p>
-I have to say that I’m quite satisfied with this API. In fact, if I
+<p>I have to say that I’m quite satisfied with this API. In fact, if I
 look at the old code that only resided within my personal config, it’s
 even a bit more ergonomic in a few places, despite having essentially no
 user-specific strings hardcoded anywhere! As I said before, if you try
 this and find something missing, do let me know and we’ll probably find
-a solution! If you try this and find it useful, also let me know :)
-<p></p>
-Of course, technically none of this needs to live only inside your
-<span class="small-caps">xm</span>onad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
+a solution! If you try this and find it useful, also let me know :)</p>
+<p>Of course, technically none of this needs to live only inside your
+XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
-cool tools like magit.sh.<!--
---><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
+cool tools like magit.sh.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Go nuts!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you <em>really</em> want to try this feature but don’t want to bother
+installing any unreleased—though stable—version, message me in any
+way and maybe we’ll hurry up and cut 0.17.1 soon!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Really, this is the definition of <code>(++)</code> for arbitrary lists <code>[a]</code>
+and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
+that here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Really, for any <em>semigroup</em>, which is a slightly weaker notion of
+an operation that is merely associative, but doesn’t necessarily
+have a unit.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I suspect that the answer is “probably not”—that didn’t stop me,
+however!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Available <a href="https://github.com/alphapapa/magit.sh">here</a>. I also
 maintain a slightly modified and POSIX shell compatible version
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.</div>
- Go nuts!
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
       <!-- Body is included in the above file -->
     </section>
@@ -861,202 +725,139 @@ maintain a slightly modified and POSIX shell compatible version
 
   
 
-<p></p>
-After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
+<p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
-discussion.
-<p></p>
-Just like Castel, I’m a new PhD student in mathematics, which means no
+discussion.</p>
+<p>Just like Castel, I’m a new PhD student in mathematics, which means no
 lab work and—in my case—no code. Just you and your inability to
 understand basic concepts. As such, I often scribble things down on
 paper or a blackboard first and, when sufficiently convinced that the
 information is worth keeping around, type it up. Typesetting something
 is a surprisingly effective way to catch errors in handwritten
-manuscripts!
-<p></p>
-As basically my entire digital life happens in either <a href="https://www.gnu.org/software/emacs/">Emacs</a> or
-<a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>, my setup is heavily skewed in that direction; I will make use
+manuscripts!</p>
+<p>As basically my entire digital life happens in either <a href="https://www.gnu.org/software/emacs/">Emacs</a> or
+<a href="https://xmonad.org/">XMonad</a>, my setup is heavily skewed in that direction; I will make use
 of these tools almost every step of the way.
 <!--more-->
 As such, there is a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
 <em>research</em> workflow—and there is a lot of great resources out there
-already—I decided to not do this here.<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you’d like some examples: being employed at a university also
-means I have to worry a bit about efficiently dealing with
-bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
-calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
-as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html"><span class="small-caps">xm</span>onad’s OrgMode prompt</a>), accessing the
-universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
-<code>TRAMP</code>), … You get the idea.</div>
+already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <h2 id="high-level-structure">High level structure</h2>
 <h3 id="topics">Topics</h3>
-<p></p>
-<span class="small-caps">xm</span>onad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
+<p>XMonad has a module called <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-TopicSpace.html">TopicSpace</a>, which upgrades the X11
 workspace—virtual desktop—concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results in
 a clean separation of concerns. Plus, I always know where my windows
-are!
-<p></p>
-Every topic has a directory and a “startup hook”, firing when the topic
+are!</p>
+<p>Every topic has a directory and a “startup hook”, firing when the topic
 is switched to and empty, associated to it. While most convenient for
 programming related tasks—e.g., spawn <code>ghcid</code> in the relevant directory
 or automatically build and open this website—it’s also quite convenient
-for mathematical projects.
-<p></p>
-I have set up special keybindings to bring up an Emacs session in the
+for mathematical projects.</p>
+<p>I have set up special keybindings to bring up an Emacs session in the
 topic directory, or spawn a terminal there. Switching to topics is done
-fuzzily via the <span class="small-caps">xm</span>onad prompt, which means I only have to type a few
+fuzzily via the XMonad prompt, which means I only have to type a few
 characters to get to my destination. This makes it feasible to have 30
 topics, instead of the usual 9 or so, in the first place. As a result,
 it’s rather fast to go from thinking about a certain problem to working
 on it. When I’m already inside a project, I leverage Emacs’s built-in
-<code>project.el</code> library to search through files and the like.
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/topics.gif" alt="Navigation example">
+<code>project.el</code> library to search through files and the like.</p>
+<p><img class="pure-img" src="../images/phd-workflow/topics.gif" alt="Navigation example"></p>
 <h3 id="files">Files</h3>
-<p></p>
-Here I keep things relatively simple; I have a big “library” directory
+<p>Here I keep things relatively simple; I have a big “library” directory
 in which essentially all books or papers that I’ve ever read reside.
 This may sound a bit chaotic, but since I never interact with this
-as-a-directory it is actually the easiest and cleanest solution for me.
-<p></p>
-To keep a bit of order, all files are named in a consistent and
+as-a-directory it is actually the easiest and cleanest solution for me.</p>
+<p>To keep a bit of order, all files are named in a consistent and
 descriptive way: <code>authors_title.pdf</code>, where <code>authors</code> is a list of last
 names of all authors separated by hyphens and <code>title</code> is the title of
-the work, also separated by hyphens. For example:
-<div class="highlight"><pre><span></span>    pastro-street_double-of-a-monoidal-category.pdf
-</pre></div>
-
-<p></p>
-Also in this directory are <code>.xopp</code> files, when I scribble on the
-relevant <span class="small-caps">pdf</span>s in <a href="https://xournalpp.github.io/">xournalpp</a>; more on that later.
-<p></p>
-Instead of navigating to it, all interaction with the library is done
+the work, also separated by hyphens. For example:</p>
+<pre><code>    pastro-street_double-of-a-monoidal-category.pdf</code></pre>
+<p>Also in this directory are <code>.xopp</code> files, when I scribble on the
+relevant PDFs in <a href="https://xournalpp.github.io/">xournalpp</a>; more on that later.</p>
+<p>Instead of navigating to it, all interaction with the library is done
 via <a href="https://github.com/slotthe/hmenu">hmenu</a>, a small wrapper around <a href="https://tools.suckless.org/dmenu/">dmenu</a> to facilitate this kind of
-behaviour. I merely have to press <code>M-y</code><!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">I will be using Emacs style notation throughout the article. This
-means that, for example, <code>C-x a</code> should be read as “hold down
-control and press x, then release both and press a”. You can of
-course safely ignore this, since the keys just serve illustrative
-purposes. An important note for Emacs users, lest anyone be
-confused: in <span class="small-caps">xm</span>onad, <code>M-</code> usually does <strong>not</strong> refer to the Meta
-key, but to the <code>modMask</code> that the user specified. This is indeed
-<code>&lt;Alt&gt;</code> by default, but many people understandably rebind this
-straight away to something that’s less likely to interfere with
-other programs. In my case, that’s the Super key, so <code>M-s</code> means
-<code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.</div>
- and can then fuzzy search
-through the directory. Once I’ve made a choice, <span class="small-caps">pdf</span>s are automatically
-opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/hmenu.gif" alt="example hmenu usage">
-<p></p>
-My bibliography is organised in a similar spirit; see
-<a href="#citations">Citations</a>.
+behaviour. I merely have to press <code>M-y</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and can then fuzzy search
+through the directory. Once I’ve made a choice, PDFs are automatically
+opened in <a href="https://pwmt.org/projects/zathura/">zathura</a> and <code>.xopp</code> files are opened in xournalpp.</p>
+<p><img class="pure-img" src="../images/phd-workflow/hmenu.gif" alt="example hmenu usage"></p>
+<p>My bibliography is organised in a similar spirit; see
+<a href="#citations">Citations</a>.</p>
 <h2 id="note-taking">Note taking</h2>
 <h3 id="handwritten-notes">Handwritten notes</h3>
-<p></p>
-For handwritten notes I… use real paper! A little elaboration is
+<p>For handwritten notes I… use real paper! A little elaboration is
 probably in order, having talked about <code>.xopp</code> files and xournalpp
 above. I do have a Wacom tablet lying around and I’m quite happy
-annotating <span class="small-caps">pdf</span>s with it. In lieu of printing everything out, this
+annotating PDFs with it. In lieu of printing everything out, this
 alleviates a little bit of the usual pain with reading papers, like
 coming back to one three weeks later and getting stuck on the same
-calculation as last time. I do love those annotations!
-<p></p>
-However, there is just something deeply psychologically pleasing about
+calculation as last time. I do love those annotations!</p>
+<p>However, there is just something deeply psychologically pleasing about
 ordinary pen and paper—nothing beats drawing up the first version of
 many ideas there. It’s a very “pure” experience: there’s no noise or
 distractions, nothing that could break, no additional layer of
 abstraction between you and the maths. Chalkboards—but not whiteboards,
 with their ever empty markers—fall into this category as well,
-especially when collaborating with others.
-<p></p>
-Not without my quirks (as I’m sure you’ve noticed), I’m a bit picky
-about the particular writing setup. It’s either completely white A5<!--
---><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Although, admittedly, when drawing up large diagrams I’m sometimes
-forced to switch to A4 paper in landscape mode.</div>
-
+especially when collaborating with others.</p>
+<p>Not without my quirks (as I’m sure you’ve noticed), I’m a bit picky
+about the particular writing setup. It’s either completely white A5<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
 paper, paired with a good (mechanical) pencil/a fine pen, or thick
-dotted paper, paired with a fountain pen.
-<p></p>
-Quite enjoying the experience, I tend to write quite a lot of
+dotted paper, paired with a fountain pen.</p>
+<p>Quite enjoying the experience, I tend to write quite a lot of
 manuscripts by hand first. Of course, anything that’s supposed to be
-permanent should be typed up properly!
+permanent should be typed up properly!</p>
 <h3 id="digital-notes">Digital notes</h3>
-<p></p>
-Not wanting to go insane, I use LaTeX for all of my digital note taking.
+<p>Not wanting to go insane, I use LaTeX for all of my digital note taking.
 My writing setup for <code>.tex</code> files is pretty similar to <a href="https://karthinks.com/software/latex-input-for-impatient-scholars/">Karthik
 Chikmagalur</a>’s—whose excellent post you should definitely check out—so I
 will not belabour the point too much here. The tl;dr is <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>,
-<a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>, and <a href="https://github.com/ymarco/auto-activating-snippets">aas</a>.
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/input.gif" alt="LaTeX input example">
-<p></p>
-In case you’re not used to <code>prettify-symbols-mode</code>: the inserted LaTeX
-code was
-<div class="highlight"><pre><span></span><span class="k">\begin</span><span class="nb">{</span>definition<span class="nb">}</span> <span class="k">\label</span><span class="nb">{</span>def:day-convolution<span class="nb">}</span>
-  The <span class="k">\emph</span><span class="nb">{</span>Day convolution<span class="nb">}</span> of two functors <span class="s">$</span><span class="nb">F</span><span class="s">$</span> and <span class="s">$</span><span class="nb">G</span><span class="s">$</span> is
-  <span class="sb">\[</span>
-<span class="nb">    F </span><span class="o">*</span><span class="nb"> G </span><span class="nv">\defeq</span>
-<span class="nb">      </span><span class="nv">\int</span><span class="nb">^{C,D </span><span class="nv">\in</span><span class="nb"> </span><span class="nv">\cc</span><span class="nb">} </span><span class="nv">\cc</span><span class="o">(</span><span class="nb">C </span><span class="nv">\otimes</span><span class="nb"> D, </span><span class="nv">\blank</span><span class="o">)</span><span class="nb"> </span><span class="nv">\otimes</span><span class="nb"> FC </span><span class="nv">\otimes</span><span class="nb"> GD.</span>
-<span class="nb">  </span><span class="s">\]</span>
-<span class="k">\end</span><span class="nb">{</span>definition<span class="nb">}</span>
-</pre></div>
-
-<p></p>
-I do use some smaller packages not mentioned in Chikmagalur’s article,
+<a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>, and <a href="https://github.com/ymarco/auto-activating-snippets">aas</a>.</p>
+<p><img class="pure-img" src="../images/phd-workflow/input.gif" alt="LaTeX input example"></p>
+<p>In case you’re not used to <code>prettify-symbols-mode</code>: the inserted LaTeX
+code was</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">definition</span>} <span class="kw">\label</span>{<span class="ex">def:day-convolution</span>}</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  The <span class="fu">\emph</span>{Day convolution} of two functors <span class="ss">$F$</span> and <span class="ss">$G$</span> is</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ss">\[</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    F * G </span><span class="sc">\defeq</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ss">      </span><span class="sc">\int</span><span class="ss">^{C,D </span><span class="sc">\in</span><span class="ss"> </span><span class="sc">\cc</span><span class="ss">} </span><span class="sc">\cc</span><span class="ss">(C </span><span class="sc">\otimes</span><span class="ss"> D, </span><span class="sc">\blank</span><span class="ss">) </span><span class="sc">\otimes</span><span class="ss"> FC </span><span class="sc">\otimes</span><span class="ss"> GD.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  \]</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">definition</span>}</span></code></pre></div>
+<p>I do use some smaller packages not mentioned in Chikmagalur’s article,
 like <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a> and <a href="https://github.com/slotthe/change-env">latex-change-env</a>. The former is for
 quickly changing between inline and display math, complete with slurping
 punctuation symbols into display math and barfing them out of inline
 math. For example, “<code>$1 + 1$.</code>” becomes “<code>\[1 + 1.\]</code>” (with line
-breaks) and back.
-<p></p>
-The <code>latex-change-env</code> package is for changing between different kinds
+breaks) and back.</p>
+<p>The <code>latex-change-env</code> package is for changing between different kinds
 of environments, including display math, while offering to rename labels
 across the project if necessary. When deleting a label from an
-environment, it also remembers this for the session!<!--
---><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">This is based on the hash of the contents of the environment—if
-that changes, the label is “lost”; though it can of course still
-be retrieved manually from the relevant hash map.</div>
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/label-renaming.gif" alt="latex-change-env showcase">
-<p></p>
-One neat feature of AUCTeX that I find myself using more and more often
-lately<!--
---><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
-Emacs 29, making use of XInput 2.4 functionality. It makes
-scrolling through buffers that are quite dense with pictures
-rather smooth.</div>
- is the in-buffer preview. Usually when writing a draft I’m
-not that interested in how exactly something looks in the <span class="small-caps">pdf</span>—that part
+environment, it also remembers this for the session!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p><img class="pure-img" src="../images/phd-workflow/label-renaming.gif" alt="latex-change-env showcase"></p>
+<p>One neat feature of AUCTeX that I find myself using more and more often
+lately<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is the in-buffer preview. Usually when writing a draft I’m
+not that interested in how exactly something looks in the PDF—that part
 comes later, believe me. In cases like these, just calling
 <code>preview-buffer</code> is quite convenient and lets me use the screen real
-estate that a <span class="small-caps">pdf</span> viewer would have taken up for something else.
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/preview.gif" alt="latex-preview showcase">
-<p></p>
-I always use pure LaTeX for writing papers, drafts, or presentations.
+estate that a PDF viewer would have taken up for something else.</p>
+<p><img class="pure-img" src="../images/phd-workflow/preview.gif" alt="latex-preview showcase"></p>
+<p>I always use pure LaTeX for writing papers, drafts, or presentations.
 However, I also take lots of notes in <a href="https://orgmode.org/">org-mode</a>, which, as a crude
 first approximation, is something like a markup language that’s <em>very</em>
-well integrated into Emacs.
-<p></p>
-For the actual note-taking, I use the venerable <a href="https://www.orgroam.com/">org-roam</a>—a free
+well integrated into Emacs.</p>
+<p>For the actual note-taking, I use the venerable <a href="https://www.orgroam.com/">org-roam</a>—a free
 software alternative to the proprietary Roam Research program—to jot
 down things that I’d like to remember for more than three days.
 Org-roam describes itself as a “plain-text personal knowledge management
 system”, which fits the bill pretty well. In short, it’s a note taking
 system in the spirit of the <a href="https://en.wikipedia.org/wiki/zettelkasten">Zettelkasten</a> method, which is essentially
-about having lots of notes with lots of backlinks to related concepts:
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/backlinks.png" alt="org-roam showcase">
-<p></p>
-In fact, using <a href="https://github.com/org-roam/org-roam-ui">org-roam-ui</a>, one can even visualise the entire
+about having lots of notes with lots of backlinks to related concepts:</p>
+<p><img class="pure-img" src="../images/phd-workflow/backlinks.png" alt="org-roam showcase"></p>
+<p>In fact, using <a href="https://github.com/org-roam/org-roam-ui">org-roam-ui</a>, one can even visualise the entire
 Zettelkasten as an interactive and pretty graph in which notes become
-nodes and backlinks become edges!
+nodes and backlinks become edges!</p>
 <div class="pure-g">
 <div class="pure-u-1-2">
 <img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.png" alt="org-roam-ui example zoomed-in">
@@ -1065,64 +866,55 @@ nodes and backlinks become edges!
 <img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.png" alt="org-roam-ui example zoomed-out">
 </div>
 </div>
-<p></p>
-Org-roam <a href="https://github.com/org-roam/org-roam#configuration">suggests
+<p>Org-roam <a href="https://github.com/org-roam/org-roam#configuration">suggests
 keybindings</a> for all
 of the most important concepts: creating notes, inserting them, showing
 all of the backlinks of a file, etc. An important extra that I’ve added
 is having two “types” of notes: <code>reference</code>s, where things that I
 learned but are otherwise known reside, and <code>novel</code>s, where I put my own
-ideas.
-<p></p>
-As I’m predisposed to quite easily forget details, I regularly engage
+ideas.</p>
+<p>As I’m predisposed to quite easily forget details, I regularly engage
 with my Zettelkasten, so as to keep things fresh in my mind. Reading
 through all of the notes that are relevant to what I’m currently working
 on, creating new backlinks, filling in gaps, even deleting old
 information and re-organising some local region of the graph. Indeed, I
 tag every new entry as a <code>draft</code> until further notice, forcing me to go
 back there especially. This results in pretty good recollection of the
-most important facts, even with my brain.
+most important facts, even with my brain.</p>
 <h2 id="staying-up-to-date">Staying up to date</h2>
-<p></p>
-I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
+<p>I use <a href="https://github.com/skeeto/elfeed">elfeed</a> to query the <a href="https://arxiv.org/">arXiv</a> for new preprints that are of
 interest to me. Thankfully, the fields I’m subscribed to tend to be
 moving slow-ish and so I can manage to at least read the abstract of
 every paper that pops up in my feed. There is also <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/emacs/.config/emacs/lisp/rss.el#L61">a little bit of
 elisp</a>
 involved to print arXiv entries in a more readable way than the default
-formatting.
-<p></p>
-When the abstract interests me, I usually directly download the paper
+formatting.</p>
+<p>When the abstract interests me, I usually directly download the paper
 into my library and open it with zathura. This is fully automated via
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>—more on that later. I merely have to press <code>C-c d</code>
-while looking at a paper and magic happens!
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/elfeed.gif" alt="elfeed showcase">
-<p></p>
-In the above gif, on the right-hand side you can see a score associated
+while looking at a paper and magic happens!</p>
+<p><img class="pure-img" src="../images/phd-workflow/elfeed.gif" alt="elfeed showcase"></p>
+<p>In the above gif, on the right-hand side you can see a score associated
 to each entry. While reading every abstract has worked quite well for
 me thus far, it’s nice to get the papers that are “probably interesting”
 high up, so that I’m more likely to notice them sooner rather than
 later. I use <a href="https://github.com/sp1ff/elfeed-score">elfeed-score</a> for this, which integrates seamlessly into
 the rest of the machinery. It compares certain features of the entry
 (like the title and abstract) with a list of regular expressions,
-increasing the total score of the entry every time it matches something.
-<p></p>
-Speaking of the arXiv, in <span class="small-caps">xm</span>onad I have bound <code>M-s a</code> to look up the
+increasing the total score of the entry every time it matches something.</p>
+<p>Speaking of the arXiv, in XMonad I have bound <code>M-s a</code> to look up the
 given string there. Likewise, <a href="https://zbmath.org/">zbmath</a> is searched with <code>M-s z</code>. When
-these commands get a “universal argument”—an Emacs concept that <span class="small-caps">xm</span>onad
+these commands get a “universal argument”—an Emacs concept that XMonad
 borrowed—they automatically start a search with the current selection
 instead. Briefly, pressing <code>M-u</code> before a command can modify it in
 different ways. All of my search commands act on the <a href="https://www.jwz.org/doc/x-cut-and-paste.html">primary
 selection</a> when given such an argument; <code>M-u M-s &lt;letter&gt;</code> will look up
 the currently selected text on the relevant “search engine”. One
 instance where this is useful is for quickly switching between the arXiv
-and zbmath:
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/selected-search.gif" alt="XMonad.Actions.Search showcase">
+and zbmath:</p>
+<p><img class="pure-img" src="../images/phd-workflow/selected-search.gif" alt="XMonad.Actions.Search showcase"></p>
 <h3 id="citations">Citations</h3>
-<p></p>
-For citation management, I use a very simple system—no Zotero, JabRef,
+<p>For citation management, I use a very simple system—no Zotero, JabRef,
 or similar technology. Concretely, this means that I have a blessed
 bibliography file somewhere within my home directory and I either
 symlink (when I’m writing something alone) or copy (when working with at
@@ -1130,47 +922,73 @@ least one coauthor) the file into the relevant project directory. In
 case of a copy operation, I only have to update a single variable in
 Emacs (<code>arxiv-citation-bibtex-files</code>), which is good enough for me and
 doesn’t seem to warrant a slightly more automated, yet probably much
-more complicated solution.
-<p></p>
-Adding new citations is done via the now aptly named Emacs package
-<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><!--
---><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Ostensibly, this should be an <span class="small-caps">xm</span>onad module, as it does not
-necessarily have anything to do with Emacs itself. However, I had
-already written the elfeed integration and so the most annoying
-part (scraping the arXiv xml for certain bits) was already done.
-On the other hand, there are more Emacs than <span class="small-caps">xm</span>onad users, so
-perhaps doing it like this will help more people anyways.</div>
- with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
+more complicated solution.</p>
+<p>Adding new citations is done via the now aptly named Emacs package
+<a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
 plumbing</a>
-on the <span class="small-caps">xm</span>onad side to get Emacs going. The basic idea is that—given an
+on the XMonad side to get Emacs going. The basic idea is that—given an
 arXiv or zbmath link—we first look up the paper on zbmath to see if it
 was published and, if not, just use the arXiv data to construct our own
 bibliography entry instead. By default, my keybinding for this acts on
 the primary selection, so I merely have to highlight the link, press
 <code>M-o a</code>, sit back, and enjoy the show. The following gif should help
 drive home the point, also showcasing the format of a not yet published
-paper and a published one.
-<p></p>
-<img class="pure-img" src="../images/phd-workflow/arXiv-citation.gif" alt="arXiv-citation showcase">
+paper and a published one.</p>
+<p><img class="pure-img" src="../images/phd-workflow/arXiv-citation.gif" alt="arXiv-citation showcase"></p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p></p>
-And that’s it! If nothing else, this post helped me to nail down some
+<p>And that’s it! If nothing else, this post helped me to nail down some
 ideas that I had lying around and got me to finally clean up and publish
 many of the extensions talked about here—that’s already a win in my
-book.
-<p></p>
-I’m sure that some details will change over the course of the next three
+book.</p>
+<p>I’m sure that some details will change over the course of the next three
 years as I mature mathematically and my needs change, but overall I feel
-pretty comfortable with this setup.
+pretty comfortable with this setup.</p>
 <h5 id="addendum">Addendum</h5>
-<p></p>
-Thanks to everyone who reached out! I received some inquiries as to my
+<p>Thanks to everyone who reached out! I received some inquiries as to my
 configurations, so here are the most important bits again, for your
 convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">my Emacs config</a>,
-<a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my <span class="small-caps">xm</span>onad config</a>,
+<a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
-<a href="https://github.com/slotthe/hmenu">hmenu</a>.
+<a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you’d like some examples: being employed at a university also
+means I have to worry a bit about efficiently dealing with
+bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
+calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
+as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
+universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
+<code>TRAMP</code>), … You get the idea.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I will be using Emacs style notation throughout the article. This
+means that, for example, <code>C-x a</code> should be read as “hold down
+control and press x, then release both and press a”. You can of
+course safely ignore this, since the keys just serve illustrative
+purposes. An important note for Emacs users, lest anyone be
+confused: in XMonad, <code>M-</code> usually does <strong>not</strong> refer to the Meta
+key, but to the <code>modMask</code> that the user specified. This is indeed
+<code>&lt;Alt&gt;</code> by default, but many people understandably rebind this
+straight away to something that’s less likely to interfere with
+other programs. In my case, that’s the Super key, so <code>M-s</code> means
+<code>&lt;Super&gt;-s</code> and not <code>&lt;Alt&gt;-s</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Although, admittedly, when drawing up large diagrams I’m sometimes
+forced to switch to A4 paper in landscape mode.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>This is based on the hash of the contents of the environment—if
+that changes, the label is “lost”; though it can of course still
+be retrieved manually from the relevant hash map.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This is, in part, due to the new <code>pixel-scroll-precision-mode</code> in
+Emacs 29, making use of XInput 2.4 functionality. It makes
+scrolling through buffers that are quite dense with pictures
+rather smooth.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Ostensibly, this should be an XMonad module, as it does not
+necessarily have anything to do with Emacs itself. However, I had
+already written the elfeed integration and so the most annoying
+part (scraping the arXiv xml for certain bits) was already done.
+On the other hand, there are more Emacs than XMonad users, so
+perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
       <!-- Body is included in the above file -->
     </section>
