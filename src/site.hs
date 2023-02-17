@@ -4,6 +4,7 @@
 {-# LANGUAGE NamedFieldPuns      #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications    #-}
 {-# LANGUAGE ViewPatterns        #-}
 
 import Data.Text qualified as T
@@ -145,7 +146,13 @@ feedConfig = FeedConfiguration
 -- Contexts
 
 postCtx :: Context String
-postCtx = dateField "date" "%F" <> defaultContext
+postCtx = dateField "date" "%F" <> estimatedReadingTime <> defaultContext
+ where
+  estimatedReadingTime :: Context String
+  estimatedReadingTime = field "estimated-reading-time" $ \key ->
+    let ws   :: Int = length . words . stripTags . itemBody $ key
+        mins :: Int = ceiling @Double (fromIntegral ws / 250)
+     in pure $ addTitle (show ws <> " words") (show mins <> " min read")
 
 -- | Augment the 'defaultContext' with a list of all tags, as well as
 -- all posts associated to a given tag.
@@ -219,6 +226,9 @@ getTocCtx ctx = do
 
 allPosts :: Pattern
 allPosts = "posts/**.md"
+
+addTitle :: String -> String -> String
+addTitle title body = "<span title=\"" <> title <> "\">" <> body <> "</span>"
 
 --- Tags
 
