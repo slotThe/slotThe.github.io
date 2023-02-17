@@ -65,7 +65,7 @@ the body or the header of the task.  If it's a URL, create a link (i.e.,
 it will be of the form `[[link][input-text]]`); if not, just add the
 selection to the body of the note.
 
-<img class="pure-img" src="selection-tasks.png"
+<img class="pure-img" src="../images/orgmode-prompt/selection-tasks.png"
      alt="visual representation of the above paragraph, showing various states of notes">
 
 Of course, you can use all of this together as well—directly link to
@@ -116,11 +116,11 @@ case, I'd like to [hear from you](mailto:soliditsallgood@mailbox.org)!
 [XMonad.Util.Run]: https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html
 [XMonad]: https://xmonad.org/
 [agenda]: https://orgmode.org/manual/Agenda-Views.html
-[calling-emacs-from-xmonad]: ../2022-05-25-calling-emacs-from-xmonad.html
+[calling-emacs-from-xmonad]: ./calling-emacs-from-xmonad.html
 [dmenu]: https://tools.suckless.org/dmenu/
 [org-roam]: https://www.orgroam.com/
 [priority]: https://orgmode.org/manual/Priorities.html
-[research workflow]: ../phd-workflow/2022-05-01-my-phd-workflow.html
+[research workflow]: ./my-phd-workflow.html
 
 [^1]: In version `0.17.0`, though new features are coming for `0.17.1`,
       which will drop soon!

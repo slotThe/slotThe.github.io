@@ -135,7 +135,7 @@ Check the documentation of [XMonad.Util.Run] to see how `inEditor` and
 In my mathematical and other work-adjacent projects I keep it pretty
 simple; an editor there is mostly sufficient.
 
-<img class="pure-img" src="../phd-workflow/topics.gif"
+<img class="pure-img" src="../images/phd-workflow/topics.gif"
      alt="Navigating to an empty topic, Emacs pops up">
 
 We can also get a little bit more fancy.  Since the topic action is just

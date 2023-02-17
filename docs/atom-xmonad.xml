@@ -255,7 +255,7 @@ inside of a terminal:</p>
 <code>termInDir</code> are defined and may be customised.</p>
 <p>In my mathematical and other work-adjacent projects I keep it pretty
 simple; an editor there is mostly sufficient.</p>
-<p><img class="pure-img" src="../phd-workflow/topics.gif" alt="Navigating to an empty topic, Emacs pops up"></p>
+<p><img class="pure-img" src="../images/phd-workflow/topics.gif" alt="Navigating to an empty topic, Emacs pops up"></p>
 <p>We can also get a little bit more fancy. Since the topic action is just
 a general <code>X</code> action, we can really do anything we want in there. In
 addition to spawning programs, all of my Haskell projects should default
@@ -365,10 +365,10 @@ Org <a href="https://orgmode.org/manual/Priorities.html">priorities</a>, so I fi
 any to talk about it.</p>
 <!--more-->
 <h3 id="motivation">Motivation</h3>
-<p>One theme in the post about my <a href="../phd-workflow/2022-05-01-my-phd-workflow.html">research workflow</a> was how it’s possible
+<p>One theme in the post about my <a href="./my-phd-workflow.html">research workflow</a> was how it’s possible
 to use org-mode (with all of its appendages, like <a href="https://www.orgroam.com/">org-roam</a>) to
 organise one’s thoughts. <code>XMonad.Prompt.OrgMode</code> was created as yet
-another link in that chain. Unlike when writing tiny <a href="../2022-05-25-calling-emacs-from-xmonad.html">Emacs Lisp
+another link in that chain. Unlike when writing tiny <a href="./calling-emacs-from-xmonad.html">Emacs Lisp
 scripts in XMonad</a>, this does not involve any
 custom elisp code one has to run; all of it is taken care of by the
 module itself.</p>
@@ -399,7 +399,7 @@ selection and, depending on the type of thing in it, use that as either
 the body or the header of the task. If it’s a URL, create a link (i.e.,
 it will be of the form <code>[[link][input-text]]</code>); if not, just add the
 selection to the body of the note.</p>
-<p><img class="pure-img" src="selection-tasks.png" alt="visual representation of the above paragraph, showing various states of notes"></p>
+<p><img class="pure-img" src="../images/orgmode-prompt/selection-tasks.png" alt="visual representation of the above paragraph, showing various states of notes"></p>
 <p>Of course, you can use all of this together as well—directly link to
 that one paper or blog post you wanted to read, or that one YouTube
 video you want to watch on the weekend!</p>
