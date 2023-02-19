@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Announcing: latex-change-env Version 0.3 · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#functionality">Functionality</a>
+<ul>
+<li><a href="#cycling-through-environments">Cycling through environments</a></li>
+<li><a href="#labels">Labels</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Announcing: latex-change-env Version 0.3</h1>
+           
+
+          <article>
+    <section class="header">
+      Posted on 2023-02-19
+      
+      &thinsp;·&nbsp; <span title="919 words">4 min read</span>
+      
+        &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
+      
+    </section>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#functionality">Functionality</a>
+<ul>
+<li><a href="#cycling-through-environments">Cycling through environments</a></li>
+<li><a href="#labels">Labels</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+
+<p></p>
+I’ve just released version 0.3 of <code>latex-change-env</code>, featuring some
+major improvements with regard to inline maths and macro handling; this
+seems as good a time as any to talk about the package in full. I
+briefly mentioned it in the post about my <a href="./my-phd-workflow.html#digital-notes">research workflow</a>, but I
+figure now that the library has reached a state where I’m not ashamed of
+it anymore—at least, not at the time of writing this—it may warrant its
+own post.
+<!--more-->
+<h2 id="functionality">Functionality<a href="#functionality" class="floatright sec-link">¶</a></h2>
+<p></p>
+Briefly, <code>latex-change-env</code><!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Available on <a href="https://gitlab.com/slotThe/change-env">GitLab</a> and
+<a href="https://github.com/slotThe/change-env">GitHub</a>, as well as
+<a href="https://www.melpa.org/#/latex-change-env"><span class="small-caps">melpa</span></a>.</div>
+ can be seen as an extension of AUCTeX’s
+built-in facilities to manipulate the current environment. Taking
+functions like <code>LaTeX-environment</code> as a base, it adds extra
+functionality like deleting environments, changing to and from display
+maths, “remembering” and editing labels, as well as macro<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">At least, macros taking exactly only argument, which is what
+support is currently restricted to; contributions welcome!</div>
+ and inline
+maths support on top of them. There are two main “entry points”:
+<code>latex-change-env</code> and <code>latex-change-env-cycle</code>.
+<p></p>
+The basic functionality may be used with a <code>use-package</code> configuration
+along the lines of
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">latex-change-env</span>
+<span class="w">  </span><span class="nb">:after</span><span class="w"> </span><span class="nv">latex</span>
+<span class="w">  </span><span class="nb">:commands</span><span class="w"> </span><span class="nv">latex-change-env</span>
+<span class="w">  </span><span class="nb">:bind</span><span class="w"> </span><span class="p">(</span><span class="nb">:map</span><span class="w"> </span><span class="nv">LaTeX-mode-map</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;C-c r&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">latex-change-env</span><span class="p">))</span>
+<span class="w">  </span><span class="nb">:custom</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-math-display</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="s">&quot;\\[&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;\\]&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-math-inline</span><span class="w">  </span><span class="o">'</span><span class="p">(</span><span class="s">&quot;$&quot;</span><span class="w">   </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;$&quot;</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+Pressing the keybinding for <code>latex-change-env</code> will pop up a selection
+in the minibuffer; by default, one can delete the current
+environment<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">In the context of this package, by “environment” I will often mean
+a proper environment, inline or display maths, or a (simple)
+macro.</div>
+ with <code>k</code>, modify it into something else with <code>m</code>, or
+switch to display maths with <code>d</code>. This is all controlled by the
+<code>latex-change-env-options</code> variable, allowing for user-defined functions
+to be inserted, should that be desired.
+<p></p>
+For example, the following video showcases switching to display maths,
+changing the environment into an <code>equation</code>, and deleting it completely.
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/basic-functionality.webm" type="video/webm">
+Basic functionality of <code>latex-change-env</code>: changing and deleting labels.
+</video>
+</p>
+<h3 id="cycling-through-environments">Cycling through environments<a href="#cycling-through-environments" class="floatright sec-link">¶</a></h3>
+<p></p>
+The <code>latex-change-env-cycle</code> function may be used to create a list of
+environments to cycle through. For convenience, it depends on Omar
+Antolín Camarena’s <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a> package, so as to facilitate a
+comfortable workflow with maths environments out of the box.<!--
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">As such, be sure that you configure <code>math-delim​it​ers-{inline,display}</code>
+accordingly. For example, it may be useful to set
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">math-delimiters-display</span>
+<span class="w">        </span><span class="nv">latex-change-env-math-display</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+and so on.</div>
+ For
+example, one could define a simple maths-based toggle
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/insert-toggle-math</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-cycle</span>
+<span class="w">   </span><span class="o">'</span><span class="p">(</span><span class="nv">display-math</span><span class="w"> </span><span class="nv">equation*</span><span class="w"> </span><span class="nv">align*</span><span class="w"> </span><span class="nv">equation</span><span class="w"> </span><span class="nv">align</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+and then bind that to <code>$</code> in <code>latex-mode</code>. This works because
+<code>math-delimiters-insert</code> is called when one is not in any environment.
+Quoting from the documentation of <code>latex-change-env-cycle</code> (slightly
+edited):
+<blockquote>
+<p></p>
+Cycle through the given list of environments. The special symbol
+<code>display-math</code> denotes a display maths environment.
+<p></p>
+If one is right at the end of a display or inline maths environment,
+call <code>math-delimiters-insert</code> instead of cycling through environments.
+The same is done when not inside any environment, which, for our
+definition of environment, also includes inline maths.
+</blockquote>
+<p></p>
+The following video illustrates how <code>my/insert-toggle-math</code> might be
+used.
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/cycling-maths.webm" type="video/webm">
+Cycling between inline and display maths, as well as several maths environments.
+</video>
+</p>
+<p></p>
+Of course, cycling also works for non-maths environments, as well as
+macros; below, I bound the following to a key:
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/cycle-macros</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-cycle</span>
+<span class="w">   </span><span class="o">'</span><span class="p">(</span><span class="nv">textbf</span><span class="w"> </span><span class="nv">emph</span><span class="w"> </span><span class="nv">textsc</span><span class="w"> </span><span class="nv">textit</span><span class="w"> </span><span class="nv">texttt</span><span class="p">)))</span>
+</pre></div>
+
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/cycling-macros.webm" type="video/webm">
+Cycling macros
+</video>
+</p>
+<p></p>
+An effort was made to make macro handling feel like a first class
+citizen; for example, when cycling through possible modifications,
+instead of <code>LaTeX-environment-list-filtered</code> (as would be used for
+environments), the macro-specific <code>TeX--symbol-completion-table</code> is used
+to generate a list of possible replacements.
+<h3 id="labels">Labels<a href="#labels" class="floatright sec-link">¶</a></h3>
+<p></p>
+When changing or deleting environments, <code>latex-change-env</code> tries to
+smartly handle associated labels. In the former case, labels have a
+unique prefix associated to what environment they are defined in; for
+example, <code>theorem</code> environments might start their labels with <code>thm:</code>,
+while a <code>lemma</code> will have a <code>lem:</code> prefix.<!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">This behaviour may be changed by customising the
+<code>latex-change-env-labels</code> variable.</div>
+ Further, when deleting an
+environment, or switching to one that does not have an associated label
+prefix, the label is (i) deleted, and (ii) stored for the session, such
+that it can be restored when switching back to the original environment.
+<p></p>
+While this is all well and good, renaming and deleting labels seems of
+little use when the changes aren’t reflected in the rest of the project.
+As such, there is an optional <code>latex-change-env-edit-labels-in-project</code>
+variable. When it is customised to <code>t</code>, a label change/deletion
+triggers a project-wide <code>query-replace-regexp</code>, such that the user can
+decide whether referencing labels should change as well. This utilises
+Emacs’s own <code>project.el</code>, so one should make sure that the LaTeX project
+is version controlled—in which case the relevant ignore file is also
+respected—or otherwise recognisable by the library.
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/label-handling.webm" type="video/webm">
+Label handling
+</video>
+</p>
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatright sec-link">¶</a></h2>
+<p></p>
+That’s about all of the functionality that the package currently has.
+It has certainly served me quite well so far—my hope is that it will be
+useful to at least one other person.
+<p></p>
+On that note: contributions welcome! For example, something that should
+not be too hard to implement is the ability to store labels not just for
+the session, but permanently, by serialising the internal hash-map to a
+file. I don’t know how useful this would be but, given a certain
+workflow, it could certainly be worthwhile! Another path of inquiry
+might be to add better macro handling. As I said, support is currently
+limited to macros that take exactly one (mandatory) argument. However,
+the response one gets from <code>LaTeX-what-macro</code> is quite general, so I
+reckon it wouldn’t be too hard to cook up a more general implementation.
+<p></p>
+Again, if you want to give the package a spin then you can find it on
+<a href="https://gitlab.com/slotThe/change-env">GitLab</a>, <a href="https://github.com/slotThe/change-env">GitHub</a>,
+and <a href="https://www.melpa.org/#/latex-change-env"><span class="small-caps">melpa</span></a>!
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

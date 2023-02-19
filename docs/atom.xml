@@ -8,8 +8,183 @@
         <name>Tony Zorman</name>
         <email>tonyzorman@mailbox.org</email>
     </author>
-    <updated>2023-01-27T00:00:00Z</updated>
+    <updated>2023-02-19T00:00:00Z</updated>
     <entry>
+    <title>Announcing: latex-change-env Version 0.3</title>
+    <link href="https://tony-zorman.com/posts/latex-change-env-0.3.html" />
+    <id>https://tony-zorman.com/posts/latex-change-env-0.3.html</id>
+    <published>2023-02-19T00:00:00Z</published>
+    <updated>2023-02-19T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <section class="header">
+      Posted on 2023-02-19
+      
+      &thinsp;·&nbsp; <span title="924 words">4 min read</span>
+      
+        &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
+      
+    </section>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<p>I’ve just released version 0.3 of <code>latex-change-env</code>, featuring some
+major improvements with regard to inline maths and macro handling; this
+seems as good a time as any to talk about the package in full. I
+briefly mentioned it in the post about my <a href="./my-phd-workflow.html#digital-notes">research workflow</a>, but I
+figure now that the library has reached a state where I’m not ashamed of
+it anymore—at least, not at the time of writing this—it may warrant its
+own post.</p>
+<!--more-->
+<h2 id="functionality">Functionality</h2>
+<p>Briefly, <code>latex-change-env</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> can be seen as an extension of AUCTeX’s
+built-in facilities to manipulate the current environment. Taking
+functions like <code>LaTeX-environment</code> as a base, it adds extra
+functionality like deleting environments, changing to and from display
+maths, “remembering” and editing labels, as well as macro<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and inline
+maths support on top of them. There are two main “entry points”:
+<code>latex-change-env</code> and <code>latex-change-env-cycle</code>.</p>
+<p>The basic functionality may be used with a <code>use-package</code> configuration
+along the lines of</p>
+<pre class="emacs-lisp"><code>(use-package latex-change-env
+  :after latex
+  :commands latex-change-env
+  :bind (:map LaTeX-mode-map (&quot;C-c r&quot; . latex-change-env))
+  :custom
+  (latex-change-env-math-display '(&quot;\\[&quot; . &quot;\\]&quot;))
+  (latex-change-env-math-inline  '(&quot;$&quot;   . &quot;$&quot;)))</code></pre>
+<p>Pressing the keybinding for <code>latex-change-env</code> will pop up a selection
+in the minibuffer; by default, one can delete the current
+environment<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> with <code>k</code>, modify it into something else with <code>m</code>, or
+switch to display maths with <code>d</code>. This is all controlled by the
+<code>latex-change-env-options</code> variable, allowing for user-defined functions
+to be inserted, should that be desired.</p>
+<p>For example, the following video showcases switching to display maths,
+changing the environment into an <code>equation</code>, and deleting it completely.</p>
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/basic-functionality.webm" type="video/webm">
+Basic functionality of <code>latex-change-env</code>: changing and deleting labels.
+</video>
+</p>
+<h3 id="cycling-through-environments">Cycling through environments</h3>
+<p>The <code>latex-change-env-cycle</code> function may be used to create a list of
+environments to cycle through. For convenience, it depends on Omar
+Antolín Camarena’s <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a> package, so as to facilitate a
+comfortable workflow with maths environments out of the box.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> For
+example, one could define a simple maths-based toggle</p>
+<pre class="emacs-lisp"><code>(defun my/insert-toggle-math ()
+  (interactive)
+  (latex-change-env-cycle
+   '(display-math equation* align* equation align)))</code></pre>
+<p>and then bind that to <code>$</code> in <code>latex-mode</code>. This works because
+<code>math-delimiters-insert</code> is called when one is not in any environment.
+Quoting from the documentation of <code>latex-change-env-cycle</code> (slightly
+edited):</p>
+<blockquote>
+<p>Cycle through the given list of environments. The special symbol
+<code>display-math</code> denotes a display maths environment.</p>
+<p>If one is right at the end of a display or inline maths environment,
+call <code>math-delimiters-insert</code> instead of cycling through environments.
+The same is done when not inside any environment, which, for our
+definition of environment, also includes inline maths.</p>
+</blockquote>
+<p>The following video illustrates how <code>my/insert-toggle-math</code> might be
+used.</p>
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/cycling-maths.webm" type="video/webm">
+Cycling between inline and display maths, as well as several maths environments.
+</video>
+</p>
+<p>Of course, cycling also works for non-maths environments, as well as
+macros; below, I bound the following to a key:</p>
+<pre class="emacs-lisp"><code>(defun my/cycle-macros ()
+  (interactive)
+  (latex-change-env-cycle
+   '(textbf emph textsc textit texttt)))</code></pre>
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/cycling-macros.webm" type="video/webm">
+Cycling macros
+</video>
+</p>
+<p>An effort was made to make macro handling feel like a first class
+citizen; for example, when cycling through possible modifications,
+instead of <code>LaTeX-environment-list-filtered</code> (as would be used for
+environments), the macro-specific <code>TeX--symbol-completion-table</code> is used
+to generate a list of possible replacements.</p>
+<h3 id="labels">Labels</h3>
+<p>When changing or deleting environments, <code>latex-change-env</code> tries to
+smartly handle associated labels. In the former case, labels have a
+unique prefix associated to what environment they are defined in; for
+example, <code>theorem</code> environments might start their labels with <code>thm:</code>,
+while a <code>lemma</code> will have a <code>lem:</code> prefix.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Further, when deleting an
+environment, or switching to one that does not have an associated label
+prefix, the label is (i) deleted, and (ii) stored for the session, such
+that it can be restored when switching back to the original environment.</p>
+<p>While this is all well and good, renaming and deleting labels seems of
+little use when the changes aren’t reflected in the rest of the project.
+As such, there is an optional <code>latex-change-env-edit-labels-in-project</code>
+variable. When it is customised to <code>t</code>, a label change/deletion
+triggers a project-wide <code>query-replace-regexp</code>, such that the user can
+decide whether referencing labels should change as well. This utilises
+Emacs’s own <code>project.el</code>, so one should make sure that the LaTeX project
+is version controlled—in which case the relevant ignore file is also
+respected—or otherwise recognisable by the library.</p>
+<p>
+<video width="100%" controls>
+<source src="../images/latex-change-env/label-handling.webm" type="video/webm">
+Label handling
+</video>
+</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>That’s about all of the functionality that the package currently has.
+It has certainly served me quite well so far—my hope is that it will be
+useful to at least one other person.</p>
+<p>On that note: contributions welcome! For example, something that should
+not be too hard to implement is the ability to store labels not just for
+the session, but permanently, by serialising the internal hash-map to a
+file. I don’t know how useful this would be but, given a certain
+workflow, it could certainly be worthwhile! Another path of inquiry
+might be to add better macro handling. As I said, support is currently
+limited to macros that take exactly one (mandatory) argument. However,
+the response one gets from <code>LaTeX-what-macro</code> is quite general, so I
+reckon it wouldn’t be too hard to cook up a more general implementation.</p>
+<p>Again, if you want to give the package a spin then you can find it on
+<a href="https://gitlab.com/slotThe/change-env">GitLab</a>, <a href="https://github.com/slotThe/change-env">GitHub</a>,
+and <a href="https://www.melpa.org/#/latex-change-env">MELPA</a>!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Available on <a href="https://gitlab.com/slotThe/change-env">GitLab</a> and
+<a href="https://github.com/slotThe/change-env">GitHub</a>, as well as
+<a href="https://www.melpa.org/#/latex-change-env">MELPA</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>At least, macros taking exactly only argument, which is what
+support is currently restricted to; contributions welcome!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>In the context of this package, by “environment” I will often mean
+a proper environment, inline or display maths, or a (simple)
+macro.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>As such, be sure that you configure <code>math-delim​it​ers-{inline,display}</code>
+accordingly. For example, it may be useful to set</p>
+<pre class="emacs-lisp"><code>  (setq math-delimiters-display
+        latex-change-env-math-display)</code></pre>
+<p>and so on.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This behaviour may be changed by customising the
+<code>latex-change-env-labels</code> variable.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Using Sidenotes with Hakyll</title>
     <link href="https://tony-zorman.com/posts/block-sidenotes.html" />
     <id>https://tony-zorman.com/posts/block-sidenotes.html</id>
