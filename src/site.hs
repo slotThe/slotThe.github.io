@@ -14,11 +14,11 @@ import Data.List (foldl')
 import Data.Maybe
 import Data.Text (Text)
 import Hakyll
-import Sidenote (usingSidenotes)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc)
 import Text.Pandoc.Options
 import Text.Pandoc.Shared (headerShift)
+import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Walk (walk, walkM)
 
@@ -314,7 +314,7 @@ pandocCompilerWorker =
 myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
   pandocCompilerWorker
-    (   pure . usingSidenotes myWriter  -- needs to be last because it renders html
+    (   pure . usingSideNotesHTML myWriter  -- needs to be last because it renders html
     <=< pygmentsHighlight
     .   addSectionLinks
     .   smallCaps
