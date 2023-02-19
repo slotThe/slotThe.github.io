@@ -23,6 +23,10 @@ body {
     position: relative;
 }
 
+.sidenote code {
+    font-size: 0.94em;
+}
+
 .sidenote-number {
     counter-increment: sidenote-counter;
 }
