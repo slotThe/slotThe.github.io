@@ -69,6 +69,9 @@ All of my preprints are readily available on the [arXiv].[^2]
 
   Based on [joint work with Sebastian Halbig](https://arxiv.org/abs/2301.03545).
 
+- *Operads as Functors* \
+  2022-12-15, Block seminar "Operads", Bonn.
+
 - *Pivotality, twisted centres and the anti-double of a Hopf monad* \
   2022-05-12, Seminar of the Czech Academy of Sciences, Prague; [slides][slides:piv:prague]. \
   2022-05-15, PSSL 106, Brno; [slides][slides:piv:brno]. \
