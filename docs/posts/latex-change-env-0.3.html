@@ -67,7 +67,7 @@
     <section class="header">
       Posted on 2023-02-19
       
-      &thinsp;·&nbsp; <span title="919 words">4 min read</span>
+      &thinsp;·&nbsp; <span title="958 words">4 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
       
@@ -236,7 +236,12 @@ triggers a project-wide <code>query-replace-regexp</code>, such that the user ca
 decide whether referencing labels should change as well. This utilises
 Emacs’s own <code>project.el</code>, so one should make sure that the LaTeX project
 is version controlled—in which case the relevant ignore file is also
-respected—or otherwise recognisable by the library.
+respected—or otherwise recognisable by the library.<!--
+--><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">If you look closely at the video, you can see that, while the
+label changes, the “Lemma” before the reference does not. This
+would require more sophisticated regular expressions, but—reading
+<code>latex​-​change-env-labels</code> and making some assumptions—it certainly
+seems possible to do.</div>
 <p>
 <video width="100%" controls>
 <source src="../images/latex-change-env/label-handling.webm" type="video/webm">

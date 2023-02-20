@@ -141,7 +141,7 @@ triggers a project-wide `query-replace-regexp`, such that the user can
 decide whether referencing labels should change as well.  This utilises
 Emacs's own `project.el`, so one should make sure that the LaTeX project
 is version controlled—in which case the relevant ignore file is also
-respected—or otherwise recognisable by the library.
+respected—or otherwise recognisable by the library.[^7]
 
 <p>
   <video width="100%" controls>
@@ -194,6 +194,12 @@ and [MELPA][melpa:latex-change-env]!
 
 [^6]: At least, macros taking exactly only argument, which is what
       support is currently restricted to; contributions welcome!
+
+[^7]: {-} If you look closely at the video, you can see that, while the
+      label changes, the "Lemma" before the reference does not.  This
+      would require more sophisticated regular expressions, but—reading
+      `latex​-​change-env-labels` and making some assumptions—it certainly
+      seems possible to do.
 
 [gitlab:latex-change-env]: https://gitlab.com/slotThe/change-env
 [github:latex-change-env]: https://github.com/slotThe/change-env

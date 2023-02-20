@@ -19,7 +19,7 @@
     <section class="header">
       Posted on 2023-02-19
       
-      &thinsp;·&nbsp; <span title="924 words">4 min read</span>
+      &thinsp;·&nbsp; <span title="965 words">4 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
@@ -135,7 +135,7 @@ triggers a project-wide <code>query-replace-regexp</code>, such that the user ca
 decide whether referencing labels should change as well. This utilises
 Emacs’s own <code>project.el</code>, so one should make sure that the LaTeX project
 is version controlled—in which case the relevant ignore file is also
-respected—or otherwise recognisable by the library.</p>
+respected—or otherwise recognisable by the library.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <p>
 <video width="100%" controls>
 <source src="../images/latex-change-env/label-handling.webm" type="video/webm">
@@ -176,6 +176,11 @@ accordingly. For example, it may be useful to set</p>
 <p>and so on.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>This behaviour may be changed by customising the
 <code>latex-change-env-labels</code> variable.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>{-} If you look closely at the video, you can see that, while the
+label changes, the “Lemma” before the reference does not. This
+would require more sophisticated regular expressions, but—reading
+<code>latex​-​change-env-labels</code> and making some assumptions—it certainly
+seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
