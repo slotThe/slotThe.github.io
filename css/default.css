@@ -256,17 +256,22 @@ div#contents-big li + li {
 /* Change the appearance of links in the TOC, so as to lower its
    intrusivity, since it is now visible most of the time. */
 div#contents-big a:link,
-div#contents a:link {
+div#contents     a:link {
     color: black;
     font-variant: small-caps;
     text-decoration: none;
 }
 div#contents-big a:visited,
-div#contents a:link {
+div#contents     a:visited {
     color: black;
     font-variant: small-caps;
     text-decoration: none;
 }
+div#contents-big a:hover,
+div#contents     a:hover {
+    color: #999;
+}
+
 a:link > code,     /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
 a:visited > code {
     font-variant: normal;
