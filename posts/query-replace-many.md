@@ -1,27 +1,27 @@
 ---
-title: How to query-replace multiple matches!
+title: Multiple Replacements with query-replace
 date: 2022-08-06
+last-modified: 2023-02-21
 tags: emacs
 ---
 
-As its name suggests, Emacs's `query-replace` function (bound to `M-%`
-by default) can be used to replace occurences of one string with
-another.  In comparison to other tools that are used for similar
-purposes—(a subset of) keyboard macros and multiple-cursors—the whole
-process after entering the `from` and `to` strings is interactive all
-the way through: it's very fast to step through the individual matches
-and decide on the spot whether one would like to replace them or not.
-Needless to say, I like `query-replace` a lot!  In true Emacs fashion,
-the function also takes way too many arguments: among other things, it
-can operate on the current region, backwards, or only on things
-surrounded by words boundaries.
-
-However, there is one crucial feature missing from its default
-functionality: the ability to create multiple `from → to` pairs.  But
-this is Emacs, after all, which means that I can just write that
-`query-replace-many` function I've always wanted!
+As its name suggests, Emacs's `query-replace` function, bound to `M-%` by default, can be used to replace occurences of one string with another—and it's quite good at what it does.
+However, there is one crucial feature missing from its default functionality: the ability to create multiple `from → to` pairs.
+But this is Emacs, after all, which means that I can just write that `query-replace-many` function I've always wanted!
 
 <!--more-->
+
+*Update (21feb2023): The (slightly edited) [code](#the-code) is now packaged as `query-replace-many`,
+available on [GitLab][gitlab:query-replace-many] and [GitHub][github:query-replace-many].*
+
+I quite like the workflow that `query-replace` offers.  In comparison to
+other tools that are used for similar purposes—keyboard macros and
+multiple-cursors—the whole process after entering the `from` and `to`
+strings is interactive all the way through: it's quite fast to step
+through the individual matches and decide whether one would like to
+replace them or not.  In true Emacs fashion, the function also takes way
+too many arguments: among other things, it can operate on the current
+region, backwards, or only on things surrounded by words boundaries.
 
 # Motivation
 
@@ -68,21 +68,22 @@ time, `U` with `T`.  The first few matches are stepped through and the
 rest is just accepted wholesale.  At the bottom, you can see the default
 `query-replace` interface when interacting with the query.
 
-<img class="pure-img" src="../images/query-replace/query-replace-many.gif" alt="query-replace-many functionality showcase">
+<img class="pure-img"
+     src="../images/query-replace/query-replace-many.gif"
+     alt="query-replace-many functionality showcase">
 
 The only cosmetic imperfection of this is that, while the replacement
 candidate itself is correctly updated, we see the whole regular
 expression `\(?U:\|T\)` as the thing to be replaced instead of the bit
 that's actually matching currently.  However, since this would seem to
 require some work and one of course sees what's to be replaced by
-looking at the thing at point, I can very much live with this for the
-moment.
+looking at the thing at point, I can live with this for the moment.
 
 ## The code
 
 Below is the full source code, in all of its hacky glory.  Note that you
 will need to `require` the `s.el` and `dash.el` libraries for this to
-work, if you haven't loaded these already (if you use any amount of
+work,[^2] if you haven't loaded these already (if you use any amount of
 packages at all, chances are that you have).
 
 ``` emacs-lisp
@@ -144,3 +145,11 @@ arguments actually mean."
       suddenly appears much more reasonable.  Thus, when we get back a
       query that has already been entered in one way or another, we bail
       out.
+
+[^2]: The `query-replace-many` package
+      ([GitHub][github:query-replace-many],
+      [GitLab][gitlab:query-replace-many]) mentioned above no longer
+      requires these libraries as dependencies.
+
+[github:query-replace-many]: https://github.com/slotThe/query-replace-many
+[gitlab:query-replace-many]: https://gitlab.com/slotThe/query-replace-many

@@ -2526,7 +2526,7 @@ case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
+<li id="fn1"><p>In version 0.17.0, though new features are coming for 0.17.1,
 which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
@@ -2538,7 +2538,7 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
 ]]></summary>
 </entry>
 <entry>
-    <title>How to query-replace multiple matches!</title>
+    <title>Multiple Replacements with query-replace</title>
     <link href="https://tony-zorman.com/posts/query-replace-many.html" />
     <id>https://tony-zorman.com/posts/query-replace-many.html</id>
     <published>2022-08-06T00:00:00Z</published>
@@ -2547,7 +2547,9 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
     <section class="header">
       Posted on 2022-08-06
       
-      &thinsp;·&nbsp; <span title="941 words">4 min read</span>
+        &thinsp;·&nbsp; last modified: 2023-02-21
+      
+      &thinsp;·&nbsp; <span title="970 words">4 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
@@ -2560,22 +2562,20 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
 
   
 
-<p>As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
-by default) can be used to replace occurences of one string with
-another. In comparison to other tools that are used for similar
-purposes—(a subset of) keyboard macros and multiple-cursors—the whole
-process after entering the <code>from</code> and <code>to</code> strings is interactive all
-the way through: it’s very fast to step through the individual matches
-and decide on the spot whether one would like to replace them or not.
-Needless to say, I like <code>query-replace</code> a lot! In true Emacs fashion,
-the function also takes way too many arguments: among other things, it
-can operate on the current region, backwards, or only on things
-surrounded by words boundaries.</p>
-<p>However, there is one crucial feature missing from its default
-functionality: the ability to create multiple <code>from → to</code> pairs. But
-this is Emacs, after all, which means that I can just write that
-<code>query-replace-many</code> function I’ve always wanted!</p>
+<p>As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
+However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
+But this is Emacs, after all, which means that I can just write that <code>query-replace-many</code> function I’ve always wanted!</p>
 <!--more-->
+<p><em>Update (21feb2023): The (slightly edited) <a href="#the-code">code</a> is now packaged as <code>query-replace-many</code>,
+available on <a href="https://gitlab.com/slotThe/query-replace-many">GitLab</a> and <a href="https://github.com/slotThe/query-replace-many">GitHub</a>.</em></p>
+<p>I quite like the workflow that <code>query-replace</code> offers. In comparison to
+other tools that are used for similar purposes—keyboard macros and
+multiple-cursors—the whole process after entering the <code>from</code> and <code>to</code>
+strings is interactive all the way through: it’s quite fast to step
+through the individual matches and decide whether one would like to
+replace them or not. In true Emacs fashion, the function also takes way
+too many arguments: among other things, it can operate on the current
+region, backwards, or only on things surrounded by words boundaries.</p>
 <h2 id="motivation">Motivation</h2>
 <p>Originally, my motivation came through <a href="../../research.html">work</a>, where I <a href="./my-phd-workflow.html">write a lot of
 LaTeX</a>. When polishing papers, it sometimes happens that I would like
@@ -2617,12 +2617,11 @@ candidate itself is correctly updated, we see the whole regular
 expression <code>\(?U:\|T\)</code> as the thing to be replaced instead of the bit
 that’s actually matching currently. However, since this would seem to
 require some work and one of course sees what’s to be replaced by
-looking at the thing at point, I can very much live with this for the
-moment.</p>
+looking at the thing at point, I can live with this for the moment.</p>
 <h3 id="the-code">The code</h3>
 <p>Below is the full source code, in all of its hacky glory. Note that you
 will need to <code>require</code> the <code>s.el</code> and <code>dash.el</code> libraries for this to
-work, if you haven’t loaded these already (if you use any amount of
+work,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> if you haven’t loaded these already (if you use any amount of
 packages at all, chances are that you have).</p>
 <pre class="emacs-lisp"><code>(defun slot/get-queries (&amp;optional pairs)
   &quot;Get multiple `query-replace' pairs from the user.
@@ -2683,6 +2682,10 @@ functions sounds like a real pain, leaning on that functionality
 suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
 out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The <code>query-replace-many</code> package
+(<a href="https://github.com/slotThe/query-replace-many">GitHub</a>,
+<a href="https://gitlab.com/slotThe/query-replace-many">GitLab</a>) mentioned above no longer
+requires these libraries as dependencies.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

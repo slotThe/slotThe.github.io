@@ -122,7 +122,7 @@ case, I'd like to [hear from you](mailto:soliditsallgood@mailbox.org)!
 [priority]: https://orgmode.org/manual/Priorities.html
 [research workflow]: ./my-phd-workflow.html
 
-[^1]: In version `0.17.0`, though new features are coming for `0.17.1`,
+[^1]: In version 0.17.0, though new features are coming for 0.17.1,
       which will drop soon!
 
 [^2]: Note that for this post, `M` means `<Super_L>` and not `<Alt_L>`.

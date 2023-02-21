@@ -313,7 +313,7 @@ towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.
 <p></p>
 Specifically, I want to showcase a new<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In version <code>0.17.0</code>, though new features are coming for <code>0.17.1</code>,
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In version 0.17.0, though new features are coming for 0.17.1,
 which will drop soon!</div>
  <span class="small-caps">xm</span>onad module:
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.​Prompt.​Org­Mode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
@@ -331,27 +331,14 @@ any to talk about it.
 
   <div class="posts">
     <div style="text-align: left">
-      <b style="font-size: 1.1em; font-family: var(--serif-fonts);">How to query-replace multiple matches!</b>
+      <b style="font-size: 1.1em; font-family: var(--serif-fonts);">Multiple Replacements with query-replace</b>
       <span style="font-size: 19px"> (<a title="All pages tagged 'emacs'." href="./tags/emacs.html">emacs</a>) </span>
     </div>
 
     <p></p>
-As its name suggests, Emacs’s <code>query-replace</code> function (bound to <code>M-%</code>
-by default) can be used to replace occurences of one string with
-another. In comparison to other tools that are used for similar
-purposes—(a subset of) keyboard macros and multiple-cursors—the whole
-process after entering the <code>from</code> and <code>to</code> strings is interactive all
-the way through: it’s very fast to step through the individual matches
-and decide on the spot whether one would like to replace them or not.
-Needless to say, I like <code>query-replace</code> a lot! In true Emacs fashion,
-the function also takes way too many arguments: among other things, it
-can operate on the current region, backwards, or only on things
-surrounded by words boundaries.
-<p></p>
-However, there is one crucial feature missing from its default
-functionality: the ability to create multiple <code>from → to</code> pairs. But
-this is Emacs, after all, which means that I can just write that
-<code>query-replace-many</code> function I’ve always wanted!
+As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
+However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
+But this is Emacs, after all, which means that I can just write that <code>query-replace-many</code> function I’ve always wanted!
 
 
     <p>
@@ -370,7 +357,7 @@ In the post about my <a href="./posts/phd-workflow/2022-05-01-my-phd-workflow.ht
 call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
-generic enough API, I decided to turn it into an <span class="small-caps">xm</span>onad module!
+generic enough <span class="small-caps">api</span>, I decided to turn it into an <span class="small-caps">xm</span>onad module!
 <p></p>
 Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
 now available for everyone to try out; provided one has the git version
