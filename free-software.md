@@ -146,6 +146,11 @@ I've written too many Emacs packages—and none of them popular, at that!
   I've written about this package [here][post:vc-use-package] and about
   `package-vc.el` [here][post:package-vc-install].
 
++ [query-replace-many]
+
+  A tiny package that wraps `query-replace` in order to support multiple matches.
+  I've written about it [here][post:query-replace-many].
+
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
 [XMonad]: https://xmonad.org/
@@ -162,7 +167,9 @@ I've written too many Emacs packages—and none of them popular, at that!
 [optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
 [optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
 [post:package-vc-install]: https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
+[post:query-replace-many]: https://tony-zorman.com/posts/query-replace-many.html
 [post:vc-use-package]: https://tony-zorman.com/posts/2022-12-22-vc-use-package.html
+[query-replace-many]: https://github.com/slotThe/query-replace-many
 [vc-use-package]: https://github.com/slotThe/vc-use-package
 [vmensa]: https://gitlab.com/slotThe/vmensa
 [xmobar]: https://codeberg.org/xmobar/xmobar
