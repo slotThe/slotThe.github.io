@@ -15,8 +15,8 @@ Further—less direct—inspirations include [gwern.net][gwern.net] and
 For various definitions of "notable".
 
 + [Sidenotes][site:sidenotes] with the help of [Tufte CSS][github:tufte-css].
-  Unlike most implementations, [Sidenote.hs][site:sidenotes-hs] supports
-  arbitrary blocks to be placed inside of sidenotes.
+  Unlike most implementations, [SideNotesHTML.hs][sidenotes-hs] on my fork[^1] of the `pandoc-sidenote` library
+  supports arbitrary blocks to be placed inside of sidenotes.
 
 + In comparison to pandoc's default, better [syntax highlighting][site:pygmentise]
   via the `pygmentize` command line utility.
@@ -33,10 +33,10 @@ For various definitions of "notable".
   to the respective section.
 
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
+[sidenotes-hs]: https://github.com/slotThe/pandoc-sidenote/blob/feat/html-sidenotes/src/Text/Pandoc/SideNoteHTML.hs
 [site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
 [site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
 [site:pygmentise]: https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html
-[site:sidenotes-hs]: https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs
 [site:sidenotes]: https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html
 [wiki:pilcrow]: https://en.wikipedia.org/wiki/Pilcrow
 
@@ -52,3 +52,5 @@ For speed reasons, `make watch` disregards this, so be sure to build the
 website with `make` to see the final result.
 
 [mathjax-node-page]: https://github.com/pkra/mathjax-node-page/
+
+[^1]: The [pull request](https://github.com/jez/pandoc-sidenote/pull/26) is currently pending.
