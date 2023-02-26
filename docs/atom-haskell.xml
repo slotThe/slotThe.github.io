@@ -16,7 +16,7 @@
     <published>2023-01-27T00:00:00Z</published>
     <updated>2023-01-27T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2023-01-27
       
         &thinsp;·&nbsp; last modified: 2023-02-16
@@ -25,7 +25,7 @@
       
         &thinsp;·&nbsp; <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -34,7 +34,8 @@
 
   
 
-<p>I’ve become quite enamoured with sidenotes recently, and so of course
+<div>
+  <p>I’ve become quite enamoured with sidenotes recently, and so of course
 this website now has them as well! Thankfully, the integration with
 pandoc and Hakyll is quite straightforward, because other people have
 already done the hard work. Depending on your use-case, however, the
@@ -373,6 +374,7 @@ pandoc’s HTML5 writer is quite hard-coded into Hakyll, I don’t think
 that I will go down that path.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -386,7 +388,7 @@ that I will go down that path.<a href="#fnref7" class="footnote-back" role="doc-
     <published>2023-01-21T00:00:00Z</published>
     <updated>2023-01-21T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2023-01-21
       
         &thinsp;·&nbsp; last modified: 2023-01-23
@@ -395,7 +397,7 @@ that I will go down that path.<a href="#fnref7" class="footnote-back" role="doc-
       
         &thinsp;·&nbsp; <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -404,7 +406,8 @@ that I will go down that path.<a href="#fnref7" class="footnote-back" role="doc-
 
   
 
-<p>By default, Hakyll uses pandoc to generate syntax highlighting for all
+<div>
+  <p>By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
 examples the HTML this produces is unsatisfactory. Thankfully, the two
 programs are almost infinitely customisable, and changing pretty much
@@ -637,6 +640,7 @@ the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX pac
 them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -650,14 +654,14 @@ them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎
     <published>2023-01-14T00:00:00Z</published>
     <updated>2023-01-14T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2023-01-14
       
       &thinsp;·&nbsp; <span title="668 words">3 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -666,7 +670,8 @@ them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎
 
   
 
-<p>In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
+<div>
+  <p>In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an XMonad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
 has proven to be extremely useful to me, and really I couldn’t be
@@ -759,6 +764,7 @@ welcome!</p>
 <li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -772,14 +778,14 @@ welcome!</p>
     <published>2022-09-11T00:00:00Z</published>
     <updated>2022-09-11T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-09-11
       
       &thinsp;·&nbsp; <span title="1309 words">6 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -788,7 +794,8 @@ welcome!</p>
 
   
 
-<p>One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
+<div>
+  <p>One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
@@ -961,6 +968,7 @@ win in my book!</p>
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -974,14 +982,14 @@ win in my book!</p>
     <published>2022-05-25T00:00:00Z</published>
     <updated>2022-05-25T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-05-25
       
       &thinsp;·&nbsp; <span title="1758 words">8 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -990,7 +998,8 @@ win in my book!</p>
 
   
 
-<p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
+<div>
+  <p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
@@ -1220,6 +1229,7 @@ maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>

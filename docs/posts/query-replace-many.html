@@ -63,7 +63,7 @@
            
 
           <article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-08-06
       
         &thinsp;·&nbsp; last modified: 2023-02-21
@@ -72,7 +72,7 @@
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -90,8 +90,8 @@
 </ul>
   </div>
 
-<p></p>
-As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
+<div>
+  As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
 But this is Emacs, after all, which means that I can just write that <code>query-replace-many</code> function I’ve always wanted!
 <!--more-->
@@ -226,6 +226,7 @@ packages at all, chances are that you have).
 <span class="w">   </span><span class="nv">delimited</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="nv">backward</span><span class="w"> </span><span class="nv">region-noncontiguous-p</span><span class="p">))</span>
 </pre></div>
 
+</div>
 
       <!-- Body is included in the above file -->
     </section>

@@ -16,14 +16,14 @@
     <published>2023-02-19T00:00:00Z</published>
     <updated>2023-02-19T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2023-02-19
       
       &thinsp;·&nbsp; <span title="965 words">4 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -32,7 +32,8 @@
 
   
 
-<p>I’ve just released version 0.3 of <code>latex-change-env</code>, featuring some
+<div>
+  <p>I’ve just released version 0.3 of <code>latex-change-env</code>, featuring some
 major improvements with regard to inline maths and macro handling; this
 seems as good a time as any to talk about the package in full. I
 briefly mentioned it in the post about my <a href="./my-phd-workflow.html#digital-notes">research workflow</a>, but I
@@ -183,6 +184,7 @@ would require more sophisticated regular expressions, but—reading
 seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -196,14 +198,14 @@ seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink"
     <published>2023-01-14T00:00:00Z</published>
     <updated>2023-01-14T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2023-01-14
       
       &thinsp;·&nbsp; <span title="668 words">3 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -212,7 +214,8 @@ seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink"
 
   
 
-<p>In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
+<div>
+  <p>In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an XMonad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
 has proven to be extremely useful to me, and really I couldn’t be
@@ -305,6 +308,7 @@ welcome!</p>
 <li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -318,14 +322,14 @@ welcome!</p>
     <published>2022-12-22T00:00:00Z</published>
     <updated>2022-12-22T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-12-22
       
       &thinsp;·&nbsp; <span title="285 words">2 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -333,7 +337,8 @@ welcome!</p>
      small for the one in the `default.html' template -->
 
 
-<p>I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
+<div>
+  <p>I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
 is a first attempt at integrating the new (as of Emacs 29)
 <code>package-vc.el</code> with the now built-in use-package. I’ve already talked
 about how these two interact in my <a href="https://tony-zorman.com/posts/2022-11-30-package-vc-install.html">last post</a>—you can
@@ -370,6 +375,7 @@ initial implementation from quelpa-use-package—and thus copyright
 assignment is a bit iffy—it will not be me. Still, implementing this
 from scratch does not sound so hard. If anyone feels inspired to do
 exactly this, I’d be delighted!</p>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -383,14 +389,14 @@ exactly this, I’d be delighted!</p>
     <published>2022-11-30T00:00:00Z</published>
     <updated>2022-11-30T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-11-30
       
       &thinsp;·&nbsp; <span title="601 words">3 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -399,7 +405,8 @@ exactly this, I’d be delighted!</p>
 
   
 
-<p>The Emacs 29 release branch was just cut—and it’s chock full of new
+<div>
+  <p>The Emacs 29 release branch was just cut—and it’s chock full of new
 features! In this post, I want to talk about the new
 <code>package-vc-install</code> function, which allows one to install packages
 directly from their respective upstream source; for example, GitHub. It
@@ -483,6 +490,7 @@ can give them right now, even with the added convenience of
 <code>package-vc.el</code>. However, for me—and probably at least a few people out
 there—this is quite enough. After all, for anything more there’s always
 <a href="https://nixos.org/">nix</a> :)</p>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -496,14 +504,14 @@ there—this is quite enough. After all, for anything more there’s always
     <published>2022-11-05T00:00:00Z</published>
     <updated>2022-11-05T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-11-05
       
       &thinsp;·&nbsp; <span title="451 words">2 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -511,7 +519,8 @@ there—this is quite enough. After all, for anything more there’s always
      small for the one in the `default.html' template -->
 
 
-<p>Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
+<div>
+  <p>Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
 <code>preview.el</code> library (whether it be in a .tex buffer, or—via
 <a href="https://github.com/karthink/org-auctex">org-auctex</a>—in Org) things get <em>really</em> messed up when one or more
 monitors are set up in portrait mode.</p>
@@ -583,6 +592,7 @@ probably be fixed; I will report it as an Emacs bug.</p>
 benefits of the <a href="https://github.com/magnars/dash.el">dash.el</a> library. Compare the readability of the
 “fixed” implementation using <code>-let</code> to the original one above. I
 certainly know which of the two I’d rather write!</p>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -596,14 +606,14 @@ certainly know which of the two I’d rather write!</p>
     <published>2022-10-22T00:00:00Z</published>
     <updated>2022-10-22T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-10-22
       
       &thinsp;·&nbsp; <span title="2221 words">9 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -612,7 +622,8 @@ certainly know which of the two I’d rather write!</p>
 
   
 
-<p>Emacs is the “extensible text editor”, and it wouldn’t be fun if one
+<div>
+  <p>Emacs is the “extensible text editor”, and it wouldn’t be fun if one
 didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs">README</a> for my Emacs configuration, I
 thought it might be nice to somewhat expand on certain ideas and give a
@@ -940,6 +951,7 @@ explicitly quantify over an argument.<a href="#fnref2" class="footnote-back" rol
 auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -953,14 +965,14 @@ auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩
     <published>2022-08-27T00:00:00Z</published>
     <updated>2022-08-27T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-08-27
       
       &thinsp;·&nbsp; <span title="667 words">3 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -968,7 +980,8 @@ auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩
      small for the one in the `default.html' template -->
 
 
-<p>As I’ve said before, basically my entire digital life happens in either
+<div>
+  <p>As I’ve said before, basically my entire digital life happens in either
 <a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.</p>
@@ -1053,6 +1066,7 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
 <li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -1066,7 +1080,7 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
     <published>2022-08-06T00:00:00Z</published>
     <updated>2022-08-06T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-08-06
       
         &thinsp;·&nbsp; last modified: 2023-02-21
@@ -1075,7 +1089,7 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1084,7 +1098,8 @@ which will drop soon!<a href="#fnref1" class="footnote-back" role="doc-backlink"
 
   
 
-<p>As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
+<div>
+  <p>As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
 But this is Emacs, after all, which means that I can just write that <code>query-replace-many</code> function I’ve always wanted!</p>
 <!--more-->
@@ -1210,6 +1225,7 @@ out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></
 requires these libraries as dependencies.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -1223,14 +1239,14 @@ requires these libraries as dependencies.<a href="#fnref2" class="footnote-back"
     <published>2022-05-25T00:00:00Z</published>
     <updated>2022-05-25T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-05-25
       
       &thinsp;·&nbsp; <span title="1758 words">8 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'haskell'." href="/tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1239,7 +1255,8 @@ requires these libraries as dependencies.<a href="#fnref2" class="footnote-back"
 
   
 
-<p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
+<div>
+  <p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
@@ -1469,6 +1486,7 @@ maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -1482,7 +1500,7 @@ maintain a slightly modified and POSIX shell compatible version
     <published>2022-05-01T00:00:00Z</published>
     <updated>2022-05-01T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <section class="header">
+    <p class="header">
       Posted on 2022-05-01
       
         &thinsp;·&nbsp; last modified: 2022-05-23
@@ -1491,7 +1509,7 @@ maintain a slightly modified and POSIX shell compatible version
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
       
-    </section>
+    </p>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1500,7 +1518,8 @@ maintain a slightly modified and POSIX shell compatible version
 
   
 
-<p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
+<div>
+  <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
 discussion.</p>
@@ -1764,6 +1783,7 @@ On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
+</div>
 
       <!-- Body is included in the above file -->
     </section>
