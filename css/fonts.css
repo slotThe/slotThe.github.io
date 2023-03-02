@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-/* Fonts taken from: https://github.com/gwern/gwern.net/tree/master/css
+/* Fonts taken from github:adobe-fonts/source{sans,serif}
+
+Originally inspired by https://github.com/gwern/gwern.net/tree/master/css
 
 I like the `IBM Plex' font much more than `Source Sans Pro' but, alas,
 the former does not have small caps glyphs.
@@ -17,28 +19,28 @@ the former does not have small caps glyphs.
     font-family: 'Source Serif Pro';
     font-weight: normal;
     font-style: normal;
-    src: url('../fonts/SourceSerifPro-BASIC-Regular.ttf') format('truetype');
+    src: url('../fonts/SourceSerif4-Regular.otf') format('opentype');
     font-display: swap;
 }
 @font-face {
     font-family: 'Source Serif Pro';
     font-weight: normal;
     font-style: italic;
-    src: url('../fonts/SourceSerifPro-BASIC-RegularItalic.ttf') format('truetype');
+    src: url('../fonts/SourceSerif4-Regular.otf') format('opentype');
     font-display: swap;
 }
 @font-face {
     font-family: 'Source Serif Pro';
     font-weight: bold;
     font-style: normal;
-    src: url('../fonts/SourceSerifPro-BASIC-Semibold.ttf') format('truetype');
+    src: url('../fonts/SourceSerif4-Semibold.otf') format('opentype');
     font-display: swap;
 }
 @font-face {
     font-family: 'Source Serif Pro';
     font-weight: bold;
     font-style: italic;
-    src: url('../fonts/SourceSansPro-BASIC-SemiboldItalic.ttf') format('truetype');
+    src: url('../fonts/SourceSerif4-SemiboldIt.otf') format('opentype');
     font-display: swap;
 }
 
@@ -46,28 +48,28 @@ the former does not have small caps glyphs.
     font-family: 'Source Sans Pro';
     font-weight: normal;
     font-style: normal;
-    src: url('../fonts/SourceSansPro-BASIC-Regular.ttf') format('truetype');
+    src: url('../fonts/SourceSans3-Regular.otf') format('opentype');
     font-display: swap;
 }
 @font-face {
     font-family: 'Source Sans Pro';
     font-weight: normal;
     font-style: italic;
-    src: url('../fonts/SourceSansPro-BASIC-RegularItalic.ttf') format('truetype');
+    src: url('../fonts/SourceSans3-It.otf') format('opentype');
     font-display: swap;
 }
 @font-face {
     font-family: 'Source Sans Pro';
     font-weight: bold;
     font-style: normal;
-    src: url('../fonts/SourceSansPro-BASIC-Semibold.ttf') format('truetype');
+    src: url('../fonts/SourceSans3-Semibold.otf') format('opentype');
     font-display: swap;
 }
 @font-face {
     font-family: 'Source Sans Pro';
     font-weight: bold;
     font-style: italic;
-    src: url('../fonts/SourceSansPro-BASIC-SemiboldItalic.ttf') format('truetype');
+    src: url('../fonts/SourceSans3-SemiboldIt.otf') format('opentype');
     font-display: swap;
 }
 
@@ -75,7 +77,7 @@ the former does not have small caps glyphs.
     font-family: 'Iosevka Custom';
     font-weight: normal;
     font-style: normal;
-    src: url('../fonts/iosevka-custom-regular.ttf') format('truetype');
+    src: url('../fonts/iosevka-custom-regular.ttf') format('opentype');
     font-display: swap;
 }
 @font-face {

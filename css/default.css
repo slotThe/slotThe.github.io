@@ -20,6 +20,7 @@ body {
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;            /* justification ⇒ hyphenation */
+    text-rendering: optimizeLegibility;
 }
 
 span.small-caps {
@@ -57,6 +58,7 @@ div#content {           /* body width */
 .pure-g [class *="pure-u"],
 .pure-g-r [class *="pure-u"] {               /* body */
     font-family: var(--proportional-fonts);
+    text-rendering: optimizeLegibility;
 }
 
 pre {                   /* Block code */
