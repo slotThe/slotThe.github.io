@@ -1,10 +1,10 @@
 ---
-title: "Announcing: latex-change-env Version 0.3"
+title: "Announcing: latex-change-env Version 0.3"
 date: 2023-02-19
 tags: emacs
 ---
 
-I've just released version 0.3 of `latex-change-env`, featuring some
+I've just released version 0.3 of `latex-change-env`, featuring some
 major improvements with regard to inline maths and macro handling; this
 seems as good a time as any to talk about the package in full.  I
 briefly mentioned it in the post about my [research workflow], but I
