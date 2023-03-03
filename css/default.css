@@ -115,6 +115,8 @@ h1 {                    /* Reserved for title */
     font-size: 1.5em;
     font-variant: small-caps;
     font-variant-numeric: normal;  /* No oldstyle figures for all-caps titles */
+    word-spacing: 0.1em;
+    letter-spacing: 0.02em;
     text-align: center;
 }
 
@@ -261,12 +263,16 @@ div#contents-big a:link,
 div#contents     a:link {
     color: black;
     font-variant: small-caps;
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
     text-decoration: none;
 }
 div#contents-big a:visited,
 div#contents     a:visited {
     color: black;
     font-variant: small-caps;
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
     text-decoration: none;
 }
 div#contents-big a:hover,
