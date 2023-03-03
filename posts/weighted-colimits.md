@@ -335,7 +335,7 @@ $$
   \mathbb{T} b \times \mathcal{J}(a, b) \times F a \longrightarrow \mathbb{T} a \times F a.
 $$
 
-Inserting these into Equation $2$, this yields
+Inserting these into Equation $(2)$, this yields
 
 $$
   \coprod_{a, b \in \mathcal{J}} \mathcal{J}(a,b) \times F a
@@ -345,7 +345,7 @@ $$
 $$
 
 This is exactly the way the tensor product of bimodules is defined in
-Equation $1$, hence it is tempting to write the resulting coequaliser as
+Equation $(1)$, hence it is tempting to write the resulting coequaliser as
 $1 \otimes_{\mathcal{J}} F$.  As such, a colimit of a functor $F$ over
 $\mathcal{J}$ can be seen as a tensor product of functors with the
 terminal functor.  Now, the terminal functor is not very interesting;
@@ -597,9 +597,8 @@ $\mathcal{A}$ by the assignment $W \mapsto W \otimes_{\mathcal{J}} G$
       those kinds of technicalities for the purposes of this post.
 
 [^5]: I mostly follow Trimble and the nLab here.  A more explicit
-      description (in the case of limits, but it should be easy enough
-      to dualise) is given, for example, in [Category Theory in
-      Context][riehl:ct], Theorem 3.2.13.
+      description—in the case of limits—is given, for example, in
+      Riehl's [Category Theory in Context][riehl:ct], Theorem 3.2.13.
 
 [^7]: The one-element set $\{\star\}$ is the terminal object in
       $\mathsf{Set}$, hence by definition there is exactly one arrow from

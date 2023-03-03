@@ -181,7 +181,7 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
       
         &thinsp;·&thinsp; last modified: 2022-10-26
       
-      &thinsp;·&thinsp; <span title="3660 words">15 min read</span>
+      &thinsp;·&thinsp; <span title="3651 words">15 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>
       
@@ -452,7 +452,7 @@ arrows with type signature</p>
 <p><span class="math display">\[
   \mathbb{T} b \times \mathcal{J}(a, b) \times F a \longrightarrow \mathbb{T} a \times F a.
 \]</span></p>
-<p>Inserting these into Equation <span class="math inline">\(2\)</span>, this yields</p>
+<p>Inserting these into Equation <span class="math inline">\((2)\)</span>, this yields</p>
 <p><span class="math display">\[
   \coprod_{a, b \in \mathcal{J}} \mathcal{J}(a,b) \times F a
     \cong             \coprod_{a, b \in \mathcal{J}} \mathbb{T} b \times \mathcal{J}(a, b) \times F a
@@ -460,7 +460,7 @@ arrows with type signature</p>
     \cong             \coprod_{a \in \mathcal{J}} F a.
 \]</span></p>
 <p>This is exactly the way the tensor product of bimodules is defined in
-Equation <span class="math inline">\(1\)</span>, hence it is tempting to write the resulting coequaliser as
+Equation <span class="math inline">\((1)\)</span>, hence it is tempting to write the resulting coequaliser as
 <span class="math inline">\(1 \otimes_{\mathcal{J}} F\)</span>. As such, a colimit of a functor <span class="math inline">\(F\)</span> over
 <span class="math inline">\(\mathcal{J}\)</span> can be seen as a tensor product of functors with the
 terminal functor. Now, the terminal functor is not very interesting;
@@ -638,9 +638,8 @@ No. 10 (2005) pp. 1-136 (<a href="http://www.tac.mta.ca/tac/reprints/articles/1
 <li id="fn2"><p>If the category <span class="math inline">\(\mathcal{A}\)</span> is locally small. I will ignore
 those kinds of technicalities for the purposes of this post.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>I mostly follow Trimble and the nLab here. A more explicit
-description (in the case of limits, but it should be easy enough
-to dualise) is given, for example, in <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in
-Context</a>, Theorem 3.2.13.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+description—in the case of limits—is given, for example, in
+Riehl’s <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in Context</a>, Theorem 3.2.13.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>The one-element set <span class="math inline">\(\{\star\}\)</span> is the terminal object in
 <span class="math inline">\(\mathsf{Set}\)</span>, hence by definition there is exactly one arrow from
 any other set to it.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
