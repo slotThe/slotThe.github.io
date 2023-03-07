@@ -1,18 +1,16 @@
 ---
 title: Multiple Replacements with query-replace
 date: 2022-08-06
-last-modified: 2023-02-21
+last-modified: 2023-03-07
 tags: emacs
 ---
 
 As its name suggests, Emacs's `query-replace` function, bound to `M-%` by default, can be used to replace occurences of one string with another—and it's quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple `from → to` pairs.
-But this is Emacs, after all, which means that I can just write that `query-replace-many` function I've always wanted!
+But this is Emacs, after all, which means that I can write that `query-replace-many` function I've always wanted, and even share it with others!
+The [code](#the-code) is packaged as `query-replace-many`, available on [GitLab][gitlab:query-replace-many] and [GitHub][github:query-replace-many].
 
 <!--more-->
-
-*Update (21feb2023): The (slightly edited) [code](#the-code) is now packaged as `query-replace-many`,
-available on [GitLab][gitlab:query-replace-many] and [GitHub][github:query-replace-many].*
 
 I quite like the workflow that `query-replace` offers.  In comparison to
 other tools that are used for similar purposes—keyboard macros and
@@ -81,49 +79,57 @@ looking at the thing at point, I can live with this for the moment.
 
 ## The code
 
-Below is the full source code, in all of its hacky glory.  Note that you
-will need to `require` the `s.el` and `dash.el` libraries for this to
-work,[^2] if you haven't loaded these already (if you use any amount of
-packages at all, chances are that you have).
+As one might imagine, the code is actually quite straightforward—it only
+consists of two functions!  The first one is a little helper, querying
+the user for multiple pairs.
 
 ``` emacs-lisp
-(defun slot/get-queries (&optional pairs)
+(defun query-replace-many--get-queries (&optional pairs)
   "Get multiple `query-replace' pairs from the user.
 PAIRS is a list of replacement pairs of the form (FROM . TO)."
-  (-let* (((from to delim arg)
-           (query-replace-read-args
-            (s-join " "
-                    (-non-nil
-                     (list "Query replace many"
-                           (cond ((eq current-prefix-arg '-) "backward")
-                                 (current-prefix-arg         "word"))
-                           (when (use-region-p) "in region"))))
-            nil))                       ; no regexp-flag
-          (from-to (cons (regexp-quote from)
-                         (s-replace "\\" "\\\\" to))))
-    ;; HACK: Since the default suggestion of replace.el will be
-    ;; the last one we've entered, an empty string will give us
-    ;; exactly that.  Instead of trying to fight against this,
-    ;; use it in order to signal an exit.
-    (if (-contains? pairs from-to)
+  (pcase-let* ((`(,from ,to ,delim ,arg)
+                (query-replace-read-args
+                 (thread-last
+                   (list "Query replace many"
+                         (cond ((eq current-prefix-arg '-) "backward")
+                               (current-prefix-arg         "word"))
+                         (when (use-region-p) "in region"))
+                   (seq-keep #'identity)
+                   ((lambda (seq) (mapconcat #'identity seq " "))))
+                 nil))                  ; no regexp-flag
+               (from-to
+                (cons (regexp-quote from)
+                      (replace-regexp-in-string "\\\\" "\\\\" to t t))))
+    ;; HACK: Since the default suggestion of replace.el will be the last
+    ;; one we've entered, an empty string will give us exactly that.
+    ;; Instead of trying to fight against this, use it in order to
+    ;; signal an exit.
+    (if (member from-to pairs)
         (list pairs delim arg)
-      (slot/get-queries (push from-to pairs)))))
+      (query-replace-many--get-queries (push from-to pairs)))))
+```
 
-(defun slot/query-replace-many
+The actual `query-replace-many` function now just reads some pairs from
+the user by virtue of the above function, and then calls
+`perform-replace` with an appropriately generated regular expression.
+
+``` emacs-lisp
+(defun query-replace-many
     (pairs &optional delimited start end backward region-noncontiguous-p)
   "Like `query-replace', but query for several replacements.
-Query for replacement pairs until the users enters an empty
-string (but see `slot/get-queries').
+Query for replacement PAIRS until the users enters an empty
+string (but see `query-replace-many--get-queries').
 
-Refer to `query-replace' and `perform-replace' for what the other
-arguments actually mean."
+The optional arguments DELIMITED, START, END, BACKWARD, and
+REGION-NONCONTIGUOUS-P are as in `query-replace' and
+`perform-replace', which see."
   (interactive
-   (let ((common (slot/get-queries)))
-     (list (nth 0 common) (nth 1 common)
+   (let ((common (query-replace-many--get-queries)))
+     (list (nth 0 common)     (nth 1 common)
            (if (use-region-p) (region-beginning))
            (if (use-region-p) (region-end))
-           (nth 2 common)
-           (if (use-region-p) (region-noncontiguous-p)))))
+           (nth 2 common)     (if (use-region-p)
+                                (region-noncontiguous-p)))))
   (perform-replace
    (concat "\\(?:" (mapconcat #'car pairs "\\|") "\\)") ; build query
    (cons (lambda (pairs _count)
@@ -131,9 +137,15 @@ arguments actually mean."
                     when (string-match from (match-string 0))
                     return to))
          pairs)
-   :query :regexp
-   delimited nil nil start end backward region-noncontiguous-p))
+   :query :regexp delimited nil nil start end backward
+   region-noncontiguous-p))
 ```
+
+And that's it!  As an aside, calling `query-replace-many` also works
+from lisp; `(query-replace-many '(("1" . "2") ("2" . "1")))` has exactly
+the effect one would imagine it to have.  As I said, everything is
+conveniently packaged up on [GitLab][gitlab:query-replace-many] and
+[GitHub][github:query-replace-many]—get it while it's hot!
 
 [^1]: This isn't _quite_ what's actually done, but it's the right mental
       model to have (since this is how the function behaves).  The gory
@@ -145,11 +157,6 @@ arguments actually mean."
       suddenly appears much more reasonable.  Thus, when we get back a
       query that has already been entered in one way or another, we bail
       out.
-
-[^2]: The `query-replace-many` package
-      ([GitHub][github:query-replace-many],
-      [GitLab][gitlab:query-replace-many]) mentioned above no longer
-      requires these libraries as dependencies.
 
 [github:query-replace-many]: https://github.com/slotThe/query-replace-many
 [gitlab:query-replace-many]: https://gitlab.com/slotThe/query-replace-many
