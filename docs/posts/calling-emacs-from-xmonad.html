@@ -69,7 +69,9 @@
     <p class="header">
       Posted on 2022-05-25
       
-      &thinsp;·&thinsp; <span title="1753 words">8 min read</span>
+        &thinsp;·&thinsp; last modified: 2023-03-07
+      
+      &thinsp;·&thinsp; <span title="1737 words">7 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>, <a title="All pages tagged 'haskell'." href="../tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html">xmonad</a>
       
@@ -101,12 +103,11 @@ that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
 generic enough <span class="small-caps">api</span>, I decided to turn it into an <span class="small-caps">xm</span>onad module!
 <p></p>
-Yesterday these changes were merged into <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a>, and they are
-now available for everyone to try out; provided one has the git version
-of <span class="small-caps">xm</span>onad <a href="https://xmonad.org/INSTALL.html">installed</a>.<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you <em>really</em> want to try this feature but don’t want to bother
-installing any unreleased—though stable—version, message me in any
-way and maybe we’ll hurry up and cut 0.17.1 soon!</div>
+These changes now live as part of the <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a> repository and
+are—from version 0.17.1 onwards—available for everyone to try out.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Alternatively, one could use the git versions of <code>xmonad</code> and
+<code>xmonad-contrib</code>; refer to
+<a href="https://xmonad.org/INSTALL.html">INSTALL</a> for more information.</div>
 <p></p>
 I’d like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
@@ -374,11 +375,12 @@ difference lists just feels right here, and so I did.
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatright sec-link">¶</a></h2>
 <p></p>
 I have to say that I’m quite satisfied with this <span class="small-caps">api</span>. In fact, if I
-look at the old code that only resided within my personal config, it’s
-even a bit more ergonomic in a few places, despite having essentially no
-user-specific strings hardcoded anywhere! As I said before, if you try
-this and find something missing, do let me know and we’ll probably find
-a solution! If you try this and find it useful, also let me know :)
+compare it with the old code that only resided within my personal
+config, this new version is even a bit more ergonomic in a few places,
+despite having essentially no user-specific strings hardcoded anywhere!
+As I said before, if you try this and find something missing, do let me
+know and we’ll probably find a solution! If you try this and find it
+useful, also let me know :)
 <p></p>
 Of course, technically none of this needs to live only inside your
 <span class="small-caps">xm</span>onad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>

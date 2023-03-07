@@ -1,6 +1,7 @@
 ---
 title: Rapidly Capture Ideas with XMonad and Emacs
 date: 2022-08-27
+last-modified: 2023-03-07
 no-toc: true
 tags: emacs, xmonad
 ---
@@ -122,7 +123,6 @@ case, I'd like to [hear from you](mailto:soliditsallgood@mailbox.org)!
 [priority]: https://orgmode.org/manual/Priorities.html
 [research workflow]: ./my-phd-workflow.html
 
-[^1]: In version 0.17.0, though new features are coming for 0.17.1,
-      which will drop soon!
+[^1]: Version 0.17.0 onwards.
 
 [^2]: Note that for this post, `M` means `<Super_L>` and not `<Alt_L>`.

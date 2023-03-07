@@ -1,6 +1,7 @@
 ---
 title: Calling Emacs from XMonad
 date: 2022-05-25
+last-modified: 2023-03-07
 tags: emacs, haskell, xmonad
 ---
 
@@ -10,9 +11,8 @@ that this was perhaps something that could be of use to more people than
 just me.  After a little bit of deliberation and coming up with a
 generic enough API, I decided to turn it into an XMonad module!
 
-Yesterday these changes were merged into [xmonad-contrib], and they are
-now available for everyone to try out; provided one has the git version
-of XMonad [installed](https://xmonad.org/INSTALL.html).[^5]
+These changes now live as part of the [xmonad-contrib] repository and
+are—from version 0.17.1 onwards—available for everyone to try out.[^5]
 
 I'd like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
@@ -293,11 +293,12 @@ difference lists just feels right here, and so I did.
 # Conclusion
 
 I have to say that I'm quite satisfied with this API.  In fact, if I
-look at the old code that only resided within my personal config, it's
-even a bit more ergonomic in a few places, despite having essentially no
-user-specific strings hardcoded anywhere!  As I said before, if you try
-this and find something missing, do let me know and we'll probably find
-a solution!  If you try this and find it useful, also let me know :)
+compare it with the old code that only resided within my personal
+config, this new version is even a bit more ergonomic in a few places,
+despite having essentially no user-specific strings hardcoded anywhere!
+As I said before, if you try this and find something missing, do let me
+know and we'll probably find a solution!  If you try this and find it
+useful, also let me know :)
 
 Of course, technically none of this needs to live only inside your
 XMonad config at all.  In combination with the excellent [turtle]
@@ -329,6 +330,6 @@ cool tools like magit.sh.[^4]  Go nuts!
       maintain a slightly modified and POSIX shell compatible version
       [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh).
 
-[^5]: If you _really_ want to try this feature but don't want to bother
-      installing any unreleased—though stable—version, message me in any
-      way and maybe we'll hurry up and cut 0.17.1 soon!
+[^5]: Alternatively, one could use the git versions of `xmonad` and
+      `xmonad-contrib`; refer to
+      [INSTALL](https://xmonad.org/INSTALL.html) for more information.
