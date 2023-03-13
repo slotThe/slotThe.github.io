@@ -27,6 +27,14 @@ body {
     font-size: 0.94em;
 }
 
+/* For some reason, although only `overflow-x` is set in `default.css`,
+   block code in side and marginnotes gets a vertical (!) scrollbar no
+   matter what; disable that.
+*/
+div .sidenote pre {
+    overflow-y: hidden;
+}
+
 .sidenote-number {
     counter-increment: sidenote-counter;
 }

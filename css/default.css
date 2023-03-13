@@ -66,6 +66,8 @@ pre {                   /* Block code */
     font-size: 0.85em;
     font-family: var(--monospace-fonts);
     font-variant-numeric: normal;  /* No oldstyle figures in code */
+    white-space: pre;
+    overflow-x: auto;
 }
 
 code {                  /* Inline code */
