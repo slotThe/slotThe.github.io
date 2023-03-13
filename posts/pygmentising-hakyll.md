@@ -78,7 +78,9 @@ the output.
 ``` console
 $ pygmentize -L formatter | grep html
 * html:
-    Format tokens as HTML 4 ``<span>`` tags within a ``<pre>`` tag, wrapped in a ``<div>`` tag. The ``<div>``'s CSS class can be set by the `cssclass` option. (filenames *.html, *.htm)
+    Format tokens as HTML 4 ``<span>`` tags within a ``<pre>`` tag, wrapped
+    in a ``<div>`` tag. The ``<div>``'s CSS class can be set by the `cssclass`
+    option. (filenames *.html, *.htm)
 ```
 
 We can test how this highlighting looks straight away; executing

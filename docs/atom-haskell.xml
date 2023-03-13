@@ -464,7 +464,9 @@ option specifies the formatter to use, which will decide the shape of
 the output.</p>
 <pre class="console"><code>$ pygmentize -L formatter | grep html
 * html:
-    Format tokens as HTML 4 ``&lt;span&gt;`` tags within a ``&lt;pre&gt;`` tag, wrapped in a ``&lt;div&gt;`` tag. The ``&lt;div&gt;``'s CSS class can be set by the `cssclass` option. (filenames *.html, *.htm)</code></pre>
+    Format tokens as HTML 4 ``&lt;span&gt;`` tags within a ``&lt;pre&gt;`` tag, wrapped
+    in a ``&lt;div&gt;`` tag. The ``&lt;div&gt;``'s CSS class can be set by the `cssclass`
+    option. (filenames *.html, *.htm)</code></pre>
 <p>We can test how this highlighting looks straight away; executing</p>
 <pre class="console"><code>$ echo &quot;fibs :: [Integer]\nfibs = 0 : scanl' (+) 1 fibs&quot; \
    \ | pygmentize -l haskell -f html</code></pre>

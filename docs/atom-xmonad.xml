@@ -428,7 +428,7 @@ with a universal argument:</p>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  orgSettings <span class="ot">=</span> (<span class="st">&quot;TODO&quot;</span>, <span class="st">&quot;~/todos.org&quot;</span>)</span></code></pre></div>
 <p>I’ve found <code>M-u</code> to be quite convenient for XMonad’s universal argument
 key, mirroring the <code>C-u</code> convention from Emacs. In either case, simply
-add the <code>usePrefixArgument</code> combinator somewhere to your <code>main</code> function
+add the <code>usePrefix​Argument</code> combinator somewhere to your <code>main</code> function
 and give it your preferred keybinding. For example:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> xmonad</span>

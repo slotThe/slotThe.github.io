@@ -93,7 +93,7 @@ orgKey =
 
 I've found `M-u` to be quite convenient for XMonad's universal argument
 key, mirroring the `C-u` convention from Emacs.  In either case, simply
-add the `usePrefixArgument` combinator somewhere to your `main` function
+add the `usePrefix​Argument` combinator somewhere to your `main` function
 and give it your preferred keybinding.  For example:
 
 ``` haskell

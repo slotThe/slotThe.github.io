@@ -289,18 +289,20 @@ different link style is used, to accomodate for different platforms.
          (-drop-last 1)                 ; empty line
          (--map (s-trim (s-replace "exposed-modules:" "" it)))
          (--map (cons it
-                      (format (concat hackage (s-replace "." "-" it) ".html")))))))
+                      (concat hackage (s-replace "." "-" it) ".html"))))))
 
 (defun slot/get-posts ()
   "Get all of my blog posts in the form (NAME . URL)."
   (let* ((website "https://tony-zorman.com/")
          (base-path "~/repos/slotThe.github.io/")
-         (posts (directory-files-recursively (concat base-path "posts/") ".md$")))
+         (posts (directory-files-recursively (concat base-path "posts/")
+                                             ".md$")))
     (--map (with-temp-buffer
              (insert-file-contents-literally it)
              (search-forward "title: ")
              (cons                      ; Name . URL
-              (string-replace "\"" "" (buffer-substring (point) (point-at-eol)))
+              (string-replace "\"" "" (buffer-substring (point)
+                                                        (point-at-eol)))
               (concat website (string-trim it base-path ".md") ".html")))
            posts)))
 
