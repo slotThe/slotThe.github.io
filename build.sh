@@ -22,7 +22,7 @@ staticCompileMathJax () {
             sed -e 's/\\to/\\longrightarrow/g'      | \
 
             # Generate the maths
-            ./mathjax-node-page/bin/mjpage --output SVG --width 71 --fontURL '/static/font/mathjax' | \
+            ./mathjax-node-page/bin/mjpage --output SVG --width 71 | \
 
             # WARNING: experimental CSS optimization: can't figure out
             # where MathJax generates its CSS which is compiled, but it
