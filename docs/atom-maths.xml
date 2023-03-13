@@ -181,7 +181,7 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
       
         &thinsp;·&thinsp; last modified: 2022-10-26
       
-      &thinsp;·&thinsp; <span title="3651 words">15 min read</span>
+      &thinsp;·&thinsp; <span title="3665 words">15 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>
       
@@ -310,10 +310,12 @@ category theory. Since limits and colimits are among the most important
 constructions, people naturally started to think about how one could
 express them in the enriched language—this is precisely what lead to the
 development of weighted colimits!</p>
-<p>One interesting thing I want to highlight about enriched functors is the
-induced arrow on morphisms that an <span class="math inline">\(F \colon \mathcal{C} \longrightarrow \mathcal{V}\)</span> always comes with. Namely, <span class="math inline">\(\mathcal{C}(a, b) \longrightarrow \mathcal{V}(F a, F b)\)</span>. Because <span class="math inline">\(\mathcal{V}\)</span> is
-symmetric monoidal, we can use the tensor-hom adjunction and rewrite the
-above to look more like an action:</p>
+<p>One interesting thing I want to highlight about enriched functors of the
+form <span class="math inline">\(\mathcal{C} \longrightarrow \mathcal{V}\)</span> is the induced arrow on
+morphisms that they always come with; namely, such a functor <span class="math inline">\(F\)</span> induces
+an assignment <span class="math inline">\(\mathcal{C}(a, b) \longrightarrow \mathcal{V}(F a, F b)\)</span>.
+Because <span class="math inline">\(\mathcal{V}\)</span> is symmetric monoidal, we can use the tensor–hom
+adjunction and rewrite the above to look more like an action:</p>
 <p><span class="math display">\[
   \mathcal{C}(a, b) \otimes F a \longrightarrow F b.
 \]</span></p>
@@ -325,7 +327,7 @@ other side:</p>
 <h2 id="copowers">Copowers</h2>
 <p>Before we get to the fun stuff, we have to talk about one more important
 technical detail: copowers. The basic idea is that in any ordinary
-monoidal category <span class="math inline">\((\mathcal{A}, \otimes_{\mathcal{A}}, 1_{\mathcal{A}})\)</span>, we have the tensor-hom adjunction (also called
+monoidal category <span class="math inline">\((\mathcal{A}, \otimes_{\mathcal{A}}, 1_{\mathcal{A}})\)</span>, we have the tensor–hom adjunction (also called
 <em>currying</em>) <span class="math inline">\({-} \otimes b \dashv [b, {-}]\)</span>. In particular, this means
 that</p>
 <p><span class="math display">\[
@@ -353,7 +355,7 @@ coproducts, there is a canonical copower <span class="math inline">\(\cdot \colo
 \]</span></p>
 <p>The fact that this is a copower follows from</p>
 <p><span class="math display">\[
-  \mathcal{A}(X \cdot a, b) = \mathcal{A}(\coprod_{x \in X} a, b)
+  \mathcal{A}(X \cdot a, b) = \mathcal{A}\left(\coprod_{x \in X} a, b\right)
   \cong \prod_{x \in X} \mathcal{A}(a, b) \cong \mathsf{Set}(X, \mathcal{A}(a, b)),
 \]</span></p>
 <p>for all <span class="math inline">\(b \in \mathcal{A}\)</span>. Because of the closeness to the tensor
@@ -474,8 +476,8 @@ like</p>
 <p>Because this looks like a tensor product—and it’s universal, due to it
 being a colimit—it should support some sort of currying operation: given
 an arrow <span class="math inline">\(W \otimes_{\mathcal{J}} F \longrightarrow c\)</span>, for some object
-<span class="math inline">\(c \in \mathcal{C}\)</span>, we should be able to obtain an arrow <span class="math inline">\(W \implies \mathcal{C}(F, c)\)</span>. Now’s your time to guess what exactly a weighted
-colimit will be!</p>
+<span class="math inline">\(c \in \mathcal{C}\)</span>, we should be able to obtain an arrow <span class="math inline">\(W \Longrightarrow \mathcal{C}(F, c)\)</span>. Now’s your time to guess what
+exactly a weighted colimit will be!</p>
 <h3 id="definition">Definition</h3>
 <p>Still in the non-enriched setting, let me now give you the formal
 definition of a weighted colimit. Suppose <span class="math inline">\(\mathcal{J}\)</span> to be a small
@@ -488,10 +490,11 @@ colimit of <span class="math inline">\(F\)</span></em> comprises an object <span
   [\mathcal{J}^{\mathrm{op}}, \mathsf{Set}] (W, \mathcal{A}(F, a)).
 \]</span></p>
 <p>Note that, by the <a href="https://ncatlab.org/nlab/show/Yoneda+lemma">Yoneda lemma</a>, the above isomorphism is
-uniquely determined by a natural transformation <span class="math inline">\(W \implies \mathcal{A}(F, W \otimes_{\mathcal{J}} F)\)</span>. As promised, this is
+uniquely determined by a natural transformation <span class="math inline">\(W \Longrightarrow \mathcal{A}(F, W \otimes_{\mathcal{J}} F)\)</span>. As promised, this is
 exactly the representation we arrived at above.</p>
-<p>A pair of an object <span class="math inline">\(c \in \mathcal{A}\)</span> and a natural transformation <span class="math inline">\(W \implies \mathcal{A}(F, c)\)</span> on their own; i.e., without the universal
-property, is what one would normally call a <em><span class="math inline">\(W\)</span>-weighted cocone</em>.</p>
+<p>A pair of an object <span class="math inline">\(c \in \mathcal{A}\)</span> and a natural transformation <span class="math inline">\(W \Longrightarrow \mathcal{A}(F, c)\)</span> on their own; i.e., without the
+universal property, is what one would normally call a <em><span class="math inline">\(W\)</span>-weighted
+cocone</em>.</p>
 <h3 id="enriched-weighted-colimits">Enriched weighted colimits</h3>
 <p>The enriched definition is now exactly the same! If <span class="math inline">\(\mathcal{J}\)</span> is a
 small <span class="math inline">\(\mathcal{V}\)</span>-category and we have <span class="math inline">\(\mathcal{V}\)</span>-functors <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> and <span class="math inline">\(W \colon \mathcal{J}^{\mathrm{op}} \longrightarrow \mathcal{V}\)</span>, then we can
@@ -518,16 +521,20 @@ out<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</su
 <span class="math inline">\(\mathsf{Set}\)</span>. The functor <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> we would like to look at sends <span class="math inline">\(a, b \in \mathcal{J}\)</span> to
 <span class="math inline">\(x, y \in \mathcal{C}\)</span> and <span class="math inline">\(\varphi\)</span> to <span class="math inline">\(\theta \colon x \longrightarrow y\)</span>.</p>
 <p>Again by the Yoneda lemma we have that a cocone is given by a natural
-transformation <span class="math inline">\(W \implies \mathcal{C}(F, c)\)</span>. In this restricted
-setting, an arrow <span class="math inline">\(Wa \longrightarrow \mathcal{A}(Fb, c)\)</span> just picks
-out two morphisms. Thus, the whole thing amounts to the
-commutativity of the following diagram:</p>
-<p><img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram"></p>
+transformation <span class="math inline">\(W \Longrightarrow \mathcal{C}(F, c)\)</span>. In this
+restricted setting, an arrow <span class="math inline">\(Wa \longrightarrow \mathcal{A}(Fb, c)\)</span>
+just picks out two morphisms. Thus, the whole thing amounts to the
+commutativity of the following diagram:</p></li>
+</ol>
+<p style="text-align:center;">
+<img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram">
+</p>
 <p>In more plain language, we have a commutative diagram of the form</p>
 <p><span class="math display">\[
-  (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;g\;\;} c)
-  = (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;f\;\;} c),
-\]</span></p></li>
+     (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;g\;\;} c)
+     = (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;f\;\;} c),
+   \]</span></p>
+<ol start="2" type="1">
 <li><p>A slightly more complicated example is the following. Assume again
 that <span class="math inline">\(\mathcal{J} = \{ \varphi \colon a \longrightarrow b \}\)</span> as
 above, only this time don’t work over <span class="math inline">\(\mathsf{Set}\)</span> but over
@@ -541,10 +548,15 @@ the arrow</p>
 becomes something 2-categorical. We still pick out arrows <span class="math inline">\(f\)</span> and
 <span class="math inline">\(g\)</span>, but since the category we are looking at is not the terminal
 one, but contains an isomorphism, the commutative diagram also
-becomes more complicated. Namely, we required the commutativity of</p>
-<p><img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram"></p>
-<p>Instead of the requiring <span class="math inline">\(\theta \circ g\)</span> to <em>equal</em> <span class="math inline">\(\theta \circ f\)</span>, we now only require the existence of an invertible 2-cell that
-mediates between the two.</p></li>
+becomes more complicated. Namely, we required the commutativity of</p></li>
+</ol>
+<p style="text-align:center;">
+<img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram">
+</p>
+<p>Test <em>Test</em> <em>Test</em> <strong><em>Test</em></strong>
+Instead of the requiring <span class="math inline">\(\theta \circ g\)</span> to <em>equal</em> <span class="math inline">\(\theta \circ  f\)</span>, we now only require the existence of an invertible 2-cell that
+mediates between the two.</p>
+<ol start="3" type="1">
 <li><p>A subcategory <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(\mathcal{E}\)</span> is said to be <em>dense</em> in
 <span class="math inline">\(\mathcal{E}\)</span> if we can, in some sense, approximate the objects of
 <span class="math inline">\(\mathcal{E}\)</span> well enough with only objects in <span class="math inline">\(\mathcal{D}\)</span> (think
@@ -644,7 +656,7 @@ Riehl’s <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in 
 <span class="math inline">\(\mathsf{Set}\)</span>, hence by definition there is exactly one arrow from
 any other set to it.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>By sending <span class="math inline">\(a\)</span> to <span class="math inline">\(\{0, 1\}\)</span>, <span class="math inline">\(b\)</span> to <span class="math inline">\(\{ 1 \}\)</span>, and <span class="math inline">\(\varphi\)</span> to
-<span class="math inline">\(\{0, 1\} \longrightarrow \{1\}\)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+the arrow <span class="math inline">\(\{0, 1\} \longrightarrow \{1\}\)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

@@ -140,12 +140,12 @@ constructions, people naturally started to think about how one could
 express them in the enriched language—this is precisely what lead to the
 development of weighted colimits!
 
-One interesting thing I want to highlight about enriched functors is the
-induced arrow on morphisms that an $F \colon \mathcal{C} \longrightarrow
-\mathcal{V}$ always comes with.  Namely, $\mathcal{C}(a, b)
-\longrightarrow \mathcal{V}(F a, F b)$.  Because $\mathcal{V}$ is
-symmetric monoidal, we can use the tensor-hom adjunction and rewrite the
-above to look more like an action:
+One interesting thing I want to highlight about enriched functors of the
+form $\mathcal{C} \longrightarrow \mathcal{V}$ is the induced arrow on
+morphisms that they always come with; namely, such a functor $F$ induces
+an assignment $\mathcal{C}(a, b) \longrightarrow \mathcal{V}(F a, F b)$.
+Because $\mathcal{V}$ is symmetric monoidal, we can use the tensor–hom
+adjunction and rewrite the above to look more like an action:
 
 $$
   \mathcal{C}(a, b) \otimes F a \longrightarrow F b.
@@ -164,7 +164,7 @@ $$
 Before we get to the fun stuff, we have to talk about one more important
 technical detail: copowers.  The basic idea is that in any ordinary
 monoidal category $(\mathcal{A}, \otimes_{\mathcal{A}},
-1_{\mathcal{A}})$, we have the tensor-hom adjunction (also called
+1_{\mathcal{A}})$, we have the tensor–hom adjunction (also called
 *currying*) ${-} \otimes b \dashv [b, {-}]$.  In particular, this means
 that
 
@@ -205,7 +205,7 @@ $$
 The fact that this is a copower follows from
 
 $$
-  \mathcal{A}(X \cdot a, b) = \mathcal{A}(\coprod_{x \in X} a, b)
+  \mathcal{A}(X \cdot a, b) = \mathcal{A}\left(\coprod_{x \in X} a, b\right)
   \cong \prod_{x \in X} \mathcal{A}(a, b) \cong \mathsf{Set}(X, \mathcal{A}(a, b)),
 $$
 
@@ -361,9 +361,9 @@ $$
 Because this looks like a tensor product—and it's universal, due to it
 being a colimit—it should support some sort of currying operation: given
 an arrow $W \otimes_{\mathcal{J}} F \longrightarrow c$, for some object
-$c \in \mathcal{C}$, we should be able to obtain an arrow $W \implies
-\mathcal{C}(F, c)$.  Now's your time to guess what exactly a weighted
-colimit will be!
+$c \in \mathcal{C}$, we should be able to obtain an arrow $W
+\Longrightarrow \mathcal{C}(F, c)$.  Now's your time to guess what
+exactly a weighted colimit will be!
 
 ## Definition
 
@@ -382,13 +382,14 @@ $$
 $$
 
 Note that, by the [Yoneda lemma][nlab:yoneda], the above isomorphism is
-uniquely determined by a natural transformation $W \implies
+uniquely determined by a natural transformation $W \Longrightarrow
 \mathcal{A}(F, W \otimes_{\mathcal{J}} F)$.  As promised, this is
 exactly the representation we arrived at above.
 
 A pair of an object $c \in \mathcal{A}$ and a natural transformation $W
-\implies \mathcal{A}(F, c)$ on their own; i.e., without the universal
-property, is what one would normally call a *$W$-weighted cocone*.
+\Longrightarrow \mathcal{A}(F, c)$ on their own; i.e., without the
+universal property, is what one would normally call a *$W$-weighted
+cocone*.
 
 ## Enriched weighted colimits
 
@@ -428,12 +429,16 @@ from Richard Garner during [BCQT 2022][leeds].
    \longrightarrow y$.
 
    Again by the Yoneda lemma we have that a cocone is given by a natural
-   transformation $W \implies \mathcal{C}(F, c)$.  In this restricted
-   setting, an arrow $Wa \longrightarrow \mathcal{A}(Fb, c)$ just picks
-   out two morphisms.  Thus, the whole thing amounts to the
+   transformation $W \Longrightarrow \mathcal{C}(F, c)$.  In this
+   restricted setting, an arrow $Wa \longrightarrow \mathcal{A}(Fb, c)$
+   just picks out two morphisms.  Thus, the whole thing amounts to the
    commutativity of the following diagram:
 
-     <img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram">
+<p style="text-align:center;">
+     <img class="pure-img"
+          src="../images/weighted-colimits/example-1.png"
+          alt="necessary commutative diagram">
+</p>
 
    In more plain language, we have a commutative diagram of the form
 
@@ -459,8 +464,13 @@ from Richard Garner during [BCQT 2022][leeds].
    one, but contains an isomorphism, the commutative diagram also
    becomes more complicated.  Namely, we required the commutativity of
 
-     <img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram">
+<p style="text-align:center;">
+     <img class="pure-img"
+          src="../images/weighted-colimits/example-2.png"
+          alt="necessary commutative diagram">
+</p>
 
+   Test *Test* _Test_ **_Test_**
    Instead of the requiring $\theta \circ g$ to _equal_ $\theta \circ
    f$, we now only require the existence of an invertible 2-cell that
    mediates between the two.
@@ -591,7 +601,7 @@ $\mathcal{A}$ by the assignment $W \mapsto W \otimes_{\mathcal{J}} G$
 [^1]: This is also sometimes called a *cosmos*.
 
 [^3]: By sending $a$ to $\{0, 1\}$, $b$ to $\{ 1 \}$, and $\varphi$ to
-      $\{0, 1\} \longrightarrow \{1\}$.
+      the arrow $\{0, 1\} \longrightarrow \{1\}$.
 
 [^4]: If the category $\mathcal{A}$ is locally small.  I will ignore
       those kinds of technicalities for the purposes of this post.
