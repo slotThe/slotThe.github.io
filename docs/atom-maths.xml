@@ -179,9 +179,9 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
     <p class="header">
       Posted on 2022-10-15
       
-        &thinsp;·&thinsp; last modified: 2022-10-26
+        &thinsp;·&thinsp; last modified: 2023-03-13
       
-      &thinsp;·&thinsp; <span title="3665 words">15 min read</span>
+      &thinsp;·&thinsp; <span title="3817 words">16 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>
       
@@ -217,64 +217,75 @@ comfortable with these and have a lot of time to kill, I recommend
 <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in Context</a> by Emily Riehl for the former and
 <a href="https://bookstore.ams.org/gsm-56/">A Course in Algebra</a> by Ernest Vinberg for the latter.</p>
 <p>Really, it’s good if you have heard about enriched category theory
-before, as this is where weighted colimits tend to naturally crop; also
-because I can’t possibly do the topic justice in a single blog post. I
-will still try, of course, but be warned. However, weighted colimits
-also appear in ordinary category theory, so if you don’t want to touch
-the enriched stuff just insert <span class="math inline">\(\mathsf{Set}\)</span> whenever I write
-<span class="math inline">\(\mathcal{V}\)</span> below—it will only get easier. Further, most of the <a href="#weighted-colimits">main
-part</a> of the text doesn’t use enrichment at all, so
-don’t be too alarmed.</p>
-<p>First and foremost I must note that—more-so than elsewhere—these are
-very much not my own thoughts. I’m just retelling the story in order to
+before, as this is where weighted colimits tend to naturally crop up a
+lot; also because I can’t possibly do the topic justice in a single blog
+post. I will still try, of course, but be warned. Even if you’re not
+familiar with enriched categories, however, this post might still be of
+interest. Weighted colimits do also appear in ordinary category theory,
+so feel free to substitute <span class="math inline">\(\mathsf{Set}\)</span> for <span class="math inline">\(\mathcal{V}\)</span> whenever you
+feel like it. On top of that, most of the <a href="#weighted-colimits">main
+part</a> of the text doesn’t use enrichment at all.</p>
+<p>Before we start I must note that—more-so than elsewhere—these are very
+much not my own thoughts. I’m just retelling the story in order to
 understand it better myself. Sources and resources for everything are
-linked <a href="#resources">at the end</a>. The key insights come from the
-mentioned blog posts by <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Todd Trimble</a> and <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">John
-Baez</a>, as well as the accompanying (resulting) <a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab
+linked <a href="#resources">at the end</a>. The key insights come from the already
+mentioned blog posts by <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007723">Trimble</a> and <a href="https://golem.ph.utexas.edu/category/2007/02/day_on_rcfts.html#c007688">Baez</a>,
+as well as the accompanying (resulting) <a href="https://ncatlab.org/nlab/show/weighted+colimit">nLab
 article</a>.</p>
 <h2 id="enriched-category-theory">Enriched category theory</h2>
-<p>As I said, we first turn our attention to <em>enriched</em> category theory.
-Before diving into the gory details, I will first discuss things a bit
-more intuitively. In short, one studies not ordinary categories—whose
-hom<em>sets</em> are always sets—but so-called <span class="math inline">\(\mathcal{V}\)</span>-categories, whose
-hom-<em>objects</em> are objects in some “environmental” category
-<span class="math inline">\(\mathcal{V}\)</span>. This category is what replaces <span class="math inline">\(\mathsf{Set}\)</span>, so it
-will usually be assumed to have some <em>very</em> nice properties. For the
-purposes of this blog post, I will assume that <span class="math inline">\((\mathcal{V}, \otimes, 1)\)</span> is a (small) complete and cocomplete closed symmetric monoidal
-category.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If you don’t know what some of these words mean, you can
-read that as “it’s an environment in which we can think about category
-theory in an effective way”.</p>
+<p>Before diving into the gory details, enriched category theory is perhaps
+best explained a bit more intuitively at first. In short, instead
+ordinary categories—whose hom-<em>sets</em> are always sets—one studies
+so-called <span class="math inline">\(\mathcal{V}\)</span>-categories, whose hom-<em>objects</em> are objects in
+some “environmental” category <span class="math inline">\(\mathcal{V}\)</span>. This category is what
+replaces <span class="math inline">\(\mathsf{Set}\)</span>, so it will usually be assumed to have some very
+nice properties. For the purposes of this blog post, I will assume that
+<span class="math inline">\((\mathcal{V}, \otimes, 1)\)</span> is a (small) complete and cocomplete closed
+symmetric monoidal category.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If you don’t know what some of these
+words mean, you can read that as “It’s an environment with enough
+structure so that a large chunk of ordinary category theory makes sense
+internal to it.”</p>
 <p>In addition, I would also like to fix a <span class="math inline">\(\mathcal{V}\)</span>-category
 <span class="math inline">\(\mathcal{C}\)</span> for the rest of this blog post. For the moment, you can
 think of this like an ordinary category such that for any two objects
 <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> in <span class="math inline">\(\mathcal{C}\)</span>, we have that <span class="math inline">\(\mathcal{C}(a, b) ≔ \mathrm{Hom}_{\mathcal{C}}(a, b)\)</span> is an object in <span class="math inline">\(\mathcal{V}\)</span>.
 Naturally, all the usual axioms of a category—like associativity and
-unitality of morphisms—ought to hold in this new setting. As you can
-imagine, this makes certain things more complicated. The fact that
-<span class="math inline">\(\mathcal{C}(a,b)\)</span> is an object in <span class="math inline">\(\mathcal{V}\)</span> means that it is now a
-black box—we can’t peek into it anymore! Writing <span class="math inline">\(f \in \mathcal{C}(a,b)\)</span> is no longer legal, so we somehow have to make do with
-not talking about individual morphisms. A little bit more care has to
-be taken for the precise definition of an enriched category to make
-sense. First, however, I will show you a few examples.</p>
-<p>Thankfully—lest the world explodes—categories enriched in <span class="math inline">\(\mathsf{Set}\)</span>
-are exactly ordinary categories. Likewise, a lot of categories that
-people are interested in and you may be familiar with arise in this way:
-2-categories (in the strict sense) are categories enriched over
-<span class="math inline">\(\mathsf{Cat}\)</span>, preadditive categories are those enriched over
-<span class="math inline">\(\mathsf{Ab}\)</span>, and <span class="math inline">\(k\)</span>-linear categories are ones enriched over
-<span class="math inline">\(\mathsf{Vect}_k\)</span>. Further, rings can also be seen as categories.
-Namely, they have just a single object <span class="math inline">\(\star\)</span> and
-<span class="math inline">\(\mathrm{Hom}(\star,\star)\)</span> forms an abelian group—more on that later.</p>
-<p>With these examples in mind, let us explore the technical definition of
-a category enriched over <span class="math inline">\(\mathcal{V}\)</span>. Formally, such a <span class="math inline">\(\mathcal{C}\)</span>
-consists of:</p>
+unitality of morphisms—ought to hold in this new setting; however,
+expressing these laws is a little bit more involved now. The fact that
+<span class="math inline">\(\mathcal{C}(a,b)\)</span> is an object in <span class="math inline">\(\mathcal{V}\)</span> means that it’s a
+“black box”—we can’t peek into it anymore! Writing <span class="math inline">\(f \in \mathcal{C}(a,b)\)</span> is no longer legal, so we somehow have to make do with
+not talking about individual morphisms. As such, a little bit more care
+has to be taken for the precise definition of an enriched category to
+make sense.</p>
+<p>Before we get to that, however, a few examples should do wonders for
+seeing just how wide-spread the concept really is in mathematics.
+Thankfully—lest the world explodes—categories enriched in <span class="math inline">\(\mathsf{Set}\)</span>
+are exactly ordinary categories. An equally familiar example should be
+<span class="math inline">\(\mathsf{vect}_k\)</span>: the category of finite-dimensional vector spaces over
+a field <span class="math inline">\(k\)</span>. It is easy to verify that the linear maps between two
+vector spaces are again a vector space, and hence <span class="math inline">\(\mathsf{vect}_k\)</span> is,
+much like the category of sets, <em>enriched over itself</em>. So whenever you
+do linear algebra, you’re in the setting of enriched category theory
+already! Categories enriched over <span class="math inline">\(\mathsf{vect}_k\)</span>, usually called
+<span class="math inline">\(k\)</span>-linear categories, are plentiful “in the wild”; for example,
+representation theorists might know Tannakian categories, or the
+Temperley–Lieb category.</p>
+<p>Other examples of enriched categories include 2-categories<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> as those
+enriched over <span class="math inline">\(\mathsf{Cat}\)</span>, and preadditive categories, which are
+enriched over <span class="math inline">\(\mathsf{Ab}\)</span>. Last, but certainly not least, rings can
+also be seen as categories; namely, they have just a single object
+<span class="math inline">\(\star\)</span> and <span class="math inline">\(\mathrm{Hom}(\star,\star)\)</span> forms an abelian group—stay
+tuned for more on this.</p>
+<p>With all of these examples in mind, let us explore the technical
+definition of a category enriched over <span class="math inline">\(\mathcal{V}\)</span>. Formally, our
+fixed <span class="math inline">\(\mathcal{C}\)</span> consists of:</p>
 <ul>
 <li>A collection of objects <span class="math inline">\(\mathrm{ob}\, \mathcal{C}\)</span>.</li>
 <li>For <span class="math inline">\(x, y \in \mathcal{C}\)</span>, a hom-object
 <span class="math inline">\(\mathcal{C}(x, y) \in \mathcal{V}\)</span>.</li>
 <li>For <span class="math inline">\(x, y, z \in \mathcal{C}\)</span>, a composition map in <span class="math inline">\(\mathcal{V}\)</span>:
 <span class="math display">\[
-  \circ_{x, y, z} \colon \mathcal{C}(y, z) \times \mathcal{C}(x, y)
+  \circ_{x, y, z} \colon \mathcal{C}(y, z) \otimes \mathcal{C}(x, y)
                   \longrightarrow \mathcal{C}(x, z).
 \]</span></li>
 <li>For <span class="math inline">\(x \in \mathcal{C}\)</span> an identities map
@@ -294,61 +305,62 @@ multi-object monoidal categories.</p>
 <h3 id="functors-and-natural-transformations">Functors and natural transformations</h3>
 <p>We furthermore need analogues for functors and natural
 transformations—they now also come with a <span class="math inline">\(\mathcal{V}\)</span>- prefix. The
-functor laws get a bit more complicated, as we can’t simply say that
-<span class="math inline">\(F(f \circ g) = Ff \circ Fg\)</span>, for some arrows <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>, and need to
-draw commutative diagrams instead (remember that we can’t talk about
-individual arrows anymore). However, most of the intuition you already
-have about functors and natural transformations should carry over just
-fine. I will leave the technical definitions of enriched functors and
-natural transformations as exercises to the reader—they are relatively
+functor laws get a bit more complicated, as we need to draw commutative
+diagrams and can’t simply express this property in an equation like <span class="math inline">\(F(f \circ g) = Ff \circ Fg\)</span> anymore—remember that we can’t talk about
+individual arrows. However, most of the intuition one already has about
+functors and natural transformations should carry over just fine. I
+will leave the technical definitions of enriched functors and natural
+transformations as exercises to the reader; they are relatively
 straightforward to write down and not all that important for what
 follows.</p>
-<p>The upshot of all of this is that, in order to do enriched category
-theory, we not only need analogues for functors and natural
-transformations, but also for all the other basic notions of ordinary
-category theory. Since limits and colimits are among the most important
-constructions, people naturally started to think about how one could
-express them in the enriched language—this is precisely what lead to the
-development of weighted colimits!</p>
+<p>Thinking further, the upshot one will arrive at is that, in order to do
+enriched category theory, we not only need analogues for functors and
+natural transformations, but also for all the other basic notions of
+ordinary category theory. Since limits and colimits are among the most
+important constructions, people naturally started to think about how one
+could express them in the enriched language—this is precisely what lead
+to the development of weighted colimits!</p>
 <p>One interesting thing I want to highlight about enriched functors of the
 form <span class="math inline">\(\mathcal{C} \longrightarrow \mathcal{V}\)</span> is the induced arrow on
 morphisms that they always come with; namely, such a functor <span class="math inline">\(F\)</span> induces
 an assignment <span class="math inline">\(\mathcal{C}(a, b) \longrightarrow \mathcal{V}(F a, F b)\)</span>.
-Because <span class="math inline">\(\mathcal{V}\)</span> is symmetric monoidal, we can use the tensor–hom
+Because <span class="math inline">\(\mathcal{V}\)</span> is symmetric monoidal, we can use its tensor–hom
 adjunction and rewrite the above to look more like an action:</p>
 <p><span class="math display">\[
   \mathcal{C}(a, b) \otimes F a \longrightarrow F b.
 \]</span></p>
-<p>Likewise, a <span class="math inline">\(\mathcal{V}\)</span>-functor <span class="math inline">\(F \colon \mathcal{C}^{\mathrm{op}} \longrightarrow \mathcal{V}\)</span> comes equipped with an “action” from the
-other side:</p>
+<p>Likewise, a <span class="math inline">\(\mathcal{V}\)</span>-functor <span class="math inline">\(F \colon \mathcal{C}^{\mathrm{op}} \longrightarrow \mathcal{V}\)</span> is equipped with an action from the other
+side:</p>
 <p><span class="math display">\[
   F b \otimes \mathcal{C}(a, b) \longrightarrow F a.
 \]</span></p>
+<p>This already frames functors as little more than generalised modules,
+and we will explore this connection in more detail later on.</p>
 <h2 id="copowers">Copowers</h2>
-<p>Before we get to the fun stuff, we have to talk about one more important
-technical detail: copowers. The basic idea is that in any ordinary
-monoidal category <span class="math inline">\((\mathcal{A}, \otimes_{\mathcal{A}}, 1_{\mathcal{A}})\)</span>, we have the tensor–hom adjunction (also called
-<em>currying</em>) <span class="math inline">\({-} \otimes b \dashv [b, {-}]\)</span>. In particular, this means
-that</p>
+<p>One more important technical detail has to be covered before we get to
+the fun stuff: copowers. The basic idea is that in any
+ordinary—non-enriched—closed monoidal category <span class="math inline">\((\mathcal{A}, \otimes_{\mathcal{A}}, 1_{\mathcal{A}})\)</span>, we have the tensor–hom
+adjunction (also called <em>currying</em>) <span class="math inline">\({-} \otimes b \,\dashv\, [b, {-}]\)</span>.
+More explicitly, this means that there is a natural isomorphism</p>
 <p><span class="math display">\[
   \mathcal{A}(a \otimes_{\mathcal{A}} b, c) \cong \mathcal{A}(a, [b, c]),
   \qquad \text{for } a, b, c \in \mathcal{A}.
 \]</span></p>
-<p>If we’re in an enriched setting, we want to somehow “switch out” the
-tensor product of the monoidal category with some action, say <span class="math inline">\(\cdot \colon \mathcal{C} \times \mathcal{V} \longrightarrow \mathcal{C}\)</span>,
-while retaining this nice property. As such, the <em>copower</em> of <span class="math inline">\(c \in \mathcal{C}\)</span> <em>by a</em> <span class="math inline">\(v \in \mathcal{V}\)</span> is an object <span class="math inline">\(c \cdot v \in \mathcal{C}\)</span>, such that for all <span class="math inline">\(b \in \mathcal{C}\)</span>, there is a natural
-isomorphism</p>
+<p>If we’re in an enriched setting, we want to somehow replace the tensor
+product of the monoidal category with some action, say <span class="math inline">\(\cdot \colon \mathcal{C} \times \mathcal{V} \longrightarrow \mathcal{C}\)</span>, while
+retaining an analogue of the above isomorphism. As such, the <em>copower</em>
+of <span class="math inline">\(c \in \mathcal{C}\)</span> <em>by</em> <span class="math inline">\(v \in \mathcal{V}\)</span> is an object <span class="math inline">\(c \cdot v \in \mathcal{C}\)</span>, such that for all <span class="math inline">\(b \in \mathcal{C}\)</span>, there is a
+natural isomorphism</p>
 <p><span class="math display">\[
   \mathcal{C}(c \cdot v, b) \cong \mathcal{V}(v, \mathcal{C}(c, b)).
 \]</span></p>
 <p>Above I have slightly abused notation; <span class="math inline">\(\mathcal{V}({-}, {-})\)</span> now
 denotes the <em>internal</em> hom of <span class="math inline">\(\mathcal{V}\)</span>, instead of the external
-one. If <span class="math inline">\(\mathcal{V}\)</span> is clear from the context, one also often writes
-<span class="math inline">\([{-},{-}]\)</span> here. Also do remember that <span class="math inline">\(\mathcal{C}(a,b)\)</span> is an object
-in <span class="math inline">\(\mathcal{V}\)</span> now!</p>
+one.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> If <span class="math inline">\(\mathcal{V}\)</span> is clear from the context, one also often writes
+<span class="math inline">\([{-},{-}]\)</span>.</p>
 <p>The best thing about copowers is their existence when it comes to
-<span class="math inline">\(\mathsf{Set}\)</span> and ordinary categories. If <span class="math inline">\(\mathcal{A}\)</span> has all
-coproducts, there is a canonical copower <span class="math inline">\(\cdot \colon \mathsf{Set} \times \mathcal{A} \longrightarrow \mathcal{A}\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> For all <span class="math inline">\(X \in \mathsf{Set}\)</span> and <span class="math inline">\(a \in \mathcal{A}\)</span>, it is given by</p>
+<span class="math inline">\(\mathsf{Set}\)</span> and ordinary categories. If <span class="math inline">\(\mathcal{A}\)</span> has
+coproducts, there is a canonical copower <span class="math inline">\(\cdot \colon \mathsf{Set} \times \mathcal{A} \longrightarrow \mathcal{A}\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> For all <span class="math inline">\(X \in \mathsf{Set}\)</span> and <span class="math inline">\(a \in \mathcal{A}\)</span>, it is given by</p>
 <p><span class="math display">\[
   X \cdot a ≔     \coprod_{x \in X} 1_{\mathcal{A}} \otimes_{\mathcal{A}} a
             \cong \coprod_{x \in X} a.
@@ -358,7 +370,7 @@ coproducts, there is a canonical copower <span class="math inline">\(\cdot \colo
   \mathcal{A}(X \cdot a, b) = \mathcal{A}\left(\coprod_{x \in X} a, b\right)
   \cong \prod_{x \in X} \mathcal{A}(a, b) \cong \mathsf{Set}(X, \mathcal{A}(a, b)),
 \]</span></p>
-<p>for all <span class="math inline">\(b \in \mathcal{A}\)</span>. Because of the closeness to the tensor
+<p>for all <span class="math inline">\(b \in \mathcal{A}\)</span>. Because of their closeness to the tensor
 product, people sometimes call copowers “tensors” and write them with
 the same symbol as they write the tensor product.</p>
 <h2 id="weighted-colimits">Weighted colimits</h2>
@@ -385,20 +397,21 @@ as</p>
                                                             \tag{1}
 \]</span></p>
 <p>Categorifying this notion, the ring <span class="math inline">\(R\)</span> can be seen as a one-object
-category enriched over <span class="math inline">\(\mathsf{Ab}\)</span> with object <span class="math inline">\(1 \in R\)</span>. The
-multiplication is recovered as function composition in <span class="math inline">\(R(1, 1)\)</span> and the
+category enriched over <span class="math inline">\(\mathsf{Ab}\)</span> with object <span class="math inline">\(1\)</span>. The
+multiplication is recovered as function composition in <span class="math inline">\(R(1, 1)\)</span>, and
 addition is given by the abelian structure. A right <span class="math inline">\(R\)</span>-module <span class="math inline">\(A\)</span> is
-then an enriched functor <span class="math inline">\(A \colon R^{\mathrm{op}} \longrightarrow \mathsf{Ab}\)</span> and a left R-module is an enriched functor <span class="math inline">\(B \colon R \longrightarrow \mathsf{Ab}\)</span>. Inserting the definition discussed above,
-we have that <span class="math inline">\(A\)</span> consists of a single object <span class="math inline">\(A1\)</span> and a single map <span class="math inline">\(A1 \otimes R(1, 1) \longrightarrow A1\)</span>. Likewise, we obtain <span class="math inline">\(B1\)</span> and
-<span class="math inline">\(R(1,1) \otimes B1 \longrightarrow B1\)</span> in <span class="math inline">\(\mathcal{V}\)</span>. Thus, we have
-induced arrows</p>
+then an enriched functor <span class="math inline">\(A \colon R^{\mathrm{op}} \longrightarrow \mathsf{Ab}\)</span> and similarly a left R-module is an enriched functor <span class="math inline">\(B \colon R \longrightarrow \mathsf{Ab}\)</span>. Inserting the definition
+discussed above, we have that <span class="math inline">\(A\)</span> consists of a single object <span class="math inline">\(A1\)</span> and a
+single arrow <span class="math inline">\(A1 \otimes R(1, 1) \longrightarrow A1\)</span>. Likewise, we
+obtain <span class="math inline">\(B1\)</span> and <span class="math inline">\(R(1,1) \otimes B1 \longrightarrow B1\)</span> in <span class="math inline">\(\mathcal{V}\)</span>.
+Thus, we have induced maps</p>
 <p><span class="math display">\[
     A1 \otimes R(1,1) \otimes B1 \rightrightarrows A1 \otimes B1.
 \]</span></p>
 <p>Let us forget about enrichment for a while and just study ordinary
 categories now. The second observation we need is the well-known fact
 that any colimit can be represented as a coequaliser. Suppose
-<span class="math inline">\(\mathcal{D}\)</span> to be a (cocomplete) category . Given a functor <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{D}\)</span> we can express its colimit as</p>
+<span class="math inline">\(\mathcal{D}\)</span> to be a cocomplete category . Given a functor <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{D}\)</span> we can express its colimit as</p>
 <p><span class="math display">\[
   \coprod_{a, b \in \mathcal{J}}
             \coprod_{f \in \mathcal{J}(a, b)} F a
@@ -415,17 +428,15 @@ as <span class="math inline">\(\mathcal{J}(a,b)\)</span> is a set in this case. 
   \longrightarrow \mathrm{colim}_\mathcal{J} F.
                                                                 \tag{2}
 \]</span></p>
-<p>What’s left is to define the two parallel arrows.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>What’s left is to define the two parallel arrows.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <ol type="1">
 <li><p>One arrow is induced by the “projection” <span class="math inline">\(\pi_2 \colon \mathcal{J}(a, b) \times F a \longrightarrow F a\)</span>. Note that
-<span class="math inline">\(\mathcal{J}(a, b) \times F a\)</span> is really a copower and so the
-existence of such an arrow is not immediately clear. We have a
-functor <span class="math inline">\({-} \times F j \colon \mathsf{Set} \longrightarrow \mathcal{C}\)</span> and so <span class="math inline">\(\pi_2\)</span> is actually the application of the
-unique map<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
-<span class="math inline">\(! \colon \mathcal{J}(a, b) \longrightarrow \{\star\}\)</span>
-to that functor; i.e.,</p>
+<span class="math inline">\(\mathcal{J}(a, b) \times F a\)</span> is really a copower, so the
+existence of such an arrow is not immediately clear. Starting with
+the unique map <span class="math inline">\(! \colon \mathcal{J}(a, b) \longrightarrow \{\star\}\)</span> to the terminal object, we apply it to the functor <span class="math inline">\({-} \times F j \colon \mathsf{Set} \longrightarrow \mathcal{C}\)</span>, in
+order to obtain</p>
 <p><span class="math display">\[
-! \times F a \colon \mathcal{J}(a,b) \times F a \longrightarrow \{\star\} \times F a \cong F a.
+\pi_2 \!≔\; ! \times F a \colon \mathcal{J}(a,b) \times F a \longrightarrow \{\star\} \times F a \cong F a.
 \]</span></p></li>
 <li><p>The other arrow is induced by a collection of actions of
 <span class="math inline">\(\mathcal{J}\)</span> on <span class="math inline">\(F\)</span>, indexed by arrows <span class="math inline">\(f \colon a \longrightarrow b\)</span> in <span class="math inline">\(\mathcal{J}\)</span>; i.e.,</p>
@@ -435,9 +446,9 @@ to that functor; i.e.,</p>
 &amp;= \langle Ff \colon Fa \longrightarrow F b \rangle_{f \in \mathcal{J}(a,b)}.
 \end{align*}\]</span></p></li>
 </ol>
-<p>So that’s the story with expressing colimits as coequalisers. What’s
-next is that we need to completely reframe this in terms of actions.
-For the second arrow we are already done: <span class="math inline">\(F\)</span> can be seen as a left
+<p>So that’s the story with expressing colimits as coequalisers. We now
+need to completely reframe this in terms of actions. For the second
+arrow we are already done: <span class="math inline">\(F\)</span> can be seen as a left
 <span class="math inline">\(\mathcal{J}\)</span>-module.</p>
 <p>Using the symmetry of the Cartesian product <span class="math inline">\(\times\)</span> of sets, the arrow
 <span class="math inline">\(\mathcal{J}(a, b) \longrightarrow \{\star\}\)</span> can be reinterpreted as
@@ -450,7 +461,7 @@ that sends every object to the one-element set <span class="math inline">\(\{\st
   \cong (\mathcal{J}(a,b) \longrightarrow \{\star\}).
 \]</span></p>
 <p>Putting these two observations together, we really have two induced
-arrows with type signature</p>
+arrows, each with type signature</p>
 <p><span class="math display">\[
   \mathbb{T} b \times \mathcal{J}(a, b) \times F a \longrightarrow \mathbb{T} a \times F a.
 \]</span></p>
@@ -462,111 +473,107 @@ arrows with type signature</p>
     \cong             \coprod_{a \in \mathcal{J}} F a.
 \]</span></p>
 <p>This is exactly the way the tensor product of bimodules is defined in
-Equation <span class="math inline">\((1)\)</span>, hence it is tempting to write the resulting coequaliser as
-<span class="math inline">\(1 \otimes_{\mathcal{J}} F\)</span>. As such, a colimit of a functor <span class="math inline">\(F\)</span> over
-<span class="math inline">\(\mathcal{J}\)</span> can be seen as a tensor product of functors with the
-terminal functor. Now, the terminal functor is not very interesting;
-what if we replace it with something more complicated? Well, that’s
-exactly the point where weighted colimits come into play! Using a
-<em>weight</em> <span class="math inline">\(W\)</span> instead of <span class="math inline">\(\mathbb{T}\)</span>, we would end up with something
-like</p>
+Equation <span class="math inline">\((1)\)</span>, hence it is tempting to write the resulting coequaliser
+as <span class="math inline">\(\mathbb{T} \otimes_{\mathcal{J}} F\)</span>. As such, a colimit of a
+functor <span class="math inline">\(F\)</span> over <span class="math inline">\(\mathcal{J}\)</span> can be seen as a tensor product of
+functors with the terminal functor. Now, the terminal functor is not
+very interesting—what if we replace it with something more complicated?
+Well, that’s exactly the point where weighted colimits come into play!
+Using a <em>weight</em> <span class="math inline">\(W\)</span> instead of <span class="math inline">\(\mathbb{T}\)</span>, we would end up with
+something like</p>
 <p><span class="math display">\[
   \coprod_{a, b \in \mathcal{J}} W b \times \mathcal{J}(a, b) \times F a \rightrightarrows \coprod_{a \in \mathcal{J}} W a \times F a \longrightarrow W \otimes_{\mathcal{J}} F.
 \]</span></p>
 <p>Because this looks like a tensor product—and it’s universal, due to it
-being a colimit—it should support some sort of currying operation: given
-an arrow <span class="math inline">\(W \otimes_{\mathcal{J}} F \longrightarrow c\)</span>, for some object
-<span class="math inline">\(c \in \mathcal{C}\)</span>, we should be able to obtain an arrow <span class="math inline">\(W \Longrightarrow \mathcal{C}(F, c)\)</span>. Now’s your time to guess what
-exactly a weighted colimit will be!</p>
+being a colimit—it should also support some form of currying: given an
+arrow <span class="math inline">\(W \otimes_{\mathcal{J}} F \longrightarrow c\)</span>, for an object <span class="math inline">\(c \in \mathcal{C}\)</span>, we should be able to obtain a map <span class="math inline">\(W \Longrightarrow \mathcal{C}(F, c)\)</span>. Now’s your time to guess what exactly a weighted
+colimit will be!</p>
 <h3 id="definition">Definition</h3>
 <p>Still in the non-enriched setting, let me now give you the formal
 definition of a weighted colimit. Suppose <span class="math inline">\(\mathcal{J}\)</span> to be a small
 category. Let <span class="math inline">\(W \colon \mathcal{J}^{\mathrm{op}} \longrightarrow \mathsf{Set}\)</span> be a presheaf—the <em>weight</em>—and suppose we have a functor
 <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{A}\)</span>. The <em><span class="math inline">\(W\)</span>-weighted
-colimit of <span class="math inline">\(F\)</span></em> comprises an object <span class="math inline">\(W \otimes_{\mathcal{J}} F \in \mathcal{A}\)</span>, and a natural (in <span class="math inline">\(a \in \mathcal{A}\)</span>) isomorphism</p>
+colimit of <span class="math inline">\(F\)</span></em> comprises an object <span class="math inline">\(W \otimes_{\mathcal{J}} F \in \mathcal{A}\)</span>, equipped with a natural (in <span class="math inline">\(a \in \mathcal{A}\)</span>)
+isomorphism</p>
 <p><span class="math display">\[
   \mathcal{A}(W \otimes_{\mathcal{J}} F, a)
   \cong
   [\mathcal{J}^{\mathrm{op}}, \mathsf{Set}] (W, \mathcal{A}(F, a)).
 \]</span></p>
 <p>Note that, by the <a href="https://ncatlab.org/nlab/show/Yoneda+lemma">Yoneda lemma</a>, the above isomorphism is
-uniquely determined by a natural transformation <span class="math inline">\(W \Longrightarrow \mathcal{A}(F, W \otimes_{\mathcal{J}} F)\)</span>. As promised, this is
-exactly the representation we arrived at above.</p>
+uniquely determined by a natural transformation <span class="math inline">\(W \Longrightarrow \mathcal{A}(F, W \otimes_{\mathcal{J}} F)\)</span>, induced by the identity on
+<span class="math inline">\(W \otimes_{\mathcal{J}} F\)</span>. As promised, this is exactly the
+representation we arrived at above.</p>
 <p>A pair of an object <span class="math inline">\(c \in \mathcal{A}\)</span> and a natural transformation <span class="math inline">\(W \Longrightarrow \mathcal{A}(F, c)\)</span> on their own; i.e., without the
 universal property, is what one would normally call a <em><span class="math inline">\(W\)</span>-weighted
 cocone</em>.</p>
 <h3 id="enriched-weighted-colimits">Enriched weighted colimits</h3>
 <p>The enriched definition is now exactly the same! If <span class="math inline">\(\mathcal{J}\)</span> is a
 small <span class="math inline">\(\mathcal{V}\)</span>-category and we have <span class="math inline">\(\mathcal{V}\)</span>-functors <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> and <span class="math inline">\(W \colon \mathcal{J}^{\mathrm{op}} \longrightarrow \mathcal{V}\)</span>, then we can
-define the <em><span class="math inline">\(W\)</span>-weighted colimit of <span class="math inline">\(F\)</span></em> as an object <span class="math inline">\(W \otimes_{\mathcal{J}} F \in \mathcal{C}\)</span>, and a <span class="math inline">\(\mathcal{V}\)</span>-natural
-(in <span class="math inline">\(c \in \mathcal{C}\)</span>) isomorphism</p>
+define the <em><span class="math inline">\(W\)</span>-weighted colimit of <span class="math inline">\(F\)</span></em> as an object <span class="math inline">\(W \otimes_{\mathcal{J}} F \in \mathcal{C}\)</span>, equipped with a
+<span class="math inline">\(\mathcal{V}\)</span>-natural (in <span class="math inline">\(c \in \mathcal{C}\)</span>) isomorphism</p>
 <p><span class="math display">\[
   \mathcal{C}(W \otimes_{\mathcal{J}} F, c)
   \cong
   [\mathcal{J}^{\mathrm{op}}, \mathcal{V}] (W {-}, \mathcal{C}(F {-}, c)).
 \]</span></p>
-<p>This is the power of this definition—it extends in a straightforward way
-to the enriched setting. This may now be used to great effect: in case
-you know what this means, among other things weighted colimits can be
-used to define the right notion of enriched coend.</p>
+<p>This is the power of the formalism we developed—the definition extends
+in a straightforward way to the enriched setting. This may now be used
+to great effect: among other things weighted colimits can be used to
+define the right notion of enriched coend.</p>
 <h3 id="examples">Examples</h3>
 <p>It’s probably about time for some examples. For the first two, let us
-focus on cocones only; this is perhaps a little easier to understand
-than also throwing the universal property in there. I learned these
-from Richard Garner during <a href="https://conferences.leeds.ac.uk/bcqt2022/">BCQT 2022</a>.</p>
+focus on cocones only; not thinking about the universal property at
+first is perhaps a little easier to understand—at least it was for me.
+I learned these from Richard Garner during <a href="https://conferences.leeds.ac.uk/bcqt2022/">BCQT 2022</a>.</p>
 <ol type="1">
-<li><p>Suppose our diagram category is the category with two objects and one
-non-trivial morphism; i.e., <span class="math inline">\(\mathcal{J} ≔ \{ \varphi \colon a \longrightarrow b \}\)</span>. Further, assume that the weight <span class="math inline">\(W\)</span> picks
-out<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> the unique arrow <span class="math inline">\(\{ 0, 1 \} \longrightarrow \{ 1 \}\)</span> in
-<span class="math inline">\(\mathsf{Set}\)</span>. The functor <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> we would like to look at sends <span class="math inline">\(a, b \in \mathcal{J}\)</span> to
-<span class="math inline">\(x, y \in \mathcal{C}\)</span> and <span class="math inline">\(\varphi\)</span> to <span class="math inline">\(\theta \colon x \longrightarrow y\)</span>.</p>
+<li><p>Let our diagram category have two objects and one non-trivial
+morphism; i.e., <span class="math inline">\(\mathcal{J} ≔ \{ \varphi \colon a \longrightarrow b \}\)</span>. Further, assume that the weight <span class="math inline">\(W\)</span> picks out<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> the unique
+arrow <span class="math inline">\(\{ 0, 1 \} \longrightarrow \{ 1 \}\)</span> in <span class="math inline">\(\mathsf{Set}\)</span>.
+Suppose that the functor <span class="math inline">\(F \colon \mathcal{J} \longrightarrow \mathcal{C}\)</span> sends <span class="math inline">\(a, b \in \mathcal{J}\)</span> to <span class="math inline">\(x, y \in \mathcal{C}\)</span>
+and <span class="math inline">\(\varphi\)</span> to <span class="math inline">\(\theta \colon x \longrightarrow y\)</span>.</p>
 <p>Again by the Yoneda lemma we have that a cocone is given by a natural
 transformation <span class="math inline">\(W \Longrightarrow \mathcal{C}(F, c)\)</span>. In this
 restricted setting, an arrow <span class="math inline">\(Wa \longrightarrow \mathcal{A}(Fb, c)\)</span>
 just picks out two morphisms. Thus, the whole thing amounts to the
-commutativity of the following diagram:</p></li>
-</ol>
-<p style="text-align:center;">
-<img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram">
-</p>
-<p>In more plain language, we have a commutative diagram of the form</p>
+commutativity of the following diagram:</p>
+<div style="text-align:center;">
+<p><img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram"></p>
+</div>
+<p>In more plain language, the following equation must hold:</p>
 <p><span class="math display">\[
-     (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;g\;\;} c)
-     = (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;f\;\;} c),
-   \]</span></p>
-<ol start="2" type="1">
+  (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;g\;\;} c)
+  = (x \xrightarrow{\;\;\theta\;\;} y \xrightarrow{\;\;f\;\;} c).
+\]</span></p></li>
 <li><p>A slightly more complicated example is the following. Assume again
 that <span class="math inline">\(\mathcal{J} = \{ \varphi \colon a \longrightarrow b \}\)</span> as
-above, only this time don’t work over <span class="math inline">\(\mathsf{Set}\)</span> but over
-<span class="math inline">\(\mathsf{Cat}\)</span>. This means that the weight <span class="math inline">\(W\)</span> is now a functor from
-<span class="math inline">\(\mathcal{A}^{\mathrm{op}}\)</span> to <span class="math inline">\(\mathsf{Cat}\)</span>. Suppose it picks out
-the arrow</p>
+above, only this time our choice of enrichment is not <span class="math inline">\(\mathsf{Set}\)</span>,
+but <span class="math inline">\(\mathsf{Cat}\)</span>. This means that the weight <span class="math inline">\(W\)</span> is now a functor
+from <span class="math inline">\(\mathcal{A}^{\mathrm{op}}\)</span> to <span class="math inline">\(\mathsf{Cat}\)</span>. Suppose it picks
+out the arrow</p>
 <p><span class="math display">\[
 \{ 0 \;\; 1 \} \hookrightarrow \{ 0 \cong 1 \},
 \]</span></p>
-<p>where these are understood to be categories. Now, a weighted cocone
-becomes something 2-categorical. We still pick out arrows <span class="math inline">\(f\)</span> and
-<span class="math inline">\(g\)</span>, but since the category we are looking at is not the terminal
-one, but contains an isomorphism, the commutative diagram also
-becomes more complicated. Namely, we required the commutativity of</p></li>
-</ol>
-<p style="text-align:center;">
-<img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram">
-</p>
-<p>Test <em>Test</em> <em>Test</em> <strong><em>Test</em></strong>
-Instead of the requiring <span class="math inline">\(\theta \circ g\)</span> to <em>equal</em> <span class="math inline">\(\theta \circ  f\)</span>, we now only require the existence of an invertible 2-cell that
-mediates between the two.</p>
-<ol start="3" type="1">
+<p>where the source an target are understood to be categories. In this
+setting, a weighted cocone becomes something 2-categorical. We still
+pick out arrows <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>, but since the category we are looking at
+contains a non-trivial isomorphism, the commutative diagram also
+becomes more complicated. Namely, we required the commutativity of</p>
+<div style="text-align:center;">
+<p><img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram"></p>
+</div>
+<p>Instead of the requiring <span class="math inline">\(\theta \circ g\)</span> to <em>equal</em> <span class="math inline">\(\theta \circ f\)</span>, we now only require the existence of an invertible 2-cell that
+mediates between the two.</p></li>
 <li><p>A subcategory <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(\mathcal{E}\)</span> is said to be <em>dense</em> in
 <span class="math inline">\(\mathcal{E}\)</span> if we can, in some sense, approximate the objects of
-<span class="math inline">\(\mathcal{E}\)</span> well enough with only objects in <span class="math inline">\(\mathcal{D}\)</span> (think
+<span class="math inline">\(\mathcal{E}\)</span> well enough with objects in <span class="math inline">\(\mathcal{D}\)</span><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> (think
 of the density of <span class="math inline">\(\mathbb{Q}\)</span> inside <span class="math inline">\(\mathbb{R}\)</span>). Dense
 categories are nice because they often tell us a lot about their
 super categories and are sometimes easier to reason about. For
 example, the category of finite-dimensional (left-)comodules of any
-(possibly infinite-dimensional) Hopf algebra is dense inside the
-category of all comodules, which makes them much easier to work with
-than modules.</p>
+(possibly infinite-dimen­sio­nal) Hopf algebra is dense
+inside the category of all comodules, which makes them much easier to
+work with than modules.</p>
 <p>Formally, <span class="math inline">\(\mathcal{D}\)</span> is dense in <span class="math inline">\(\mathcal{E}\)</span> if the restricted
 Yoneda embedding along the inclusion functor <span class="math inline">\(\iota \colon \mathcal{D} \hookrightarrow \mathcal{E}\)</span></p>
 <p><span class="math display">\[
@@ -580,11 +587,11 @@ colimit specialised to our situation looks like</p>
 <p><span class="math display">\[
  \mathcal{E}(e, a) \cong [\mathcal{D}^{\mathrm{op}}, \mathsf{Set}] (\mathcal{E}(\iota, e), \mathcal{E}(\iota, a)),
 \]</span></p>
-<p>for all <span class="math inline">\(a \in \mathcal{E}\)</span>. This is exactly what it means for the
+<p>for all <span class="math inline">\(a \in \mathcal{E}\)</span>, which is exactly what it means for the
 above arrow to be fully faithful.</p></li>
 </ol>
-<p><em>Exercise</em>: Try to find a weight such that one recovers a normal,
-unweighted, cocone.</p>
+<p><em>Exercise</em>: Try to find a weight <span class="math inline">\(W\)</span> such that a <span class="math inline">\(W\)</span>-weighted cocone
+recovers the normal, unweighted, notion.</p>
 <p><em>Exercise</em>: As you can imagine 1. and 2. can be used to produce all
 kinds of relations between <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>. As such, prove the following
 statements:</p>
@@ -607,8 +614,8 @@ about and play around with, and I would invite you to do just that.</p>
 <p>Lastly, the category of weights <span class="math inline">\([\mathcal{J}^{\mathrm{op}}, \mathcal{V}]\)</span> is actually very special: it is the free cocompletion of
 <span class="math inline">\(\mathcal{J}\)</span>. Every functor <span class="math inline">\(G \colon \mathcal{J} \longrightarrow \mathcal{A}\)</span> extends uniquely (up to unique isomorphism) to a
 cocontinuous functor <span class="math inline">\([\mathcal{J}^{\mathrm{op}}, \mathcal{V}]\)</span> to
-<span class="math inline">\(\mathcal{A}\)</span> by the assignment <span class="math inline">\(W \mapsto W \otimes_{\mathcal{J}} G\)</span>
-(note the tensor product of functors!).</p>
+<span class="math inline">\(\mathcal{A}\)</span> by the assignment <span class="math inline">\(W \mapsto W \otimes_{\mathcal{J}} G\)</span>;
+note the tensor product of functors!.</p>
 <h2 id="resources">(Re)sources</h2>
 <ul>
 <li><p>Monoidal Category Theory:</p>
@@ -647,16 +654,23 @@ No. 10 (2005) pp. 1-136 (<a href="http://www.tac.mta.ca/tac/reprints/articles/1
 <hr />
 <ol>
 <li id="fn1"><p>This is also sometimes called a <em>cosmos</em>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>If the category <span class="math inline">\(\mathcal{A}\)</span> is locally small. I will ignore
-those kinds of technicalities for the purposes of this post.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>I mostly follow Trimble and the nLab here. A more explicit
+<li id="fn2"><p>In the strict sense.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Do remember that <span class="math inline">\(\mathcal{C}(a,b)\)</span> is an object in <span class="math inline">\(\mathcal{V}\)</span> now!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>If the category <span class="math inline">\(\mathcal{A}\)</span> is locally small. I will ignore
+those kinds of technicalities for the purposes of this post.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>I still mostly follow Trimble and the nLab here. A more explicit
 description—in the case of limits—is given, for example, in
-Riehl’s <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in Context</a>, Theorem 3.2.13.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>The one-element set <span class="math inline">\(\{\star\}\)</span> is the terminal object in
-<span class="math inline">\(\mathsf{Set}\)</span>, hence by definition there is exactly one arrow from
-any other set to it.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>By sending <span class="math inline">\(a\)</span> to <span class="math inline">\(\{0, 1\}\)</span>, <span class="math inline">\(b\)</span> to <span class="math inline">\(\{ 1 \}\)</span>, and <span class="math inline">\(\varphi\)</span> to
-the arrow <span class="math inline">\(\{0, 1\} \longrightarrow \{1\}\)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+Riehl’s <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in Context</a>, Theorem 3.2.13.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>By sending <span class="math inline">\(a\)</span> to <span class="math inline">\(\{0, 1\}\)</span>, <span class="math inline">\(b\)</span> to <span class="math inline">\(\{1\}\)</span>, and <span class="math inline">\(\varphi\)</span> to the
+arrow <span class="math inline">\(\{0, 1\} \longrightarrow \{1\}\)</span>, which exists because
+<span class="math inline">\(\{1\}\)</span> is the terminal set.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>{-} These things are actually all other the place: for example,
+the Yoneda embedding itself is dense if the category is
+essentially small. Further, if you like higher category
+theory, you will appreciate that the simplex category being
+dense in <span class="math inline">\(\mathsf{Cat}\)</span> immediately follows from the fact
+that the nerve functor from <span class="math inline">\(\mathsf{Cat}\)</span> to <span class="math inline">\(\mathsf{sSet}\)</span>
+is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
