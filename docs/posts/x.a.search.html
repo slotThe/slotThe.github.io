@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>XMonad Module Showcase: X.A.Search · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#functionality">Functionality</a>
+<ul>
+<li><a href="#adding-new-engines">Adding new engines</a></li>
+<li><a href="#further-tweaks">Further tweaks</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>XMonad Module Showcase: X.A.Search</h1>
+           
+
+          <article>
+    <p class="header">
+      Posted on 2023-03-19
+      
+      &thinsp;·&thinsp; <span title="1292 words">6 min read</span>
+      
+        &thinsp;·&nbsp; <a title="All pages tagged 'haskell'." href="../tags/haskell.html">haskell</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html">xmonad</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#functionality">Functionality</a>
+<ul>
+<li><a href="#adding-new-engines">Adding new engines</a></li>
+<li><a href="#further-tweaks">Further tweaks</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+
+<div>
+  I’d like to highlight another <span class="small-caps">xm</span>onad module that has become quite
+essential to me: <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Search.html">XMonad.Actions.Search</a>. Its premise is simple: you
+enter some text into the <span class="small-caps">xm</span>onad prompt, and it queries a search engine
+of your choice with this input—straightforward, and yet very effective.
+<!--more-->
+<p></p>
+In fact, this sounds so simple that one might immediately ask: what’s
+the point? The problem with regular searching is that it’s <em>slow</em>; who
+has the time to open their browser, navigate to the relevant website,
+and only then enter their search? In today’s world, where many things
+now have their own dedicated search engines,<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Just to name a few, I regularly look things up on
+<a href="https://zbmath.org/">zbmath</a>,
+<a href="https://hoogle.haskell.org/">Hoogle</a>,
+<a href="https://clojuredocs.org/">ClojureDocs</a>,
+<a href="https://en.wikipedia.org/">Wikipedia</a>,
+<a href="https://www.openstreetmap.org/">Open­Street­Map</a>,
+<a href="https://searx.github.io/searx/">searX</a>,
+<a href="https://arxiv.org/">arXiv</a>,
+<a href="https://noogle.dev/">noogle</a>,
+forges like <a href="https://github.com/">Git­Hub</a>,
+… the list goes on.</div>
+ searching efficiently
+becomes increasingly important. Plus, the lower barrier to entry means
+that looking something up—always a good idea, with all of humanities
+collected knowledge at one’s fingertips—may well become instinctive,
+instead of feeling like a chore.
+<h2 id="functionality">Functionality<a href="#functionality" class="floatright sec-link">¶</a></h2>
+<p></p>
+The basic workflow suggested by the module simply consists of picking a
+search engine, and binding it to a key via <code>promptSearch</code>—that’s it.
+Additionally, there is also <code>selectSearch</code> to look up the current
+(primary) selection. For example,<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Using <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.</div>
+ suppose we had bound
+<div class="highlight"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
+<span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span><span class="w">              </span><span class="c1">-- def is an optional prompt config</span>
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">promptSearch</span><span class="w"> </span><span class="n">def</span><span class="w"> </span><span class="n">wikipedia</span><span class="p">)</span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-u M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">selectSearch</span><span class="w">     </span><span class="n">wikipedia</span><span class="p">)</span>
+<span class="w">  </span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+This would enable us to search through Wikipedia normally by pressing
+<code>M-s</code>, and directly look up the currently selected text with <code>M-u M-s</code>.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">As an aside, this is an ideal use case for <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>.
+With that module, one could define an equivalent keybinding along the lines of
+<div class="highlight"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
+<span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">      </span><span class="kt">Raw</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">selectSearch</span><span class="w">     </span><span class="n">wikipedia</span>
+<span class="w">      </span><span class="kr">_</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">promptSearch</span><span class="w"> </span><span class="n">def</span><span class="w"> </span><span class="n">wikipedia</span><span class="p">)</span>
+<span class="w">  </span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+This is especially useful when multiple search engines are involved;
+see <a href="#further-tweaks">below</a> or check out <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">my configuration</a> for a complete example.</div>
+ The whole things looks like this:
+<p>
+<video width="100%" controls>
+<source src="../images/search-showcase/search-simple.webm" type="video/webm">
+Searching for “Alexander Grothendieck” once manually,
+and then highlighting that phrase and using the selection search.
+</video>
+</p>
+<p></p>
+Further, there is a third workflow that is quite convenient: by default,
+pressing <code>C-y</code> in the prompt inserts the current selection, ready for
+further editing.
+<p>
+<video width="100%" controls>
+<source src="../images/search-showcase/search-simple-alt.webm" type="video/webm">
+Showcasing the functionality described in the last paragraph.
+</video>
+</p>
+<h3 id="adding-new-engines">Adding new engines<a href="#adding-new-engines" class="floatright sec-link">¶</a></h3>
+<p></p>
+There are quite a few search engines built-in: at the time of writing,
+X.A.Search sports about 40 different ones. Thankfully, adding new
+engines is easy, even in one’s own configuration; e.g., to look up
+something on <a href="https://hoogle.haskell.org/">Hoogle</a>, one would simply
+define
+<div class="highlight"><pre><span></span><span class="nf">hoogle</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
+<span class="nf">hoogle</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">searchEngine</span><span class="w"> </span><span class="s">&quot;hoogle&quot;</span><span class="w"> </span><span class="s">&quot;https://hoogle.haskell.org/?hoogle=&quot;</span>
+</pre></div>
+
+<p></p>
+This means that even if the module does not have a search engine you
+want, it’s trivial to define it yourself—and don’t forget to upstream it
+afterwards!
+<p></p>
+There also is the <code>searchEngineF</code> function, which instead of just a
+string takes a function to also modify that string.<!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">For the following code examples, you may need to place extra
+pragmas along the lines of
+<div class="highlight"><pre><span></span><span class="cm">{-# LANGUAGE BlockArguments #-}</span>
+<span class="cm">{-# LANGUAGE LambdaCase     #-}</span>
+<span class="cm">{-# LANGUAGE MultiWayIf     #-}</span>
+</pre></div>
+
+<p></p>
+at the top of your <span class="small-caps">xm</span>onad configuration file.</div>
+ With this, one
+can build more complicated search engines; for example, the following
+constitutes a very basic URL entry function, which may also work as a
+sort of lightweight bookmarking system:
+<div class="highlight"><pre><span></span><span class="nf">url</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
+<span class="nf">url</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">searchEngineF</span><span class="w"> </span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="nf">\</span><span class="n">s</span><span class="w"> </span><span class="ow">-&gt;</span>
+<span class="w">  </span><span class="kr">let</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;https://&quot;</span>
+<span class="w">   </span><span class="kr">in</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="p">`</span><span class="n">isPrefixOf</span><span class="p">`</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
+</pre></div>
+
+<p></p>
+The whole <span class="small-caps">api</span> is quite flexible. In my personal configuration I have
+defined a <code>git</code> search engine to quickly jump to certain projects on
+several different forges:
+<div class="highlight"><pre><span></span><span class="nf">git</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
+<span class="nf">git</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">searchEngineF</span><span class="w"> </span><span class="s">&quot;repo&quot;</span><span class="w"> </span><span class="nf">\</span><span class="n">s</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">if</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;change-env&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;irc-bot&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://gitlab.com/slotThe/&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;kbd-mode&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;kmonad&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://github.com/kmonad/&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s">&quot;x11&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x11-xft&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xmonad&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xmonad-contrib&quot;</span>
+<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xmonad-docs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;xmonad-web&quot;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://github.com/xmonad/&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s">&quot;vc-use-package&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;arXiv-citation&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hmenu&quot;</span>
+<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;slotThe.github.io&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;query-replace-many&quot;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://github.com/slotThe/&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;slotThe&quot;</span><span class="w">    </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://github.com/slotThe/&quot;</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;void-linux&quot;</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://github.com/void-linux/void-packages&quot;</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;xmobar&quot;</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://codeberg.org/xmobar/xmobar&quot;</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">otherwise</span><span class="w">         </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+</pre></div>
+
+<p></p>
+It works as expected—so much so that I can enable the prompt’s
+auto-complete feature, which automatically completes a query if there is
+only a single candidate left.<!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">In this case here, that single candidate will be from the relevant
+prompt history.</div>
+<p>
+<video width="100%" controls>
+<source src="../images/search-showcase/search-git.webm" type="video/webm">
+<img class="“pure-img”" Showcasing the git search engine defined above < video>
+</p>
+<h3 id="further-tweaks">Further tweaks<a href="#further-tweaks" class="floatright sec-link">¶</a></h3>
+<p></p>
+As I said, the module is pretty flexible with how exactly one can use
+it, and so here are a few more personal tweaks that I figure might also
+be of interest to others. First, my setup is integrated with
+<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>—I use the prefix argument to decide whether I
+want “normal” searches, or ones using the primary selection.
+<div class="highlight"><pre><span></span><span class="c1">-- | Search commands; integration with X.A.Prefix.</span>
+<span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Keybindings</span>
+<span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">submap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">searchEngineMap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">      </span><span class="kt">Raw</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="c1">-- normal searches</span>
+<span class="w">        </span><span class="n">selectSearchBrowser</span>
+<span class="w">      </span><span class="kr">_</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="c1">-- use the primary selection</span>
+<span class="w">        </span><span class="nf">\</span><span class="n">br</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">promptSearchBrowser'</span><span class="w"> </span><span class="p">(</span><span class="n">decidePrompt</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="n">br</span><span class="w"> </span><span class="n">se</span><span class="p">)</span>
+<span class="w">  </span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+This is nice because <code>searchKeys</code> is now the only two place where this
+distinction has to be made; others functions, like <code>search​Engine​Map</code>, do
+not need to differentiate between a select search and a prompt search.
+What I do separately match on is (i) the type of browser that I want to
+open the searches in, and (ii) the type of prompt I would like to use.
+This is very dependent on the engine itself; some, like <code>git</code> as defined
+above, greatly benefit from keeping a history, while in others this is
+more of a hinderance than anything else. The browser situation is
+similar. An except of the totality of <code>searchKeys</code> looks like the
+following.<!--
+--><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">Just for completeness, an in order to improve
+copy-pasteability, the definition of <code>basicSubmapFromList</code> used a
+lot in this piece of code is:
+<div class="highlight"><pre><span></span><span class="nf">basicSubmapFromList</span>
+<span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">Ord</span><span class="w"> </span><span class="n">key</span>
+<span class="w">  </span><span class="ow">=&gt;</span><span class="w"> </span><span class="p">[(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="p">)]</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Map</span><span class="w"> </span><span class="p">(</span><span class="kt">KeyMask</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="n">action</span>
+<span class="nf">basicSubmapFromList</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">fromList</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="nf">\</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+This is just creates a basic (i.e. there is no additional ‘KeyMask’ to consider)
+submap from a list of <code>(key, action)</code> pairs.</div>
+<div class="highlight"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Keybindings</span>
+<span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">submap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">searchEngineMap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">      </span><span class="kt">Raw</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">selectSearchBrowser</span>
+<span class="w">      </span><span class="kr">_</span><span class="w">     </span><span class="ow">-&gt;</span><span class="w"> </span><span class="nf">\</span><span class="n">br</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">promptSearchBrowser'</span><span class="w"> </span><span class="p">(</span><span class="n">decidePrompt</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="n">br</span><span class="w"> </span><span class="n">se</span><span class="p">)</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="c1">-- | Match on the prompt type; this needs an orphan 'Eq' instance</span>
+<span class="w">  </span><span class="c1">-- for 'SearchEngine'.  @prompt@ is my prompt config.</span>
+<span class="w">  </span><span class="n">decidePrompt</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">XPConfig</span>
+<span class="w">  </span><span class="n">decidePrompt</span><span class="w"> </span><span class="n">se</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="n">arXiv</span><span class="p">,</span><span class="w"> </span><span class="n">wikipedia</span><span class="p">,</span><span class="w"> </span><span class="n">github</span><span class="p">]</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">promptNoHist</span><span class="c1">-- no history</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="n">git</span><span class="p">]</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">prompt</span><span class="p">{</span><span class="w"> </span><span class="n">autoComplete</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="p">`</span><span class="n">ms</span><span class="p">`)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">otherwise</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">prompt</span>
+
+<span class="w">  </span><span class="c1">-- | Open searches, possibly in a new window.</span>
+<span class="w">  </span><span class="n">searchEngineMap</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">Browser</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">SearchEngine</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)</span>
+<span class="w">                  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Map</span><span class="w"> </span><span class="p">(</span><span class="kt">KeyMask</span><span class="p">,</span><span class="w"> </span><span class="kt">KeySym</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)</span>
+<span class="w">  </span><span class="n">searchEngineMap</span><span class="w"> </span><span class="n">searchIn</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">basicSubmapFromList</span>
+<span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="n">xK_a</span><span class="p">,</span><span class="w"> </span><span class="n">sw</span><span class="w"> </span><span class="n">arXiv</span><span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">xK_w</span><span class="p">,</span><span class="w"> </span><span class="n">nw</span><span class="w"> </span><span class="n">wikipedia</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">xK_g</span><span class="p">,</span><span class="w"> </span><span class="n">submap</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">basicSubmapFromList</span><span class="w">  </span><span class="c1">-- submaps in submaps</span>
+<span class="w">              </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="n">xK_g</span><span class="p">,</span><span class="w"> </span><span class="n">sw'</span><span class="w"> </span><span class="n">git</span><span class="p">)</span>
+<span class="w">              </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">xK_h</span><span class="p">,</span><span class="w"> </span><span class="n">sw'</span><span class="w"> </span><span class="n">github</span><span class="p">)</span>
+<span class="w">              </span><span class="p">])</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">   </span><span class="kr">where</span>
+<span class="w">    </span><span class="c1">-- | Same window, new window.</span>
+<span class="w">    </span><span class="n">sw</span><span class="p">,</span><span class="w"> </span><span class="n">sw'</span><span class="p">,</span><span class="w"> </span><span class="n">nw</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<span class="w">    </span><span class="n">sw</span><span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">searchIn</span><span class="w"> </span><span class="n">browser</span>
+<span class="w">    </span><span class="n">nw</span><span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">searchIn</span><span class="w"> </span><span class="s">&quot;browser-new-window.sh&quot;</span>
+<span class="w">    </span><span class="n">sw'</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">searchIn</span><span class="w"> </span><span class="n">altBrowser</span>
+
+<span class="kr">instance</span><span class="w"> </span><span class="kt">Eq</span><span class="w"> </span><span class="cm">{- ORPHAN -}</span><span class="w"> </span><span class="kt">SearchEngine</span><span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="p">(</span><span class="o">==</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">SearchEngine</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Bool</span>
+<span class="w">  </span><span class="p">(</span><span class="kt">SearchEngine</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="kt">SearchEngine</span><span class="w"> </span><span class="n">n'</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n'</span>
+</pre></div>
+
+<p></p>
+For my full configuration, see <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">here</a>.
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatright sec-link">¶</a></h2>
+<p></p>
+As always, even the simplest topic—that of a search—leaves a lot more
+room for personalisation than one would initially think. Also as
+always, <span class="small-caps">xm</span>onad delivers on the “there is already a module for that”
+front.
+<p></p>
+For me personally, X.A.Search has really alleviated this perceived
+slowness in searching, especially when using many different engines
+simultaneously. So much so, in fact, that I no longer have a problem
+looking up information from multiple sources mid (text) conversation.
+This not only helps me, but I reckon a few users of the <code>#xmonad</code> <a href="https://web.libera.chat/#xmonad">IRC
+Channel</a> are quite glad about this as well!
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
