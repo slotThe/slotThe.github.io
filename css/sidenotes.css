@@ -31,6 +31,7 @@ body {
    block code in side and marginnotes gets a vertical (!) scrollbar no
    matter what; disable that.
 */
+div .marginnote pre,
 div .sidenote pre {
     overflow-y: hidden;
 }
