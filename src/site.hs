@@ -342,7 +342,7 @@ myPandocCompiler =
   smallCaps :: Pandoc -> Pandoc
   smallCaps = walk \case
     Str t -> RawInline "html"
-           $ replaceXMonad
+           $ replaceSpecial
            $ foldl' (replace T.toLower)
                     t
                     ["HTML", "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST", "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS", "PSSL", "TODO", "EDSL", "DSL", "API", "BCQT"]
@@ -354,14 +354,16 @@ myPandocCompiler =
     sc :: Text -> Text
     sc s = "<span class=\"small-caps\">" <> s <> "</span>"
 
-    -- Big hack, in order to replace "XMonad." and "XMonad," with its
-    -- small-caps variants, but leave things like
+    -- Big hack, in order to replace e.g. "XMonad." and "XMonad," with
+    -- its small-caps variants, but leave things like
     -- "XMonad.Prompt.OrgMode" alone.
-    replaceXMonad :: Text -> Text
-    replaceXMonad s =
-      if "XMonad" `T.isPrefixOf` s && T.length s < 9
-      then sc "xm" <> T.drop 2 s
-      else s
+    replaceSpecial :: Text -> Text
+    replaceSpecial = go "KMonad" . go "XMonad"
+     where
+      go :: Text -> Text -> Text
+      go pfx s = if pfx `T.isPrefixOf` s && T.length s < 9
+                 then sc (T.toLower (T.take 2 pfx)) <> T.drop 2 s
+                 else s
 
 -----------------------------------------------------------------------
 -- Redirects

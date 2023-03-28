@@ -44,12 +44,12 @@ configuration can be found
  </div>
 </p>
 
-## Kmonad
+## KMonad
 
-I'm a contributor to kmonad, a keyboard remapping daemon in the spirit
+I'm a contributor to [KMonad], a keyboard remapping daemon in the spirit
 of [QMK].  However, instead of being firmware for a specific keyboard,
-it is implemented in software and thus works for any keyboard—even your
-laptop keyboard!
+it is implemented in software and thus works anywhere—even on your
+laptop!
 
 <p style="text-align:center;">
  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=kmonad&repo=kmonad&show_owner=true" width="50%"
@@ -121,7 +121,7 @@ I've written too many Emacs packages—and none of them popular, at that!
 
 + [kbd-mode]
 
-  I wrote the Emacs integration for kmonad's configuration files—that
+  I wrote the Emacs integration for KMonad's configuration files—that
   is, kbd-mode is a major more for `.kbd` files.
 
 + [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
@@ -162,7 +162,7 @@ I've written too many Emacs packages—and none of them popular, at that!
 [html-parse-util]: https://github.com/slotThe/html-parse-util
 [html-parse]: https://hackage.haskell.org/package/html-parse
 [kbd-mode]: https://github.com/kmonad/kbd-mode
-[kmonad]: https://github.com/kmonad/kmonad
+[KMonad]: https://github.com/kmonad/kmonad
 [latex-change-env]: https://gitlab.com/slotThe/change-env
 [optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
 [optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
