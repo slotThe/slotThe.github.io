@@ -10,7 +10,8 @@ body {
 }
 
 .sidenote,
-.marginnote {
+.marginnote,
+.marginnote-left {
     float: right;
     clear: right;
     margin-right: -56%;
@@ -22,6 +23,15 @@ body {
     vertical-align: baseline;
     position: relative;
     text-align: left;
+}
+
+.marginnote-left {
+    float: left;
+    clear: left;
+    margin-left: -47%;
+    width: 40%;
+    position: relative;
+    text-align: right;
 }
 
 .sidenote code {
@@ -116,7 +126,8 @@ label.margin-toggle:not(.sidenote-number) {
     }
 
     .sidenote,
-    .marginnote {
+    .marginnote,
+    .marginnote-left {
         display: none;
     }
 
@@ -128,7 +139,8 @@ label.margin-toggle:not(.sidenote-number) {
     }
 
     .margin-toggle:checked + .sidenote,
-    .margin-toggle:checked + .marginnote {
+    .margin-toggle:checked + .marginnote,
+    .margin-toggle:checked + .marginnote-left {
         display: block;
         float: left;
         left: 1rem;
@@ -137,6 +149,7 @@ label.margin-toggle:not(.sidenote-number) {
         margin: 1rem 2.5%;
         vertical-align: baseline;
         position: relative;
+        text-align: left;
     }
 
     label {
