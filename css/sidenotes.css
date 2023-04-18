@@ -28,10 +28,14 @@ body {
 .marginnote-left {
     float: left;
     clear: left;
-    margin-left: -47%;
-    width: 40%;
+    margin-left: -32%;
+    width: 25%;
     position: relative;
     text-align: right;
+}
+@media (max-width: 1365px) or ((min-width: 1367px) and (max-width: 1592px)) {
+    margin-left: -47%;
+    width: 40%;
 }
 
 .sidenote code {
