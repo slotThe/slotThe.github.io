@@ -344,7 +344,7 @@ myPandocCompiler =
            $ replaceSpecial
            $ foldl' (replace T.toLower)
                     t
-                    ["HTML", "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST", "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS", "PSSL", "TODO", "EDSL", "DSL", "API", "BCQT"]
+                    ["HTML", "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST", "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS", "PSSL", "TODO", "EDSL", "DSL", "API", "BCQT", "LOWER", "RAISE", "ADJUST", "TL;DR", "BOX", "PBT", "XDA", "GTK"]
     inline -> inline
    where
     replace :: (Text -> Text) -> Text -> Text -> Text

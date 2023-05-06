@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Tony Zorman · Blog</title>
+    <link href="https://tony-zorman.com/atom-hardware.xml" rel="self" />
+    <link href="https://tony-zorman.com" />
+    <id>https://tony-zorman.com/atom-hardware.xml</id>
+    <author>
+        <name>Tony Zorman</name>
+        <email>tonyzorman@mailbox.org</email>
+    </author>
+    <updated>2023-05-06T00:00:00Z</updated>
+    <entry>
+    <title>Keyboardio Atreus Review</title>
+    <link href="https://tony-zorman.com/posts/atreus-review.html" />
+    <id>https://tony-zorman.com/posts/atreus-review.html</id>
+    <published>2023-05-06T00:00:00Z</published>
+    <updated>2023-05-06T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      Posted on 2023-05-06
+      
+      &thinsp;·&thinsp; <span title="4115 words">17 min read</span>
+      
+        &thinsp;·&nbsp; <a title="All pages tagged 'hardware'." href="/tags/hardware.html">hardware</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>And now for something completely different—hardware.
+Even worse: consumerism!
+I bought an <a href="https://shop.keyboard.io/products/keyboardio-atreus">Atreus</a> keyboard from Keyboardio about three weeks ago,
+and can’t resist writing at least a few sentences about it.</p>
+<p>TL;DR: Get it.
+For bonus points, build it yourself!</p>
+<!--more-->
+<h2 id="overview">Overview</h2>
+<p>So what even is the Atreus?
+I will keep this rather short,
+as I don’t imagine many people not knowing at least a vague answer to that question will have clicked on this random blog and want to read about it.
+To start, they say a picture is worth a thousand words:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><img class="pure-img" src="../images/atreus-review/atreus.jpg" alt="My Atreus with blank keycaps"></p>
+<p>If you’re interested in buzzwords:
+this is a 40%, vertically staggered, split-ish mechanical keyboard
+with Kailh tactile silent BOX switches.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+In particular,
+the Keyboardio version builds upon an <a href="https://atreus.technomancy.us/">earlier design</a> by Phil Hagelberg.
+There are some distinctions, like two additional thumb keys in the centre,
+but most of what I say here will also apply to that version of the keyboard.</p>
+<p>The 40% form factor—just 44 keys—is obviously quite something,
+and in fact one of the main reasons that I bought this keyboard in the first place.
+Basically, it’s small enough so that one can take it everywhere,
+while also not being <em>too</em> small.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+The relying on thumb buttons,
+which means that one is not forced to use the weakest finger for holding down modifiers anymore,
+also fits nicely with my particular sensibilities.
+As does—and these things go hand in hand, I suppose—not having a comically large space bar;
+something that too many people still put up with!</p>
+<p>The physical keys themselves are PBT with an XDA profile.
+While they are more than adequate,
+sculpted keycaps would have been nice,
+if only to go with the ergo theme.
+The one key I do have with a label (the <code>Any</code> key) is laser engraved,
+and feels quite good as well.
+I went with blank keycaps mostly because I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my keyboard layout,
+and I can’t stand TODOs on the wrong fingers!
+Plus,
+not being sure how the key layout was actually going to look like in the end,
+this seemed like the safer choice, aesthetically.</p>
+<p>Being quite inexperienced with these sorts of things,
+I don’t have too many things to say about the switches:
+they’re honestly pretty much exactly what I wanted.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+Comparing them with the two other switches that I have access to,
+Cherry MX Browns and Hako Trues,
+they are much lighter than the latter—which is a big plus for me—and
+a bit more weighty than the former.
+Overall, the Kailh switches feel more comfortable than either of the other two.
+Plus, the “silent” aspect really delivers:
+perfect for the office,
+where I now bring this keyboard every day,
+as well as coffee shops or trains.</p>
+<h2 id="physical-layout">Physical layout</h2>
+<p>The layout—both in terms of physical placement of the keys, as well as the key mappings—obviously plays a tremendous role
+in making a keyboard that small both comfortable, and actually usable.</p>
+<p>While perhaps not quite being on the level of a truly split keyboard,
+like the <a href="https://ergodox-ez.com/">ergodox</a>,
+the ergonomic aspects are entirely adequate,
+and there obviously had to have been some sort of trade-off in favour of portability.
+That being said, some keys are hard to hit.
+For me, this is thankfully limited to the two upper thumb keys,
+as well as the penultimate keys from the left and right in the bottom row:</p>
+<pre><code>     .----.----.----.----.----.         .----.----.----.----.----.
+     |    |    |    |    |    |         |    |    |    |    |    |
+     .----.----.----.----.----.         .----.----.----.----.----.
+     |    |    |    |    |    |         |    |    |    |    |    |
+     .----.----.----.----.----.----.----.----.----.----.----.----.
+     |    |    |    |    |    | XX | XX |    |    |    |    |    |
+     .----.----.----.----.----.----.----.----.----.----.----.----.
+     |    | XX |    |    |    |    |    |    |    |    | XX |    |
+     .----.----.----.----.----.----.----.----.----.----.----.----.</code></pre>
+<p>Hitting these involves big stretches of the
+thumb—or alternatively the ring finger, in the latter case—and
+neither movement is particularly comfortable.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>Also, while the thumb buttons are convenient,
+I do sort of wish for one or two additional pinky keys on both sides,
+perhaps on the second or third row:</p>
+<pre><code>     .----.----.----.----.----.         .----.----.----.----.----.
+     |    |    |    |    |    |         |    |    |    |    |    |
+.----.----.----.----.----.----.         .----.----.----.----.----.----.
+| XX |    |    |    |    |    |         |    |    |    |    |    | XX |
+.----.----.----.----.----.----.----.----.----.----.----.----.----.----.
+| XX |    |    |    |    |    |    |    |    |    |    |    |    | XX |
+.----.----.----.----.----.----.----.----.----.----.----.----.----.----.
+     |    |    |    |    |    |    |    |    |    |    |    |    |
+     .----.----.----.----.----.----.----.----.----.----.----.----.</code></pre>
+<p>One could then even get rid of the problematic keys altogether,
+though they could still be useful for e.g. mouse-assist layers.</p>
+<p>Actually getting used to the physical layout of the board took a while.
+Typing itself was not the issue,
+and I was back to a comfortable pace after just two or three hours of practice.
+Incorporating numbers,
+special keys,
+and getting muscle memory for all of the modifiers and key chords<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> however… took some time.
+The better part of these last weeks, in fact,
+and even now I still occasionally notice some hesitation and awkwardness in my movements.
+I suppose it did not help that I kept fiddling with the layout;
+perhaps people who have less specific requirements and just use the Atreus as-is would need less time.
+Then again, creating a custom keyboard layout for this thing is at least half of the fun!</p>
+<p>Speaking of which, let’s talk about that.</p>
+<h2 id="keyboard-layout">Keyboard layout</h2>
+<p><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>The Atreus comes loaded with the <a href="https://github.com/keyboardio/Kaleidoscope">Kaleidoscope</a> firmware,
+and Keyboardio are very keen to point to their GUI configurator <a href="https://github.com/keyboardio/Chrysalis">Chrysalis</a> for interfacing with the keyboard.
+Personally, I was planning on using features—like tap dancing—that Chrysalis does not support,
+and I didn’t see much of a point in using Kaleidoscope just to be different,
+so I immediately flashed my Atreus with <a href="https://qmk.fm/">QMK</a>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+The end result turned out to be quite nice,
+and for my typical workflow I now indeed often have the feeling of being <em>faster</em> than I was before.
+Typing <code>M-(</code> has become such a joy!</p>
+<p>While one could stop here and just paste the layout,
+I think the considerations that went into it during its initial
+creation—and while fiddling with it, of course—are quite important,
+given the unusual form-factor.
+Plus, there aren’t very many detailed resources on actually using a 40% keyboard that I could find,
+so perhaps this will also turn out to be useful to people not using an Atreus.
+For the impatient: you can find my finished layout <a href="https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe">here</a>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<h3 id="key-chord-considerations">Key chord considerations</h3>
+<p>As I extensively use both Emacs and XMonad,
+there are quite a few modifier combinations to consider.
+Obviously, some of these will be more difficult to press than others,
+especially since I don’t want to go overboard with layers,
+and I would like as many of my key chords to commute as possible,
+but more on that later.
+For example, a (non-exhaustive) list of combinations<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
+would be <code>C-S</code>, <code>C-M1</code>, <code>M4-M1</code>, <code>S-M4</code>, and <code>C-M4</code>;
+this already suggests some vague ordering of keys to different hands.
+Before buying the Atreus, I keylogged myself for a little bit on my internal laptop keyboard using <a href="https://github.com/anko/xkbcat">xkbcat</a>.
+A cursory analysis reveals the following:<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<pre class="console"><code>$ sort ~/.keylog.txt | uniq -c | sort -r | head -n15
+  80590 Control_L
+  58476 n
+  49657 space
+  47140 e
+  46213 Down
+  38062 s
+  36874 Shift_L
+  32862 t
+  31168 Up
+  30814 BackSpace
+  30522 p
+  28555 a
+  26445 x
+  25004 Alt_L
+  24831 Super_L</code></pre>
+<p>This is not 100% accurate,
+as xkbcat uses X11 input events in order to find out which keys were pressed,
+and so my layer key—with which I also press keys like <code>Down</code>—does not show up at all.
+I did, however, go through the trouble of remapping every right variant of a key (like <code>Shift_R</code>) to their respective left versions,
+so that there was no need for further <code>sed</code>ing.
+Based on the prevalence of <code>Up</code> and <code>Down</code>,
+it’s probably fair to say that the layer key and Control are my two most pressed keys.</p>
+<p>The data suggests that Control and the layer 1 key should probably be on different hands.
+Shift was used quite a lot,
+but since the Atreus does not have a number row
+it will become a bit less essential,
+with a lot of special characters moving to a different layer instead.
+Super and Alt are probably not too critical,
+and can be distributed according to how easy it is to press the most important key chords.
+For example,
+<code>C-M1</code> is used very often inside of Emacs,
+and hence Alt should be on the opposite hand of Control.</p>
+<p>One thing that I didn’t anticipate,
+yet which turned out to be quite important,
+was to have “numerical” symbols on a layer that’s on the opposite hand of the space bar.
+Otherwise, entering maths can become a bit clunky.
+For example, with both keys on the same hand,
+just typing <code>3 + 3</code> would involve
+holding down a layer key with one thumb,
+pressing <code>3</code>,
+releasing the layer key,
+tapping Shift with the same thumb,
+pressing the layer key, …
+Quite the chore!
+Much better to have Shift and the layer key on opposite hands,
+and set up a fall-through for space on the respective layer
+(i.e., so that one can just hold down the layer key and write <code>3 + 3</code> “in one go”).
+This situation gets exacerbated when writing LaTeX
+(which I do <a href="https://tony-zorman.com/posts/my-phd-workflow.html">quite a lot</a>).</p>
+<p>So much for my preparation.</p>
+<p>Of course, I still changed the layout every two minutes during the first few days of usage,
+and I’m only now slowing down a little bit.
+Still, I like to think that keylogging myself gave me some small insight into my (subconscious) keyboard habits,
+although using a 40% board is so different from even just a laptop keyboard that
+surprises like the above maths entry conundrum are inevitable.
+Anyways, let’s actually talk about the layers now.</p>
+<h3 id="base-layer">Base layer</h3>
+<pre><code>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.------.
+|  Q  |  W  |  F  |  P  |  B  |           |  J  |  L  |  U  |  Y  | M4+; |
+.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.------.
+|  A  |  R  |  S  |  T  |  G  |           |  M  |  N  |  E  |  I  |  O   |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
+| S+Z |  X  |  C  |  D  |  V  | PGD | PGU |  K  |  H  |  ,  |  .  | S+/  |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
+| ESC | TAB | M4  | L1  | SPC | A[] | BSC | C() | L2  |  -  |  '  | RET  |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.</code></pre>
+<p>As I said, I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my layout,
+though this is probably the least surprising thing about the above layer.
+Some key names aren’t at all obvious,
+and this layer already showcases quite a bit of the functionality that I’ve packed into the keyboard,
+so let’s go through it carefully.</p>
+<p>I—perhaps strikingly—opted for not putting Shift on the thumb,
+but recreating the “ordinary” one-on-each-side setup from the good old typewriter days.
+While I already have a key to access the LOWER (L1) layer with my left thumb,
+I had to sacrifice Shift so I could fit a key to the RAISE (L2) layer on the right thumb.
+This also jumps to the ADJUST (L3) layer when both LOWER and RAISE are held at the same time.
+I will gladly trade two layers for one Shift key.</p>
+<p>One of the most basic things—besides having layers—that one can do with QMK is <a href="https://docs.qmk.fm/#/mod_tap">mod-taps</a>.
+These are keys that act as modifiers when held, and as “ordinary” keys when pressed.
+For example, all of the <code>S+«key»</code> keys emit Shift when held and <code>«key»</code> when pressed.
+There is a slight delay between pressing the key and the press registering,
+since we have to wait for a possible tap,
+which keeps me from using modifiers on the home-row, as some people like to do.
+Likewise, the <code>M4+;</code> key acts as Super when held and as <code>;</code> when pressed.
+At this point, it is actually my main way to press the Super key,
+even though I don’t find the real <code>M4</code> key particularly hard to hit with my thumb.
+Sometimes these things just happen,
+I suppose,
+though it may help that I press both outer keys of the top row (that is, <code>q</code> and <code>;</code>) with my ring finger
+instead of my pinky.</p>
+<p>The <code>A[]</code> and <code>C()</code> keys are utilising <a href="https://docs.qmk.fm/#/feature_tap_dance">tap dances</a>,
+in order to do even more.
+Tap dances are very similar to mod-taps,
+only in addition to just differentiating between a “pressed” and a “held” state,
+QMK now also keeps track of <em>how often</em> a key has been tapped.
+So far, <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe/keymap.c#L187">my setup</a> here is quite basic;
+I only check whether a key was pressed once, twice, or is being held.
+This allows me to not need extra keys for parentheses,
+as they can fit on the modifier keys:</p>
+<ul>
+<li><p><code>A[]</code>: Alt when held, <code>[</code> when pressed once, and <code>]</code> when pressed twice.
+This one is especially neat, since tap dances play well with other modifiers,
+so pressing <code>S-M1</code> once will result in <code>{</code> and pressing it twice gives <code>}</code>.</p></li>
+<li><p><code>C()</code>: Control when held, <code>(</code> when pressed once, and <code>)</code> when pressed twice.</p></li>
+</ul>
+<p>I don’t mind having the extra indirection for the respective closed delimiter,
+as <a href="https://paredit.org/">paredit</a>,
+<a href="https://github.com/AmaiKinono/puni">puni</a>,
+<code>electric-pair-mode</code>,
+or a different package of choice usually takes care of inserting it.</p>
+<p>Having essentially all parentheses on the base layer makes programming even more fun,
+especially the more parentheses-heavy languages—whether that’d be Clojure or Rust.</p>
+<h3 id="layer-1">Layer 1</h3>
+<pre><code>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-------.
+|  &amp;  | *&gt;  | &gt;&gt;= | &lt;&amp;&gt; |     |           |  =  |  +  |  *  |  -  | M4+RT |
+.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-------.
+| ::  | =&gt;  | =&lt;&lt; | &lt;|&gt; |  @  |           | LFT |  UP | DWN | RGT |   \   |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-------.
+| S+! | &lt;*  | &lt;*&gt; | &lt;$&gt; | &lt;-  |     | MEN |  -&gt; |  $  |  #  |  %  |  S+^  |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-------.
+|     |     |     |     |     |     |     |     | L3  | ALT |     | S-Ins |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-------.</code></pre>
+<p>Guess which programming language I like based on this layer’s <a href="https://docs.qmk.fm/#/feature_macros">macros</a> :).
+There are also other mod-taps here, but nothing new concept wise.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<p>Crucially, however, keys that were “Shift when held,
+<em>something</em> when pressed” on the base layer retain the Shift part of that functionality.
+This is used for the commutativity of the modifier keys,<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>
+which would otherwise drive me insane.
+The same goes for all fall-through keys;
+i.e., keys that appear blank in the above layout.
+These aren’t blocked or anything,
+just no new functionality is added
+so the key falls back to what’s on the next lowest layer.
+In plain terms,
+the key to the left of <code>L3</code> will still be Control,
+as I can comfortably press that while holding down something with my left hand.
+The same can’t be said for the Alt key,
+which is on the left hand by default,
+so a separate binding for it has to be created on the right hand.
+Thus,
+as the two don’t commute,
+key chords involving the LOWER layer and Alt are to be avoided if possible.</p>
+<p>The <code>S-Ins</code> key is not some sort of tap,
+but actually just emits a Shift-Insert,
+which can be used to paste stuff from the <a href="https://www.uninformativ.de/blog/postings/2017-04-02/0/POSTING-en.html">X11 primary selection</a>.</p>
+<h3 id="layer-2">Layer 2</h3>
+<pre><code>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
+|     |  7  |  8  |  9  |     |           |     |  +  |  *  |  -  |     |
+.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
+|  :  |  4  |  5  |  6  |  =  |           |     |  `  |  _  |  '  |  &quot;  |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.
+| S+0 |  1  |  2  |  3  |     |     |     |     |     |  #  |  %  | S+^ |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.
+|     |     |     | L3  |     |     |     |     |     |     |     |     |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.</code></pre>
+<p>A relatively unspectacular layer,
+RAISE is mainly used for numbers,
+and number adjacent things.
+Some symbols related to this,
+like <code>=</code>, <code>+</code>, <code>*</code>, and <code>-</code>,
+are replicated from the LOWER layer.
+This is due to the above mentioned issues of inserting arithmetic.
+This layer also features ` and <code>'</code> quite prominently,
+as these are important for <a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>.
+Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the difficult to hit key on the base layer.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
+<h3 id="layer-3">Layer 3</h3>
+<pre><code>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
+|     |     |     |     |     |           |     | F7  | F8  | F9  | F10 |
+.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
+|     |     |     |     |     |           |     | F4  | F5  | F6  | F11 |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.
+|     |     |     |     |     |     |     |     | F1  | F2  | F3  | F12 |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.
+|     |     |     |     |     |     |     |     |     |     |     |     |
+.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.</code></pre>
+<p>So far, only the seldom used F-keys are present here.
+As should be obvious, this is the least developed layer,
+and also the one that’ll probably change the most in the future.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>
+Currently, I’m thinking of putting some XMonad specific bindings on here,
+which could even to free up the Super key to be used inside of Emacs
+for certain things—that would certainly be a worthwhile experiment.
+Other thoughts include things like volume and brightness controls,
+although this is less critical since my laptop keyboard is never far away.</p>
+<h2 id="other-features">Other features</h2>
+<p>There are some features that aren’t necessarily reflected in the keys themselves,
+yet are quite essential for day-to-day use.
+The TL;DR can be found in <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe/rules.mk">rules.mk</a>.</p>
+<p>One notable omission from the following list will be Unicode entry.
+This is solely due to the fact that QMK’s built-in support for this utilises some GTK-specific functionality,
+which is woefully inadequate for my setup.
+However, since I mostly write English nowadays,
+so far I have survived on a mixture of compose key sequences,
+and <a href="https://github.com/minad/jinx">jinx</a> telling me that I really should write an Umlaut in a certain place.
+This is one of the areas in which KMonad actually beats
+QMK—and by quite a large margin at that!
+There is a good way to define Unicode characters by setting up one’s own X11 keymap,
+but I haven’t gotten around to this yet.
+Some day!</p>
+<h3 id="key-overridesqmkkey-overrides"><a href="https://docs.qmk.fm/#/feature_key_overrides">Key overrides</a></h3>
+<p>Quoting from the documentation</p>
+<blockquote>
+<p>Key overrides allow you to override modifier-key combinations to send a different modifier-key combination
+or perform completely custom actions.</p>
+</blockquote>
+<p>Above I mentioned that some keys on the keyboard are quite hard to hit.
+On the default layout,
+one of these turns out to be the Tab key,
+which is nonetheless important in a lot of situations.
+Conveniently, Emacs interprets <code>C-i</code> as Tab, so there is less need to actually hit the “real” key.
+However, not all programs are quite so understanding—or old, I guess.
+With key overrides, one can send a real <code>TAB</code> whenever <code>C-i</code> is pressed;
+no special convention on how to interpret certain key chords required!
+I also rebound <code>C-m</code> to <code>RET</code> (with the same justification), and <code>S-BSP</code> to <code>DEL</code>.</p>
+<p>This is one of those features that I didn’t know I needed,
+yet now couldn’t live without anymore.
+I’m definitely looking forward to discovering new and interesting ways of using this!</p>
+<h3 id="autocorrectqmkautocorrect"><a href="https://docs.qmk.fm/#/feature_autocorrect">Autocorrect</a></h3>
+<p>This is a quaint little feature: auto-correct inside of your keyboard’s firmware!
+I promise that it’s not as bad as it sounds.
+It does not work automatically, thankfully, but is based off a given list of replacements.
+For example,</p>
+<pre><code>widht -&gt; width</code></pre>
+<p>would fire anytime one writes <code>widht</code>, which then gets replaced by <code>width</code>.
+This is based on (a trie of) the most recently pressed keys,
+so whenever one actually wants to write <code>widht</code>
+all that’s needed is pressing, for example, any modifier during the insertion.</p>
+<p>As I’ve really just been trying this out for a laugh, my current word list is quite short:</p>
+<pre><code>:alot       -&gt;  a lot
+accesories  -&gt;  accessories
+accomodate  -&gt;  accommodate
+alledge     -&gt;  allege</code></pre>
+<p>In general,
+I think the solution to stop misspelling a word is not to remap key sequences on the firmware level,
+but to—you know—learn how to spell that word.
+Still,
+I can imagine at least one or two use-cases where something like this could be useful,
+so I figured it might be nice to make people aware of this features’ existence.</p>
+<p>In addition—as I’ve found out on three separate occasions so far—using the words “auto-correct, but in firmware”
+makes people stare in utter disbelief and/or disgust at your keyboard.
+That alone makes this feature worth it.</p>
+<h3 id="caps-wordqmkcaps-word"><a href="https://docs.qmk.fm/#/feature_caps_word">Caps Word</a></h3>
+<p>Caps Word is a clever alternative to Caps Lock,
+which I enable by pressing both Shift keys together.
+After that,
+all of the letter keys are shifted,
+and <code>-</code> becomes <code>_</code>
+until a different key (excluding common sense ones like backspace) is pressed.
+This is very useful for, e.g.,
+writing long constants,
+as these tend to have capital names separated with underscores:
+writing <code>BOTH_SHIFTS_TURNS_ON_CAPS_WORD</code> has never been easier!</p>
+<p>One thing to note is that,
+while layer switching works just fine in “Caps Word mode”,
+the <a href="https://docs.qmk.fm/#/feature_tri_layer">Tri Layer</a> feature does not seem to play nicely with it;
+i.e., the mode gets disabled when switching to these layers.
+This is also the reason why I have an explicit LOWER, RAISE, and ADJUST setup,
+instead of just using Tri Layer.
+One could fiddle with the <code>caps_word_press_user</code> callback,
+but it seemed much easier to just create one additional layer toggle instead.
+I haven’t looked at how hard it would be to hack this into Caps Word,
+so maybe this is a future pull request.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This turned into more of a QMK overview than an Atreus review,
+but the verdict stays the same:
+definitely get this keyboard, if only so you have an excuse to play around with QMK.</p>
+<p>It does have some flaws and design decisions that were perhaps not entirely optimal,
+but in my opinion it is one of the best choices one can make when buying a keyboard.
+Even more-so when buying a keyboard to travel with.
+As I said in the beginning,
+I would almost suggest to build one from scratch according to the original instructions
+instead of buying it already assembled.
+In my opinion, the changes made by Keyboardio,
+like the two additional thumb buttons,
+aren’t strictly necessary, so there isn’t much one is missing;
+plus, building something yourself is much more rewarding than buying it!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>{-} </p>
+<p></p>
+<p></p>
+<p></p>
+<p>Not pictured: I braided the cable,
+which makes it much more manageable.
+The default cable is <em>long</em>,
+which is not at all necessary since the keyboard is always rather close to my laptop.
+Plus, <a href="https://ncatlab.org/nlab/show/braided+monoidal+category">braids</a>
+make everything better!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I think the full name—at least as far as I could make out—is
+“Kailh deep sea tactile silent BOX islet switches”.
+Quite the mouthfull indeed!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This may seem debatable at this point,
+but I guess part of this post is convincing the skeptics that 44 keys really are enough.
+Indeed, one might even argue that the form-factor is a big strength of the keyboard,
+irrespective of the potential ergonomic benefits.
+After all,
+even though it involves hitting two keys,
+for me it’s much faster to hit a capital <code>E</code>
+than having to do an awkward stretch in order to reach <code>6</code> or—even worse—<code>F6</code>.
+On the Atreus everything is close together,
+which means these kinds of big stretches are a things of the past!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>The outer two keys would suffer from the same issue, but these are actually very easy to hit with one’s palm. I press the two keys under the middle finger with a thumb or middle finger curl, both of which feel fine for me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Thanks, Emacs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>{-} I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>This was very straightforward—after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
+After, that, one simply has to execute</p>
+<pre class="console"><code>$ xset r rate 230 70
+$ setxkbmap -option compose:menu</code></pre>
+<p>to get some sane key repeat and compose key settings, and that’s it!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Until my keymap really settles down,
+I will not submit it upstream to QMK,
+so the link points to a personal fork for now.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>{-} Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>{-} </p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p>At first I was very surprised to see <code>x</code> so far up this list—at least,
+until I remembered that <code>M1-x</code> and <code>C-x</code> exist!<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Note that <code>S+^</code> and <code>S+!</code> are tap-dances for technical reasons:
+QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>I.e., it does not matter whether I press <code>S-L1-«key»</code> or <code>L1-S-«key»</code>.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Although, strictly speaking, only <code>'</code> would be necessary, as <code>S-L2</code> is pretty easy to hit.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>I will try to keep this post updated with newer versions.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+
+</feed>
