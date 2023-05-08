@@ -206,11 +206,11 @@ just typing `3 + 3` would involve
 holding down a layer key with one thumb,
 pressing `3`,
 releasing the layer key,
-tapping Shift with the same thumb,
+tapping Space with the same thumb,
 pressing the layer key, …
 Quite the chore!
-Much better to have Shift and the layer key on opposite hands,
-and set up a fall-through for space on the respective layer
+Much better to have Space and the layer key on opposite hands,
+and set up a fall-through for it on the respective layer
 (i.e., so that one can just hold down the layer key and write `3 + 3` "in one go").
 This situation gets exacerbated when writing LaTeX
 (which I do [quite a lot][My PhD Research Workflow]).
