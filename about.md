@@ -17,10 +17,14 @@ The full source code is available [here][site].
 <label for="mn-configs" class="margin-toggle">&#8853;</label>
 <input type="checkbox" id="mn-configs" class="margin-toggle"/>
 <span class="marginnote-left">
-  My [Emacs][cfg:emacs] and [KMonad][cfg:layout] configurations are readily available online.
+  For reference: here are my
+  [Emacs][cfg:emacs],
+  [QMK][cfg:qmk],
+  and [KMonad][cfg:layout]
+  configurations.
 </span>
-All posts are written on a ThinkPad X220 in GNU Emacs.
-I'm using [KMonad] to supply me with a proper keyboard layout.
+All posts are written on a ThinkPad X220 in GNU Emacs, probably on an [Atreus][site:atreus].
+If the latter is unavailable, [KMonad] supplies me with a proper keyboard layout.
 
 Most of the time, I'm fastest to reply via E-Mail or IRC, but you try
 any of the following channels:
@@ -42,6 +46,7 @@ any of the following channels:
 [arXiv]: https://arxiv.org/a/zorman_t_1
 [cfg:emacs]: https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs
 [cfg:layout]: https://gitlab.com/slotThe/dotfiles/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd
+[cfg:qmk]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe
 [duoidal]: https://ncatlab.org/nlab/show/duoidal+category
 [free software]: ./free-software.html
 [graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
@@ -50,6 +55,7 @@ any of the following channels:
 [operads]: https://ncatlab.org/nlab/show/string+diagram
 [pandoc]: https://pandoc.org/
 [rigid]: https://ncatlab.org/nlab/show/rigid+monoidal+category
+[site:atreus]: https://tony-zorman.com/posts/atreus-review.html
 [site]: https://github.com/slotThe/slotThe.github.io
 
 [^1]: I wish.
