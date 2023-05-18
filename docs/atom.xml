@@ -8,8 +8,87 @@
         <name>Tony Zorman</name>
         <email>tonyzorman@mailbox.org</email>
     </author>
-    <updated>2023-05-06T00:00:00Z</updated>
+    <updated>2023-05-18T00:00:00Z</updated>
     <entry>
+    <title>Use-package now has a :vc keyword</title>
+    <link href="https://tony-zorman.com/posts/use-package-vc.html" />
+    <id>https://tony-zorman.com/posts/use-package-vc.html</id>
+    <published>2023-05-18T00:00:00Z</published>
+    <updated>2023-05-18T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      Posted on 2023-05-18
+      
+      &thinsp;·&thinsp; <span title="232 words">1 min read</span>
+      
+        &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<div>
+  <p>Just a quick heads-up: <code>use-package</code>,
+which was merged into Emacs in <a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=4a1e9d61b57c36255752437a2668e037e79fe870">November last year</a>,
+now has a <code>:vc</code> keyword!</p>
+<!--more-->
+<p>The change was <a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe">merged</a> two days ago,
+and supersedes—indeed, is a rewrite of—<a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>,
+which is now only needed for people who prefer to stick to released versions of Emacs.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+In short,
+the keyword enables one to install packages directly from their remote source:</p>
+<pre class="emacs-lisp"><code>(use-package modus-themes
+  :vc (:url &quot;https://gitlab.com/protesilaos/modus-themes&quot;
+       :branch &quot;main&quot;))</code></pre>
+<p>This is not dependent on git,
+but should work for all version control systems that Emacs knows about;
+see <code>vc-handled-backends</code>.</p>
+<p>By default,
+<code>:vc</code> installs the latest <em>release</em> of a package—the
+last commit that bumped the <code>"Version"</code> tag inside of the main elisp file
+(yes, really).
+Installing the most recent commit instead,
+which should feel more familiar to users coming from package archives like MELPA,
+can be done by giving <code>:vc</code> a <code>:rev :newest</code> argument.
+Additionally,
+<code>:rev</code> can also be used to pin specific revisions of a package.
+Other niceties, like specifying alternative lisp directories, are also included:</p>
+<pre class="emacs-lisp"><code>(use-package vertico
+  :vc (:url &quot;https://github.com/minad/vertico&quot;
+       :rev :newest
+       :lisp-dir &quot;extensions/&quot;))</code></pre>
+<p>For more information on the specific syntax,
+refer to <code>C-h v package-vc-selected-packages RET</code>,
+and the relevant info node <code>(emacs)Fetching Package Sources</code>.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There is no reason for that, of course.
+Building Emacs is just a</p>
+<pre class="shell"><code>BUILD_OPTS=$(emacs \
+  --batch \
+  --eval &quot;(prin1 system-configuration-options)&quot;)
+
+./autogen.sh
+echo &quot;$BUILD_OPTS&quot; | sed 's/^&quot;\(.*\)&quot;$/\1/' \
+                   | xargs ./configure
+make bootstrap
+sudo make install</code></pre>
+<p>away!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Keyboardio Atreus Review</title>
     <link href="https://tony-zorman.com/posts/atreus-review.html" />
     <id>https://tony-zorman.com/posts/atreus-review.html</id>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Use-package now has a :vc keyword · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+        
+        
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Use-package now has a :vc keyword</h1>
+           
+
+          <article>
+    <p class="header">
+      Posted on 2023-05-18
+      
+      &thinsp;·&thinsp; <span title="231 words">1 min read</span>
+      
+        &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<div>
+  Just a quick heads-up: <code>use-package</code>,
+which was merged into Emacs in <a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=4a1e9d61b57c36255752437a2668e037e79fe870">November last year</a>,
+now has a <code>:vc</code> keyword!
+<!--more-->
+<p></p>
+The change was <a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe">merged</a> two days ago,
+and supersedes—indeed, is a rewrite of—<a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>,
+which is now only needed for people who prefer to stick to released versions of Emacs.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">There is no reason for that, of course.
+Building Emacs is just a
+<div class="highlight"><pre><span></span><span class="nv">BUILD_OPTS</span><span class="o">=</span><span class="k">$(</span>emacs<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--batch<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--eval<span class="w"> </span><span class="s2">&quot;(prin1 system-configuration-options)&quot;</span><span class="k">)</span>
+
+./autogen.sh
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BUILD_OPTS</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">'s/^&quot;\(.*\)&quot;$/\1/'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                   </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>./configure
+make<span class="w"> </span>bootstrap
+sudo<span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+
+<p></p>
+away!</div>
+
+In short,
+the keyword enables one to install packages directly from their remote source:
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">modus-themes</span>
+<span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:url</span><span class="w"> </span><span class="s">&quot;https://gitlab.com/protesilaos/modus-themes&quot;</span>
+<span class="w">       </span><span class="nb">:branch</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+This is not dependent on git,
+but should work for all version control systems that Emacs knows about;
+see <code>vc-handled-backends</code>.
+<p></p>
+By default,
+<code>:vc</code> installs the latest <em>release</em> of a package—the
+last commit that bumped the <code>"Version"</code> tag inside of the main elisp file
+(yes, really).
+Installing the most recent commit instead,
+which should feel more familiar to users coming from package archives like <span class="small-caps">melpa</span>,
+can be done by giving <code>:vc</code> a <code>:rev :newest</code> argument.
+Additionally,
+<code>:rev</code> can also be used to pin specific revisions of a package.
+Other niceties, like specifying alternative lisp directories, are also included:
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">vertico</span>
+<span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:url</span><span class="w"> </span><span class="s">&quot;https://github.com/minad/vertico&quot;</span>
+<span class="w">       </span><span class="nb">:rev</span><span class="w"> </span><span class="nb">:newest</span>
+<span class="w">       </span><span class="nb">:lisp-dir</span><span class="w"> </span><span class="s">&quot;extensions/&quot;</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+For more information on the specific syntax,
+refer to <code>C-h v package-vc-selected-packages RET</code>,
+and the relevant info node <code>(emacs)Fetching Package Sources</code>.
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
