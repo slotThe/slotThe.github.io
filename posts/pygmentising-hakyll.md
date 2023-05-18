@@ -314,9 +314,20 @@ results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don't agree with—at least for now.
 
+# Backlinks
+
+- Vaibhav Sagar has written a
+  [fantastic post][backlinks:ghc-syntax-highlighter-hakyll]
+  outlining how one can use GHC itself to generate highlighting for Haskell code
+  using the [ghc-syntax-highlighter] library.
+  Seeing how there are a lot of language extensions that `pygmentize` does not highlight correctly,
+  this seems well worth it!
+
 [KDE XML syntax definitions]: https://docs.kde.org/stable5/en/kate/katepart/highlight.html
 [LSLeary]: https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/
+[backlinks:ghc-syntax-highlighter-hakyll]: https://vaibhavsagar.com/blog/2023/01/29/ghc-syntax-hakyll/
 [cfg:site]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L87
+[ghc-syntax-highlighter]: https://hackage.haskell.org/package/ghc-syntax-highlighter
 [minted]: https://ctan.org/pkg/minted?lang=en
 [pandoc:walk]: https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html
 [pandocCompilerWithTransformM]: https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:pandocCompilerWithTransformM
