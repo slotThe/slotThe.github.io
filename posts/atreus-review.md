@@ -520,15 +520,15 @@ plus, building something yourself is much more rewarding than buying it!
 
 [^4]: {-} Keeping in line with X11 conventions, `M4` denotes the Super key, and `M1` is for Alt.
 
-[^6]: {-} 
+[^6]: {-} 󠀠
 
-      
+      󠀠
 
-      
+      󠀠
 
-      
+      󠀠
 
-      
+      󠀠
 
       At first I was very surprised to see `x` so far up this list—at least,
       until I remembered that `M1-x` and `C-x` exist!
@@ -557,13 +557,13 @@ plus, building something yourself is much more rewarding than buying it!
        On the Atreus everything is close together,
        which means these kinds of big stretches are a things of the past!
 
-[^18]: {-} 
+[^18]: {-} 󠀠
 
-       
+       󠀠
 
-       
+       󠀠
 
-       
+       󠀠
 
        Not pictured: I braided the cable,
        which makes it much more manageable.
