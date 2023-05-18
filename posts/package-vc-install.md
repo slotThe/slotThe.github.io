@@ -1,6 +1,7 @@
 ---
 title: Exploring package-vc-install
 date: 2022-11-30
+last-modified: 2023-05-18
 tags: emacs
 ---
 
@@ -12,6 +13,12 @@ can be seen as a built-in alternative to things like quelpa or
 straight.el.
 
 <!--more-->
+
+*Update (2023-05-18)*:
+Integration into `use-package` is now available as
+a [standalone package](https://tony-zorman.com/posts/vc-use-package.html),
+as well as—as of Emacs 30—a
+[built-in option](https://tony-zorman.com/posts/use-package-vc.html)
 
 # The story so far
 

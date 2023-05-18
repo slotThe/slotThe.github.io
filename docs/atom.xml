@@ -1942,7 +1942,9 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
     <p class="header">
       Posted on 2022-12-22
       
-      &thinsp;·&thinsp; <span title="285 words">2 min read</span>
+        &thinsp;·&thinsp; last modified: 2023-05-18
+      
+      &thinsp;·&thinsp; <span title="286 words">2 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
@@ -1961,6 +1963,8 @@ is a first attempt at integrating the new (as of Emacs 29)
 about how these two interact in my <a href="https://tony-zorman.com/posts/2022-11-30-package-vc-install.html">last post</a>—you can
 see this package as automating things juuuust a little more.</p>
 <!--more-->
+<p><em>Update (2023-05-18)</em>: This is now built into Emacs 30!
+Check <a href="https://tony-zorman.com/posts/use-package-vc.html">here</a> for more details.</p>
 <h2 id="motivation">Motivation</h2>
 <p>For the last post, someone gave me some <a href="https://old.reddit.com/r/emacs/comments/z9i4ce/exploring_packagevcinstall_as_an_alternative_to/iygzeum/">feedback</a>:
 couldn’t we go a little further? In particular, they wanted a new <code>:vc</code>
@@ -1985,13 +1989,12 @@ variable, but this should mostly be taken care of automatically. For
 more information (and manual controls), see the
 <a href="https://github.com/slotThe/vc-use-package#in-combination-with-use-package-always-ensure">README</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>As I’ve said in the corresponding Reddit post, now that both
-<code>package-vc.el</code> and use-package are built-in, someone should really add
-this to Emacs proper. Alas, since I copied the idea and most of the
-initial implementation from quelpa-use-package—and thus copyright
-assignment is a bit iffy—it will not be me. Still, implementing this
-from scratch does not sound so hard. If anyone feels inspired to do
-exactly this, I’d be delighted!</p>
+<p>As I said above,
+this is no longer only available as an external package,
+but actually <a href="https://tony-zorman.com/posts/use-package-vc.html">built into Emacs</a>!
+By virtue of being a part of it now,
+the integration with <code>use-package</code> is a lot tighter—try it out if you’re using <code>HEAD</code> anyways!
+If not, then don’t worry: <code>vc-use-package</code> will not go anywhere for the forseeable future.</p>
 </div>
 
       <!-- Body is included in the above file -->
@@ -2009,7 +2012,9 @@ exactly this, I’d be delighted!</p>
     <p class="header">
       Posted on 2022-11-30
       
-      &thinsp;·&thinsp; <span title="601 words">3 min read</span>
+        &thinsp;·&thinsp; last modified: 2023-05-18
+      
+      &thinsp;·&thinsp; <span title="621 words">3 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>
       
@@ -2030,6 +2035,11 @@ directly from their respective upstream source; for example, GitHub. It
 can be seen as a built-in alternative to things like quelpa or
 straight.el.</p>
 <!--more-->
+<p><em>Update (2023-05-18)</em>:
+Integration into <code>use-package</code> is now available as
+a <a href="https://tony-zorman.com/posts/vc-use-package.html">standalone package</a>,
+as well as—as of Emacs 30—a
+<a href="https://tony-zorman.com/posts/use-package-vc.html">built-in option</a></p>
 <h2 id="the-story-so-far">The story so far</h2>
 <p>I’ve been using <a href="https://github.com/quelpa/quelpa">quelpa</a> and <a href="https://github.com/quelpa/quelpa-use-package">quelpa-use-package</a> to install packages
 that are not on any popular archive straight from source. Especially

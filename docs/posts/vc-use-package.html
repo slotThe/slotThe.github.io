@@ -56,7 +56,9 @@
     <p class="header">
       Posted on 2022-12-22
       
-      &thinsp;·&thinsp; <span title="285 words">2 min read</span>
+        &thinsp;·&thinsp; last modified: 2023-05-18
+      
+      &thinsp;·&thinsp; <span title="286 words">2 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="../tags/emacs.html">emacs</a>
       
@@ -75,6 +77,9 @@ is a first attempt at integrating the new (as of Emacs 29)
 about how these two interact in my <a href="https://tony-zorman.com/posts/2022-11-30-package-vc-install.html">last post</a>—you can
 see this package as automating things juuuust a little more.
 <!--more-->
+<p></p>
+<em>Update (2023-05-18)</em>: This is now built into Emacs 30!
+Check <a href="https://tony-zorman.com/posts/use-package-vc.html">here</a> for more details.
 <h2 id="motivation">Motivation<a href="#motivation" class="floatright sec-link">¶</a></h2>
 <p></p>
 For the last post, someone gave me some <a href="https://old.reddit.com/r/emacs/comments/z9i4ce/exploring_packagevcinstall_as_an_alternative_to/iygzeum/">feedback</a>:
@@ -108,13 +113,12 @@ more information (and manual controls), see the
 <a href="https://github.com/slotThe/vc-use-package#in-combination-with-use-package-always-ensure">README</a>.
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatright sec-link">¶</a></h2>
 <p></p>
-As I’ve said in the corresponding Reddit post, now that both
-<code>package-vc.el</code> and use-package are built-in, someone should really add
-this to Emacs proper. Alas, since I copied the idea and most of the
-initial implementation from quelpa-use-package—and thus copyright
-assignment is a bit iffy—it will not be me. Still, implementing this
-from scratch does not sound so hard. If anyone feels inspired to do
-exactly this, I’d be delighted!
+As I said above,
+this is no longer only available as an external package,
+but actually <a href="https://tony-zorman.com/posts/use-package-vc.html">built into Emacs</a>!
+By virtue of being a part of it now,
+the integration with <code>use-package</code> is a lot tighter—try it out if you’re using <code>HEAD</code> anyways!
+If not, then don’t worry: <code>vc-use-package</code> will not go anywhere for the forseeable future.
 </div>
 
       <!-- Body is included in the above file -->

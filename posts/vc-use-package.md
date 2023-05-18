@@ -1,6 +1,7 @@
 ---
 title: "Announcing: vc-use-package"
 date: 2022-12-22
+last-modified: 2023-05-18
 tags: emacs
 no-toc: true
 ---
@@ -15,6 +16,9 @@ see this package as automating things juuuust a little more.
 [vc-use-package]: https://github.com/slotThe/vc-use-package
 
 <!--more-->
+
+*Update (2023-05-18)*: This is now built into Emacs 30!
+Check [here](https://tony-zorman.com/posts/use-package-vc.html) for more details.
 
 # Motivation
 
@@ -52,13 +56,12 @@ more information (and manual controls), see the
 
 # Conclusion
 
-As I've said in the corresponding Reddit post, now that both
-`package-vc.el` and use-package are built-in, someone should really add
-this to Emacs proper.  Alas, since I copied the idea and most of the
-initial implementation from quelpa-use-package—and thus copyright
-assignment is a bit iffy—it will not be me.  Still, implementing this
-from scratch does not sound so hard.  If anyone feels inspired to do
-exactly this, I'd be delighted!
+As I said above,
+this is no longer only available as an external package,
+but actually [built into Emacs](https://tony-zorman.com/posts/use-package-vc.html)!
+By virtue of being a part of it now,
+the integration with `use-package` is a lot tighter—try it out if you're using `HEAD` anyways!
+If not, then don't worry: `vc-use-package` will not go anywhere for the forseeable future.
 
 [quelpa-use-package]: https://github.com/quelpa/quelpa-use-package
 [quelpa]: https://github.com/quelpa/quelpa
