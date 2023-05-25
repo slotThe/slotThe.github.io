@@ -555,7 +555,7 @@ plus, building something yourself is much more rewarding than buying it!
        for me it's much faster to hit a capital `E`
        than having to do an awkward stretch in order to reach `6` or—even worse—`F6`.
        On the Atreus everything is close together,
-       which means these kinds of big stretches are a things of the past!
+       which means these kinds of big stretches are a thing of the past!
 
 [^18]: {-} 󠀠
 
