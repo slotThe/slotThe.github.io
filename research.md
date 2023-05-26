@@ -56,18 +56,39 @@ All of my preprints are readily available on the [arXiv].[^2]
 # Talks
 
 - *Duality in Monoidal Categories* \
-  2023-01-16, Seminar GMM, Dresden.
+  2023-01-16, Seminar GMM, Dresden. \
+  2023-05-23, Workshop Hopf Algebras and Tensor Categories, Marburg;
+  [slides][slides:duality] ([handout][slides:duality:handout]). \
 
-  There are at least three categorical gadgets that capture various
-  notions of mathematical duality: closed monoidal, *-autonomous, and
-  rigid monoidal categories.  These concepts are all interlinked—rigid
-  monoidal categories are always *-autonomous, and they in turn are
-  necessarily closed monoidal.  In fact, the resulting internal-hom is
-  very well-behaved.  We will explore connections in the other
-  direction: does the shape of the internal-hom of a closed monoidal
-  category already characterise rigidity or *-autonomy?
+  Dualities are an important tool in the study of monoidal categories and their applications.
+  For example, underlying the construction of Tor and Ext functors
+  is the tensor–hom adjunction in the category of bimodules over a unital
+  ring—this is referred to as a closed monoidal structure.
+  A stronger concept, rigidity, models the behaviour of finite-dimensional vector spaces;
+  that is, the existence of evaluation and coevaluation morphisms,
+  implementing a notion of dual basis.
+  Under delooping, this corresponds to the concept of an adjunction in a bicategory,
+  with coevaluation as unit and evaluation as counit.
+  Grothendieck–Verdier duality—also called *-autonomy—lies between the strict confinements of rigidity,
+  and the generality of monoidal closedness.
+  It is closely linked to linearly distributive categories with negation.
 
-  Based on [joint work with Sebastian Halbig](https://arxiv.org/abs/2301.03545).
+  An immediate consequence of rigidity is that the internal-hom functor is tensor representable.
+  That is, a dualising functor sending any object to its dual exists,
+  and tensoring with the object is left adjoint to tensoring with its dual.
+
+  This raises a naive question:
+
+    > Is a monoidal category with tensor representable internal-hom automatically rigid?
+
+  While it is expected that this is not true in general,
+  constructing counterexamples is non-trivial;
+  we will provide one in the form of the category of Mackey functors.
+  Additionally, a weaker version of the above statement is true:
+  every monoidal category with tensor representable internal-hom is Grothendieck–Verdier.
+
+  This talk is based on
+  [joint work with Sebastian Halbig](https://arxiv.org/abs/2301.03545).
 
 - *Operads as Functors* \
   2022-12-15, Block seminar "Operads", Bonn.
@@ -122,15 +143,17 @@ All of my preprints are readily available on the [arXiv].[^2]
   trying to generalize the number of 3-colourings of a knot.
 
 [Clark et.al.]: https://arxiv.org/abs/2001.07488
+[Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
 [Pastro and Street]: https://arxiv.org/abs/0711.1859
+[Pivotality, twisted centres and the anti-double of a Hopf monad]: https://arxiv.org/abs/2201.05361
 [Riley]: https://arxiv.org/abs/1809.00738
 [Willerton]: https://arxiv.org/abs/0807.0658
+[slides:duality:handout]: /talks/duality-in-monoidal-categories-handout.pdf
+[slides:duality]: /talks/duality-in-monoidal-categories.pdf
 [slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
 [slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
 [slides:profunctor]: /talks/profunctor-optics.pdf
 [slides:visual-cat]: /talks/visual-category-theory.pdf
-[Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
-[Pivotality, twisted centres and the anti-double of a Hopf monad]: https://arxiv.org/abs/2201.05361
 
 [^1]: {-} I may be found on the [arXiv] and [zbmath].
 
