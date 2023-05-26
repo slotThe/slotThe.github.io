@@ -57,7 +57,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden. \
-  2023-05-23, Workshop Hopf Algebras and Tensor Categories, Marburg;
+  2023-05-23, HATC23, Marburg;
   [slides][slides:duality] ([handout][slides:duality:handout]). \
 
   Dualities are an important tool in the study of monoidal categories and their applications.
@@ -69,7 +69,9 @@ All of my preprints are readily available on the [arXiv].[^2]
   implementing a notion of dual basis.
   Under delooping, this corresponds to the concept of an adjunction in a bicategory,
   with coevaluation as unit and evaluation as counit.
-  Grothendieck–Verdier duality—also called *-autonomy—lies between the strict confinements of rigidity,
+  Grothendieck–Verdier duality,
+  also called *-autonomy,
+  lies between the strict confinements of rigidity,
   and the generality of monoidal closedness.
   It is closely linked to linearly distributive categories with negation.
 
