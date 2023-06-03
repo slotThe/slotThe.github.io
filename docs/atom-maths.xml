@@ -6,10 +6,252 @@
     <id>https://tony-zorman.com/atom-maths.xml</id>
     <author>
         <name>Tony Zorman</name>
+        
         <email>tonyzorman@mailbox.org</email>
+        
     </author>
-    <updated>2023-01-10T00:00:00Z</updated>
+    <updated>2023-05-28T00:00:00Z</updated>
     <entry>
+    <title>The tensor product of S-modules is a convolution product</title>
+    <link href="https://tony-zorman.com/posts/day-convolution-for-operads.html" />
+    <id>https://tony-zorman.com/posts/day-convolution-for-operads.html</id>
+    <published>2023-05-28T00:00:00Z</published>
+    <updated>2023-05-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      Posted on 2023-05-28
+      
+      &thinsp;·&thinsp; <span title="1501 words">7 min read</span>
+      
+        &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>Classically, (algebraic) symmetric <a href="https://ncatlab.org/nlab/show/operad">operads</a> are defined as certain graded objects,
+each level coming equipped with a nice action of the symmetric group,
+which are also monoids in some sense.
+While it is often noted that the grading and action represent exactly the data of a functor,
+the fact that virtually all of the structure needed to define operads can be expressed categorically is often passed by,
+which I think is quite the shame!
+In this post I want to explicitly calculate the Day convolution for symmetric operads in the category of
+vector spaces—though the argument holds for all nice enough target categories—in order
+to show that it is nothing but the usual tensor product of modules.</p>
+<!--more-->
+<p>While there is more to this
+story—all of which is wonderfully explained in <a href="http://www.tac.mta.ca/tac/reprints/articles/13/tr13abs.html">[Kel05]</a>—I
+think focusing on the tensor product of <span class="math inline">\(\mathbb{S}\)</span>-modules in the case of vector spaces already gives one a clue
+as to how this whole translation works in general.</p>
+<h2 id="the-day-convolution-product">The Day convolution product</h2>
+<p>In general,
+if we have nice enough categories <span class="math inline">\(\mathcal{C}\)</span> and <span class="math inline">\(\mathcal{V}\)</span>,
+then the functor category <span class="math inline">\([\mathcal{C}, \mathcal{V}]\)</span> inherits many of the properties of the two parent categories.
+One of them is being <em>monoidal</em>; if there are nice functors
+<span class="math display">\[
+  \otimes_{\mathcal{C}} \colon \mathcal{C} \times \mathcal{C} \to \mathcal{C},
+  \qquad \qquad
+  \otimes \colon \mathcal{V} \times \mathcal{V} \to \mathcal{V},
+\]</span>
+that are associative and unital in appropriate ways,
+then there is also a nice monoidal structure—called the <em>(Day) convolution product</em>—on <span class="math inline">\([\mathcal{C}, \mathcal{V}]\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Intuitively,
+one can think of the Day convolution much like the tensor product of vector spaces.
+Given functors <span class="math inline">\(F, G, H \in [\mathcal{C}, \mathcal{V}]\)</span>,
+a <em>bilinear map</em> is a natural transformation
+<span class="math display">\[
+  \beta ≔
+  \big\{
+    \beta_{v, w} \colon
+      Fv \otimes Gw \to H(v \otimes_{\mathcal{C}} w)
+  \big\}_{v, w \in \mathcal{V}}.
+\]</span>
+Just as in the concrete case,
+maps from the convolution product <span class="math inline">\(F \star G\)</span> to <span class="math inline">\(H\)</span> now correspond to exactly these bilinear maps,
+and can be seen as some sort of “linearisation”.</p>
+<p>Setting <span class="math inline">\(\mathcal{V} ≔ \mathsf{Vect}_{\mathtt{k}}\)</span>—for some field <span class="math inline">\(\mathtt{k}\)</span>—one
+can also give a definition in more explicit terms:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+<span class="math display">\[
+  (F \star G)x
+  ≔ \int^{c,d \in \mathcal{C}}
+      \mathtt{k}\mathcal{C}(c \otimes_{\mathcal{C}} d, x) \otimes Fc \otimes Gd.
+\]</span>
+The <span class="math inline">\(\mathtt{k}\mathcal{C}(c \otimes_{\mathcal{C}} d, x)\)</span> notation is meant to indicate
+the linearisation of the hom-set;
+i.e., we take the free vector space with basis <span class="math inline">\(\mathcal{C}(c \otimes_{\mathcal{C}} d, x)\)</span>.
+The little integral sign above is called a <em>coend</em>.
+These are nice universal objects, and show up all the time when working with functor categories.
+Still in the case of <span class="math inline">\(\mathcal{V} ≔ \mathsf{Vect}_{\mathtt{k}}\)</span>,
+suppose that <span class="math inline">\(P \colon \mathcal{C}^{\mathrm{op}} \otimes \mathcal{C} \to \mathcal{V}\)</span> is a functor.
+In general, one can speak of the coend <span class="math inline">\(\int^{V \in \mathcal{V}} P(V, V)\)</span> of that functor;
+a more explicit description can be given as a certain coequaliser:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+<span class="math display">\[
+ \bigoplus_{f \colon V \to W} P(W, V) \rightrightarrows \bigoplus_{V} P(V, V) \twoheadrightarrow \int^{V} P(V, V).
+\]</span>
+For a linear map <span class="math inline">\(f \colon V \to W\)</span>,
+the two parallel arrows are induced by
+<span class="math display">\[
+  P(f, V) \colon P(W, V) \to P(V, V) \quad \text{and} \quad P(W, f) \colon P(W, V) \to P(W, W).
+\]</span></p>
+<p>To get a feeling for these things,
+consider the following example in the case of <span class="math inline">\(\mathcal{V} ≔ \mathsf{Set}\)</span>.
+We know how coequalisers look in the category of sets: they are merely certain equivalence relations.
+Squinting at the above definition of the coend,
+one wants to identify <span class="math inline">\(P(f, V)(x)\)</span> with <span class="math inline">\(P(W, f)(x)\)</span>,
+for sets <span class="math inline">\(V\)</span> and <span class="math inline">\(W\)</span>, <span class="math inline">\(x \in P(W, V)\)</span>, and <span class="math inline">\(f \colon V \to W\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+In the special case that <span class="math inline">\(P\)</span> is the hom-functor,
+the induced maps are <span class="math inline">\(\mathcal{C}(W, V) \ni g \mapsto g \circ f\)</span>, and <span class="math inline">\(g \mapsto f \circ g\)</span>.
+I.e., given <span class="math inline">\(x \colon W \to V\)</span> and <span class="math inline">\(f \colon V \to W\)</span>,
+we have <span class="math inline">\(x \circ f \sim f \circ x\)</span>.
+Thus, the coend in this case can be seen as a kind of abelianisation of arrows.</p>
+<h2 id="the-tensor-product-of-mathbbs-modules">The tensor product of <span class="math inline">\(\mathbb{S}\)</span>-modules</h2>
+<p>Consider the following category <span class="math inline">\(\mathbb{S}\)</span>:
+objects are natural numbers,
+and morphism spaces are given by <span class="math inline">\(\mathbb{S}(n, m) = S_n\)</span> if <span class="math inline">\(n = m\)</span>, and <span class="math inline">\(0\)</span> otherwise,
+where <span class="math inline">\(S_n\)</span> is the symmetric group of <span class="math inline">\(n\)</span> elements.</p>
+<p>Again staying firmly in the case that <span class="math inline">\(\mathcal{V} = \mathsf{Vect}_{\mathtt{k}}\)</span>,
+an <em><span class="math inline">\(\mathbb{S}\)</span>-module</em> is a family of vector spaces <span class="math inline">\(F = (F0, F1, F2, \dots)\)</span>,
+each of which is a left <span class="math inline">\(\mathtt{k}S_n\)</span>-module.
+Alternatively, it is a functor from <span class="math inline">\(\mathbb{S}\)</span> to <span class="math inline">\(\mathcal{V}\)</span>—this is,
+of course, where the convolution product comes into play.
+The category of S-modules is usually denoted by <span class="math inline">\(\mathbb{S}\text{-}\mathrm{Mod}\)</span>.</p>
+<p>This construction might seem somewhat artificial at first,
+but as mentioned <a href="https://ncatlab.org/nlab/show/operad">(symmetric) operads</a> turn out to be <span class="math inline">\(\mathbb{S}\)</span>-modules
+that are also monoids with respect to a certain monoidal structure
+(not the Day convolution, but a related one).
+As such, <span class="math inline">\(\mathbb{S}\)</span>-modules are quite well studied as a category.</p>
+<p>One could put quite a few monoidal structures on <span class="math inline">\(\mathbb{S}\)</span>,
+but what is usually called the <em>tensor product of <span class="math inline">\(\mathbb{S}\)</span>-modules</em> is defined as follows:
+given <span class="math inline">\(F, G \in \mathbb{S}\text{-}\mathrm{Mod}\)</span>, let
+<span class="math display">\[
+  (F \otimes G)r ≔ \bigoplus_{n + m = r} \mathsf{Ind}_{S_n \times S_m}^{S_r} Fn \otimes_{\mathtt{k}} Gm,
+\]</span>
+where <span class="math inline">\(\mathsf{Ind}_{S_n \times S_m}^{S_r}\)</span> denotes the <a href="https://ncatlab.org/nlab/show/induced+representation">induced representation</a>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+Alternatively, one could write this with <a href="https://ncatlab.org/nlab/show/shuffle">shuffles</a>:
+<span class="math display">\[
+  (F \otimes G)r ≔ \bigoplus_{n + m = r} \mathtt{k}\mathrm{Shuf}(n, m) \otimes_{\mathtt{k}} Fn \otimes_{\mathtt{k}} Gm,
+\]</span></p>
+<p>This tensor product doesn’t look super different than the convolution product above,
+but it remains to see that the equivalence relation generated by the coequaliser really glues things together in just the right way.
+Let’s try that.</p>
+<h2 id="bringing-everything-together">Bringing everything together</h2>
+<p>In a slightly more general setting,
+considering now a category <span class="math inline">\(\mathcal{C}\)</span> instead of <span class="math inline">\(\mathbb{S}\)</span>,
+but still fixing vector spaces over <span class="math inline">\(\mathtt{k}\)</span> for <span class="math inline">\(\mathcal{V}\)</span>,
+the Day convolution <span class="math inline">\(F \star G\)</span> evaluated at <span class="math inline">\(x \in \mathcal{C}\)</span> can be expressed as</p>
+<p><span class="math display">\[
+  \bigoplus_{\substack{f \colon a \to a' \\ g \colon b \to b'}}
+    \mathtt{k}\mathcal{C}(a' \otimes b', x) \otimes_{\mathtt{k}} Fa \otimes_{\mathtt{k}} Gb
+  \rightrightarrows
+  \bigoplus_{a, b \in \mathcal{C}}
+    \mathtt{k}\mathcal{C}(a \otimes b, x) \otimes_{\mathtt{k}} Fa \otimes_{\mathtt{k}} Gb.
+\]</span></p>
+<p>Looking at the induced arrows,
+and—as usual—considering only elementary tensors,
+on the left side we have “tuples” of
+<span class="math display">\[
+  h \colon a' \otimes b' \to x,\quad  v \in Fa,\quad  w \in Gb.
+\]</span>
+They are then mapped to either
+<span class="math display">\[
+  h \circ (f \otimes g) \colon a \otimes b \to x,\quad  v \in Fa,\quad  w \in Gb
+\]</span>
+or
+<span class="math display">\[
+  h \colon a' \otimes b' \to x,\quad (Ff) v \in Fa',\quad (Gg) w \in Gb',
+\]</span>
+and these two representations are identified.</p>
+<p>In the special example of operads,
+the above coequaliser is easier to
+understand—remember that <span class="math inline">\(\mathbb{S}\)</span> is a category with only endomorphisms.
+Thus, all factors in the coproduct where <span class="math inline">\(a + b \neq x\)</span> are automatically 0,
+due to <span class="math inline">\(\mathbb{S}(a + b, x)\)</span> vanishing.
+As such, the whole thing transforms into something along the lines of</p>
+<p><span class="math display">\[
+  \bigoplus_{\substack{\sigma \in S_n \\ \tau \in S_m \\ n + m = r}}
+    \mathtt{k}\mathbb{S}(n + m, r) \otimes_{\mathtt{k}} Fn \otimes_{\mathtt{k}} Gm
+  \rightrightarrows
+  \bigoplus_{n + m = r}
+    \mathtt{k}\mathbb{S}(n + m, r) \otimes_{\mathtt{k}} Fn \otimes_{\mathtt{k}} Gm.
+\]</span></p>
+<p>The identifications
+<span class="math display">\[
+  h \circ (\sigma + \tau),\,  v,\,  w \quad\sim\quad h,\, (F\sigma) v,\, (G\tau) w
+\]</span>
+now look an awful lot like identifying some left actions with some right actions.
+Indeed, due to the extra condition that <span class="math inline">\(n + m = r\)</span>,
+we are effectively permuting <span class="math inline">\(r\)</span>
+by applying the action of two partitions of size <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span>—a shuffle product!
+Overall, the expression
+<span class="math display">\[
+  \big(\!\!\!\!
+    \bigoplus_{n + m = r} \mathtt{k}\mathbb{S}(n + m, r) \otimes_{\mathtt{k}} Fn \otimes_{\mathtt{k}} Gm
+  \big)
+  /
+  {\sim}
+\]</span>
+simplifies to
+<span class="math display">\[
+  \bigoplus_{n + m = r} \mathtt{k}\mathrm{Shuf}(n,m)  \otimes_{\mathtt{k}} Fn \otimes_{\mathtt{k}} Gm,
+\]</span>
+or, in different notation,
+<span class="math display">\[
+  \bigoplus_{n + m = r} \mathsf{Ind}_{S_n \times S_m}^{S_k} Fn \otimes_{\mathtt{k}} Gm,
+\]</span>
+which is exactly the kind of formula that we wanted to end up with. Neat.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Provided some extra technical conditions:
+<span class="math inline">\(\mathcal{C}\)</span> should be small,
+and <span class="math inline">\(\mathcal{V}\)</span> should be cocomplete,
+with the tensor product preserving colimits in both variables.
+Alternatively, one could talk about enriched categories and functors,
+but since I will work with <span class="math inline">\(\mathcal{V} = \mathsf{Vect}_{\mathtt{k}}\)</span> for most of the post,
+these more involved concepts seem overkill.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Really, this definition always works,
+one just needs to substitute the <span class="math inline">\(\mathtt{k}\)</span>-linearisation of the hom-set
+with a <a href="https://ncatlab.org/nlab/show/copower">Copower</a>.
+I have written about these things <a href="https://tony-zorman.com/posts/weighted-colimits.html#copowers">before</a>,
+just in a different context.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} 󠀠
+󠀠</p>
+<p>The big direct sum
+<span class="math inline">\(\bigoplus_{f \colon V \to W}\)</span> is shorthand for <span class="math inline">\(\bigoplus_{V, W} \bigoplus_{f \in \mathcal{V}(V, W)}\)</span>.
+Really, this is a coproduct in general,
+but we are in <span class="math inline">\(\mathsf{Vect}_{\mathtt{k}}\)</span>,
+so writing a direct sum here is appropriate.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>This may or may not be an equivalence relation,
+but we can always complete to one.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>{-} As an aside (literally),
+equipped with the tensor product of <span class="math inline">\(\mathbb{S}\)</span>-modules,
+it’s not so hard to define the <em>plethysm product</em> <span class="math inline">\(\odot\)</span>,
+which is actually the one that operads are monoids for:
+<span class="math display">\[
+    (F \odot G)n ≔ \bigoplus_{m \geq 0} Fm \otimes_{S_m} G^{\star m}n.
+  \]</span>
+This can, of course, also be expressed with coends:
+<span class="math display">\[
+    (F \odot G)n ≔ \int^{m} Fm \otimes_{\mathtt{k}} G^{\star m}n.
+  \]</span>
+In both expressions,
+<span class="math inline">\(G^{\star m}\)</span> is the <span class="math inline">\(m\)</span>-fold tensor product (Day convolution) of <span class="math inline">\(G\)</span> with itself.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Duality in Monoidal Categories</title>
     <link href="https://tony-zorman.com/posts/duality-in-monoidal-categories.html" />
     <id>https://tony-zorman.com/posts/duality-in-monoidal-categories.html</id>

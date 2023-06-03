@@ -20,6 +20,7 @@ staticCompileMathJax () {
             sed -e 's/≔/\\mathrel{\\vcenter{:}}=/g' | \
             # A poor person's macros!
             sed -e 's/\\to/\\longrightarrow/g'      | \
+            sed -e 's/\\mapsto/\\longmapsto/g'      | \
 
             # Generate the maths
             ./mathjax-node-page/bin/mjpage --output SVG --width 71 | \
