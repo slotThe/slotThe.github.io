@@ -10,18 +10,18 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2023-05-28T00:00:00Z</updated>
+    <updated>2023-06-12T00:00:00Z</updated>
     <entry>
     <title>The tensor product of S-modules is a convolution product</title>
     <link href="https://tony-zorman.com/posts/day-convolution-for-operads.html" />
     <id>https://tony-zorman.com/posts/day-convolution-for-operads.html</id>
-    <published>2023-05-28T00:00:00Z</published>
-    <updated>2023-05-28T00:00:00Z</updated>
+    <published>2023-06-12T00:00:00Z</published>
+    <updated>2023-06-12T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <p class="header">
-      Posted on 2023-05-28
+      Posted on 2023-06-12
       
-      &thinsp;·&thinsp; <span title="1501 words">7 min read</span>
+      &thinsp;·&thinsp; <span title="1520 words">7 min read</span>
       
         &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
@@ -38,7 +38,7 @@
   <p>Classically, (algebraic) symmetric <a href="https://ncatlab.org/nlab/show/operad">operads</a> are defined as certain graded objects,
 each level coming equipped with a nice action of the symmetric group,
 which are also monoids in some sense.
-While it is often noted that the grading and action represent exactly the data of a functor,
+While it is often noted that the grading and action correspond exactly to the data of a functor,
 the fact that virtually all of the structure needed to define operads can be expressed categorically is often passed by,
 which I think is quite the shame!
 In this post I want to explicitly calculate the Day convolution for symmetric operads in the category of
@@ -50,8 +50,7 @@ story—all of which is wonderfully explained in <a href="http://www.tac.mta.ca/
 think focusing on the tensor product of <span class="math inline">\(\mathbb{S}\)</span>-modules in the case of vector spaces already gives one a clue
 as to how this whole translation works in general.</p>
 <h2 id="the-day-convolution-product">The Day convolution product</h2>
-<p>In general,
-if we have nice enough categories <span class="math inline">\(\mathcal{C}\)</span> and <span class="math inline">\(\mathcal{V}\)</span>,
+<p>If we have nice enough categories <span class="math inline">\(\mathcal{C}\)</span> and <span class="math inline">\(\mathcal{V}\)</span>,
 then the functor category <span class="math inline">\([\mathcal{C}, \mathcal{V}]\)</span> inherits many of the properties of the two parent categories.
 One of them is being <em>monoidal</em>; if there are nice functors
 <span class="math display">\[
@@ -89,27 +88,34 @@ The little integral sign above is called a <em>coend</em>.
 These are nice universal objects, and show up all the time when working with functor categories.
 Still in the case of <span class="math inline">\(\mathcal{V} ≔ \mathsf{Vect}_{\mathtt{k}}\)</span>,
 suppose that <span class="math inline">\(P \colon \mathcal{C}^{\mathrm{op}} \otimes \mathcal{C} \to \mathcal{V}\)</span> is a functor.
-In general, one can speak of the coend <span class="math inline">\(\int^{V \in \mathcal{V}} P(V, V)\)</span> of that functor;
+In general, one can speak of the coend <span class="math inline">\(\int^{c \in \mathcal{C}} P(c, c)\)</span> of that functor;
 a more explicit description can be given as a certain coequaliser:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
 <span class="math display">\[
- \bigoplus_{f \colon V \to W} P(W, V) \rightrightarrows \bigoplus_{V} P(V, V) \twoheadrightarrow \int^{V} P(V, V).
+ \bigoplus_{f \colon c \to d} P(d, c) \rightrightarrows \bigoplus_{c} P(c, c) \twoheadrightarrow \int^{c} P(c, c).
 \]</span>
-For a linear map <span class="math inline">\(f \colon V \to W\)</span>,
+For a morphism <span class="math inline">\(f \colon c \to d\)</span>,
 the two parallel arrows are induced by
 <span class="math display">\[
-  P(f, V) \colon P(W, V) \to P(V, V) \quad \text{and} \quad P(W, f) \colon P(W, V) \to P(W, W).
+  P(f, c) \colon P(d, c) \to P(c, c) \quad \text{and} \quad P(d, f) \colon P(d, c) \to P(d, d).
 \]</span></p>
 <p>To get a feeling for these things,
 consider the following example in the case of <span class="math inline">\(\mathcal{V} ≔ \mathsf{Set}\)</span>.
 We know how coequalisers look in the category of sets: they are merely certain equivalence relations.
-Squinting at the above definition of the coend,
-one wants to identify <span class="math inline">\(P(f, V)(x)\)</span> with <span class="math inline">\(P(W, f)(x)\)</span>,
-for sets <span class="math inline">\(V\)</span> and <span class="math inline">\(W\)</span>, <span class="math inline">\(x \in P(W, V)\)</span>, and <span class="math inline">\(f \colon V \to W\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
-In the special case that <span class="math inline">\(P\)</span> is the hom-functor,
-the induced maps are <span class="math inline">\(\mathcal{C}(W, V) \ni g \mapsto g \circ f\)</span>, and <span class="math inline">\(g \mapsto f \circ g\)</span>.
-I.e., given <span class="math inline">\(x \colon W \to V\)</span> and <span class="math inline">\(f \colon V \to W\)</span>,
+Squinting at the induced arrows,
+one wants to identify <span class="math inline">\(P(f, c)(x)\)</span> with <span class="math inline">\(P(d, f)(x)\)</span>,
+for <span class="math inline">\(c, d \in \mathcal{C}\)</span>,
+<span class="math inline">\(x \in P(d, c)\)</span>,
+and <span class="math inline">\(f \colon c \to d\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+In the special case that <span class="math inline">\(P\)</span> is the hom-functor <span class="math inline">\(\mathcal{C}({-},{-})\)</span>,
+the induced maps are
+<span class="math display">\[
+  {-} \circ f \colon \mathcal{C}(d, c) \to \mathcal{C}(c, c)
+  \qquad \text{and} \qquad
+  f \circ {-} \colon \mathcal{C}(d, c) \to \mathcal{C}(d, d).
+\]</span>
+More plainly, given <span class="math inline">\(x \colon d \to c\)</span> and <span class="math inline">\(f \colon c \to d\)</span>,
 we have <span class="math inline">\(x \circ f \sim f \circ x\)</span>.
-Thus, the coend in this case can be seen as a kind of abelianisation of arrows.</p>
+Thus, the coend here can be seen as a kind of abelianisation of arrows.</p>
 <h2 id="the-tensor-product-of-mathbbs-modules">The tensor product of <span class="math inline">\(\mathbb{S}\)</span>-modules</h2>
 <p>Consider the following category <span class="math inline">\(\mathbb{S}\)</span>:
 objects are natural numbers,
@@ -120,9 +126,9 @@ an <em><span class="math inline">\(\mathbb{S}\)</span>-module</em> is a family o
 each of which is a left <span class="math inline">\(\mathtt{k}S_n\)</span>-module.
 Alternatively, it is a functor from <span class="math inline">\(\mathbb{S}\)</span> to <span class="math inline">\(\mathcal{V}\)</span>—this is,
 of course, where the convolution product comes into play.
-The category of S-modules is usually denoted by <span class="math inline">\(\mathbb{S}\text{-}\mathrm{Mod}\)</span>.</p>
+The category of <span class="math inline">\(\mathbb{S}\)</span>-modules is usually denoted by <span class="math inline">\(\mathbb{S}\text{-}\mathrm{Mod}\)</span>.</p>
 <p>This construction might seem somewhat artificial at first,
-but as mentioned <a href="https://ncatlab.org/nlab/show/operad">(symmetric) operads</a> turn out to be <span class="math inline">\(\mathbb{S}\)</span>-modules
+but—as mentioned before—<a href="https://ncatlab.org/nlab/show/operad">(symmetric) operads</a> turn out to be <span class="math inline">\(\mathbb{S}\)</span>-modules
 that are also monoids with respect to a certain monoidal structure
 (not the Day convolution, but a related one).
 As such, <span class="math inline">\(\mathbb{S}\)</span>-modules are quite well studied as a category.</p>
@@ -141,10 +147,11 @@ Alternatively, one could write this with <a href="https://ncatlab.org/nlab/show/
 but it remains to see that the equivalence relation generated by the coequaliser really glues things together in just the right way.
 Let’s try that.</p>
 <h2 id="bringing-everything-together">Bringing everything together</h2>
-<p>In a slightly more general setting,
-considering now a category <span class="math inline">\(\mathcal{C}\)</span> instead of <span class="math inline">\(\mathbb{S}\)</span>,
-but still fixing vector spaces over <span class="math inline">\(\mathtt{k}\)</span> for <span class="math inline">\(\mathcal{V}\)</span>,
-the Day convolution <span class="math inline">\(F \star G\)</span> evaluated at <span class="math inline">\(x \in \mathcal{C}\)</span> can be expressed as</p>
+<p>In a slightly more general setting—now considering
+an arbitrary (monoidal) category <span class="math inline">\(\mathcal{C}\)</span> instead of <span class="math inline">\(\mathbb{S}\)</span>,
+but still fixing vector spaces over <span class="math inline">\(\mathtt{k}\)</span> for
+<span class="math inline">\(\mathcal{V}\)</span>—the
+Day convolution <span class="math inline">\(F \star G\)</span> evaluated at <span class="math inline">\(x \in \mathcal{C}\)</span> can be expressed as</p>
 <p><span class="math display">\[
   \bigoplus_{\substack{f \colon a \to a' \\ g \colon b \to b'}}
     \mathtt{k}\mathcal{C}(a' \otimes b', x) \otimes_{\mathtt{k}} Fa \otimes_{\mathtt{k}} Gb
@@ -170,19 +177,20 @@ and these two representations are identified.</p>
 <p>In the special example of operads,
 the above coequaliser is easier to
 understand—remember that <span class="math inline">\(\mathbb{S}\)</span> is a category with only endomorphisms.
-Thus, all factors in the coproduct where <span class="math inline">\(a + b \neq x\)</span> are automatically 0,
-due to <span class="math inline">\(\mathbb{S}(a + b, x)\)</span> vanishing.
-As such, the whole thing transforms into something along the lines of</p>
+Thus, due to <span class="math inline">\(\mathbb{S}(a + b, x)\)</span> vanishing, all factors in the coproduct where <span class="math inline">\(a + b \neq x\)</span> are automatically 0.
+As such, the whole thing transforms into</p>
 <p><span class="math display">\[
-  \bigoplus_{\substack{\sigma \in S_n \\ \tau \in S_m \\ n + m = r}}
+  \bigoplus_{\substack{\sigma \in S_n \\ \tau \in S_m \\ n + m = r}}\!\!\!
     \mathtt{k}\mathbb{S}(n + m, r) \otimes_{\mathtt{k}} Fn \otimes_{\mathtt{k}} Gm
   \rightrightarrows
-  \bigoplus_{n + m = r}
+  \!\bigoplus_{n + m = r}\!\!
     \mathtt{k}\mathbb{S}(n + m, r) \otimes_{\mathtt{k}} Fn \otimes_{\mathtt{k}} Gm.
 \]</span></p>
 <p>The identifications
 <span class="math display">\[
-  h \circ (\sigma + \tau),\,  v,\,  w \quad\sim\quad h,\, (F\sigma) v,\, (G\tau) w
+  h \circ (\sigma + \tau),\quad v         ,\quad w
+  \qquad\sim\qquad
+  h                      ,\quad (F\sigma) v,\quad (G\tau) w
 \]</span>
 now look an awful lot like identifying some left actions with some right actions.
 Indeed, due to the extra condition that <span class="math inline">\(n + m = r\)</span>,
@@ -241,7 +249,10 @@ This can, of course, also be expressed with coends:
     (F \odot G)n ≔ \int^{m} Fm \otimes_{\mathtt{k}} G^{\star m}n.
   \]</span>
 In both expressions,
-<span class="math inline">\(G^{\star m}\)</span> is the <span class="math inline">\(m\)</span>-fold tensor product (Day convolution) of <span class="math inline">\(G\)</span> with itself.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<span class="math inline">\(G^{\star m}\)</span> is the <span class="math inline">\(m\)</span>-fold tensor product (Day convolution) of <span class="math inline">\(G\)</span> with itself:
+<span class="math display">\[
+    \int^{r_1 \dots r_m}\!\! \mathbb{S}(r_1 + \dots + r_m, n) \otimes G r_1 \otimes \dots \otimes G r_m.
+  \]</span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -265,7 +276,7 @@ In both expressions,
       
       &thinsp;·&thinsp; <span title="868 words">4 min read</span>
       
-        &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>
+        &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
     </p>
     <section>
@@ -425,7 +436,7 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
       
       &thinsp;·&thinsp; <span title="3817 words">16 min read</span>
       
-        &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>
+        &thinsp;·&nbsp; <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
     </p>
     <section>
@@ -936,7 +947,7 @@ is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">�
       
       &thinsp;·&thinsp; <span title="2284 words">10 min read</span>
       
-        &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html">maths</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html">xmonad</a>
+        &thinsp;·&nbsp; <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html" rel="tag">xmonad</a>
       
     </p>
     <section>
