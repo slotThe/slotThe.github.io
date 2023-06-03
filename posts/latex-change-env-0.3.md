@@ -12,7 +12,7 @@ figure now that the library has reached a state where I'm not ashamed of
 it anymore—at least, not at the time of writing this—it may warrant its
 own post.
 
-[research workflow]: ./my-phd-workflow.html#digital-notes
+[research workflow]: https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes
 
 <!--more-->
 
@@ -203,4 +203,4 @@ and [MELPA][melpa:latex-change-env]!
 
 [gitlab:latex-change-env]: https://gitlab.com/slotThe/change-env
 [github:latex-change-env]: https://github.com/slotThe/change-env
-[melpa:latex-change-env]: https://www.melpa.org/#/latex-change-env
+[melpa:latex-change-env]: https://melpa.org/#/latex-change-env

@@ -4,10 +4,8 @@ packages:
   - .
 
 extra-deps:
-  - hakyll-4.15.1.1
-  # XXX: Until https://github.com/jez/pandoc-sidenote/pull/26 is merged.
-  - git: https://github.com/slotThe/pandoc-sidenote
-    commit: 88a395460ffd289d3487eaf95f020b7eba141425
+  - /home/slot/repos/haskell/hakyll
+  - /home/slot/repos/haskell/pandoc-sidenote
 
 flags:
   pandoc-sidenote:

@@ -844,7 +844,7 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
   <p>I’ve just released version 0.3 of <code>latex-change-env</code>, featuring some
 major improvements with regard to inline maths and macro handling; this
 seems as good a time as any to talk about the package in full. I
-briefly mentioned it in the post about my <a href="./my-phd-workflow.html#digital-notes">research workflow</a>, but I
+briefly mentioned it in the post about my <a href="https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes">research workflow</a>, but I
 figure now that the library has reached a state where I’m not ashamed of
 it anymore—at least, not at the time of writing this—it may warrant its
 own post.</p>
@@ -966,13 +966,13 @@ the response one gets from <code>LaTeX-what-macro</code> is quite general, so I
 reckon it wouldn’t be too hard to cook up a more general implementation.</p>
 <p>Again, if you want to give the package a spin then you can find it on
 <a href="https://gitlab.com/slotThe/change-env">GitLab</a>, <a href="https://github.com/slotThe/change-env">GitHub</a>,
-and <a href="https://www.melpa.org/#/latex-change-env">MELPA</a>!</p>
+and <a href="https://melpa.org/#/latex-change-env">MELPA</a>!</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Available on <a href="https://gitlab.com/slotThe/change-env">GitLab</a> and
 <a href="https://github.com/slotThe/change-env">GitHub</a>, as well as
-<a href="https://www.melpa.org/#/latex-change-env">MELPA</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<a href="https://melpa.org/#/latex-change-env">MELPA</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>At least, macros taking exactly only argument, which is what
 support is currently restricted to; contributions welcome!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>In the context of this package, by “environment” I will often mean
