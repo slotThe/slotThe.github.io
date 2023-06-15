@@ -11,11 +11,12 @@ import Data.Text qualified as T
 
 import Control.Monad
 import Data.List (foldl')
+import qualified Data.Map.Strict as Map
 import Data.Maybe
 import Data.Text (Text)
 import Hakyll
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
-import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc)
+import Text.Pandoc.Definition (Block (..), Inline (..), Meta (..), MetaValue (..), Pandoc (Pandoc))
 import Text.Pandoc.Options
 import Text.Pandoc.Shared (headerShift)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
@@ -37,6 +38,10 @@ main = hakyllWith config do
 
   --- Redirects
   version "redirects" $ createRedirects redirects
+
+  --- Citations
+  match "bib/style.csl"        $ compile cslCompiler    -- labels: [DaPaSt07]
+  match "bib/bibliography.bib" $ compile biblioCompiler
 
   --- Generate tags
   tags@Tags{ tagsMap , tagsMakeId } <- buildTags "posts/**" (fromCapture "tags/**.html")
@@ -73,7 +78,7 @@ main = hakyllWith config do
   --- Sidebar "about"ish sites.
   match (fromList ["research.md", "free-software.md"]) do
     route $ setExtension "html"
-    compile $ do
+    compile do
       tocCtx <- getTocCtx defaultContext
       myPandocCompiler
         >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
@@ -92,7 +97,7 @@ main = hakyllWith config do
   --- An individual post
   match allPosts do
     route $ setExtension "html"
-    compile $ do
+    compile do
       tocCtx <- getTocCtx tagCtx
       -- Atom feeds get their own compiler, since the website uses a lot
       -- of stuff (sidenotes, small-caps…) that doesn't work in feeds.
@@ -171,25 +176,39 @@ defaultCtxWithTags tagAssocs = listField "tags" tagCtx tagAssocs <> defaultConte
 --   + TOC toggling: https://github.com/duplode/duplode.github.io/blob/sources/src/site.hs
 --
 -- However, note that this is /not/ part of 'myPandocCompiler' for good
--- reasons.  I also want section links as part of the heading (see
+-- reasons. I also want section links as part of the heading (see
 -- 'myPandocCompiler'), but these should not show up in the table of
 -- contents for obvious reasons.
 --
--- Hence, this function (i) creates a writer that has my preferred
--- writer settings, (ii) already renders this with pandoc, and (iii)
--- adds the finished thing as a constant field to the metadata of the
--- current entry.  Additionally, the @no-toc@ option is honoured insofar
--- as a @no-toc@ boolean field is introduced, which can be used from the
--- post template (@.\/templates\/post.html@).
+-- Hence, this function
 --
--- There is some CSS that makes section links only show on hover in
+--     (i) creates a writer that has my preferred writer settings,
+--
+--    (ii) already renders this with pandoc, and
+--
+--   (iii) adds the finished thing as a constant field to the metadata
+--         of the current entry.
+--
+-- Additionally, the @no-toc@ option is honoured insofar as a @no-toc@
+-- boolean field is introduced, which can be used from the post template
+-- (@.\/templates\/post.html@).
+--
+-- Further, because the table of contents is pre-generated here and then
+-- never touched again, this function also needs to check for the @bib@
+-- metadata field. If this is present, an extra "References" section is
+-- added to the TOC. The actual generating of bibtex data is done in the
+-- 'myPandocCompiler' function, however.
+--
+-- There is some CSS that makes section links only show on hover.
 getTocCtx :: Context a -> Compiler (Context a)
 getTocCtx ctx = do
   noToc      <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "no-toc"))
+  bib        <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "bib"))
   writerOpts <- mkTocWriter defaultHakyllWriterOptions
   toc        <- renderPandocWith defaultHakyllReaderOptions writerOpts =<< getResourceBody
   pure $ mconcat [ ctx
-                 , constField "toc" (killLinkIds (itemBody toc))
+                 , constField "toc" $
+                     (if bib then addBibHeading else id) $ killLinkIds (itemBody toc)
                  , if noToc then boolField "no-toc" (pure noToc) else mempty
                  ]
  where
@@ -219,6 +238,17 @@ getTocCtx ctx = do
     go = \case
       []     -> []
       x : xs -> x : map (T.drop 1 . T.dropWhile (/= '\"')) xs
+
+  -- If needed, add a heading for the bibliography at the very end of
+  -- the TOC.
+  addBibHeading :: String -> String
+  addBibHeading s = T.unpack . mconcat $
+    [ T.dropEnd 5 before
+    , "<li><a href=\"#references\">References</a></li></ul>"
+    , after
+    ]
+   where
+    (before, after) = T.breakOnEnd "</ul>" (T.pack s)
 
 -----------------------------------------------------------------------
 -- Util
@@ -290,6 +320,25 @@ killTags open close = go
 -----------------------------------------------------------------------
 -- Compilers
 
+-- | Like 'renderPandocWithTransformM', but work on an 'Item' 'Pandoc'
+-- instead of just a 'Pandoc'.
+myRenderPandocWithTransformM
+  :: ReaderOptions -> WriterOptions
+  -> (Item Pandoc -> Compiler (Item Pandoc))
+  -> Item String
+  -> Compiler (Item String)
+myRenderPandocWithTransformM ropt wopt f i =
+    writePandocWith wopt <$> (f =<< readPandocWith ropt i)
+
+-- | Like 'pandocCompilerWithTransformM', but work on an 'Item' 'Pandoc'
+-- instead of just a 'Pandoc'.
+myPandocCompilerWithTransformM
+  :: ReaderOptions -> WriterOptions
+  -> (Item Pandoc -> Compiler (Item Pandoc))
+  -> Compiler (Item String)
+myPandocCompilerWithTransformM ropt wopt f =
+    getResourceBody >>= myRenderPandocWithTransformM ropt wopt f
+
 myWriter :: WriterOptions
 myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
 
@@ -298,26 +347,32 @@ myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
 pandocRssCompiler :: Compiler (Item String)
 pandocRssCompiler = pandocCompilerWorker pure
 
-pandocCompilerWorker :: (Pandoc -> Compiler Pandoc) -> Compiler (Item String)
+pandocCompilerWorker :: (Item Pandoc -> Compiler (Item Pandoc)) -> Compiler (Item String)
 pandocCompilerWorker =
-  pandocCompilerWithTransformM
+  myPandocCompilerWithTransformM
     defaultHakyllReaderOptions
     myWriter
-    . (. headerShift 1)                   -- only the `title' should be <h1>
+    -- Only the `title' should be <h1>. This needs to be here so that
+    -- headings are shifted down for both 'myPandocCompiler', and
+    -- 'pandocRssCompiler' .
+    . ((fmap . fmap) (headerShift 1) .)
 
 -- | Pandoc compiler with syntax highlighting (via @pygmentize@),
 -- sidenotes instead of footnotes (see @css/sidenotes.css@ and
 -- @src/Sidenote.hs@), automatic small-caps for certain abbreviations,
--- and section links.  Also see 'getTocCtx' for more table of contents
--- related things, and @./build.sh@ for LaTeX-rendering.
+-- section links, and referencing via bibtex. Also see 'getTocCtx' for
+-- the generation of a table of contents (see there for an explanation),
+-- and @./build.sh@ for LaTeX rendering.
 myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
-  pandocCompilerWorker
-    (   pure . usingSideNotesHTML myWriter  -- needs to be last because it renders html
-    <=< pygmentsHighlight
-    .   addSectionLinks
-    .   smallCaps
-    )
+  pandocCompilerWorker $
+    traverse
+      (   pure . usingSideNotesHTML myWriter  -- needs to be last because it renders html
+      <=< pygmentsHighlight
+      .   addSectionLinks
+      .   smallCaps
+      )
+    <=< processBib
  where
   -- https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
   addSectionLinks :: Pandoc -> Pandoc
@@ -336,6 +391,25 @@ myPandocCompiler =
    where
     callPygs :: String -> String -> Compiler String
     callPygs lang = unixFilter "pygmentize" ["-l", lang, "-f", "html"]
+
+  processBib :: Item Pandoc -> Compiler (Item Pandoc)
+  processBib pandoc = do
+    -- See @Citations@ in the main function.
+    csl <- load @CSL    "bib/style.csl"
+    bib <- load @Biblio "bib/bibliography.bib"
+    -- We do want to link citations.
+    p <- withItemBody
+           (\(Pandoc (Meta meta) bs) -> pure $
+             Pandoc (Meta $ Map.insert "link-citations" (MetaBool True) meta)
+                    bs)
+           pandoc
+    -- Generate citations and insert a heading for them.
+    fmap (walk insertRefHeading) <$> processPandocBiblio csl bib p
+    where
+      insertRefHeading :: [Block] -> [Block]
+      insertRefHeading = concatMap \case
+        d@(Div ("refs", _, _) _) -> [Header 1 ("references", [], []) [Str "References"], d]
+        block                    -> [block]
 
   -- This is very manual, but for now that's "good enough".
   smallCaps :: Pandoc -> Pandoc
