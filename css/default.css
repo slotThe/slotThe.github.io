@@ -55,6 +55,14 @@ div#content {           /* body width */
     }
 }
 
+/* Don't split up a citation over multiple lines. */
+div.csl-left-margin {
+    display: inline;
+}
+div.csl-right-inline {
+    display: inline;
+}
+
 /**********************************************************************
   FURTHER FONT SETTINGS
 */
