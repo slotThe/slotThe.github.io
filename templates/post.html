@@ -1,12 +1,16 @@
 <article>
     <p class="header">
-      Posted on $date$
+      $if(date)$
+        Posted on $date$
+      $endif$
       $if(last-modified)$
         &thinsp;·&thinsp; last modified: $last-modified$
       $endif$
-      &thinsp;·&thinsp; $estimated-reading-time$
+      $if(date)$
+        &thinsp;·&thinsp; $estimated-reading-time$ &thinsp;·&nbsp;
+      $endif$
       $if(tags)$
-        &thinsp;·&nbsp; $tags$
+        $tags$
       $endif$
     </p>
     <section>
