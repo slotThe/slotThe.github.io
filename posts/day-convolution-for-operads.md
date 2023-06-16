@@ -2,6 +2,7 @@
 title: The tensor product of S-modules is a convolution product
 date: 2023-06-12
 tags: maths
+bib: true
 ---
 
 Classically, (algebraic) symmetric [operads][nlab:operad] are defined as certain graded objects,
@@ -17,7 +18,7 @@ to show that it is nothing but the usual tensor product of modules.
 <!--more-->
 
 While there is more to this
-story—all of which is wonderfully explained in [[Kel05]]—I
+story—all of which is wonderfully explained in [@kelly05:operads]—I
 think focusing on the tensor product of $\mathbb{S}$-modules in the case of vector spaces already gives one a clue
 as to how this whole translation works in general.
 
@@ -206,7 +207,6 @@ which is exactly the kind of formula that we wanted to end up with. Neat.
 [nlab:induced-rep]: https://ncatlab.org/nlab/show/induced+representation
 [nlab:operad]: https://ncatlab.org/nlab/show/operad
 [nlab:shuffle]: https://ncatlab.org/nlab/show/shuffle
-[[Kel05]]: http://www.tac.mta.ca/tac/reprints/articles/13/tr13abs.html
 
 [^1]: For an appropriate definition of simple.
 

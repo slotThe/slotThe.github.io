@@ -3,6 +3,7 @@ title: Duality in Monoidal Categories
 date: 2023-01-10
 last-modified: 2023-01-12
 tags: maths
+bib: true
 ---
 
 I have a new preprint [on the arXiv][the paper]!  It is joint work with
@@ -10,8 +11,6 @@ Sebastian Halbig, and concerns itself with the interplay of different
 structures on monoidal categories that give rise to a notion of
 "duality".  At five pages, it is a very short paper; yet I'd still like
 to give a little teaser as to what kind of question we sought to answer.
-
-[the paper]: https://arxiv.org/abs/2301.03545
 
 <!--more-->
 
@@ -62,7 +61,7 @@ extra condition:
 > $$
 > Then $\mathcal{C}$ is \*-autonomous.
 
-Using the notion of a \*-autonomous category of [[BD13]]—that is, for
+Using the notion of a \*-autonomous category of [@boyarchenko13:groth-verdier]—that is, for
 every $x \in \mathcal{C}$ the functor $\mathcal{C}({-} \otimes x, 1)$ is
 representable by $Dx$—this becomes an exercise in "Yoneda Yoga".  More
 precisely, one uses the fact that the Yoneda embedding is fully faithful
@@ -138,17 +137,16 @@ snake identities for duals is (i) closed under exactly these relations,
 and (ii) all morphisms in this set have length at least two.  Hence, if
 we project any morphism down to $\mathcal{C}$, it can't possibly be the
 identity, and thus the snake identities for duals do not hold.  If you
-want more details, check [the paper]!
+want more details, check the paper [@halbig23:dualit-monoid-categ]!
 
 [\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
-[[BD13]]: https://zbmath.org/1370.18007
 [closed monoidal]: https://ncatlab.org/nlab/show/closed+monoidal+category
 [monoidal]: https://ncatlab.org/nlab/show/monoidal+category
 [rigid (monoidal)]: https://ncatlab.org/nlab/show/rigid+monoidal+category
 [the paper]: https://arxiv.org/abs/2301.03545
 
 [^1]: Or rather, a non-symmetric variant of it called an *r-category* in
-      [[BD13]].
+      [@boyarchenko13:groth-verdier].
 
 [^2]: This is not a coincidence; for example, adjoints in the monoidal
       category $([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})$ are
