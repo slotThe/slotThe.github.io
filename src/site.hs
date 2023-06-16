@@ -16,6 +16,8 @@ import Data.Maybe
 import Data.Text (Text)
 import Hakyll
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
+import Text.Pandoc.Builder (simpleTable, Many)
+import qualified Text.Pandoc.Builder as Many (toList, singleton)
 import Text.Pandoc.Definition (Block (..), Inline (..), Meta (..), MetaValue (..), Pandoc (Pandoc))
 import Text.Pandoc.Options
 import Text.Pandoc.Shared (headerShift)
@@ -403,13 +405,25 @@ myPandocCompiler =
              Pandoc (Meta $ Map.insert "link-citations" (MetaBool True) meta)
                     bs)
            pandoc
-    -- Generate citations and insert a heading for them.
-    fmap (walk insertRefHeading) <$> processPandocBiblio csl bib p
-    where
-      insertRefHeading :: [Block] -> [Block]
-      insertRefHeading = concatMap \case
-        d@(Div ("refs", _, _) _) -> [Header 1 ("references", [], []) [Str "References"], d]
-        block                    -> [block]
+    fmap (tableiseBib . insertRefHeading) <$> processPandocBiblio csl bib p
+   where
+    -- Insert a heading for the citations.
+    insertRefHeading :: Pandoc -> Pandoc
+    insertRefHeading = walk $ concatMap \case
+      d@(Div ("refs", _, _) _) -> [Header 1 ("references", [], []) [Str "References"], d]
+      block                    -> [block]
+
+    -- Arrange all citations in a table, so that they are nicely aligned.
+    -- This probably only works with label or numerical styles.
+    tableiseBib :: Pandoc -> Pandoc
+    tableiseBib = walk \case
+      Div a@("refs", _, _) body -> Div a (Many.toList (simpleTable [] (map citToRow body)))
+      body                      -> body
+     where
+      citToRow :: Block -> [Many Block]
+      citToRow = map Many.singleton . \case
+        Div attr [Para [s1, s2]] -> [Div attr [Plain [s1]], Plain [Space], Plain [s2]]
+        _                        -> error "citToRow: unexpected citation format."
 
   -- This is very manual, but for now that's "good enough".
   smallCaps :: Pandoc -> Pandoc

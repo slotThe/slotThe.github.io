@@ -62,6 +62,10 @@ div.csl-left-margin {
 div.csl-right-inline {
     display: inline;
 }
+/* Align citations to the top. */
+div#refs td {
+  vertical-align: top;
+}
 
 /**********************************************************************
   FURTHER FONT SETTINGS
