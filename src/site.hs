@@ -113,6 +113,17 @@ main = hakyllWith config do
         >>= loadAndApplyTemplate "templates/default.html"  tocCtx
         >>= relativizeUrls
 
+  --- Standalone sites
+  ---- Mackey functors seminar
+  match "mackey-functors.md" do
+    route $ setExtension "html"
+    compile do
+      tocCtx <- getTocCtx tagCtx
+      myPandocCompiler
+        >>= loadAndApplyTemplate "templates/post.html"       tocCtx
+        >>= loadAndApplyTemplate "templates/standalone.html" tocCtx
+        >>= relativizeUrls
+
   --- Lists of posts
   -- For showing all posts, we want a list of all posts, followed by a
   -- list of tags with associated posts.
