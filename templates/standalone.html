@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    $if(noindex)$
+      <meta name="robots" content="noindex">
+    $endif$
+
+    <title>$title$</title>
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="/css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="/css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="/css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        $if(no-toc)$
+        $else$ $if(toc)$
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            $toc$
+          </div>
+        $endif$ $endif$
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          $if(titleWithFeed)$
+            <h1>$titleWithFeed$</h1>
+          $else$ $if(title)$
+            <h1>$title$</h1>
+          $endif$ $endif$
+
+          $body$
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="/impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
