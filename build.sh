@@ -43,5 +43,5 @@ export -f staticCompileMathJax
 
 stack build
 stack exec site build
-find docs/posts -name '*.html' | parallel --jobs 31 --max-args=1 staticCompileMathJax
+find docs/ -name '*.html' | parallel --jobs 31 --max-args=1 staticCompileMathJax
 stack exec site server
