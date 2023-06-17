@@ -81,7 +81,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="4096 words">17 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="4152 words">17 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'hardware'." href="../tags/hardware.html" rel="tag">hardware</a>
@@ -398,7 +398,7 @@ Anyways, let’s actually talk about the layers now.
 .-----.-----.-----.-----.-----.           .-----.-----.-----.-----.------.
 |  A  |  R  |  S  |  T  |  G  |           |  M  |  N  |  E  |  I  |  O   |
 .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
-| S+Z |  X  |  C  |  D  |  V  | PGD | PGU |  K  |  H  |  ,  |  .  | S+/  |
+| S+Z |  X  |  C  |  D  |  V  | ARP | REP |  K  |  H  |  ,  |  .  | S+/  |
 .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
 | ESC | TAB | M4  | L1  | SPC | A[] | BSC | C() | L2  |  -  |  '  | RET  |
 .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
@@ -460,6 +460,14 @@ or a different package of choice usually takes care of inserting it.
 <p></p>
 Having essentially all parentheses on the base layer makes programming even more fun,
 especially the more parentheses-heavy languages—whether that’d be Clojure or Rust.
+<p></p>
+The <code>REP</code> and <code>AREP</code> keys make use of the <a href="https://docs.qmk.fm/#/feature_repeat_key">Repeat Key</a> functionality;
+basically, <code>REP</code> executes the key chord that was last pressed.
+On the other hand,
+<code>AREP</code> is an alternative, configurable, of “repeating” things;
+by default, it turns some directional movements
+around—e.g., <code>M-f</code> becomes <code>M-b</code>—but
+it can be made to pretty much input anything one wants.
 <h3 id="layer-1">Layer 1<a href="#layer-1" class="floatright sec-link">¶</a></h3>
 <div class="highlight"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-------.
 |  &amp;  | *&gt;  | &gt;&gt;= | &lt;&amp;&gt; |     |           |  =  |  +  |  *  |  -  | M4+RT |

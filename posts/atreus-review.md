@@ -231,7 +231,7 @@ Anyways, let's actually talk about the layers now.
     .-----.-----.-----.-----.-----.           .-----.-----.-----.-----.------.
     |  A  |  R  |  S  |  T  |  G  |           |  M  |  N  |  E  |  I  |  O   |
     .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
-    | S+Z |  X  |  C  |  D  |  V  | PGD | PGU |  K  |  H  |  ,  |  .  | S+/  |
+    | S+Z |  X  |  C  |  D  |  V  | ARP | REP |  K  |  H  |  ,  |  .  | S+/  |
     .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
     | ESC | TAB | M4  | L1  | SPC | A[] | BSC | C() | L2  |  -  |  '  | RET  |
     .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.------.
@@ -287,6 +287,14 @@ or a different package of choice usually takes care of inserting it.
 
 Having essentially all parentheses on the base layer makes programming even more fun,
 especially the more parentheses-heavy languages—whether that'd be Clojure or Rust.
+
+The `REP` and `AREP` keys make use of the [Repeat Key][qmk:repeat-key] functionality;
+basically, `REP` executes the key chord that was last pressed.
+On the other hand,
+`AREP` is an alternative, configurable, of "repeating" things;
+by default, it turns some directional movements
+around—e.g., `M-f` becomes `M-b`—but
+it can be made to pretty much input anything one wants.
 
 ## Layer 1
 
@@ -499,6 +507,7 @@ plus, building something yourself is much more rewarding than buying it!
 [qmk:key-overrides]: https://docs.qmk.fm/#/feature_key_overrides
 [qmk:macros]: https://docs.qmk.fm/#/feature_macros
 [qmk:mod-tap]: https://docs.qmk.fm/#/mod_tap
+[qmk:repeat-key]: https://docs.qmk.fm/#/feature_repeat_key
 [qmk:slotthe:rules.mk]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe/rules.mk
 [qmk:slotthe:tapdances]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe/keymap.c#L187
 [qmk:slotthe]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe
