@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Incorporating BibTeX into Hakyll · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#simple-setup">Simple setup</a></li>
+<li><a href="#integration-into-my-hakyll-setup">Integration into my Hakyll setup</a></li>
+<li><a href="#changing-the-look">Changing the look</a>
+<ul>
+<li><a href="#adding-a-header-for-the-references">Adding a header for the references</a></li>
+<li><a href="#prettifying-the-generated-references">Prettifying the generated references</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Incorporating BibTeX into Hakyll</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2023-06-20
+      
+      
+      
+        &thinsp;·&thinsp; <span title="2972 words">12 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#simple-setup">Simple setup</a></li>
+<li><a href="#integration-into-my-hakyll-setup">Integration into my Hakyll setup</a></li>
+<li><a href="#changing-the-look">Changing the look</a>
+<ul>
+<li><a href="#adding-a-header-for-the-references">Adding a header for the references</a></li>
+<li><a href="#prettifying-the-generated-references">Prettifying the generated references</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+
+<div>
+  When writing a blog post that feels academic—or pretentious—enough to invoke the need for citations,
+having them automatically generated feels like a mandatory requirement.
+I can only shudder to imagine the alternatives.
+<p></p>
+The good news is that LaTeX has solved this problem long ago;
+we now have BibTeX as a file format,
+and any number of programs,
+like <code>biblatex</code> or <code>natbib</code>,
+to generate good-looking citations from that.
+Further, everyone’s favourite document format converter<!--
+-->—pandoc—<!--
+-->has excellent support for leveraging this functionality.
+All that’s left is to integrate this into Hakyll;
+and to play around with it, of course!
+<!--more-->
+<h2 id="introduction">Introduction<a href="#introduction" class="floatright sec-link">¶</a></h2>
+<p></p>
+Pandoc—using the <a href="https://github.com/jgm/citeproc">citeproc</a> library—can
+make use of <a href="https://citationstyles.org/"><span class="small-caps">csl</span></a>,
+which is an <span class="small-caps">xml</span>-based formatting specification,<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you want some more information,
+the format describes itself as
+<blockquote>
+<p></p>
+an <span class="small-caps">xml</span>-based format to describe the formatting of citations,
+notes and bibliographies, offering:
+<ul>
+<li>An open format</li>
+<li>Compact and robust styles</li>
+<li>Extensive support for style requirements</li>
+<li>Automatic style localization</li>
+<li>Infrastructure for style distribution and updating</li>
+<li>Thousands of freely available styles (Creative Commons <span class="small-caps">by-sa</span> licensed)</li>
+</ul>
+</blockquote></div>
+
+in order to decide how the generated citations will be displayed.
+There are <em>a lot</em> of styles to choose from;
+the <a href="https://www.zotero.org/styles">Zotero Style Repository</a> alone sports around 10’000 different ones!
+I settled on one that closely resembles <code>biblatex</code>’s “alphabetic” style.
+<p></p>
+To not keep anyone in suspense, the final result looks like this:
+<div class="highlight">
+<p>
+This is a line citing
+<span>[<a href="#ref-benabou67:bicats-intro" role="doc-biblioref">Béna67</a>]</span>
+and
+<span>[<a href="ref-day07:lax-intro" role="doc-biblioref">DaPaSt07</a>]</span>.
+</p>
+<h2>
+References
+</h2>
+<div id="refs-intro" class="references csl-bib-body" role="doc-bibliography">
+<table>
+<tr>
+<div id="ref-benabou67:bicats-intro">
+<td style="vertical-align: top">
+<div class="csl-left-margin">
+[Béna67]
+</div>
+</td>
+<td>
+</td>
+<td>
+<div class="csl-right-inline">
+J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
+</div>
+</td>
+</div>
+</tr>
+<tr>
+<div id="ref-day07:lax-intro" class="csl-entry" role="doc-biblioentry">
+<td style="vertical-align: top">
+<div class="csl-left-margin">
+[DaPaSt07]
+</div>
+</td>
+<td>
+</td>
+<td>
+<div class="csl-right-inline">
+B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+</div>
+<p></p>
+The rest of the post will be a step by step explanation of how I arrived at this result,
+hopefully in a generic enough way such that the ideas presented here
+may translate to other problems that can be solved with pandoc filters.
+If you just want the code, however, the relevant commits are
+<a href="https://github.com/slotThe/slotThe.github.io/commit/62c6072243ee06d8df39813b7e35a6fd0ea1fe9d">here</a>,
+<a href="https://github.com/slotThe/slotThe.github.io/commit/c23b03522fcddca779f2a1e593a32b2e51284958">here</a>,
+and <a href="https://github.com/slotThe/slotThe.github.io/commit/f39352fd825ed6efad918de11b002734fdff03c4">here</a>.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">While this style is good enough for now,
+it’s still not quite perfect;
+suggestions for other styles would be most welcome!</div>
+<h2 id="simple-setup">Simple setup<a href="#simple-setup" class="floatright sec-link">¶</a></h2>
+<p></p>
+On the command line,
+the incantation one needs to write is quite simple:
+<div class="highlight"><pre><span></span>$<span class="w"> </span>pandoc<span class="w"> </span>--from<span class="o">=</span>markdown<span class="w"> </span>--to<span class="o">=</span>html<span class="w">                               </span><span class="se">\</span>
+<span class="w">         </span>--citeproc<span class="w"> </span>--biblatex<span class="w">                                   </span><span class="se">\</span>
+<span class="w">         </span>--csl<span class="o">=</span>bib/style.csl<span class="w"> </span>--bibliography<span class="o">=</span>bib/bibliography.bib<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>FILE.md
+</pre></div>
+
+<p></p>
+Integrating this into a basic Hakyll setup is not much more complicated,
+as some kind soul has given us
+<a href="https://hackage.haskell.org/package/hakyll-4.16.0.0/docs/Hakyll-Web-Pandoc-Biblio.html#v:pandocBiblioCompiler">Hakyll.Web.Pandoc.Biblio</a>—<!--
+-->a library specifically written to make use of pandoc’s bibliography handling.
+<p></p>
+In fact, <a href="https://jaspervdj.be/">Jasper Van der Jeugt</a> himself created a <a href="https://github.com/jaspervdj/hakyll-citeproc-example">tutorial</a> for this.
+Slightly abbreviated, it goes a bit like the following.
+First, we compile the <span class="small-caps">csl</span> and BibTeX files in our main function:
+<div class="highlight"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
+<span class="nf">main</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">hakyll</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="c1">-- …</span>
+<span class="w">  </span><span class="n">match</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span><span class="w">        </span><span class="o">$</span><span class="w"> </span><span class="n">compile</span><span class="w"> </span><span class="n">cslCompiler</span>
+<span class="w">  </span><span class="n">match</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">compile</span><span class="w"> </span><span class="n">biblioCompiler</span>
+<span class="w">  </span><span class="c1">-- …</span>
+</pre></div>
+
+<p></p>
+Next, we create a compiler
+with the help of the <code>readPandocBiblio</code> function:
+<div class="highlight"><pre><span></span><span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
+<span class="w">  </span><span class="n">bib</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span>
+<span class="w">  </span><span class="n">getResourceBody</span>
+<span class="w">    </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">readPandocBiblio</span><span class="w"> </span><span class="n">defaultHakyllReaderOptions</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span>
+<span class="w">    </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">writePandoc</span>
+</pre></div>
+
+<p></p>
+Since this kind of setup is so common,
+it is already packaged up in <code>pandoc​Biblio​Compiler</code>:
+<div class="highlight"><pre><span></span><span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">pandocBiblioCompiler</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span>
+</pre></div>
+
+<p></p>
+With all these pieces in place,
+this compiler can now be used in place of the default <code>pandocCompiler</code>;
+for example, instead of
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">-- somewhere in main</span>
+<span class="w">  </span><span class="n">compile</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">pandocCompiler</span>
+<span class="w">        </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">loadAndApplyTemplate</span><span class="w"> </span><span class="s">&quot;default.html&quot;</span><span class="w"> </span><span class="n">defaultContext</span>
+</pre></div>
+
+<p></p>
+one would write
+<div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">-- somewhere in main</span>
+<span class="w">  </span><span class="n">compile</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">myPandocBiblioCompiler</span>
+<span class="w">        </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">loadAndApplyTemplate</span><span class="w"> </span><span class="s">&quot;default.html&quot;</span><span class="w"> </span><span class="n">defaultContext</span>
+</pre></div>
+
+<p></p>
+And that’s all there is to it!
+Citations should now work out of the box using the <code>[@citation-name]</code> syntax.
+They appear like this:
+<div id="ref-first-try" class="highlight">
+<p>
+This is a line citing <span>[Béna67]</span>, and <span>[DaPaSt07]</span>.
+</p>
+<div>
+<div>
+<div>
+[Béna67]
+</div>
+<div>
+J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
+</div>
+</div>
+<div>
+<div>
+[DaPaSt07]
+</div>
+<div>
+B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
+</div>
+</div>
+</div>
+</div>
+<p></p>
+While the basic setup really is this easy,
+incorporating citations into a real-world Hakyll code base
+proves to be slightly more difficult<!--
+-->—not to mention addressing all of my neuroses.
+Let’s get straight into it.
+<h2 id="integration-into-my-hakyll-setup">Integration into my Hakyll setup<a href="#integration-into-my-hakyll-setup" class="floatright sec-link">¶</a></h2>
+<p></p>
+The most important bit is that,
+instead of a separate compiler,
+I would really rather have a <a href="https://pandoc.org/filters.html">pandoc filter</a> for this feature.
+Briefly, filters are transformations of
+pandoc’s internal representation of a document’s structure.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">As one can imagine, the use-cases for filters are manifold.
+From changing Hakyll’s default <a href="./pygmentising-hakyll.html">syntax highlighting</a>,
+to swapping out footnotes and producing this very <a href="./block-sidenotes.html">sidenote</a>,
+almost anything one can imagine is possible.</div>
+
+This internal representation is encapsulated in the <code>Pandoc</code> type
+<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="kt">Meta</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+which represents a full document plus some metadata.
+The <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Block">Block</a> and <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Inline">Inline</a> types then
+contain more fine-grained stylistic information,
+like the presence of lists, tables, bold text, and so on.
+Writing a filter is further simplified by the <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html#t:Walkable">Walkable</a>
+type class,
+with which it becomes trivial to promote an <code>Inline -&gt; Inline</code> function
+to a full <code>Pandoc -&gt; Pandoc</code> transformation.
+<p></p>
+Luckily, <code>Hakyll.​Web.​Pandoc.​Biblio</code> exposes a function for this kind of use-case:
+<div class="highlight"><pre><span></span><span class="nf">processPandocBiblio</span>
+<span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">CSL</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Biblio</span><span class="w">               </span><span class="c1">-- Formatting boiler plate</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span><span class="w"> </span><span class="c1">-- The actual transformation</span>
+</pre></div>
+
+<p></p>
+A basic filter materialises:
+<div class="highlight"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
+<span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
+<span class="w">  </span><span class="n">bib</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span>
+<span class="w">  </span><span class="n">processPandocBiblio</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span><span class="w"> </span><span class="n">pandoc</span>
+</pre></div>
+
+<p></p>
+Notice that the type of this function transforms an <code>Item Pandoc</code>!
+An <a href="https://hackage.haskell.org/package/hakyll/docs/Hakyll-Core-Item.html#t:Item">Item</a> is a type internal to Hakyll,
+which associates a unique identifier to some contents.
+In the best case,
+one would like to treat this as an implementation detail and not think about it at all.
+However, most of Hakyll’s other pandoc functions that let you do <span class="small-caps">ast</span>
+transformations—like <code>pandoc​Compiler​With​TransformM</code>—have a bit of a different <span class="small-caps">api</span>,
+accepting only a <code>Pandoc -&gt; Compiler Pandoc</code> argument.
+This means that some care is needed to get everything to type check.
+<p></p>
+To start, my personal pandoc compiler looks a little bit like this:
+<div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
+<span class="w">    </span><span class="n">myReader</span>
+<span class="w">    </span><span class="n">myWriter</span>
+<span class="w">    </span><span class="n">myTransformations</span><span class="w">   </span><span class="c1">-- Pandoc -&gt; Compiler Pandoc</span>
+</pre></div>
+
+<p></p>
+The easiest way I found to incorporate a <code>process​Pandoc​Biblio</code>-like transformation into this was to
+write a function that’s like <code>pandoc​Compiler​With​TransformM</code>,
+but accepts a wider input range.
+Looking at its definition
+already gives some idea as to what needs to be done:
+<div class="highlight"><pre><span></span><span class="nf">pandocCompilerWithTransformM</span>
+<span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ReaderOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">WriterOptions</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">pandocCompilerWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">getResourceBody</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">renderPandocWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span>
+
+<span class="nf">renderPandocWithTransformM</span>
+<span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ReaderOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">WriterOptions</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">renderPandocWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">writePandocWith</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">traverse</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=&lt;&lt;</span><span class="w"> </span><span class="n">readPandocWith</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+
+<span class="c1">-- readPandocWith :: ReaderOptions -&gt; Item String -&gt; Compiler (Item Pandoc)</span>
+</pre></div>
+
+<p></p>
+So <code>pandoc​Compiler​With​TransformM</code> is defined in terms of <code>render​Pandoc​With​TransformM</code>,
+which in turn has quite a simple implementation.
+Notice in particular the <code>traverse f =&lt;&lt; readPandocWith ropt i</code> bit;
+<code>readPandocWith</code> returns a <code>Compiler (Item Pandoc)</code>,
+so the <code>traverse</code> above exactly transform our <code>f</code> into a function that works at the <code>Item</code> level.
+Omitting this yields the desired functions:
+<div class="highlight"><pre><span></span><span class="nf">myRenderPandocWithTransformM</span>
+<span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ReaderOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">WriterOptions</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">))</span><span class="w">  </span><span class="c1">-- this changed!</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myRenderPandocWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">writePandocWith</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="o">=&lt;&lt;</span><span class="w"> </span><span class="n">readPandocWith</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+
+<span class="nf">myPandocCompilerWithTransformM</span>
+<span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ReaderOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">WriterOptions</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">))</span><span class="w">  </span><span class="c1">-- this changed!</span>
+<span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocCompilerWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">getResourceBody</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">myRenderPandocWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span>
+</pre></div>
+
+<p></p>
+We can now easily incorporate the <code>processBib</code> function defined above into our existing framework,
+adding a <code>traverse</code> where the old code was:
+<div class="highlight"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">myPandocCompilerWithTransformM</span>
+<span class="w">    </span><span class="n">myReader</span>
+<span class="w">    </span><span class="n">myWriter</span>
+<span class="w">    </span><span class="p">(</span><span class="w">    </span><span class="n">traverse</span><span class="w"> </span><span class="n">myTransformations</span><span class="w">  </span><span class="c1">-- Item Pandoc -&gt; Compiler (Item Pandoc)</span>
+<span class="w">     </span><span class="o">&lt;=&lt;</span><span class="w"> </span><span class="n">processBib</span><span class="w">                  </span><span class="c1">-- composed with the new stuff</span>
+<span class="w">    </span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+And that’s it!
+Citations can now be added using the <code>[@citation-name]</code> syntax mentioned above,
+and they look exactly the same as in <a href="#ref-first-try">the simple example</a>.
+<p></p>
+Now, that particular formatting looks <em>fine</em>,
+but I’m sure you can already discern a few not-so-nice bits.
+Let’s address the most glaring ones,
+at least in my opinion.
+<h2 id="changing-the-look">Changing the look<a href="#changing-the-look" class="floatright sec-link">¶</a></h2>
+<h3 id="adding-a-header-for-the-references">Adding a header for the references<a href="#adding-a-header-for-the-references" class="floatright sec-link">¶</a></h3>
+<p></p>
+As it stands now,
+the references are just dumped at the bottom of the page,
+without any additional heading.
+This looks subjectively ugly,
+so automatically adding one
+whenever at least one citation is present would be nice.
+<p></p>
+There is another small complication because of my idiosyncratic Hakyll setup:
+in order to easily control the style of the headings in the table of contents,
+I pre-generate the <span class="small-caps">toc</span> before the actual compilation of the site.
+This means that in addition to the <code>processBib</code> function,
+we need to change the code in one other place.
+<p></p>
+The generation looks a little bit like this:
+<div class="highlight"><pre><span></span><span class="nf">getTocCtx</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<span class="nf">getTocCtx</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">writerOpts</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">mkTocWriter</span>
+<span class="w">  </span><span class="n">toc</span><span class="w">        </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">renderPandocWith</span>
+<span class="w">                  </span><span class="n">defaultHakyllReaderOptions</span>
+<span class="w">                  </span><span class="n">writerOpts</span>
+<span class="w">                  </span><span class="o">=&lt;&lt;</span><span class="w"> </span><span class="n">getResourceBody</span>
+<span class="w">  </span><span class="n">pure</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">mconcat</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">ctx</span>
+<span class="w">                 </span><span class="p">,</span><span class="w"> </span><span class="n">constField</span><span class="w"> </span><span class="s">&quot;toc&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">doStuffWithTheToc</span><span class="w"> </span><span class="n">toc</span>
+<span class="w">                 </span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+When the <span class="small-caps">toc</span> is saved in the <code>toc</code> variable,
+it’s already rendered into a string,
+which means that it’s time for some good old string manipulations.
+The (simplified) <span class="small-caps">html</span> for a typical table of contents looks like this:
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Contents<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+      High level structure
+      <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Topics<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Files<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+
+<p></p>
+The last <code>&lt;/ul&gt;</code> block seems to be an appropriate target to attack.
+The function to add a <code>References</code> heading in its place is swiftly written:
+<div class="highlight"><pre><span></span><span class="nf">addBibHeading</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<span class="nf">addBibHeading</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">mconcat</span><span class="w"> </span><span class="o">$</span>
+<span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">dropEnd</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">before</span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&lt;li&gt;&lt;a href=</span><span class="se">\&quot;</span><span class="s">#references</span><span class="se">\&quot;</span><span class="s">&gt;References&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&quot;</span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">after</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="p">(</span><span class="n">before</span><span class="p">,</span><span class="w"> </span><span class="n">after</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">breakOnEnd</span><span class="w"> </span><span class="s">&quot;&lt;/ul&gt;&quot;</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+This can now be incorporated into <code>getTocCtx</code> in a straightforward manner:<!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+In the actual code,
+I also check for a <code>bib</code> boolean field,
+in order to decide whether this transformation should actually be applied.
+If you are interested in that, see the relevant <a href="https://github.com/slotThe/slotThe.github.io/commit/62c6072243ee06d8df39813b7e35a6fd0ea1fe9d">commit</a>.</div>
+<div class="highlight"><pre><span></span><span class="nf">getTocCtx</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<span class="nf">getTocCtx</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">writerOpts</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">mkTocWriter</span>
+<span class="w">  </span><span class="n">toc</span><span class="w">        </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">renderPandocWith</span>
+<span class="w">                  </span><span class="n">defaultHakyllReaderOptions</span>
+<span class="w">                  </span><span class="n">writerOpts</span>
+<span class="w">                  </span><span class="o">=&lt;&lt;</span><span class="w"> </span><span class="n">getResourceBody</span>
+<span class="w">  </span><span class="n">pure</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">mconcat</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">ctx</span>
+<span class="w">                 </span><span class="p">,</span><span class="w"> </span><span class="n">constField</span><span class="w"> </span><span class="s">&quot;toc&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">addBibHeading</span><span class="w"> </span><span class="p">(</span><span class="n">doStuffWithTheToc</span><span class="w"> </span><span class="n">toc</span><span class="p">)</span>
+<span class="w">                                   </span><span class="c1">-- ^^^^^^^^^^^^^</span>
+<span class="w">                 </span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+All we need to do now is to actually create that header.
+Again inspecting the <span class="small-caps">html</span>, one can spy a line along the lines of
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;refs&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;references csl-bib-body&quot;</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;doc-bibliography&quot;</span><span class="p">&gt;</span>
+</pre></div>
+
+<p></p>
+when the references start.
+Inserting a heading above that sounds like a plan.
+This can again be done using filters,
+this time inside our <code>processBib</code> function:<!--
+--><label for="sn-4" class="margin-toggle">⊕</label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+This example also nicely showcases the power of the <code>Walkable</code> type class.
+Via the
+<div class="highlight"><pre><span></span><span class="kt">Walkable</span><span class="w"> </span><span class="kt">Block</span><span class="w"> </span><span class="kt">Pandoc</span>
+</pre></div>
+
+<p></p>
+instance,
+I seamlessly walk over all <code>Block</code>s in the <span class="small-caps">ast</span>
+and pick out the ones I’d like to change.
+Pretty neat if you ask me.</div>
+<div class="highlight"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
+<span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
+<span class="w">  </span><span class="n">bib</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span>
+<span class="w">  </span><span class="n">fmap</span><span class="w"> </span><span class="n">insertRefHeading</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">processPandocBiblio</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span><span class="w"> </span><span class="n">pandoc</span>
+<span class="w">  </span><span class="c1">--   ^^^^^^^^^^^^^^^^</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="c1">-- Insert a heading for the citations.</span>
+<span class="w">  </span><span class="n">insertRefHeading</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Pandoc</span>
+<span class="w">  </span><span class="n">insertRefHeading</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">walk</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">concatMap</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="n">d</span><span class="o">@</span><span class="p">(</span><span class="kt">Div</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;refs&quot;</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span>
+<span class="w">      </span><span class="p">[</span><span class="kt">Header</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;references&quot;</span><span class="p">,</span><span class="w"> </span><span class="kt">[]</span><span class="p">,</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="kt">Str</span><span class="w"> </span><span class="s">&quot;References&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">d</span><span class="p">]</span>
+<span class="w">    </span><span class="n">block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">block</span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+The citations now look like this:
+<div class="highlight">
+<p>
+This is a line citing <span>[Béna67]</span>, and <span>[DaPaSt07]</span>.
+</p>
+<h2>
+References
+</h2>
+<div>
+<div>
+<div>
+[Béna67]
+</div>
+<div>
+J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
+</div>
+</div>
+<div>
+<div>
+[DaPaSt07]
+</div>
+<div>
+B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
+</div>
+</div>
+</div>
+</div>
+<h3 id="prettifying-the-generated-references">Prettifying the generated references<a href="#prettifying-the-generated-references" class="floatright sec-link">¶</a></h3>
+<p></p>
+What immediately irks me in the above output is
+that a single citation is broken up into two lines.
+Thankfully, this is easily fixed by a tiny bit of <span class="small-caps">css</span>.
+<div class="highlight"><pre><span></span><span class="c">/* Don't split up a citation over multiple lines. */</span>
+<span class="nt">div</span><span class="p">.</span><span class="nc">csl-left-margin</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">div</span><span class="p">.</span><span class="nc">csl-right-inline</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+Much better:
+<div class="highlight">
+<p>
+This is a line citing <span>[Béna67]</span> and <span>[DaPaSt07]</span>.
+</p>
+<h2>
+References
+</h2>
+<div>
+<div>
+<div class="csl-left-margin">
+[Béna67]
+</div>
+<div class="csl-right-inline">
+J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
+</div>
+</div>
+<div>
+<div class="csl-left-margin">
+[DaPaSt07]
+</div>
+<div class="csl-right-inline">
+B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
+</div>
+</div>
+</div>
+</div>
+<p></p>
+Next, notice that there is no link from the label in the text
+to the actual citation at the end.
+This seems pretty inconvenient,
+as at least I often jump to citations whose label is
+unfamiliar—just to get an idea what kind of article it is.
+<p></p>
+Pandoc does accept a <code>link-citations</code> option that controls this behaviour,
+which works fine for my purposes.
+Setting this can be done directly
+by modifying the <a href="https://hackage.haskell.org/package/pandoc-types-1.23/docs/Text-Pandoc-Definition.html#t:Meta">Meta</a> field of the <code>Pandoc</code> type:
+<div class="highlight"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
+<span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
+<span class="w">  </span><span class="n">bib</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span>
+<span class="w">  </span><span class="c1">-- We do want to link citations.</span>
+<span class="w">  </span><span class="n">p</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">withItemBody</span>
+<span class="w">         </span><span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="p">(</span><span class="kt">Meta</span><span class="w"> </span><span class="n">meta</span><span class="p">)</span><span class="w"> </span><span class="n">bs</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="o">$</span>
+<span class="w">           </span><span class="kt">Pandoc</span><span class="w"> </span><span class="p">(</span><span class="kt">Meta</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="kt">Map</span><span class="o">.</span><span class="n">insert</span><span class="w"> </span><span class="s">&quot;link-citations&quot;</span><span class="w"> </span><span class="p">(</span><span class="kt">MetaBool</span><span class="w"> </span><span class="kt">True</span><span class="p">)</span><span class="w"> </span><span class="n">meta</span><span class="p">)</span>
+<span class="w">                  </span><span class="n">bs</span><span class="p">)</span>
+<span class="w">         </span><span class="n">pandoc</span>
+<span class="w">  </span><span class="n">fmap</span><span class="w"> </span><span class="n">insertRefHeading</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">processPandocBiblio</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span><span class="w"> </span><span class="n">pandoc</span>
+</pre></div>
+
+<p></p>
+One could also introduce a Hakyll metadata field
+if this is to be done conditionally,
+but I see no reason to not link citations,
+so I didn’t.
+<p></p>
+Everything works as expected:
+<div class="highlight">
+<p>
+This is a line citing
+<span>[<a href="#ref-benabou67:bicats-1" role="doc-biblioref">Béna67</a>]</span>
+and
+<span>[<a href="ref-day07:lax-1" role="doc-biblioref">DaPaSt07</a>]</span>.
+</p>
+<h2>
+References
+</h2>
+<div id="refs1" class="references csl-bib-body" role="doc-bibliography">
+<div id="ref-benabou67:bicats-a">
+<div class="csl-left-margin">
+[Béna67]
+</div>
+<div class="csl-right-inline">
+J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
+</div>
+</div>
+<div id="ref-day07:lax-1" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">
+[DaPaSt07]
+</div>
+<div class="csl-right-inline">
+B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
+</div>
+</div>
+</div>
+</div>
+<p></p>
+Lastly,
+and this is perhaps the most important modification,
+I think that not having a table-like
+look—aligning labels and not letting the citation information run under its label—looks
+a bit awkward.
+As so many times before, pandoc filters come to the rescue here.
+There is a <code>Table</code> constructor of the <code>Block</code> type which we will use:
+<div class="highlight"><pre><span></span><span class="kt">Table</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Attr</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Caption</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">ColSpec</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">TableHead</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">TableBody</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">TableFoot</span>
+<span class="w">      </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Block</span>
+</pre></div>
+
+<p></p>
+This may look kind of scary,
+but for our simple use-case there is the aptly named <code>simpleTable</code> function:
+<div class="highlight"><pre><span></span><span class="nf">simpleTable</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Blocks</span><span class="p">]</span><span class="w">   </span><span class="c1">-- ^ Headers</span>
+<span class="w">            </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[[</span><span class="kt">Blocks</span><span class="p">]]</span><span class="w"> </span><span class="c1">-- ^ Rows</span>
+<span class="w">            </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Blocks</span>
+
+<span class="c1">-- where</span>
+<span class="kr">type</span><span class="w"> </span><span class="kt">Blocks</span><span class="w">    </span><span class="ow">=</span><span class="w"> </span><span class="kt">Many</span><span class="w"> </span><span class="kt">Block</span>
+<span class="kr">newtype</span><span class="w"> </span><span class="kt">Many</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Many</span><span class="w"> </span><span class="p">(</span><span class="kt">Seq</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+Basically, any particular cell is composed of a number of <code>Blocks</code>,
+a single row is a bunch (list) of those,
+and all rows taken together then form a <code>[[Blocks]]</code>.
+Equipped with this knowledge,
+we can just search for an instance of a citation,
+which will be two <code>Div</code>s inside of one <code>Para</code> inside of one <code>Div</code>,
+and replace accordingly:
+<div class="highlight"><pre><span></span><span class="c1">-- | Align all citations in a table.</span>
+<span class="nf">tableiseBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Pandoc</span>
+<span class="nf">tableiseBib</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">walk</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">  </span><span class="c1">-- Citations start with a &lt;div id=&quot;refs&quot; …&gt;</span>
+<span class="w">  </span><span class="kt">Div</span><span class="w"> </span><span class="n">a</span><span class="o">@</span><span class="p">(</span><span class="s">&quot;refs&quot;</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="ow">-&gt;</span>
+<span class="w">    </span><span class="c1">-- No header needed, we just want to fill in the body contents.</span>
+<span class="w">    </span><span class="kt">Div</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">(</span><span class="kt">Many</span><span class="o">.</span><span class="n">toList</span><span class="w"> </span><span class="p">(</span><span class="n">simpleTable</span><span class="w"> </span><span class="kt">[]</span><span class="w"> </span><span class="p">(</span><span class="n">map</span><span class="w"> </span><span class="n">citToRow</span><span class="w"> </span><span class="n">body</span><span class="p">)))</span>
+<span class="w">  </span><span class="n">body</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="n">citToRow</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Many</span><span class="w"> </span><span class="kt">Block</span><span class="p">]</span>
+<span class="w">  </span><span class="n">citToRow</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="kt">Many</span><span class="o">.</span><span class="n">singleton</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="kt">Div</span><span class="w"> </span><span class="n">attr</span><span class="w"> </span><span class="p">[</span><span class="kt">Para</span><span class="w"> </span><span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">]]</span><span class="w"> </span><span class="ow">-&gt;</span>
+<span class="w">      </span><span class="p">[</span><span class="kt">Div</span><span class="w"> </span><span class="n">attr</span><span class="w"> </span><span class="p">[</span><span class="kt">Plain</span><span class="w"> </span><span class="p">[</span><span class="n">s1</span><span class="p">]],</span><span class="w"> </span><span class="kt">Plain</span><span class="w"> </span><span class="p">[</span><span class="kt">Space</span><span class="p">],</span><span class="w"> </span><span class="kt">Plain</span><span class="w"> </span><span class="p">[</span><span class="n">s2</span><span class="p">]]</span>
+<span class="w">    </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="ne">error</span><span class="w"> </span><span class="s">&quot;citToRow: unexpected citation format.&quot;</span>
+</pre></div>
+
+<p></p>
+Just signaling an <code>error</code> here
+in case of an unexpected format
+was nice for debugging the code<!--
+-->—I missed the <code>Para</code> at first—<!--
+-->and at this point I see no reason to change it.
+Perhaps it is better to fail fast in theses kinds of situations,
+instead of trying to desperately produce something based off garbage input.
+<p></p>
+The <code>tableiseBib</code> function can
+be incorporated into <code>processBib</code>
+in a straightforward fashion:
+<div class="highlight"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
+<span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="c1">-- …</span>
+<span class="w">  </span><span class="n">fmap</span><span class="w"> </span><span class="p">(</span><span class="n">tableiseBib</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">insertRefHeading</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">processPandocBiblio</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span><span class="w"> </span><span class="n">p</span>
+</pre></div>
+
+<p></p>
+All that’s left is to nicely align everything:
+the right side of the table will,
+in general,
+span multiple lines—in stark contrast to the label.
+This is again just a few lines of <span class="small-caps">css</span>:
+<div class="highlight"><pre><span></span><span class="c">/* Align citations to the top. */</span>
+<span class="nt">div</span><span class="p">#</span><span class="nn">refs</span><span class="w"> </span><span class="nt">td</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">vertical-align</span><span class="p">:</span><span class="w"> </span><span class="kc">top</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+We get the expected result already showcased in the introduction.
+For completeness, here it is again:
+<div class="highlight">
+<p>
+This is a line citing
+<span>[<a href="#ref-benabou67:bicats" role="doc-biblioref">Béna67</a>]</span>
+and
+<span>[<a href="ref-day07:lax" role="doc-biblioref">DaPaSt07</a>]</span>.
+</p>
+<h2>
+References
+</h2>
+<div id="refs-final" class="references csl-bib-body" role="doc-bibliography">
+<table>
+<tr>
+<div id="ref-benabou67:bicats">
+<td style="vertical-align: top">
+<div class="csl-left-margin">
+[Béna67]
+</div>
+</td>
+<td>
+</td>
+<td>
+<div class="csl-right-inline">
+J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
+</div>
+</td>
+</div>
+</tr>
+<tr>
+<div id="ref-day07:lax" class="csl-entry" role="doc-biblioentry">
+<td style="vertical-align: top">
+<div class="csl-left-margin">
+[DaPaSt07]
+</div>
+</td>
+<td>
+</td>
+<td>
+<div class="csl-right-inline">
+B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
+</div>
+</td>
+</div>
+</tr>
+</table>
+</div>
+</div>
+<p></p>
+Neat.
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatright sec-link">¶</a></h2>
+<p></p>
+Since smart people had already written all the hard parts,
+this was surprisingly easy to add for such a useful feature!
+Plus, playing around with pandoc filters is always fun.
+<p></p>
+Especially the <code>my​{render​Pandoc,Pandoc​Compiler}​With​TransformM</code> functions
+could—with different names, of course—perhaps be contributed to upstream Hakyll.
+A variant of any of the <code>*PandocBiblio</code> functions
+that explicitly accepts a list of additional arguments
+to give to <code>citeproc</code> might also be useful;
+there are quite a few <a href="https://pandoc.org/MANUAL.html#citations">metadata fields</a> one can specify,
+after all.
+Finally, I think a format along the lines of <code>tableiseBib</code> would be quite nice to have with label-style citations.
+However, the current implementation is much too specific to justify living anywhere but a personal configuration.
+Some day, maybe.
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
