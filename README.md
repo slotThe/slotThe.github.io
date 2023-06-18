@@ -32,8 +32,11 @@ For various definitions of "notable".
 + [Pilcrows][wiki:pilcrow] when hovering over a section title, linking
   to the respective section.
 
++ [Citation handling][site:citations] with BibTeX.
+
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
 [sidenotes-hs]: https://github.com/slotThe/pandoc-sidenote/blob/feat/html-sidenotes/src/Text/Pandoc/SideNoteHTML.hs
+[site:citations]: https://tony-zorman.com/posts/hakyll-and-bibtex.html
 [site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
 [site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
 [site:pygmentise]: https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html
