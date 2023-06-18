@@ -145,6 +145,9 @@ I've written too many Emacs packages—and none of them popular, at that!
   repositories (as opposed to, say, GNU ELPA) becomes very convenient.
   I've written about this package [here][post:vc-use-package] and about
   `package-vc.el` [here][post:package-vc-install].
+  Note that,
+  as of commit [2ce27968][emacs:vc-keyword],
+  this package is not built into Emacs!
 
 + [query-replace-many]
 
@@ -174,3 +177,4 @@ I've written too many Emacs packages—and none of them popular, at that!
 [vmensa]: https://gitlab.com/slotThe/vmensa
 [xmobar]: https://codeberg.org/xmobar/xmobar
 [yeganesh]: https://hackage.haskell.org/package/yeganesh
+[emacs:vc-keyword]: https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe
