@@ -64,7 +64,13 @@ div.csl-right-inline {
 }
 /* Align citations to the top. */
 div#refs td {
-  vertical-align: top;
+    vertical-align: top;
+}
+
+/* For some tables we'd like visual separators. */
+div#border-table table tr {
+    vertical-align: top;
+    border-top: 1px dotted black;
 }
 
 /**********************************************************************

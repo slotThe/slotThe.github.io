@@ -3,9 +3,26 @@ title: Mackey Functors Seminar
 bib: true
 ---
 
-# Dates
+# Tentative Schedule
 
 The seminar is set to happen **on the 15th and 16th of July**.
+
+<p>
+<div id="border-table" class="highlight">
++--------------+--------------+--------------+-----------------+
+| Time         | Friday       | Saturday     | Sunday          |
++==============+==============+==============+=================+
+| Morning      | Manuel\      | Tony\        |                 |
+|              | Exercises    | Exercises    |                 |
++--------------+--------------+--------------+-----------------+
+| Afternoon    | Zbiggi       | Ivan\        |                 |
+|              | Sebastian    | Uli          |                 |
++--------------+--------------+--------------+-----------------+
+| Evening      | Edoardo      | Exercises    |                 |
+|              | Exercises    |              |                 |
++--------------+--------------+--------------+-----------------+
+</div>
+</p>
 
 # Roadmap
 
@@ -56,17 +73,17 @@ and a couple of side quests
 
 ## Outline
 
-#### Preliminaries: The Mackey machine in group representation theory
+#### Preliminaries: The Mackey machine in group representation theory (*Manuel*)
 
 Chapter 8 of Representation Theory of Finite Groups by Benjamin Steinberg [@steinberg12:repres]
 or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 
-#### First definitions
+#### First definitions (*Sebastian*)
 
 -   Green Definition of Mackey functors
 -   Definition of Dress and comparison with the Green definition
 
-#### First examples
+#### First examples (*Zbiggi*)
 
 -   Any representation of G [Exercise]
 -   The Grothendieck group of the group ring
@@ -74,19 +91,21 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 -   The Burnside ring of G [important]
 -   Examples from modular representation theory (rather an outlook than a main topic)
 
-#### The Mackey algebra
+#### The Mackey algebra (*Sebastian*)
 
 -   Equivalence of categories between Mky and $\mu$-Mod
 -   Splitting of the unit into orthogonal idempotents
 -   Prove that Mky has enough projectives
 -   Projectivity of the Burnside Mackey functor [Exercise]
--   Semisimplicity of Mky in characteristic zero ( over a field)
+-   Semisimplicity of Mky in characteristic zero (over a field)
 
-#### Green functors
+#### Green functors (*Not necessary*)
 
 -   Concrete definition and examples (cohomology, Burnside Mackey functor)
 
-#### Relative projectivity and Dress
+#### Relative homological algebra and the Dress construction (*Edoardo*)
+
+- Andreas Dress: Contributions to the theory of induced representations [@dress73:contrib-ind-rep]
 
 #### Outlook: Cohomological Mackey functors and the Hecke algebra
 
@@ -100,11 +119,11 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 
 ## Outline
 
-#### Preliminaries: Spans and functor categories
+#### Preliminaries: Spans and functor categories (*Tony*)
 
 -   The bicategory of spans and functor categories
 
-#### Enriched category theory
+#### Enriched category theory (*Tony*)
 
 -   Definition of an enriched category, functor, natural transformation, adjunction etc.
 -   Examples of enriched categories (Ab or vect enrichment, dg categories, simplicial enrichment, Cat-enriched categories as strict 2 categories)
@@ -112,7 +131,7 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 -   Weighted limits
 -   Change of enrichment [Exercise]
 
-#### The category of Mackey functors
+#### The category of Mackey functors (*Tony*)
 
 -   Lindners definition of Mackey functors
 -   Naive definition of the tensor product of Mackey functors
@@ -130,14 +149,14 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 
 ## Outline
 
-#### Preliminaries: (Co)end calculus
+#### Preliminaries: (Co)end calculus (*Ivan*)
 
 -   Abstract definition of (co)ends
 -   Functoriality of coends [Exercise]
 -   (Co)ends as (co)limits
 -   Prove the Elmendorf reconstruction theorem
 
-#### Day convolution
+#### Day convolution (*Uli*)
 
 -   Copowers
     -   Important example: every cocomplete category is copowered over **Set**
@@ -182,20 +201,5 @@ Note that this trace differs slightly from the one for pivotal categories.
 
 In the paper "The Burnside dimension of projective Mackey functors", Bouc [@bouc05:mackey] utilises the idea of traces for the full maximal pivotal subcategory of Mackey functors.
 We might try to interpret/extend his results using traces for GV categories.
-
-# Tentative Schedule
-
-1.  The Mackey machinery in group representation theory (*Manuel*).
-2.  Definitions and examples of Mackey functors (*Sebastian*).
-3.  The Mackey algebra (*Sebastian*).
-4.  Green functors (*Edoardo*).
-5.  Relative projectivity and the Dress construction (**not taken**).
-6.  Spans and functor categories (*Tony*).
-7.  Basics of enriched category theory (*Tony*).
-8.  The category of Mackey functors (*Tony*).
-9.  Coend calculus (*Ivan*).
-10. Day convolution (*Ivan/Uli*).
-11. Day convolution and operads (**not taken**).
-12. GV categories (**not taken**).
 
 [^1]: For the bicategory of spans.
