@@ -5,22 +5,22 @@ bib: true
 
 # Tentative Schedule
 
-The seminar is set to happen **on the 15th and 16th of July**.
+The seminar is set to happen **on the 14–16th of July**.
 
 <p>
 <div id="border-table" class="highlight">
-+--------------+--------------+--------------+-----------------+
-| Time         | Friday       | Saturday     | Sunday          |
-+==============+==============+==============+=================+
-| Morning      | Manuel\      | Tony\        |                 |
-|              | Exercises    | Exercises    |                 |
-+--------------+--------------+--------------+-----------------+
-| Afternoon    | Zbiggi       | Ivan\        |                 |
-|              | Sebastian    | Uli          |                 |
-+--------------+--------------+--------------+-----------------+
-| Evening      | Edoardo      | Exercises    |                 |
-|              | Exercises    |              |                 |
-+--------------+--------------+--------------+-----------------+
++--------------+--------------+--------------+-----------+
+| Time         | Friday       | Saturday     | Sunday    |
++==============+==============+==============+===========+
+| Morning      | Manuel\      | Edoardo\     | Ivan\     |
+|              | Exercises    | Exercises    | Exercises |
++--------------+--------------+--------------+-----------+
+| Afternoon    | Zbiggi\      | Tony\        |           |
+|              | Exercises    | Exercises    |           |
++--------------+--------------+--------------+-----------+
+| Evening      | Sebastian\   | Uli\         |           |
+|              | Exercises    | Exercises    |           |
++--------------+--------------+--------------+-----------+
 </div>
 </p>
 
@@ -99,7 +99,7 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 -   Projectivity of the Burnside Mackey functor [Exercise]
 -   Semisimplicity of Mky in characteristic zero (over a field)
 
-#### Green functors (*Not necessary*)
+#### Green functors (*Edoardo*)
 
 -   Concrete definition and examples (cohomology, Burnside Mackey functor)
 
