@@ -509,9 +509,9 @@ plus, building something yourself is much more rewarding than buying it!
 [qmk:macros]: https://docs.qmk.fm/#/feature_macros
 [qmk:mod-tap]: https://docs.qmk.fm/#/mod_tap
 [qmk:repeat-key]: https://docs.qmk.fm/#/feature_repeat_key
-[qmk:slotthe:rules.mk]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe/rules.mk
-[qmk:slotthe:tapdances]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe/keymap.c#L187
-[qmk:slotthe]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotThe
+[qmk:slotthe:rules.mk]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk
+[qmk:slotthe:tapdances]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L187
+[qmk:slotthe]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe
 [qmk:tap-dance]: https://docs.qmk.fm/#/feature_tap_dance
 [qmk:tri-layer]: https://docs.qmk.fm/#/feature_tri_layer
 [qmk]: https://qmk.fm/
