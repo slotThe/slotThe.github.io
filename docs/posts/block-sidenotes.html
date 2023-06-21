@@ -175,8 +175,8 @@ of these features.
 <p></p>
 If you don’t know: sidenotes are footnotes, just on the side of the
 page!<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"><div class="sidenote">For example, this is one.</div>
- More specifically they are footnotes placed inside of the
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"><div class="sidenote">For example, this is one.</div><!--
+--> More specifically they are footnotes placed inside of the
 margins, in order to avoid having to click or scroll, breaking the flow
 of reading—a flick of the eyes is enough. This is very convenient,
 especially for longer entries with lots of asides that don’t necessarily
@@ -204,8 +204,8 @@ provides an appropriate pandoc filter. After extracting the relevant
 <span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="n">addSectionLinks</span><span class="w">   </span><span class="c1">-- link on hover</span>
 <span class="w">    </span><span class="p">)</span>
 </pre></div>
-</div>
- things just
+</div><!--
+--> things just
 worked!
 <p></p>
 There is but one problem with this setup: paragraphs. A sidenote
@@ -233,8 +233,8 @@ elements are allowed inside paragraphs per the <span class="small-caps">html</sp
 I know what you’re thinking: people don’t usually let themselves be
 hampered by standards, do they?<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><div class="sidenote">Just ask any person who’s ever worked on a window manager what
-creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</div>
- Alas, the <code>pandoc-sidenote</code> package
+creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</div><!--
+--> Alas, the <code>pandoc-sidenote</code> package
 quite sensibly converts a given footnote into an approximation of the
 above <span class="small-caps">html</span> by using pandoc’s native <code>Span</code> data constructor. Here is a
 (heavily) simplified version of the relevant function.
@@ -380,7 +380,8 @@ display maths
 </svg></span></span></li>
 </ul>
 <p></p>
-and the like are no problem at all!</div>
+and the like are no problem at all!</div><!--
+-->
 <p></p>
 So what to do? Well, life wouldn’t be fun if we didn’t at least try to
 hack our way around a standard, would it?
@@ -453,7 +454,8 @@ picking out the <code>Note</code> constructor, rendering it, and putting everyth
 back together.<!--
 --><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"><div class="sidenote">The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
 which keeps track of the sidenote number, as well as the supplied
-<code>WriterOption</code>s; nothing fancy.</div>
+<code>WriterOption</code>s; nothing fancy.</div><!--
+-->
 <div class="highlight"><pre><span></span><span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w">            </span><span class="c1">-- ^ Inlines from a single @Note@</span>
 <span class="w">               </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 <span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="kt">[]</span>
@@ -552,8 +554,8 @@ block containers.
 So far, I had assumed that there was a reason why Tufte <span class="small-caps">css</span> used <code>span</code>
 elements instead of <code>div</code>s in their sidenote, but this does not seem to
 be the case.<!--
---><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"><div class="sidenote">At least not to my current knowledge.</div>
- Instead of writing
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"><div class="sidenote">At least not to my current knowledge.</div><!--
+--> Instead of writing
 <div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote"</span><span class="p">&gt;</span>
   «sidenote»
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
@@ -581,8 +583,8 @@ perspective,<!--
 and concluded that perhaps a custom pandoc <code>Writer</code> would be the
 most elegant solution to this problem. However, since using
 pandoc’s <span class="small-caps">html</span>5 writer is quite hard-coded into Hakyll, I don’t think
-that I will go down that path.</div>
- and people have told me that the functionality provided
+that I will go down that path.</div><!--
+--> and people have told me that the functionality provided
 is still useful to them. Since what I’ve done here amounts to a
 complete rewrite—and almost certainly a regression in places—I don’t
 think that this will ever replace <code>Text.​Pandoc.​SideNote</code> wholesale.

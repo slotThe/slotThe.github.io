@@ -116,8 +116,8 @@ now have their own dedicated search engines,<!--
 <a href="https://arxiv.org/">arXiv</a>,
 <a href="https://noogle.dev/">noogle</a>,
 forges like <a href="https://github.com/">Git­Hub</a>,
-… the list goes on.</div>
- searching efficiently
+… the list goes on.</div><!--
+--> searching efficiently
 becomes increasingly important. Plus, the lower barrier to entry means
 that looking something up—always a good idea, with all of humanities
 collected knowledge at one’s fingertips—may well become instinctive,
@@ -128,8 +128,8 @@ The basic workflow suggested by the module simply consists of picking a
 search engine, and binding it to a key via <code>promptSearch</code>—that’s it.
 Additionally, there is also <code>selectSearch</code> to look up the current
 (primary) selection. For example,<!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Using <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.</div>
- suppose we had bound
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Using <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.</div><!--
+--> suppose we had bound
 <div class="highlight"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span><span class="w">              </span><span class="c1">-- def is an optional prompt config</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">promptSearch</span><span class="w"> </span><span class="n">def</span><span class="w"> </span><span class="n">wikipedia</span><span class="p">)</span>
@@ -152,8 +152,8 @@ With that module, one could define an equivalent keybinding along the lines of
 
 <p></p>
 This is especially useful when multiple search engines are involved;
-see <a href="#further-tweaks">below</a> or check out <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">my configuration</a> for a complete example.</div>
- The whole things looks like this:
+see <a href="#further-tweaks">below</a> or check out <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">my configuration</a> for a complete example.</div><!--
+--> The whole things looks like this:
 <p>
 <video width="100%" controls>
 <source src="../images/search-showcase/search-simple.webm" type="video/webm">
@@ -197,8 +197,8 @@ pragmas along the lines of
 </pre></div>
 
 <p></p>
-at the top of your <span class="small-caps">xm</span>onad configuration file.</div>
- With this, one
+at the top of your <span class="small-caps">xm</span>onad configuration file.</div><!--
+--> With this, one
 can build more complicated search engines; for example, the following
 constitutes a very basic URL entry function, which may also work as a
 sort of lightweight bookmarking system:
@@ -235,7 +235,8 @@ It works as expected—so much so that I can enable the prompt’s
 auto-complete feature, which automatically completes a query if there is
 only a single candidate left.<!--
 --><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">In this case here, that single candidate will be from the relevant
-prompt history.</div>
+prompt history.</div><!--
+-->
 <p>
 <video width="100%" controls>
 <source src="../images/search-showcase/search-git.webm" type="video/webm">
@@ -283,7 +284,8 @@ lot in this piece of code is:
 
 <p></p>
 This is just creates a basic (i.e. there is no additional ‘KeyMask’ to consider)
-submap from a list of <code>(key, action)</code> pairs.</div>
+submap from a list of <code>(key, action)</code> pairs.</div><!--
+-->
 <div class="highlight"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Keybindings</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">submap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">searchEngineMap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>

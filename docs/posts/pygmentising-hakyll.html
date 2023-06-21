@@ -157,8 +157,8 @@ These kinds of issues, combined with the fact that certain
 languages—like Emacs Lisp—don’t have any syntax definitions at all,
 annoyed me enough to look for an alternative way to highlight code on
 this website.<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">All of this work for a mostly greyscale theme!</div>
- There are of course many options to choose from; I
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">All of this work for a mostly greyscale theme!</div><!--
+--> There are of course many options to choose from; I
 went with <code>pygmentize</code>, solely because I already had it installed. All
 that’s left is to tell pandoc and Hakyll to make use of it. As
 mentioned, this thankfully doesn’t turn out to be very difficult!
@@ -166,8 +166,8 @@ mentioned, this thankfully doesn’t turn out to be very difficult!
 <p></p>
 Having never used <code>pygmentize</code> as a command line utility,<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">So far, the only interaction I had with the program was through
-the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.</div>
- I expected
+the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.</div><!--
+--> I expected
 this to take some work—possibly involving Python <em>shudder</em>—but all of
 the necessary pieces are already present in the <span class="small-caps">cli</span>. First up, the <code>-f</code>
 option specifies the formatter to use, which will decide the shape of
@@ -297,7 +297,8 @@ is an instance
 which will be all that we need. The necessary code now just
 materialises in front of our eyes:<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">If all else fails, simply <a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">trace the sigils in the air and give
-them form</a>.</div>
+them form</a>.</div><!--
+-->
 <div class="highlight"><pre><span></span><span class="c1">-- {-# LANGUAGE BlockArguments    #-}</span>
 <span class="c1">-- {-# LANGUAGE LambdaCase        #-}</span>
 <span class="c1">-- {-# LANGUAGE OverloadedStrings #-}</span>

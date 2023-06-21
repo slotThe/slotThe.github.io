@@ -135,8 +135,8 @@ notes and bibliographies, offering:
 <li>Infrastructure for style distribution and updating</li>
 <li>Thousands of freely available styles (Creative Commons <span class="small-caps">by-sa</span> licensed)</li>
 </ul>
-</blockquote></div>
-
+</blockquote></div><!--
+-->
 in order to decide how the generated citations will be displayed.
 There are <em>a lot</em> of styles to choose from;
 the <a href="https://www.zotero.org/styles">Zotero Style Repository</a> alone sports around 10’000 different ones!
@@ -200,7 +200,8 @@ If you just want the code, however, the relevant commits are
 and <a href="https://github.com/slotThe/slotThe.github.io/commit/f39352fd825ed6efad918de11b002734fdff03c4">here</a>.<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">While this style is good enough for now,
 it’s still not quite perfect;
-suggestions for other styles would be most welcome!</div>
+suggestions for other styles would be most welcome!</div><!--
+-->
 <h2 id="simple-setup">Simple setup<a href="#simple-setup" class="floatright sec-link">¶</a></h2>
 <p></p>
 On the command line,
@@ -307,8 +308,8 @@ pandoc’s internal representation of a document’s structure.<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">As one can imagine, the use-cases for filters are manifold.
 From changing Hakyll’s default <a href="./pygmentising-hakyll.html">syntax highlighting</a>,
 to swapping out footnotes and producing this very <a href="./block-sidenotes.html">sidenote</a>,
-almost anything one can imagine is possible.</div>
-
+almost anything one can imagine is possible.</div><!--
+-->
 This internal representation is encapsulated in the <code>Pandoc</code> type
 <div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="kt">Meta</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 </pre></div>
@@ -497,7 +498,8 @@ This can now be incorporated into <code>getTocCtx</code> in a straightforward ma
 In the actual code,
 I also check for a <code>bib</code> boolean field,
 in order to decide whether this transformation should actually be applied.
-If you are interested in that, see the relevant <a href="https://github.com/slotThe/slotThe.github.io/commit/62c6072243ee06d8df39813b7e35a6fd0ea1fe9d">commit</a>.</div>
+If you are interested in that, see the relevant <a href="https://github.com/slotThe/slotThe.github.io/commit/62c6072243ee06d8df39813b7e35a6fd0ea1fe9d">commit</a>.</div><!--
+-->
 <div class="highlight"><pre><span></span><span class="nf">getTocCtx</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
 <span class="nf">getTocCtx</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">writerOpts</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">mkTocWriter</span>
@@ -543,7 +545,8 @@ Via the
 instance,
 I seamlessly walk over all <code>Block</code>s in the <span class="small-caps">ast</span>
 and pick out the ones I’d like to change.
-Pretty neat if you ask me.</div>
+Pretty neat if you ask me.</div><!--
+-->
 <div class="highlight"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
 <span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>

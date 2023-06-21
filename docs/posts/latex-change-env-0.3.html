@@ -108,15 +108,15 @@ own post.
 Briefly, <code>latex-change-env</code><!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Available on <a href="https://gitlab.com/slotThe/change-env">GitLab</a> and
 <a href="https://github.com/slotThe/change-env">GitHub</a>, as well as
-<a href="https://melpa.org/#/latex-change-env"><span class="small-caps">melpa</span></a>.</div>
- can be seen as an extension of AUCTeX’s
+<a href="https://melpa.org/#/latex-change-env"><span class="small-caps">melpa</span></a>.</div><!--
+--> can be seen as an extension of AUCTeX’s
 built-in facilities to manipulate the current environment. Taking
 functions like <code>LaTeX-environment</code> as a base, it adds extra
 functionality like deleting environments, changing to and from display
 maths, “remembering” and editing labels, as well as macro<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">At least, macros taking exactly only argument, which is what
-support is currently restricted to; contributions welcome!</div>
- and inline
+support is currently restricted to; contributions welcome!</div><!--
+--> and inline
 maths support on top of them. There are two main “entry points”:
 <code>latex-change-env</code> and <code>latex-change-env-cycle</code>.
 <p></p>
@@ -137,8 +137,8 @@ in the minibuffer; by default, one can delete the current
 environment<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">In the context of this package, by “environment” I will often mean
 a proper environment, inline or display maths, or a (simple)
-macro.</div>
- with <code>k</code>, modify it into something else with <code>m</code>, or
+macro.</div><!--
+--> with <code>k</code>, modify it into something else with <code>m</code>, or
 switch to display maths with <code>d</code>. This is all controlled by the
 <code>latex-change-env-options</code> variable, allowing for user-defined functions
 to be inserted, should that be desired.
@@ -164,8 +164,8 @@ accordingly. For example, it may be useful to set
 </pre></div>
 
 <p></p>
-and so on.</div>
- For
+and so on.</div><!--
+--> For
 example, one could define a simple maths-based toggle
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/insert-toggle-math</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
@@ -226,8 +226,8 @@ unique prefix associated to what environment they are defined in; for
 example, <code>theorem</code> environments might start their labels with <code>thm:</code>,
 while a <code>lemma</code> will have a <code>lem:</code> prefix.<!--
 --><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">This behaviour may be changed by customising the
-<code>latex-change-env-labels</code> variable.</div>
- Further, when deleting an
+<code>latex-change-env-labels</code> variable.</div><!--
+--> Further, when deleting an
 environment, or switching to one that does not have an associated label
 prefix, the label is (i) deleted, and (ii) stored for the session, such
 that it can be restored when switching back to the original environment.
@@ -245,7 +245,8 @@ respected—or otherwise recognisable by the library.<!--
 label changes, the “Lemma” before the reference does not. This
 would require more sophisticated regular expressions, but—reading
 <code>latex​-​change-env-labels</code> and making some assumptions—it certainly
-seems possible to do.</div>
+seems possible to do.</div><!--
+-->
 <p>
 <video width="100%" controls>
 <source src="../images/latex-change-env/label-handling.webm" type="video/webm">

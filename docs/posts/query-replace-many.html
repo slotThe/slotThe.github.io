@@ -145,8 +145,8 @@ What happens on an empty input is quite deep in the bowels of
 functions sounds like a real pain, leaning on that functionality
 suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
-out.</div>
- build up a regular expression of the
+out.</div><!--
+--> build up a regular expression of the
 form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
 replacing—test the current thing to be replaced against all of the
 queries to select the correct one.
