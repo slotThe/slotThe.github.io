@@ -18,8 +18,8 @@ The seminar is set to happen **on the 14–16th of July**.
 | Afternoon    | Zbiggi\      | Tony\        |           |
 |              | Exercises    | Exercises    |           |
 +--------------+--------------+--------------+-----------+
-| Evening      | Sebastian\   | Uli\         |           |
-|              | Exercises    | Exercises    |           |
+| Evening      | Sebastian\   | Exercises    |           |
+|              | Exercises    |              |           |
 +--------------+--------------+--------------+-----------+
 </div>
 </p>
@@ -156,7 +156,7 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 -   (Co)ends as (co)limits
 -   Prove the Elmendorf reconstruction theorem
 
-#### Day convolution (*Uli*)
+#### Day convolution
 
 -   Copowers
     -   Important example: every cocomplete category is copowered over **Set**
