@@ -150,7 +150,7 @@ environment, it also remembers this for the session![^4]
 <img class="pure-img" src="../images/phd-workflow/label-renaming.gif" alt="latex-change-env showcase">
 
 One neat feature of AUCTeX that I find myself using more and more often
-lately[^5] is the in-buffer preview.  Usually when writing a draft I'm
+lately is the in-buffer preview.[^5]  Usually when writing a draft I'm
 not that interested in how exactly something looks in the PDF—that part
 comes later, believe me.  In cases like these, just calling
 `preview-buffer` is quite convenient and lets me use the screen real

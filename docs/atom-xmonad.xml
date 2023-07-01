@@ -24,7 +24,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1309 words">6 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1313 words">6 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'haskell'." href="/tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html" rel="tag">xmonad</a>
@@ -48,7 +48,7 @@ of your choice with this input—straightforward, and yet very effective.</p>
 the point? The problem with regular searching is that it’s <em>slow</em>; who
 has the time to open their browser, navigate to the relevant website,
 and only then enter their search? In today’s world, where many things
-now have their own dedicated search engines,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> searching efficiently
+now have their own dedicated search engines<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, searching efficiently
 becomes increasingly important. Plus, the lower barrier to entry means
 that looking something up—always a good idea, with all of humanities
 collected knowledge at one’s fingertips—may well become instinctive,
@@ -57,7 +57,7 @@ instead of feeling like a chore.</p>
 <p>The basic workflow suggested by the module simply consists of picking a
 search engine, and binding it to a key via <code>promptSearch</code>—that’s it.
 Additionally, there is also <code>selectSearch</code> to look up the current
-(primary) selection. For example,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> suppose we had bound</p>
+(primary) selection. For example, suppose we had bound<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">searchKeys ::</span> [(<span class="dt">String</span>, <span class="dt">X</span> ())]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>searchKeys <span class="ot">=</span>              <span class="co">-- def is an optional prompt config</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  [ (<span class="st">&quot;M-s&quot;</span>    , promptSearch def wikipedia)</span>
@@ -217,7 +217,9 @@ Channel</a> are quite glad about this as well!</p>
 <a href="https://noogle.dev/">noogle</a>,
 forges like <a href="https://github.com/">Git­Hub</a>,
 … the list goes on.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Using <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>As an aside, this is an ideal use case for <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>.
 With that module, one could define an equivalent keybinding along the lines of</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">searchKeys ::</span> [(<span class="dt">String</span>, <span class="dt">X</span> ())]</span>
@@ -939,7 +941,7 @@ exactly right! I, however, thought that for people not familiar with
 Haskell, giving it a pipe-like appearance would be more conceptually
 amenable to the threading idea.</p>
 <p>I haven’t benchmarked this, so it’s not entirely clear to me whether
-performance is actually relevant in this situation,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but using
+performance is actually relevant in this situation<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, but using
 difference lists just feels right here, and so I did.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>I have to say that I’m quite satisfied with this API. In fact, if I
@@ -1121,7 +1123,7 @@ across the project if necessary. When deleting a label from an
 environment, it also remembers this for the session!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p><img class="pure-img" src="../images/phd-workflow/label-renaming.gif" alt="latex-change-env showcase"></p>
 <p>One neat feature of AUCTeX that I find myself using more and more often
-lately<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is the in-buffer preview. Usually when writing a draft I’m
+lately is the in-buffer preview.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Usually when writing a draft I’m
 not that interested in how exactly something looks in the PDF—that part
 comes later, believe me. In cases like these, just calling
 <code>preview-buffer</code> is quite convenient and lets me use the screen real

@@ -70,7 +70,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1292 words">6 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1295 words">6 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html" rel="tag">xmonad</a>
@@ -105,7 +105,7 @@ In fact, this sounds so simple that one might immediately ask: what’s
 the point? The problem with regular searching is that it’s <em>slow</em>; who
 has the time to open their browser, navigate to the relevant website,
 and only then enter their search? In today’s world, where many things
-now have their own dedicated search engines,<!--
+now have their own dedicated search engines<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Just to name a few, I regularly look things up on
 <a href="https://zbmath.org/">zbmath</a>,
 <a href="https://hoogle.haskell.org/">Hoogle</a>,
@@ -117,7 +117,7 @@ now have their own dedicated search engines,<!--
 <a href="https://noogle.dev/">noogle</a>,
 forges like <a href="https://github.com/">Git­Hub</a>,
 … the list goes on.</div><!--
---> searching efficiently
+-->, searching efficiently
 becomes increasingly important. Plus, the lower barrier to entry means
 that looking something up—always a good idea, with all of humanities
 collected knowledge at one’s fingertips—may well become instinctive,
@@ -127,9 +127,13 @@ instead of feeling like a chore.
 The basic workflow suggested by the module simply consists of picking a
 search engine, and binding it to a key via <code>promptSearch</code>—that’s it.
 Additionally, there is also <code>selectSearch</code> to look up the current
-(primary) selection. For example,<!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Using <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.</div><!--
---> suppose we had bound
+(primary) selection. For example, suppose we had bound<!--
+--><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.</div><!--
+-->
 <div class="highlight"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span><span class="w">              </span><span class="c1">-- def is an optional prompt config</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">promptSearch</span><span class="w"> </span><span class="n">def</span><span class="w"> </span><span class="n">wikipedia</span><span class="p">)</span>

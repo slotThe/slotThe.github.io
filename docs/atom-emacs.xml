@@ -750,9 +750,9 @@ little context to some snippets that have accumulated over time.</p>
 <p>While there is a post about <a href="https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html">my version</a> of the
 <code>query-replace</code> function, most other tidbits have only seen the light of
 day in places like the “Weekly Tips, Tricks, &amp;c.” thread on Reddit. In
-the spirit of hosting my content somewhere that I actually control,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+the spirit of hosting my content somewhere that I actually control,
 I chose to showcase these again here, hoping that other people may also
-find some of this stuff useful.</p>
+find some of this stuff useful.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <!--more-->
 <h2 id="frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></h2>
 <p>This variable is interesting for all the people who, for one reason or
@@ -1593,7 +1593,7 @@ exactly right! I, however, thought that for people not familiar with
 Haskell, giving it a pipe-like appearance would be more conceptually
 amenable to the threading idea.</p>
 <p>I haven’t benchmarked this, so it’s not entirely clear to me whether
-performance is actually relevant in this situation,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but using
+performance is actually relevant in this situation<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, but using
 difference lists just feels right here, and so I did.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>I have to say that I’m quite satisfied with this API. In fact, if I
@@ -1775,7 +1775,7 @@ across the project if necessary. When deleting a label from an
 environment, it also remembers this for the session!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p><img class="pure-img" src="../images/phd-workflow/label-renaming.gif" alt="latex-change-env showcase"></p>
 <p>One neat feature of AUCTeX that I find myself using more and more often
-lately<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is the in-buffer preview. Usually when writing a draft I’m
+lately is the in-buffer preview.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Usually when writing a draft I’m
 not that interested in how exactly something looks in the PDF—that part
 comes later, believe me. In cases like these, just calling
 <code>preview-buffer</code> is quite convenient and lets me use the screen real

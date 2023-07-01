@@ -13,9 +13,9 @@ little context to some snippets that have accumulated over time.
 While there is a post about [my version][posts:query-replace] of the
 `query-replace` function, most other tidbits have only seen the light of
 day in places like the "Weekly Tips, Tricks, &c." thread on Reddit.  In
-the spirit of hosting my content somewhere that I actually control,[^2]
+the spirit of hosting my content somewhere that I actually control,
 I chose to showcase these again here, hoping that other people may also
-find some of this stuff useful.
+find some of this stuff useful.[^2]
 
 <!--more-->
 

@@ -287,7 +287,7 @@ Haskell, giving it a pipe-like appearance would be more conceptually
 amenable to the threading idea.
 
 I haven't benchmarked this, so it's not entirely clear to me whether
-performance is actually relevant in this situation,[^3] but using
+performance is actually relevant in this situation[^3], but using
 difference lists just feels right here, and so I did.
 
 # Conclusion

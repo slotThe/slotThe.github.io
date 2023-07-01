@@ -15,7 +15,7 @@ In fact, this sounds so simple that one might immediately ask: what's
 the point?  The problem with regular searching is that it's *slow*; who
 has the time to open their browser, navigate to the relevant website,
 and only then enter their search?  In today's world, where many things
-now have their own dedicated search engines,[^4] searching efficiently
+now have their own dedicated search engines[^4], searching efficiently
 becomes increasingly important.  Plus, the lower barrier to entry means
 that looking something up—always a good idea, with all of humanities
 collected knowledge at one's fingertips—may well become instinctive,
@@ -28,7 +28,7 @@ instead of feeling like a chore.
 The basic workflow suggested by the module simply consists of picking a
 search engine, and binding it to a key via `promptSearch`—that's it.
 Additionally, there is also `selectSearch` to look up the current
-(primary) selection.  For example,[^1] suppose we had bound
+(primary) selection.  For example, suppose we had bound[^1]
 
 ``` haskell
 searchKeys :: [(String, X ())]
@@ -220,7 +220,11 @@ Channel][libera:webchat] are quite glad about this as well!
 [config:search]: https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720
 [libera:webchat]: https://web.libera.chat/#xmonad
 
-[^1]: Using [XMonad.Util.EZConfig] syntax.
+[^1]: {-} 󠀠
+
+       󠀠
+
+       This uses [XMonad.Util.EZConfig] syntax.
 
 [^2]: As an aside, this is an ideal use case for [XMonad.​Actions.​Prefix].
       With that module, one could define an equivalent keybinding along the lines of

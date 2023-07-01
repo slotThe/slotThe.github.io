@@ -8,7 +8,7 @@ I also spend way too much money on (good) coffee and tea.
 
 My work in mathematics can broadly be characterised under the term "monoidal category theory".
 In particular, I like thinking about things like
-[Hopf monads]; [graphical calculi]; [rigid], [Grothendieck–Verdier],[^3] [linearly distributive], and [duoidal] categories; as well as [operads].
+[Hopf monads]; [graphical calculi]; [rigid], [Grothendieck–Verdier][^3], [linearly distributive], and [duoidal] categories; as well as [operads].
 If you're interested in my publications, you can check out my name on the [arXiv].
 I've also given some talks, slides of which are available [here](./research.html).
 

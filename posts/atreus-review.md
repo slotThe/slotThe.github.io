@@ -314,7 +314,7 @@ There are also other mod-taps here, but nothing new concept wise.[^7]
 
 Crucially, however, keys that were "Shift when held,
 *something* when pressed" on the base layer retain the Shift part of that functionality.
-This is used for the commutativity of the modifier keys,[^13]
+This is used for the commutativity[^13] of the modifier keys,
 which would otherwise drive me insane.
 The same goes for all fall-through keys;
 i.e., keys that appear blank in the above layout.
