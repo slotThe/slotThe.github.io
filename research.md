@@ -129,6 +129,15 @@ All of my preprints are readily available on the [arXiv].[^2]
   Wacom tablet and thus contained many live drawings to illustrate the
   concepts.  These, however, are lost to time.
 
+# Posters
+
+- *Duality in Monoidal Categories* \
+  2023-07-07, CT23, Louvain-la-Neuve;
+  in [portrait][ct23:portrait] and
+  [landscape][ct23:landscape] format.
+
+  Based on a paper with Sebastian Halbig of the [same name][Duality in Monoidal Categories].
+
 # Theses
 
 - *Comodules for Categories*
@@ -150,6 +159,8 @@ All of my preprints are readily available on the [arXiv].[^2]
 [Pivotality, twisted centres and the anti-double of a Hopf monad]: https://arxiv.org/abs/2201.05361
 [Riley]: https://arxiv.org/abs/1809.00738
 [Willerton]: https://arxiv.org/abs/0807.0658
+[ct23:landscape]: /talks/ct23-landscape.pdf
+[ct23:portrait]: /talks/ct23-portrait.pdf
 [slides:duality:handout]: /talks/duality-in-monoidal-categories-handout.pdf
 [slides:duality]: /talks/duality-in-monoidal-categories.pdf
 [slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
