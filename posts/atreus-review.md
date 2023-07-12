@@ -111,7 +111,7 @@ perhaps on the second or third row:
          .----.----.----.----.----.----.----.----.----.----.----.----.
 
 One could then even get rid of the problematic keys altogether,
-though they could still be useful for e.g. mouse-assist layers.
+though they could still be useful for e.g. mouse-assist layers.
 
 Actually getting used to the physical layout of the board took a while.
 Typing itself was not the issue,

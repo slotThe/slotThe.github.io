@@ -280,5 +280,5 @@ Channel][libera:webchat] are quite glad about this as well!
       fromList . map \(k, a) -> ((0, k), a)
     ```
 
-    This is just creates a basic (i.e. there is no additional 'KeyMask' to consider)
+    This is just creates a basic (i.e. there is no additional 'KeyMask' to consider)
     submap from a list of `(key, action)` pairs.

@@ -145,7 +145,7 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 -   Brian Day: On closed categories of functors [@day70]
 -   Brian Day, Elango Panchadcharam, Ross Street: Lax Braidings and the Lax Centre [@day07:lax]
 -   Fosco Loregian: Coend Calculus [@loregian2021]
--   Max Kelly: On the operads of J.P. May [@kelly05:operads]
+-   Max Kelly: On the operads of J.P. May [@kelly05:operads]
 
 ## Outline
 
@@ -166,7 +166,7 @@ or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
 
 #### Extended example: operads
 
-A good reference to follow is Kelly's "On the operads of J.P. May" [@kelly05:operads],
+A good reference to follow is Kelly's "On the operads of J.P. May" [@kelly05:operads],
 or Chapter 6 of "Coend Calculus" [@loregian2021].
 
 -   Definition of an "abstract" operad
