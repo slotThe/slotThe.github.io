@@ -138,6 +138,13 @@ All of my preprints are readily available on the [arXiv].[^2]
 
   Based on a paper with Sebastian Halbig of the [same name][Duality in Monoidal Categories].
 
+# Seminars
+
+- *Mackey Functors* \
+  2023-07-14–2023-07-15, Dresden; [website here][sem:mackey-functors].
+
+  A seminar on Mackey functors and its applications.
+
 # Theses
 
 - *Comodules for Categories*
@@ -161,6 +168,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 [Willerton]: https://arxiv.org/abs/0807.0658
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
+[sem:mackey-functors]: https://tony-zorman.com/mackey-functors
 [slides:duality:handout]: /talks/duality-in-monoidal-categories-handout.pdf
 [slides:duality]: /talks/duality-in-monoidal-categories.pdf
 [slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
