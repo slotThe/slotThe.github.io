@@ -75,8 +75,9 @@ and a couple of side quests
 
 #### Preliminaries: The Mackey machine in group representation theory (*Manuel*)
 
-Chapter 8 of Representation Theory of Finite Groups by Benjamin Steinberg [@steinberg12:repres]
-or Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie].
+Chapter 8 of Representation Theory of Finite Groups by Benjamin Steinberg [@steinberg12:repres],
+Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie], or
+Linear representations of finite groups by Jean-Pierre Serre [@serre98:repres].
 
 #### First definitions (*Sebastian*)
 
