@@ -144,7 +144,7 @@ creation—and while fiddling with it, of course—are quite important,
 given the unusual form-factor.
 Plus, there aren't very many detailed resources on actually using a 40% keyboard that I could find,
 so perhaps this will also turn out to be useful to people not using an Atreus.
-For the impatient: you can find my finished layout [here][qmk:slotthe].[^19]
+For the impatient: you can find my finished layout [here][qmk:slotthe].
 
 ## Key chord considerations
 
@@ -509,9 +509,9 @@ plus, building something yourself is much more rewarding than buying it!
 [qmk:macros]: https://docs.qmk.fm/#/feature_macros
 [qmk:mod-tap]: https://docs.qmk.fm/#/mod_tap
 [qmk:repeat-key]: https://docs.qmk.fm/#/feature_repeat_key
-[qmk:slotthe:rules.mk]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk
-[qmk:slotthe:tapdances]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L187
-[qmk:slotthe]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe
+[qmk:slotthe:rules.mk]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk
+[qmk:slotthe:tapdances]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L181
+[qmk:slotthe]: https://github.com/qmk/qmk_firmware/tree/master/keyboards/keyboardio/atreus/keymaps/slotthe
 [qmk:tap-dance]: https://docs.qmk.fm/#/feature_tap_dance
 [qmk:tri-layer]: https://docs.qmk.fm/#/feature_tri_layer
 [qmk]: https://qmk.fm/
@@ -581,10 +581,6 @@ plus, building something yourself is much more rewarding than buying it!
        which is not at all necessary since the keyboard is always rather close to my laptop.
        Plus, [braids](https://ncatlab.org/nlab/show/braided+monoidal+category)
        make everything better!
-
-[^19]: Until my keymap really settles down,
-       I will not submit it upstream to QMK,
-       so the link points to a personal fork for now.
 
 [^21]: Although, strictly speaking, only `'` would be necessary, as `S-L2` is pretty easy to hit.
 

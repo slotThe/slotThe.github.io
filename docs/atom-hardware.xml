@@ -26,7 +26,7 @@
         &thinsp;·&thinsp; last modified: 2023-06-17
       
       
-        &thinsp;·&thinsp; <span title="4171 words">17 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="4147 words">17 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'hardware'." href="/tags/hardware.html" rel="tag">hardware</a>
@@ -156,7 +156,7 @@ creation—and while fiddling with it, of course—are quite important,
 given the unusual form-factor.
 Plus, there aren’t very many detailed resources on actually using a 40% keyboard that I could find,
 so perhaps this will also turn out to be useful to people not using an Atreus.
-For the impatient: you can find my finished layout <a href="https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe">here</a>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+For the impatient: you can find my finished layout <a href="https://github.com/qmk/qmk_firmware/tree/master/keyboards/keyboardio/atreus/keymaps/slotthe">here</a>.</p>
 <h3 id="key-chord-considerations">Key chord considerations</h3>
 <p>As I extensively use both Emacs and XMonad,
 there are quite a few modifier combinations to consider.
@@ -164,11 +164,11 @@ Obviously, some of these will be more difficult to press than others,
 especially since I don’t want to go overboard with layers,
 and I would like as many of my key chords to commute as possible,
 but more on that later.
-For example, a (non-exhaustive) list of combinations<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
+For example, a (non-exhaustive) list of combinations<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>
 would be <code>C-S</code>, <code>C-M1</code>, <code>M4-M1</code>, <code>S-M4</code>, and <code>C-M4</code>;
 this already suggests some vague ordering of keys to different hands.
 Before buying the Atreus, I keylogged myself for a little bit on my internal laptop keyboard using <a href="https://github.com/anko/xkbcat">xkbcat</a>.
-A cursory analysis reveals the following:<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+A cursory analysis reveals the following:<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <pre class="console"><code>$ sort ~/.keylog.txt | uniq -c | sort -r | head -n15
   80590 Control_L
   58476 n
@@ -265,7 +265,7 @@ in order to do even more.
 Tap dances are very similar to mod-taps,
 only in addition to just differentiating between a “pressed” and a “held” state,
 QMK now also keeps track of <em>how often</em> a key has been tapped.
-So far, <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L187">my setup</a> here is quite basic;
+So far, <a href="https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L181">my setup</a> here is quite basic;
 I only check whether a key was pressed once, twice, or is being held.
 This allows me to not need extra keys for parentheses,
 as they can fit on the modifier keys:</p>
@@ -300,10 +300,10 @@ it can be made to pretty much input anything one wants.</p>
 |     |     |     |     |     |     |     |     | L3  | ALT |     | S-Ins |
 .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-------.</code></pre>
 <p>Guess which programming language I like based on this layer’s <a href="https://docs.qmk.fm/#/feature_macros">macros</a> :).
-There are also other mod-taps here, but nothing new concept wise.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+There are also other mod-taps here, but nothing new concept wise.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 <p>Crucially, however, keys that were “Shift when held,
 <em>something</em> when pressed” on the base layer retain the Shift part of that functionality.
-This is used for the commutativity<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> of the modifier keys,
+This is used for the commutativity<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> of the modifier keys,
 which would otherwise drive me insane.
 The same goes for all fall-through keys;
 i.e., keys that appear blank in the above layout.
@@ -341,7 +341,7 @@ are replicated from the LOWER layer.
 This is due to the above mentioned issues of inserting arithmetic.
 This layer also features ` and <code>'</code> quite prominently,
 as these are important for <a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>.
-Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the difficult to hit key on the base layer.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
+Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the difficult to hit key on the base layer.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
 <h3 id="layer-3">Layer 3</h3>
 <pre><code>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
 |     |     |     |     |     |           |     | F7  | F8  | F9  | F10 |
@@ -354,7 +354,7 @@ Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the di
 .-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.-----.</code></pre>
 <p>So far, only the seldom used F-keys are present here.
 As should be obvious, this is the least developed layer,
-and also the one that’ll probably change the most in the future.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>
+and also the one that’ll probably change the most in the future.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
 Currently, I’m thinking of putting some XMonad specific bindings on here,
 which could even to free up the Super key to be used inside of Emacs
 for certain things—that would certainly be a worthwhile experiment.
@@ -363,7 +363,7 @@ although this is less critical since my laptop keyboard is never far away.</p>
 <h2 id="other-features">Other features</h2>
 <p>There are some features that aren’t necessarily reflected in the keys themselves,
 yet are quite essential for day-to-day use.
-The TL;DR can be found in <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk">rules.mk</a>.</p>
+The TL;DR can be found in <a href="https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk">rules.mk</a>.</p>
 <p>One notable omission from the following list will be Unicode entry.
 This is solely due to the fact that QMK’s built-in support for this utilises some GTK-specific functionality,
 which is woefully inadequate for my setup.
@@ -487,22 +487,19 @@ After, that, one simply has to execute</p>
 <pre class="console"><code>$ xset r rate 230 70
 $ setxkbmap -option compose:menu</code></pre>
 <p>to get some sane key repeat and compose key settings, and that’s it!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>Until my keymap really settles down,
-I will not submit it upstream to QMK,
-so the link points to a personal fork for now.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>{-} Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>{-} 󠀠</p>
+<li id="fn9"><p>{-} Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>{-} 󠀠</p>
 <p>󠀠</p>
 <p>󠀠</p>
 <p>󠀠</p>
 <p>󠀠</p>
 <p>At first I was very surprised to see <code>x</code> so far up this list—at least,
-until I remembered that <code>M1-x</code> and <code>C-x</code> exist!<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>Note that <code>S+^</code> and <code>S+!</code> are tap-dances for technical reasons:
-QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>I.e., it does not matter whether I press <code>S-L1-«key»</code> or <code>L1-S-«key»</code>.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14"><p>Although, strictly speaking, only <code>'</code> would be necessary, as <code>S-L2</code> is pretty easy to hit.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15"><p>I will try to keep this post updated with newer versions.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+until I remembered that <code>M1-x</code> and <code>C-x</code> exist!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Note that <code>S+^</code> and <code>S+!</code> are tap-dances for technical reasons:
+QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>I.e., it does not matter whether I press <code>S-L1-«key»</code> or <code>L1-S-«key»</code>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Although, strictly speaking, only <code>'</code> would be necessary, as <code>S-L2</code> is pretty easy to hit.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>I will try to keep this post updated with newer versions.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

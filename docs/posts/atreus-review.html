@@ -83,7 +83,7 @@
         &thinsp;·&thinsp; last modified: 2023-06-17
       
       
-        &thinsp;·&thinsp; <span title="4151 words">17 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="4128 words">17 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'hardware'." href="../tags/hardware.html" rel="tag">hardware</a>
@@ -301,11 +301,7 @@ creation—and while fiddling with it, of course—are quite important,
 given the unusual form-factor.
 Plus, there aren’t very many detailed resources on actually using a 40% keyboard that I could find,
 so perhaps this will also turn out to be useful to people not using an Atreus.
-For the impatient: you can find my finished layout <a href="https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe">here</a>.<!--
---><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Until my keymap really settles down,
-I will not submit it upstream to <span class="small-caps">qmk</span>,
-so the link points to a personal fork for now.</div><!--
--->
+For the impatient: you can find my finished layout <a href="https://github.com/qmk/qmk_firmware/tree/master/keyboards/keyboardio/atreus/keymaps/slotthe">here</a>.
 <h3 id="key-chord-considerations">Key chord considerations<a href="#key-chord-considerations" class="floatright sec-link">¶</a></h3>
 <p></p>
 As I extensively use both Emacs and <span class="small-caps">xm</span>onad,
@@ -315,13 +311,13 @@ especially since I don’t want to go overboard with layers,
 and I would like as many of my key chords to commute as possible,
 but more on that later.
 For example, a (non-exhaustive) list of combinations<!--
---><label for="sn-9" class="margin-toggle">⊕</label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="marginnote">Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.</div><!--
+--><label for="sn-8" class="margin-toggle">⊕</label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="marginnote">Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.</div><!--
 -->
 would be <code>C-S</code>, <code>C-M1</code>, <code>M4-M1</code>, <code>S-M4</code>, and <code>C-M4</code>;
 this already suggests some vague ordering of keys to different hands.
 Before buying the Atreus, I keylogged myself for a little bit on my internal laptop keyboard using <a href="https://github.com/anko/xkbcat">xkbcat</a>.
 A cursory analysis reveals the following:<!--
---><label for="sn-10" class="margin-toggle">⊕</label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-9" class="margin-toggle">⊕</label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -443,7 +439,7 @@ in order to do even more.
 Tap dances are very similar to mod-taps,
 only in addition to just differentiating between a “pressed” and a “held” state,
 <span class="small-caps">qmk</span> now also keeps track of <em>how often</em> a key has been tapped.
-So far, <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L187">my setup</a> here is quite basic;
+So far, <a href="https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L181">my setup</a> here is quite basic;
 I only check whether a key was pressed once, twice, or is being held.
 This allows me to not need extra keys for parentheses,
 as they can fit on the modifier keys:
@@ -489,14 +485,14 @@ it can be made to pretty much input anything one wants.
 <p></p>
 Guess which programming language I like based on this layer’s <a href="https://docs.qmk.fm/#/feature_macros">macros</a> :).
 There are also other mod-taps here, but nothing new concept wise.<!--
---><label for="sn-11" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-11" class="margin-toggle" /><div class="sidenote">Note that <code>S+^</code> and <code>S+!</code> are tap-dances for technical reasons:
+--><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote">Note that <code>S+^</code> and <code>S+!</code> are tap-dances for technical reasons:
 <span class="small-caps">qmk</span> can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.</div><!--
 -->
 <p></p>
 Crucially, however, keys that were “Shift when held,
 <em>something</em> when pressed” on the base layer retain the Shift part of that functionality.
 This is used for the commutativity<!--
---><label for="sn-12" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-12" class="margin-toggle" /><div class="sidenote">I.e., it does not matter whether I press <code>S-L1-«key»</code> or <code>L1-S-«key»</code>.</div><!--
+--><label for="sn-11" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-11" class="margin-toggle" /><div class="sidenote">I.e., it does not matter whether I press <code>S-L1-«key»</code> or <code>L1-S-«key»</code>.</div><!--
 --> of the modifier keys,
 which would otherwise drive me insane.
 The same goes for all fall-through keys;
@@ -540,7 +536,7 @@ This is due to the above mentioned issues of inserting arithmetic.
 This layer also features ` and <code>'</code> quite prominently,
 as these are important for <a href="https://github.com/cdominik/cdlatex">CDLaTeX</a>.
 Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the difficult to hit key on the base layer.<!--
---><label for="sn-13" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-13" class="margin-toggle" /><div class="sidenote">Although, strictly speaking, only <code>'</code> would be necessary, as <code>S-L2</code> is pretty easy to hit.</div><!--
+--><label for="sn-12" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-12" class="margin-toggle" /><div class="sidenote">Although, strictly speaking, only <code>'</code> would be necessary, as <code>S-L2</code> is pretty easy to hit.</div><!--
 -->
 <h3 id="layer-3">Layer 3<a href="#layer-3" class="floatright sec-link">¶</a></h3>
 <div class="highlight"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
@@ -558,7 +554,7 @@ Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the di
 So far, only the seldom used F-keys are present here.
 As should be obvious, this is the least developed layer,
 and also the one that’ll probably change the most in the future.<!--
---><label for="sn-14" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-14" class="margin-toggle" /><div class="sidenote">I will try to keep this post updated with newer versions.</div><!--
+--><label for="sn-13" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-13" class="margin-toggle" /><div class="sidenote">I will try to keep this post updated with newer versions.</div><!--
 -->
 Currently, I’m thinking of putting some <span class="small-caps">xm</span>onad specific bindings on here,
 which could even to free up the Super key to be used inside of Emacs
@@ -569,7 +565,7 @@ although this is less critical since my laptop keyboard is never far away.
 <p></p>
 There are some features that aren’t necessarily reflected in the keys themselves,
 yet are quite essential for day-to-day use.
-The <span class="small-caps">tl;dr</span> can be found in <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk">rules.mk</a>.
+The <span class="small-caps">tl;dr</span> can be found in <a href="https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk">rules.mk</a>.
 <p></p>
 One notable omission from the following list will be Unicode entry.
 This is solely due to the fact that <span class="small-caps">qmk</span>’s built-in support for this utilises some <span class="small-caps">gtk</span>-specific functionality,
