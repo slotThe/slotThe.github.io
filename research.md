@@ -55,6 +55,11 @@ All of my preprints are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *Abstract Schur Functors* \
+  2023-07-21, Block seminar "Operads", Bonn.
+
+  Based on [this paper](https://arxiv.org/abs/2106.00190) by Baez, Moeller, and Trimble.
+
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden. \
   2023-05-23, HATC23, Marburg;
