@@ -147,7 +147,7 @@ I've written too many Emacs packages—and none of them popular, at that!
   `package-vc.el` [here][post:package-vc-install].
   Note that,
   as of commit [2ce27968][emacs:vc-keyword],
-  this package is not built into Emacs!
+  this package is now built into Emacs!
 
 + [query-replace-many]
 
