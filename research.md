@@ -2,13 +2,13 @@
 title: Research
 ---
 [^1] My research interests can broadly be characterised under the term
-"category theory"—in particular, I like anything involving *dualities*,
-like [rigid] monoidal or [\*-autonomous] categories.  Further, I enjoy
-studying how algebraic gadgets lift into more categorical frameworks,
-and how much theory still works in that context.  When no one's looking,
-I also like to study categories for their own sake.  Some more keywords
-include [Hopf monads], [graphical calculi], [duoidal] and [linearly
-distributive] categories, as well as [operads].
+"monoidal category theory"—in particular,
+I like anything involving *dualities*,
+like [rigid] monoidal or [\*-autonomous] categories.
+Further, I enjoy studying how algebraic gadgets lift into more categorical frameworks,
+and how much theory still works in that context.
+When no one's looking, I also like to study categories for their own sake.
+Some more keywords include [Hopf monads], [graphical calculi], [duoidal] and [linearly distributive] categories, as well as [operads].
 
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
 [\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
