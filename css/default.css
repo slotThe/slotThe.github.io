@@ -17,7 +17,7 @@ html {
 
 body {
     color: black;
-    font-size: 21px;
+    font-size: 23px;
     font-family: var(--proportional-fonts);
     font-variant-numeric: oldstyle-nums;
     line-height: 1.4;
@@ -47,6 +47,7 @@ div#content {           /* body width */
     body {
         max-width: 960px;
         margin-right: 3em;
+        font-size: 21px;
     }
 }
 @media (max-width: 768px) {  /* Ease up on this again for *very* small screens */
