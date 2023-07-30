@@ -10,8 +10,135 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2023-06-20T00:00:00Z</updated>
+    <updated>2023-07-30T00:00:00Z</updated>
     <entry>
+    <title>Notmuch: Warn on Empty Subjects</title>
+    <link href="https://tony-zorman.com/posts/notmuch-subject.html" />
+    <id>https://tony-zorman.com/posts/notmuch-subject.html</id>
+    <published>2023-07-30T00:00:00Z</published>
+    <updated>2023-07-30T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2023-07-30
+      
+      
+      
+        &thinsp;·&thinsp; <span title="523 words">3 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<div>
+  <p>Emacs’s <code>notmuch</code> package has this fantastic concept of an <em>attachment check</em>:
+adding <code>notmuch-mua-attachment-check</code> to <code>notmuch-mua-send-hook</code> will,
+before sending the message,
+check whether the regular expression in <code>notmuch-mua-attachment-regexp</code> matches.
+If yes—and no attachment has been added—it will alert the user,
+asking whether one really wants to send that email;
+otherwise, everything goes through smoothly.
+Due to some personal idiosyncrasies,
+I needed a variant of this to check for empty subjects,
+lest I become one of those people who sends emails like that.
+As always, Emacs delivers.</p>
+<!--more-->
+<p>The code for <code>notmuch-mua-attachment-check</code> is relatively straightforward,
+and worth a look if we want to imitate this kind of behaviour for other headers.
+A simplified<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> version goes as follows:</p>
+<pre class="emacs-lisp"><code>(defun notmuch-mua-attachment-check ()
+  &quot;Signal an error an attachement is expected but missing.
+
+Signal an error if the message text indicates that an attachment
+is expected but no MML referencing an attachment is found.
+
+Typically this is added to `notmuch-mua-send-hook'.&quot;
+  (when (and
+         ;; When the message mentions attachment...
+         (save-excursion
+           (message-goto-body)
+           ;; Limit search from reaching other possible parts of the message
+           (let ((search-limit (search-forward &quot;\n&lt;#&quot; nil t)))
+             (message-goto-body)
+             (re-search-forward notmuch-mua-attachment-regexp search-limit t)))
+         ;; ...but doesn't have a part with a filename...
+         (save-excursion
+           (message-goto-body)
+           (not (re-search-forward &quot;^&lt;#part [^&gt;]*filename=&quot; nil t)))
+         ;; ...and that's not okay...
+         (not
+          (y-or-n-p &quot;Attachment mentioned, but no attachment - is that okay?&quot;)))
+    ;; ...signal an error.
+    (error &quot;Missing attachment&quot;)))</code></pre>
+<p>There is nothing fancy happening here,
+so it’s not terribly difficult to adapt it to other settings.
+As I said in the beginning,
+I need it to check for subjects,
+due to the bad habit of only adding a subject once the email is already written—only sometimes I forget.
+Instead of trying to change my habits—which is hard!—it sounds much easier to modify Emacs to suit my needs.</p>
+<p>The strategy is exactly the same as for <code>notmuch-mua-attachment-check</code>;
+check for a certain regular expression, whitespace, and say something if it matches the current subject:</p>
+<pre class="emacs-lisp"><code>(defun notmuch-mua-subject-check ()
+  (or (save-excursion
+        (message-goto-subject)
+        (message-beginning-of-header t)
+        (not (looking-at-p &quot;[[:blank:]]*$&quot;)))
+      (y-or-n-p &quot;No subject given – still send?&quot;)
+      (error &quot;No subject&quot;)))</code></pre>
+<p>All one has to do is to execute this before sending a mail:</p>
+<pre class="emacs-lisp"><code>(add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)</code></pre>
+<p>and we’re good to go.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Looking for an attachment is complicated insofar as there are some ways the regular expression might match,
+which however <em>don’t</em> indicate that anything needs to be done.
+The real code looks at this by observing text properties of the matches.
+However, this is not important for what follows, so I simply omitted it.</p>
+<p>If you’re interested:</p>
+<pre class="emacs-lisp"><code>;; When the message mentions attachment...
+(save-excursion
+  (message-goto-body)
+  ;; Limit search from reaching other possible
+  ;; parts of the message
+  (let ((search-limit
+         (search-forward &quot;\n&lt;#&quot; nil t)))
+    (message-goto-body)
+    (cl-loop
+     while (re-search-forward
+             notmuch-mua-attachment-regexp
+             search-limit t)
+     ;; For every instance of the &quot;attachment&quot;
+     ;; string found, examine the text
+     ;; properties.  If the text has either a
+     ;; `face' or `syntax-table' property then
+     ;; it is quoted text and should *not*
+     ;; cause the user to be asked about a
+     ;; missing attachment.
+     if (let ((props (text-properties-at
+                      (match-beginning 0))))
+          (not (or (memq 'syntax-table props)
+                   (memq 'face props))))
+     return t
+     finally return nil)))</code></pre>
+<p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Incorporating BibTeX into Hakyll</title>
     <link href="https://tony-zorman.com/posts/hakyll-and-bibtex.html" />
     <id>https://tony-zorman.com/posts/hakyll-and-bibtex.html</id>
@@ -3207,8 +3334,10 @@ certainly know which of the two I’d rather write!</p>
         Posted on 2022-10-22
       
       
+        &thinsp;·&thinsp; last modified: 2023-07-30
       
-        &thinsp;·&thinsp; <span title="2220 words">9 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="2747 words">11 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
@@ -3541,6 +3670,63 @@ insert the last character of DEF into the repeat map SYM.&quot;
     &quot;`repeat-mode' keymap to repeat `multiple-cursors' bindings.&quot;)</code></pre>
 <p>This may be too implicit for many people, but for me it’s just right—and
 that’s sort of the point of all of this, right?</p>
+<h2 id="warn-on-empty-subjects">Warn on empty subjects</h2>
+<p>Emacs’s <code>notmuch</code> package has this fantastic concept of an <em>attachment check</em>:
+adding <code>notmuch-mua-attachment-check</code> to <code>notmuch-mua-send-hook</code> will,
+before sending the message,
+check whether the regular expression in <code>notmuch-mua-attachment-regexp</code> matches.
+If yes—and no attachment has been added—it will alert the user,
+asking whether one really wants to send that email;
+otherwise, everything goes through smoothly.
+Due to some personal idiosyncrasies,
+I needed a variant of this to check for empty subjects,
+lest I become one of those people who sends emails like that.
+As always, Emacs delivers.</p>
+<p>The code for <code>notmuch-mua-attachment-check</code> is relatively straightforward,
+and worth a look if we want to imitate this kind of behaviour for other headers.
+A simplified<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> version goes as follows:</p>
+<pre class="emacs-lisp"><code>(defun notmuch-mua-attachment-check ()
+  &quot;Signal an error an attachement is expected but missing.
+
+Signal an error if the message text indicates that an attachment
+is expected but no MML referencing an attachment is found.
+
+Typically this is added to `notmuch-mua-send-hook'.&quot;
+  (when (and
+         ;; When the message mentions attachment...
+         (save-excursion
+           (message-goto-body)
+           ;; Limit search from reaching other possible parts of the message
+           (let ((search-limit (search-forward &quot;\n&lt;#&quot; nil t)))
+             (message-goto-body)
+             (re-search-forward notmuch-mua-attachment-regexp search-limit t)))
+         ;; ...but doesn't have a part with a filename...
+         (save-excursion
+           (message-goto-body)
+           (not (re-search-forward &quot;^&lt;#part [^&gt;]*filename=&quot; nil t)))
+         ;; ...and that's not okay...
+         (not
+          (y-or-n-p &quot;Attachment mentioned, but no attachment - is that okay?&quot;)))
+    ;; ...signal an error.
+    (error &quot;Missing attachment&quot;)))</code></pre>
+<p>There is nothing fancy happening here,
+so it’s not terribly difficult to adapt it to other settings.
+As I said in the beginning,
+I need it to check for subjects,
+due to the bad habit of only adding a subject once the email is already written—only sometimes I forget.
+Instead of trying to change my habits—which is hard!—it sounds much easier to modify Emacs to suit my needs.</p>
+<p>The strategy is exactly the same as for <code>notmuch-mua-attachment-check</code>;
+check for a certain regular expression, whitespace, and say something if it matches the current subject:</p>
+<pre class="emacs-lisp"><code>(defun notmuch-mua-subject-check ()
+  (or (save-excursion
+        (message-goto-subject)
+        (message-beginning-of-header t)
+        (not (looking-at-p &quot;[[:blank:]]*$&quot;)))
+      (y-or-n-p &quot;No subject given – still send?&quot;)
+      (error &quot;No subject&quot;)))</code></pre>
+<p>All one has to do is to execute this before sending a mail:</p>
+<pre class="emacs-lisp"><code>(add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)</code></pre>
+<p>and we’re good to go.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
@@ -3551,6 +3737,37 @@ this feels “more correct” in some way.<a href="#fnref1" class="footnote-back
 explicitly quantify over an argument.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Though it’s still much smaller than whatever it is that WeeChat
 auto-generates :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Looking for an attachment is complicated insofar as there are some ways the regular expression might match,
+which however <em>don’t</em> indicate that anything needs to be done.
+The real code looks at this by observing text properties of the matches.
+However, this is not important for what follows, so I simply omitted it.</p>
+<p>If you’re interested:</p>
+<pre class="emacs-lisp"><code>;; When the message mentions attachment...
+(save-excursion
+  (message-goto-body)
+  ;; Limit search from reaching other possible
+  ;; parts of the message
+  (let ((search-limit
+         (search-forward &quot;\n&lt;#&quot; nil t)))
+    (message-goto-body)
+    (cl-loop
+     while (re-search-forward
+             notmuch-mua-attachment-regexp
+             search-limit t)
+     ;; For every instance of the &quot;attachment&quot;
+     ;; string found, examine the text
+     ;; properties.  If the text has either a
+     ;; `face' or `syntax-table' property then
+     ;; it is quoted text and should *not*
+     ;; cause the user to be asked about a
+     ;; missing attachment.
+     if (let ((props (text-properties-at
+                      (match-beginning 0))))
+          (not (or (memq 'syntax-table props)
+                   (memq 'face props))))
+     return t
+     finally return nil)))</code></pre>
+<p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

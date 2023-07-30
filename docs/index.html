@@ -59,6 +59,30 @@
 
   <div class="posts">
     <div style="text-align: left">
+      <b style="font-size: 1.1em; font-family: var(--serif-fonts);">Notmuch: Warn on Empty Subjects</b>
+      <span style="font-size: 19px"> (<a title="All pages tagged 'emacs'." href="./tags/emacs.html" rel="tag">emacs</a>) </span>
+    </div>
+    <p>
+      Emacs’s <code>notmuch</code> package has this fantastic concept of an <em>attachment check</em>:
+adding <code>notmuch-mua-attachment-check</code> to <code>notmuch-mua-send-hook</code> will,
+before sending the message,
+check whether the regular expression in <code>notmuch-mua-attachment-regexp</code> matches.
+If yes—and no attachment has been added—it will alert the user,
+asking whether one really wants to send that email;
+otherwise, everything goes through smoothly.
+Due to some personal idiosyncrasies,
+I needed a variant of this to check for empty subjects,
+lest I become one of those people who sends emails like that.
+As always, Emacs delivers.
+
+    </p>
+    <p>
+      <a href="./posts/notmuch-subject.html">Read more</a> – 2023-07-30
+    </p>
+  </div>
+
+  <div class="posts">
+    <div style="text-align: left">
       <b style="font-size: 1.1em; font-family: var(--serif-fonts);">Incorporating BibTeX into Hakyll</b>
       <span style="font-size: 19px"> (<a title="All pages tagged 'haskell'." href="./tags/haskell.html" rel="tag">haskell</a>) </span>
     </div>
