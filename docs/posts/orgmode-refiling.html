@@ -103,7 +103,7 @@ happier with it. However, a user recently contacted me by email and
 told me that they’re missing but one feature: the ability to immediately
 refile notes.
 <!--more-->
-<h2 id="motivation">Motivation<a href="#motivation" class="floatright sec-link">¶</a></h2>
+<h2 id="motivation">Motivation<a href="#motivation" class="floatleft sec-link">§</a></h2>
 <p></p>
 If you don’t know, <a href="https://orgmode.org/manual/Refile-and-Copy.html">refiling</a> is the act of moving an entry<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">A headline, possibly with an attached body.</div><!--
@@ -121,7 +121,7 @@ However, it is conceivable that someone might want to refile certain
 tasks straight away when it’s pretty clear that (i) they’ll be kept, and
 (ii) they can be unambiguously assigned to a certain heading (e.g., an
 already scheduled work meeting with X).
-<h2 id="showcase">Showcase<a href="#showcase" class="floatright sec-link">¶</a></h2>
+<h2 id="showcase">Showcase<a href="#showcase" class="floatleft sec-link">§</a></h2>
 <p></p>
 Long story short, this is now built into X.P.OrgMode. There are two new
 functions:
@@ -144,7 +144,7 @@ heading.
 <p></p>
 Note: Refiling is (near) instant; the delay you are seeing above is due
 to <code>auto-revert-mode</code>.
-<h3 id="some-gory-details">Some gory details<a href="#some-gory-details" class="floatright sec-link">¶</a></h3>
+<h3 id="some-gory-details">Some gory details<a href="#some-gory-details" class="floatleft sec-link">§</a></h3>
 <p></p>
 All of the refiling is actually directly done by Emacs itself! More
 precisely, the <span class="small-caps">edsl</span> that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
@@ -186,7 +186,7 @@ much less brittle than the alternative. The Org maintainers certainly
 know best what refiling <em>means</em>, and thus also what it entails—if all of
 this logic is already written, why not take advantage of it? Plus, I
 now don’t have to keep track of subtle changes in newer versions of Org.
-<h2 id="closing-thoughts">Closing thoughts<a href="#closing-thoughts" class="floatright sec-link">¶</a></h2>
+<h2 id="closing-thoughts">Closing thoughts<a href="#closing-thoughts" class="floatleft sec-link">§</a></h2>
 <p></p>
 Writing this was actually a lot of fun, and a great opportunity to play
 with the <span class="small-caps">edsl</span> that X.U.Run exposes. I reckon there are a few places in

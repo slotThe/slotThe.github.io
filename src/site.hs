@@ -391,7 +391,7 @@ myPandocCompiler =
   addSectionLinks :: Pandoc -> Pandoc
   addSectionLinks = walk \case
     Header n attr@(idAttr, _, _) inlines ->
-      let link = Link ("", ["floatright", "sec-link"], []) [Str "¶"] ("#" <> idAttr, "")
+      let link = Link ("", ["floatleft", "sec-link"], []) [Str "§"] ("#" <> idAttr, "")
        in Header n attr (inlines <> [link])
     block -> block
 

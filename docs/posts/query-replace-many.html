@@ -109,7 +109,7 @@ through the individual matches and decide whether one would like to
 replace them or not. In true Emacs fashion, the function also takes way
 too many arguments: among other things, it can operate on the current
 region, backwards, or only on things surrounded by words boundaries.
-<h2 id="motivation">Motivation<a href="#motivation" class="floatright sec-link">¶</a></h2>
+<h2 id="motivation">Motivation<a href="#motivation" class="floatleft sec-link">§</a></h2>
 <p></p>
 Originally, my motivation came through <a href="../../research.html">work</a>, where I <a href="./my-phd-workflow.html">write a lot of
 LaTeX</a>. When polishing papers, it sometimes happens that I would like
@@ -130,7 +130,7 @@ alternative <code>query-replace-regexp</code> function and capture groups, but I
 unsure how many people know their elisp regular expressions well enough
 for that to be time efficient. I don’t, and almost certainly never
 will, so it seemed much easier to automate this instead!
-<h2 id="the-solution">The solution<a href="#the-solution" class="floatright sec-link">¶</a></h2>
+<h2 id="the-solution">The solution<a href="#the-solution" class="floatleft sec-link">§</a></h2>
 <p></p>
 Thankfully, since <code>replace.el</code> sports a decent <span class="small-caps">api</span>, writing a version of
 <code>query-replace</code> that accepts multiple arguments turns out to be easy
@@ -169,7 +169,7 @@ expression <code>\(?U:\|T\)</code> as the thing to be replaced instead of the bi
 that’s actually matching currently. However, since this would seem to
 require some work and one of course sees what’s to be replaced by
 looking at the thing at point, I can live with this for the moment.
-<h3 id="the-code">The code<a href="#the-code" class="floatright sec-link">¶</a></h3>
+<h3 id="the-code">The code<a href="#the-code" class="floatleft sec-link">§</a></h3>
 <p></p>
 As one might imagine, the code is actually quite straightforward—it only
 consists of two functions! The first one is a little helper, querying

@@ -29,8 +29,7 @@ For various definitions of "notable".
   like `HTML` or `GNU`.  As such, a font that actually supports this
   (instead of rescaling capital letters) is [also provided][site:impl:fonts].
 
-+ [Pilcrows][wiki:pilcrow] when hovering over a section title, linking
-  to the respective section.
++ Section marks when hovering over a heading, linking to the respective section.
 
 + [Citation handling][site:citations] with BibTeX.
 
@@ -41,7 +40,6 @@ For various definitions of "notable".
 [site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
 [site:pygmentise]: https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html
 [site:sidenotes]: https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html
-[wiki:pilcrow]: https://en.wikipedia.org/wiki/Pilcrow
 
 ## Build
 

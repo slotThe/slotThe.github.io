@@ -126,7 +126,7 @@ going to be around longer than my personal site will. And yet,
 this feels “more correct” in some way.</div><!--
 -->
 <!--more-->
-<h2 id="frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code><a href="#frame-inhibit-implied-resize" class="floatright sec-link">¶</a></h2>
+<h2 id="frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code><a href="#frame-inhibit-implied-resize" class="floatleft sec-link">§</a></h2>
 <p></p>
 This variable is interesting for all the people who, for one reason or
 another, care about the startup time of their Emacs session. Even more
@@ -154,7 +154,7 @@ that this cuts my startup time from just over 1 second to about 0.8
 seconds. This may not seem like much, but it’s literally <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51">setting a
 single variable</a> in my <code>early-init.el</code>—pretty good
 value for money.
-<h2 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code><a href="#pixel-scroll-precision-mode" class="floatright sec-link">¶</a></h2>
+<h2 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code><a href="#pixel-scroll-precision-mode" class="floatleft sec-link">§</a></h2>
 <p></p>
 This is pretty old news by now, but I wanted to take the opportunity to
 again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a href="./phd-workflow/2022-05-01-my-phd-workflow.html">PhD
@@ -173,7 +173,7 @@ difference for yourself:
 <source src="../images/emacs-potpourri/pixel-scroll-precision-mode.mp4" type="video/mp4">
 </video>
 </p>
-<h2 id="quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code><a href="#quickly-insert-images-in-org-roam" class="floatright sec-link">¶</a></h2>
+<h2 id="quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code><a href="#quickly-insert-images-in-org-roam" class="floatleft sec-link">§</a></h2>
 <p></p>
 Speaking of inserting images into Org; how does one do that, exactly?
 Doing everything by hand seems like a slog: select an arbitrary
@@ -204,7 +204,7 @@ All it needs is <code>xdotool</code> for moving the mouse (though, if you don’
 taking the screenshot. Pretty convenient. If <code>scrot</code> is too low-tech
 for you, then the above snippet probably also works with <code>flameshot</code> or
 a similar tool.
-<h2 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician<a href="#latex-for-the-lazy-mathematician" class="floatright sec-link">¶</a></h2>
+<h2 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician<a href="#latex-for-the-lazy-mathematician" class="floatleft sec-link">§</a></h2>
 <p></p>
 I am pretty impatient when it comes to LaTeX entry. So impatient that I
 have created a few “now you’re really taking it too far”-type of
@@ -276,7 +276,7 @@ LaTeX entry:
 <p></p>
 More examples can be found in the <a href="./phd-workflow/2022-05-01-my-phd-workflow.html#digital-notes">post</a> about
 my research workflow.
-<h2 id="erc">ERC<a href="#erc" class="floatright sec-link">¶</a></h2>
+<h2 id="erc">ERC<a href="#erc" class="floatleft sec-link">§</a></h2>
 <p></p>
 I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s
 really great so far, but some things felt a bit lackluster out of the
@@ -286,7 +286,7 @@ bit.<!--
 auto-generates :)</div><!--
 --> The following are a few tweaks that improve my experience
 greatly.
-<h3 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent<a href="#mark-the-current-frame-as-urgent" class="floatright sec-link">¶</a></h3>
+<h3 id="mark-the-current-frame-as-urgent">Mark the current frame as urgent<a href="#mark-the-current-frame-as-urgent" class="floatleft sec-link">§</a></h3>
 <p></p>
 One feature I was dearly missing was the ability to set <a href="https://tronche.com/gui/x/xlib/ICC/client-to-window-manager/wm-hints.html">urgency
 hints</a> in the case I get highlighted/pinged. This is
@@ -320,7 +320,7 @@ I get highlighted. Note that, <a href="https://old.reddit.com/r/emacs/comments/x
 you use a reparenting window manager (you probably do if you use a
 desktop environment) you might have to give <code>x-change-window-property</code>
 above an extra <code>t</code> argument.
-<h3 id="dont-highlight-quite-so-much">Don’t highlight quite so much<a href="#dont-highlight-quite-so-much" class="floatright sec-link">¶</a></h3>
+<h3 id="dont-highlight-quite-so-much">Don’t highlight quite so much<a href="#dont-highlight-quite-so-much" class="floatleft sec-link">§</a></h3>
 <p></p>
 Having configured quite a few regular expressions for when I get
 highlighted, things can get quite overwhelming at times. For example,
@@ -364,7 +364,7 @@ All that’s left to do is to thread this function through to
 
 <p></p>
 If it works, it works, right?
-<h2 id="inserting-links">Inserting links<a href="#inserting-links" class="floatright sec-link">¶</a></h2>
+<h2 id="inserting-links">Inserting links<a href="#inserting-links" class="floatleft sec-link">§</a></h2>
 <p></p>
 Next to being a user, I also spend way too much time working on <span class="small-caps">xm</span>onad.
 As such, I often help people coming into our IRC or posting on the
@@ -428,7 +428,7 @@ different link style is used, to accomodate for different platforms.
 I bind this to <code>C-c l</code> in <code>markdown-mode</code>; it looks like this:
 <p></p>
 <img class="pure-img" src="../images/emacs-potpourri/markdown-entry.gif" alt="link entry in markdown-mode, with an interactive prompt">
-<h2 id="a-macro-for-repeat-mode">A macro for <code>repeat-mode</code><a href="#a-macro-for-repeat-mode" class="floatright sec-link">¶</a></h2>
+<h2 id="a-macro-for-repeat-mode">A macro for <code>repeat-mode</code><a href="#a-macro-for-repeat-mode" class="floatleft sec-link">§</a></h2>
 <p></p>
 I’ve written a macro for Emacs’s <code>repeat-mode</code>, which allows you to
 execute repeated commands without having to press the same prefix over
@@ -486,7 +486,7 @@ The following would, for example, bind <code>mc/mark-next-like-this-word</code> 
 <p></p>
 This may be too implicit for many people, but for me it’s just right—and
 that’s sort of the point of all of this, right?
-<h2 id="warn-on-empty-subjects">Warn on empty subjects<a href="#warn-on-empty-subjects" class="floatright sec-link">¶</a></h2>
+<h2 id="warn-on-empty-subjects">Warn on empty subjects<a href="#warn-on-empty-subjects" class="floatleft sec-link">§</a></h2>
 <p></p>
 Emacs’s <code>notmuch</code> package has this fantastic concept of an <em>attachment check</em>:
 adding <code>notmuch-mua-attachment-check</code> to <code>notmuch-mua-send-hook</code> will,

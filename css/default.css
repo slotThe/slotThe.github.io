@@ -183,6 +183,10 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--serif-fonts);
 }
 
+:is(h1, h2, h3, h4, h5, h6)[id] { /* Id means it has a link associated to it */
+    margin-left: -20px; /* Same as `margin-left' of `floatleft' */
+}
+
 /**********************************************************************
   LEFT HAND SIDE NAVIGATION
 */
@@ -408,6 +412,16 @@ a#to-top {
 /**********************************************************************
   SECTION LINKS
 */
+
+.floatleft {           /* Section links float to the left. */
+    float: left;
+    margin-left: -20px; /* Negation of `padding-left' */
+    padding-left: 20px;
+    padding-right: 6px;
+    font-variant: normal;
+    font-size: 0.8em;
+    line-height: 1.5;
+}
 
 :is(h1, h2, h3, h4, h5, h6) .sec-link {
     text-decoration: none;
