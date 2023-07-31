@@ -3,26 +3,12 @@ title: Mackey Functors Seminar
 bib: true
 ---
 
-# Tentative Schedule
-
-The seminar is set to happen **on the 14–16th of July**.
-
-<p>
-<div id="border-table" class="highlight">
-+--------------+--------------+--------------+-----------+
-| Time         | Friday       | Saturday     | Sunday    |
-+==============+==============+==============+===========+
-| Morning      | Manuel\      | Edoardo\     | Ivan\     |
-|              | Exercises    | Exercises    | Exercises |
-+--------------+--------------+--------------+-----------+
-| Afternoon    | Zbiggi\      | Tony\        |           |
-|              | Exercises    | Exercises    |           |
-+--------------+--------------+--------------+-----------+
-| Evening      | Sebastian\   | Exercises    |           |
-|              | Exercises    |              |           |
-+--------------+--------------+--------------+-----------+
-</div>
-</p>
+This is the website for a seminar on *Mackey functors* held at TU Dresden,
+in collaboration with the University of Marburg.
+The goal was to understand several equivalent definitions of these functors,
+and—along the way—introduce representation theory of finite groups,
+relative homological algebra,
+and some monoidal category theory.
 
 # Roadmap
 
@@ -51,29 +37,42 @@ Thus, spectral Mackey functors are good test candidates for formulating
 and checking these tools in the $(\infty, 1)$-categorical world.
 
 This seminar will be an introduction to these topics.
-It has two main parts
+It has two main parts:
 
-1.  Concrete and abstract Mackey functors
-2.  Promonoidal categories, Coend calculus and Day convolution
+1.  Concrete and abstract Mackey functors.
+2.  Coend calculus and Day convolution.
 
-and a couple of side quests
+# Schedule
 
--   Group representation theory
--   Grothendieck–Verdier categories
--   [Grothendieck–Verdier categories and topological quantum field theories](https://arxiv.org/pdf/2010.10229.pdf)
--   [Mackey functors for Hopf algebras](https://www.researchgate.net/publication/258726672_Mackey_type_theory_for_representations_of_semisimple_Hopf_algebras)
--   [Mackey functors for topological groups](http://www.tac.mta.ca/tac/volumes/1999/n9/n9.pdf)
+The seminar took place on the 14–15th of July 2023.
 
-# Concrete Mackey functors
+<p>
+<div id="border-table" class="highlight">
++--------------+--------------+--------------+
+| Time         | Friday       | Saturday     |
++==============+==============+==============+
+| Morning      | Manuel       | Edoardo\     |
+|              |              | Ivan         |
++--------------+--------------+--------------+
+| Afternoon    | Zbiggi\      | Tony         |
+|              | (Exercises)  |              |
++--------------+--------------+--------------+
+| Evening      | Sebastian    |              |
+|              |              |              |
++--------------+--------------+--------------+
+</div>
+</p>
 
-## Sources
+## Concrete Mackey functors
+
+### Sources
 
 -   Peter Webb: A guide to Mackey functors [@webb00:mackey]
 -   Jacques Thévenaz and Peter Webb: The structure of Mackey functors [@thevenaz95:mackey]
 
-## Outline
+### Outline
 
-#### Preliminaries: The Mackey machine in group representation theory (*Manuel*)
+#### The Mackey machine in group representation theory (*Manuel*)
 
 Chapter 8 of Representation Theory of Finite Groups by Benjamin Steinberg [@steinberg12:repres],
 Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie], or
@@ -110,15 +109,15 @@ Linear representations of finite groups by Jean-Pierre Serre [@serre98:repres].
 
 #### Outlook: Cohomological Mackey functors and the Hecke algebra
 
-# Abstract Mackey functors
+## Abstract Mackey functors
 
-## Sources
+### Sources
 
 -   John Bénabou: Introduction to Bicategories[^1] [@benabou67:bicats]
 -   Harald Lindner: A Remark on Mackey-Functors [@lindner76:mackey]
 -   Max Kelly: Basic concepts of enriched category theory [@kelly05:basic]
 
-## Outline
+### Outline
 
 #### Preliminaries: Spans and functor categories (*Tony*)
 
@@ -139,16 +138,16 @@ Linear representations of finite groups by Jean-Pierre Serre [@serre98:repres].
 -   Characterisations of rigid dualisability[Exercise]
 -   The dual basis lemma for Mky functors[Important]
 
-# Day convolution
+## Day convolution
 
-## Sources
+### Sources
 
 -   Brian Day: On closed categories of functors [@day70]
 -   Brian Day, Elango Panchadcharam, Ross Street: Lax Braidings and the Lax Centre [@day07:lax]
 -   Fosco Loregian: Coend Calculus [@loregian2021]
 -   Max Kelly: On the operads of J.P. May [@kelly05:operads]
 
-## Outline
+### Outline
 
 #### Preliminaries: (Co)end calculus (*Ivan*)
 
@@ -176,7 +175,7 @@ or Chapter 6 of "Coend Calculus" [@loregian2021].
 
 #### Profunctors and promonoidal categories
 
-# Final goals
+## Final goals
 
 The speakers of the seminar are invited to write a short proceedings articles.
 For example the following question might be investigated:
