@@ -33,7 +33,7 @@ body {
     position: relative;
     text-align: right;
 }
-@media (max-width: 1365px) or ((min-width: 1367px) and (max-width: 1620)) {
+@media (max-width: 1349px) or ((min-width: 1367px) and (max-width: 1620px)) {
     margin-left: -47%;
     width: 40%;
 }
@@ -124,7 +124,7 @@ label.margin-toggle:not(.sidenote-number) {
 /* The first condition is for the case of a left-aligned layout (on a
    smaller screen), and the second condition for a more centered layout
    on a larger screen.  It's a bit awkward, sadly :/ */
-@media (max-width: 1365px) or ((min-width: 1367px) and (max-width: 1620px)) {
+@media (max-width: 1349px) or ((min-width: 1367px) and (max-width: 1620px)) {
     label.margin-toggle:not(.sidenote-number) {
         display: inline;
     }
