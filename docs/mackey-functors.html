@@ -98,24 +98,32 @@
             <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
             <ul>
 <li><a href="#roadmap">Roadmap</a></li>
-<li><a href="#schedule">Schedule</a>
-<ul>
 <li><a href="#concrete-mackey-functors">Concrete Mackey functors</a>
 <ul>
-<li><a href="#sources">Sources</a></li>
+<li><a href="#representation-theoretic-preliminaries-manuel">Representation theoretic preliminaries (<em>Manuel</em>)</a>
+<ul>
 <li><a href="#outline">Outline</a></li>
+</ul></li>
+<li><a href="#first-examples-zbiggi">First examples (<em>Zbiggi</em>)</a></li>
+<li><a href="#mackey-functors-and-the-mackey-algebra-sebastian">Mackey functors and the Mackey algebra (<em>Sebastian</em>)</a>
+<ul>
+<li><a href="#outline-1">Outline</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#abstract-mackey-functors">Abstract Mackey functors</a>
 <ul>
-<li><a href="#sources-1">Sources</a></li>
-<li><a href="#outline-1">Outline</a></li>
-</ul></li>
-<li><a href="#day-convolution">Day convolution</a>
+<li><a href="#relative-homological-algebra-edoardo">Relative homological algebra (<em>Edoardo</em>)</a>
 <ul>
-<li><a href="#sources-2">Sources</a></li>
 <li><a href="#outline-2">Outline</a></li>
 </ul></li>
-<li><a href="#final-goals">Final goals</a></li>
+<li><a href="#day-convolution-ivan">Day convolution (<em>Ivan</em>)</a>
+<ul>
+<li><a href="#outline-3">Outline</a></li>
+</ul></li>
+<li><a href="#abstract-mackey-functors-tony">Abstract Mackey functors (<em>Tony</em>)</a>
+<ul>
+<li><a href="#outline-4">Outline</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#references">References</a></li></ul>
           </div>
@@ -146,24 +154,32 @@
     <p class="mini-header">Contents</p>
     <ul>
 <li><a href="#roadmap">Roadmap</a></li>
-<li><a href="#schedule">Schedule</a>
-<ul>
 <li><a href="#concrete-mackey-functors">Concrete Mackey functors</a>
 <ul>
-<li><a href="#sources">Sources</a></li>
+<li><a href="#representation-theoretic-preliminaries-manuel">Representation theoretic preliminaries (<em>Manuel</em>)</a>
+<ul>
 <li><a href="#outline">Outline</a></li>
+</ul></li>
+<li><a href="#first-examples-zbiggi">First examples (<em>Zbiggi</em>)</a></li>
+<li><a href="#mackey-functors-and-the-mackey-algebra-sebastian">Mackey functors and the Mackey algebra (<em>Sebastian</em>)</a>
+<ul>
+<li><a href="#outline-1">Outline</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#abstract-mackey-functors">Abstract Mackey functors</a>
 <ul>
-<li><a href="#sources-1">Sources</a></li>
-<li><a href="#outline-1">Outline</a></li>
-</ul></li>
-<li><a href="#day-convolution">Day convolution</a>
+<li><a href="#relative-homological-algebra-edoardo">Relative homological algebra (<em>Edoardo</em>)</a>
 <ul>
-<li><a href="#sources-2">Sources</a></li>
 <li><a href="#outline-2">Outline</a></li>
 </ul></li>
-<li><a href="#final-goals">Final goals</a></li>
+<li><a href="#day-convolution-ivan">Day convolution (<em>Ivan</em>)</a>
+<ul>
+<li><a href="#outline-3">Outline</a></li>
+</ul></li>
+<li><a href="#abstract-mackey-functors-tony">Abstract Mackey functors (<em>Tony</em>)</a>
+<ul>
+<li><a href="#outline-4">Outline</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#references">References</a></li></ul>
   </div>
@@ -175,6 +191,48 @@ The goal was to understand several equivalent definitions of these functors,
 and—along the way—introduce representation theory of finite groups,
 relative homological algebra,
 and some monoidal category theory.
+<p></p>
+The seminar <strong>took place</strong> on the 14–15th of July 2023.
+<p>
+</p><div id="border-table" class="highlight">
+<table style="width:56%;">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Friday</th>
+<th>Saturday</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Morning</td>
+<td>Manuel</td>
+<td>Edoardo<br>
+Sebastian</td>
+</tr>
+<tr class="even">
+<td>Afternoon</td>
+<td>Zbiggi<br>
+(Exercises)</td>
+<td>Ivan<br>
+Tony</td>
+</tr>
+<tr class="odd">
+<td>Evening</td>
+<td>Exercises</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<p></p>
+A <span class="small-caps">pdf</span> with the contents of the seminar will be released <strong>soon</strong>.
 <h2 id="roadmap">Roadmap<a href="#roadmap" class="floatleft sec-link">§</a></h2>
 <blockquote>
 <p></p>
@@ -236,417 +294,536 @@ It has two main parts:
 <li>Concrete and abstract Mackey functors.</li>
 <li>Coend calculus and Day convolution.</li>
 </ol>
-<h2 id="schedule">Schedule<a href="#schedule" class="floatleft sec-link">§</a></h2>
+<h2 id="concrete-mackey-functors">Concrete Mackey functors<a href="#concrete-mackey-functors" class="floatleft sec-link">§</a></h2>
+<h3 id="representation-theoretic-preliminaries-manuel">Representation theoretic preliminaries (<em>Manuel</em>)<a href="#representation-theoretic-preliminaries-manuel" class="floatleft sec-link">§</a></h3>
 <p></p>
-The seminar took place on the 14–15th of July 2023.
-<p>
-</p><div id="border-table" class="highlight">
-<table style="width:56%;">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Time</th>
-<th>Friday</th>
-<th>Saturday</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Morning</td>
-<td>Manuel</td>
-<td>Edoardo<br>
-Ivan</td>
-</tr>
-<tr class="even">
-<td>Afternoon</td>
-<td>Zbiggi<br>
-(Exercises)</td>
-<td>Tony</td>
-</tr>
-<tr class="odd">
-<td>Evening</td>
-<td>Sebastian</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
+This talk introduces much of the representation theoretic language that is needed when one wants to study classical Mackey functors.
+In particular, we will see what <em>restriction</em>, <em>induction</em>, and <em>conjugation</em> look like,
+and conclude with <em>Mackey decomposition</em>, modelling the interaction between these operations.
+We are interested in studying the “original” Mackey functor:
+for a field <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.221ex" height="2.009ex" style="vertical-align: -0.338ex;" viewBox="0 -719.6 525.5 865.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-4-Title">
+<title id="MathJax-SVG-4-Title">\mathtt{k}</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJTT-6B" x="0" y="0"></use>
+</g>
+</svg></span></span> and a finite group <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.827ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 786.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-5-Title">
+<title id="MathJax-SVG-5-Title">G</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-47" x="0" y="0"></use>
+</g>
+</svg></span></span>,
+the assignment <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="18.4ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 7922.1 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-6-Title">
+<title id="MathJax-SVG-6-Title">H \leq G \longrightarrow M(H)</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-48" x="0" y="0"></use>
+ <use xlink:href="#MJMAIN-2264" x="1166" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="2222" y="0"></use>
+ <use xlink:href="#MJMAIN-27F6" x="3286" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="5203" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="6254" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="6644" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="7532" y="0"></use>
+</g>
+</svg></span></span>, where
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="39.652ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 17072.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-7-Title">
+<title id="MathJax-SVG-7-Title">
+  M(H) = \text{Rep} H = \mathtt{k}[H]\text{-mod} = Z[\mathtt{k}[H]],
+</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="1051" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="1441" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="2329" y="0"></use>
+ <use xlink:href="#MJMAIN-3D" x="2996" y="0"></use>
+<g transform="translate(4053,0)">
+ <use xlink:href="#MJMAIN-52"></use>
+ <use xlink:href="#MJMAIN-65" x="736" y="0"></use>
+ <use xlink:href="#MJMAIN-70" x="1181" y="0"></use>
+</g>
+ <use xlink:href="#MJMATHI-48" x="5790" y="0"></use>
+ <use xlink:href="#MJMAIN-3D" x="6956" y="0"></use>
+ <use xlink:href="#MJTT-6B" x="8013" y="0"></use>
+ <use xlink:href="#MJMAIN-5B" x="8538" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="8817" y="0"></use>
+ <use xlink:href="#MJMAIN-5D" x="9705" y="0"></use>
+<g transform="translate(9984,0)">
+ <use xlink:href="#MJMAIN-2D"></use>
+ <use xlink:href="#MJMAIN-6D" x="333" y="0"></use>
+ <use xlink:href="#MJMAIN-6F" x="1167" y="0"></use>
+ <use xlink:href="#MJMAIN-64" x="1667" y="0"></use>
+</g>
+ <use xlink:href="#MJMAIN-3D" x="12485" y="0"></use>
+ <use xlink:href="#MJMATHI-5A" x="13542" y="0"></use>
+ <use xlink:href="#MJMAIN-5B" x="14265" y="0"></use>
+ <use xlink:href="#MJTT-6B" x="14544" y="0"></use>
+ <use xlink:href="#MJMAIN-5B" x="15069" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="15348" y="0"></use>
+ <use xlink:href="#MJMAIN-5D" x="16236" y="0"></use>
+ <use xlink:href="#MJMAIN-5D" x="16515" y="0"></use>
+ <use xlink:href="#MJMAIN-2C" x="16793" y="0"></use>
+</g>
+</svg></span></span>
 <p></p>
-<h3 id="concrete-mackey-functors">Concrete Mackey functors<a href="#concrete-mackey-functors" class="floatleft sec-link">§</a></h3>
-<h4 id="sources">Sources<a href="#sources" class="floatleft sec-link">§</a></h4>
-<ul>
-<li>Peter Webb: A guide to Mackey functors <span class="citation" data-cites="webb00:mackey">[<a href="#ref-webb00:mackey" role="doc-biblioref">Webb00</a>]</span></li>
-<li>Jacques Thévenaz and Peter Webb: The structure of Mackey functors <span class="citation" data-cites="thevenaz95:mackey">[<a href="#ref-thevenaz95:mackey" role="doc-biblioref">ThWe95</a>]</span></li>
-</ul>
+The talk will follow
+<span class="citation" data-cites="webb00:mackey">[<a href="#ref-webb00:mackey" role="doc-biblioref">Webb00</a>]</span>,
+<span class="citation" data-cites="thevenaz95:mackey">[<a href="#ref-thevenaz95:mackey" role="doc-biblioref">ThWe95</a>]</span>,
+Chapter 8 of <span class="citation" data-cites="steinberg12:repres">[<a href="#ref-steinberg12:repres" role="doc-biblioref">Stei12</a>]</span>,
+Chapter 34 of <span class="citation" data-cites="bump13:lie">[<a href="#ref-bump13:lie" role="doc-biblioref">Bump13</a>]</span>,
+and <span class="citation" data-cites="serre98:repres">[<a href="#ref-serre98:repres" role="doc-biblioref">Serr98</a>]</span>.
 <h4 id="outline">Outline<a href="#outline" class="floatleft sec-link">§</a></h4>
-<h5 id="the-mackey-machine-in-group-representation-theory-manuel">The Mackey machine in group representation theory (<em>Manuel</em>)<a href="#the-mackey-machine-in-group-representation-theory-manuel" class="floatleft sec-link">§</a></h5>
+<ol type="1">
+<li><p></p>
+
+<em>Representations, characters, and class functions</em>:</li>
+<li><p></p>
+
+<em>Restriction, induction, and conjugation in terms of class functions</em>:</li>
+</ol>
+<h3 id="first-examples-zbiggi">First examples (<em>Zbiggi</em>)<a href="#first-examples-zbiggi" class="floatleft sec-link">§</a></h3>
 <p></p>
-Chapter 8 of Representation Theory of Finite Groups by Benjamin Steinberg <span class="citation" data-cites="steinberg12:repres">[<a href="#ref-steinberg12:repres" role="doc-biblioref">Stei12</a>]</span>,
-Chapter 34 of Lie Groups by Daniel Bump <span class="citation" data-cites="bump13:lie">[<a href="#ref-bump13:lie" role="doc-biblioref">Bump13</a>]</span>, or
-Linear representations of finite groups by Jean-Pierre Serre <span class="citation" data-cites="serre98:repres">[<a href="#ref-serre98:repres" role="doc-biblioref">Serr98</a>]</span>.
-<h5 id="first-definitions-sebastian">First definitions (<em>Sebastian</em>)<a href="#first-definitions-sebastian" class="floatleft sec-link">§</a></h5>
+An exercise session, to get a feeling for what representation theoretic Mackey functors look like.
 <ul>
-<li>Green Definition of Mackey functors</li>
-<li>Definition of Dress and comparison with the Green definition</li>
-</ul>
-<h5 id="first-examples-zbiggi">First examples (<em>Zbiggi</em>)<a href="#first-examples-zbiggi" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Any representation of G [Exercise]</li>
-<li>The Grothendieck group of the group ring</li>
-<li>The (co-)homology of G [Exercise]</li>
-<li>The Burnside ring of G [important]</li>
-<li>Examples from modular representation theory (rather an outlook than a main topic)</li>
-</ul>
-<h5 id="the-mackey-algebra-sebastian">The Mackey algebra (<em>Sebastian</em>)<a href="#the-mackey-algebra-sebastian" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Equivalence of categories between Mky and <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.402ex" height="2.176ex" style="vertical-align: -0.838ex;" viewBox="0 -576.1 603.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-4-Title">
-<title id="MathJax-SVG-4-Title">\mu</title>
+<li>Any representation of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.827ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 786.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-8-Title">
+<title id="MathJax-SVG-8-Title">G</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-3BC" x="0" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="0" y="0"></use>
 </g>
-</svg></span></span>-Mod</li>
-<li>Splitting of the unit into orthogonal idempotents</li>
-<li>Prove that Mky has enough projectives</li>
-<li>Projectivity of the Burnside Mackey functor [Exercise]</li>
-<li>Semisimplicity of Mky in characteristic zero (over a field)</li>
+</svg></span></span>.</li>
+<li>The Grothendieck group <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.881ex" height="2.509ex" style="vertical-align: -0.671ex;" viewBox="0 -791.3 1240.4 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-9-Title">
+<title id="MathJax-SVG-9-Title">G_0</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-47" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-30" x="1112" y="-213"></use>
+</g>
+</svg></span></span> of the group ring.</li>
+<li>The (co-)homology of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.827ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 786.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-10-Title">
+<title id="MathJax-SVG-10-Title">G</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-47" x="0" y="0"></use>
+</g>
+</svg></span></span>.</li>
+<li>The Burnside ring of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.827ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 786.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-11-Title">
+<title id="MathJax-SVG-11-Title">G</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-47" x="0" y="0"></use>
+</g>
+</svg></span></span>.</li>
+<li>Examples from modular representation theory (rather an outlook than a main topic).</li>
 </ul>
-<h5 id="green-functors-edoardo">Green functors (<em>Edoardo</em>)<a href="#green-functors-edoardo" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Concrete definition and examples (cohomology, Burnside Mackey functor)</li>
-</ul>
-<h5 id="relative-homological-algebra-and-the-dress-construction-edoardo">Relative homological algebra and the Dress construction (<em>Edoardo</em>)<a href="#relative-homological-algebra-and-the-dress-construction-edoardo" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Andreas Dress: Contributions to the theory of induced representations <span class="citation" data-cites="dress73:contrib-ind-rep">[<a href="#ref-dress73:contrib-ind-rep" role="doc-biblioref">Dres73</a>]</span></li>
-</ul>
-<h5 id="outlook-cohomological-mackey-functors-and-the-hecke-algebra">Outlook: Cohomological Mackey functors and the Hecke algebra<a href="#outlook-cohomological-mackey-functors-and-the-hecke-algebra" class="floatleft sec-link">§</a></h5>
-<h3 id="abstract-mackey-functors">Abstract Mackey functors<a href="#abstract-mackey-functors" class="floatleft sec-link">§</a></h3>
-<h4 id="sources-1">Sources<a href="#sources-1" class="floatleft sec-link">§</a></h4>
-<ul>
-<li>John Bénabou: Introduction to Bicategories<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"><div class="sidenote">For the bicategory of spans.</div><!--
---> <span class="citation" data-cites="benabou67:bicats">[<a href="#ref-benabou67:bicats" role="doc-biblioref">Béna67</a>]</span></li>
-<li>Harald Lindner: A Remark on Mackey-Functors <span class="citation" data-cites="lindner76:mackey">[<a href="#ref-lindner76:mackey" role="doc-biblioref">Lind76</a>]</span></li>
-<li>Max Kelly: Basic concepts of enriched category theory <span class="citation" data-cites="kelly05:basic">[<a href="#ref-kelly05:basic" role="doc-biblioref">Kell05</a>]</span></li>
-</ul>
+<h3 id="mackey-functors-and-the-mackey-algebra-sebastian">Mackey functors and the Mackey algebra (<em>Sebastian</em>)<a href="#mackey-functors-and-the-mackey-algebra-sebastian" class="floatleft sec-link">§</a></h3>
+<p></p>
+This talk introduces both Dress’ and Green’s definition of <em>Mackey functor</em>, and shows their equivalence.
 <h4 id="outline-1">Outline<a href="#outline-1" class="floatleft sec-link">§</a></h4>
-<h5 id="preliminaries-spans-and-functor-categories-tony">Preliminaries: Spans and functor categories (<em>Tony</em>)<a href="#preliminaries-spans-and-functor-categories-tony" class="floatleft sec-link">§</a></h5>
+<ol type="1">
+<li><p></p>
+
+<strong>Two definitions of Mackey functors</strong>:
 <ul>
-<li>The bicategory of spans and functor categories</li>
-</ul>
-<h5 id="enriched-category-theory-tony">Enriched category theory (<em>Tony</em>)<a href="#enriched-category-theory-tony" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Definition of an enriched category, functor, natural transformation, adjunction etc.</li>
-<li>Examples of enriched categories (Ab or vect enrichment, dg categories, simplicial enrichment, Cat-enriched categories as strict 2 categories)</li>
-<li>The enriched Yoneda lemma</li>
-<li>Weighted limits</li>
-<li>Change of enrichment [Exercise]</li>
-</ul>
-<h5 id="the-category-of-mackey-functors-tony">The category of Mackey functors (<em>Tony</em>)<a href="#the-category-of-mackey-functors-tony" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Lindners definition of Mackey functors</li>
-<li>Naive definition of the tensor product of Mackey functors</li>
-<li>Characterisations of rigid dualisability[Exercise]</li>
-<li>The dual basis lemma for Mky functors[Important]</li>
-</ul>
-<h3 id="day-convolution">Day convolution<a href="#day-convolution" class="floatleft sec-link">§</a></h3>
-<h4 id="sources-2">Sources<a href="#sources-2" class="floatleft sec-link">§</a></h4>
-<ul>
-<li>Brian Day: On closed categories of functors <span class="citation" data-cites="day70">[<a href="#ref-day70" role="doc-biblioref">Day70</a>]</span></li>
-<li>Brian Day, Elango Panchadcharam, Ross Street: Lax Braidings and the Lax Centre <span class="citation" data-cites="day07:lax">[<a href="#ref-day07:lax" role="doc-biblioref">DaPaSt07</a>]</span></li>
-<li>Fosco Loregian: Coend Calculus <span class="citation" data-cites="loregian2021">[<a href="#ref-loregian2021" role="doc-biblioref">Lore21</a>]</span></li>
-<li>Max Kelly: On the operads of J.P.&nbsp;May <span class="citation" data-cites="kelly05:operads">[<a href="#ref-kelly05:operads" role="doc-biblioref">Kell05</a>]</span></li>
-</ul>
-<h4 id="outline-2">Outline<a href="#outline-2" class="floatleft sec-link">§</a></h4>
-<h5 id="preliminaries-coend-calculus-ivan">Preliminaries: (Co)end calculus (<em>Ivan</em>)<a href="#preliminaries-coend-calculus-ivan" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Abstract definition of (co)ends</li>
-<li>Functoriality of coends [Exercise]</li>
-<li>(Co)ends as (co)limits</li>
-<li>Prove the Elmendorf reconstruction theorem</li>
-</ul>
-<h5 id="day-convolution-1">Day convolution<a href="#day-convolution-1" class="floatleft sec-link">§</a></h5>
-<ul>
-<li>Copowers
-<ul>
-<li>Important example: every cocomplete category is copowered over <strong>Set</strong></li>
-</ul></li>
-<li>Definition</li>
-<li>Day convolution as a Kan extension</li>
-<li>Associated closed structure</li>
-</ul>
-<h5 id="extended-example-operads">Extended example: operads<a href="#extended-example-operads" class="floatleft sec-link">§</a></h5>
-<p></p>
-A good reference to follow is Kelly’s “On the operads of J.P.&nbsp;May” <span class="citation" data-cites="kelly05:operads">[<a href="#ref-kelly05:operads" role="doc-biblioref">Kell05</a>]</span>,
-or Chapter 6 of “Coend Calculus” <span class="citation" data-cites="loregian2021">[<a href="#ref-loregian2021" role="doc-biblioref">Lore21</a>]</span>.
-<ul>
-<li>Definition of an “abstract” operad</li>
-<li>Bonus (not strictly necessary): the Kelly product <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.808ex" height="2.176ex" style="vertical-align: -0.505ex;" viewBox="0 -719.6 778.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-5-Title">
-<title id="MathJax-SVG-5-Title">\odot</title>
+<li><p></p>
+
+
+<strong>A closer look at the Grothendieck group</strong>:</li>
+<li><p></p>
+
+
+<strong>Green’s definition of Mackey functors</strong>:
+Mackey functors abstract the induction, restriction, and conjugation operations introduced on the level of Grothendieck groups.
+This becomes most transparent in the initial definition given by Green.</li>
+<li><p></p>
+
+
+<strong>G-sets and Dress’ definition of Mackey functors</strong>:
+The next characterisation we want to investigate is based on the notion of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.827ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 786.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-12-Title">
+<title id="MathJax-SVG-12-Title">G</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMAIN-2299" x="0" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="0" y="0"></use>
 </g>
-</svg></span></span> yields an example of a category
-that is left-closed, but not right-closed</li>
-</ul>
-<h5 id="profunctors-and-promonoidal-categories">Profunctors and promonoidal categories<a href="#profunctors-and-promonoidal-categories" class="floatleft sec-link">§</a></h5>
-<h3 id="final-goals">Final goals<a href="#final-goals" class="floatleft sec-link">§</a></h3>
-<p></p>
-The speakers of the seminar are invited to write a short proceedings articles.
-For example the following question might be investigated:
-Let <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.298ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 2281.2 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-6-Title">
-<title id="MathJax-SVG-6-Title">(\mathcal{C}, d)</title>
+</svg></span></span>-sets.
+In order to contextualise and motivate it, let us state some useful facts about <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.827ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 786.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-13-Title">
+<title id="MathJax-SVG-13-Title">G</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-47" x="0" y="0"></use>
+</g>
+</svg></span></span>-sets first.
+The starting point is the orbit-stabiliser theorem.</li>
+<li><p></p>
+
+
+<strong>Equivalence of the constructions</strong>:
+In order to prove that the two definitions of Mackey functors stated so far are equivalent,
+we will, for a brief moment, speak of <em>Green</em> and <em>Dress Mackey functors</em>.
+For any Mackey functor <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="28.725ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 12367.6 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-14-Title">
+<title id="MathJax-SVG-14-Title">(M_{\ast}, M^{\ast}) \colon G\text{-}\mathsf{Set} \longrightarrow \text{Mod-}{R}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
  <use xlink:href="#MJMAIN-28" x="0" y="0"></use>
- <use xlink:href="#MJCAL-43" x="389" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="923" y="0"></use>
- <use xlink:href="#MJMATHI-64" x="1368" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="1891" y="0"></use>
+<g transform="translate(389,0)">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-2217" x="1372" y="-213"></use>
 </g>
-</svg></span></span> be a symmetric Grothendieck–Verdier category with dualising object <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.216ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 523.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-7-Title">
-<title id="MathJax-SVG-7-Title">d</title>
+ <use xlink:href="#MJMAIN-2C" x="1813" y="0"></use>
+<g transform="translate(2259,0)">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-2217" x="1521" y="513"></use>
+</g>
+ <use xlink:href="#MJMAIN-29" x="3788" y="0"></use>
+ <use xlink:href="#MJMAIN-3A" x="4178" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="4623" y="0"></use>
+ <use xlink:href="#MJMAIN-2D" x="5409" y="0"></use>
+<g transform="translate(5743,0)">
+ <use xlink:href="#MJSS-53" x="0" y="0"></use>
+ <use xlink:href="#MJSS-65" x="556" y="0"></use>
+ <use xlink:href="#MJSS-74" x="1001" y="0"></use>
+</g>
+ <use xlink:href="#MJMAIN-27F6" x="7383" y="0"></use>
+<g transform="translate(9300,0)">
+ <use xlink:href="#MJMAIN-4D"></use>
+ <use xlink:href="#MJMAIN-6F" x="917" y="0"></use>
+ <use xlink:href="#MJMAIN-64" x="1418" y="0"></use>
+ <use xlink:href="#MJMAIN-2D" x="1974" y="0"></use>
+</g>
+ <use xlink:href="#MJMATHI-52" x="11608" y="0"></use>
+</g>
+</svg></span></span> in the sense of Dress
+we define for all <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.989ex" height="2.343ex" style="vertical-align: -0.505ex;" viewBox="0 -791.3 3009.1 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-15-Title">
+<title id="MathJax-SVG-15-Title">H\leq G</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-64" x="0" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="0" y="0"></use>
+ <use xlink:href="#MJMAIN-2264" x="1166" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="2222" y="0"></use>
+</g>
+</svg></span></span> the <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.764ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 759.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-16-Title">
+<title id="MathJax-SVG-16-Title">R</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-52" x="0" y="0"></use>
+</g>
+</svg></span></span>-Module <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="19.584ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 8432 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-17-Title">
+<title id="MathJax-SVG-17-Title">M(H) = M_{\ast}(G/H)</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="1051" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="1441" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="2329" y="0"></use>
+ <use xlink:href="#MJMAIN-3D" x="2996" y="0"></use>
+<g transform="translate(4053,0)">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-2217" x="1372" y="-213"></use>
+</g>
+ <use xlink:href="#MJMAIN-28" x="5477" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="5866" y="0"></use>
+ <use xlink:href="#MJMAIN-2F" x="6653" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="7153" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="8042" y="0"></use>
 </g>
 </svg></span></span>.
-That is, <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.239ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 533.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-8-Title">
-<title id="MathJax-SVG-8-Title">\mathcal{C}</title>
+We can now define for any <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="12.153ex" height="2.343ex" style="vertical-align: -0.505ex;" viewBox="0 -791.3 5232.6 1008.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-18-Title">
+<title id="MathJax-SVG-18-Title">K \leq H \leq G</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJCAL-43" x="0" y="0"></use>
+ <use xlink:href="#MJMATHI-4B" x="0" y="0"></use>
+ <use xlink:href="#MJMAIN-2264" x="1167" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="2223" y="0"></use>
+ <use xlink:href="#MJMAIN-2264" x="3389" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="4446" y="0"></use>
 </g>
-</svg></span></span> is symmetric monoidal,
-and we have an anti-equivalence <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="10.532ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 4534.7 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-9-Title">
-<title id="MathJax-SVG-9-Title">D \colon \mathcal{C} \longrightarrow \mathcal{C}</title>
+</svg></span></span> and <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.783ex" height="2.509ex" style="vertical-align: -0.671ex;" viewBox="0 -791.3 2490.1 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-19-Title">
+<title id="MathJax-SVG-19-Title">g \in G</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-44" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-3A" x="828" y="0"></use>
- <use xlink:href="#MJCAL-43" x="1273" y="0"></use>
- <use xlink:href="#MJMAIN-27F6" x="2084" y="0"></use>
- <use xlink:href="#MJCAL-43" x="4001" y="0"></use>
+ <use xlink:href="#MJMATHI-67" x="0" y="0"></use>
+ <use xlink:href="#MJMAIN-2208" x="758" y="0"></use>
+ <use xlink:href="#MJMATHI-47" x="1703" y="0"></use>
 </g>
-</svg></span></span>
-such that for any <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.06ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 2609.1 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-10-Title">
-<title id="MathJax-SVG-10-Title">X \in \mathcal{C}</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-58" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-2208" x="1130" y="0"></use>
- <use xlink:href="#MJCAL-43" x="2075" y="0"></use>
-</g>
-</svg></span></span> there exists an isomorphism
-<span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="31.895ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 13732.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-11-Title">
-<title id="MathJax-SVG-11-Title">\mathrm{Hom}(A \otimes X, d) \cong \mathrm{Hom}(A, DX)</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMAIN-48" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-6F" x="750" y="0"></use>
- <use xlink:href="#MJMAIN-6D" x="1251" y="0"></use>
- <use xlink:href="#MJMAIN-28" x="2084" y="0"></use>
- <use xlink:href="#MJMATHI-41" x="2474" y="0"></use>
- <use xlink:href="#MJMAIN-2297" x="3446" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="4447" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="5299" y="0"></use>
- <use xlink:href="#MJMATHI-64" x="5745" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="6268" y="0"></use>
- <use xlink:href="#MJMAIN-2245" x="6935" y="0"></use>
-<g transform="translate(7992,0)">
- <use xlink:href="#MJMAIN-48" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-6F" x="750" y="0"></use>
- <use xlink:href="#MJMAIN-6D" x="1251" y="0"></use>
-</g>
- <use xlink:href="#MJMAIN-28" x="10076" y="0"></use>
- <use xlink:href="#MJMATHI-41" x="10466" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="11216" y="0"></use>
- <use xlink:href="#MJMATHI-44" x="11661" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="12490" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="13342" y="0"></use>
-</g>
-</svg></span></span>.
-Further we assume <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="8.209ex" height="2.509ex" style="vertical-align: -0.338ex;" viewBox="0 -934.9 3534.5 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-12-Title">
-<title id="MathJax-SVG-12-Title">D^2 = \mathrm{Id}</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-44" x="0" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMAIN-32" x="1171" y="513"></use>
- <use xlink:href="#MJMAIN-3D" x="1560" y="0"></use>
-<g transform="translate(2616,0)">
- <use xlink:href="#MJMAIN-49" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-64" x="361" y="0"></use>
-</g>
-</g>
-</svg></span></span>.
-For any <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.06ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 2609.1 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-13-Title">
-<title id="MathJax-SVG-13-Title">X \in \mathcal{C}</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-58" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-2208" x="1130" y="0"></use>
- <use xlink:href="#MJCAL-43" x="2075" y="0"></use>
-</g>
-</svg></span></span>
-we have a evaluation map <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="21.836ex" height="2.843ex" style="vertical-align: -0.671ex;" viewBox="0 -934.9 9401.4 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-14-Title">
-<title id="MathJax-SVG-14-Title">\mathrm{ev}_x \colon X \otimes D^{-1} X \longrightarrow d</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMAIN-65" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-76" x="444" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMATHI-78" x="1376" y="-213"></use>
- <use xlink:href="#MJMAIN-3A" x="1477" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="1922" y="0"></use>
- <use xlink:href="#MJMAIN-2297" x="2997" y="0"></use>
-<g transform="translate(3998,0)">
- <use xlink:href="#MJMATHI-44" x="0" y="0"></use>
-<g transform="translate(828,362)">
- <use transform="scale(0.707)" xlink:href="#MJMAIN-2212" x="0" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMAIN-31" x="778" y="0"></use>
-</g>
-</g>
- <use xlink:href="#MJMATHI-58" x="5831" y="0"></use>
- <use xlink:href="#MJMAIN-27F6" x="6961" y="0"></use>
- <use xlink:href="#MJMATHI-64" x="8877" y="0"></use>
-</g>
-</svg></span></span>
-given by pullback of the identity on <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.98ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 852.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-15-Title">
-<title id="MathJax-SVG-15-Title">X</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-58" x="0" y="0"></use>
-</g>
-</svg></span></span> under the adjunction.
-This can be used to define a trace <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.904ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 2111.5 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-16-Title">
-<title id="MathJax-SVG-16-Title">\mathrm{tr}(f)</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMAIN-74" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-72" x="389" y="0"></use>
- <use xlink:href="#MJMAIN-28" x="782" y="0"></use>
- <use xlink:href="#MJMATHI-66" x="1171" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="1722" y="0"></use>
-</g>
-</svg></span></span> for any endomorphism <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="11.368ex" height="2.509ex" style="vertical-align: -0.671ex;" viewBox="0 -791.3 4894.7 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-17-Title">
-<title id="MathJax-SVG-17-Title">f \colon X \longrightarrow X</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-66" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-3A" x="550" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="995" y="0"></use>
- <use xlink:href="#MJMAIN-27F6" x="2125" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="4042" y="0"></use>
-</g>
-</svg></span></span>
-by applying <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.166ex" height="2.843ex" style="vertical-align: -0.838ex;" viewBox="0 -863.1 3085.3 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-18-Title">
-<title id="MathJax-SVG-18-Title">D(\mathrm{ev}_x)</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJMATHI-44" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-28" x="828" y="0"></use>
-<g transform="translate(1218,0)">
- <use xlink:href="#MJMAIN-65" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-76" x="444" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMATHI-78" x="1376" y="-213"></use>
-</g>
- <use xlink:href="#MJMAIN-29" x="2695" y="0"></use>
-</g>
-</svg></span></span> to the image of f under the following compositions:
-<p></p>
-<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="62.189ex" height="6.509ex" style="vertical-align: -2.671ex;" viewBox="0 -1652.5 26775.8 2802.6" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-19-Title">
-<title id="MathJax-SVG-19-Title">\begin{align*}
-  \mathrm{Hom}(X,X) &amp;\cong \mathrm{Hom}(X \otimes D^{-1} X, d)
-                     \cong \mathrm{Hom}(1, D(X \otimes D^{-1}X)) \\
-                    &amp;\longrightarrow \mathrm{Hom}(1, D^2 d) \cong \mathrm{Hom}(1,1).
+</svg></span></span> the prototypical operations of a Mackey functor à la Green:
+<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="53.705ex" height="11.176ex" style="vertical-align: -4.756ex; margin-bottom: -0.249ex;" viewBox="0 -2657.1 23123.1 4811.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-20-Title">
+<title id="MathJax-SVG-20-Title">\begin{align*}
+  I_K^H &amp;= M_{\ast}(\pi_H^K)\colon M(K) \longrightarrow M(H), \\
+  R^H_{K} &amp;= M_{\ast}(\pi_H^K) \colon M(H) \longrightarrow M(K), \\
+  c_g^H &amp;= M_{\ast}(c^H_g) =M^{\ast}(c^{gHg^{-1}}_{g^{-1}}) \colon M(H) \longrightarrow M(gHg^{-1}).
 \end{align*}</title>
 <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
 <g transform="translate(167,0)">
 <g transform="translate(-11,0)">
-<g transform="translate(0,651)">
- <use xlink:href="#MJMAIN-48" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-6F" x="750" y="0"></use>
- <use xlink:href="#MJMAIN-6D" x="1251" y="0"></use>
- <use xlink:href="#MJMAIN-28" x="2084" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="2474" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="3326" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="3771" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="4624" y="0"></use>
+<g transform="translate(236,1718)">
+ <use xlink:href="#MJMATHI-49" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-48" x="740" y="488"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-4B" x="622" y="-452"></use>
+</g>
+<g transform="translate(0,270)">
+ <use xlink:href="#MJMATHI-52" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-48" x="1074" y="488"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-4B" x="1074" y="-452"></use>
+</g>
+<g transform="translate(326,-1480)">
+ <use xlink:href="#MJMATHI-63" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-48" x="613" y="488"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-67" x="613" y="-211"></use>
 </g>
 </g>
-<g transform="translate(5003,0)">
-<g transform="translate(0,651)">
- <use xlink:href="#MJMAIN-2245" x="277" y="0"></use>
+<g transform="translate(1478,0)">
+<g transform="translate(0,1718)">
+ <use xlink:href="#MJMAIN-3D" x="277" y="0"></use>
 <g transform="translate(1334,0)">
- <use xlink:href="#MJMAIN-48" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-6F" x="750" y="0"></use>
- <use xlink:href="#MJMAIN-6D" x="1251" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-2217" x="1372" y="-213"></use>
 </g>
- <use xlink:href="#MJMAIN-28" x="3418" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="3808" y="0"></use>
- <use xlink:href="#MJMAIN-2297" x="4882" y="0"></use>
-<g transform="translate(5883,0)">
- <use xlink:href="#MJMATHI-44" x="0" y="0"></use>
-<g transform="translate(828,412)">
+ <use xlink:href="#MJMAIN-28" x="2758" y="0"></use>
+<g transform="translate(3147,0)">
+ <use xlink:href="#MJMATHI-3C0" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-4B" x="812" y="488"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-48" x="806" y="-452"></use>
+</g>
+ <use xlink:href="#MJMAIN-29" x="4451" y="0"></use>
+ <use xlink:href="#MJMAIN-3A" x="4840" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="5286" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="6337" y="0"></use>
+ <use xlink:href="#MJMATHI-4B" x="6727" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="7616" y="0"></use>
+ <use xlink:href="#MJMAIN-27F6" x="8283" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="10200" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="11251" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="11641" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="12529" y="0"></use>
+ <use xlink:href="#MJMAIN-2C" x="12919" y="0"></use>
+</g>
+<g transform="translate(0,270)">
+ <use xlink:href="#MJMAIN-3D" x="277" y="0"></use>
+<g transform="translate(1334,0)">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-2217" x="1372" y="-213"></use>
+</g>
+ <use xlink:href="#MJMAIN-28" x="2758" y="0"></use>
+<g transform="translate(3147,0)">
+ <use xlink:href="#MJMATHI-3C0" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-4B" x="812" y="488"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-48" x="806" y="-452"></use>
+</g>
+ <use xlink:href="#MJMAIN-29" x="4451" y="0"></use>
+ <use xlink:href="#MJMAIN-3A" x="4840" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="5286" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="6337" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="6727" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="7615" y="0"></use>
+ <use xlink:href="#MJMAIN-27F6" x="8282" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="10199" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="11250" y="0"></use>
+ <use xlink:href="#MJMATHI-4B" x="11640" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="12529" y="0"></use>
+ <use xlink:href="#MJMAIN-2C" x="12919" y="0"></use>
+</g>
+<g transform="translate(0,-1480)">
+ <use xlink:href="#MJMAIN-3D" x="277" y="0"></use>
+<g transform="translate(1334,0)">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-2217" x="1372" y="-213"></use>
+</g>
+ <use xlink:href="#MJMAIN-28" x="2758" y="0"></use>
+<g transform="translate(3147,0)">
+ <use xlink:href="#MJMATHI-63" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-48" x="613" y="488"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-67" x="613" y="-211"></use>
+</g>
+ <use xlink:href="#MJMAIN-29" x="4309" y="0"></use>
+ <use xlink:href="#MJMAIN-3D" x="4977" y="0"></use>
+<g transform="translate(6033,0)">
+ <use xlink:href="#MJMATHI-4D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMAIN-2217" x="1521" y="583"></use>
+</g>
+ <use xlink:href="#MJMAIN-28" x="7563" y="0"></use>
+<g transform="translate(7952,0)">
+ <use xlink:href="#MJMATHI-63" x="0" y="0"></use>
+<g transform="translate(433,490)">
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-67" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-48" x="480" y="0"></use>
+<g transform="translate(968,0)">
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-67" x="0" y="0"></use>
+<g transform="translate(340,256)">
+ <use transform="scale(0.574)" xlink:href="#MJMAIN-2212" x="0" y="0"></use>
+ <use transform="scale(0.574)" xlink:href="#MJMAIN-31" x="778" y="0"></use>
+</g>
+</g>
+</g>
+<g transform="translate(433,-423)">
+ <use transform="scale(0.707)" xlink:href="#MJMATHI-67" x="0" y="0"></use>
+<g transform="translate(340,204)">
+ <use transform="scale(0.574)" xlink:href="#MJMAIN-2212" x="0" y="0"></use>
+ <use transform="scale(0.574)" xlink:href="#MJMAIN-31" x="778" y="0"></use>
+</g>
+</g>
+</g>
+ <use xlink:href="#MJMAIN-29" x="10599" y="0"></use>
+ <use xlink:href="#MJMAIN-3A" x="10988" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="11434" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="12485" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="12875" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="13763" y="0"></use>
+ <use xlink:href="#MJMAIN-27F6" x="14430" y="0"></use>
+ <use xlink:href="#MJMATHI-4D" x="16347" y="0"></use>
+ <use xlink:href="#MJMAIN-28" x="17398" y="0"></use>
+ <use xlink:href="#MJMATHI-67" x="17788" y="0"></use>
+ <use xlink:href="#MJMATHI-48" x="18268" y="0"></use>
+<g transform="translate(19157,0)">
+ <use xlink:href="#MJMATHI-67" x="0" y="0"></use>
+<g transform="translate(481,412)">
  <use transform="scale(0.707)" xlink:href="#MJMAIN-2212" x="0" y="0"></use>
  <use transform="scale(0.707)" xlink:href="#MJMAIN-31" x="778" y="0"></use>
 </g>
 </g>
- <use xlink:href="#MJMATHI-58" x="7716" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="8568" y="0"></use>
- <use xlink:href="#MJMATHI-64" x="9014" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="9537" y="0"></use>
- <use xlink:href="#MJMAIN-2245" x="10204" y="0"></use>
-<g transform="translate(11261,0)">
- <use xlink:href="#MJMAIN-48" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-6F" x="750" y="0"></use>
- <use xlink:href="#MJMAIN-6D" x="1251" y="0"></use>
-</g>
- <use xlink:href="#MJMAIN-28" x="13345" y="0"></use>
- <use xlink:href="#MJMAIN-31" x="13735" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="14235" y="0"></use>
- <use xlink:href="#MJMATHI-44" x="14680" y="0"></use>
- <use xlink:href="#MJMAIN-28" x="15509" y="0"></use>
- <use xlink:href="#MJMATHI-58" x="15898" y="0"></use>
- <use xlink:href="#MJMAIN-2297" x="16973" y="0"></use>
-<g transform="translate(17974,0)">
- <use xlink:href="#MJMATHI-44" x="0" y="0"></use>
-<g transform="translate(828,412)">
- <use transform="scale(0.707)" xlink:href="#MJMAIN-2212" x="0" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMAIN-31" x="778" y="0"></use>
-</g>
-</g>
- <use xlink:href="#MJMATHI-58" x="19807" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="20659" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="21049" y="0"></use>
-</g>
-<g transform="translate(0,-785)">
- <use xlink:href="#MJMAIN-27F6" x="277" y="0"></use>
-<g transform="translate(2194,0)">
- <use xlink:href="#MJMAIN-48" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-6F" x="750" y="0"></use>
- <use xlink:href="#MJMAIN-6D" x="1251" y="0"></use>
-</g>
- <use xlink:href="#MJMAIN-28" x="4278" y="0"></use>
- <use xlink:href="#MJMAIN-31" x="4668" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="5168" y="0"></use>
-<g transform="translate(5613,0)">
- <use xlink:href="#MJMATHI-44" x="0" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMAIN-32" x="1171" y="583"></use>
-</g>
- <use xlink:href="#MJMATHI-64" x="6896" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="7419" y="0"></use>
- <use xlink:href="#MJMAIN-2245" x="8086" y="0"></use>
-<g transform="translate(9143,0)">
- <use xlink:href="#MJMAIN-48" x="0" y="0"></use>
- <use xlink:href="#MJMAIN-6F" x="750" y="0"></use>
- <use xlink:href="#MJMAIN-6D" x="1251" y="0"></use>
-</g>
- <use xlink:href="#MJMAIN-28" x="11227" y="0"></use>
- <use xlink:href="#MJMAIN-31" x="11617" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="12117" y="0"></use>
- <use xlink:href="#MJMAIN-31" x="12562" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="13063" y="0"></use>
- <use xlink:href="#MJMAIN-2E" x="13452" y="0"></use>
+ <use xlink:href="#MJMAIN-29" x="20643" y="0"></use>
+ <use xlink:href="#MJMAIN-2E" x="21032" y="0"></use>
 </g>
 </g>
 </g>
 </g>
 </svg></span></span>
+Note that the two equivalent ways to define the conjugation operation is a first application of the pullback axiom for Dress Mackey functors.</li>
+</ul></li>
+<li><p></p>
+
+<strong>The Mackey algebra</strong>:
+A representation of a quiver<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"><div class="sidenote">A <em>quiver</em> is a directed graph in the most general sense,
+meaning we allow things such as loops and multiple edges between the same two vertices.</div><!--
+--> <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.453ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 625.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-21-Title">
+<title id="MathJax-SVG-21-Title">\Gamma</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMAIN-393" x="0" y="0"></use>
+</g>
+</svg></span></span> is
+an assignment of an <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.764ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 759.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-22-Title">
+<title id="MathJax-SVG-22-Title">R</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-52" x="0" y="0"></use>
+</g>
+</svg></span></span>-module to any vertex of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.453ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 625.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-23-Title">
+<title id="MathJax-SVG-23-Title">\Gamma</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMAIN-393" x="0" y="0"></use>
+</g>
+</svg></span></span> and
+an <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.764ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 759.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-24-Title">
+<title id="MathJax-SVG-24-Title">R</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMATHI-52" x="0" y="0"></use>
+</g>
+</svg></span></span>-linear map for every edge with sources and targets given by the modules assigned to the source and target vertex, respectively.
+The similarity between this construction and Green’s definition of a Mackey functor suggest that we can think of them as quiver representations.</li>
+</ol>
+<h2 id="abstract-mackey-functors">Abstract Mackey functors<a href="#abstract-mackey-functors" class="floatleft sec-link">§</a></h2>
+<h3 id="relative-homological-algebra-edoardo">Relative homological algebra (<em>Edoardo</em>)<a href="#relative-homological-algebra-edoardo" class="floatleft sec-link">§</a></h3>
 <p></p>
-Note that this trace differs slightly from the one for pivotal categories.
+This talk is mainly based on <span class="citation" data-cites="dress73:ind-rep">[<a href="#ref-dress73:ind-rep" role="doc-biblioref">Dres73</a>]</span>.
+<h4 id="outline-2">Outline<a href="#outline-2" class="floatleft sec-link">§</a></h4>
+<ol type="1">
+<li><p></p>
+
+<strong>The Dress construction</strong></li>
+<li><p></p>
+
+<strong>Relative projectiveness</strong></li>
+<li><p></p>
+
+<strong>Relative covers, resolutions, and derived functors</strong></li>
+</ol>
+<h3 id="day-convolution-ivan">Day convolution (<em>Ivan</em>)<a href="#day-convolution-ivan" class="floatleft sec-link">§</a></h3>
 <p></p>
-In the paper “The Burnside dimension of projective Mackey functors”, Bouc <span class="citation" data-cites="bouc05:mackey">[<a href="#ref-bouc05:mackey" role="doc-biblioref">Bouc05</a>]</span> utilises the idea of traces for the full maximal pivotal subcategory of Mackey functors.
-We might try to interpret/extend his results using traces for GV categories.
+Coends play an important role whenever one wants to talk about, for example,
+monoidal structures on functor categories.
+The canonical tensor product on the category of Mackey functors—Day convolution—is best phrased in this language.
+<p></p>
+While coends can be defined in any appropriately enriched category<!--
+-->—a bit more on this will be said in <a href="#abstract-mackey-functors">the next talk</a>—<!--
+-->we will specialise this for very concrete categories,
+like the category of sets, or the category of (finite-dimensional) <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.221ex" height="2.009ex" style="vertical-align: -0.338ex;" viewBox="0 -719.6 525.5 865.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-25-Title">
+<title id="MathJax-SVG-25-Title">\mathtt{k}</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJTT-6B" x="0" y="0"></use>
+</g>
+</svg></span></span>-vector spaces.
+For a more general account see Chapter 3 of <span class="citation" data-cites="kelly05:basic">[<a href="#ref-kelly05:basic" role="doc-biblioref">Kell05</a>]</span>.
+<p></p>
+This talk also follows <span class="citation" data-cites="loregian2021">[<a href="#ref-loregian2021" role="doc-biblioref">Lore21</a>]</span>, <span class="citation" data-cites="richter20:from">[<a href="#ref-richter20:from" role="doc-biblioref">Rich20</a>]</span>, and <span class="citation" data-cites="MacLane1998">[<a href="#ref-MacLane1998" role="doc-biblioref">Mac 98</a>]</span>.
+<h4 id="outline-3">Outline<a href="#outline-3" class="floatleft sec-link">§</a></h4>
+<ol type="1">
+<li><p></p>
+
+<strong>Abstract definition</strong>:
+The first definition of (co)ends:
+in terms of universal (co)wedges.</li>
+<li><p></p>
+
+<strong>(Co)ends as (co)limits</strong>:
+Further definitions of (co)ends
+as (co)limits in the twisted arrow category,
+and as explicit (co)equalisers.
+In particular, this has important consequences for the existence of these structures.</li>
+<li><p></p>
+
+<strong>Day convolution</strong>:
+The canonical tensor product on a category of functors over a (nice) closed symmetric monoidal category.
+The focus here is on lots of examples, like understanding the tensor product of modules over a ring in this language.</li>
+</ol>
+<h3 id="abstract-mackey-functors-tony">Abstract Mackey functors (<em>Tony</em>)<a href="#abstract-mackey-functors-tony" class="floatleft sec-link">§</a></h3>
+<p></p>
+So far, all of the definitions of Mackey functor that we have seen had—from the categorical point of view—a few drawbacks:
+the “original” Mackey functor was not functorial,
+and Dress’ definition, while featuring two functors,
+split everything up between a covariant and a contravariant one.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><div class="sidenote">In particular, this made morphisms between Mackey functors quite awkward to define.</div><!--
+-->
+As it turns out, there is another equivalent definition of Mackey functors—due to Lindner—featuring just a single functor as data,
+with all of the necessary conditions “tucked away” in a suitable category.
+The goal of this talk is to understand this definition—and the resulting category of Mackey functors—in detail.
+I will follow
+<span class="citation" data-cites="kelly05:basic">[<a href="#ref-kelly05:basic" role="doc-biblioref">Kell05</a>]</span>,
+<span class="citation" data-cites="lindner76:mackey">[<a href="#ref-lindner76:mackey" role="doc-biblioref">Lind76</a>]</span>,
+<span class="citation" data-cites="loregian2021">[<a href="#ref-loregian2021" role="doc-biblioref">Lore21</a>]</span>,
+<span class="citation" data-cites="benabou67:bicats">[<a href="#ref-benabou67:bicats" role="doc-biblioref">Béna67</a>]</span>,
+<span class="citation" data-cites="panchadcharam07:mackey">[<a href="#ref-panchadcharam07:mackey" role="doc-biblioref">PaSt07</a>]</span>,
+<span class="citation" data-cites="day70">[<a href="#ref-day70" role="doc-biblioref">Day70</a>]</span>,
+and <span class="citation" data-cites="garner22">[<a href="#ref-garner22" role="doc-biblioref">Garn22</a>]</span>.
+<h4 id="outline-4">Outline<a href="#outline-4" class="floatleft sec-link">§</a></h4>
+<ol type="1">
+<li><p></p>
+
+<strong>Day convolution redux</strong>:
+We explore some further properties of coends,
+like the coYoneda lemma, which help us with verifying that the Day convolution is, in fact, a monoidal proudct.</li>
+<li><p></p>
+
+<strong>Enriched Category Theory</strong>:
+A swift introduction to basic enriched category theory.
+While we mainly<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><div class="sidenote">Although there are places where we care about categories enriched in commutative monoids, for example.</div><!--
+--> need the language of <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.221ex" height="2.009ex" style="vertical-align: -0.338ex;" viewBox="0 -719.6 525.5 865.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-26-Title">
+<title id="MathJax-SVG-26-Title">\mathtt{k}</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJTT-6B" x="0" y="0"></use>
+</g>
+</svg></span></span>-linear categories for this seminar,
+enriched categories crop up all the time in mathematics,
+so it is still good to at least know the basic definitions.</li>
+<li><p></p>
+
+<strong>Spans</strong>:
+We explore the category<!--
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><div class="sidenote">Really: the classifying category of the bicategory of spans.</div><!--
+--> of spans over a rigid monoidal <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.221ex" height="2.009ex" style="vertical-align: -0.338ex;" viewBox="0 -719.6 525.5 865.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-27-Title">
+<title id="MathJax-SVG-27-Title">\mathtt{k}</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJTT-6B" x="0" y="0"></use>
+</g>
+</svg></span></span>-linear base category.</li>
+<li><p></p>
+
+<strong>The Lindner definition</strong>:
+With everything in place,
+the Lindner definition is introduced,
+and the resulting category of Mackey functor is endowed with a closed monoidal structure by means of Day convolution.
+Some other properties, like the <span class="math inline"><span class="mjpage"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.162ex" height="1.509ex" style="vertical-align: 0.079ex; margin-bottom: -0.25ex;" viewBox="0 -576.1 500.5 649.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-28-Title">
+<title id="MathJax-SVG-28-Title">*</title>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#MJMAIN-2217" x="0" y="0"></use>
+</g>
+</svg></span></span>-autonomous structure of finite-dimensional Mackey functors, are also mentioned.</li>
+</ol>
 <h2 id="references">References<a href="#references" class="floatleft sec-link">§</a></h2>
 <div id="refs" class="references csl-bib-body" role="list">
 <table>
@@ -687,25 +864,11 @@ We might try to interpret/extend his results using traces for GV categories.
 <td><div class="csl-right-inline">J.-P. Serre, <em>Repr<span>é</span>sentations lin<span>é</span>aires des groupes finis. 5i<span>è</span>me <span class="nocase">é</span>d., corr. Et augm. De nouveaux exercices</em>, 5i<span>è</span>me <span>é</span>d., corr. et augm. de nouveaux exercices. Paris: Hermann, 1998. </div></td>
 </tr>
 <tr class="even">
-<td><div id="ref-dress73:contrib-ind-rep" class="csl-entry" role="listitem">
+<td><div id="ref-dress73:ind-rep" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[Dres73] </div>
 </div></td>
 <td> </td>
 <td><div class="csl-right-inline">A. W. M. Dress, <span>“Contributions to the theory of induced representations,”</span> in <em><span>“Classical”</span> algebraic k-theory, and connections with arithmetic</em>, 1973, pp. 181–240. </div></td>
-</tr>
-<tr class="odd">
-<td><div id="ref-benabou67:bicats" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[Béna67] </div>
-</div></td>
-<td> </td>
-<td><div class="csl-right-inline">J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div></td>
-</tr>
-<tr class="even">
-<td><div id="ref-lindner76:mackey" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[Lind76] </div>
-</div></td>
-<td> </td>
-<td><div class="csl-right-inline">H. Lindner, <span>“A remark on <span>Mackey</span>-functors,”</span> <em>Manuscr. Math.</em>, vol. 18, pp. 273–278, 1976, doi: <a href="https://doi.org/10.1007/BF01245921">10.1007/BF01245921</a>. </div></td>
 </tr>
 <tr class="odd">
 <td><div id="ref-kelly05:basic" class="csl-entry" role="listitem">
@@ -715,20 +878,6 @@ We might try to interpret/extend his results using traces for GV categories.
 <td><div class="csl-right-inline">G. M. Kelly, <span>“Basic concepts of enriched category theory,”</span> <em>Repr. Theory Appl. Categ.</em>, vol. 2005, no. 10, pp. 1–136, 2005. </div></td>
 </tr>
 <tr class="even">
-<td><div id="ref-day70" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[Day70] </div>
-</div></td>
-<td> </td>
-<td><div class="csl-right-inline">B. Day, <span>“<a href="https://doi.org/10.1007/BFb0060438">On closed categories of functors</a>.”</span> Rep. <span>Midwest</span> <span>Category</span> <span>Semin</span>. 4, <span>Lect</span>. <span>Notes</span> <span>Math</span>. 137, 1-38 (1970)., 1970. </div></td>
-</tr>
-<tr class="odd">
-<td><div id="ref-day07:lax" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[DaPaSt07] </div>
-</div></td>
-<td> </td>
-<td><div class="csl-right-inline">B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17. </div></td>
-</tr>
-<tr class="even">
 <td><div id="ref-loregian2021" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[Lore21] </div>
 </div></td>
@@ -736,18 +885,53 @@ We might try to interpret/extend his results using traces for GV categories.
 <td><div class="csl-right-inline">F. Loregian, <em>(<span>C</span>o)end calculus</em>, vol. 468. Cambridge University Press, Cambridge, 2021, p. 308. </div></td>
 </tr>
 <tr class="odd">
-<td><div id="ref-kelly05:operads" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[Kell05] </div>
+<td><div id="ref-richter20:from" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Rich20] </div>
 </div></td>
 <td> </td>
-<td><div class="csl-right-inline">G. M. Kelly, <span>“On the operads of <span>J</span>.<span>P</span>. <span>May</span>,”</span> <em>Repr. Theory Appl. Categ.</em>, vol. 2005, no. 13, pp. 1–13, 2005. </div></td>
+<td><div class="csl-right-inline">B. Richter, <em><a href="https://doi.org/10.1017/9781108855891">From categories to homotopy theory</a></em>, vol. 188. Cambridge: Cambridge University Press, 2020. </div></td>
 </tr>
 <tr class="even">
-<td><div id="ref-bouc05:mackey" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[Bouc05] </div>
+<td><div id="ref-MacLane1998" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Mac 98] </div>
 </div></td>
 <td> </td>
-<td><div class="csl-right-inline">S. Bouc, <span>“The <span>B</span>urnside dimension of projective <span>M</span>ackey functors,”</span> <em>RIMS Kôkyûroku</em>, vol. 1440, pp. 107–120, 2005. </div></td>
+<td><div class="csl-right-inline">S. Mac Lane, <em>Categories for the working mathematician</em>, Second., vol. 5. Springer-Verlag, New York, 1998, p. xii+314. </div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-lindner76:mackey" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Lind76] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline">H. Lindner, <span>“A remark on <span>Mackey</span>-functors,”</span> <em>Manuscr. Math.</em>, vol. 18, pp. 273–278, 1976, doi: <a href="https://doi.org/10.1007/BF01245921">10.1007/BF01245921</a>. </div></td>
+</tr>
+<tr class="even">
+<td><div id="ref-benabou67:bicats" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Béna67] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline">J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-panchadcharam07:mackey" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[PaSt07] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline">E. Panchadcharam and R. Street, <span>“Mackey functors on compact closed categories,”</span> <em>J. Homotopy Relat. Struct.</em>, vol. 2, no. 2, pp. 261–293, 2007. </div></td>
+</tr>
+<tr class="even">
+<td><div id="ref-day70" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Day70] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline">B. Day, <span>“<a href="https://doi.org/10.1007/BFb0060438">On closed categories of functors</a>.”</span> Rep. <span>Midwest</span> <span>Category</span> <span>Semin</span>. 4, <span>Lect</span>. <span>Notes</span> <span>Math</span>. 137, 1-38 (1970)., 1970. </div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-garner22" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Garn22] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline">R. Garner, <span>“Bicategories.”</span> Lecture course at the <em>Research School on Bicategories, Categorification and Quantum Theory</em>, 2022. </div></td>
 </tr>
 </tbody>
 </table>
@@ -772,4 +956,4 @@ We might try to interpret/extend his results using traces for GV categories.
     </div>
   
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs id="MathJax_SVG_glyphs"><path stroke-width="1" id="MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="MJMAIN-221E" d="M55 217Q55 305 111 373T254 442Q342 442 419 381Q457 350 493 303L507 284L514 294Q618 442 747 442Q833 442 888 374T944 214Q944 128 889 59T743 -11Q657 -11 580 50Q542 81 506 128L492 147L485 137Q381 -11 252 -11Q166 -11 111 57T55 217ZM907 217Q907 285 869 341T761 397Q740 397 720 392T682 378T648 359T619 335T594 310T574 285T559 263T548 246L543 238L574 198Q605 158 622 138T664 94T714 61T765 51Q827 51 867 100T907 217ZM92 214Q92 145 131 89T239 33Q357 33 456 193L425 233Q364 312 334 337Q285 380 233 380Q171 380 132 331T92 214Z"></path><path stroke-width="1" id="MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path stroke-width="1" id="MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="1" id="MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="1" id="MJMATHI-3BC" d="M58 -216Q44 -216 34 -208T23 -186Q23 -176 96 116T173 414Q186 442 219 442Q231 441 239 435T249 423T251 413Q251 401 220 279T187 142Q185 131 185 107V99Q185 26 252 26Q261 26 270 27T287 31T302 38T315 45T327 55T338 65T348 77T356 88T365 100L372 110L408 253Q444 395 448 404Q461 431 491 431Q504 431 512 424T523 412T525 402L449 84Q448 79 448 68Q448 43 455 35T476 26Q485 27 496 35Q517 55 537 131Q543 151 547 152Q549 153 557 153H561Q580 153 580 144Q580 138 575 117T555 63T523 13Q510 0 491 -8Q483 -10 467 -10Q446 -10 429 -4T402 11T385 29T376 44T374 51L368 45Q362 39 350 30T324 12T288 -4T246 -11Q199 -11 153 12L129 -85Q108 -167 104 -180T92 -202Q76 -216 58 -216Z"></path><path stroke-width="1" id="MJMAIN-2299" d="M56 250Q56 394 156 488T384 583Q530 583 626 485T722 250Q722 110 625 14T390 -83Q249 -83 153 14T56 250ZM682 250Q682 322 649 387T546 497T381 542Q272 542 184 459T95 250Q95 132 178 45T389 -42Q515 -42 598 45T682 250ZM311 250Q311 285 332 304T375 328Q376 328 382 328T392 329Q424 326 445 305T466 250Q466 217 445 195T389 172Q354 172 333 195T311 250Z"></path><path stroke-width="1" id="MJCAL-43" d="M201 -25Q167 -25 136 -14T75 23T29 94T12 202Q12 290 50 394T161 574Q227 642 303 673T433 704Q435 705 457 705Q533 701 533 640Q533 606 507 548T464 474Q431 444 396 444Q381 444 381 453Q381 459 388 473T407 513T428 563Q433 580 433 594Q433 636 381 636Q314 636 260 594T175 489T128 363T112 247Q112 157 153 101T273 44Q347 44 398 121Q413 144 437 157T481 171Q496 171 496 160Q496 150 476 123Q426 56 350 16T201 -25Z"></path><path stroke-width="1" id="MJMATHI-64" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path><path stroke-width="1" id="MJMATHI-44" d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z"></path><path stroke-width="1" id="MJMAIN-3A" d="M78 370Q78 394 95 412T138 430Q162 430 180 414T199 371Q199 346 182 328T139 310T96 327T78 370ZM78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path stroke-width="1" id="MJMAIN-27F6" d="M84 237T84 250T98 270H1444Q1328 357 1301 493Q1301 494 1301 496T1300 499Q1300 511 1317 511H1320Q1329 511 1332 510T1338 506T1341 497T1344 481T1352 456Q1374 389 1425 336T1544 261Q1553 258 1553 250Q1553 244 1548 241T1524 231T1486 212Q1445 186 1415 152T1370 85T1349 35T1341 4Q1339 -6 1336 -8T1320 -11Q1300 -11 1300 0Q1300 7 1305 25Q1337 151 1444 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="MJMATHI-58" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path><path stroke-width="1" id="MJMAIN-2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path><path stroke-width="1" id="MJMAIN-48" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q57 680 180 680Q315 680 324 683H335V637H302Q262 636 251 634T233 622L232 500V378H517V622Q510 629 506 631T490 634T447 637H414V683H425Q446 680 569 680Q704 680 713 683H724V637H691Q651 636 640 634T622 622V61Q628 51 639 49T691 46H724V0H713Q692 3 569 3Q434 3 425 0H414V46H447Q489 47 498 49T517 61V332H232V197L233 61Q239 51 250 49T302 46H335V0H324Q303 3 180 3Q45 3 36 0H25V46H58Q100 47 109 49T128 61V622Z"></path><path stroke-width="1" id="MJMAIN-6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z"></path><path stroke-width="1" id="MJMAIN-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path stroke-width="1" id="MJMATHI-41" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path><path stroke-width="1" id="MJMAIN-2297" d="M56 250Q56 394 156 488T384 583Q530 583 626 485T722 250Q722 110 625 14T390 -83Q249 -83 153 14T56 250ZM582 471Q531 510 496 523Q446 542 381 542Q324 542 272 519T196 471L389 278L485 375L582 471ZM167 442Q95 362 95 250Q95 137 167 58L359 250L167 442ZM610 58Q682 138 682 250Q682 363 610 442L418 250L610 58ZM196 29Q209 16 230 2T295 -27T388 -42Q409 -42 429 -40T465 -33T496 -23T522 -11T544 1T561 13T574 22T582 29L388 222L196 29Z"></path><path stroke-width="1" id="MJMAIN-2245" d="M55 388Q55 463 101 526T222 589Q260 589 296 571T362 526T421 474T484 430T554 411Q616 411 655 458T694 560Q694 572 698 580T708 589Q722 589 722 556Q722 482 677 419T562 356H554Q517 356 481 374T414 418T355 471T292 515T223 533Q179 533 145 508Q109 479 96 440T80 378T69 355Q55 355 55 388ZM56 236Q56 249 70 256H707Q722 248 722 236Q722 225 708 217L390 216H72Q56 221 56 236ZM56 42Q56 57 72 62H708Q722 52 722 42Q722 30 707 22H70Q56 29 56 42Z"></path><path stroke-width="1" id="MJMAIN-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path stroke-width="1" id="MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="1" id="MJMAIN-49" d="M328 0Q307 3 180 3T32 0H21V46H43Q92 46 106 49T126 60Q128 63 128 342Q128 620 126 623Q122 628 118 630T96 635T43 637H21V683H32Q53 680 180 680T328 683H339V637H317Q268 637 254 634T234 623Q232 620 232 342Q232 63 234 60Q238 55 242 53T264 48T317 46H339V0H328Z"></path><path stroke-width="1" id="MJMAIN-64" d="M376 495Q376 511 376 535T377 568Q377 613 367 624T316 637H298V660Q298 683 300 683L310 684Q320 685 339 686T376 688Q393 689 413 690T443 693T454 694H457V390Q457 84 458 81Q461 61 472 55T517 46H535V0Q533 0 459 -5T380 -11H373V44L365 37Q307 -11 235 -11Q158 -11 96 50T34 215Q34 315 97 378T244 442Q319 442 376 393V495ZM373 342Q328 405 260 405Q211 405 173 369Q146 341 139 305T131 211Q131 155 138 120T173 59Q203 26 251 26Q322 26 373 103V342Z"></path><path stroke-width="1" id="MJMAIN-65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z"></path><path stroke-width="1" id="MJMAIN-76" d="M338 431Q344 429 422 429Q479 429 503 431H508V385H497Q439 381 423 345Q421 341 356 172T288 -2Q283 -11 263 -11Q244 -11 239 -2Q99 359 98 364Q93 378 82 381T43 385H19V431H25L33 430Q41 430 53 430T79 430T104 429T122 428Q217 428 232 431H240V385H226Q187 384 184 370Q184 366 235 234L286 102L377 341V349Q377 363 367 372T349 383T335 385H331V431H338Z"></path><path stroke-width="1" id="MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path stroke-width="1" id="MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="MJMAIN-74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z"></path><path stroke-width="1" id="MJMAIN-72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z"></path><path stroke-width="1" id="MJMATHI-66" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path><path stroke-width="1" id="MJMAIN-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></defs></svg></body></html>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs id="MathJax_SVG_glyphs"><path stroke-width="1" id="MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="MJMAIN-221E" d="M55 217Q55 305 111 373T254 442Q342 442 419 381Q457 350 493 303L507 284L514 294Q618 442 747 442Q833 442 888 374T944 214Q944 128 889 59T743 -11Q657 -11 580 50Q542 81 506 128L492 147L485 137Q381 -11 252 -11Q166 -11 111 57T55 217ZM907 217Q907 285 869 341T761 397Q740 397 720 392T682 378T648 359T619 335T594 310T574 285T559 263T548 246L543 238L574 198Q605 158 622 138T664 94T714 61T765 51Q827 51 867 100T907 217ZM92 214Q92 145 131 89T239 33Q357 33 456 193L425 233Q364 312 334 337Q285 380 233 380Q171 380 132 331T92 214Z"></path><path stroke-width="1" id="MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path stroke-width="1" id="MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="1" id="MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="1" id="MJTT-6B" d="M13 42Q13 63 23 69T69 76H102V535H69H54Q34 535 24 542T13 573Q13 588 15 593Q22 605 29 608T56 611H95Q113 611 122 611T140 610T152 609T159 607T163 603T167 597T173 589V413L174 237L295 355H275Q260 355 253 356T239 367T232 393Q232 419 243 425T304 431H359H464Q479 422 482 415T485 393Q485 364 464 356L431 355H398L293 254L427 76H486Q501 67 504 60T507 38Q507 28 507 24T501 12T486 1H314Q292 8 292 38Q292 62 308 73Q312 75 326 76L338 77L290 140Q279 154 267 171T248 196L242 204L207 171L173 139V76H206H221Q241 76 251 69T262 38Q262 11 244 3Q240 1 138 1Q123 1 100 1T70 0Q32 0 23 7T13 42Z"></path><path stroke-width="1" id="MJMATHI-47" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path><path stroke-width="1" id="MJMATHI-48" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 219 683Q260 681 355 681Q389 681 418 681T463 682T483 682Q499 682 499 672Q499 670 497 658Q492 641 487 638H485Q483 638 480 638T473 638T464 637T455 637Q416 636 405 634T387 623Q384 619 355 500Q348 474 340 442T328 395L324 380Q324 378 469 378H614L615 381Q615 384 646 504Q674 619 674 627T617 637Q594 637 587 639T580 648Q580 650 582 660Q586 677 588 679T604 682Q609 682 646 681T740 680Q802 680 835 681T871 682Q888 682 888 672Q888 645 876 638H874Q872 638 869 638T862 638T853 637T844 637Q805 636 794 634T776 623Q773 618 704 340T634 58Q634 51 638 51Q646 48 692 46H723Q729 38 729 37T726 19Q722 6 716 0H701Q664 2 567 2Q533 2 504 2T458 2T437 1Q420 1 420 10Q420 15 423 24Q428 43 433 45Q437 46 448 46H454Q481 46 514 49Q520 50 522 50T528 55T534 64T540 82T547 110T558 153Q565 181 569 198Q602 330 602 331T457 332H312L279 197Q245 63 245 58Q245 51 253 49T303 46H334Q340 38 340 37T337 19Q333 6 327 0H312Q275 2 178 2Q144 2 115 2T69 2T48 1Q31 1 31 10Q31 12 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path><path stroke-width="1" id="MJMAIN-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path stroke-width="1" id="MJMAIN-27F6" d="M84 237T84 250T98 270H1444Q1328 357 1301 493Q1301 494 1301 496T1300 499Q1300 511 1317 511H1320Q1329 511 1332 510T1338 506T1341 497T1344 481T1352 456Q1374 389 1425 336T1544 261Q1553 258 1553 250Q1553 244 1548 241T1524 231T1486 212Q1445 186 1415 152T1370 85T1349 35T1341 4Q1339 -6 1336 -8T1320 -11Q1300 -11 1300 0Q1300 7 1305 25Q1337 151 1444 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="MJMATHI-4D" d="M289 629Q289 635 232 637Q208 637 201 638T194 648Q194 649 196 659Q197 662 198 666T199 671T201 676T203 679T207 681T212 683T220 683T232 684Q238 684 262 684T307 683Q386 683 398 683T414 678Q415 674 451 396L487 117L510 154Q534 190 574 254T662 394Q837 673 839 675Q840 676 842 678T846 681L852 683H948Q965 683 988 683T1017 684Q1051 684 1051 673Q1051 668 1048 656T1045 643Q1041 637 1008 637Q968 636 957 634T939 623Q936 618 867 340T797 59Q797 55 798 54T805 50T822 48T855 46H886Q892 37 892 35Q892 19 885 5Q880 0 869 0Q864 0 828 1T736 2Q675 2 644 2T609 1Q592 1 592 11Q592 13 594 25Q598 41 602 43T625 46Q652 46 685 49Q699 52 704 61Q706 65 742 207T813 490T848 631L654 322Q458 10 453 5Q451 4 449 3Q444 0 433 0Q418 0 415 7Q413 11 374 317L335 624L267 354Q200 88 200 79Q206 46 272 46H282Q288 41 289 37T286 19Q282 3 278 1Q274 0 267 0Q265 0 255 0T221 1T157 2Q127 2 95 1T58 0Q43 0 39 2T35 11Q35 13 38 25T43 40Q45 46 65 46Q135 46 154 86Q158 92 223 354T289 629Z"></path><path stroke-width="1" id="MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="1" id="MJMAIN-52" d="M130 622Q123 629 119 631T103 634T60 637H27V683H202H236H300Q376 683 417 677T500 648Q595 600 609 517Q610 512 610 501Q610 468 594 439T556 392T511 361T472 343L456 338Q459 335 467 332Q497 316 516 298T545 254T559 211T568 155T578 94Q588 46 602 31T640 16H645Q660 16 674 32T692 87Q692 98 696 101T712 105T728 103T732 90Q732 59 716 27T672 -16Q656 -22 630 -22Q481 -16 458 90Q456 101 456 163T449 246Q430 304 373 320L363 322L297 323H231V192L232 61Q238 51 249 49T301 46H334V0H323Q302 3 181 3Q59 3 38 0H27V46H60Q102 47 111 49T130 61V622ZM491 499V509Q491 527 490 539T481 570T462 601T424 623T362 636Q360 636 340 636T304 637H283Q238 637 234 628Q231 624 231 492V360H289Q390 360 434 378T489 456Q491 467 491 499Z"></path><path stroke-width="1" id="MJMAIN-65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z"></path><path stroke-width="1" id="MJMAIN-70" d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"></path><path stroke-width="1" id="MJMAIN-5B" d="M118 -250V750H255V710H158V-210H255V-250H118Z"></path><path stroke-width="1" id="MJMAIN-5D" d="M22 710V750H159V-250H22V-210H119V710H22Z"></path><path stroke-width="1" id="MJMAIN-2D" d="M11 179V252H277V179H11Z"></path><path stroke-width="1" id="MJMAIN-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path stroke-width="1" id="MJMAIN-6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z"></path><path stroke-width="1" id="MJMAIN-64" d="M376 495Q376 511 376 535T377 568Q377 613 367 624T316 637H298V660Q298 683 300 683L310 684Q320 685 339 686T376 688Q393 689 413 690T443 693T454 694H457V390Q457 84 458 81Q461 61 472 55T517 46H535V0Q533 0 459 -5T380 -11H373V44L365 37Q307 -11 235 -11Q158 -11 96 50T34 215Q34 315 97 378T244 442Q319 442 376 393V495ZM373 342Q328 405 260 405Q211 405 173 369Q146 341 139 305T131 211Q131 155 138 120T173 59Q203 26 251 26Q322 26 373 103V342Z"></path><path stroke-width="1" id="MJMATHI-5A" d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z"></path><path stroke-width="1" id="MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="1" id="MJMAIN-2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path><path stroke-width="1" id="MJMAIN-3A" d="M78 370Q78 394 95 412T138 430Q162 430 180 414T199 371Q199 346 182 328T139 310T96 327T78 370ZM78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path stroke-width="1" id="MJSS-53" d="M55 514Q55 589 115 652T283 716Q315 716 345 711T396 699T432 685T457 672T467 667Q467 666 459 618T449 568Q383 634 282 634Q214 634 182 600T150 525Q150 507 155 492T172 465T194 446T222 432T247 423T272 416T289 412Q353 396 378 384Q432 358 466 307T500 194Q500 110 438 44T272 -22Q215 -22 159 -5T73 28T44 50Q45 51 49 75T57 122T62 146L65 143Q68 140 74 136T88 125T107 111T131 98T160 85T194 74T232 66T274 63H286Q327 63 366 96T406 182Q406 245 352 280Q329 296 265 310T173 339Q124 363 90 409T55 514Z"></path><path stroke-width="1" id="MJSS-65" d="M28 226Q28 329 91 395T235 461Q258 461 279 456T325 436T368 397T399 332T415 238V219H113V215Q113 163 151 114T248 65Q273 65 298 70T341 82T373 96T396 108L403 113Q403 106 406 76T409 38Q409 34 408 33T393 24Q325 -10 252 -10Q155 -10 92 59T28 226ZM340 289L338 297Q335 305 333 310T327 326T317 343T304 358T286 372T263 381T233 385Q212 385 193 376T162 353T140 325T127 301T123 289H340Z"></path><path stroke-width="1" id="MJSS-74" d="M333 27Q333 24 314 16T257 -1T184 -10H172Q146 -10 128 14T105 58T99 91Q95 113 95 251V371H18V444H98V571H182V444H316V371H182V253Q183 128 189 104Q199 68 234 68Q277 72 314 98Q315 93 323 61T333 27Z"></path><path stroke-width="1" id="MJMAIN-4D" d="M132 622Q125 629 121 631T105 634T62 637H29V683H135Q221 683 232 682T249 675Q250 674 354 398L458 124L562 398Q666 674 668 675Q671 681 683 682T781 683H887V637H854Q814 636 803 634T785 622V61Q791 51 802 49T854 46H887V0H876Q855 3 736 3Q605 3 596 0H585V46H618Q660 47 669 49T688 61V347Q688 424 688 461T688 546T688 613L687 632Q454 14 450 7Q446 1 430 1T410 7Q409 9 292 316L176 624V606Q175 588 175 543T175 463T175 356L176 86Q187 50 261 46H278V0H269Q254 3 154 3Q52 3 37 0H29V46H46Q78 48 98 56T122 69T132 86V622Z"></path><path stroke-width="1" id="MJMATHI-52" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path><path stroke-width="1" id="MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path stroke-width="1" id="MJMATHI-4B" d="M285 628Q285 635 228 637Q205 637 198 638T191 647Q191 649 193 661Q199 681 203 682Q205 683 214 683H219Q260 681 355 681Q389 681 418 681T463 682T483 682Q500 682 500 674Q500 669 497 660Q496 658 496 654T495 648T493 644T490 641T486 639T479 638T470 637T456 637Q416 636 405 634T387 623L306 305Q307 305 490 449T678 597Q692 611 692 620Q692 635 667 637Q651 637 651 648Q651 650 654 662T659 677Q662 682 676 682Q680 682 711 681T791 680Q814 680 839 681T869 682Q889 682 889 672Q889 650 881 642Q878 637 862 637Q787 632 726 586Q710 576 656 534T556 455L509 418L518 396Q527 374 546 329T581 244Q656 67 661 61Q663 59 666 57Q680 47 717 46H738Q744 38 744 37T741 19Q737 6 731 0H720Q680 3 625 3Q503 3 488 0H478Q472 6 472 9T474 27Q478 40 480 43T491 46H494Q544 46 544 71Q544 75 517 141T485 216L427 354L359 301L291 248L268 155Q245 63 245 58Q245 51 253 49T303 46H334Q340 37 340 35Q340 19 333 5Q328 0 317 0Q314 0 280 1T180 2Q118 2 85 2T49 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Z"></path><path stroke-width="1" id="MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path stroke-width="1" id="MJMAIN-2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path><path stroke-width="1" id="MJMATHI-49" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path><path stroke-width="1" id="MJMATHI-3C0" d="M132 -11Q98 -11 98 22V33L111 61Q186 219 220 334L228 358H196Q158 358 142 355T103 336Q92 329 81 318T62 297T53 285Q51 284 38 284Q19 284 19 294Q19 300 38 329T93 391T164 429Q171 431 389 431Q549 431 553 430Q573 423 573 402Q573 371 541 360Q535 358 472 358H408L405 341Q393 269 393 222Q393 170 402 129T421 65T431 37Q431 20 417 5T381 -10Q370 -10 363 -7T347 17T331 77Q330 86 330 121Q330 170 339 226T357 318T367 358H269L268 354Q268 351 249 275T206 114T175 17Q164 -11 132 -11Z"></path><path stroke-width="1" id="MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="MJMAIN-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path stroke-width="1" id="MJMAIN-393" d="M128 619Q121 626 117 628T101 631T58 634H25V680H554V676Q556 670 568 560T582 444V440H542V444Q542 445 538 478T523 545T492 598Q454 634 349 634H334Q264 634 249 633T233 621Q232 618 232 339L233 61Q240 54 245 52T270 48T333 46H360V0H348Q324 3 182 3Q51 3 36 0H25V46H58Q100 47 109 49T128 61V619Z"></path></defs></svg></body></html>

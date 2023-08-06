@@ -10,6 +10,27 @@ and—along the way—introduce representation theory of finite groups,
 relative homological algebra,
 and some monoidal category theory.
 
+The seminar **took place** on the 14–15th of July 2023.
+
+<p>
+<div id="border-table" class="highlight">
++--------------+--------------+--------------+
+| Time         | Friday       | Saturday     |
++==============+==============+==============+
+| Morning      | Manuel       | Edoardo\     |
+|              |              | Sebastian    |
++--------------+--------------+--------------+
+| Afternoon    | Zbiggi\      | Ivan\        |
+|              | (Exercises)  | Tony         |
++--------------+--------------+--------------+
+| Evening      | Exercises    |              |
+|              |              |              |
++--------------+--------------+--------------+
+</div>
+</p>
+
+A PDF with the contents of the seminar will be released **soon**.
+
 # Roadmap
 
 > A Mackey functor is an algebraic structure possessing operations which behave like the induction, restriction and conjugation mappings in group representation theory.
@@ -42,164 +63,171 @@ It has two main parts:
 1.  Concrete and abstract Mackey functors.
 2.  Coend calculus and Day convolution.
 
-# Schedule
+# Concrete Mackey functors
 
-The seminar took place on the 14–15th of July 2023.
+## Representation theoretic preliminaries (*Manuel*)
 
-<p>
-<div id="border-table" class="highlight">
-+--------------+--------------+--------------+
-| Time         | Friday       | Saturday     |
-+==============+==============+==============+
-| Morning      | Manuel       | Edoardo\     |
-|              |              | Ivan         |
-+--------------+--------------+--------------+
-| Afternoon    | Zbiggi\      | Tony         |
-|              | (Exercises)  |              |
-+--------------+--------------+--------------+
-| Evening      | Sebastian    |              |
-|              |              |              |
-+--------------+--------------+--------------+
-</div>
-</p>
+This talk introduces much of the representation theoretic language that is needed when one wants to study classical Mackey functors.
+In particular, we will see what *restriction*, *induction*, and *conjugation* look like,
+and conclude with *Mackey decomposition*, modelling the interaction between these operations.
+We are interested in studying the "original" Mackey functor:
+for a field $\mathtt{k}$ and a finite group $G$,
+the assignment $H \leq G \to M(H)$, where
+$$
+  M(H) = \text{Rep} H = \mathtt{k}[H]\text{-mod} = Z[\mathtt{k}[H]],
+$$
 
-## Concrete Mackey functors
-
-### Sources
-
--   Peter Webb: A guide to Mackey functors [@webb00:mackey]
--   Jacques Thévenaz and Peter Webb: The structure of Mackey functors [@thevenaz95:mackey]
+The talk will follow
+[@webb00:mackey],
+[@thevenaz95:mackey],
+Chapter 8 of [@steinberg12:repres],
+Chapter 34 of [@bump13:lie],
+and [@serre98:repres].
 
 ### Outline
 
-#### The Mackey machine in group representation theory (*Manuel*)
+1. *Representations, characters, and class functions*:
 
-Chapter 8 of Representation Theory of Finite Groups by Benjamin Steinberg [@steinberg12:repres],
-Chapter 34 of Lie Groups by Daniel Bump [@bump13:lie], or
-Linear representations of finite groups by Jean-Pierre Serre [@serre98:repres].
+2. *Restriction, induction, and conjugation in terms of class functions*:
 
-#### First definitions (*Sebastian*)
+## First examples (*Zbiggi*)
 
--   Green Definition of Mackey functors
--   Definition of Dress and comparison with the Green definition
+An exercise session, to get a feeling for what representation theoretic Mackey functors look like.
 
-#### First examples (*Zbiggi*)
+-   Any representation of $G$.
+-   The Grothendieck group $G_0$ of the group ring.
+-   The (co-)homology of $G$.
+-   The Burnside ring of $G$.
+-   Examples from modular representation theory (rather an outlook than a main topic).
 
--   Any representation of G [Exercise]
--   The Grothendieck group of the group ring
--   The (co-)homology of G [Exercise]
--   The Burnside ring of G [important]
--   Examples from modular representation theory (rather an outlook than a main topic)
+## Mackey functors and the Mackey algebra (*Sebastian*)
 
-#### The Mackey algebra (*Sebastian*)
-
--   Equivalence of categories between Mky and $\mu$-Mod
--   Splitting of the unit into orthogonal idempotents
--   Prove that Mky has enough projectives
--   Projectivity of the Burnside Mackey functor [Exercise]
--   Semisimplicity of Mky in characteristic zero (over a field)
-
-#### Green functors (*Edoardo*)
-
--   Concrete definition and examples (cohomology, Burnside Mackey functor)
-
-#### Relative homological algebra and the Dress construction (*Edoardo*)
-
-- Andreas Dress: Contributions to the theory of induced representations [@dress73:contrib-ind-rep]
-
-#### Outlook: Cohomological Mackey functors and the Hecke algebra
-
-## Abstract Mackey functors
-
-### Sources
-
--   John Bénabou: Introduction to Bicategories[^1] [@benabou67:bicats]
--   Harald Lindner: A Remark on Mackey-Functors [@lindner76:mackey]
--   Max Kelly: Basic concepts of enriched category theory [@kelly05:basic]
+This talk introduces both Dress' and Green's definition of *Mackey functor*, and shows their equivalence.
 
 ### Outline
 
-#### Preliminaries: Spans and functor categories (*Tony*)
+1. **Two definitions of Mackey functors**:
 
--   The bicategory of spans and functor categories
+   - **A closer look at the Grothendieck group**:
 
-#### Enriched category theory (*Tony*)
+   - **Green's definition of Mackey functors**:
+     Mackey functors abstract the induction, restriction, and conjugation operations introduced on the level of Grothendieck groups.
+     This becomes most transparent in the initial definition given by Green.
 
--   Definition of an enriched category, functor, natural transformation, adjunction etc.
--   Examples of enriched categories (Ab or vect enrichment, dg categories, simplicial enrichment, Cat-enriched categories as strict 2 categories)
--   The enriched Yoneda lemma
--   Weighted limits
--   Change of enrichment [Exercise]
+    - **G-sets and Dress' definition of Mackey functors**:
+      The next characterisation we want to investigate is based on the notion of $G$-sets.
+      In order to contextualise and motivate it, let us state some useful facts about $G$-sets first.
+      The starting point is the orbit-stabiliser theorem.
 
-#### The category of Mackey functors (*Tony*)
+    - **Equivalence of the constructions**:
+      In order to prove that the two definitions of Mackey functors stated so far are equivalent,
+      we will, for a brief moment, speak of *Green* and *Dress Mackey functors*.
+      For any Mackey functor $(M_{\ast}, M^{\ast}) \colon G\text{-}\mathsf{Set} \to \text{Mod-}{R}$ in the sense of Dress
+      we define for all $H\leq G$ the $R$-Module $M(H) = M_{\ast}(G/H)$.
+      We can now define for any $K \leq H \leq G$ and $g \in G$ the prototypical operations of a Mackey functor à la Green:
+      \begin{align*}
+        I_K^H &= M_{\ast}(\pi_H^K)\colon M(K) \to M(H), \\
+        R^H_{K} &= M_{\ast}(\pi_H^K) \colon M(H) \to M(K), \\
+        c_g^H &= M_{\ast}(c^H_g) =M^{\ast}(c^{gHg^{-1}}_{g^{-1}}) \colon M(H) \to M(gHg^{-1}).
+      \end{align*}
+      Note that the two equivalent ways to define the conjugation operation is a first application of the pullback axiom for Dress Mackey functors.
 
--   Lindners definition of Mackey functors
--   Naive definition of the tensor product of Mackey functors
--   Characterisations of rigid dualisability[Exercise]
--   The dual basis lemma for Mky functors[Important]
+2. **The Mackey algebra**:
+   A representation of a quiver[^4] $\Gamma$ is
+   an assignment of an $R$-module to any vertex of $\Gamma$ and
+   an $R$-linear map for every edge with sources and targets given by the modules assigned to the source and target vertex, respectively.
+   The similarity between this construction and Green's definition of a Mackey functor suggest that we can think of them as quiver representations.
 
-## Day convolution
+# Abstract Mackey functors
 
-### Sources
+## Relative homological algebra (*Edoardo*)
 
--   Brian Day: On closed categories of functors [@day70]
--   Brian Day, Elango Panchadcharam, Ross Street: Lax Braidings and the Lax Centre [@day07:lax]
--   Fosco Loregian: Coend Calculus [@loregian2021]
--   Max Kelly: On the operads of J.P. May [@kelly05:operads]
+This talk is mainly based on [@dress73:ind-rep].
 
 ### Outline
 
-#### Preliminaries: (Co)end calculus (*Ivan*)
+1. **The Dress construction**
 
--   Abstract definition of (co)ends
--   Functoriality of coends [Exercise]
--   (Co)ends as (co)limits
--   Prove the Elmendorf reconstruction theorem
+2. **Relative projectiveness**
 
-#### Day convolution
+3. **Relative covers, resolutions, and derived functors**
 
--   Copowers
-    -   Important example: every cocomplete category is copowered over **Set**
--   Definition
--   Day convolution as a Kan extension
--   Associated closed structure
+## Day convolution (*Ivan*)
 
-#### Extended example: operads
+Coends play an important role whenever one wants to talk about, for example,
+monoidal structures on functor categories.
+The canonical tensor product on the category of Mackey functors—Day convolution—is best phrased in this language.
 
-A good reference to follow is Kelly's "On the operads of J.P. May" [@kelly05:operads],
-or Chapter 6 of "Coend Calculus" [@loregian2021].
+While coends can be defined in any appropriately enriched category<!--
+-->—a bit more on this will be said in [the next talk](#abstract-mackey-functors)—<!--
+-->we will specialise this for very concrete categories,
+like the category of sets, or the category of (finite-dimensional) $\mathtt{k}$-vector spaces.
+For a more general account see Chapter 3 of [@kelly05:basic].
 
--   Definition of an "abstract" operad
--   Bonus (not strictly necessary): the Kelly product $\odot$ yields an example of a category
-    that is left-closed, but not right-closed
+This talk also follows [@loregian2021], [@richter20:from], and [@MacLane1998].
 
-#### Profunctors and promonoidal categories
+### Outline
 
-## Final goals
+1. **Abstract definition**:
+   The first definition of (co)ends:
+   in terms of universal (co)wedges.
 
-The speakers of the seminar are invited to write a short proceedings articles.
-For example the following question might be investigated:
-Let $(\mathcal{C}, d)$ be a symmetric Grothendieck–Verdier category with dualising object $d$.
-That is, $\mathcal{C}$ is symmetric monoidal,
-and we have an anti-equivalence $D \colon \mathcal{C} \to \mathcal{C}$
-such that for any $X \in \mathcal{C}$ there exists an isomorphism
-$\mathrm{Hom}(A \otimes X, d) \cong \mathrm{Hom}(A, DX)$.
-Further we assume $D^2 = \mathrm{Id}$.
-For any $X \in \mathcal{C}$
-we have a evaluation map $\mathrm{ev}_x \colon X \otimes D^{-1} X \to d$
-given by pullback of the identity on $X$ under the adjunction.
-This can be used to define a trace $\mathrm{tr}(f)$ for any endomorphism $f \colon X \to X$
-by applying $D(\mathrm{ev}_x)$ to the image of f under the following compositions:
+2. **(Co)ends as (co)limits**:
+   Further definitions of (co)ends
+   as (co)limits in the twisted arrow category,
+   and as explicit (co)equalisers.
+   In particular, this has important consequences for the existence of these structures.
 
-\begin{align*}
-  \mathrm{Hom}(X,X) &\cong \mathrm{Hom}(X \otimes D^{-1} X, d)
-                     \cong \mathrm{Hom}(1, D(X \otimes D^{-1}X)) \\
-                    &\to \mathrm{Hom}(1, D^2 d) \cong \mathrm{Hom}(1,1).
-\end{align*}
+3. **Day convolution**:
+   The canonical tensor product on a category of functors over a (nice) closed symmetric monoidal category.
+   The focus here is on lots of examples, like understanding the tensor product of modules over a ring in this language.
 
-Note that this trace differs slightly from the one for pivotal categories.
+## Abstract Mackey functors (*Tony*)
 
-In the paper "The Burnside dimension of projective Mackey functors", Bouc [@bouc05:mackey] utilises the idea of traces for the full maximal pivotal subcategory of Mackey functors.
-We might try to interpret/extend his results using traces for GV categories.
+So far, all of the definitions of Mackey functor that we have seen had—from the categorical point of view—a few drawbacks:
+the "original" Mackey functor was not functorial,
+and Dress' definition, while featuring two functors,
+split everything up between a covariant and a contravariant one.[^3]
+As it turns out, there is another equivalent definition of Mackey functors—due to Lindner—featuring just a single functor as data,
+with all of the necessary conditions "tucked away" in a suitable category.
+The goal of this talk is to understand this definition—and the resulting category of Mackey functors—in detail.
+I will follow
+[@kelly05:basic],
+[@lindner76:mackey],
+[@loregian2021],
+[@benabou67:bicats],
+[@panchadcharam07:mackey],
+[@day70],
+and [@garner22].
+
+### Outline
+
+1. **Day convolution redux**:
+   We explore some further properties of coends,
+   like the coYoneda lemma, which help us with verifying that the Day convolution is, in fact, a monoidal proudct.
+
+2. **Enriched Category Theory**:
+   A swift introduction to basic enriched category theory.
+   While we mainly[^5] need the language of $\mathtt{k}$-linear categories for this seminar,
+   enriched categories crop up all the time in mathematics,
+   so it is still good to at least know the basic definitions.
+
+3. **Spans**:
+   We explore the category[^6] of spans over a rigid monoidal $\mathtt{k}$-linear base category.
+
+4. **The Lindner definition**:
+   With everything in place,
+   the Lindner definition is introduced,
+   and the resulting category of Mackey functor is endowed with a closed monoidal structure by means of Day convolution.
+   Some other properties, like the $*$-autonomous structure of finite-dimensional Mackey functors, are also mentioned.
 
 [^1]: For the bicategory of spans.
+
+[^3]: In particular, this made morphisms between Mackey functors quite awkward to define.
+
+[^4]: A *quiver* is a directed graph in the most general sense,
+      meaning we allow things such as loops and multiple edges between the same two vertices.
+
+[^5]: Although there are places where we care about categories enriched in commutative monoids, for example.
+
+[^6]: Really: the classifying category of the bicategory of spans.

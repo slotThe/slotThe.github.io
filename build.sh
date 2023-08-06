@@ -18,9 +18,12 @@ staticCompileMathJax () {
             # While writing it in markdown files is nice, replace it
             # with something semi-sensible for the generated page.
             sed -e 's/≔/\\mathrel{\\vcenter{:}}=/g' | \
+            sed -e 's/\\defeq/\\mathrel{\\vcenter{:}}=/g' | \
             # A poor person's macros!
             sed -e 's/\\to/\\longrightarrow/g'      | \
             sed -e 's/\\mapsto/\\longmapsto/g'      | \
+            sed -e 's/\\cat/\\mathcal/g'            | \
+            sed -e 's/\\kVect/\\mathsf{Vect}_{\\mathtt{k}}/g' | \
 
             # Generate the maths
             ./mathjax-node-page/bin/mjpage --output SVG --width 71 | \
