@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>How to Use Git—an Interactive Tutorial</title>
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#initialisation">Initialisation</a></li>
+<li><a href="#introducing-a-first-file">Introducing a first file</a></li>
+<li><a href="#making-changes">Making changes</a></li>
+<li><a href="#branches">Branches</a></li>
+<li><a href="#remote-repositories">Remote repositories</a></li>
+<li><a href="#other-things-to-try-out">Other things to try out</a>
+<ul>
+<li><a href="#the-many-faces-of-git-reset">The many faces of <code>git reset</code></a></li>
+</ul></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+           
+            <h1>How to Use Git—an Interactive Tutorial</h1>
+           
+
+          <article>
+    <p class="header">
+      
+      
+      
+      
+        
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#initialisation">Initialisation</a></li>
+<li><a href="#introducing-a-first-file">Introducing a first file</a></li>
+<li><a href="#making-changes">Making changes</a></li>
+<li><a href="#branches">Branches</a></li>
+<li><a href="#remote-repositories">Remote repositories</a></li>
+<li><a href="#other-things-to-try-out">Other things to try out</a>
+<ul>
+<li><a href="#the-many-faces-of-git-reset">The many faces of <code>git reset</code></a></li>
+</ul></li>
+</ul>
+  </div>
+
+<div>
+  Website <a href="https://tony-zorman.com/talks/git-introduction">here</a>.
+<h2 id="initialisation">Initialisation<a href="#initialisation" class="floatleft sec-link">§</a></h2>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>git-introduction<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>git-introduction
+
+<span class="gp">$ </span>git<span class="w"> </span>init<span class="w">                    </span><span class="c1"># initialise a git repo!</span>
+<span class="go">Initialized empty Git repository in $HOME/git-introduction/.git/</span>
+
+<span class="gp">$ </span>ls<span class="w"> </span>-lah
+<span class="go">drwxr-xr-x - slot  6 Aug 10:09 .git/</span>
+
+<span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Tony Zorman&quot;</span>
+<span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;tony.zorman@tu-dresden.de&quot;</span>
+</pre></div>
+
+<h2 id="introducing-a-first-file">Introducing a first file<a href="#introducing-a-first-file" class="floatleft sec-link">§</a></h2>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status
+
+<span class="go">On branch main</span>
+
+<span class="go">No commits yet</span>
+
+<span class="go">nothing to commit (create/copy files and use &quot;git add&quot; to track)</span>
+</pre></div>
+
+<h5 id="creating-a-file">Creating a file<a href="#creating-a-file" class="floatleft sec-link">§</a></h5>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w">              </span><span class="c1"># Make changes!</span>
+<span class="gp">$ </span>cat<span class="w"> </span>main.txt
+<span class="go">This is the first line.</span>
+
+<span class="go">1 Line</span>
+<span class="go">2 Line</span>
+<span class="go">3 Line</span>
+<span class="go">4 Line</span>
+<span class="go">5 Line</span>
+
+<span class="go">This is the last line.</span>
+</pre></div>
+
+<h5 id="checking-whats-up">Checking what’s up<a href="#checking-whats-up" class="floatleft sec-link">§</a></h5>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status
+<span class="go">On branch main</span>
+
+<span class="go">No commits yet</span>
+
+<span class="go">Untracked files:</span>
+<span class="go">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span>
+<span class="go">    main.txt</span>
+
+<span class="go">nothing added to commit but untracked files present (use &quot;git add&quot; to track)</span>
+</pre></div>
+
+<p></p>
+Actually adding the file works as one might expect.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>main.txt
+
+<span class="gp">$ </span>git<span class="w"> </span>status
+<span class="go">On branch main</span>
+
+<span class="go">No commits yet</span>
+
+<span class="go">Changes to be committed:</span>
+<span class="go">  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)</span>
+<span class="go">    new file:   main.txt</span>
+</pre></div>
+
+<h5 id="committing-the-changes">Committing the changes<a href="#committing-the-changes" class="floatleft sec-link">§</a></h5>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit&quot;</span>
+<span class="go">[main (root-commit) 83b1316] Initial commit</span>
+<span class="go"> 1 file changed, 24 insertions(+)</span>
+<span class="go"> create mode 100644 main.txt</span>
+
+<span class="gp">$ </span>git<span class="w"> </span>log
+<span class="go">commit 83b1316fa3d9ee796d6f7519b3fdae9867998849 (HEAD -&gt; main)</span>
+<span class="go">Author: Tony Zorman &lt;tony.zorman@tu-dresden.de&gt;</span>
+<span class="go">Date:   Sun Aug 6 12:47:28 2023 +0200</span>
+
+<span class="go">    Initial commit</span>
+</pre></div>
+
+<h2 id="making-changes">Making changes<a href="#making-changes" class="floatleft sec-link">§</a></h2>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w">              </span><span class="c1"># Make changes!</span>
+<span class="gp">$ </span>cat<span class="w"> </span>main.txt
+<span class="go">This is the first line!</span>
+
+<span class="go">1 Line</span>
+<span class="go">2 Line</span>
+<span class="go">3 Line</span>
+<span class="go">4 Line</span>
+<span class="go">5 Line that says something else</span>
+
+<span class="go">This is the last line?</span>
+</pre></div>
+
+<p></p>
+We can get a diff of all unstaged changed with
+<code>git diff</code> or <code>git status -vv</code>.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status<span class="w"> </span>-vv
+<span class="go">On branch main</span>
+<span class="go">Changes not staged for commit:</span>
+<span class="go">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
+<span class="go">  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span>
+<span class="go">    modified:   main.txt</span>
+
+<span class="go">--------------------------------------------------</span>
+<span class="go">Changes not staged for commit:</span>
+<span class="go">diff --git i/main.txt w/main.txt</span>
+<span class="go">index f18b618..89336de 100644</span>
+<span class="go">--- i/main.txt</span>
+<span class="go">+++ w/main.txt</span>
+<span class="go">@@ -1,10 +1,9 @@</span>
+<span class="go">-This is the first line</span>
+<span class="go">+This is the first line!</span>
+
+<span class="go"> 1 Line</span>
+<span class="go"> 2 Line</span>
+<span class="go"> 3 Line</span>
+<span class="go"> 4 Line</span>
+<span class="go">-5 Line</span>
+<span class="go">-6 Line</span>
+<span class="go">+5 Line that says something else</span>
+
+<span class="go">-This is the last line.</span>
+<span class="go">+This is the last line?</span>
+<span class="go">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span>
+</pre></div>
+
+<h5 id="committing-changes-individually">Committing changes individually<a href="#committing-changes-individually" class="floatleft sec-link">§</a></h5>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>--patch<span class="w"> </span>main.txt
+</pre></div>
+
+<p></p>
+After writing this, out pops an interactive menu!
+Type <code>?</code> to see what’s going on.
+Try Only committing the first line.
+With <code>git status -v</code>,
+we can display a diff only for the <em>staged</em> changes
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status<span class="w"> </span>-v
+<span class="go">On branch main</span>
+<span class="go">Changes to be committed:</span>
+<span class="go">  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)</span>
+<span class="go">    modified:   main.txt</span>
+
+<span class="go">Changes not staged for commit:</span>
+<span class="go">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
+<span class="go">  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span>
+<span class="go">    modified:   main.txt</span>
+
+<span class="go">diff --git a/main.txt b/main.txt</span>
+<span class="go">index f18b618..f1f2880 100644</span>
+<span class="go">--- a/main.txt</span>
+<span class="go">+++ b/main.txt</span>
+<span class="go">@@ -1,4 +1,4 @@</span>
+<span class="go">-This is the first line</span>
+<span class="go">+This is the first line!</span>
+
+<span class="go"> 1 Line</span>
+<span class="go"> 2 Line</span>
+</pre></div>
+
+<p></p>
+Without the <code>-m</code> option,
+<code>git commit</code> instead pops up an editor window in which to enter a commit message.
+Here, there’s also the option of
+specifying further comments after two additional line breaks:
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit
+<span class="go">[main 28cb79a] Changed the first line</span>
+<span class="go"> 1 file changed, 1 insertion(+), 1 deletion(-)</span>
+<span class="gp">$ </span>git<span class="w"> </span>log<span class="w"> </span>HEAD^..HEAD
+<span class="go">commit 28cb79aca150f19b258732132f16ea0114c80a86 (HEAD -&gt; main)</span>
+<span class="go">Author: Tony Zorman &lt;soliditsallgood@mailbox.org&gt;</span>
+<span class="go">Date:   Mon Aug 14 15:36:12 2023 +0200</span>
+
+<span class="go">    Changed the first line</span>
+
+<span class="go">    Another comment.</span>
+</pre></div>
+
+<p></p>
+We still have unstaged changes.
+The index can be circumvented by supplying the <code>-a</code> flag to <code>git commit</code>.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;A bad commit message&quot;</span>
+<span class="go">[main d4de7f6] A bad commit message</span>
+<span class="go"> 1 file changed, 2 insertions(+), 3 deletions(-)</span>
+</pre></div>
+
+<h2 id="branches">Branches<a href="#branches" class="floatleft sec-link">§</a></h2>
+<p></p>
+Branches can also be created with <code>git branch</code>,
+but <code>checkout</code> immediately switches to them, so let’s use that instead.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new-branch
+<span class="go">Switched to a new branch 'new-branch'</span>
+</pre></div>
+
+<p></p>
+To double check:
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>rev-parse<span class="w"> </span>--abbrev-ref<span class="w"> </span>HEAD
+<span class="go">new-branch</span>
+</pre></div>
+
+<p></p>
+Notice that <code>git log</code> correctly identifies <code>HEAD</code> pointing to <code>new-branch</code> now.
+<h5 id="changing-something-on-the-new-branch">Changing something on the new branch<a href="#changing-something-on-the-new-branch" class="floatleft sec-link">§</a></h5>
+<p></p>
+Let’s change <code>2 Line</code> to say something useless.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt
+<span class="gp">$ </span>cat<span class="w"> </span>main.txt
+<span class="go">This is the first line!</span>
+
+<span class="go">1 Line</span>
+<span class="go">2 Line now says something useless</span>
+<span class="go">3 Line</span>
+<span class="go">4 Line</span>
+<span class="go">5 Line that says something else</span>
+
+<span class="go">This is the last line?</span>
+</pre></div>
+
+<p></p>
+Committing the result, as we have done before.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Change 2 Line to say something useless&quot;</span>
+<span class="go">[new-branch f1aba65] Change 2 Line to say something useless</span>
+<span class="go"> 1 file changed, 1 insertion(+), 1 deletion(-)</span>
+</pre></div>
+
+<h5 id="merge-conflicts">Merge conflicts<a href="#merge-conflicts" class="floatleft sec-link">§</a></h5>
+<p></p>
+How about we go back to the <code class="verbatim">main</code> branch,
+and make a similar change?
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>main
+<span class="go">Switched to branch 'main'</span>
+
+<span class="gp">$ </span>emacs<span class="w"> </span>main.txt
+<span class="gp">$ </span>cat<span class="w"> </span>main.txt
+<span class="go">This is the first line!</span>
+
+<span class="go">1 Line</span>
+<span class="go">2 Line says something useful!</span>
+<span class="go">3 Line</span>
+<span class="go">4 Line</span>
+<span class="go">5 Line that says something else</span>
+
+<span class="go">This is the last line?</span>
+
+<span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Change 2 Line to say something useful&quot;</span>
+</pre></div>
+
+<p></p>
+If we try to merge <code>new-branch</code> into main now, we’ll get a merge conflict.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>merge<span class="w"> </span>new-branch
+<span class="go">Auto-merging main.txt</span>
+<span class="go">CONFLICT (content): Merge conflict in main.txt</span>
+<span class="go">Automatic merge failed; fix conflicts and then commit the result.</span>
+</pre></div>
+
+<p></p>
+Fixing the conflict in an editor involves identifying the correct regions of text;
+these look like this:
+<div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+2 Line says something useful!
+||||||| d4de7f6
+2 Line
+=======
+2 Line now says something useless
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; new-branch
+</pre></div>
+
+<p></p>
+We resolve the conflict by deciding upon a final form:
+<div class="highlight"><pre><span></span>2 Line says something even more useful!
+</pre></div>
+
+<p></p>
+and continue the merge.
+This will now prompt us for a commit message.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>merge<span class="w"> </span>--continue
+<span class="go">[main 3845de7] Merge branch 'new-branch'</span>
+</pre></div>
+
+<p></p>
+We now get a pretty tree:
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>log<span class="w"> </span>--graph<span class="w"> </span>--pretty<span class="o">=</span>oneline
+<span class="go">\*   3845de7315908dbcd8b227b5f36fbddf779a950c (HEAD -&gt; main) Merge branch 'new-branch'</span>
+<span class="go">|\</span>
+<span class="go">| * f1aba6569a83471ccad199985e0e5971505b0c16 (new-branch) Change 2 Line to say something useless</span>
+<span class="go">* | 5f21c5b97c0e243a06055b96a6b601ac4eec448e Change 2 Line to say something useful</span>
+<span class="go">|/</span>
+<span class="go">* d4de7f69083fcd893a0c176f3b4b0e355123dd66 A bad commit message</span>
+<span class="go">* 28cb79aca150f19b258732132f16ea0114c80a86 Changed the first line</span>
+<span class="go">* b38875afab25cefa61d7f4413cbbc0238d53b561 Initial commit</span>
+</pre></div>
+
+<h2 id="remote-repositories">Remote repositories<a href="#remote-repositories" class="floatleft sec-link">§</a></h2>
+<p></p>
+Creating a remote requires a Git forge; see the presentation.
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>«URL»
+</pre></div>
+
+<p></p>
+Pushing code to this repository is done with <code>git push</code>;
+getting something off it works with <code>git pull</code>.
+<p></p>
+Merge conflicts can also happen while trying to pull from a remote repository.
+<div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>«URL»<span class="w"> </span>new-git-repo-name
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>new-git-repo-name
+<span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w"> </span><span class="c1"># Change something.</span>
+<span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;A bad commit message&quot;</span>
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/git-introduction<span class="w"> </span><span class="c1"># original repository</span>
+<span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w"> </span><span class="c1"># Change the same line in a different way.</span>
+<span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Another bad commit message&quot;</span>
+<span class="gp">$ </span>git<span class="w"> </span>pull<span class="w">       </span><span class="c1"># Uh oh!</span>
+</pre></div>
+
+<p></p>
+Often, you will also have unstaged changes when pulling;
+best to stash them.
+<div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>«URL»<span class="w"> </span>new-git-repo-name
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>new-git-repo-name
+<span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w"> </span><span class="c1"># Change something.</span>
+<span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;A bad commit message&quot;</span>
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/git-introduction<span class="w"> </span><span class="c1"># original repository</span>
+<span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w"> </span><span class="c1"># Change the same line in a different way</span>
+<span class="gp">                 # </span>NOTE:<span class="w"> </span>nothing<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>index/no<span class="w"> </span>commit<span class="w"> </span>yet!
+<span class="gp">$ </span>git<span class="w"> </span>stash
+<span class="gp">$ </span>git<span class="w"> </span>pull
+<span class="gp">$ </span>git<span class="w"> </span>stash<span class="w"> </span>apply
+</pre></div>
+
+<h2 id="other-things-to-try-out">Other things to try out<a href="#other-things-to-try-out" class="floatleft sec-link">§</a></h2>
+<p></p>
+The following examples are taken from
+<a href="https://jwiegley.github.io/git-from-the-bottom-up/">Git from the Bottom Up</a>.
+<h4 id="the-many-faces-of-git-reset">The many faces of <code>git reset</code><a href="#the-many-faces-of-git-reset" class="floatleft sec-link">§</a></h4>
+<h5 id="mixed"><code>--mixed</code><a href="#mixed" class="floatleft sec-link">§</a></h5>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>foo.c<span class="w">   </span><span class="c1"># add changes to the index as a new blob</span>
+<span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>HEAD<span class="w">  </span><span class="c1"># delete any changes staged in the index</span>
+<span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>foo.c<span class="w">   </span><span class="c1"># made a mistake, add it back</span>
+</pre></div>
+
+<h5 id="soft"><code>--soft</code><a href="#soft" class="floatleft sec-link">§</a></h5>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD^<span class="w">     </span><span class="c1"># backup HEAD to its parent,</span>
+<span class="gp">                             # </span>effectively<span class="w"> </span>ignoring<span class="w"> </span>the<span class="w"> </span>last<span class="w"> </span>commit
+<span class="gp">$ </span>git<span class="w"> </span>update-ref<span class="w"> </span>HEAD<span class="w"> </span>HEAD^<span class="w">  </span><span class="c1"># does the same thing, albeit manually</span>
+</pre></div>
+
+<h5 id="hard"><code>--hard</code><a href="#hard" class="floatleft sec-link">§</a></h5>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD~3<span class="w">  </span><span class="c1"># Go back in time, throwing away changes</span>
+<span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD~3<span class="w">  </span><span class="c1"># Set HEAD to point to an earlier commit</span>
+<span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w">  </span><span class="c1"># Wipe out differences in the working tree</span>
+</pre></div>
+
+<p></p>
+(almost) NEVER DO THIS! It’s much safer to
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>stash
+<span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new-branch<span class="w"> </span>HEAD~3<span class="w">   </span><span class="c1"># head back in time!</span>
+</pre></div>
+
+<p></p>
+Also
+<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>stash<span class="w">  </span><span class="c1"># because it's always a good thing to do</span>
+<span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD~3<span class="w">  </span><span class="c1"># go back in time</span>
+<span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD@<span class="o">{</span><span class="m">1</span><span class="o">}</span><span class="w">  </span><span class="c1"># oops, that was a mistake, undo it!</span>
+<span class="gp">$ </span>git<span class="w"> </span>stash<span class="w"> </span>apply<span class="w">  </span><span class="c1"># and bring back my working tree changes</span>
+</pre></div>
+
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
