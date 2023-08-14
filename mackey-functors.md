@@ -10,6 +10,9 @@ and—along the way—introduce representation theory of finite groups,
 relative homological algebra,
 and some monoidal category theory.
 
+A PDF with the contents of the seminar is available
+[**here**](./talks/mackey-functors.pdf).
+
 The seminar **took place** on the 14–15th of July 2023.
 
 <p>
@@ -28,8 +31,6 @@ The seminar **took place** on the 14–15th of July 2023.
 +--------------+--------------+--------------+
 </div>
 </p>
-
-A PDF with the contents of the seminar will be released **soon**.
 
 # Roadmap
 
@@ -142,15 +143,17 @@ This talk introduces both Dress' and Green's definition of *Mackey functor*, and
 
 ## Relative homological algebra (*Edoardo*)
 
-This talk is mainly based on [@dress73:ind-rep].
+This talk is mainly based on [@dress73:ind-rep] and [@enochs00:relat].
 
 ### Outline
 
 1. **The Dress construction**
 
-2. **Relative projectiveness**
+   - **Relative projectiveness**
 
-3. **Relative covers, resolutions, and derived functors**
+2. **Relative Homological Algebra**
+
+   - **From classical to relative homological algebra**
 
 ## Day convolution (*Ivan*)
 
