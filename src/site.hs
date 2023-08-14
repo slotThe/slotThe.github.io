@@ -245,7 +245,7 @@ getTocCtx ctx = do
   -- [1]: https://github.com/jgm/pandoc/issues/7907
   -- [2]: https://github.com/jgm/pandoc/pull/7913
   killLinkIds :: String -> String
-  killLinkIds = T.unpack . mconcat . go . T.splitOn "id=\"toc-" . T.pack
+  killLinkIds = asTxt (mconcat . go . T.splitOn "id=\"toc-")
    where
     go :: [Text] -> [Text]
     go = \case
@@ -255,13 +255,12 @@ getTocCtx ctx = do
   -- If needed, add a heading for the bibliography at the very end of
   -- the TOC.
   addBibHeading :: String -> String
-  addBibHeading s = T.unpack . mconcat $
-    [ T.dropEnd 5 before
-    , "<li><a href=\"#references\">References</a></li></ul>"
-    , after
-    ]
-   where
-    (before, after) = T.breakOnEnd "</ul>" (T.pack s)
+  addBibHeading = asTxt \s ->
+    let (before, after) = T.breakOnEnd "</ul>" s
+     in mconcat [ T.dropEnd 5 before
+                , "<li><a href=\"#references\">References</a></li></ul>"
+                , after
+                ]
 
 -----------------------------------------------------------------------
 -- Util
@@ -271,6 +270,9 @@ allPosts = "posts/**.md"
 
 addTitle :: String -> String -> String
 addTitle title body = "<span title=\"" <> title <> "\">" <> body <> "</span>"
+
+asTxt :: (Text -> Text) -> String -> String
+asTxt f = T.unpack . f . T.pack
 
 --- Tags
 
