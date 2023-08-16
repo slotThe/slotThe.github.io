@@ -160,6 +160,14 @@ I've written too many Emacs packages—and none of them popular, at that!
   A tiny package that wraps `query-replace` in order to support multiple matches.
   I've written about it [here][post:query-replace-many].
 
+# Talks
+
++ [Git Introduction]
+
+  An introduction to Git for people at the mathematics faculty at TU Dresden.
+
+[Git Introduction]: ./talks/git-introduction.html
+[KMonad]: https://github.com/kmonad/kmonad
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
 [XMonad]: https://xmonad.org/
