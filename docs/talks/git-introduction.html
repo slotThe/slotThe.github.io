@@ -86,6 +86,104 @@ Use <code>pdflatex</code> or <code>latexmk</code> to build; e.g.,
 <div class="highlight"><pre><span></span>$<span class="w"> </span>latexmk<span class="w"> </span>-pdf<span class="w"> </span>main.tex
 </pre></div>
 
+<h2 id="exercise">Exercise<a href="#exercise" class="floatleft sec-link">§</a></h2>
+<p></p>
+As an exercise to apply some of the things we talked about,
+perform the following tasks in a private repository.
+If it’s helpful, document which Git command you have used and why.
+<ul>
+<li><p></p>
+
+Create a new directory on your computer,
+and <em>initialize</em> a new Git repository inside.</li>
+<li><p></p>
+
+Put a text file of some sort into the repository,
+<em>add</em> it to the files tracked by Git,
+and <em>commit</em> your changes to the repository,
+using a meaningful commit message.</li>
+<li><p></p>
+
+Check that your commit was successful by reading the <em>log</em> file,
+and take a look at the status of your working directory.</li>
+<li><p></p>
+
+Change something in the text file,
+<em>add</em>, and <em>commit</em> those changes.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Remember those meaningful commit messages!</div><!--
+-->
+Assume you have made a mistake,
+and <em>amend</em> your commit.</li>
+<li><p></p>
+
+Edit the file a second time,
+but <em>stash</em> your changes away to keep them save for using them at
+some later point.</li>
+</ul>
+<p></p>
+On the universities GitLab,
+find the “Projects” tab and press the “New Project” button.
+Enter a project name and set the visibility to something of your liking.
+Do <strong>not</strong> initialise the project in any way (say, with a <span class="small-caps">readme</span> file).
+<p></p>
+Follow the instructions under “Git global setup”
+and “Existing Git repository” to get your project on GitLab.
+Note that there are also options for completely new projects or existing (non-Git) directories.
+<ul>
+<li><p></p>
+
+Use the URL on the project page to create <em>another copy</em> of your repository on your computer.
+Let’s call this <code>repo2</code>,
+while the original repository is <code>repo1</code>.</li>
+<li><p></p>
+
+Change something in the file in <code>repo2</code>,
+add,
+commit,
+and <em>push</em> it to GitLab.</li>
+<li><p></p>
+
+Change a <em>different</em> line in <code>repo1</code>.
+<em>Pulling</em> the newest version from GitLab should silently incorporate both your changes.</li>
+<li><p></p>
+
+Pull the changes from <code>repo1</code> into <code>repo2</code>;
+then edit the line you before changed,
+but in a different way.
+<em>Push</em> your changes, and then switch back to <code>repo1</code>.</li>
+<li><p></p>
+
+This time, <em>pulling</em> from GitLab should cause a <em>merge conflict</em>.
+Check the difference to your last clean version,
+and try to <em>resolve</em> the conflict by either accepting one of the versions (“theirs”/“ours”),
+resolving conflicts in an editor,
+or using an interactive <em>merge tool</em>.
+Resolving a conflict includes <em>committing</em> (this <em>continues the merge</em>) the merged files,
+and explaining your reasoning and choices.</li>
+<li><p></p>
+
+Reapply the change you had <em>stashed</em> away in <code>repo1</code>,
+and check that the <em>difference</em> to your previous repository
+state is what you would expect.</li>
+<li><p></p>
+
+Create a new <em>branch</em> locally,
+edit the text file and <em>commit</em> your changes.
+Finally, <em>push</em> the new branch to the repository.</li>
+</ul>
+<p></p>
+If you like web interfaces,
+you may well also try what GitLab has to offer.
+<ul>
+<li>Browse your repository content under the “Files” tab,
+and perform a quick edit to your text file,
+<em>committing</em> the change directly from GitLab.</li>
+</ul>
+<p></p>
+However,
+especially for more complex operations,
+I would not recommend this.
+Use your favourite editors Git integration instead.
 </div>
 
       <!-- Body is included in the above file -->
