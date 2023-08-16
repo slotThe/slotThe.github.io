@@ -78,6 +78,11 @@
 
 <div>
   Website <a href="https://tony-zorman.com/talks/git-introduction">here</a>.
+<p></p>
+This is supposed to be a transcript of what happened during the introduction.
+As such,
+it omits most of the more “advanced” points seen in the <a href="https://gitlab.mn.tu-dresden.de/api/v4/projects/2225/jobs/artifacts/main/raw/main.pdf?job=compile_job">presentation</a>,
+see the referenced material for more on those points.
 <h2 id="initialisation">Initialisation<a href="#initialisation" class="floatleft sec-link">§</a></h2>
 <div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>git-introduction<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>git-introduction
 
@@ -441,6 +446,11 @@ Also
 <span class="gp">$ </span>git<span class="w"> </span>stash<span class="w"> </span>apply<span class="w">  </span><span class="c1"># and bring back my working tree changes</span>
 </pre></div>
 
+<p></p>
+In particular,
+<code>HEAD@{1}</code> accesses the <strong>reflog</strong> (<code>git reflog</code>).
+This is an incredibly useful tool anytime you <em>think</em> that
+you have lost some changes with Git—almost surely, you haven’t.
 </div>
 
       <!-- Body is included in the above file -->
