@@ -2,23 +2,25 @@
 title: Free Software
 ---
 
-Free software is quite dear to my heart and so I try to contribute as
-much as I can to all kinds of different projects.  List below are either
-ones that I've stuck with for a while, or personal projects that are
-still actively maintained.
+Free software is quite dear to my heart,
+and so I try to contribute as much as I can to all kinds of different projects.
+Listed below are either ones that I've stuck with for a while,
+or personal projects that are still actively maintained.
+Sometimes I give talks that aren't about maths;
+you can also find these here.
 
 # Contributor
 
 ## XMonad
 
-I'm a maintainer for [XMonad], a minimal X11 window manager written in
-Haskell.  In particular, this encompasses the `xmonad` repository, where
-the lean core of the program resides, `xmonad-contrib`—containing lots
-of user extensions for all kinds of different use-cases—as well as some
-auxillary packages like `X11`: Haskell bindings to Xlib.
+I'm a maintainer for [XMonad], a minimal X11 window manager written in Haskell.
+In particular, this encompasses the `xmonad` repository,
+where the lean core of the program resides,
+`xmonad-contrib`—containing lots of user extensions for all kinds of different use-cases—<!--
+-->as well as some auxillary packages like `X11`: Haskell bindings to Xlib.
 
-As I strongly believe in dogfooding, I'm an avid user of course!  My
-configuration can be found
+As I strongly believe in dogfooding, I'm an avid user of course!
+My configuration can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad).
 
 <p>
@@ -46,26 +48,28 @@ configuration can be found
 
 ## KMonad
 
-I'm a contributor to [KMonad], a keyboard remapping daemon in the spirit
-of [QMK].  However, instead of being firmware for a specific keyboard,
-it is implemented in software and thus works anywhere—even on your
-laptop!
+I'm a contributor to [KMonad],
+a keyboard remapping daemon in the spirit of [QMK].
+However,
+instead of being firmware for a specific keyboard,
+it is implemented in software and thus works anywhere<!--
+-->—even on your laptop![^1]
 
 <p style="text-align:center;">
  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=kmonad&repo=kmonad&show_owner=true" width="50%"
       alt="GitHub stats for kmonad/kmonad">
 </p>
 
-My personal keyboard configuration—[colemak-dh], with some extras to
-facilitate more convenient Haskell and LaTeX programming—can be found
+My personal keyboard configuration—[colemak-dh],
+with some extras to facilitate more convenient Haskell and LaTeX programming—can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd).
 
 ## Xmobar
 
-Since XMonad does not have a built-in status bar, one has to use a third
-party bar—[xmobar] is that bar!  As these programs have to work together
-quite closely, one can't help but also be a contributor to xmobar if one
-uses it with XMonad.
+Since XMonad does not have a built-in status bar,
+one has to use a third party program instead—[xmobar]![^2]
+As these programs have to work together quite closely,
+one can't help but also be a contributor to the latter if one uses the former.
 
 The configuration I use is available
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs).
@@ -92,28 +96,28 @@ Haskell package in case of an update—lots of fun!
 
 ## [hmenu]
 
-I'm the author of hmenu, a wrapper for [dmenu] in the spirit of
-[yeganesh].  More concretely, it displays commands in order of usage
-(with an optional decay for frequency sorting) and can open programs or
-(given) files inside of your terminal or any chosen program.
+I'm the author of hmenu, a wrapper for [dmenu] in the spirit of [yeganesh].
+More concretely, it displays commands in order of usage
+(with an optional decay for frequency sorting),
+and can open programs or given files inside of your terminal or any other chosen program.
 
 ## [vmensa]
 
-CLI application to query and filter the menus of the different canteens
-at TU Dresden.
+CLI application to query and filter the menus of the different canteens at TU Dresden.
 
 ## Haskell Libraries
 
 + [optparse-applicative-cmdline-util] ([Hackage](https://hackage.haskell.org/package/optparse-applicative-cmdline-util))
 
-  Utility functions for writing command line interfaces with
-  [optparse-applicative].  This is used, for example, in [vmensa].
+  Utility functions for writing command line interfaces with [optparse-applicative].
+  This is used, for example, in [vmensa].
 
 + [html-parse-util] ([Hackage](https://hackage.haskell.org/package/html-parse-util))
 
-  A reimplementation of utility functions from Neil Mitchell's
-  [TagSoup], as well as some extra functionality, for Ben Gamari's
-  [html-parse], as this nicely supports `Text` and `Attoparsec`.
+  A reimplementation of utility functions from Neil Mitchell's [TagSoup],
+  as well as some extra functionality,
+  for Ben Gamari's [html-parse],
+  as this nicely supports `Text` and `Attoparsec`.
 
 ## Emacs modes
 
@@ -121,33 +125,35 @@ I've written too many Emacs packages—and none of them popular, at that!
 
 + [kbd-mode]
 
-  I wrote the Emacs integration for KMonad's configuration files—that
-  is, kbd-mode is a major more for `.kbd` files.
+  A major more for `.kbd` files,
+  serving as the Emacs integration for KMonad's configuration.
 
 + [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
 
-  Generate citation data for PDF files from the arXiv.  Additionally,
-  download preprints to a specified directory and open them.  Includes
-  [elfeed] support.
+  Generate citation data for PDF files from the arXiv.
+  Additionally, download preprints to a specified directory and open them.
+  Includes [elfeed] support.
 
 + [latex-change-env] ([MELPA](https://melpa.org/#/latex-change-env))
 
-  Provides a way to modify LaTeX environments, as well as the display
-  math mode (seeing it as an environment of sorts).  This includes
-  primitive label handling: we remember the name of labels and can
-  rename or remember them for later.  This means that we can restore old
-  labels after deleting them—very convenient!
+  Provides a way to modify LaTeX environments,
+  as well as the display math mode (seeing it as an environment of sorts).
+  This includes primitive label handling:
+  we remember the name of labels and can rename or remember them for later.
+  This means that we can restore old labels after deleting them—very convenient!
 
 + [vc-use-package]
 
-  Creates a new `:vc` keyword for use-package.  Leveraging
-  `package-vc.el`, installing packages from their direct upstream
-  repositories (as opposed to, say, GNU ELPA) becomes very convenient.
-  I've written about this package [here][post:vc-use-package] and about
-  `package-vc.el` [here][post:package-vc-install].
+  Creates a new `:vc` keyword for use-package.
+  Leveraging `package-vc.el`,
+  installing packages from their direct upstream repositories
+  (as opposed to, say, GNU ELPA)
+  becomes very convenient.
+  I've written about this package [here][post:vc-use-package],
+  and about `package-vc.el` [here][post:package-vc-install].
   Note that,
   as of commit [2ce27968][emacs:vc-keyword],
-  this package is now built into Emacs!
+  this package is built into Emacs!
 
 + [query-replace-many]
 
@@ -161,11 +167,11 @@ I've written too many Emacs packages—and none of them popular, at that!
 [colemak-dh]: https://colemakmods.github.io/mod-dh/
 [dmenu]: https://tools.suckless.org/dmenu/
 [elfeed]: https://github.com/skeeto/elfeed
+[emacs:vc-keyword]: https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe
 [hmenu]: https://gitlab.com/slotThe/hmenu
 [html-parse-util]: https://github.com/slotThe/html-parse-util
 [html-parse]: https://hackage.haskell.org/package/html-parse
 [kbd-mode]: https://github.com/kmonad/kbd-mode
-[KMonad]: https://github.com/kmonad/kmonad
 [latex-change-env]: https://gitlab.com/slotThe/change-env
 [optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
 [optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
@@ -177,4 +183,13 @@ I've written too many Emacs packages—and none of them popular, at that!
 [vmensa]: https://gitlab.com/slotThe/vmensa
 [xmobar]: https://codeberg.org/xmobar/xmobar
 [yeganesh]: https://hackage.haskell.org/package/yeganesh
-[emacs:vc-keyword]: https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe
+[Atreus]: https://tony-zorman.com/posts/atreus-review.html
+[xmobar:#656]: https://codeberg.org/xmobar/xmobar/issues/656
+[QMK configuration]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/
+
+[^1]: {-} Relatedly, I also maintain a [QMK configuration] for my [Atreus] keyboard.
+
+[^2]: {-} Note that my contributions to xmobar have come to a bit of a halt,
+      as—see [#656][xmobar:#656]—xmobar 0.45 and up does not work with musl libc,
+      which happens to be the libc that I'm currently using on my main machine.
+      One day!
