@@ -124,6 +124,10 @@ main = hakyllWith config do
     gitCtx "Git Introduction" <> constField "no-toc" "true"
   mkStandalone "talks/git-introduction/transcript.md" pure $
     gitCtx "How to Use Git—an Interactive Tutorial"
+  ---- Key
+  match "key.txt" do
+    route idRoute
+    compile copyFileCompiler
 
   --- Lists of posts
   -- For showing all posts, we want a list of all posts, followed by a

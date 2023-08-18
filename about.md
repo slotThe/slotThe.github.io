@@ -32,7 +32,7 @@ any of the following channels:
 + E-Mail:
   + `soliditsallgood (at) mailbox (dot) org`
   + `tonyzorman      (at) mailbox (dot) org`
-+ PGP: `4896FB6C952846C3414C2475C927DE8C7DFD57B8`
++ PGP: [`4896FB6C952846C3414C2475C927DE8C7DFD57B8`](./key.txt)
 + IRC: `Solid`@[irc.libera.chat](https://libera.chat/)
 + Matrix: `slot-`@[matrix.org](https://matrix.org/)
 + GitHub: [slotThe](https://github.com/slotThe)
