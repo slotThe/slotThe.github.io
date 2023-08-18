@@ -25,59 +25,90 @@ import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Walk (walk, walkM)
 
-main :: IO ()
-main = hakyllWith config do
-  --- Housekeeping
-  match "templates/*" $ compile templateBodyCompiler
 
+main :: IO ()
+main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
+  -- Housekeeping
+  match "templates/*" $ compile templateBodyCompiler
   match "css/*" do
     route   idRoute
     compile compressCssCompiler
-
   match ("images/**" .||. "talks/**.pdf" .||. "fonts/**") do
     route   idRoute
     compile copyFileCompiler
 
-  --- Redirects
+  -- Redirects
   version "redirects" $ createRedirects redirects
 
-  --- Citations
+  -- Citations
   match "bib/style.csl"        $ compile cslCompiler    -- labels: [DaPaSt07]
   match "bib/bibliography.bib" $ compile biblioCompiler
 
-  --- Generate tags
-  tags@Tags{ tagsMap , tagsMakeId } <- buildTags "posts/**" (fromCapture "tags/**.html")
+  -- Generate tags
+  tags <- buildTags "posts/**" (fromCapture "tags/**.html")
   let tagCtx = tagsField "tags" tags <> postCtx
 
-  --- RSS
-  -- For all posts
-  create ["atom.xml"] do        -- Atom feed; see 'feedConfig' below.
-    route idRoute
-    compile do
-      lastPosts <- recentFirst =<< loadAllSnapshots allPosts "post-content"
-      renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
-  -- For individual tags
-  tagsRules tags $ \tag taggedPosts ->
-    create [fromFilePath $ "atom-" <> tag <> ".xml"] do
-      route idRoute
-      compile do
-        lastPosts <- recentFirst =<< loadAllSnapshots taggedPosts "post-content"
-        renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
+  -- Build some pages!
+  landingPage tagCtx
+  posts       tagCtx
+  listOfPosts tags
+  aboutMe
+  standalones tagCtx
+  rss         tags
 
-  --- The "landing page"
-  match "index.html" do
-    route idRoute
-    compile do
-      posts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
-      let teaserCtx = teaserField "teaser" "post-teaser" <> tagCtx
-          indexCtx :: Context String
-                    = listField "posts" teaserCtx (pure posts) <> bodyField "body"
-      getResourceBody
-        >>= applyAsTemplate                               indexCtx
-        >>= loadAndApplyTemplate "templates/default.html" indexCtx
-        >>= relativizeUrls
+landingPage :: Context String -> Rules ()
+landingPage tagCtx = match "index.html" do
+  route idRoute
+  compile do
+    allposts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
+    let teaserCtx = teaserField "teaser" "post-teaser" <> tagCtx
+        indexCtx  = listField "posts" teaserCtx (pure allposts) <> bodyField "body"
+    getResourceBody
+      >>= applyAsTemplate                               indexCtx
+      >>= loadAndApplyTemplate "templates/default.html" indexCtx
+      >>= relativizeUrls
 
-  --- Sidebar "about"ish sites.
+posts :: Context String -> Rules ()
+posts tagCtx = match allPosts do
+  route $ setExtension "html"
+  compile do
+    tocCtx <- getTocCtx tagCtx
+    -- Atom feeds get their own compiler; the website uses a lot of stuff
+    -- (sidenotes, small-caps, …) that doesn't work in feeds.
+    void $ pandocRssCompiler
+       >>= loadAndApplyTemplate "templates/post.html"    tocCtx
+       >>= mkCleanSnapshot "post-for-feed"  -- See 'rss'
+    -- Actual compiler for a page.
+    myPandocCompiler
+      >>= mkCleanSnapshot "post-teaser"   -- For the previews on the main page.
+      >>= loadAndApplyTemplate "templates/post.html"     tocCtx
+      >>= loadAndApplyTemplate "templates/default.html"  tocCtx
+      >>= relativizeUrls
+
+-- | For showing all posts, we want a list of all posts, followed by a list of
+-- tags with associated posts.
+-- https://stackoverflow.com/questions/52805193/in-hakyll-how-can-i-generate-a-tags-page
+listOfPosts :: Tags -> Rules ()
+listOfPosts tags@Tags{ tagsMakeId, tagsMap } = do
+  -- All posts
+  create ["posts.html"] do
+    let allPostsCtx :: Context String
+          = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
+    mkList allPostsCtx "All posts" "atom" "templates/all-posts.html"
+  -- Only posts tagged by a certain tag
+  tagsRules tags \tag taggedPosts -> do
+    let taggedPostCtx :: Context String
+          = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
+    mkList taggedPostCtx
+           ("Posts tagged " <> "\"" <> tag <> "\"")
+           ("../atom-" <> tag)
+           "templates/post-list.html"
+ where
+  mkList :: Context String -> String -> String -> Identifier -> Rules ()
+  mkList = mkPostList (mkTagAssocs tagsMakeId tagsMap)
+
+aboutMe :: Rules ()
+aboutMe = do
   match (fromList ["research.md", "free-software.md"]) do
     route $ setExtension "html"
     compile do
@@ -96,27 +127,11 @@ main = hakyllWith config do
                 <> defaultContext )
           >>= relativizeUrls
 
-  --- An individual post
-  match allPosts do
-    route $ setExtension "html"
-    compile do
-      tocCtx <- getTocCtx tagCtx
-      -- Atom feeds get their own compiler, since the website uses a lot
-      -- of stuff (sidenotes, small-caps…) that doesn't work in feeds.
-      void $ pandocRssCompiler
-         >>= loadAndApplyTemplate "templates/post.html"    tocCtx
-         >>= mkCleanSnapshot "post-content"  -- For atom feed.
-      -- Actual compiler for the website
-      myPandocCompiler
-        >>= mkCleanSnapshot "post-teaser"   -- For the previews on the main page.
-        >>= loadAndApplyTemplate "templates/post.html"     tocCtx
-        >>= loadAndApplyTemplate "templates/default.html"  tocCtx
-        >>= relativizeUrls
-
-  --- Standalone sites
-  ---- Mackey functors seminar
+standalones :: Context String -> Rules ()
+standalones tagCtx = do
+  -- Mackey functors seminar
   mkStandalone "mackey-functors.md" pure tagCtx
-  ---- Git introduction
+  -- Git introduction
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…
         asTxt (T.replace "./transcript.md" "./git-introduction/transcript.html")
@@ -124,45 +139,35 @@ main = hakyllWith config do
     gitCtx "Git Introduction" <> constField "no-toc" "true"
   mkStandalone "talks/git-introduction/transcript.md" pure $
     gitCtx "How to Use Git—an Interactive Tutorial"
-  ---- Key
+  -- Key
   match "key.txt" do
     route idRoute
     compile copyFileCompiler
 
-  --- Lists of posts
-  -- For showing all posts, we want a list of all posts, followed by a
-  -- list of tags with associated posts.
-  -- https://stackoverflow.com/questions/52805193/in-hakyll-how-can-i-generate-a-tags-page
-  let mkList :: Context String -> String -> String -> Identifier -> Rules ()
-      mkList = mkPostList (mkTagAssocs tagsMakeId tagsMap)
+rss :: Tags -> Rules ()
+rss tags = do
   -- All posts
-  create ["posts.html"] do
-    let allPostsCtx :: Context String
-          = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
-    mkList allPostsCtx "All posts" "atom" "templates/all-posts.html"
-  -- Only posts tagged by a certain tag
-  tagsRules tags \tag taggedPosts -> do
-    let taggedPostCtx :: Context String
-          = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
-    mkList taggedPostCtx
-           ("Posts tagged " <> "\"" <> tag <> "\"")
-           ("../atom-" <> tag)
-           "templates/post-list.html"
-
------------------------------------------------------------------------
--- Config
-
-config :: Configuration
-config = defaultConfiguration{ destinationDirectory = "docs" }
-
-feedConfig :: FeedConfiguration
-feedConfig = FeedConfiguration
-  { feedTitle       = "Tony Zorman · Blog"
-  , feedDescription = "Maths, Haskell, Emacs, and whatever else comes to mind."
-  , feedAuthorName  = "Tony Zorman"
-  , feedAuthorEmail = "tonyzorman@mailbox.org"
-  , feedRoot        = "https://tony-zorman.com"
-  }
+  create ["atom.xml"] do
+    route idRoute
+    compile do
+      lastPosts <- recentFirst =<< loadAllSnapshots allPosts "post-for-feed"
+      renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
+  -- Individual tags
+  tagsRules tags $ \tag taggedPosts ->
+    create [fromFilePath $ "atom-" <> tag <> ".xml"] do
+      route idRoute
+      compile do
+        lastPosts <- recentFirst =<< loadAllSnapshots taggedPosts "post-for-feed"
+        renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
+ where
+  feedConfig :: FeedConfiguration
+  feedConfig = FeedConfiguration
+    { feedTitle       = "Tony Zorman · Blog"
+    , feedDescription = "Maths, Haskell, Emacs, and whatever else comes to mind."
+    , feedAuthorName  = "Tony Zorman"
+    , feedAuthorEmail = "tonyzorman@mailbox.org"
+    , feedRoot        = "https://tony-zorman.com"
+    }
 
 -----------------------------------------------------------------------
 -- Contexts
@@ -342,16 +347,16 @@ mkCleanSnapshot name item = item <$
   noPilcrow  = killTags (~== TagOpen ("a" :: String) [("class", "floatright sec-link")]) (== TagClose "a")
   supressToc = killTags (==  TagOpen "div"           [("id"   , "contents")])            (== TagClose "div")
 
--- | Find @open@ and kill everything between it and @close@.
-killTags :: (Tag String -> Bool) -> (Tag String -> Bool) -> [Tag String] -> [Tag String]
-killTags open close = go
- where
-  go :: [Tag String] -> [Tag String]
-  go tgs = case post of
-    [] -> pre
-    ps -> pre <> go ps
+  -- Find @open@ and kill everything between it and @close@.
+  killTags :: (Tag String -> Bool) -> (Tag String -> Bool) -> [Tag String] -> [Tag String]
+  killTags open close = go
    where
-    (pre, (_, post)) = fmap (fmap (drop 1) . break close) . break open $ tgs
+    go :: [Tag String] -> [Tag String]
+    go tgs = case post of
+      [] -> pre
+      ps -> pre <> go ps
+     where
+      (pre, (_, post)) = fmap (fmap (drop 1) . break close) . break open $ tgs
 
 -----------------------------------------------------------------------
 -- Compilers
