@@ -125,7 +125,7 @@ already scheduled work meeting with X).
 <p></p>
 Long story short, this is now built into X.P.OrgMode. There are two new
 functions:
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">orgPromptRefile</span><span class="w">   </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w">           </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">    </span><span class="n">orgPromptRefile</span><span class="w">   </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w">           </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="w">    </span><span class="n">orgPromptRefileTo</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 </pre></div>
 
@@ -151,7 +151,7 @@ precisely, the <span class="small-caps">edsl</span> that <a href="https://hackag
 <a href="../posts/2022-05-25-calling-emacs-from-xmonad.html">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:
-<div class="highlight"><pre><span></span><span class="nf">refile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">refile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">refile</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">fp</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
 <span class="w">     </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">asBatch</span>
@@ -170,7 +170,7 @@ share it:
 <p></p>
 This—as you probably guessed already—just executes the following elisp
 snippet in Emacs’s batch mode:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="k">progn</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="k">progn</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">find-file</span><span class="w"> </span><span class="err">«</span><span class="nv">fp</span><span class="err">»</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">org-refile</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span>

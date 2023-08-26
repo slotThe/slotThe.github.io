@@ -167,7 +167,7 @@ In terms of code, this—as well as the following examples—heavily use the
 spawn processes in a declarative and compositional way; I’ve <a href="./calling-emacs-from-xmonad.html">written
 about this</a> in another post. For example, my RSS topic is
 specified thusly:
-<div class="highlight"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (inHome)</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (inHome)</span>
 <span class="c1">-- import XMonad.Util.Run</span>
 
 <span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">inHome</span><span class="w"> </span><span class="s">&quot;7:RSS&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEditor</span>
@@ -194,7 +194,7 @@ For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghc
 of mine—so why not automate this? Using what X.U.Run gives us, we can
 quickly throw together a function that executes the given instruction
 inside of a terminal:
-<div class="highlight"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span>
 <span class="c1">-- 'topicConfig' is my personal topic configuration.</span>
 
 <span class="c1">-- | Execute a program in the topic directory (inside a terminal).</span>
@@ -205,7 +205,7 @@ inside of a terminal:
 
 <p></p>
 Similar functions can be created for spawning the terminal and editor:
-<div class="highlight"><pre><span></span><span class="c1">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span>
 <span class="c1">-- or X.U.Run.</span>
 
 <span class="c1">-- | Spawn terminal in topic directory.</span>
@@ -231,7 +231,7 @@ a general <code>X</code> action, we can really do anything we want in there. In
 addition to spawning programs, all of my Haskell projects should default
 to the <code>Hacking</code><!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In case you are interested:
-<div class="highlight"><pre><span></span><span class="nf">hacking</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">hacking</span>
 <span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">renamed</span><span class="w"> </span><span class="p">[</span><span class="kt">Replace</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">]</span>
 <span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">limitWindows</span><span class="w"> </span><span class="mi">3</span>
 <span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">magnify</span><span class="w"> </span><span class="mf">1.3</span><span class="w"> </span><span class="p">(</span><span class="kt">NoMaster</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kt">True</span>
@@ -242,7 +242,7 @@ to the <code>Hacking</code><!--
 As the rest of my dotfiles, it’s available
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</div><!--
 --> layout:
-<div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;ghcid&quot;</span>
@@ -254,7 +254,7 @@ And Voilà, we can now attach this action to all the topics that we want!
 Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
 actions. If you’re more comfortable with <code>do</code> notation, you can also
 write the above as
-<div class="highlight"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="n">spawnEditorInTopic</span>
@@ -272,7 +272,7 @@ complicated example. My main shell environment is <code>eshell</code> and gettin
 sane behaviour there presents one with a few more obstacles than
 <code>spawnTermInTopic</code> did. It also uses <code>inProgram</code> instead of <code>inEditor</code>,
 allowing access to a different instance of the Emacs server.
-<div class="highlight"><pre><span></span><span class="c1">-- | Spawn an eshell frame in the current topic directory.</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- | Spawn an eshell frame in the current topic directory.</span>
 <span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="nf">\</span><span class="n">dir</span><span class="w"> </span><span class="ow">-&gt;</span>
 <span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inProgram</span><span class="w"> </span><span class="s">&quot;emacsclient -a '' -c -s eshell&quot;</span>
@@ -294,7 +294,7 @@ to be extremely handy—you can probably guess what it’s used for. Its
 associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
 an Emacs frame in the topic directory, builds the website, and opens a
 browser window pointing to the local copy:
-<div class="highlight"><pre><span></span><span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">switchToLayout</span><span class="w"> </span><span class="s">&quot;Tall&quot;</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;hakyll-build.sh --hold&quot;</span>

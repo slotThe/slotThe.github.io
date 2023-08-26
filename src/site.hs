@@ -431,7 +431,10 @@ myPandocCompiler =
     block -> pure block
    where
     callPygs :: String -> String -> Compiler String
-    callPygs lang = unixFilter "pygmentize" ["-l", lang, "-f", "html"]
+    callPygs lang = unixFilter "pygmentize" [ "-l", lang
+                                            , "-f", "html"
+                                            , "-P", "cssstyles=" <> lang
+                                            ]
 
   processBib :: Item Pandoc -> Compiler (Item Pandoc)
   processBib pandoc = do

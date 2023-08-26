@@ -222,7 +222,7 @@ and there obviously had to have been some sort of trade-off in favour of portabi
 That being said, some keys are hard to hit.
 For me, this is thankfully limited to the two upper thumb keys,
 as well as the penultimate keys from the left and right in the bottom row:
-<div class="highlight"><pre><span></span>     .----.----.----.----.----.         .----.----.----.----.----.
+<div class="highlight" style="text"><pre><span></span>     .----.----.----.----.----.         .----.----.----.----.----.
      |    |    |    |    |    |         |    |    |    |    |    |
      .----.----.----.----.----.         .----.----.----.----.----.
      |    |    |    |    |    |         |    |    |    |    |    |
@@ -243,7 +243,7 @@ neither movement is particularly comfortable.<!--
 Also, while the thumb buttons are convenient,
 I do sort of wish for one or two additional pinky keys on both sides,
 perhaps on the second or third row:
-<div class="highlight"><pre><span></span>     .----.----.----.----.----.         .----.----.----.----.----.
+<div class="highlight" style="text"><pre><span></span>     .----.----.----.----.----.         .----.----.----.----.----.
      |    |    |    |    |    |         |    |    |    |    |    |
 .----.----.----.----.----.----.         .----.----.----.----.----.----.
 | XX |    |    |    |    |    |         |    |    |    |    |    | XX |
@@ -284,7 +284,7 @@ and I didn’t see much of a point in using Kaleidoscope just to be different,
 so I immediately flashed my Atreus with <a href="https://qmk.fm/"><span class="small-caps">qmk</span></a>.<!--
 --><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">This was very straightforward—after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
 After, that, one simply has to execute
-<div class="highlight"><pre><span></span><span class="gp">$ </span>xset<span class="w"> </span>r<span class="w"> </span>rate<span class="w"> </span><span class="m">230</span><span class="w"> </span><span class="m">70</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>xset<span class="w"> </span>r<span class="w"> </span>rate<span class="w"> </span><span class="m">230</span><span class="w"> </span><span class="m">70</span>
 <span class="gp">$ </span>setxkbmap<span class="w"> </span>-option<span class="w"> </span>compose:menu
 </pre></div>
 
@@ -330,7 +330,7 @@ A cursory analysis reveals the following:<!--
 At first I was very surprised to see <code>x</code> so far up this list—at least,
 until I remembered that <code>M1-x</code> and <code>C-x</code> exist!</div><!--
 -->
-<div class="highlight"><pre><span></span><span class="gp">$ </span>sort<span class="w"> </span>~/.keylog.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-r<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n15
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>sort<span class="w"> </span>~/.keylog.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-r<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n15
 <span class="go">  80590 Control_L</span>
 <span class="go">  58476 n</span>
 <span class="go">  49657 space</span>
@@ -395,7 +395,7 @@ although using a 40% board is so different from even just a laptop keyboard that
 surprises like the above maths entry conundrum are inevitable.
 Anyways, let’s actually talk about the layers now.
 <h3 id="base-layer">Base layer<a href="#base-layer" class="floatleft sec-link">§</a></h3>
-<div class="highlight"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.------.
+<div class="highlight" style="text"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.------.
 |  Q  |  W  |  F  |  P  |  B  |           |  J  |  L  |  U  |  Y  | M4+; |
 .-----.-----.-----.-----.-----.           .-----.-----.-----.-----.------.
 |  A  |  R  |  S  |  T  |  G  |           |  M  |  N  |  E  |  I  |  O   |
@@ -471,7 +471,7 @@ by default, it turns some directional movements
 around—e.g., <code>M-f</code> becomes <code>M-b</code>—but
 it can be made to pretty much input anything one wants.
 <h3 id="layer-1">Layer 1<a href="#layer-1" class="floatleft sec-link">§</a></h3>
-<div class="highlight"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-------.
+<div class="highlight" style="text"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-------.
 |  &amp;  | *&gt;  | &gt;&gt;= | &lt;&amp;&gt; |     |           |  =  |  +  |  *  |  -  | M4+RT |
 .-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-------.
 | ::  | =&gt;  | =&lt;&lt; | &lt;|&gt; |  @  |           | LFT |  UP | DWN | RGT |   \   |
@@ -514,7 +514,7 @@ The <code>S-Ins</code> key is not some sort of tap,
 but actually just emits a Shift-Insert,
 which can be used to paste stuff from the <a href="https://www.uninformativ.de/blog/postings/2017-04-02/0/POSTING-en.html">X11 primary selection</a>.
 <h3 id="layer-2">Layer 2<a href="#layer-2" class="floatleft sec-link">§</a></h3>
-<div class="highlight"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
+<div class="highlight" style="text"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
 |     |  7  |  8  |  9  |     |           |     |  +  |  *  |  -  |     |
 .-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
 |  :  |  4  |  5  |  6  |  =  |           |     |  `  |  _  |  '  |  &quot;  |
@@ -539,7 +539,7 @@ Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the di
 --><label for="sn-12" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-12" class="margin-toggle" /><div class="sidenote">Although, strictly speaking, only <code>'</code> would be necessary, as <code>S-L2</code> is pretty easy to hit.</div><!--
 -->
 <h3 id="layer-3">Layer 3<a href="#layer-3" class="floatleft sec-link">§</a></h3>
-<div class="highlight"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
+<div class="highlight" style="text"><pre><span></span>.-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
 |     |     |     |     |     |           |     | F7  | F8  | F9  | F10 |
 .-----.-----.-----.-----.-----.           .-----.-----.-----.-----.-----.
 |     |     |     |     |     |           |     | F4  | F5  | F6  | F11 |
@@ -606,7 +606,7 @@ This is a quaint little feature: auto-correct inside of your keyboard’s firmwa
 I promise that it’s not as bad as it sounds.
 It does not work automatically, thankfully, but is based off a given list of replacements.
 For example,
-<div class="highlight"><pre><span></span>widht -&gt; width
+<div class="highlight" style="text"><pre><span></span>widht -&gt; width
 </pre></div>
 
 <p></p>
@@ -616,7 +616,7 @@ so whenever one actually wants to write <code>widht</code>
 all that’s needed is pressing, for example, any modifier during the insertion.
 <p></p>
 As I’ve really just been trying this out for a laugh, my current word list is quite short:
-<div class="highlight"><pre><span></span>:alot       -&gt;  a lot
+<div class="highlight" style="text"><pre><span></span>:alot       -&gt;  a lot
 accesories  -&gt;  accessories
 accomodate  -&gt;  accommodate
 alledge     -&gt;  allege

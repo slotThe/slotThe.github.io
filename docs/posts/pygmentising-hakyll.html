@@ -119,13 +119,13 @@ for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.
 definitions</a> for the respective tokenisers. However, even for simple
 examples I don’t agree with the <span class="small-caps">html</span> this generates. Consider the
 following Haskell code block.
-<div class="highlight"><pre><span></span><span class="nf">fibs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Integer</span><span class="p">]</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">fibs</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Integer</span><span class="p">]</span>
 <span class="nf">fibs</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">scanl'</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">fibs</span>
 </pre></div>
 
 <p></p>
 Pandoc would generate something like the following:
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sourceCode&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cb1&quot;</span><span class="p">&gt;</span>
+<div class="highlight" style="html"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sourceCode&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cb1&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sourceCode haskell&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sourceCode haskell&quot;</span><span class="p">&gt;</span>
       <span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;cb1-1&quot;</span><span class="p">&gt;</span>
@@ -172,7 +172,7 @@ this to take some work—possibly involving Python <em>shudder</em>—but all of
 the necessary pieces are already present in the <span class="small-caps">cli</span>. First up, the <code>-f</code>
 option specifies the formatter to use, which will decide the shape of
 the output.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-L<span class="w"> </span>formatter<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>html
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-L<span class="w"> </span>formatter<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>html
 <span class="go">* html:</span>
 <span class="go">    Format tokens as HTML 4 ``&lt;span&gt;`` tags within a ``&lt;pre&gt;`` tag, wrapped</span>
 <span class="go">    in a ``&lt;div&gt;`` tag. The ``&lt;div&gt;``'s CSS class can be set by the `cssclass`</span>
@@ -181,13 +181,13 @@ the output.
 
 <p></p>
 We can test how this highlighting looks straight away; executing
-<div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;fibs :: [Integer]\nfibs = 0 : scanl' (+) 1 fibs&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;fibs :: [Integer]\nfibs = 0 : scanl' (+) 1 fibs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">   </span><span class="se">\ </span><span class="p">|</span><span class="w"> </span>pygmentize<span class="w"> </span>-l<span class="w"> </span>haskell<span class="w"> </span>-f<span class="w"> </span>html
 </pre></div>
 
 <p></p>
 produces an <span class="small-caps">html</span> output along the lines of
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;</span>
+<div class="highlight" style="html"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nf&quot;</span><span class="p">&gt;</span>fibs <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;w&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
@@ -213,7 +213,7 @@ This looks much better! The class names are kind of obtuse, but
 <code>pygmentize</code> can also give you nicely annotated <span class="small-caps">css</span> styles for its
 supported colour schemes. For example, the following is a small excerpt
 of the output:
-<div class="highlight"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-S<span class="w"> </span>emacs<span class="w"> </span>-f<span class="w"> </span>html
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>pygmentize<span class="w"> </span>-S<span class="w"> </span>emacs<span class="w"> </span>-f<span class="w"> </span>html
 <span class="go">…</span>
 <span class="go">.nf { color: #00A000 }                    /* Name.Function */</span>
 <span class="go">.ow { color: #AA22FF; font-weight: bold } /* Operator.Word */</span>
@@ -238,14 +238,14 @@ Let’s solve this step by step.
 <p></p>
 Pandoc has an aptly named <code>Pandoc</code> type, which represents the internal
 structure of a document.
-<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="kt">Meta</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="kt">Meta</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 </pre></div>
 
 <p></p>
 We’ll neglect the metadata for now and just look at the <code>Block</code>s;
 specifically, we want to zoom in on two constructors that will give you
 everything we need:
-<div class="highlight"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Block</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Block</span>
 <span class="w">  </span><span class="c1">-- Lots of other constructors omitted</span>
 <span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="kt">Attr</span><span class="w"> </span><span class="kt">Text</span><span class="w">   </span><span class="c1">-- ^ Code block (literal) with attributes</span>
 <span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="kt">RawBlock</span><span class="w"> </span><span class="kt">Format</span><span class="w"> </span><span class="kt">Text</span><span class="w">  </span><span class="c1">-- ^ Raw block</span>
@@ -261,7 +261,7 @@ everything we need:
 To get a feeling for how these <code>CodeBlock</code>s look, again consider our
 <code>fibs</code> example from above. By default, the corresponding <code>CodeBlock</code>
 for this would look something like
-<div class="highlight"><pre><span></span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;haskell&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;haskell&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span>
 <span class="w">          </span><span class="s">&quot;fibs :: [Integer]</span><span class="se">\n</span><span class="s">fibs = 0 : scanl' (+) 1 fibs&quot;</span>
 </pre></div>
 
@@ -276,7 +276,7 @@ challenges—pandoc has really great capabilities for
 <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html">walking</a> its <span class="small-caps">ast</span> in order to facilitate exactly these
 kinds of changes. Unsurprisingly, the <code>Walkable</code> class resides over all
 things walkable; an abbreviated definition looks like this:
-<div class="highlight"><pre><span></span><span class="kr">class</span><span class="w"> </span><span class="kt">Walkable</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="kr">where</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="kr">class</span><span class="w"> </span><span class="kt">Walkable</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="kr">where</span>
 <span class="w">  </span><span class="c1">-- | @walk f x@ walks the structure @x@ (bottom up) and replaces every</span>
 <span class="w">  </span><span class="c1">-- occurrence of an @a@ with the result of applying @f@ to it.</span>
 <span class="w">  </span><span class="n">walk</span><span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">b</span>
@@ -290,7 +290,7 @@ things walkable; an abbreviated definition looks like this:
 Specifically, as we’ll need to shell out to an external program, let us
 restrict our attention to the more general <code>walkM</code> function here. There
 is an instance
-<div class="highlight"><pre><span></span><span class="kr">instance</span><span class="w"> </span><span class="kt">Walkable</span><span class="w"> </span><span class="kt">Block</span><span class="w"> </span><span class="kt">Pandoc</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="kr">instance</span><span class="w"> </span><span class="kt">Walkable</span><span class="w"> </span><span class="kt">Block</span><span class="w"> </span><span class="kt">Pandoc</span>
 </pre></div>
 
 <p></p>
@@ -299,7 +299,7 @@ materialises in front of our eyes:<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">If all else fails, simply <a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">trace the sigils in the air and give
 them form</a>.</div><!--
 -->
-<div class="highlight"><pre><span></span><span class="c1">-- {-# LANGUAGE BlockArguments    #-}</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- {-# LANGUAGE BlockArguments    #-}</span>
 <span class="c1">-- {-# LANGUAGE LambdaCase        #-}</span>
 <span class="c1">-- {-# LANGUAGE OverloadedStrings #-}</span>
 <span class="c1">-- {-# LANGUAGE ViewPatterns      #-}</span>
@@ -330,13 +330,13 @@ Further, the above code checks whether the block has an explicit
 language attached to it and, if not, leaves it alone; this was suggested
 by <a href="https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/">LSLeary</a> on Reddit. If you want to have a single <code>div</code> class for
 every code block—say, for some custom <span class="small-caps">css</span>—then you can replace
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">lang</span><span class="p">)</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">  </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">lang</span><span class="p">)</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span>
 <span class="w">    </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="p">(</span><span class="n">callPygs</span><span class="w"> </span><span class="n">lang</span><span class="w"> </span><span class="n">body</span><span class="p">)</span>
 </pre></div>
 
 <p></p>
 with
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="n">listToMaybe</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">mbLang</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">do</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">  </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="n">listToMaybe</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">mbLang</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">    </span><span class="kr">let</span><span class="w"> </span><span class="n">lang</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="p">(</span><span class="n">fromMaybe</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="w"> </span><span class="n">mbLang</span><span class="p">)</span>
 <span class="w">    </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="p">(</span><span class="n">callPygs</span><span class="w"> </span><span class="n">lang</span><span class="w"> </span><span class="n">body</span><span class="p">)</span>
 </pre></div>
@@ -347,7 +347,7 @@ Thankfully, integrating <code>pygmentsHighlight</code> into Hakyll is not very
 complicated either. In addition to the normal <code>pandocCompiler</code> or
 <code>pandocCompilerWith</code> functions that you are probably already using,
 there is also <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:pandocCompilerWithTransformM">pandocCompilerWithTransformM</a>:
-<div class="highlight"><pre><span></span><span class="nf">pandocCompilerWithTransformM</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">pandocCompilerWithTransformM</span>
 <span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ReaderOptions</span>
 <span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">WriterOptions</span>
 <span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
@@ -358,7 +358,7 @@ there is also <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/
 Basically, in additions to reader and writer options, it also takes a
 monadic transformation of pandoc’s <span class="small-caps">ast</span> and builds an appropriate
 <code>Compiler</code> from that.
-<div class="highlight"><pre><span></span><span class="c1">-- import Hakyll</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- import Hakyll</span>
 <span class="c1">-- import Text.Pandoc.Options</span>
 
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
@@ -372,7 +372,7 @@ monadic transformation of pandoc’s <span class="small-caps">ast</span> and bui
 <p></p>
 The <code>myPandocCompiler</code> function can now be used as any other compiler;
 for example:
-<div class="highlight"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">main</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">hakyll</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="c1">-- …</span>
 <span class="w">  </span><span class="n">match</span><span class="w"> </span><span class="s">&quot;posts/**.md&quot;</span><span class="w"> </span><span class="kr">do</span>

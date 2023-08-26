@@ -122,7 +122,7 @@ maths support on top of them. There are two main “entry points”:
 <p></p>
 The basic functionality may be used with a <code>use-package</code> configuration
 along the lines of
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">latex-change-env</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">latex-change-env</span>
 <span class="w">  </span><span class="nb">:after</span><span class="w"> </span><span class="nv">latex</span>
 <span class="w">  </span><span class="nb">:commands</span><span class="w"> </span><span class="nv">latex-change-env</span>
 <span class="w">  </span><span class="nb">:bind</span><span class="w"> </span><span class="p">(</span><span class="nb">:map</span><span class="w"> </span><span class="nv">LaTeX-mode-map</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;C-c r&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">latex-change-env</span><span class="p">))</span>
@@ -159,7 +159,7 @@ Antolín Camarena’s <a href="https://github.com/oantolin/math-delimiters">math
 comfortable workflow with maths environments out of the box.<!--
 --><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">As such, be sure that you configure <code>math-delim​it​ers-{inline,display}</code>
 accordingly. For example, it may be useful to set
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">math-delimiters-display</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">math-delimiters-display</span>
 <span class="w">        </span><span class="nv">latex-change-env-math-display</span><span class="p">)</span>
 </pre></div>
 
@@ -167,7 +167,7 @@ accordingly. For example, it may be useful to set
 and so on.</div><!--
 --> For
 example, one could define a simple maths-based toggle
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/insert-toggle-math</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/insert-toggle-math</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-cycle</span>
 <span class="w">   </span><span class="o">'</span><span class="p">(</span><span class="nv">display-math</span><span class="w"> </span><span class="nv">equation*</span><span class="w"> </span><span class="nv">align*</span><span class="w"> </span><span class="nv">equation</span><span class="w"> </span><span class="nv">align</span><span class="p">)))</span>
@@ -200,7 +200,7 @@ Cycling between inline and display maths, as well as several maths environments.
 <p></p>
 Of course, cycling also works for non-maths environments, as well as
 macros; below, I bound the following to a key:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/cycle-macros</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/cycle-macros</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-cycle</span>
 <span class="w">   </span><span class="o">'</span><span class="p">(</span><span class="nv">textbf</span><span class="w"> </span><span class="nv">emph</span><span class="w"> </span><span class="nv">textsc</span><span class="w"> </span><span class="nv">textit</span><span class="w"> </span><span class="nv">texttt</span><span class="p">)))</span>

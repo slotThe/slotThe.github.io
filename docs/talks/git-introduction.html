@@ -71,7 +71,7 @@ The repository employs git submodules<!--
 in order to bring the beamer class and the style file into scope.
 This means that it needs to be cloned with
 the <code>--recurse-submodules</code> (or <code>--recursive</code>) flag:
-<div class="highlight"><pre><span></span><span class="c1"># If you have set up SSH keys</span>
+<div class="highlight" style="shell"><pre><span></span><span class="c1"># If you have set up SSH keys</span>
 $<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>git@gitlab.mn.tu-dresden.de:s0428072/git-introduction.git
 
@@ -83,7 +83,7 @@ $<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span
 <h2 id="building">Building<a href="#building" class="floatleft sec-link">§</a></h2>
 <p></p>
 Use <code>pdflatex</code> or <code>latexmk</code> to build; e.g.,
-<div class="highlight"><pre><span></span>$<span class="w"> </span>latexmk<span class="w"> </span>-pdf<span class="w"> </span>main.tex
+<div class="highlight" style="shell"><pre><span></span>$<span class="w"> </span>latexmk<span class="w"> </span>-pdf<span class="w"> </span>main.tex
 </pre></div>
 
 <h2 id="exercise">Exercise<a href="#exercise" class="floatleft sec-link">§</a></h2>

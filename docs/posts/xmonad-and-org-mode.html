@@ -147,7 +147,7 @@ module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Acti
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</div><!--
 --> and uses the selection when called
 with a universal argument:
-<div class="highlight"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- uses {-# LANGUAGE LambdaCase #-}</span>
 <span class="nf">orgKey</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)</span>
 <span class="nf">orgKey</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="p">(</span><span class="s">&quot;M-o c&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="p">(`</span><span class="n">uncurry</span><span class="p">`</span><span class="w"> </span><span class="n">orgSettings</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
@@ -162,7 +162,7 @@ I’ve found <code>M-u</code> to be quite convenient for <span class="small-caps
 key, mirroring the <code>C-u</code> convention from Emacs. In either case, simply
 add the <code>usePrefix​Argument</code> combinator somewhere to your <code>main</code> function
 and give it your preferred keybinding. For example:
-<div class="highlight"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">main</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">xmonad</span>
 <span class="w">     </span><span class="o">.</span><span class="w"> </span><span class="n">usePrefixArgument</span><span class="w"> </span><span class="s">&quot;M-u&quot;</span>
 <span class="w">     </span><span class="o">$</span><span class="w"> </span><span class="n">def</span><span class="p">{</span><span class="w"> </span><span class="n">modMask</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">mod4Mask</span><span class="w">  </span><span class="c1">-- use &lt;Super&gt; as mod</span>

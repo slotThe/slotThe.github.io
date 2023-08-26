@@ -143,7 +143,7 @@ sounds exactly like what our <span class="small-caps">edsl</span> should be good
 Using the new features of <code>XMonad.Util.Run</code>, we could spawn an Emacs
 frame with a special name for our scratchpad hooks to grab onto, and
 execute <code>notmuch</code>:
-<div class="highlight"><pre><span></span><span class="nf">mailSession</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="kt">String</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">mailSession</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="kt">String</span>
 <span class="nf">mailSession</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">getInput</span><span class="w"> </span><span class="o">$</span>
 <span class="w">  </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setFrameName</span><span class="w"> </span><span class="n">mailInstName</span>
 <span class="w">           </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="p">(</span><span class="n">function</span><span class="w"> </span><span class="s">&quot;notmuch&quot;</span><span class="p">)</span>
@@ -156,7 +156,7 @@ want an editor with a certain frame name that also starts up notmuch”.
 <p></p>
 In full, the above function would produce the string (broken into a few
 lines for better readability)
-<div class="highlight"><pre><span></span>&quot;emacsclient -c -a ''
+<div class="highlight" style="text"><pre><span></span>&quot;emacsclient -c -a ''
              -F '(quote (name . \&quot;notmuch-scratch\&quot;))'
              --eval '(notmuch)'&quot;
 </pre></div>
@@ -167,7 +167,7 @@ which would be quite bothersome to type indeed.
 Because the type of <code>mailSession</code> is <code>X String</code> and not just <code>String</code>,
 the setup for this is a little bit different than usual when using
 scratchpads. You would use it like this:
-<div class="highlight"><pre><span></span><span class="nf">myScratchpads</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="p">[</span><span class="kt">NamedScratchpad</span><span class="p">]</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">myScratchpads</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="p">[</span><span class="kt">NamedScratchpad</span><span class="p">]</span>
 <span class="nf">myScratchpads</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="c1">-- First, get the finished string.</span>
 <span class="w">  </span><span class="n">mailSession</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getInput</span><span class="w"> </span><span class="o">$</span>
@@ -197,7 +197,7 @@ the first argument to <code>namedScratchpadAction</code> is actually unused and
 only there for backwards compatibility. This means that it’s not
 necessary to enter your scratchpads there at all if they are added to
 your <code>manageHook</code>. For example, in the following I just provide the empty list:
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="s">&quot;M-C-t&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">namedScratchpadAction</span><span class="w"> </span><span class="kt">[]</span><span class="w"> </span><span class="s">&quot;Mail&quot;</span><span class="p">)</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="s">&quot;M-C-t&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">namedScratchpadAction</span><span class="w"> </span><span class="kt">[]</span><span class="w"> </span><span class="s">&quot;Mail&quot;</span><span class="p">)</span>
 </pre></div>
 
 <p></p>
@@ -215,7 +215,7 @@ For example, I have the following snippet in my config to get the
 currently selected text and call <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> with it to <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">produce a
 citation entry in my bibliography
 files</a>:
-<div class="highlight"><pre><span></span><span class="nf">callArXiv</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">callArXiv</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">callArXiv</span><span class="w"> </span><span class="n">fun</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">url</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">getSelection</span><span class="w">  </span><span class="c1">-- from X.U.XSelection</span>
 <span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
@@ -228,7 +228,7 @@ files</a>:
 
 <p></p>
 When executed, this translates to something like
-<div class="highlight"><pre><span></span>emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
+<div class="highlight" style="text"><pre><span></span>emacs -L /home/slot/.config/emacs/elpa/dash-20220417.2250
       -L /home/slot/.config/emacs/elpa/s-20210616.619
       -L /home/slot/.config/emacs/elpa/arxiv-citation-20220510.1137/
       --batch
@@ -248,7 +248,7 @@ As this is my main use case for it, the new features of
 other programs they may well come in handy. Drawing from the point
 about scratchpads again, here is a hypothetical one that spawns a ghci
 session:
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="n">ghci</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inTerm</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setXClass</span><span class="w"> </span><span class="n">calcInstName</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="s">&quot;ghci&quot;</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">  </span><span class="n">ghci</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inTerm</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setXClass</span><span class="w"> </span><span class="n">calcInstName</span><span class="w"> </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="s">&quot;ghci&quot;</span>
 </pre></div>
 
 <p></p>
@@ -256,7 +256,7 @@ Further, something that’s useful when dealing with <a href="../posts/phd-workf
 workspaces</a>
 is spawning a terminal or an editor already in the current topic
 directory:
-<div class="highlight"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">XMonad.Actions.TopicSpace</span><span class="w">  </span><span class="c1">-- for currentTopicDir and more</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">XMonad.Actions.TopicSpace</span><span class="w">  </span><span class="c1">-- for currentTopicDir and more</span>
 <span class="nf">topicConfig</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="err">…</span>
 
 <span class="nf">spawnTermInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
@@ -286,7 +286,7 @@ One concept that’s still worth touching upon is the internal use of
 <a href="https://github.com/spl/dlist#references">difference list</a>s. The basic idea of these things is that, instead of
 concatenating strings one by one, we create functions <code>String -&gt; String</code>
 and then use function composition to do the work for us:
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">-- Ordinary string concatenation</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">  </span><span class="c1">-- Ordinary string concatenation</span>
 <span class="w">  </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
 
 <span class="w">  </span><span class="c1">-- Using difference lists:</span>
@@ -302,7 +302,7 @@ Note how we have to apply the entire thing to <code>""</code> at the end in orde
 to actually get a string back. As a concrete example, assuming we have
 set <code>"Emacs"</code> as our editor, the <code>inEditor</code> function would essentially
 be
-<div class="highlight"><pre><span></span><span class="nf">inEditor</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">inEditor</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
 <span class="nf">inEditor</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot; Emacs &quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
 </pre></div>
 
@@ -314,7 +314,7 @@ of just <code>String -&gt; String</code>, but that isn’t too important for us 
 Difference lists have some performance advantages over the traditional
 concatenation of strings. The concatenation <code>(&lt;&gt;)</code> on strings is left
 associative by default and so
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">    </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
 <span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="p">((</span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
 </pre></div>
 
@@ -325,7 +325,7 @@ against us here; the definition of <code>(&lt;&gt;)</code> on <code>String</code
 and <code>(&lt;&gt;) = (++)</code> for <code>String = [Char]</code>, but let’s not get into
 that here.</div><!--
 --> is
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="p">(</span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
 <span class="kt">[]</span><span class="w">       </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w">           </span><span class="n">ys</span>
 <span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">ys</span>
 </pre></div>
@@ -334,14 +334,14 @@ that here.</div><!--
 We are merely traversing the first string, leaving the second one
 completely untouched (and unevaluated!). All in all, this means that
 <code>s₁ &lt;&gt; s₂</code> is in <code>𝓞(|s₁|)</code>; given an expression of the form
-<div class="highlight"><pre><span></span><span class="w">  </span><span class="p">((</span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">  </span><span class="p">((</span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;string4&quot;</span>
 </pre></div>
 
 <p></p>
 we will have to walk over <code>"string1"</code> three times! What we actually
 want is a right-associative ordering—exactly what function compositions
 gives us. Spelled out,
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;&quot;</span>
 <span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="n">string1</span><span class="w"> </span><span class="p">(</span><span class="n">string2</span><span class="w"> </span><span class="p">(</span><span class="n">string3</span><span class="w"> </span><span class="p">(</span><span class="n">string4</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
 <span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="s">&quot;string1&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string2&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string3&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;string4&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
 </pre></div>
@@ -350,7 +350,7 @@ gives us. Spelled out,
 which yields the desired behaviour. In fact, this is so canonical that
 instead of using <code>(.)</code>, we could have also—perhaps a bit
 confusingly—used <code>(&lt;&gt;)</code> directly:
-<div class="highlight"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span>
+<div class="highlight" style="haskell"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span>
 <span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="n">string1</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string4</span>
 </pre></div>
 

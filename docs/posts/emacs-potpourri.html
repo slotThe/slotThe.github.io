@@ -182,7 +182,7 @@ picture into the correct directory, give it an appropriate name, and
 insert a link to it into the current buffer. This sounds like a lot of
 busywork for something that I ideally don’t want to think about at all;
 thankfully, most of this can be nicely automated.
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/org-roam-insert-image</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/org-roam-insert-image</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Select and insert an image at point.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">file-name</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;%s-%s.png&quot;</span>
@@ -212,7 +212,7 @@ functions. To be honest, they kind of delight me.
 <p></p>
 First, the following is an override for the <code>self-insert-command</code>, which
 enables faster entry of one-character math symbols:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">char</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-self-insert</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">char</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;</span><span class="ss">`self-insert-command'</span><span class="s"> for LaTeX mode.</span>
 <span class="s">If the previous word is just a single character, surround it with</span>
 <span class="s">dollar signs.  If already in math mode, do nothing.  If the</span>
@@ -253,7 +253,7 @@ explicitly quantify over an argument.</div><!--
 --> I could also create an auto-expanding snippet for this, but
 wouldn’t it be <em>much better</em> to insert it on a double tap of the space
 bar instead? I think so!
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-space</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/LaTeX-space</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Insert a space; or not.</span>
 <span class="s">In case the previous character was already a space, insert</span>
 <span class="s">\\blank instead.&quot;</span>
@@ -294,7 +294,7 @@ essentially the window telling your window manager or desktop
 environment that it wants your attention. You can then execute an
 action based on this urgency hint. Thankfully, Emacs is extensible, so
 hacking this behaviour into ERC wasn’t actually all that complicated.
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/mark-emacs-urgent</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/mark-emacs-urgent</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Mark the current frame as urgent.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">WM-HINTS</span><span class="w"> </span><span class="s">&quot;WM_HINTS&quot;</span><span class="p">)</span>
 <span class="w">         </span><span class="p">(</span><span class="nv">hints</span><span class="w"> </span><span class="p">(</span><span class="nv">seq--into-list</span>
@@ -333,7 +333,7 @@ WeeChat’s <code>highmon.pl</code>).
 Thankfully, however, there is a straightforward hack around this: just
 check the message for certain regular expression first and do nothing
 when they are present.
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="p">(</span><span class="nv">msg</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="p">(</span><span class="nv">msg</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Don't highlight me when these things happen.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">message</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim-left</span><span class="w"> </span><span class="nv">msg</span><span class="p">))</span>
 <span class="w">        </span><span class="p">(</span><span class="nv">channel</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">erc-default-target</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)))</span>
@@ -347,7 +347,7 @@ when they are present.
 <p></p>
 All that’s left to do is to thread this function through to
 <code>erc-log-matches</code> and the above-defined <code>slot/beep-on-match</code>:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-log-matches</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-log-matches</span><span class="w"> </span><span class="p">(</span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Log matches to extra buffer, unless they are annoying.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="nf">message</span><span class="p">)</span>
 <span class="w">    </span><span class="p">(</span><span class="nv">erc-log-matches</span><span class="w"> </span><span class="nv">match-type</span><span class="w"> </span><span class="nv">nickuserhost</span><span class="w"> </span><span class="nf">message</span><span class="p">)))</span>
@@ -376,7 +376,7 @@ I currently have a set-up where I can link to every <span class="small-caps">xm<
 of my blog posts, as well as selected extra sites, like our tutorial and
 installation instructions. Depending on the given universal argument, a
 different link style is used, to accomodate for different platforms.
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-xmonad-modules</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-xmonad-modules</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Get all XMonad modules in the form (NAME . DOC-URL).&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">xmonad-cabal</span><span class="w"> </span><span class="s">&quot;~/repos/xmonad/xmonad-contrib/xmonad-contrib.cabal&quot;</span><span class="p">)</span>
 <span class="w">         </span><span class="p">(</span><span class="nv">hackage</span><span class="w"> </span><span class="s">&quot;https://hackage.haskell.org/package/xmonad-contrib/docs/&quot;</span><span class="p">)</span>
@@ -442,7 +442,7 @@ around that define different macros which probably work much better than
 the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword
 now. However, obviously the one I wrote feels the most natural to <em>me</em>,
 so it’s being kept around regardless.
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defmacro</span><span class="w"> </span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="p">(</span><span class="nv">sym</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">docstring</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defmacro</span><span class="w"> </span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="p">(</span><span class="nv">sym</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">docstring</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;A macro for defining </span><span class="ss">`repeat-map'</span><span class="s">s.</span>
 <span class="s">Defines a new repeat-map called SYM with the given DOCSTRING.</span>
 <span class="s">The keys are derived via the list PAIRS, whose elements are cons</span>
@@ -474,7 +474,7 @@ so it’s being kept around regardless.
 The following would, for example, bind <code>mc/mark-next-like-this-word</code> to
 <code>M-s s</code> globally and to <code>s</code> in the created <code>mc-repeat-map</code>. Likewise,
 <code>mc/mark-next-word-like-this</code> is bound to <code>.</code> in that map, and so on.
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="nv">mc-repeat-map</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="nv">mc-repeat-map</span>
 <span class="w">    </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;M-s s&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-like-this-word</span><span class="p">)</span>
 <span class="w">      </span><span class="p">(</span><span class="s">&quot;C-M-.&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-next-word-like-this</span><span class="p">)</span>
 <span class="w">      </span><span class="p">(</span><span class="s">&quot;C-M-,&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">mc/mark-previous-word-like-this</span><span class="p">)</span>
@@ -509,7 +509,7 @@ The real code looks at this by observing text properties of the matches.
 However, this is not important for what follows, so I simply omitted it.
 <p></p>
 If you’re interested:
-<div class="highlight"><pre><span></span><span class="c1">;; When the message mentions attachment...</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="c1">;; When the message mentions attachment...</span>
 <span class="p">(</span><span class="k">save-excursion</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">message-goto-body</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">;; Limit search from reaching other possible</span>
@@ -539,7 +539,7 @@ If you’re interested:
 <p></p>
 Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.</div><!--
 --> version goes as follows:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">notmuch-mua-attachment-check</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">notmuch-mua-attachment-check</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Signal an error an attachement is expected but missing.</span>
 
 <span class="s">Signal an error if the message text indicates that an attachment</span>
@@ -575,7 +575,7 @@ Instead of trying to change my habits—which is hard!—it sounds much easier t
 <p></p>
 The strategy is exactly the same as for <code>notmuch-mua-attachment-check</code>;
 check for a certain regular expression, whitespace, and say something if it matches the current subject:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">notmuch-mua-subject-check</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">notmuch-mua-subject-check</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="k">save-excursion</span>
 <span class="w">        </span><span class="p">(</span><span class="nv">message-goto-subject</span><span class="p">)</span>
 <span class="w">        </span><span class="p">(</span><span class="nv">message-beginning-of-header</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
@@ -586,7 +586,7 @@ check for a certain regular expression, whitespace, and say something if it matc
 
 <p></p>
 All one has to do is to execute this before sending a mail:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">add-hook</span><span class="w"> </span><span class="ss">'notmuch-mua-send-hook</span><span class="w"> </span><span class="nf">#'</span><span class="nv">notmuch-mua-attachment-check</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">add-hook</span><span class="w"> </span><span class="ss">'notmuch-mua-send-hook</span><span class="w"> </span><span class="nf">#'</span><span class="nv">notmuch-mua-attachment-check</span><span class="p">)</span>
 </pre></div>
 
 <p></p>

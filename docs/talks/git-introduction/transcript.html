@@ -84,7 +84,7 @@ As such,
 it omits most of the more “advanced” points seen in the <a href="https://gitlab.mn.tu-dresden.de/api/v4/projects/2225/jobs/artifacts/main/raw/main.pdf?job=compile_job">presentation</a>,
 see the referenced material for more on those points.
 <h2 id="initialisation">Initialisation<a href="#initialisation" class="floatleft sec-link">§</a></h2>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>git-introduction<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>git-introduction
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>git-introduction<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>git-introduction
 
 <span class="gp">$ </span>git<span class="w"> </span>init<span class="w">                    </span><span class="c1"># initialise a git repo!</span>
 <span class="go">Initialized empty Git repository in $HOME/git-introduction/.git/</span>
@@ -97,7 +97,7 @@ see the referenced material for more on those points.
 </pre></div>
 
 <h2 id="introducing-a-first-file">Introducing a first file<a href="#introducing-a-first-file" class="floatleft sec-link">§</a></h2>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status
 
 <span class="go">On branch main</span>
 
@@ -107,7 +107,7 @@ see the referenced material for more on those points.
 </pre></div>
 
 <h5 id="creating-a-file">Creating a file<a href="#creating-a-file" class="floatleft sec-link">§</a></h5>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w">              </span><span class="c1"># Make changes!</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w">              </span><span class="c1"># Make changes!</span>
 <span class="gp">$ </span>cat<span class="w"> </span>main.txt
 <span class="go">This is the first line.</span>
 
@@ -121,7 +121,7 @@ see the referenced material for more on those points.
 </pre></div>
 
 <h5 id="checking-whats-up">Checking what’s up<a href="#checking-whats-up" class="floatleft sec-link">§</a></h5>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status
 <span class="go">On branch main</span>
 
 <span class="go">No commits yet</span>
@@ -135,7 +135,7 @@ see the referenced material for more on those points.
 
 <p></p>
 Actually adding the file works as one might expect.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>main.txt
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>main.txt
 
 <span class="gp">$ </span>git<span class="w"> </span>status
 <span class="go">On branch main</span>
@@ -148,7 +148,7 @@ Actually adding the file works as one might expect.
 </pre></div>
 
 <h5 id="committing-the-changes">Committing the changes<a href="#committing-the-changes" class="floatleft sec-link">§</a></h5>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit&quot;</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit&quot;</span>
 <span class="go">[main (root-commit) 83b1316] Initial commit</span>
 <span class="go"> 1 file changed, 24 insertions(+)</span>
 <span class="go"> create mode 100644 main.txt</span>
@@ -162,7 +162,7 @@ Actually adding the file works as one might expect.
 </pre></div>
 
 <h2 id="making-changes">Making changes<a href="#making-changes" class="floatleft sec-link">§</a></h2>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w">              </span><span class="c1"># Make changes!</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w">              </span><span class="c1"># Make changes!</span>
 <span class="gp">$ </span>cat<span class="w"> </span>main.txt
 <span class="go">This is the first line!</span>
 
@@ -178,7 +178,7 @@ Actually adding the file works as one might expect.
 <p></p>
 We can get a diff of all unstaged changed with
 <code>git diff</code> or <code>git status -vv</code>.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status<span class="w"> </span>-vv
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status<span class="w"> </span>-vv
 <span class="go">On branch main</span>
 <span class="go">Changes not staged for commit:</span>
 <span class="go">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
@@ -209,7 +209,7 @@ We can get a diff of all unstaged changed with
 </pre></div>
 
 <h5 id="committing-changes-individually">Committing changes individually<a href="#committing-changes-individually" class="floatleft sec-link">§</a></h5>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>--patch<span class="w"> </span>main.txt
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>--patch<span class="w"> </span>main.txt
 </pre></div>
 
 <p></p>
@@ -218,7 +218,7 @@ Type <code>?</code> to see what’s going on.
 Try Only committing the first line.
 With <code>git status -v</code>,
 we can display a diff only for the <em>staged</em> changes
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status<span class="w"> </span>-v
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>status<span class="w"> </span>-v
 <span class="go">On branch main</span>
 <span class="go">Changes to be committed:</span>
 <span class="go">  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)</span>
@@ -246,7 +246,7 @@ Without the <code>-m</code> option,
 <code>git commit</code> instead pops up an editor window in which to enter a commit message.
 Here, there’s also the option of
 specifying further comments after two additional line breaks:
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit
 <span class="go">[main 28cb79a] Changed the first line</span>
 <span class="go"> 1 file changed, 1 insertion(+), 1 deletion(-)</span>
 <span class="gp">$ </span>git<span class="w"> </span>log<span class="w"> </span>HEAD^..HEAD
@@ -262,7 +262,7 @@ specifying further comments after two additional line breaks:
 <p></p>
 We still have unstaged changes.
 The index can be circumvented by supplying the <code>-a</code> flag to <code>git commit</code>.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;A bad commit message&quot;</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;A bad commit message&quot;</span>
 <span class="go">[main d4de7f6] A bad commit message</span>
 <span class="go"> 1 file changed, 2 insertions(+), 3 deletions(-)</span>
 </pre></div>
@@ -271,13 +271,13 @@ The index can be circumvented by supplying the <code>-a</code> flag to <code>git
 <p></p>
 Branches can also be created with <code>git branch</code>,
 but <code>checkout</code> immediately switches to them, so let’s use that instead.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new-branch
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new-branch
 <span class="go">Switched to a new branch 'new-branch'</span>
 </pre></div>
 
 <p></p>
 To double check:
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>rev-parse<span class="w"> </span>--abbrev-ref<span class="w"> </span>HEAD
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>rev-parse<span class="w"> </span>--abbrev-ref<span class="w"> </span>HEAD
 <span class="go">new-branch</span>
 </pre></div>
 
@@ -286,7 +286,7 @@ Notice that <code>git log</code> correctly identifies <code>HEAD</code> pointing
 <h5 id="changing-something-on-the-new-branch">Changing something on the new branch<a href="#changing-something-on-the-new-branch" class="floatleft sec-link">§</a></h5>
 <p></p>
 Let’s change <code>2 Line</code> to say something useless.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>emacs<span class="w"> </span>main.txt
 <span class="gp">$ </span>cat<span class="w"> </span>main.txt
 <span class="go">This is the first line!</span>
 
@@ -301,7 +301,7 @@ Let’s change <code>2 Line</code> to say something useless.
 
 <p></p>
 Committing the result, as we have done before.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Change 2 Line to say something useless&quot;</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Change 2 Line to say something useless&quot;</span>
 <span class="go">[new-branch f1aba65] Change 2 Line to say something useless</span>
 <span class="go"> 1 file changed, 1 insertion(+), 1 deletion(-)</span>
 </pre></div>
@@ -310,7 +310,7 @@ Committing the result, as we have done before.
 <p></p>
 How about we go back to the <code class="verbatim">main</code> branch,
 and make a similar change?
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>main
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>main
 <span class="go">Switched to branch 'main'</span>
 
 <span class="gp">$ </span>emacs<span class="w"> </span>main.txt
@@ -330,7 +330,7 @@ and make a similar change?
 
 <p></p>
 If we try to merge <code>new-branch</code> into main now, we’ll get a merge conflict.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>merge<span class="w"> </span>new-branch
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>merge<span class="w"> </span>new-branch
 <span class="go">Auto-merging main.txt</span>
 <span class="go">CONFLICT (content): Merge conflict in main.txt</span>
 <span class="go">Automatic merge failed; fix conflicts and then commit the result.</span>
@@ -339,7 +339,7 @@ If we try to merge <code>new-branch</code> into main now, we’ll get a merge co
 <p></p>
 Fixing the conflict in an editor involves identifying the correct regions of text;
 these look like this:
-<div class="highlight"><pre><span></span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+<div class="highlight" style="text"><pre><span></span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 2 Line says something useful!
 ||||||| d4de7f6
 2 Line
@@ -350,19 +350,19 @@ these look like this:
 
 <p></p>
 We resolve the conflict by deciding upon a final form:
-<div class="highlight"><pre><span></span>2 Line says something even more useful!
+<div class="highlight" style="text"><pre><span></span>2 Line says something even more useful!
 </pre></div>
 
 <p></p>
 and continue the merge.
 This will now prompt us for a commit message.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>merge<span class="w"> </span>--continue
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>merge<span class="w"> </span>--continue
 <span class="go">[main 3845de7] Merge branch 'new-branch'</span>
 </pre></div>
 
 <p></p>
 We now get a pretty tree:
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>log<span class="w"> </span>--graph<span class="w"> </span>--pretty<span class="o">=</span>oneline
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>log<span class="w"> </span>--graph<span class="w"> </span>--pretty<span class="o">=</span>oneline
 <span class="go">\*   3845de7315908dbcd8b227b5f36fbddf779a950c (HEAD -&gt; main) Merge branch 'new-branch'</span>
 <span class="go">|\</span>
 <span class="go">| * f1aba6569a83471ccad199985e0e5971505b0c16 (new-branch) Change 2 Line to say something useless</span>
@@ -376,7 +376,7 @@ We now get a pretty tree:
 <h2 id="remote-repositories">Remote repositories<a href="#remote-repositories" class="floatleft sec-link">§</a></h2>
 <p></p>
 Creating a remote requires a Git forge; see the presentation.
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>«URL»
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>«URL»
 </pre></div>
 
 <p></p>
@@ -384,7 +384,7 @@ Pushing code to this repository is done with <code>git push</code>;
 getting something off it works with <code>git pull</code>.
 <p></p>
 Merge conflicts can also happen while trying to pull from a remote repository.
-<div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>«URL»<span class="w"> </span>new-git-repo-name
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>«URL»<span class="w"> </span>new-git-repo-name
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>new-git-repo-name
 <span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w"> </span><span class="c1"># Change something.</span>
 <span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;A bad commit message&quot;</span>
@@ -397,7 +397,7 @@ Merge conflicts can also happen while trying to pull from a remote repository.
 <p></p>
 Often, you will also have unstaged changes when pulling;
 best to stash them.
-<div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>«URL»<span class="w"> </span>new-git-repo-name
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>«URL»<span class="w"> </span>new-git-repo-name
 <span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>new-git-repo-name
 <span class="gp">$ </span>emacs<span class="w"> </span>main.txt<span class="w"> </span><span class="c1"># Change something.</span>
 <span class="gp">$ </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;A bad commit message&quot;</span>
@@ -415,32 +415,32 @@ The following examples are taken from
 <a href="https://jwiegley.github.io/git-from-the-bottom-up/">Git from the Bottom Up</a>.
 <h4 id="the-many-faces-of-git-reset">The many faces of <code>git reset</code><a href="#the-many-faces-of-git-reset" class="floatleft sec-link">§</a></h4>
 <h5 id="mixed"><code>--mixed</code><a href="#mixed" class="floatleft sec-link">§</a></h5>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>foo.c<span class="w">   </span><span class="c1"># add changes to the index as a new blob</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>foo.c<span class="w">   </span><span class="c1"># add changes to the index as a new blob</span>
 <span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>HEAD<span class="w">  </span><span class="c1"># delete any changes staged in the index</span>
 <span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>foo.c<span class="w">   </span><span class="c1"># made a mistake, add it back</span>
 </pre></div>
 
 <h5 id="soft"><code>--soft</code><a href="#soft" class="floatleft sec-link">§</a></h5>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD^<span class="w">     </span><span class="c1"># backup HEAD to its parent,</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD^<span class="w">     </span><span class="c1"># backup HEAD to its parent,</span>
 <span class="gp">                             # </span>effectively<span class="w"> </span>ignoring<span class="w"> </span>the<span class="w"> </span>last<span class="w"> </span>commit
 <span class="gp">$ </span>git<span class="w"> </span>update-ref<span class="w"> </span>HEAD<span class="w"> </span>HEAD^<span class="w">  </span><span class="c1"># does the same thing, albeit manually</span>
 </pre></div>
 
 <h5 id="hard"><code>--hard</code><a href="#hard" class="floatleft sec-link">§</a></h5>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD~3<span class="w">  </span><span class="c1"># Go back in time, throwing away changes</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD~3<span class="w">  </span><span class="c1"># Go back in time, throwing away changes</span>
 <span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--soft<span class="w"> </span>HEAD~3<span class="w">  </span><span class="c1"># Set HEAD to point to an earlier commit</span>
 <span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w">  </span><span class="c1"># Wipe out differences in the working tree</span>
 </pre></div>
 
 <p></p>
 (almost) NEVER DO THIS! It’s much safer to
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>stash
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>stash
 <span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>new-branch<span class="w"> </span>HEAD~3<span class="w">   </span><span class="c1"># head back in time!</span>
 </pre></div>
 
 <p></p>
 Also
-<div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>stash<span class="w">  </span><span class="c1"># because it's always a good thing to do</span>
+<div class="highlight" style="console"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>stash<span class="w">  </span><span class="c1"># because it's always a good thing to do</span>
 <span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD~3<span class="w">  </span><span class="c1"># go back in time</span>
 <span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>HEAD@<span class="o">{</span><span class="m">1</span><span class="o">}</span><span class="w">  </span><span class="c1"># oops, that was a mistake, undo it!</span>
 <span class="gp">$ </span>git<span class="w"> </span>stash<span class="w"> </span>apply<span class="w">  </span><span class="c1"># and bring back my working tree changes</span>

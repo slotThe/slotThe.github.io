@@ -96,13 +96,13 @@ here we are!
 <p></p>
 The basic premise is really this simple—we create a handler for a new
 <code>:vc</code> use-package keyword. It can be used like so:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
 <span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:fetcher</span><span class="w"> </span><span class="nv">github</span><span class="w"> </span><span class="nb">:repo</span><span class="w"> </span><span class="nv">oantolin/math-delimiters</span><span class="p">))</span>
 </pre></div>
 
 <p></p>
 One can specify most arguments that <code>package-vc-install</code> also accepts; for example:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
 <span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:fetcher</span><span class="w"> </span><span class="s">&quot;github&quot;</span>
 <span class="w">       </span><span class="nb">:repo</span><span class="w"> </span><span class="s">&quot;oantolin/math-delimiters&quot;</span>
 <span class="w">       </span><span class="nb">:rev</span><span class="w"> </span><span class="s">&quot;master&quot;</span><span class="w">         </span><span class="c1">; also accepts the special `:last-release'</span>

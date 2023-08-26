@@ -110,7 +110,7 @@ I’ve been using <a href="https://github.com/quelpa/quelpa">quelpa</a> and <a h
 that are not on any popular archive straight from source. Especially
 the latter package resulted in an almost seemless integration with the
 rest of my configuration; for example:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
 <span class="w">  </span><span class="nb">:quelpa</span><span class="w"> </span><span class="p">(</span><span class="nv">math-delimiters</span><span class="w"> </span><span class="nb">:fetcher</span><span class="w"> </span><span class="nv">github</span><span class="w"> </span><span class="nb">:repo</span><span class="w"> </span><span class="s">&quot;oantolin/math-delimiters&quot;</span><span class="p">))</span>
 </pre></div>
 
@@ -124,7 +124,7 @@ quelpa up until now!
 <p></p>
 The most user-facing of these new functions is <code>package-vc-install</code>,
 with signature
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">package-vc-install</span><span class="w"> </span><span class="nv">PACKAGE</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">NAME</span><span class="w"> </span><span class="nv">REV</span><span class="w"> </span><span class="nv">BACKEND</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">package-vc-install</span><span class="w"> </span><span class="nv">PACKAGE</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">NAME</span><span class="w"> </span><span class="nv">REV</span><span class="w"> </span><span class="nv">BACKEND</span><span class="p">)</span>
 </pre></div>
 
 <p></p>
@@ -151,7 +151,7 @@ that package X is not installed from *<span class="small-caps">elpa</span> local
 declaration of X itself.
 <p></p>
 So, let’s take the easy way out and write a small wrapper:
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">cl-defun</span><span class="w"> </span><span class="nv">slot/vc-install</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;key</span><span class="w"> </span><span class="p">(</span><span class="nv">fetcher</span><span class="w"> </span><span class="s">&quot;github&quot;</span><span class="p">)</span><span class="w"> </span><span class="nv">repo</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="nv">rev</span><span class="w"> </span><span class="nv">backend</span><span class="p">)</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">cl-defun</span><span class="w"> </span><span class="nv">slot/vc-install</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;key</span><span class="w"> </span><span class="p">(</span><span class="nv">fetcher</span><span class="w"> </span><span class="s">&quot;github&quot;</span><span class="p">)</span><span class="w"> </span><span class="nv">repo</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="nv">rev</span><span class="w"> </span><span class="nv">backend</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Install a package from a remote if it's not already installed.</span>
 <span class="s">This is a thin wrapper around </span><span class="ss">`package-vc-install'</span><span class="s"> in order to</span>
 <span class="s">make non-interactive usage more ergonomic.  Takes the following</span>
@@ -176,7 +176,7 @@ So, let’s take the easy way out and write a small wrapper:
 This function can now be used under the <code>init</code> keyword of the
 use-package macro, almost without changing the shape of the declaration
 from above:
-<div class="highlight"><pre><span></span><span class="c1">;; Before</span>
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="c1">;; Before</span>
 <span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">math-delimiters</span>
 <span class="w">  </span><span class="nb">:quelpa</span><span class="w"> </span><span class="p">(</span><span class="nv">math-delimiters</span><span class="w"> </span><span class="nb">:fetcher</span><span class="w"> </span><span class="nv">github</span><span class="w"> </span><span class="nb">:repo</span><span class="w"> </span><span class="s">&quot;oantolin/math-delimiters&quot;</span><span class="p">))</span>
 
