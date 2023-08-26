@@ -10,8 +10,369 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2023-07-30T00:00:00Z</updated>
+    <updated>2023-08-26T00:00:00Z</updated>
     <entry>
+    <title>Change the insides of an S-expression in Emacs</title>
+    <link href="https://tony-zorman.com/posts/change-inner.html" />
+    <id>https://tony-zorman.com/posts/change-inner.html</id>
+    <published>2023-08-26T00:00:00Z</published>
+    <updated>2023-08-26T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2023-08-26
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1720 words">7 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>I have to make a confession:
+I have an <a href="https://github.com/emacs-evil/evil">evil</a> past—literally.
+Having switched to vanilla Emacs keybindings a while ago,
+one thing that I genuinely miss from <em>that time</em> are the <code>ci(</code> and <code>ca(</code> motions,
+killing everything in or around the closest encompassing <code>()</code>-environment.
+Luckily, the <a href="https://github.com/magnars/change-inner.el">change-inner</a> package provides exactly these commands for Emacs proper.
+Unluckily, there are some issues regarding whitespace handling—let’s try to fix that.</p>
+<!--more-->
+<h2 id="how-it-all-started">How it all started</h2>
+<p>After happily using change-inner for a few days,
+one of the first problems I ran into
+was the package’s flakiness with respect to whitespace.
+This is elucidated in, for example,
+<a href="https://github.com/magnars/change-inner.el/issues/5">this issue</a>:</p>
+<blockquote>
+<p>When using change-inner with rust-mode, the following code (with <code>|</code> as the cursor):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> issue_list_url <span class="op">=</span> <span class="pp">Url::</span>parse(<span class="op">|</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://github.com/rust-lang/rust/issues?labels=E-easy&amp;state=open&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        )<span class="op">.</span>unwrap()<span class="op">;</span></span></code></pre></div>
+<p>calling <code>M-x change-inner (</code> gives:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> issue_list_url <span class="op">=</span> <span class="pp">Url::</span>parse<span class="op">|.</span>unwrap()<span class="op">;</span></span></code></pre></div>
+<p>whereas I would expect:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> issue_list_url <span class="op">=</span> <span class="pp">Url::</span>parse(<span class="op">|</span>)<span class="op">.</span>unwrap()<span class="op">;</span></span></code></pre></div>
+<p>It looks like it’s related to newlines. There’s a similar issue in JS:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// works here</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> foo <span class="op">=</span> <span class="fu">bar</span>(<span class="op">|</span><span class="st">&quot;baz&quot;</span>)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">// error: Couldn't find expansion</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> foo <span class="op">=</span> <span class="fu">bar</span>(<span class="op">|</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;baz&quot;</span>)<span class="op">;</span></span></code></pre></div>
+</blockquote>
+<p>Change-inner as a package builds upon another excellent one from the same author:
+<a href="https://github.com/magnars/expand-region.el">expand-region</a>,
+an “Emacs extension to increase selected region by semantic units.”
+Essentially, change-inner just expands the region
+until it hits something that it’s happy with.
+As such, the problem eluded to above is
+with the respective expand-region functions that are called;
+specifically, <code>er/mark-inside-pairs</code>,
+which is defined like so:</p>
+<pre class="emacs-lisp"><code>(defun er/mark-inside-pairs ()
+  &quot;Mark inside pairs (as defined by the mode), not including the pairs.&quot;
+  (interactive)
+  (when (er--point-inside-pairs-p)
+    (goto-char (nth 1 (syntax-ppss)))
+    (set-mark (save-excursion
+                (forward-char 1)
+                (skip-chars-forward er--space-str) ; ← HERE
+                (point)))
+    (forward-list)
+    (backward-char)
+    (skip-chars-backward er--space-str)            ; ← HERE
+    (exchange-point-and-mark)))</code></pre>
+<p>Notice the invocations of <code>(skip-chars-forward er--space-str)</code>;
+if we start with<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> foo <span class="op">=</span> <span class="fu">bar</span>(<span class="op">|</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;baz&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<p>and run <code>M-x er/mark-inside-pairs RET</code>,
+then the marked area will actually just be <code>"baz"</code>,
+instead of everything inside of the parentheses.</p>
+<p>Mystery solved, right?
+Maybe, but having to redefine that function for this package alone
+feels wrong to me.
+This got me looking into the internals of change-inner,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+in order to see where the problem <em>actually</em> lies.</p>
+<h2 id="inside-change-inner">Inside change-inner</h2>
+<p>Taking a closer look at <code>change-inner*</code><!--
+-->—the internal function doing the actual work—<!--
+-->reveals the following.
+After some initial book keeping,
+the area surrounding the point is expanded,
+looking for the innermost expression matching the parameters:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre class="emacs-lisp"><code>(er--expand-region-1)
+(er--expand-region-1)                      ; sic!
+(while (and (not (= (point) (point-min)))
+            (not (looking-at q-char)))
+  (er--expand-region-1))</code></pre>
+<p>Crucially,
+the area is expanded twice <em>completely unconditionally</em>.
+This stops only
+once we’ve reached the bounds of either the buffer,
+or the expression we are interested in.</p>
+<p>The idea is to start in a situation like this</p>
+<pre class="emacs-lisp"><code>'( &quot;one&quot; &quot;t|wo&quot; &quot;three&quot; &quot;four&quot; )</code></pre>
+<p>and expand until we encompass the whole list<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<pre class="emacs-lisp"><code>'( &quot;one&quot; &quot;t|wo&quot; &quot;three&quot; &quot;four&quot; )
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+<p>noting that the previous step was</p>
+<pre class="emacs-lisp"><code>'( &quot;one&quot; &quot;t|wo&quot; &quot;three&quot; &quot;four&quot; )
+;  ^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+<p>which equates to the “inner” part of the list.
+Then, one can call
+<code>er/contract-region</code>,
+which relies on an expansion history,
+in order to only kill this inner part.</p>
+<p>Why expand twice unconditionally?
+Because in a situation like</p>
+<pre class="emacs-lisp"><code>'|( &quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot; )</code></pre>
+<p>The expansion would immediately encompass the whole list,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+and its innards wouldn’t be available to expand-region’s contraction history.
+The “trick” is to actually expand <em>further</em> than necessary;
+looping through the <code>while</code> above until one inevitably hits <code>(point-min)</code> and stops expanding.
+This triggers yet another bit of code that then recurses with prefilled arguments<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<pre class="emacs-lisp"><code>(if (not (looking-at q-char))
+    (if search-forward-char
+        (error &quot;Couldn't find any expansion starting with %S&quot; char)
+      (goto-char starting-point)
+      (setq mark-active nil)
+      (change-inner* yank? char))
+  ;; … else …
+  )</code></pre>
+<p>During that additional run of the function,
+it searches for the correct delimiter via</p>
+<pre class="emacs-lisp"><code>(search-forward char (point-at-eol))</code></pre>
+<p>and<!--
+-->—due to the way that <code>search-forward</code> works by default—<!--
+-->we end up with the point directly after the opening delimiter</p>
+<pre class="emacs-lisp"><code>'(| &quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot; )</code></pre>
+<p>This now expands correctly.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<h3 id="puni-to-the-rescue">Puni to the rescue</h3>
+<p>I certainly know what I think of this solution.
+Instead of trying to fix this web of expansions and contractions,
+how about we rewrite the function instead?</p>
+<p>I’ve been happily using <a href="https://github.com/AmaiKinono/puni">puni</a> for a while,
+and it seems pretty apt for the job.
+Briefly, puni is a structured editing package,
+like <a href="https://paredit.org/">paredit</a> or <a href="https://github.com/Fuco1/smartparens">smartparens</a>,
+but it works for a broader range of languages than the former,
+while comprising of a much smaller code-base<!--
+-->—and even fewer language-specific bits—<!--
+-->than the latter.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+While I still prefer paredit for lisps,
+puni has become my de facto standard for language-agnostic parenthesis handling.</p>
+<p>Luckily for us,
+puni already comes equipped with a <code>puni-expand-region</code> function,
+so one can swiftly rewrite the core of <code>change-inner*</code> using that instead of <code>er--expand-region-1</code>:</p>
+<pre class="emacs-lisp"><code>;; Try to find a region.
+(puni-expand-region)
+(when (&gt; (point) (mark)) ; By default, puni jumps to the end of the sexp
+  (exchange-point-and-mark))
+(while (and (not (= (point) (point-min)))
+            (not (looking-at q-char)))
+  (puni-expand-region))</code></pre>
+<p>Notice that the double expansion vanished!
+Instead, when a region was found,
+we can make use of <code>puni-bounds-of-list-around-point</code> to get the internals explicitly,
+and then calculate how big the delimiters were:</p>
+<pre class="emacs-lisp"><code>(let* ((rb (region-beginning))
+       (re (region-end))
+       (insides (progn (goto-char (1+ rb))
+                       (puni-bounds-of-list-around-point)))
+       (olen (- (car insides) rb))  ; Length of opening delimiter
+       (clen (- re (cdr insides)))) ; Length of closing delimiter
+  (kill-region (+ rb olen) (- re clen)))</code></pre>
+<p>Trying this out with our trusty example of</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> foo <span class="op">=</span> <span class="fu">bar</span>(<span class="op">|</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;baz&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<p>we… are greeted with a type error.</p>
+<pre><code>Debugger entered--Lisp error: (wrong-type-argument number-or-marker-p nil)
+  puni--smaller-interval((103 . 108) (nil . 108))</code></pre>
+<p>Yikes.</p>
+<h3 id="puni-to-the-rescue-1">Puni to the rescue?</h3>
+<p>The <code>puni--smaller-interval</code> function does some comparisons with <code>&lt;=</code>,
+and having <code>nil</code> in there will obviously result in a bad time for everyone.
+As it turns out, puni <em>also</em> has some problems handling whitespace,
+in that it <em>doesn’t</em> skip it.
+At some point in <code>puni-expand-region</code>,
+we call <code>puni-bounds-of-sexp-at-point</code>,
+which tries to find out whether we are at the start or end of an S-expression
+by going forwards and backwards a few times:</p>
+<pre class="emacs-lisp"><code>(save-excursion
+  (setq end-forward (puni-strict-forward-sexp)
+        beg-forward (puni-strict-backward-sexp)))
+(save-excursion
+  (setq beg-backward (puni-strict-backward-sexp)
+        end-backward (puni-strict-forward-sexp)))</code></pre>
+<p>Now, when we are in a situation like <code>(|   "furble")</code>,
+an invocation of <code>puni-strict-forward-sexp</code> will leave us at <code>(   "furble"|)</code>,
+but executing <code>puni-strict-backward-sexp</code> after that will result in <code>(   |"furble")</code>—not where we started.
+As such, puni will (incorrectly) conclude that we were not at the start of the expression.</p>
+<p>One could try to cram some whitespace handling into this,
+but who says we don’t run into other issues then?<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>
+In fact, <code>puni-expand-region</code> is written in such a way
+that it tries out different expansion strategies until one succeeds—why not just quiet the error?</p>
+<pre class="emacs-lisp"><code>(advice-add 'puni-bounds-of-sexp-at-point :around
+  (lambda (fun)
+    (ignore-errors (fun))))</code></pre>
+<p>This… turns out to work!</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">// before</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> foo <span class="op">=</span> <span class="fu">bar</span>(<span class="op">|</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;baz&quot;</span>)<span class="op">;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">// after</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> foo <span class="op">=</span> <span class="fu">bar</span>(<span class="op">|</span>)<span class="op">;</span></span></code></pre></div>
+<p>Phew.</p>
+<h2 id="the-code">The code</h2>
+<p>For anyone interested, here is the full code.
+It also includes a <code>mode</code> setting, which can be set to <code>outer</code>,
+in order to kill around the parentheses; e.g.,</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// before</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> issue_list_url <span class="op">=</span> <span class="pp">Url::</span>parse(<span class="op">|</span><span class="st">&quot;https://my-url.com&quot;</span>)<span class="op">.</span>unwrap()<span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">// after</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> issue_list_url <span class="op">=</span> <span class="pp">Url::</span>parse<span class="op">|.</span>unwrap()<span class="op">;</span></span></code></pre></div>
+<p>For obvious reasons,
+I will not submit this upstream to change-inner,
+but it will instead live in my personal configuration.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<pre class="emacs-lisp"><code>(cl-defun slot/change-sexp (&amp;key search-for mode)
+  &quot;Delete (the innards of) a sexp.
+Takes a char, like ( or \&quot;, and kills the first ancestor semantic
+unit starting with that char. The unit must be recognisable to
+`puni'.
+
+SEARCH-FOR is the opening delimiter to search for: if this is
+nil, prompt for one. MODE is whether to kill the whole
+region (`outer'), or just the innards of it (any other value,
+including nil).&quot;
+  (cl-labels
+      ((expand (char &amp;optional forward)
+         &quot;Expand until we encompass the whole expression.&quot;
+         (let* ((char (or char
+                          (char-to-string
+                           (read-char (format &quot;Kill %s:&quot;
+                                              (symbol-name
+                                               (or mode 'inner)))))))
+                (q-char (regexp-quote char))
+                (starting-point (point)))
+           ;; Try to find a region.
+           (puni-expand-region)
+           (when (&gt; (point) (mark))
+             (exchange-point-and-mark))
+           (while (and (not (= (point) (point-min)))
+                       (not (looking-at q-char)))
+             (puni-expand-region))
+           ;; If we haven't found one yet, initiate a forward search and
+           ;; try again—once.
+           (when (not (looking-at q-char))
+             (goto-char starting-point)
+             (deactivate-mark)
+             (if forward
+                 (error &quot;Couldn't find any expansion starting with %S&quot; char)
+               (search-forward char (pos-eol 2))
+               (expand char 'forward))))))
+    (expand search-for)
+    ;; Now that we have a region, decide what to do with it.
+    (let ((rb (region-beginning))
+          (re (region-end)))
+      (if (eq mode 'outer)
+          (kill-region rb re)           ; Kill everything
+        ;; If we want to delete inside the expression, fall back to `puni'.
+        ;; This circumvents having to call `er--expand-region-1' and then
+        ;; `er/contract-region' in some vaguely sensical order, and hoping
+        ;; to recover the inner expansion from that.
+        ;; Addresses ghub:magnars/change-inner.el#5
+        (let* ((insides (progn (goto-char (1+ rb))
+                               (puni-bounds-of-list-around-point)))
+               (olen (- (car insides) rb)) ; Length of opening delimiter
+               (clen (- re (cdr insides)))) ; Length of closing delimiter
+          (kill-region (+ rb olen) (- re clen)))))))</code></pre>
+<p>One can bind killing the innards to <code>M-i</code>,
+and killing everything to <code>M-o</code>,
+as change-inner suggests.
+Alternatively, and this is what I do,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
+a second small helper function is swiftly written,
+such that only one keybinding is needed:</p>
+<pre class="emacs-lisp"><code>(defun slot/change-around (&amp;optional arg)
+  (interactive &quot;P&quot;)
+  (if arg
+      (slot/change-sexp :mode 'outer)
+    (slot/change-sexp)))
+
+(bind-key &quot;M-i&quot; #'slot/change-around)</code></pre>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>{-} As is common,
+I will use <code>|</code>
+to indicate the position of the point.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I wish I hadn’t.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p><code>q-char</code> is the char that the user input,
+but quoted as a regular expression via <code>regexp-quote</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} 󠀠</p>
+<p>As you’ve probably already guessed,
+the <code>^</code>’s are supposed to signal the marked region.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>As in</p>
+<pre class="emacs-lisp"><code>'|( &quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot; )
+; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn6"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p><code>search-forward-char</code> is the second argument of <code>change-inner*</code>;
+if the function was called with that,
+we have already recursed once, so stop.
+<code>char</code> is the character that the user actually input.
+<code>starting-point</code> is the position of the point before anything happened.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Actually,
+the searching also has a different, actual, use.
+When in a situation like</p>
+<pre class="emacs-lisp"><code>'(1| 2 &quot;this is a string&quot;)</code></pre>
+<p>One might want to change the string—indeed,
+<code>M-x change-inner "</code> correctly jumps to the string:</p>
+<pre class="emacs-lisp"><code>'(1 2 &quot;|&quot;)</code></pre>
+<p>This is one of the great features of Vim’s <code>ci"</code>,
+and certainly something to preserve.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Puni achieves this by relying on Emacs’s built-in functions.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>The real reason,
+of course,
+is that I just wanted my code to work <em>right now</em>,
+instead of having to wait for upstream to fix something.
+At some point this should definitely be fixed in puni, though.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>Using a recursive local function also incidentally fixes <a href="https://github.com/magnars/change-inner.el/issues/9">#9</a>.
+Nice.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p><code>M-o</code> will never be something other than <code>other-window</code>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Notmuch: Warn on Empty Subjects</title>
     <link href="https://tony-zorman.com/posts/notmuch-subject.html" />
     <id>https://tony-zorman.com/posts/notmuch-subject.html</id>
