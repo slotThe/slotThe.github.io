@@ -1,5 +1,5 @@
 ---
-title: Change the insides of an S-expression in Emacs
+title: Change the Insides of an S-expression in Emacs
 date: 2023-08-26
 tags: emacs
 ---
