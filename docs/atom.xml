@@ -12,7 +12,7 @@
     </author>
     <updated>2023-08-26T00:00:00Z</updated>
     <entry>
-    <title>Change the Insides of an S-expression in Emacs</title>
+    <title>Change the Insides of an S-Expression in Emacs</title>
     <link href="https://tony-zorman.com/posts/change-inner.html" />
     <id>https://tony-zorman.com/posts/change-inner.html</id>
     <published>2023-08-26T00:00:00Z</published>
@@ -24,7 +24,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1720 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1770 words">8 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
@@ -39,7 +39,7 @@
   
 
 <div>
-  <p>I have to make a confession:
+  <p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>I have to make a confession:
 I have an <a href="https://github.com/emacs-evil/evil">evil</a> past—literally.
 Having switched to vanilla Emacs keybindings a while ago,
 one thing that I genuinely miss from <em>that time</em> are the <code>ci(</code> and <code>ca(</code> motions,
@@ -93,7 +93,7 @@ which is defined like so:</p>
     (skip-chars-backward er--space-str)            ; ← HERE
     (exchange-point-and-mark)))</code></pre>
 <p>Notice the invocations of <code>(skip-chars-forward er--space-str)</code>;
-if we start with<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+if we start with<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> foo <span class="op">=</span> <span class="fu">bar</span>(<span class="op">|</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;baz&quot;</span>)<span class="op">;</span></span></code></pre></div>
 <p>and run <code>M-x er/mark-inside-pairs RET</code>,
@@ -102,7 +102,7 @@ instead of everything inside of the parentheses.</p>
 <p>Mystery solved, right?
 Maybe, but having to redefine that function for this package alone
 feels wrong to me.
-This got me looking into the internals of change-inner,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+This got me looking into the internals of change-inner,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
 in order to see where the problem <em>actually</em> lies.</p>
 <h2 id="inside-change-inner">Inside change-inner</h2>
 <p>Taking a closer look at <code>change-inner*</code><!--
@@ -110,7 +110,7 @@ in order to see where the problem <em>actually</em> lies.</p>
 -->reveals the following.
 After some initial book keeping,
 the area surrounding the point is expanded,
-looking for the innermost expression matching the parameters:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+looking for the innermost expression matching the parameters:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <pre class="emacs-lisp"><code>(er--expand-region-1)
 (er--expand-region-1)                      ; sic!
 (while (and (not (= (point) (point-min)))
@@ -123,7 +123,7 @@ once we’ve reached the bounds of either the buffer,
 or the expression we are interested in.</p>
 <p>The idea is to start in a situation like this</p>
 <pre class="emacs-lisp"><code>'( &quot;one&quot; &quot;t|wo&quot; &quot;three&quot; &quot;four&quot; )</code></pre>
-<p>and expand until we encompass the whole list<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>and expand until we encompass the whole list<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <pre class="emacs-lisp"><code>'( &quot;one&quot; &quot;t|wo&quot; &quot;three&quot; &quot;four&quot; )
 ;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
 <p>noting that the previous step was</p>
@@ -137,11 +137,11 @@ in order to only kill this inner part.</p>
 <p>Why expand twice unconditionally?
 Because in a situation like</p>
 <pre class="emacs-lisp"><code>'|( &quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot; )</code></pre>
-<p>The expansion would immediately encompass the whole list,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+<p>The expansion would immediately encompass the whole list,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
 and its innards wouldn’t be available to expand-region’s contraction history.
 The “trick” is to actually expand <em>further</em> than necessary;
 looping through the <code>while</code> above until one inevitably hits <code>(point-min)</code> and stops expanding.
-This triggers yet another bit of code that then recurses with prefilled arguments<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+This triggers yet another bit of code that then recurses with prefilled arguments<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
 <pre class="emacs-lisp"><code>(if (not (looking-at q-char))
     (if search-forward-char
         (error &quot;Couldn't find any expansion starting with %S&quot; char)
@@ -157,7 +157,7 @@ it searches for the correct delimiter via</p>
 -->—due to the way that <code>search-forward</code> works by default—<!--
 -->we end up with the point directly after the opening delimiter</p>
 <pre class="emacs-lisp"><code>'(| &quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot; )</code></pre>
-<p>This now expands correctly.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>This now expands correctly.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <h3 id="puni-to-the-rescue">Puni to the rescue</h3>
 <p>I certainly know what I think of this solution.
 Instead of trying to fix this web of expansions and contractions,
@@ -169,7 +169,7 @@ like <a href="https://paredit.org/">paredit</a> or <a href="https://github.com/F
 but it works for a broader range of languages than the former,
 while comprising of a much smaller code-base<!--
 -->—and even fewer language-specific bits—<!--
--->than the latter.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+-->than the latter.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>
 While I still prefer paredit for lisps,
 puni has become my de facto standard for language-agnostic parenthesis handling.</p>
 <p>Luckily for us,
@@ -220,7 +220,7 @@ an invocation of <code>puni-strict-forward-sexp</code> will leave us at <code>( 
 but executing <code>puni-strict-backward-sexp</code> after that will result in <code>(   |"furble")</code>—not where we started.
 As such, puni will (incorrectly) conclude that we were not at the start of the expression.</p>
 <p>One could try to cram some whitespace handling into this,
-but who says we don’t run into other issues then?<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>
+but who says we don’t run into other issues then?<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
 In fact, <code>puni-expand-region</code> is written in such a way
 that it tries out different expansion strategies until one succeeds—why not just quiet the error?</p>
 <pre class="emacs-lisp"><code>(advice-add 'puni-bounds-of-sexp-at-point :around
@@ -245,7 +245,7 @@ in order to kill around the parentheses; e.g.,</p>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> issue_list_url <span class="op">=</span> <span class="pp">Url::</span>parse<span class="op">|.</span>unwrap()<span class="op">;</span></span></code></pre></div>
 <p>For obvious reasons,
 I will not submit this upstream to change-inner,
-but it will instead live in my personal configuration.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+but it will instead live in my personal configuration.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 <pre class="emacs-lisp"><code>(cl-defun slot/change-sexp (&amp;key search-for mode)
   &quot;Delete (the innards of) a sexp.
 Takes a char, like ( or \&quot;, and kills the first ancestor semantic
@@ -301,7 +301,7 @@ including nil).&quot;
 <p>One can bind killing the innards to <code>M-i</code>,
 and killing everything to <code>M-o</code>,
 as change-inner suggests.
-Alternatively, and this is what I do,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
+Alternatively, and this is what I do,<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>
 a second small helper function is swiftly written,
 such that only one keybinding is needed:</p>
 <pre class="emacs-lisp"><code>(defun slot/change-around (&amp;optional arg)
@@ -314,29 +314,33 @@ such that only one keybinding is needed:</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} As is common,
+<li id="fn1"><p>{-} The term “S-expression” is not super accurate,
+and should be substituted with something like “semantic unit” instead,
+as I’m also talking about things that aren’t necessarily S-expressions as Emacs knows them.
+I mainly chose the term for brevity, and because it’s hopefully more familiar—and thus less scary—to the reader.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>{-} As is common,
 I will use <code>|</code>
-to indicate the position of the point.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>I wish I hadn’t.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
+to indicate the position of the point.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I wish I hadn’t.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} 󠀠</p>
 <p>󠀠</p>
 <p><code>q-char</code> is the char that the user input,
-but quoted as a regular expression via <code>regexp-quote</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
+but quoted as a regular expression via <code>regexp-quote</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>{-} 󠀠</p>
 <p>As you’ve probably already guessed,
-the <code>^</code>’s are supposed to signal the marked region.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>As in</p>
+the <code>^</code>’s are supposed to signal the marked region.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>As in</p>
 <pre class="emacs-lisp"><code>'|( &quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot; )
 ; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
-<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn6"><p>{-} 󠀠</p>
+<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn7"><p>{-} 󠀠</p>
 <p>󠀠</p>
 <p><code>search-forward-char</code> is the second argument of <code>change-inner*</code>;
 if the function was called with that,
 we have already recursed once, so stop.
 <code>char</code> is the character that the user actually input.
-<code>starting-point</code> is the position of the point before anything happened.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>Actually,
+<code>starting-point</code> is the position of the point before anything happened.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Actually,
 the searching also has a different, actual, use.
 When in a situation like</p>
 <pre class="emacs-lisp"><code>'(1| 2 &quot;this is a string&quot;)</code></pre>
@@ -344,14 +348,14 @@ When in a situation like</p>
 <code>M-x change-inner "</code> correctly jumps to the string:</p>
 <pre class="emacs-lisp"><code>'(1 2 &quot;|&quot;)</code></pre>
 <p>This is one of the great features of Vim’s <code>ci"</code>,
-and certainly something to preserve.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>Puni achieves this by relying on Emacs’s built-in functions.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>The real reason,
+and certainly something to preserve.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Puni achieves this by relying on Emacs’s built-in functions.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>The real reason,
 of course,
 is that I just wanted my code to work <em>right now</em>,
 instead of having to wait for upstream to fix something.
-At some point this should definitely be fixed in puni, though.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>{-} 󠀠</p>
+At some point this should definitely be fixed in puni, though.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>{-} 󠀠</p>
 <p>󠀠</p>
 <p>󠀠</p>
 <p>󠀠</p>
@@ -361,8 +365,8 @@ At some point this should definitely be fixed in puni, though.<a href="#fnref9" 
 <p>󠀠</p>
 <p>󠀠</p>
 <p>Using a recursive local function also incidentally fixes <a href="https://github.com/magnars/change-inner.el/issues/9">#9</a>.
-Nice.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p><code>M-o</code> will never be something other than <code>other-window</code>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p><code>M-o</code> will never be something other than <code>other-window</code>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

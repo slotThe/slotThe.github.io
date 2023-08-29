@@ -7,7 +7,7 @@
     
 
     
-      <title>Change the Insides of an S-expression in Emacs · Tony Zorman</title>
+      <title>Change the Insides of an S-Expression in Emacs · Tony Zorman</title>
     
 
     <!-- https://purecss.io/ -->
@@ -61,7 +61,7 @@
           <!-- We want to include the RSS/Atom feed in certain scenarios,
                but this shouldn't mangle the above header title. -->
            
-            <h1>Change the Insides of an S-expression in Emacs</h1>
+            <h1>Change the Insides of an S-Expression in Emacs</h1>
            
 
           <article>
@@ -71,7 +71,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1703 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1751 words">8 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
@@ -97,7 +97,12 @@
   </div>
 
 <div>
-  I have to make a confession:
+  <!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">The term “S-expression” is not super accurate,
+and should be substituted with something like “semantic unit” instead,
+as I’m also talking about things that aren’t necessarily S-expressions as Emacs knows them.
+I mainly chose the term for brevity, and because it’s hopefully more familiar—and thus less scary—to the reader.</div><!--
+-->I have to make a confession:
 I have an <a href="https://github.com/emacs-evil/evil">evil</a> past—literally.
 Having switched to vanilla Emacs keybindings a while ago,
 one thing that I genuinely miss from <em>that time</em> are the <code>ci(</code> and <code>ca(</code> motions,
@@ -169,7 +174,7 @@ which is defined like so:
 <p></p>
 Notice the invocations of <code>(skip-chars-forward er--space-str)</code>;
 if we start with<!--
---><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">As is common,
+--><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote">As is common,
 I will use <code>|</code>
 to indicate the position of the point.</div><!--
 -->
@@ -186,7 +191,7 @@ Mystery solved, right?
 Maybe, but having to redefine that function for this package alone
 feels wrong to me.
 This got me looking into the internals of change-inner,<!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">I wish I hadn’t.</div><!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">I wish I hadn’t.</div><!--
 -->
 in order to see where the problem <em>actually</em> lies.
 <h2 id="inside-change-inner">Inside change-inner<a href="#inside-change-inner" class="floatleft sec-link">§</a></h2>
@@ -197,7 +202,7 @@ Taking a closer look at <code>change-inner*</code><!--
 After some initial book keeping,
 the area surrounding the point is expanded,
 looking for the innermost expression matching the parameters:<!--
---><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -224,7 +229,7 @@ The idea is to start in a situation like this
 
 <p></p>
 and expand until we encompass the whole list<!--
---><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-4" class="margin-toggle">⊕</label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 As you’ve probably already guessed,
 the <code>^</code>’s are supposed to signal the marked region.</div><!--
@@ -253,7 +258,7 @@ Because in a situation like
 
 <p></p>
 The expansion would immediately encompass the whole list,<!--
---><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">As in
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">As in
 <div class="highlight" style="emacs-lisp"><pre><span></span><span class="ss">'|</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;one&quot;</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="w"> </span><span class="s">&quot;three&quot;</span><span class="w"> </span><span class="s">&quot;four&quot;</span><span class="w"> </span><span class="p">)</span>
 <span class="c1">; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
 </pre></div>
@@ -263,7 +268,7 @@ and its innards wouldn’t be available to expand-region’s contraction history
 The “trick” is to actually expand <em>further</em> than necessary;
 looping through the <code>while</code> above until one inevitably hits <code>(point-min)</code> and stops expanding.
 This triggers yet another bit of code that then recurses with prefilled arguments<!--
---><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -298,7 +303,7 @@ and<!--
 
 <p></p>
 This now expands correctly.<!--
---><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Actually,
+--><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Actually,
 the searching also has a different, actual, use.
 When in a situation like
 <div class="highlight" style="emacs-lisp"><pre><span></span><span class="o">'</span><span class="p">(</span><span class="nv">1|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="s">&quot;this is a string&quot;</span><span class="p">)</span>
@@ -328,7 +333,7 @@ but it works for a broader range of languages than the former,
 while comprising of a much smaller code-base<!--
 -->—and even fewer language-specific bits—<!--
 -->than the latter.<!--
---><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Puni achieves this by relying on Emacs’s built-in functions.</div><!--
+--><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Puni achieves this by relying on Emacs’s built-in functions.</div><!--
 -->
 While I still prefer paredit for lisps,
 puni has become my de facto standard for language-agnostic parenthesis handling.
@@ -399,7 +404,7 @@ As such, puni will (incorrectly) conclude that we were not at the start of the e
 <p></p>
 One could try to cram some whitespace handling into this,
 but who says we don’t run into other issues then?<!--
---><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">The real reason,
+--><label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="sidenote">The real reason,
 of course,
 is that I just wanted my code to work <em>right now</em>,
 instead of having to wait for upstream to fix something.
@@ -440,7 +445,7 @@ in order to kill around the parentheses; e.g.,
 For obvious reasons,
 I will not submit this upstream to change-inner,
 but it will instead live in my personal configuration.<!--
---><label for="sn-9" class="margin-toggle">⊕</label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-10" class="margin-toggle">⊕</label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -520,7 +525,7 @@ One can bind killing the innards to <code>M-i</code>,
 and killing everything to <code>M-o</code>,
 as change-inner suggests.
 Alternatively, and this is what I do,<!--
---><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote"><code>M-o</code> will never be something other than <code>other-window</code>.</div><!--
+--><label for="sn-11" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-11" class="margin-toggle" /><div class="sidenote"><code>M-o</code> will never be something other than <code>other-window</code>.</div><!--
 -->
 a second small helper function is swiftly written,
 such that only one keybinding is needed:

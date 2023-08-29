@@ -1,10 +1,10 @@
 ---
-title: Change the Insides of an S-expression in Emacs
+title: Change the Insides of an S-Expression in Emacs
 date: 2023-08-26
 tags: emacs
 ---
 
-I have to make a confession:
+[^14]I have to make a confession:
 I have an [evil][ghub:evil-mode] past—literally.
 Having switched to vanilla Emacs keybindings a while ago,
 one thing that I genuinely miss from *that time* are the `ci(` and `ca(` motions,
@@ -478,3 +478,8 @@ such that only one keybinding is needed:
        is that I just wanted my code to work *right now*,
        instead of having to wait for upstream to fix something.
        At some point this should definitely be fixed in puni, though.
+
+[^14]: {-} The term "S-expression" is not super accurate,
+       and should be substituted with something like "semantic unit" instead,
+       as I'm also talking about things that aren't necessarily S-expressions as Emacs knows them.
+       I mainly chose the term for brevity, and because it's hopefully more familiar—and thus less scary—to the reader.
