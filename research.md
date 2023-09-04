@@ -60,6 +60,9 @@ All of my preprints are readily available on the [arXiv].[^2]
 
   Based on [this paper](https://arxiv.org/abs/2106.00190) by Baez, Moeller, and Trimble.
 
+- *Abstract Mackey Functors* \
+  2023-07-15, Mackey functors seminar, Dresden; see Section 6 of the [script][slides:mackey-functors:handout].
+
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden. \
   2023-05-23, HATC23, Marburg;
@@ -176,6 +179,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
 [slides:duality:handout]: /talks/duality-in-monoidal-categories-handout.pdf
 [slides:duality]: /talks/duality-in-monoidal-categories.pdf
+[slides:mackey-functors:handout]: /talks/mackey-functors.pdf
 [slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
 [slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
 [slides:profunctor]: /talks/profunctor-optics.pdf
