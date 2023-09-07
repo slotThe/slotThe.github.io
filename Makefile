@@ -6,10 +6,10 @@ build:
 
 .PHONY: watch
 watch:
-	stack build
-	stack exec site rebuild
-	stack exec site watch
+	cabal build
+	cabal exec site rebuild
+	cabal exec site watch
 
 .PHONY: clean
 clean:
-	stack exec site clean
+	cabal exec site clean
