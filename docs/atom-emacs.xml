@@ -311,7 +311,7 @@ such that only one keybinding is needed:</p>
     (slot/change-sexp)))
 
 (bind-key &quot;M-i&quot; #'slot/change-around)</code></pre>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>{-} The term “S-expression” is not super accurate,
@@ -368,7 +368,7 @@ At some point this should definitely be fixed in puni, though.<a href="#fnref10"
 Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p><code>M-o</code> will never be something other than <code>other-window</code>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -460,7 +460,7 @@ check for a certain regular expression, whitespace, and say something if it matc
 <p>All one has to do is to execute this before sending a mail:</p>
 <pre class="emacs-lisp"><code>(add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)</code></pre>
 <p>and we’re good to go.</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Looking for an attachment is complicated insofar as there are some ways the regular expression might match,
@@ -495,7 +495,7 @@ However, this is not important for what follows, so I simply omitted it.</p>
      finally return nil)))</code></pre>
 <p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -562,7 +562,7 @@ Other niceties, like specifying alternative lisp directories, are also included:
 <p>For more information on the specific syntax,
 refer to <code>C-h v package-vc-selected-packages RET</code>,
 and the relevant info node <code>(emacs)Fetching Package Sources</code>.</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>There is no reason for that, of course.
@@ -578,7 +578,7 @@ make bootstrap
 sudo make install</code></pre>
 <p>away!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -740,7 +740,7 @@ reckon it wouldn’t be too hard to cook up a more general implementation.</p>
 <p>Again, if you want to give the package a spin then you can find it on
 <a href="https://gitlab.com/slotThe/change-env">GitLab</a>, <a href="https://github.com/slotThe/change-env">GitHub</a>,
 and <a href="https://melpa.org/#/latex-change-env">MELPA</a>!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Available on <a href="https://gitlab.com/slotThe/change-env">GitLab</a> and
@@ -764,7 +764,7 @@ would require more sophisticated regular expressions, but—reading
 <code>latex​-​change-env-labels</code> and making some assumptions—it certainly
 seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -887,12 +887,12 @@ want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions
 welcome!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -1611,7 +1611,7 @@ check for a certain regular expression, whitespace, and say something if it matc
 <p>All one has to do is to execute this before sending a mail:</p>
 <pre class="emacs-lisp"><code>(add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)</code></pre>
 <p>and we’re good to go.</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>I am aware of the futility of this—Reddit is almost certainly
@@ -1653,7 +1653,7 @@ However, this is not important for what follows, so I simply omitted it.</p>
      finally return nil)))</code></pre>
 <p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -1767,13 +1767,13 @@ and give it your preferred keybinding. For example:</p>
 your workflow and you won’t want to live without it. If not, then
 perhaps you still don’t understand what all the fuss is about; in either
 case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</a>!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Version 0.17.0 onwards.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -1926,7 +1926,7 @@ from lisp; <code>(query-replace-many '(("1" . "2") ("2" . "1")))</code> has exac
 the effect one would imagine it to have. As I said, everything is
 conveniently packaged up on <a href="https://gitlab.com/slotThe/query-replace-many">GitLab</a> and
 <a href="https://github.com/slotThe/query-replace-many">GitHub</a>—get it while it’s hot!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>This isn’t <em>quite</em> what’s actually done, but it’s the right mental
@@ -1940,7 +1940,7 @@ suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
 out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -2189,7 +2189,7 @@ useful, also let me know :)</p>
 XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
 cool tools like magit.sh.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Go nuts!</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Alternatively, one could use the git versions of <code>xmonad</code> and
@@ -2207,7 +2207,7 @@ however!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></
 maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
@@ -2471,7 +2471,7 @@ convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
 <a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>If you’d like some examples: being employed at a university also
@@ -2508,7 +2508,7 @@ part (scraping the arXiv xml for certain bits) was already done.
 On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 </div>
 
       <!-- Body is included in the above file -->
