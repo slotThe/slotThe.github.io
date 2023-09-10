@@ -10,8 +10,310 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2023-08-26T00:00:00Z</updated>
+    <updated>2023-09-10T00:00:00Z</updated>
     <entry>
+    <title>Prettifying LaTeX Buffers</title>
+    <link href="https://tony-zorman.com/posts/pretty-latex.html" />
+    <id>https://tony-zorman.com/posts/pretty-latex.html</id>
+    <published>2023-09-10T00:00:00Z</published>
+    <updated>2023-09-10T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2023-09-10
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1614 words">7 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>A friend of mine recently confided in me that,
+after years of using Emacs,
+he was only now getting into using <code>prettify-symbols-mode</code> for editing LaTeX buffers!
+After overwhelming him with more customisations related to this,
+I realised that the topic<!--
+-->—while seemingly easy on the surface—<!--
+-->actually has a lot more depth to it than one would first imagine.</p>
+<!--more-->
+<h2 id="prettify-symbols-mode"><code>prettify-symbols-mode</code></h2>
+<p>If you’ve never come into contact with <code>prettify-symbols-mode</code> before,
+I encourage you to just issue an <code>M-x prettify-symbols-mode RET</code> in a <code>LaTeX-mode</code> buffer.
+The default <code>prettify-symbols-alist</code> that e.g. AUCTeX provides already includes a lot of symbols.
+For the uninitiated,
+it would display a buffer like this<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/no-pretty-symbols.png" alt="Definition of the Day convolution without prettify-symbols-mode enabled"></p>
+<p>as the already much more readable</p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/default-pretty-symbols.png" alt="Definition of the Day convolution with AUCTeX's default prettify-symbols-alist"></p>
+<p>Basically, <code>prettify-symbols-mode</code> is a home-cooked ligature system for Emacs,
+because of course that exists.</p>
+<p>However, the above already has some problems:
+<code>\otimes</code> is quite small,
+and thus barely discernible from <code>\bullet</code>,
+and of course user-defined macros—like <code>\defeq</code> or <code>\cat</code>—don’t get picked up on at all.
+We can refine the displayed symbols by adding our own definitions to
+the (buffer-local) <code>prettify-symbols-alist</code> variable:</p>
+<pre class="emacs-lisp"><code>(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (--map (push it prettify-symbols-alist)
+                   '((&quot;\\blank&quot;      . ?—)
+                     (&quot;\\otimes&quot;     . ?⨂) ; more visible
+                     (&quot;\\defeq&quot;      . ?≔)
+                     (&quot;\\mathcal{C}&quot; . ?𝓒) ; better looking
+                     (&quot;\\cat{C}&quot;     . ?𝓒)))))</code></pre>
+<p>Executing that hook makes the above situation even prettier.</p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/custom-pretty-symbols.png" alt="Definition of the Day convolution with a custom prettify-symbols-alist"></p>
+<h3 id="going-further">Going further</h3>
+<p>Naturally<!--
+-->—this being Emacs—<!--
+-->substituting one symbol for another is not all that <code>prettify-symbols-mode</code> has to offer.
+Digging into the documentation of <code>prettify-symbols-alist</code>,
+the second entry of the cons pair can be<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<blockquote>
+<p>[…] a character, a string or a vector or list of integers and rules.</p>
+<p>If it is a character, it is an alternate character to display instead
+of the text in the region.</p>
+<p>If it is a string, the elements are alternate characters. In
+this case, TAB element has a special meaning. If the first
+character is TAB, the glyphs are displayed with left padding space
+so that no pixel overlaps with the previous column. If the last
+character is TAB, the glyphs are displayed with right padding
+space so that no pixel overlaps with the following column.</p>
+<p>If it is a vector or list, it is a sequence of alternate characters and
+composition rules, where (2N)th elements are characters and (2N+1)th
+elements are composition rules to specify how to compose (2N+2)th
+elements with previously composed N glyphs.</p>
+<p>A composition rule is a cons of global and new glyph reference point
+symbols. See the documentation of reference-point-alist for more
+details.</p>
+</blockquote>
+<p>We’ve only used a plain character as the replacement so far,
+but in fact we can supply a whole list of them,
+with some rules on how everything should be glued together.
+The gluing of each pair of glyphs is done according to the following diagram,
+taken from the documentation of <code>reference-point-alist</code>:</p>
+<pre><code>  0----1----2 &lt;---- ascent    0:tl or top-left
+  |         |                 1:tc or top-center
+  |         |                 2:tr or top-right
+  |         |                 3:Bl or base-left     9:cl or center-left
+  9   10   11 &lt;---- center    4:Bc or base-center  10:cc or center-center
+  |         |                 5:Br or base-right   11:cr or center-right
+--3----4----5-- &lt;-- baseline  6:bl or bottom-left
+  |         |                 7:bc or bottom-center
+  6----7----8 &lt;---- descent   8:br or bottom-right</code></pre>
+<p>A gluing instruction either comprises a cons pair of two locations<!--
+-->—e.g., <code>(cr . cl)</code> to glue position 9 of the left glyph to position 11 of the right—<!--
+-->or a list with some additional <code>x</code> and <code>y</code> offsets,
+like <code>'(cr cl 0 10)</code>.</p>
+<p>As an easy example,
+consider <code>\defeq</code> from the above LaTeX snippet,
+which is a better-looking version of the definitional equality symbol <code>:=</code>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+Sadly, the appropriate Unicode symbol <code>≔</code> does not look particularly nice in my font<!--
+-->—simply fusing <code>:</code> and <code>=</code> together works quite well, however!
+Defining</p>
+<pre class="emacs-lisp"><code>'(&quot;\\coloneqq&quot; . (?: (cr cl -20 -8) ?=))</code></pre>
+<p>yields a decent approximation of what I would want the Unicode symbol to look like.
+Here are some more examples of this in action:</p>
+<pre class="emacs-lisp"><code>'((&quot;\\tak&quot;         . (?× (br . cl) ?A))
+  (&quot;^{\\op}&quot;       . (?ᵒ (tr tl -25 0) ?ᵖ))
+  (&quot;\\defeq&quot;       . (?: (cr cl -20 -8) ?=))
+  (&quot;^{\\tensorop}&quot; . (?​ (tr bl 0 80) ?⊗ (tr . tl) ?ᵒ (tr tl -25 0) ?ᵖ))
+  (&quot;^{-1}&quot;         . (?​ (tr bl 0 100) ?- (cr . bl) ?¹)))</code></pre>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/stitching-together-symbols.png" alt="The above symbols"></p>
+<h2 id="going-too-far-code-folding">Going too far: code folding</h2>
+<p><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>The only thing that <code>prettify-symbols-mode</code> lacks is
+being able to supply a function as a replacement,
+in order to manipulate the matched symbol.</p>
+<p>Enter code folding, which does not have this restriction.
+Most often, it is used to hide parts of a definition or section,
+in order to make the respective buffer more easily scannable for a human.
+However, AUCTeX’s machinery is set up in such a way
+that one can supply an arbitrary function that transforms the matched text somehow.
+This is extremely convenient for things like mathematical alphabets,
+as then one does not have to hard-code all replacements.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>The main variables to change here are
+<code>TeX-fold-math-spec-list</code> and <code>TeX-fold-macro-spec-list</code>.
+The parsing of <code>tex-fold.el</code> is fairly featureful;
+the documentation for the latter variable tells the whole story.</p>
+<blockquote>
+<p>List of replacement specifiers and macros to fold.</p>
+<p>The first element of each item can be a string, an integer or a
+function symbol. The second element is a list of macros to fold
+without the leading backslash.</p>
+If the first element is a string, it will be used as a display
+replacement for the whole macro. Numbers in braces, brackets,
+parens or angle brackets will be replaced by the respective macro
+argument. For example “{1}” will be replaced by the first
+mandatory argument of the macro. One can also define
+alternatives within the specifier which are used if an argument
+is not found. Alternatives are separated by “||”. They are
+most useful with optional arguments. As an example, the default
+specifier for
+<p>is “[1]:||*” which means that if there is
+an optional argument, its value is shown followed by a colon. If
+there is no optional argument, only an asterisk is used as the
+display string.</p>
+<p>If the first element is an integer, the macro will be replaced by
+the respective macro argument.</p>
+<p>If the first element is a function symbol, the function will be
+called with all mandatory arguments of the macro and the result
+of the function call will be used as a replacement for the macro.</p>
+<p>Setting this variable does not take effect immediately. Use
+Customize or reset the mode.</p>
+</blockquote>
+<p>Quite the functionality!
+The simplest example is probably hiding the <code>\emph</code> macro,
+which indicates emphasised text.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<pre class="emacs-lisp"><code>(setopt TeX-fold-macro-spec-list '((&quot;{1}&quot; (&quot;emph&quot;))))</code></pre>
+<p>This ends up looking like the following:</p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/hide-emphasis.png" alt="Hiding \emph"></p>
+<p>As with <code>prettify-symbols-mode</code>,
+things unprettify when the point is on them.</p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/show-emphasis.png" alt="Show \emph on hover"></p>
+<p>Using these techniques,
+we can define replacements for calligraphic letters
+(or any other alphabet, like Fraktur or blackboard bold)
+in a much more straightforward fashion.
+First, we create a function to shift each codepoint in a string by a certain offset.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<pre class="emacs-lisp"><code>(defun slot/shift-string (offset word)
+  &quot;Shift the codepoint of each character in WORD by OFFSET.
+Add an extra -6 shift if the letter is lowercase.&quot;
+  (apply #'string
+         (--map (+ (if (&gt;= it ?a) (- it 6) it) offset)
+                word)))</code></pre>
+<p>Now, all that’s left to do is to define some folds for mathematical alphabets,
+and give them the right starting points:<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<pre class="emacs-lisp"><code>(cl-flet ((start-at (pt)
+            (- pt ?A)))
+  (setq TeX-fold-math-spec-list
+        `((,(lambda (c) (slot/shift-string (start-at ?𝔄) c)) (&quot;mathfrak&quot;))
+          (,(lambda (c) (slot/shift-string (start-at ?𝓐) c)) (&quot;mathcal&quot;)))))
+
+;; For good measure
+(setq LaTeX-fold-math-spec-list TeX-fold-math-spec-list)</code></pre>
+<p>Note that this again has the advantage of
+making user-defined macros much easier to integrate into the whole system.
+Above we have met the <code>\cat</code> macro<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>,
+which should be displayed in much the same way as <code>\mathcal</code> is.
+With code folding,
+all this entails is to amend the respective line in <code>TeX-fold-math-spec-list</code>:</p>
+<pre class="emacs-lisp"><code>(,(lambda (c) (slot/shift-string (start-at ?𝓐) c)) (&quot;mathcal&quot; &quot;cat&quot;))</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>Using everything in this article together—see
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el">here</a>—<!--
+-->one can transform a boring old LaTeX buffer</p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math"></p>
+<p>into something like this:</p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math"></p>
+<p>Nice.</p>
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>{-} If you don’t have AUCTeX installed for some reason<!--
+  -->—why are you reading this?—<!--
+  -->then trying out the following snippet might also get the message across:</p>
+<pre class="emacs-lisp"><code>(add-hook
+ 'emacs-lisp-mode-hook
+ (lambda ()
+   (setq-local prettify-symbols-alist
+               '((&quot;lambda&quot; . ?λ)))
+   (prettify-symbols-mode)))</code></pre>
+<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn2"><p>{-} The citation itself is from the documentation of <code>compose-region</code>,
+as that is what the <code>CHARACTER</code> argument of <code>prettify-symbols-alist</code> can be.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For the interested reader:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand*</span>{<span class="ex">\defeq</span>}{<span class="co">%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\mathrel</span>{<span class="fu">\vcenter</span>{<span class="co">%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\baselineskip</span>0.5ex <span class="fu">\lineskiplimit</span>0pt</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\hbox</span>{<span class="fu">\scriptsize</span>.}<span class="fu">\hbox</span>{<span class="fu">\scriptsize</span>.}}}<span class="co">%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  =}</span></code></pre></div>
+<p>I think that this looks better than <code>amsmath</code>’s <code>\coloneq</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} <strong>Disclaimer</strong>:
+Pretty much all of the code in this section was written by
+<a href="https://git.tecosaur.net/">tecosaur</a>,
+from whose
+<a href="https://tecosaur.github.io/emacs-config/config.html#editor-visuals">configuration</a><!--
+  -->—which I encourage you to check out—<!--
+  -->I first learned about the fact that one can use AUCTeX’s code folding in this way.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This actually happens;
+just a small excerpt of the default <code>tex--prettify-symbols-alist</code>:</p>
+<pre class="emacs-lisp"><code>(&quot;\\mathcal{A}&quot; . ?𝒜)
+(&quot;\\mathcal{B}&quot; . ?ℬ)
+(&quot;\\mathcal{C}&quot; . ?𝒞)
+(&quot;\\mathcal{D}&quot; . ?𝒟)
+(&quot;\\mathcal{E}&quot; . ?ℰ)
+(&quot;\\mathcal{F}&quot; . ?ℱ)
+(&quot;\\mathcal{G}&quot; . ?𝒢)
+(&quot;\\mathcal{H}&quot; . ?ℋ)
+(&quot;\\mathcal{I}&quot; . ?ℐ)
+(&quot;\\mathcal{J}&quot; . ?𝒥)
+(&quot;\\mathcal{K}&quot; . ?𝒦)
+(&quot;\\mathcal{L}&quot; . ?ℒ)
+(&quot;\\mathcal{M}&quot; . ?ℳ)
+(&quot;\\mathcal{N}&quot; . ?𝒩)
+(&quot;\\mathcal{O}&quot; . ?𝒪)
+(&quot;\\mathcal{P}&quot; . ?𝒫)
+(&quot;\\mathcal{Q}&quot; . ?𝒬)
+(&quot;\\mathcal{R}&quot; . ?ℛ)
+(&quot;\\mathcal{S}&quot; . ?𝒮)
+(&quot;\\mathcal{T}&quot; . ?𝒯)
+(&quot;\\mathcal{U}&quot; . ?𝒰)
+(&quot;\\mathcal{V}&quot; . ?𝒱)
+(&quot;\\mathcal{W}&quot; . ?𝒲)
+(&quot;\\mathcal{X}&quot; . ?𝒳)
+(&quot;\\mathcal{Y}&quot; . ?𝒴)
+(&quot;\\mathcal{Z}&quot; . ?𝒵)</code></pre>
+<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn6"><p>{-} The <code>TeX-fold-macro-spec-list</code> can be used for any macro outside of math-mode.
+One application is to define
+prettier versions of <code>\[sub]section</code> commands,
+or even <code>\item</code>:</p>
+<pre class="emacs-lisp"><code>(setopt
+ TeX-fold-macro-spec-list
+ '((&quot;{1}&quot; (&quot;emph&quot;))
+   (&quot;[1]:||►&quot; (&quot;item&quot;))
+   (&quot;§ {1}&quot; (&quot;section&quot; &quot;section*&quot;))
+   (&quot;§§ {1}&quot; (&quot;subsection&quot; &quot;subsection*&quot;))
+   (&quot;¶ {1}&quot; (&quot;paragraph&quot; &quot;paragraph*&quot;))))</code></pre>
+<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn7"><p>The
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el#L77-L117">real function</a>
+is a tad more complicated,
+as some codepoints are not where you expect them to be,
+so some sort of lookup table has to be consulted as well.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>Ideally, one would make use of the new <code>setopt</code> macro here,
+but the fact that <code>TeX-fold-math-spec-list</code> accepts functions in this way was only documented in
+<a href="https://git.savannah.gnu.org/cgit/auctex.git/commit/?id=3c03ee089a2b74d0d5a0285f983a9eba82dc04a5">3c03ee08</a>,
+which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Defined as</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand*</span>{<span class="ex">\cat</span>}[1]{<span class="co">%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="ss">\ensuremath{</span><span class="sc">\mathcal</span><span class="ss">{#1}}</span><span class="co">%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></li>
+</ol>
+</aside>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Change the Insides of an S-Expression in Emacs</title>
     <link href="https://tony-zorman.com/posts/change-inner.html" />
     <id>https://tony-zorman.com/posts/change-inner.html</id>

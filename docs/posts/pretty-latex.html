@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Prettifying LaTeX Buffers · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#prettify-symbols-mode"><code>prettify-symbols-mode</code></a>
+<ul>
+<li><a href="#going-further">Going further</a></li>
+</ul></li>
+<li><a href="#going-too-far-code-folding">Going too far: code folding</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Prettifying LaTeX Buffers</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2023-09-10
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1597 words">7 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#prettify-symbols-mode"><code>prettify-symbols-mode</code></a>
+<ul>
+<li><a href="#going-further">Going further</a></li>
+</ul></li>
+<li><a href="#going-too-far-code-folding">Going too far: code folding</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+
+<div>
+  A friend of mine recently confided in me that,
+after years of using Emacs,
+he was only now getting into using <code>prettify-symbols-mode</code> for editing LaTeX buffers!
+After overwhelming him with more customisations related to this,
+I realised that the topic<!--
+-->—while seemingly easy on the surface—<!--
+-->actually has a lot more depth to it than one would first imagine.
+<!--more-->
+<h2 id="prettify-symbols-mode"><code>prettify-symbols-mode</code><a href="#prettify-symbols-mode" class="floatleft sec-link">§</a></h2>
+<p></p>
+If you’ve never come into contact with <code>prettify-symbols-mode</code> before,
+I encourage you to just issue an <code>M-x prettify-symbols-mode RET</code> in a <code>LaTeX-mode</code> buffer.
+The default <code>prettify-symbols-alist</code> that e.g. AUCTeX provides already includes a lot of symbols.
+For the uninitiated,
+it would display a buffer like this<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">If you don’t have AUCTeX installed for some reason<!--
+  -->—why are you reading this?—<!--
+  -->then trying out the following snippet might also get the message across:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">add-hook</span>
+<span class="w"> </span><span class="ss">'emacs-lisp-mode-hook</span>
+<span class="w"> </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">()</span>
+<span class="w">   </span><span class="p">(</span><span class="nb">setq-local</span><span class="w"> </span><span class="nv">prettify-symbols-alist</span>
+<span class="w">               </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;lambda&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?λ</span><span class="p">)))</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">prettify-symbols-mode</span><span class="p">)))</span>
+</pre></div>
+</div><!--
+-->
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/no-pretty-symbols.png" alt="Definition of the Day convolution without prettify-symbols-mode enabled">
+<p></p>
+as the already much more readable
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/default-pretty-symbols.png" alt="Definition of the Day convolution with AUCTeX's default prettify-symbols-alist">
+<p></p>
+Basically, <code>prettify-symbols-mode</code> is a home-cooked ligature system for Emacs,
+because of course that exists.
+<p></p>
+However, the above already has some problems:
+<code>\otimes</code> is quite small,
+and thus barely discernible from <code>\bullet</code>,
+and of course user-defined macros—like <code>\defeq</code> or <code>\cat</code>—don’t get picked up on at all.
+We can refine the displayed symbols by adding our own definitions to
+the (buffer-local) <code>prettify-symbols-alist</code> variable:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">add-hook</span><span class="w"> </span><span class="ss">'LaTeX-mode-hook</span>
+<span class="w">          </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">()</span>
+<span class="w">            </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nb">push</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">prettify-symbols-alist</span><span class="p">)</span>
+<span class="w">                   </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;\\blank&quot;</span><span class="w">      </span><span class="o">.</span><span class="w"> </span><span class="sc">?—</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="s">&quot;\\otimes&quot;</span><span class="w">     </span><span class="o">.</span><span class="w"> </span><span class="sc">?⨂</span><span class="p">)</span><span class="w"> </span><span class="c1">; more visible</span>
+<span class="w">                     </span><span class="p">(</span><span class="s">&quot;\\defeq&quot;</span><span class="w">      </span><span class="o">.</span><span class="w"> </span><span class="sc">?≔</span><span class="p">)</span>
+<span class="w">                     </span><span class="p">(</span><span class="s">&quot;\\mathcal{C}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝓒</span><span class="p">)</span><span class="w"> </span><span class="c1">; better looking</span>
+<span class="w">                     </span><span class="p">(</span><span class="s">&quot;\\cat{C}&quot;</span><span class="w">     </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝓒</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+Executing that hook makes the above situation even prettier.
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/custom-pretty-symbols.png" alt="Definition of the Day convolution with a custom prettify-symbols-alist">
+<h3 id="going-further">Going further<a href="#going-further" class="floatleft sec-link">§</a></h3>
+<p></p>
+Naturally<!--
+-->—this being Emacs—<!--
+-->substituting one symbol for another is not all that <code>prettify-symbols-mode</code> has to offer.
+Digging into the documentation of <code>prettify-symbols-alist</code>,
+the second entry of the cons pair can be<!--
+--><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote">The citation itself is from the documentation of <code>compose-region</code>,
+as that is what the <code>CHARACTER</code> argument of <code>prettify-symbols-alist</code> can be.</div><!--
+-->
+<blockquote>
+<p></p>
+[…] a character, a string or a vector or list of integers and rules.
+<p></p>
+If it is a character, it is an alternate character to display instead
+of the text in the region.
+<p></p>
+If it is a string, the elements are alternate characters. In
+this case, TAB element has a special meaning. If the first
+character is TAB, the glyphs are displayed with left padding space
+so that no pixel overlaps with the previous column. If the last
+character is TAB, the glyphs are displayed with right padding
+space so that no pixel overlaps with the following column.
+<p></p>
+If it is a vector or list, it is a sequence of alternate characters and
+composition rules, where (2N)th elements are characters and (2N+1)th
+elements are composition rules to specify how to compose (2N+2)th
+elements with previously composed N glyphs.
+<p></p>
+A composition rule is a cons of global and new glyph reference point
+symbols. See the documentation of reference-point-alist for more
+details.
+</blockquote>
+<p></p>
+We’ve only used a plain character as the replacement so far,
+but in fact we can supply a whole list of them,
+with some rules on how everything should be glued together.
+The gluing of each pair of glyphs is done according to the following diagram,
+taken from the documentation of <code>reference-point-alist</code>:
+<div class="highlight" style="text"><pre><span></span>  0----1----2 &lt;---- ascent    0:tl or top-left
+  |         |                 1:tc or top-center
+  |         |                 2:tr or top-right
+  |         |                 3:Bl or base-left     9:cl or center-left
+  9   10   11 &lt;---- center    4:Bc or base-center  10:cc or center-center
+  |         |                 5:Br or base-right   11:cr or center-right
+--3----4----5-- &lt;-- baseline  6:bl or bottom-left
+  |         |                 7:bc or bottom-center
+  6----7----8 &lt;---- descent   8:br or bottom-right
+</pre></div>
+
+<p></p>
+A gluing instruction either comprises a cons pair of two locations<!--
+-->—e.g., <code>(cr . cl)</code> to glue position 9 of the left glyph to position 11 of the right—<!--
+-->or a list with some additional <code>x</code> and <code>y</code> offsets,
+like <code>'(cr cl 0 10)</code>.
+<p></p>
+As an easy example,
+consider <code>\defeq</code> from the above LaTeX snippet,
+which is a better-looking version of the definitional equality symbol <code>:=</code>.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">For the interested reader:
+<div class="highlight" style="tex"><pre><span></span><span class="k">\newcommand*</span><span class="nb">{</span><span class="k">\defeq</span><span class="nb">}{</span><span class="c">%</span>
+  <span class="k">\mathrel</span><span class="nb">{</span><span class="k">\vcenter</span><span class="nb">{</span><span class="c">%</span>
+      <span class="k">\baselineskip</span>0.5ex <span class="k">\lineskiplimit</span>0pt
+      <span class="k">\hbox</span><span class="nb">{</span><span class="k">\scriptsize</span>.<span class="nb">}</span><span class="k">\hbox</span><span class="nb">{</span><span class="k">\scriptsize</span>.<span class="nb">}}}</span><span class="c">%</span>
+  =<span class="nb">}</span>
+</pre></div>
+
+<p></p>
+I think that this looks better than <code>amsmath</code>’s <code>\coloneq</code>.</div><!--
+-->
+Sadly, the appropriate Unicode symbol <code>≔</code> does not look particularly nice in my font<!--
+-->—simply fusing <code>:</code> and <code>=</code> together works quite well, however!
+Defining
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="o">'</span><span class="p">(</span><span class="s">&quot;\\coloneqq&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?:</span><span class="w"> </span><span class="p">(</span><span class="nv">cr</span><span class="w"> </span><span class="nv">cl</span><span class="w"> </span><span class="mi">-20</span><span class="w"> </span><span class="mi">-8</span><span class="p">)</span><span class="w"> </span><span class="sc">?=</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+yields a decent approximation of what I would want the Unicode symbol to look like.
+Here are some more examples of this in action:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="o">'</span><span class="p">((</span><span class="s">&quot;\\tak&quot;</span><span class="w">         </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?×</span><span class="w"> </span><span class="p">(</span><span class="nv">br</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">cl</span><span class="p">)</span><span class="w"> </span><span class="sc">?A</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="s">&quot;^{\\op}&quot;</span><span class="w">       </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?ᵒ</span><span class="w"> </span><span class="p">(</span><span class="nv">tr</span><span class="w"> </span><span class="nv">tl</span><span class="w"> </span><span class="mi">-25</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="sc">?ᵖ</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="s">&quot;\\defeq&quot;</span><span class="w">       </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?:</span><span class="w"> </span><span class="p">(</span><span class="nv">cr</span><span class="w"> </span><span class="nv">cl</span><span class="w"> </span><span class="mi">-20</span><span class="w"> </span><span class="mi">-8</span><span class="p">)</span><span class="w"> </span><span class="sc">?=</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="s">&quot;^{\\tensorop}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?​</span><span class="w"> </span><span class="p">(</span><span class="nv">tr</span><span class="w"> </span><span class="nv">bl</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="sc">?⊗</span><span class="w"> </span><span class="p">(</span><span class="nv">tr</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">tl</span><span class="p">)</span><span class="w"> </span><span class="sc">?ᵒ</span><span class="w"> </span><span class="p">(</span><span class="nv">tr</span><span class="w"> </span><span class="nv">tl</span><span class="w"> </span><span class="mi">-25</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="sc">?ᵖ</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="s">&quot;^{-1}&quot;</span><span class="w">         </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?​</span><span class="w"> </span><span class="p">(</span><span class="nv">tr</span><span class="w"> </span><span class="nv">bl</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="sc">?-</span><span class="w"> </span><span class="p">(</span><span class="nv">cr</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">bl</span><span class="p">)</span><span class="w"> </span><span class="sc">?¹</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/stitching-together-symbols.png" alt="The above symbols">
+<h2 id="going-too-far-code-folding">Going too far: code folding<a href="#going-too-far-code-folding" class="floatleft sec-link">§</a></h2>
+<p></p>
+<!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote"><strong>Disclaimer</strong>:
+Pretty much all of the code in this section was written by
+<a href="https://git.tecosaur.net/">tecosaur</a>,
+from whose
+<a href="https://tecosaur.github.io/emacs-config/config.html#editor-visuals">configuration</a><!--
+  -->—which I encourage you to check out—<!--
+  -->I first learned about the fact that one can use AUCTeX’s code folding in this way.</div><!--
+-->
+<p></p>
+The only thing that <code>prettify-symbols-mode</code> lacks is
+being able to supply a function as a replacement,
+in order to manipulate the matched symbol.
+<p></p>
+Enter code folding, which does not have this restriction.
+Most often, it is used to hide parts of a definition or section,
+in order to make the respective buffer more easily scannable for a human.
+However, AUCTeX’s machinery is set up in such a way
+that one can supply an arbitrary function that transforms the matched text somehow.
+This is extremely convenient for things like mathematical alphabets,
+as then one does not have to hard-code all replacements.<!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">This actually happens;
+just a small excerpt of the default <code>tex--prettify-symbols-alist</code>:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="s">&quot;\\mathcal{A}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒜</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{B}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℬ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{C}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒞</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{D}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒟</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{E}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℰ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{F}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℱ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{G}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒢</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{H}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℋ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{I}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℐ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{J}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒥</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{K}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒦</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{L}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℒ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{M}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℳ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{N}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒩</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{O}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒪</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{P}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒫</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{Q}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒬</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{R}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?ℛ</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{S}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒮</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{T}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒯</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{U}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒰</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{V}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒱</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{W}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒲</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{X}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒳</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{Y}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒴</span><span class="p">)</span>
+<span class="p">(</span><span class="s">&quot;\\mathcal{Z}&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="sc">?𝒵</span><span class="p">)</span>
+</pre></div>
+</div><!--
+-->
+<p></p>
+The main variables to change here are
+<code>TeX-fold-math-spec-list</code> and <code>TeX-fold-macro-spec-list</code>.
+The parsing of <code>tex-fold.el</code> is fairly featureful;
+the documentation for the latter variable tells the whole story.
+<blockquote>
+<p></p>
+List of replacement specifiers and macros to fold.
+<p></p>
+The first element of each item can be a string, an integer or a
+function symbol. The second element is a list of macros to fold
+without the leading backslash.
+If the first element is a string, it will be used as a display
+replacement for the whole macro. Numbers in braces, brackets,
+parens or angle brackets will be replaced by the respective macro
+argument. For example “{1}” will be replaced by the first
+mandatory argument of the macro. One can also define
+alternatives within the specifier which are used if an argument
+is not found. Alternatives are separated by “||”. They are
+most useful with optional arguments. As an example, the default
+specifier for
+<p></p>
+is “[1]:||*” which means that if there is
+an optional argument, its value is shown followed by a colon. If
+there is no optional argument, only an asterisk is used as the
+display string.
+<p></p>
+If the first element is an integer, the macro will be replaced by
+the respective macro argument.
+<p></p>
+If the first element is a function symbol, the function will be
+called with all mandatory arguments of the macro and the result
+of the function call will be used as a replacement for the macro.
+<p></p>
+Setting this variable does not take effect immediately. Use
+Customize or reset the mode.
+</blockquote>
+<p></p>
+Quite the functionality!
+The simplest example is probably hiding the <code>\emph</code> macro,
+which indicates emphasised text.<!--
+--><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">The <code>TeX-fold-macro-spec-list</code> can be used for any macro outside of math-mode.
+One application is to define
+prettier versions of <code>\[sub]section</code> commands,
+or even <code>\item</code>:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">setopt</span>
+<span class="w"> </span><span class="nv">TeX-fold-macro-spec-list</span>
+<span class="w"> </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;{1}&quot;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;emph&quot;</span><span class="p">))</span>
+<span class="w">   </span><span class="p">(</span><span class="s">&quot;[1]:||►&quot;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;item&quot;</span><span class="p">))</span>
+<span class="w">   </span><span class="p">(</span><span class="s">&quot;§ {1}&quot;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;section&quot;</span><span class="w"> </span><span class="s">&quot;section*&quot;</span><span class="p">))</span>
+<span class="w">   </span><span class="p">(</span><span class="s">&quot;§§ {1}&quot;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;subsection&quot;</span><span class="w"> </span><span class="s">&quot;subsection*&quot;</span><span class="p">))</span>
+<span class="w">   </span><span class="p">(</span><span class="s">&quot;¶ {1}&quot;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;paragraph&quot;</span><span class="w"> </span><span class="s">&quot;paragraph*&quot;</span><span class="p">))))</span>
+</pre></div>
+</div><!--
+-->
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">setopt</span><span class="w"> </span><span class="nv">TeX-fold-macro-spec-list</span><span class="w"> </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;{1}&quot;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;emph&quot;</span><span class="p">))))</span>
+</pre></div>
+
+<p></p>
+This ends up looking like the following:
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/hide-emphasis.png" alt="Hiding \emph">
+<p></p>
+As with <code>prettify-symbols-mode</code>,
+things unprettify when the point is on them.
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/show-emphasis.png" alt="Show \emph on hover">
+<p></p>
+Using these techniques,
+we can define replacements for calligraphic letters
+(or any other alphabet, like Fraktur or blackboard bold)
+in a much more straightforward fashion.
+First, we create a function to shift each codepoint in a string by a certain offset.<!--
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">The
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el#L77-L117">real function</a>
+is a tad more complicated,
+as some codepoints are not where you expect them to be,
+so some sort of lookup table has to be consulted as well.</div><!--
+-->
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/shift-string</span><span class="w"> </span><span class="p">(</span><span class="nv">offset</span><span class="w"> </span><span class="nv">word</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Shift the codepoint of each character in WORD by OFFSET.</span>
+<span class="s">Add an extra -6 shift if the letter is lowercase.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">apply</span><span class="w"> </span><span class="nf">#'string</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nf">+</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">&gt;=</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="sc">?a</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">-</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span><span class="w"> </span><span class="nv">offset</span><span class="p">)</span>
+<span class="w">                </span><span class="nv">word</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+Now, all that’s left to do is to define some folds for mathematical alphabets,
+and give them the right starting points:<!--
+--><label for="sn-7" class="margin-toggle">⊕</label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+Ideally, one would make use of the new <code>setopt</code> macro here,
+but the fact that <code>TeX-fold-math-spec-list</code> accepts functions in this way was only documented in
+<a href="https://git.savannah.gnu.org/cgit/auctex.git/commit/?id=3c03ee089a2b74d0d5a0285f983a9eba82dc04a5">3c03ee08</a>,
+which has not found its way to <span class="small-caps">gnu</span> <span class="small-caps">elpa</span> yet.</div><!--
+-->
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">cl-flet</span><span class="w"> </span><span class="p">((</span><span class="nv">start-at</span><span class="w"> </span><span class="p">(</span><span class="nv">pt</span><span class="p">)</span>
+<span class="w">            </span><span class="p">(</span><span class="nf">-</span><span class="w"> </span><span class="nv">pt</span><span class="w"> </span><span class="sc">?A</span><span class="p">)))</span>
+<span class="w">  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">TeX-fold-math-spec-list</span>
+<span class="w">        </span><span class="o">`</span><span class="p">((</span><span class="o">,</span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/shift-string</span><span class="w"> </span><span class="p">(</span><span class="nv">start-at</span><span class="w"> </span><span class="sc">?𝔄</span><span class="p">)</span><span class="w"> </span><span class="nv">c</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;mathfrak&quot;</span><span class="p">))</span>
+<span class="w">          </span><span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/shift-string</span><span class="w"> </span><span class="p">(</span><span class="nv">start-at</span><span class="w"> </span><span class="sc">?𝓐</span><span class="p">)</span><span class="w"> </span><span class="nv">c</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;mathcal&quot;</span><span class="p">)))))</span>
+
+<span class="c1">;; For good measure</span>
+<span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">LaTeX-fold-math-spec-list</span><span class="w"> </span><span class="nv">TeX-fold-math-spec-list</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+Note that this again has the advantage of
+making user-defined macros much easier to integrate into the whole system.
+Above we have met the <code>\cat</code> macro<!--
+--><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Defined as
+<div class="highlight" style="tex"><pre><span></span><span class="k">\newcommand*</span><span class="nb">{</span><span class="k">\cat</span><span class="nb">}</span>[1]<span class="nb">{</span><span class="c">%</span>
+  <span class="k">\ensuremath</span><span class="nb">{</span><span class="k">\mathcal</span><span class="nb">{</span>#1<span class="nb">}}</span><span class="c">%</span>
+<span class="nb">}</span>
+</pre></div>
+</div><!--
+-->,
+which should be displayed in much the same way as <code>\mathcal</code> is.
+With code folding,
+all this entails is to amend the respective line in <code>TeX-fold-math-spec-list</code>:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">c</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/shift-string</span><span class="w"> </span><span class="p">(</span><span class="nv">start-at</span><span class="w"> </span><span class="sc">?𝓐</span><span class="p">)</span><span class="w"> </span><span class="nv">c</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;mathcal&quot;</span><span class="w"> </span><span class="s">&quot;cat&quot;</span><span class="p">))</span>
+</pre></div>
+
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
+<p></p>
+Using everything in this article together—see
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el">here</a>—<!--
+-->one can transform a boring old LaTeX buffer
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math">
+<p></p>
+into something like this:
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math">
+<p></p>
+Nice.
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
