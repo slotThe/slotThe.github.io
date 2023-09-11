@@ -4,7 +4,7 @@ date: 2023-09-10
 tags: emacs
 ---
 
-A friend of mine recently confided in me that,
+A friend recently confided in me that,
 after years of using Emacs,
 he was only now getting into using `prettify-symbols-mode` for editing LaTeX buffers!
 After overwhelming him with more customisations related to this,
