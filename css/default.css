@@ -97,7 +97,10 @@ code {                  /* Inline code */
     font-size: 0.95em;
     font-family: var(--monospace-fonts);
     font-variant-numeric: normal;  /* No oldstyle figures in code */
-    background: #f5f5f5;
+    background: #f7f7f7;
+    border-radius: 0.25rem;
+    padding: 0 0.25rem;
+    border: 1px solid #f5f5f5;
 }
 
 blockquote {            /* Block quotes */
@@ -322,6 +325,10 @@ div#contents     a:hover {
 a:link > code,     /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
 a:visited > code {
     font-variant: normal;
+    font-size: 0.95em;
+    border-radius: 0;
+    padding: 0;
+    border: 0;
 }
 /* The "↑" link in the TOC */
 a#up-arrow {
