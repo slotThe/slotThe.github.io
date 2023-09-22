@@ -242,24 +242,6 @@ margin: 7px 2px;
     background: #f1e7ef;
 }
 
-/* DISABLED STATES */
-.pure-skin-solid .pure-menu li.pure-menu-disabled a:hover,
-.pure-skin-solid .pure-menu li.pure-menu-disabled a:focus {
-    background: #f6eff5;
-    color: #c293bb;
-}
-
-.pure-skin-solid .pure-menu .pure-menu-disabled > a {
-    background-image: none;
-    border-color: transparent;
-    cursor: default;
-}
-
-.pure-skin-solid .pure-menu .pure-menu-disabled > a,
-.pure-skin-solid .pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {
-    color: #c293bb;
-}
-
 /* HEADINGS */
 .pure-skin-solid .pure-menu .pure-menu-heading {
     color: #271625;
@@ -267,13 +249,6 @@ margin: 7px 2px;
     font-size: 90%;
     margin-top: 0.5em;
     border-bottom: solid 1px #eddeea;
-}
-
-
-/* SELECTED MENU ITEM */
-.pure-skin-solid .pure-menu li.pure-menu-selected a {
-    background-color: #A24996;
-    color: #fdfbfd;
 }
 
 /* FIXED MENU */
