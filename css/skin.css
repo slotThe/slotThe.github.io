@@ -1,6 +1,6 @@
 /* From: https://yui.github.io/skinbuilder/index.html?mode=pure */
 body {
-    background-color: #fcfcfc;
+    background-color: var(--bg);
 }
 
 /* from PURE menu-core.css */
@@ -82,7 +82,7 @@ body {
 }
 
 .pure-skin-solid .pure-menu-separator {
-    background-color: #eddeea;
+    background-color: var(--fg-menu-divider);
     display: block;
     height: 1px;
     font-size: 0;
@@ -203,8 +203,8 @@ margin: 7px 2px;
 
 .pure-skin-solid .pure-menu.pure-menu-open,
 .pure-skin-solid .pure-menu.pure-menu-horizontal li .pure-menu-children {
-    background: #fbf9fb; /* Old browsers */
-    border: 1px solid #eceaec;
+    background: var(--bg-menu-children); /* Old browsers */
+    border: 1px solid var(--fg-menu-border);
 }
 
 /* remove borders for horizontal menus */
@@ -225,36 +225,36 @@ margin: 7px 2px;
 
 .pure-skin-solid .pure-menu a,
 .pure-skin-solid .pure-menu .pure-menu-can-have-children > li:after {
-    color: #5b3355;
+    color: var(--fg-menu);
 }
 
 .pure-skin-solid .pure-menu .pure-menu-can-have-children > li:hover:after {
-    color: #3a2237;
+    color: var(--fg-menu-hover);
 }
 
 /* Focus style for a dropdown menu-item when the parent has been opened */
 .pure-skin-solid .pure-menu .pure-menu-open {
-    background: #f1e7ef;
+    background: var(--bg-menu-foc);
 }
 
 .pure-skin-solid .pure-menu li a:hover,
 .pure-skin-solid .pure-menu li a:focus {
-    background: #f1e7ef;
+    background: var(--bg-menu-foc);
 }
 
 /* HEADINGS */
 .pure-skin-solid .pure-menu .pure-menu-heading {
-    color: #271625;
+    color: var(--fg-menu-heading);
     text-transform: uppercase;
     font-size: 90%;
     margin-top: 0.5em;
-    border-bottom: solid 1px #eddeea;
+    border-bottom: solid 1px var(--fg-menu-divider);
 }
 
 /* FIXED MENU */
 .pure-skin-solid .pure-menu.pure-menu-open.pure-menu-fixed {
     border: none;
-    border-bottom: 1px solid #eddeea;
+    border-bottom: 1px solid var(--fg-menu-divider);
 }
 /* end from PURE menu.css ***********************************/
 /* from PURE menu-responsive.css ****************************/
@@ -268,7 +268,7 @@ margin: 7px 2px;
 
     .pure-skin-solid .pure-menu-children li {
         display: block;
-        border-bottom:1px solid #eddeea;
+        border-bottom:1px solid var(--fg-menu-divider);
     }
 
 }

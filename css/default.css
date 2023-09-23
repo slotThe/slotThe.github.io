@@ -16,7 +16,7 @@ html {
 }
 
 body {
-    color: black;
+    color: var(--fg);
     font-size: 23px;
     font-family: var(--proportional-fonts);
     font-variant-numeric: oldstyle-nums;
@@ -97,10 +97,10 @@ code {                  /* Inline code */
     font-size: 0.95em;
     font-family: var(--monospace-fonts);
     font-variant-numeric: normal;  /* No oldstyle figures in code */
-    background: #f7f7f7;
+    background: var(--bg-inline-code);
     border-radius: 0.25rem;
     padding: 0 0.25rem;
-    border: 1px solid #f5f5f5;
+    border: 1px solid var(--border-inline-code);
 }
 
 blockquote {            /* Block quotes */
@@ -121,8 +121,8 @@ span.mjpage__block {    /* Display maths */
 */
 
 div#footer {            /* Footer with RSS feed etc. */
-    border-top: solid 1px lavender;
-    color: #555;
+    border-top: solid 1px var(--fg-footer-divider);
+    color: var(--fg-footer-pipe);
     font-size: 0.78em;
     margin-top: 30px;
     padding: 9px 1em 12px 1em;
@@ -134,7 +134,7 @@ hr {                    /* That line before the footnotes */
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid lavender;
+    border-top: 1px solid var(--fg-footer-divider);
     margin: 1em 0; padding: 0;
 }
 
@@ -302,7 +302,7 @@ div#contents-big li + li {
    intrusivity, since it is now visible most of the time. */
 div#contents-big a:link,
 div#contents     a:link {
-    color: black;
+    color: var(--fg);
     font-variant: small-caps;
     word-spacing: 0.06em;
     letter-spacing: 0.02em;
@@ -310,7 +310,7 @@ div#contents     a:link {
 }
 div#contents-big a:visited,
 div#contents     a:visited {
-    color: black;
+    color: var(--fg);
     font-variant: small-caps;
     word-spacing: 0.06em;
     letter-spacing: 0.02em;
@@ -318,7 +318,7 @@ div#contents     a:visited {
 }
 div#contents-big a:hover,
 div#contents     a:hover {
-    color: #999;
+    color: var(--fg-link-hover);
 }
 
 a:link > code,     /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
@@ -348,7 +348,7 @@ div#contents-big {
 
 /* Smaller screens */
 div#contents {
-    background-color: #fbf9fb;
+    background-color: var(--bg-toc);
     padding-bottom: 0.25em;
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -377,18 +377,18 @@ div#contents {
 */
 
 a:link {
-    color: #640d57;
+    color: var(--fg-link);
     text-decoration: none;
 }
 
 a:hover {
-    color: #999;
+    color: var(--fg-link-hover);
     text-decoration: 1px underline;
     text-underline-offset: 0.1em;
 }
 
 a:visited {
-    color: #640d57;
+    color: var(--fg-link);
     text-decoration: none;
 }
 
@@ -431,7 +431,7 @@ a#to-top {
 
 :is(h1, h2, h3, h4, h5, h6) .sec-link {
     text-decoration: none;
-    color: grey;
+    color: var(--fg-sec-link);
     visibility: hidden;
 }
 

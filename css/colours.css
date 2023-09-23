@@ -1,0 +1,82 @@
+:root {
+    /* Basic */
+    --fg: black;
+    --bg: #fcfcfc;
+    --bg-toc: #fbf9fb;
+
+    /* Menu */
+    --fg-menu: #5b3355;
+    --fg-menu-hover: #3a2237;
+    --fg-menu-heading: #271625;
+    --fg-menu-divider: #eddeea;
+    --fg-menu-border: #eceaec;
+    --bg-menu-foc: #f1e7ef;
+    --bg-menu-children: #fbf9fb;
+
+    /* Links */
+    --fg-sec-link: grey;
+    --fg-link: #640d57;
+    --fg-link-hover: #999;
+
+    /* Footer */
+    --fg-footer-pipe: #555;
+    --fg-footer-divider: lavender;
+
+    /* Inline code */
+    --border-inline-code: #f5f5f5;
+    --bg-inline-code: #f7f7f7;
+
+    /* Display code */
+    --fg-variable: #9A9A9A;
+    --fg-string: #454545;
+    --fg-output: #303030;
+    --fg-nametag: #3B3B3B;
+    --fg-nameclass: #7E7E7E;
+    --fg-literal: #676767;
+    --fg-keyword: #575757;
+    --fg-exception: black;
+    --fg-comment: #888888;
+    --fg-comment2: #666666;
+    --bg-code-accent: #f8edff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Basic */
+        --fg: #eaf2ef;
+        --bg: #443b41;
+        --bg-toc: var(--bg);
+
+        /* Menu */
+        --fg-menu: #cc9bcf;
+        --fg-menu-heading: #aac0cf;
+        --fg-menu-divider: #594a4f;
+        --fg-menu-border: #594a4f;
+        --bg-menu-foc: #392a2f;
+        --bg-menu-children: #3f373c;
+
+        /* Links */
+        --fg-link: #d662c3;
+        --fg-link-hover: #bbb;
+
+        /* Footer */
+        --fg-footer-pipe: #999;
+        --fg-footer-divider: #bf9cdf;
+
+        /* Inline code */
+        --border-inline-code: #443b41;
+        --bg-inline-code: #594a4f;
+
+        /* Display code */
+        --fg-string: #b0b0b0;
+        --fg-output: #e0e0e0;
+        --fg-nametag: #ebebeb;
+        --fg-nameclass: #d0d0d0;
+        --fg-literal: #d0d0d0;
+        --fg-keyword: #c0c0c0;
+        --fg-exception: white;
+        --fg-comment: #aaa;
+        --fg-comment2: #999;
+        --bg-code-accent: #5e3f52;
+    }
+}
