@@ -55,18 +55,10 @@ All of my preprints are readily available on the [arXiv].[^2]
 
 # Talks
 
-- *Abstract Schur Functors* \
-  2023-07-21, Block seminar "Operads", Bonn.
-
-  Based on [this paper](https://arxiv.org/abs/2106.00190) by Baez, Moeller, and Trimble.
-
-- *Abstract Mackey Functors* \
-  2023-07-15, Mackey functors seminar, Dresden; see Section 6 of the [script][slides:mackey-functors:handout].
-
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden. \
-  2023-05-23, HATC23, Marburg;
-  [slides][slides:duality] ([handout][slides:duality:handout]). \
+  2023-05-23, HATC23, Marburg; [slides][slides:duality] ([handout][slides:duality:handout]). \
+  2023-07-26, Uppsala Algebra Seminar, Uppsala.
 
   Dualities are an important tool in the study of monoidal categories and their applications.
   For example, underlying the construction of Tor and Ext functors
@@ -99,6 +91,15 @@ All of my preprints are readily available on the [arXiv].[^2]
 
   This talk is based on
   [joint work with Sebastian Halbig](https://arxiv.org/abs/2301.03545).
+
+
+- *Abstract Schur Functors* \
+  2023-07-21, Block seminar "Operads", Bonn.
+
+  Based on [this paper](https://arxiv.org/abs/2106.00190) by Baez, Moeller, and Trimble.
+
+- *Abstract Mackey Functors* \
+  2023-07-15, Mackey functors seminar, Dresden; see Section 6 of the [script][slides:mackey-functors:handout].
 
 - *Operads as Functors* \
   2022-12-15, Block seminar "Operads", Bonn.
