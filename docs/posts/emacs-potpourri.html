@@ -49,7 +49,11 @@
 <li><a href="#frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
 <li><a href="#pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
 <li><a href="#quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code></a></li>
+<li><a href="#latex">LaTeX</a>
+<ul>
 <li><a href="#latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician</a></li>
+<li><a href="#prettify-latex-buffers">Prettify LaTeX buffers</a></li>
+</ul></li>
 <li><a href="#erc">ERC</a>
 <ul>
 <li><a href="#mark-the-current-frame-as-urgent">Mark the current frame as urgent</a></li>
@@ -76,10 +80,10 @@
         Posted on 2022-10-22
       
       
-        &thinsp;·&thinsp; last modified: 2023-07-30
+        &thinsp;·&thinsp; last modified: 2023-10-15
       
       
-        &thinsp;·&thinsp; <span title="2743 words">11 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="2777 words">12 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
@@ -97,7 +101,11 @@
 <li><a href="#frame-inhibit-implied-resize"><code>frame-inhibit-implied-resize</code></a></li>
 <li><a href="#pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code></a></li>
 <li><a href="#quickly-insert-images-in-org-roam">Quickly insert images in <code>org-roam</code></a></li>
+<li><a href="#latex">LaTeX</a>
+<ul>
 <li><a href="#latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician</a></li>
+<li><a href="#prettify-latex-buffers">Prettify LaTeX buffers</a></li>
+</ul></li>
 <li><a href="#erc">ERC</a>
 <ul>
 <li><a href="#mark-the-current-frame-as-urgent">Mark the current frame as urgent</a></li>
@@ -158,7 +166,7 @@ value for money.
 <h2 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code><a href="#pixel-scroll-precision-mode" class="floatleft sec-link">§</a></h2>
 <p></p>
 This is pretty old news by now, but I wanted to take the opportunity to
-again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a href="./phd-workflow/2022-05-01-my-phd-workflow.html">PhD
+again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a href="./my-phd-workflow.html">PhD
 student in maths</a>, which means that I write a lot of
 LaTeX and also use Org extensively for taking notes. While ordinary
 LaTeX entry in Org works quite well, commutative diagrams are a pain
@@ -205,7 +213,8 @@ All it needs is <code>xdotool</code> for moving the mouse (though, if you don’
 taking the screenshot. Pretty convenient. If <code>scrot</code> is too low-tech
 for you, then the above snippet probably also works with <code>flameshot</code> or
 a similar tool.
-<h2 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician<a href="#latex-for-the-lazy-mathematician" class="floatleft sec-link">§</a></h2>
+<h2 id="latex">LaTeX<a href="#latex" class="floatleft sec-link">§</a></h2>
+<h3 id="latex-for-the-lazy-mathematician">LaTeX for the lazy mathematician<a href="#latex-for-the-lazy-mathematician" class="floatleft sec-link">§</a></h3>
 <p></p>
 I am pretty impatient when it comes to LaTeX entry. So impatient that I
 have created a few “now you’re really taking it too far”-type of
@@ -275,8 +284,19 @@ LaTeX entry:
 <p></p>
 <img class="pure-img" src="../images/emacs-potpourri/latex-entry.gif" alt="Fast LaTeX entry with various kinds of macros and abbreviations">
 <p></p>
-More examples can be found in the <a href="./phd-workflow/2022-05-01-my-phd-workflow.html#digital-notes">post</a> about
+More examples can be found in the <a href="./my-phd-workflow.html#digital-notes">post</a> about
 my research workflow.
+<h3 id="prettify-latex-buffers">Prettify LaTeX buffers<a href="#prettify-latex-buffers" class="floatleft sec-link">§</a></h3>
+<p></p>
+This story is interesting enough that I’ve written a whole <a href="./pretty-latex.html">post</a> about it<!--
+-->—go check it out!
+Long story short, one can transform a buffers like this
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math">
+<p></p>
+into one like this
+<p></p>
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math">
 <h2 id="erc">ERC<a href="#erc" class="floatleft sec-link">§</a></h2>
 <p></p>
 I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s

@@ -1,7 +1,7 @@
 ---
 title: A Potpourri of Emacs Tweaks
 date: 2022-10-22
-last-modified: 2023-07-30
+last-modified: 2023-10-15
 tags: emacs
 ---
 
@@ -101,7 +101,9 @@ taking the screenshot.  Pretty convenient.  If `scrot` is too low-tech
 for you, then the above snippet probably also works with `flameshot` or
 a similar tool.
 
-# LaTeX for the lazy mathematician
+# LaTeX
+
+## LaTeX for the lazy mathematician
 
 I am pretty impatient when it comes to LaTeX entry.  So impatient that I
 have created a few "now you're really taking it too far"-type of
@@ -173,6 +175,24 @@ LaTeX entry:
 
 More examples can be found in the [post][posts:phd-workflow:entry] about
 my research workflow.
+
+## Prettify LaTeX buffers
+
+This story is interesting enough that I've written a whole [post][posts:prett-latex] about it<!--
+-->—go check it out!
+Long story short, one can transform a buffers like this
+
+<img class="pure-img"
+     style="padding-left: 1em"
+     src="../images/pretty-latex/end-before.png"
+     alt="Before prettifying: Sections, subsections, emphasis, math">
+
+into one like this
+
+<img class="pure-img"
+     style="padding-left: 1em"
+     src="../images/pretty-latex/end-after.png"
+     alt="After prettifying: Sections, subsections, emphasis, math">
 
 # ERC
 
@@ -475,8 +495,9 @@ and we're good to go.
 [emacs:repeat-mode:1]: https://tildegit.org/acdw/define-repeat-map.el
 [emacs:repeat-mode:2]: https://github.com/mmarshall540/repeaters
 [posts:people:repeat-mode]: https://karthinks.com/software/it-bears-repeating/
-[posts:phd-workflow:entry]: ./phd-workflow/2022-05-01-my-phd-workflow.html#digital-notes
-[posts:phd-workflow]: ./phd-workflow/2022-05-01-my-phd-workflow.html
+[posts:phd-workflow:entry]: ./my-phd-workflow.html#digital-notes
+[posts:phd-workflow]: ./my-phd-workflow.html
+[posts:prett-latex]: ./pretty-latex.html
 [posts:query-replace]: https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html
 [quiver]: https://q.uiver.app/
 [use-package]: https://github.com/jwiegley/use-package
