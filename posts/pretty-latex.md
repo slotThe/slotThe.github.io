@@ -1,6 +1,7 @@
 ---
 title: Prettifying LaTeX Buffers
 date: 2023-09-10
+last-modified: 2023-10-15
 tags: emacs
 ---
 
@@ -223,7 +224,9 @@ First, we create a function to shift each codepoint in a string by a certain off
   "Shift the codepoint of each character in WORD by OFFSET.
 Add an extra -6 shift if the letter is lowercase."
   (apply #'string
-         (--map (+ (if (>= it ?a) (- it 6) it) offset)
+         (--map (pcase it
+                  (?, ?,)   ; Allow things like \Hom(\mathbb{A,B})
+                  (_ (+ (if (>= it ?a) (- it 6) it) offset)))
                 word)))
 ```
 

@@ -23,8 +23,10 @@
         Posted on 2023-09-10
       
       
+        &thinsp;·&thinsp; last modified: 2023-10-15
       
-        &thinsp;·&thinsp; <span title="1612 words">7 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1622 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
@@ -191,7 +193,9 @@ First, we create a function to shift each codepoint in a string by a certain off
   &quot;Shift the codepoint of each character in WORD by OFFSET.
 Add an extra -6 shift if the letter is lowercase.&quot;
   (apply #'string
-         (--map (+ (if (&gt;= it ?a) (- it 6) it) offset)
+         (--map (pcase it
+                  (?, ?,)   ; Allow things like \Hom(\mathbb{A,B})
+                  (_ (+ (if (&gt;= it ?a) (- it 6) it) offset)))
                 word)))</code></pre>
 <p>Now, all that’s left to do is to define some folds for mathematical alphabets,
 and give them the right starting points:<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>

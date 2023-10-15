@@ -70,8 +70,10 @@
         Posted on 2023-09-10
       
       
+        &thinsp;·&thinsp; last modified: 2023-10-15
       
-        &thinsp;·&thinsp; <span title="1595 words">7 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1605 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
@@ -378,7 +380,9 @@ so some sort of lookup table has to be consulted as well.</div><!--
 <span class="w">  </span><span class="s">&quot;Shift the codepoint of each character in WORD by OFFSET.</span>
 <span class="s">Add an extra -6 shift if the letter is lowercase.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nf">apply</span><span class="w"> </span><span class="nf">#'string</span>
-<span class="w">         </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nf">+</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">&gt;=</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="sc">?a</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">-</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span><span class="w"> </span><span class="nv">offset</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">--map</span><span class="w"> </span><span class="p">(</span><span class="nb">pcase</span><span class="w"> </span><span class="nv">it</span>
+<span class="w">                  </span><span class="p">(</span><span class="sc">?,</span><span class="w"> </span><span class="sc">?,</span><span class="p">)</span><span class="w">   </span><span class="c1">; Allow things like \Hom(\mathbb{A,B})</span>
+<span class="w">                  </span><span class="p">(</span><span class="nv">_</span><span class="w"> </span><span class="p">(</span><span class="nf">+</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">&gt;=</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="sc">?a</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">-</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span><span class="w"> </span><span class="nv">offset</span><span class="p">)))</span>
 <span class="w">                </span><span class="nv">word</span><span class="p">)))</span>
 </pre></div>
 
