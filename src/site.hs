@@ -478,7 +478,8 @@ myPandocCompiler =
                     , "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS"
                     , "PSSL", "TODO", "EDSL", "DSL", "API", "BCQT", "LOWER"
                     , "RAISE", "ADJUST", "TL;DR", "BOX", "PBT", "XDA", "GTK"
-                    , "HATC", "CSL", "BY-SA", "TOC", "CT23", "README"
+                    , "HATC", "CSL", "BY-SA", "TOC", "CT23", "README", "LSP"
+                    , "PR", "GIF"
                     ]
     inline -> inline
    where
