@@ -10,8 +10,244 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2023-06-20T00:00:00Z</updated>
+    <updated>2023-10-22T00:00:00Z</updated>
     <entry>
+    <title>Fixing Lsp-Mode's Hover Signatures</title>
+    <link href="https://tony-zorman.com/posts/fixing-lsp-mode.html" />
+    <id>https://tony-zorman.com/posts/fixing-lsp-mode.html</id>
+    <published>2023-10-22T00:00:00Z</published>
+    <updated>2023-10-22T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2023-10-22
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1112 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'haskell'." href="/tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'rust'." href="/tags/rust.html" rel="tag">rust</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>By now,
+LSP servers have become the norm for editor-agnostic language support.
+As expected, Emacs features at least two packages that implement the protocol:
+the built-in <code>eglot</code>,
+and the third-party <code>lsp-mode</code>.
+I will focus on the latter in this post.</p>
+<p>L<span class="small-caps">sp</span> clients have the option of showing useful things on hover.
+In most languages, there is an obvious candidate for this:
+the type signature of the thing at point.
+Sadly—for some languages—the implementation of the feature is… not great.
+Buggy even, one might say.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+Taking this as an excuse to talk about Emacs’s infinite customisability,
+there is of course a way to fix this within the bounds of our configuration.
+Let’s do that!</p>
+<!--more-->
+<h2 id="the-problem">The problem</h2>
+<p>Take any Haskell function with a long enough type signature, like the
+following:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">iAmTooLong ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iAmTooLong <span class="ot">=</span> <span class="fu">undefined</span></span></code></pre></div>
+<p>By default, lsp-mode<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> will display the following type signature
+in the echo-area
+when hovering over the function name:</p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
+<p>That’s… not correct.
+Executing <code>lsp-describe-thing-at-point</code> immediately reveals the problem;
+the request we get back looks like this:</p>
+<pre><code>``` haskell
+iAmTooLong :: String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+```
+
+Defined at »PATH«</code></pre>
+<p>The type signature is so long that the server breaks it into several lines.
+Lsp-mode uses <code>lsp-clients-extract-signature-on-hover</code> to extract a signature on hover—by default, it looks like this:</p>
+<pre class="emacs-lisp"><code>(cl-defgeneric lsp-clients-extract-signature-on-hover (contents _server-id)
+  &quot;Extract a representative line from CONTENTS, to show in the echo area.&quot;
+  (car (s-lines (s-trim (lsp--render-element contents)))))</code></pre>
+<p>It just takes the first line of the first markdown code block.
+While this works for simple type signatures,
+it obviously falls flat in more complicated scenarios.
+However, this being a generic function,
+there’s the possibility to overload it depending on the major mode.</p>
+<h2 id="fixing-haskell-type-signatures">Fixing Haskell type signatures</h2>
+<p>The strategy seems pretty clear:
+extract the whole block instead of only the first line.
+This is swiftly done:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre class="emacs-lisp"><code>(defun slot/lsp-get-type-signature (lang str)
+  &quot;Get LANGs type signature in STR.
+Original implementation from https://github.com/emacs-lsp/lsp-mode/pull/1740.&quot;
+  (let* ((start (concat &quot;```&quot; lang))
+         (groups (--filter (s-equals? start (car it))
+                           (-partition-by #'s-blank? (s-lines (s-trim str)))))
+         (name-at-point (symbol-name (symbol-at-point)))
+         (type-sig-group (car
+                          (--filter (s-contains? name-at-point (cadr it))
+                                    groups))))
+    (-&gt;&gt; (or type-sig-group (car groups))
+         (-drop 1)                    ; ``` LANG
+         (-drop-last 1)               ; ```
+         (-map #'s-trim)
+         (s-join &quot; &quot;))))</code></pre>
+<p>We can now override the method with our own implementation:</p>
+<pre class="emacs-lisp"><code>(cl-defmethod lsp-clients-extract-signature-on-hover
+  (contents (_server-id (eql lsp-haskell))) ; Only for Haskell.
+  &quot;Display the type signature of the function at point.&quot;
+  (slot/lsp-get-type-signature &quot;haskell&quot; (plist-get contents :value)))</code></pre>
+<p>This already looks <em>fine</em>, but something is still amiss.</p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.png" alt="Correctly shows the whole type signature, but there is no syntax highlighting"></p>
+<p>There is no syntax highlighting!
+Thankfully, this is not very difficult to fix;
+the idea is to paste the string into a temporary buffer,
+activate <code>haskell-mode</code>,
+and grab the propertised string from that.
+The only thing to take care of is that we dont want to run <code>lsp-mode</code> and friends <em>again</em> in the temporary buffer.</p>
+<pre class="emacs-lisp"><code>(defun slot/syntax-highlight-string (str mode)
+  &quot;Syntax highlight STR in MODE.&quot;
+  (with-temp-buffer
+    (insert str)
+    ;; We definitely don't want to call certain modes, so delay the mode's
+    ;; hooks until we have removed them.
+    (delay-mode-hooks (funcall mode))
+    (-map #'funcall
+          (--remove (-contains? '(lsp-mode lsp-deferred) it)
+                    (-mapcat #'symbol-value delayed-mode-hooks)))
+    ;; Now we can propertise the string.
+    (font-lock-ensure)
+    (buffer-string)))</code></pre>
+<p>Lsp-mode also provides a function for this, <code>lsp--render-string</code>,
+but that one does not try to load all of the “safe” hooks for the major mode.
+However, I have some <code>pretify-symbols-mode</code> configuration for Haskell
+which I would very much like to take effect.</p>
+<p>All in all, we have</p>
+<pre class="emacs-lisp"><code>;; Fixes https://github.com/emacs-lsp/lsp-haskell/issues/151
+(cl-defmethod lsp-clients-extract-signature-on-hover
+  (contents (_server-id (eql lsp-haskell)))
+  &quot;Display the type signature of the function at point.&quot;
+  (slot/syntax-highlight-string
+   (slot/lsp-get-type-signature &quot;haskell&quot; (plist-get contents :value))
+   'haskell-mode))</code></pre>
+<p>This works quite nicely:</p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature"></p>
+<h2 id="fixing-rust-hovers">Fixing Rust hovers</h2>
+<p>One of the above code snippets already mentions <a href="https://github.com/emacs-lsp/lsp-mode/pull/1740">lsp-mode#1740</a>,
+which is not about Haskell, but Rust,
+a language that I also occasionally dabble in.
+The basic issue here goes like this:
+by default, <code>lsp-mode</code> shows the following hover information.</p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.png" alt="By default, the hover shows the module that the identifier is imported from"></p>
+<p>Much like the user who opened the mentioned pull-request,
+I really don’t care about this.
+Instead, I’d much rather see</p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.png" alt="Instead of the module, show the type singature"></p>
+<p>which looks much more useful to me.</p>
+<p>Luckily, this is exactly the same situation as in the Haskell case,
+which we already fixed.
+Writing</p>
+<pre class="emacs-lisp"><code>(cl-defmethod lsp-clients-extract-signature-on-hover
+  (contents (_server-id (eql rust-analyzer))) ; Only for Rust.
+  &quot;Display the type signature of the function at point.&quot;
+  (slot/syntax-highlight-string
+   (slot/lsp-get-type-signature &quot;rust&quot; (plist-get contents :value))
+   'rustic-mode))</code></pre>
+<p>works out of the box.
+Nice.</p>
+<h2 id="bonus-adding-type-signatures">Bonus: adding type signatures</h2>
+<p>Here’s another problem that we’ve solved <em>en passant</em>:
+lsp-mode has code-lens support<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>,
+which enables one to add type signatures by clicking on the relevant button:</p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/add-type-signature-mouse.gif" alt="Clicking on the relevant code lens adds a type signature"></p>
+<p>However, this ostensibly requires me to use the mouse,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+and—more importantly—the above GIF also shows that local functions do not have such a code lens attached to them.
+I quite like type signatures for local definitions,
+so that’s a bit of a shame.</p>
+<p>Fixing this is not terribly difficult either;
+the hardest thing is having to look through lsp-mode’s codebase so one actually knows which functions to call.
+When defining the overrides for <code>lsp-clients-extract-signature-on-hover</code>, the LSP response was free,
+whereas now we want to create a request for the thing at point.</p>
+<pre class="emacs-lisp"><code>(defun slot/lsp-get-type-signature-at-point (&amp;optional lang)
+  &quot;Get LANGs type signature at point.
+LANG is not given, get it from `lsp--buffer-language'.&quot;
+  (interactive)
+  (-some-&gt;&gt; (lsp--text-document-position-params)
+    (lsp--make-request &quot;textDocument/hover&quot;)
+    lsp--send-request
+    lsp:hover-contents
+    (funcall (-flip #'plist-get) :value)
+    (slot/lsp-get-type-signature (or lang lsp--buffer-language))))</code></pre>
+<p>Once we have the type signature at point,
+all that’s left is to insert it into the buffer.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<pre class="emacs-lisp"><code>(defun slot/lsp-haskell-type-signature ()
+  &quot;Add a type signature for the thing at point.
+This is very convenient, for example, when dealing with local
+functions, since those—as opposed to top-level expressions—don't
+have a code lens for \&quot;add type signature here\&quot; associated with
+them.&quot;
+  (interactive)
+  (let* ((value (slot/lsp-get-type-signature-at-point &quot;haskell&quot;)))
+    (slot/back-to-indentation)
+    (insert value)
+    (haskell-indentation-newline-and-indent)))</code></pre>
+<p>Bind that to a key and you’re good to go!</p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/add-type-signature-keybinding.gif" alt="Clicking on the relevant code lens adds a type signature"></p>
+<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I have reported this as a bug <a href="https://github.com/emacs-lsp/lsp-haskell/issues/151">here</a>,
+but that issue seems to have stalled,
+so here we are.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>And also eglot, judging from a cursory test.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Even more so because smart people have already written this for me;
+see the docstring.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Incidentally, this is the only reason that I use lsp-mode over eglot.
+There is a
+<a href="https://github.com/joaotavora/eglot/pull/71">stalled PR</a>
+from five years ago,
+but that never led anywhere.
+<em>Someone</em> should pick this back up, I suppose.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Lsp-mode also features the <code>lsp-avy-lens</code>,
+so this is not really an actual problem.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>{-} For when hovering inexplicably breaks again,
+this also enables for a quick definition of “show the type signature of the thing at point”:</p>
+<pre class="emacs-lisp"><code>(defun slot/lsp-show-type-signature ()
+  &quot;Show the type signature for the thing at
+point.  This is essentially what
+`lsp-clients-extract-signature-on-hover'
+does, just as an extra function.&quot;
+  (interactive)
+  (message
+   (slot/syntax-highlight-string
+    (slot/lsp-get-type-signature-at-point)
+    major-mode)))</code></pre>
+<p>This can, again, be bound to a key for convenient access.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Incorporating BibTeX into Hakyll</title>
     <link href="https://tony-zorman.com/posts/hakyll-and-bibtex.html" />
     <id>https://tony-zorman.com/posts/hakyll-and-bibtex.html</id>

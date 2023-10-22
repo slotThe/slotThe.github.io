@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Fixing Lsp-Mode's Hover Signatures · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#the-problem">The problem</a></li>
+<li><a href="#fixing-haskell-type-signatures">Fixing Haskell type signatures</a></li>
+<li><a href="#fixing-rust-hovers">Fixing Rust hovers</a></li>
+<li><a href="#bonus-adding-type-signatures">Bonus: adding type signatures</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Fixing Lsp-Mode's Hover Signatures</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2023-10-22
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1105 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'rust'." href="../tags/rust.html" rel="tag">rust</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#the-problem">The problem</a></li>
+<li><a href="#fixing-haskell-type-signatures">Fixing Haskell type signatures</a></li>
+<li><a href="#fixing-rust-hovers">Fixing Rust hovers</a></li>
+<li><a href="#bonus-adding-type-signatures">Bonus: adding type signatures</a></li>
+</ul>
+  </div>
+
+<div>
+  By now,
+<span class="small-caps">lsp</span> servers have become the norm for editor-agnostic language support.
+As expected, Emacs features at least two packages that implement the protocol:
+the built-in <code>eglot</code>,
+and the third-party <code>lsp-mode</code>.
+I will focus on the latter in this post.
+<p></p>
+L<span class="small-caps">sp</span> clients have the option of showing useful things on hover.
+In most languages, there is an obvious candidate for this:
+the type signature of the thing at point.
+Sadly—for some languages—the implementation of the feature is… not great.
+Buggy even, one might say.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">I have reported this as a bug <a href="https://github.com/emacs-lsp/lsp-haskell/issues/151">here</a>,
+but that issue seems to have stalled,
+so here we are.</div><!--
+-->
+Taking this as an excuse to talk about Emacs’s infinite customisability,
+there is of course a way to fix this within the bounds of our configuration.
+Let’s do that!
+<!--more-->
+<h2 id="the-problem">The problem<a href="#the-problem" class="floatleft sec-link">§</a></h2>
+<p></p>
+Take any Haskell function with a long enough type signature, like the
+following:
+<div class="highlight" style="haskell"><pre><span></span><span class="nf">iAmTooLong</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<span class="nf">iAmTooLong</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">undefined</span>
+</pre></div>
+
+<p></p>
+By default, lsp-mode<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">And also eglot, judging from a cursory test.</div><!--
+--> will display the following type signature
+in the echo-area
+when hovering over the function name:
+<p></p>
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`">
+<p></p>
+That’s… not correct.
+Executing <code>lsp-describe-thing-at-point</code> immediately reveals the problem;
+the request we get back looks like this:
+<div class="highlight" style="text"><pre><span></span>``` haskell
+iAmTooLong :: String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+-&gt; String
+```
+
+Defined at »PATH«
+</pre></div>
+
+<p></p>
+The type signature is so long that the server breaks it into several lines.
+Lsp-mode uses <code>lsp-clients-extract-signature-on-hover</code> to extract a signature on hover—by default, it looks like this:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">cl-defgeneric</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span><span class="w"> </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="nv">_server-id</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Extract a representative line from CONTENTS, to show in the echo area.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="p">(</span><span class="nv">s-lines</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">lsp--render-element</span><span class="w"> </span><span class="nv">contents</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+It just takes the first line of the first markdown code block.
+While this works for simple type signatures,
+it obviously falls flat in more complicated scenarios.
+However, this being a generic function,
+there’s the possibility to overload it depending on the major mode.
+<h2 id="fixing-haskell-type-signatures">Fixing Haskell type signatures<a href="#fixing-haskell-type-signatures" class="floatleft sec-link">§</a></h2>
+<p></p>
+The strategy seems pretty clear:
+extract the whole block instead of only the first line.
+This is swiftly done:<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Even more so because smart people have already written this for me;
+see the docstring.</div><!--
+-->
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="p">(</span><span class="nv">lang</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Get LANGs type signature in STR.</span>
+<span class="s">Original implementation from https://github.com/emacs-lsp/lsp-mode/pull/1740.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">start</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;```&quot;</span><span class="w"> </span><span class="nv">lang</span><span class="p">))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">groups</span><span class="w"> </span><span class="p">(</span><span class="nv">--filter</span><span class="w"> </span><span class="p">(</span><span class="nv">s-equals?</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">                           </span><span class="p">(</span><span class="nv">-partition-by</span><span class="w"> </span><span class="nf">#'</span><span class="nv">s-blank?</span><span class="w"> </span><span class="p">(</span><span class="nv">s-lines</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim</span><span class="w"> </span><span class="nv">str</span><span class="p">)))))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">name-at-point</span><span class="w"> </span><span class="p">(</span><span class="nf">symbol-name</span><span class="w"> </span><span class="p">(</span><span class="nv">symbol-at-point</span><span class="p">)))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">type-sig-group</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span>
+<span class="w">                          </span><span class="p">(</span><span class="nv">--filter</span><span class="w"> </span><span class="p">(</span><span class="nv">s-contains?</span><span class="w"> </span><span class="nv">name-at-point</span><span class="w"> </span><span class="p">(</span><span class="nv">cadr</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">                                    </span><span class="nv">groups</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">-&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="nv">type-sig-group</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">groups</span><span class="p">))</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">-drop</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">                    </span><span class="c1">; ``` LANG</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">-drop-last</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">               </span><span class="c1">; ```</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">-map</span><span class="w"> </span><span class="nf">#'</span><span class="nv">s-trim</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">s-join</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">))))</span>
+</pre></div>
+
+<p></p>
+We can now override the method with our own implementation:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="p">(</span><span class="nv">_server-id</span><span class="w"> </span><span class="p">(</span><span class="nf">eql</span><span class="w"> </span><span class="nv">lsp-haskell</span><span class="p">)))</span><span class="w"> </span><span class="c1">; Only for Haskell.</span>
+<span class="w">  </span><span class="s">&quot;Display the type signature of the function at point.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="s">&quot;haskell&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">plist-get</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nb">:value</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+This already looks <em>fine</em>, but something is still amiss.
+<p></p>
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.png" alt="Correctly shows the whole type signature, but there is no syntax highlighting">
+<p></p>
+There is no syntax highlighting!
+Thankfully, this is not very difficult to fix;
+the idea is to paste the string into a temporary buffer,
+activate <code>haskell-mode</code>,
+and grab the propertised string from that.
+The only thing to take care of is that we dont want to run <code>lsp-mode</code> and friends <em>again</em> in the temporary buffer.
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/syntax-highlight-string</span><span class="w"> </span><span class="p">(</span><span class="nv">str</span><span class="w"> </span><span class="nv">mode</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Syntax highlight STR in MODE.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">;; We definitely don't want to call certain modes, so delay the mode's</span>
+<span class="w">    </span><span class="c1">;; hooks until we have removed them.</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">delay-mode-hooks</span><span class="w"> </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">mode</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">-map</span><span class="w"> </span><span class="nf">#'funcall</span>
+<span class="w">          </span><span class="p">(</span><span class="nv">--remove</span><span class="w"> </span><span class="p">(</span><span class="nv">-contains?</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nv">lsp-mode</span><span class="w"> </span><span class="nv">lsp-deferred</span><span class="p">)</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">(</span><span class="nv">-mapcat</span><span class="w"> </span><span class="nf">#'symbol-value</span><span class="w"> </span><span class="nv">delayed-mode-hooks</span><span class="p">)))</span>
+<span class="w">    </span><span class="c1">;; Now we can propertise the string.</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">font-lock-ensure</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">buffer-string</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+Lsp-mode also provides a function for this, <code>lsp--render-string</code>,
+but that one does not try to load all of the “safe” hooks for the major mode.
+However, I have some <code>pretify-symbols-mode</code> configuration for Haskell
+which I would very much like to take effect.
+<p></p>
+All in all, we have
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="c1">;; Fixes https://github.com/emacs-lsp/lsp-haskell/issues/151</span>
+<span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="p">(</span><span class="nv">_server-id</span><span class="w"> </span><span class="p">(</span><span class="nf">eql</span><span class="w"> </span><span class="nv">lsp-haskell</span><span class="p">)))</span>
+<span class="w">  </span><span class="s">&quot;Display the type signature of the function at point.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">slot/syntax-highlight-string</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="s">&quot;haskell&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">plist-get</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nb">:value</span><span class="p">))</span>
+<span class="w">   </span><span class="ss">'haskell-mode</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+This works quite nicely:
+<p></p>
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature">
+<h2 id="fixing-rust-hovers">Fixing Rust hovers<a href="#fixing-rust-hovers" class="floatleft sec-link">§</a></h2>
+<p></p>
+One of the above code snippets already mentions <a href="https://github.com/emacs-lsp/lsp-mode/pull/1740">lsp-mode#1740</a>,
+which is not about Haskell, but Rust,
+a language that I also occasionally dabble in.
+The basic issue here goes like this:
+by default, <code>lsp-mode</code> shows the following hover information.
+<p></p>
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.png" alt="By default, the hover shows the module that the identifier is imported from">
+<p></p>
+Much like the user who opened the mentioned pull-request,
+I really don’t care about this.
+Instead, I’d much rather see
+<p></p>
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.png" alt="Instead of the module, show the type singature">
+<p></p>
+which looks much more useful to me.
+<p></p>
+Luckily, this is exactly the same situation as in the Haskell case,
+which we already fixed.
+Writing
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="p">(</span><span class="nv">_server-id</span><span class="w"> </span><span class="p">(</span><span class="nf">eql</span><span class="w"> </span><span class="nv">rust-analyzer</span><span class="p">)))</span><span class="w"> </span><span class="c1">; Only for Rust.</span>
+<span class="w">  </span><span class="s">&quot;Display the type signature of the function at point.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">slot/syntax-highlight-string</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="s">&quot;rust&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">plist-get</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nb">:value</span><span class="p">))</span>
+<span class="w">   </span><span class="ss">'rustic-mode</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+works out of the box.
+Nice.
+<h2 id="bonus-adding-type-signatures">Bonus: adding type signatures<a href="#bonus-adding-type-signatures" class="floatleft sec-link">§</a></h2>
+<p></p>
+Here’s another problem that we’ve solved <em>en passant</em>:
+lsp-mode has code-lens support<!--
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">Incidentally, this is the only reason that I use lsp-mode over eglot.
+There is a
+<a href="https://github.com/joaotavora/eglot/pull/71">stalled <span class="small-caps">pr</span></a>
+from five years ago,
+but that never led anywhere.
+<em>Someone</em> should pick this back up, I suppose.</div><!--
+-->,
+which enables one to add type signatures by clicking on the relevant button:
+<p></p>
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/add-type-signature-mouse.gif" alt="Clicking on the relevant code lens adds a type signature">
+<p></p>
+However, this ostensibly requires me to use the mouse,<!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">Lsp-mode also features the <code>lsp-avy-lens</code>,
+so this is not really an actual problem.</div><!--
+-->
+and—more importantly—the above <span class="small-caps">gif</span> also shows that local functions do not have such a code lens attached to them.
+I quite like type signatures for local definitions,
+so that’s a bit of a shame.
+<p></p>
+Fixing this is not terribly difficult either;
+the hardest thing is having to look through lsp-mode’s codebase so one actually knows which functions to call.
+When defining the overrides for <code>lsp-clients-extract-signature-on-hover</code>, the <span class="small-caps">lsp</span> response was free,
+whereas now we want to create a request for the thing at point.
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-get-type-signature-at-point</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">lang</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Get LANGs type signature at point.</span>
+<span class="s">LANG is not given, get it from </span><span class="ss">`lsp--buffer-language'</span><span class="s">.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">-some-&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">lsp--text-document-position-params</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">lsp--make-request</span><span class="w"> </span><span class="s">&quot;textDocument/hover&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">lsp--send-request</span>
+<span class="w">    </span><span class="nv">lsp:hover-contents</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="p">(</span><span class="nv">-flip</span><span class="w"> </span><span class="nf">#'plist-get</span><span class="p">)</span><span class="w"> </span><span class="nb">:value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="nv">lang</span><span class="w"> </span><span class="nv">lsp--buffer-language</span><span class="p">))))</span>
+</pre></div>
+
+<p></p>
+Once we have the type signature at point,
+all that’s left is to insert it into the buffer.<!--
+--><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">For when hovering inexplicably breaks again,
+this also enables for a quick definition of “show the type signature of the thing at point”:
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-show-type-signature</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Show the type signature for the thing at</span>
+<span class="s">point.  This is essentially what</span>
+<span class="ss">`lsp-clients-extract-signature-on-hover'</span>
+<span class="s">does, just as an extra function.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">message</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">slot/syntax-highlight-string</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">slot/lsp-get-type-signature-at-point</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">major-mode</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+This can, again, be bound to a key for convenient access.</div><!--
+-->
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-haskell-type-signature</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Add a type signature for the thing at point.</span>
+<span class="s">This is very convenient, for example, when dealing with local</span>
+<span class="s">functions, since those—as opposed to top-level expressions—don't</span>
+<span class="s">have a code lens for \&quot;add type signature here\&quot; associated with</span>
+<span class="s">them.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">value</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/lsp-get-type-signature-at-point</span><span class="w"> </span><span class="s">&quot;haskell&quot;</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">slot/back-to-indentation</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">haskell-indentation-newline-and-indent</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+Bind that to a key and you’re good to go!
+<p></p>
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/add-type-signature-keybinding.gif" alt="Clicking on the relevant code lens adds a type signature">
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
