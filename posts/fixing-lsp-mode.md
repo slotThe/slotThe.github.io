@@ -182,7 +182,7 @@ Instead, I'd much rather see
      src="../images/fixing-lsp-mode/lsp-rust-improved-hover.png"
      alt="Instead of the module, show the type singature">
 
-which looks much more useful; to me.
+which looks much more useful to me.
 
 Luckily, this is exactly the same situation as in the Haskell case,
 which we already fixed.

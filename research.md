@@ -94,7 +94,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 
 
 - *Abstract Schur Functors* \
-  2023-07-21, Block seminar "Operads", Bonn.
+  2023-07-21, Block seminar "Operads", Bonn; [notes][slides:abstact-schur-functors]
 
   Based on [this paper](https://arxiv.org/abs/2106.00190) by Baez, Moeller, and Trimble.
 
@@ -178,6 +178,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
+[slides:abstact-schur-functors]: /talks/abstract-schur-functors.pdf
 [slides:duality:handout]: /talks/duality-in-monoidal-categories-handout.pdf
 [slides:duality]: /talks/duality-in-monoidal-categories.pdf
 [slides:mackey-functors:handout]: /talks/mackey-functors.pdf
