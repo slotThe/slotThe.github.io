@@ -68,8 +68,10 @@
         Posted on 2023-10-22
       
       
+        &thinsp;·&thinsp; last modified: 2023-10-27
       
-        &thinsp;·&thinsp; <span title="1105 words">5 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1139 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'rust'." href="../tags/rust.html" rel="tag">rust</a>
@@ -225,7 +227,17 @@ but that one does not try to load all of the “safe” hooks for the major mode
 However, I have some <code>pretify-symbols-mode</code> configuration for Haskell
 which I would very much like to take effect.
 <p></p>
-All in all, we have
+All in all, we have<!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+This code assumes that lsp-mode uses
+<a href="https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization">plists instead of hash tables for deserialisation</a>.
+If you don’t have the <code>lsp-use-plists</code> variable set<!--
+  -->—and have recompiled lsp-mode afterwards—<!--
+  -->then just replace <code>(plist-get contents :value)</code> with <code>(gethash "value" contents)</code>.</div><!--
+-->
 <div class="highlight" style="emacs-lisp"><pre><span></span><span class="c1">;; Fixes https://github.com/emacs-lsp/lsp-haskell/issues/151</span>
 <span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="p">(</span><span class="nv">_server-id</span><span class="w"> </span><span class="p">(</span><span class="nf">eql</span><span class="w"> </span><span class="nv">lsp-haskell</span><span class="p">)))</span>
@@ -275,7 +287,7 @@ Nice.
 <p></p>
 Here’s another problem that we’ve solved <em>en passant</em>:
 lsp-mode has code-lens support<!--
---><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">Incidentally, this is the only reason that I use lsp-mode over eglot.
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">Incidentally, this is the only reason that I use lsp-mode over eglot.
 There is a
 <a href="https://github.com/joaotavora/eglot/pull/71">stalled <span class="small-caps">pr</span></a>
 from five years ago,
@@ -287,7 +299,7 @@ which enables one to add type signatures by clicking on the relevant button:
 <img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/add-type-signature-mouse.gif" alt="Clicking on the relevant code lens adds a type signature">
 <p></p>
 However, this ostensibly requires me to use the mouse,<!--
---><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">Lsp-mode also features the <code>lsp-avy-lens</code>,
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Lsp-mode also provides <code>lsp-avy-lens</code>,
 so this is not really an actual problem.</div><!--
 -->
 and—more importantly—the above <span class="small-caps">gif</span> also shows that local functions do not have such a code lens attached to them.
@@ -313,7 +325,7 @@ whereas now we want to create a request for the thing at point.
 <p></p>
 Once we have the type signature at point,
 all that’s left is to insert it into the buffer.<!--
---><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">For when hovering inexplicably breaks again,
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">For when hovering inexplicably breaks again,
 this also enables for a quick definition of “show the type signature of the thing at point”:
 <div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-show-type-signature</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Show the type signature for the thing at</span>

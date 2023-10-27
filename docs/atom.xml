@@ -23,8 +23,10 @@
         Posted on 2023-10-22
       
       
+        &thinsp;·&thinsp; last modified: 2023-10-27
       
-        &thinsp;·&thinsp; <span title="1112 words">5 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1148 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'haskell'." href="/tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'rust'." href="/tags/rust.html" rel="tag">rust</a>
@@ -137,7 +139,7 @@ The only thing to take care of is that we dont want to run <code>lsp-mode</code>
 but that one does not try to load all of the “safe” hooks for the major mode.
 However, I have some <code>pretify-symbols-mode</code> configuration for Haskell
 which I would very much like to take effect.</p>
-<p>All in all, we have</p>
+<p>All in all, we have<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <pre class="emacs-lisp"><code>;; Fixes https://github.com/emacs-lsp/lsp-haskell/issues/151
 (cl-defmethod lsp-clients-extract-signature-on-hover
   (contents (_server-id (eql lsp-haskell)))
@@ -172,10 +174,10 @@ Writing</p>
 Nice.</p>
 <h2 id="bonus-adding-type-signatures">Bonus: adding type signatures</h2>
 <p>Here’s another problem that we’ve solved <em>en passant</em>:
-lsp-mode has code-lens support<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>,
+lsp-mode has code-lens support<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>,
 which enables one to add type signatures by clicking on the relevant button:</p>
 <p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/add-type-signature-mouse.gif" alt="Clicking on the relevant code lens adds a type signature"></p>
-<p>However, this ostensibly requires me to use the mouse,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+<p>However, this ostensibly requires me to use the mouse,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
 and—more importantly—the above GIF also shows that local functions do not have such a code lens attached to them.
 I quite like type signatures for local definitions,
 so that’s a bit of a shame.</p>
@@ -194,7 +196,7 @@ LANG is not given, get it from `lsp--buffer-language'.&quot;
     (funcall (-flip #'plist-get) :value)
     (slot/lsp-get-type-signature (or lang lsp--buffer-language))))</code></pre>
 <p>Once we have the type signature at point,
-all that’s left is to insert it into the buffer.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+all that’s left is to insert it into the buffer.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
 <pre class="emacs-lisp"><code>(defun slot/lsp-haskell-type-signature ()
   &quot;Add a type signature for the thing at point.
 This is very convenient, for example, when dealing with local
@@ -217,15 +219,22 @@ so here we are.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩�
 <li id="fn2"><p>And also eglot, judging from a cursory test.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Even more so because smart people have already written this for me;
 see the docstring.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Incidentally, this is the only reason that I use lsp-mode over eglot.
+<li id="fn4"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>This code assumes that lsp-mode uses
+<a href="https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization">plists instead of hash tables for deserialisation</a>.
+If you don’t have the <code>lsp-use-plists</code> variable set<!--
+  -->—and have recompiled lsp-mode afterwards—<!--
+  -->then just replace <code>(plist-get contents :value)</code> with <code>(gethash "value" contents)</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Incidentally, this is the only reason that I use lsp-mode over eglot.
 There is a
 <a href="https://github.com/joaotavora/eglot/pull/71">stalled PR</a>
 from five years ago,
 but that never led anywhere.
-<em>Someone</em> should pick this back up, I suppose.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Lsp-mode also features the <code>lsp-avy-lens</code>,
-so this is not really an actual problem.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} For when hovering inexplicably breaks again,
+<em>Someone</em> should pick this back up, I suppose.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Lsp-mode also provides <code>lsp-avy-lens</code>,
+so this is not really an actual problem.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>{-} For when hovering inexplicably breaks again,
 this also enables for a quick definition of “show the type signature of the thing at point”:</p>
 <pre class="emacs-lisp"><code>(defun slot/lsp-show-type-signature ()
   &quot;Show the type signature for the thing at
@@ -237,7 +246,7 @@ does, just as an extra function.&quot;
    (slot/syntax-highlight-string
     (slot/lsp-get-type-signature-at-point)
     major-mode)))</code></pre>
-<p>This can, again, be bound to a key for convenient access.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<p>This can, again, be bound to a key for convenient access.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </aside>
 </div>

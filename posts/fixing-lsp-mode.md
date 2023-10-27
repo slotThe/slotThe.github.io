@@ -1,6 +1,7 @@
 ---
 title: Fixing Lsp-Mode's Hover Signatures
 date: 2023-10-22
+last-modified: 2023-10-27
 tags: emacs, haskell, rust
 ---
 
@@ -141,7 +142,7 @@ but that one does not try to load all of the "safe" hooks for the major mode.
 However, I have some `pretify-symbols-mode` configuration for Haskell
 which I would very much like to take effect.
 
-All in all, we have
+All in all, we have[^7]
 
 ``` emacs-lisp
 ;; Fixes https://github.com/emacs-lsp/lsp-haskell/issues/151
@@ -294,5 +295,15 @@ Bind that to a key and you're good to go!
       but that issue seems to have stalled,
       so here we are.
 
-[^6]: Lsp-mode also features the `lsp-avy-lens`,
+[^6]: Lsp-mode also provides `lsp-avy-lens`,
       so this is not really an actual problem.
+
+[^7]: {-} 󠀠
+
+      󠀠
+
+      This code assumes that lsp-mode uses
+      [plists instead of hash tables for deserialisation](https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization).
+      If you don't have the `lsp-use-plists` variable set<!--
+      -->—and have recompiled lsp-mode afterwards—<!--
+      -->then just replace `(plist-get contents :value)` with `(gethash "value" contents)`.
