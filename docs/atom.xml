@@ -210,7 +210,7 @@ them.&quot;
     (haskell-indentation-newline-and-indent)))</code></pre>
 <p>Bind that to a key and you’re good to go!</p>
 <p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/add-type-signature-keybinding.gif" alt="Clicking on the relevant code lens adds a type signature"></p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>I have reported this as a bug <a href="https://github.com/emacs-lsp/lsp-haskell/issues/151">here</a>,
@@ -248,7 +248,7 @@ does, just as an extra function.&quot;
     major-mode)))</code></pre>
 <p>This can, again, be bound to a key for convenient access.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -467,7 +467,7 @@ all this entails is to amend the respective line in <code>TeX-fold-math-spec-lis
 <p>into something like this:</p>
 <p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math"></p>
 <p>Nice.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>{-} If you don’t have AUCTeX installed for some reason<!--
@@ -554,7 +554,7 @@ which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-ba
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -862,7 +862,7 @@ such that only one keybinding is needed:</p>
     (slot/change-sexp)))
 
 (bind-key &quot;M-i&quot; #'slot/change-around)</code></pre>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>{-} The term “S-expression” is not super accurate,
@@ -919,7 +919,7 @@ At some point this should definitely be fixed in puni, though.<a href="#fnref10"
 Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p><code>M-o</code> will never be something other than <code>other-window</code>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -1011,7 +1011,7 @@ check for a certain regular expression, whitespace, and say something if it matc
 <p>All one has to do is to execute this before sending a mail:</p>
 <pre class="emacs-lisp"><code>(add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)</code></pre>
 <p>and we’re good to go.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Looking for an attachment is complicated insofar as there are some ways the regular expression might match,
@@ -1046,7 +1046,7 @@ However, this is not important for what follows, so I simply omitted it.</p>
      finally return nil)))</code></pre>
 <p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -1398,7 +1398,7 @@ The function to add a <code>References</code> heading in its place is swiftly wr
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                 ]</span></code></pre></div>
 <p>All we need to do now is to actually create that header.
 Again inspecting the HTML, one can spy a line along the lines of</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;refs&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;references csl-bib-body&quot;</span><span class="ot"> role</span><span class="op">=</span><span class="st">&quot;doc-bibliography&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;refs&quot;</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;references csl-bib-body&quot;</span> <span class="er">role</span><span class="ot">=</span><span class="st">&quot;doc-bibliography&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>when the references start.
 Inserting a heading above that sounds like a plan.
 This can again be done using filters,
@@ -1661,7 +1661,7 @@ after all.
 Finally, I think a format along the lines of <code>tableiseBib</code> would be quite nice to have with label-style citations.
 However, the current implementation is much too specific to justify living anywhere but a personal configuration.
 Some day, maybe.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>If you want some more information,
@@ -1706,7 +1706,7 @@ I seamlessly walk over all <code>Block</code>s in the AST
 and pick out the ones I’d like to change.
 Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -1920,7 +1920,7 @@ or, in different notation,
   \bigoplus_{n + m = r} \mathsf{Ind}_{S_n \times S_m}^{S_k} Fn \otimes_{\mathtt{k}} Gm,
 \]</span>
 which is exactly the kind of formula that we wanted to end up with. Neat.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Provided some extra technical conditions:
@@ -1961,7 +1961,7 @@ In both expressions,
     \int^{r_1 \dots r_m}\!\! \mathbb{S}(r_1 + \dots + r_m, n) \otimes G r_1 \otimes \dots \otimes G r_m.
   \]</span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -2028,7 +2028,7 @@ Other niceties, like specifying alternative lisp directories, are also included:
 <p>For more information on the specific syntax,
 refer to <code>C-h v package-vc-selected-packages RET</code>,
 and the relevant info node <code>(emacs)Fetching Package Sources</code>.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>There is no reason for that, of course.
@@ -2044,7 +2044,7 @@ make bootstrap
 sudo make install</code></pre>
 <p>away!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -2493,7 +2493,7 @@ In my opinion, the changes made by Keyboardio,
 like the two additional thumb buttons,
 aren’t strictly necessary, so there isn’t much one is missing;
 plus, building something yourself is much more rewarding than buying it!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>{-} 󠀠</p>
@@ -2542,7 +2542,7 @@ QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a 
 <li id="fn13"><p>Although, strictly speaking, only <code>'</code> would be necessary, as <code>S-L2</code> is pretty easy to hit.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn14"><p>I will try to keep this post updated with newer versions.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -2742,7 +2742,7 @@ simultaneously. So much so, in fact, that I no longer have a problem
 looking up information from multiple sources mid (text) conversation.
 This not only helps me, but I reckon a few users of the <code>#xmonad</code> <a href="https://web.libera.chat/#xmonad">IRC
 Channel</a> are quite glad about this as well!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Just to name a few, I regularly look things up on
@@ -2789,7 +2789,7 @@ lot in this piece of code is:</p>
 <p>This is just creates a basic (i.e. there is no additional ‘KeyMask’ to consider)
 submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -2951,7 +2951,7 @@ reckon it wouldn’t be too hard to cook up a more general implementation.</p>
 <p>Again, if you want to give the package a spin then you can find it on
 <a href="https://gitlab.com/slotThe/change-env">GitLab</a>, <a href="https://github.com/slotThe/change-env">GitHub</a>,
 and <a href="https://melpa.org/#/latex-change-env">MELPA</a>!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Available on <a href="https://gitlab.com/slotThe/change-env">GitLab</a> and
@@ -2975,7 +2975,7 @@ would require more sophisticated regular expressions, but—reading
 <code>latex​-​change-env-labels</code> and making some assumptions—it certainly
 seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -3044,10 +3044,10 @@ CSS into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sid
 worked!</p>
 <p>There is but one problem with this setup: paragraphs. A sidenote
 roughly looks like the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sidenote-wrapper&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;sn-NAME&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;margin-toggle sidenote-number&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;sn-NAME&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;margin-toggle&quot;</span><span class="dt">/&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sidenote&quot;</span><span class="dt">&gt;</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;sidenote-wrapper&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">label</span> <span class="er">for</span><span class="ot">=</span><span class="st">&quot;sn-NAME&quot;</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;margin-toggle sidenote-number&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span> <span class="er">type</span><span class="ot">=</span><span class="st">&quot;checkbox&quot;</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;sn-NAME&quot;</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;margin-toggle&quot;</span><span class="dt">/&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;sidenote&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    SIDENOTEn</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span></code></pre></div>
@@ -3265,11 +3265,11 @@ block containers.</p>
 <p>So far, I had assumed that there was a reason why Tufte CSS used <code>span</code>
 elements instead of <code>div</code>s in their sidenote, but this does not seem to
 be the case.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> Instead of writing</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sidenote&quot;</span><span class="dt">&gt;</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;sidenote&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  «sidenote»</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>one may well use</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sidenote&quot;</span><span class="dt">&gt;</span></span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;sidenote&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  «sidenote»</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>instead—since we render directly to HTML now, that door opened for us.
@@ -3286,7 +3286,7 @@ However, I have now created a <a href="https://github.com/jez/pandoc-sidenote/pu
 which adds a module called <code>Text.​Pandoc.​SideNoteHTML</code> as an alternative.
 This keeps backwards compatibility, yet still allows people to make use
 of the alternative filter.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>For example, this is one.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -3351,7 +3351,7 @@ most elegant solution to this problem. However, since using
 pandoc’s HTML5 writer is quite hard-coded into Hakyll, I don’t think
 that I will go down that path.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -3407,18 +3407,18 @@ following Haskell code block.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">fibs ::</span> [<span class="dt">Integer</span>]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fibs <span class="ot">=</span> <span class="dv">0</span> <span class="op">:</span> scanl' (<span class="op">+</span>) <span class="dv">1</span> fibs</span></code></pre></div>
 <p>Pandoc would generate something like the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sourceCode&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;cb1&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">pre</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sourceCode haskell&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">code</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sourceCode haskell&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;cb1-1&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#cb1-1&quot;</span><span class="ot"> aria-hidden</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="ot"> tabindex</span><span class="op">=</span><span class="st">&quot;-1&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;ot&quot;</span><span class="dt">&gt;</span>    fibs :: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> [<span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;dt&quot;</span><span class="dt">&gt;</span>Integer <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>]</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;sourceCode&quot;</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;cb1&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">pre</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;sourceCode haskell&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">code</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;sourceCode haskell&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;cb1-1&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;#cb1-1&quot;</span> <span class="er">aria-hidden</span><span class="ot">=</span><span class="st">&quot;true&quot;</span> <span class="er">tabindex</span><span class="ot">=</span><span class="st">&quot;-1&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;ot&quot;</span><span class="dt">&gt;</span>    fibs :: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> [<span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;dt&quot;</span><span class="dt">&gt;</span>Integer <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>]</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;cb1-2&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#cb1-2&quot;</span><span class="ot"> aria-hidden</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="ot"> tabindex</span><span class="op">=</span><span class="st">&quot;-1&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>    fibs</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;ot&quot;</span><span class="dt">&gt;</span>= <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;dv&quot;</span><span class="dt">&gt;</span>0 <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;op&quot;</span><span class="dt">&gt;</span>: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        scanl<span class="dv">&amp;#39;</span> (<span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;op&quot;</span><span class="dt">&gt;</span>+ <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>) <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;dv&quot;</span><span class="dt">&gt;</span>1</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;cb1-2&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;#cb1-2&quot;</span> <span class="er">aria-hidden</span><span class="ot">=</span><span class="st">&quot;true&quot;</span> <span class="er">tabindex</span><span class="ot">=</span><span class="st">&quot;-1&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>    fibs</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;ot&quot;</span><span class="dt">&gt;</span>= <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;dv&quot;</span><span class="dt">&gt;</span>0 <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;op&quot;</span><span class="dt">&gt;</span>: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        scanl<span class="dv">&amp;#39;</span> (<span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;op&quot;</span><span class="dt">&gt;</span>+ <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span>) <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;dv&quot;</span><span class="dt">&gt;</span>1</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> fibs</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">code</span><span class="dt">&gt;</span></span>
@@ -3453,23 +3453,23 @@ the output.</p>
 <pre class="console"><code>$ echo &quot;fibs :: [Integer]\nfibs = 0 : scanl' (+) 1 fibs&quot; \
    \ | pygmentize -l haskell -f html</code></pre>
 <p>produces an HTML output along the lines of</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;highlight&quot;</span><span class="dt">&gt;</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;highlight&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">pre</span><span class="dt">&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;nf&quot;</span><span class="dt">&gt;</span>fibs <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;ow&quot;</span><span class="dt">&gt;</span>:: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>[<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;kt&quot;</span><span class="dt">&gt;</span>Integer <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>] <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;nf&quot;</span><span class="dt">&gt;</span>fibs <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;ow&quot;</span><span class="dt">&gt;</span>= <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;mi&quot;</span><span class="dt">&gt;</span>0 <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;kt&quot;</span><span class="dt">&gt;</span>: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;n&quot;</span><span class="dt">&gt;</span>scanl<span class="dv">&amp;#39;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>(<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;o&quot;</span><span class="dt">&gt;</span>+ <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>) <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;mi&quot;</span><span class="dt">&gt;</span>1 <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;n&quot;</span><span class="dt">&gt;</span>fibs <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;nf&quot;</span><span class="dt">&gt;</span>fibs <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;ow&quot;</span><span class="dt">&gt;</span>:: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>[<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;kt&quot;</span><span class="dt">&gt;</span>Integer <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>] <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;nf&quot;</span><span class="dt">&gt;</span>fibs <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;ow&quot;</span><span class="dt">&gt;</span>= <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;mi&quot;</span><span class="dt">&gt;</span>0 <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;kt&quot;</span><span class="dt">&gt;</span>: <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;n&quot;</span><span class="dt">&gt;</span>scanl<span class="dv">&amp;#39;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>(<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;o&quot;</span><span class="dt">&gt;</span>+ <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;p&quot;</span><span class="dt">&gt;</span>) <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;mi&quot;</span><span class="dt">&gt;</span>1 <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;w&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;n&quot;</span><span class="dt">&gt;</span>fibs <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">pre</span><span class="dt">&gt;</span></span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>This looks much better! The class names are kind of obtuse, but
@@ -3623,7 +3623,7 @@ using the <a href="https://hackage.haskell.org/package/ghc-syntax-highlighter">g
 Seeing how there are a lot of language extensions that <code>pygmentize</code> does not highlight correctly,
 this seems well worth it!</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>All of this work for a mostly greyscale theme!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -3632,7 +3632,7 @@ the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX pac
 <li id="fn3"><p>If all else fails, simply <a href="https://aphyr.com/posts/353-rewriting-the-technical-interview">trace the sigils in the air and give
 them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -3755,12 +3755,12 @@ want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions
 welcome!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -3915,7 +3915,7 @@ and (ii) all morphisms in this set have length at least two. Hence, if
 we project any morphism down to <span class="math inline">\(\mathcal{C}\)</span>, it can’t possibly be the
 identity, and thus the snake identities for duals do not hold. If you
 want more details, check the paper <span class="citation" data-cites="halbig23:dualit-monoid-categ">[@halbig23:dualit-monoid-categ]</span>!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Or rather, a non-symmetric variant of it called an <em>r-category</em> in
@@ -3924,7 +3924,7 @@ want more details, check the paper <span class="citation" data-cites="halbig23:d
 category <span class="math inline">\(([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})\)</span> are
 exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -4651,7 +4651,7 @@ check for a certain regular expression, whitespace, and say something if it matc
 <p>All one has to do is to execute this before sending a mail:</p>
 <pre class="emacs-lisp"><code>(add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)</code></pre>
 <p>and we’re good to go.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>I am aware of the futility of this—Reddit is almost certainly
@@ -4693,7 +4693,7 @@ However, this is not important for what follows, so I simply omitted it.</p>
      finally return nil)))</code></pre>
 <p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -5186,7 +5186,7 @@ No. 10 (2005) pp. 1-136 (<a href="http://www.tac.mta.ca/tac/reprints/articles/1
 <li><p>Emily Riehl: “Weighted Limits and Colimits”; <a href="https://math.jhu.edu/~eriehl/weighted.pdf">lecture notes</a>.</p></li>
 </ul></li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>This is also sometimes called a <em>cosmos</em>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -5208,7 +5208,7 @@ dense in <span class="math inline">\(\mathsf{Cat}\)</span> immediately follows f
 that the nerve functor from <span class="math inline">\(\mathsf{Cat}\)</span> to <span class="math inline">\(\mathsf{sSet}\)</span>
 is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -5404,7 +5404,7 @@ perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
 of ways to automate boring tasks just that tiny bit more—definitely a
 win in my book!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>In case you are interested:</p>
@@ -5416,7 +5416,7 @@ win in my book!</p>
 <p>As the rest of my dotfiles, it’s available
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -5530,13 +5530,13 @@ and give it your preferred keybinding. For example:</p>
 your workflow and you won’t want to live without it. If not, then
 perhaps you still don’t understand what all the fuss is about; in either
 case, I’d like to <a href="mailto:soliditsallgood@mailbox.org">hear from you</a>!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Version 0.17.0 onwards.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -5689,7 +5689,7 @@ from lisp; <code>(query-replace-many '(("1" . "2") ("2" . "1")))</code> has exac
 the effect one would imagine it to have. As I said, everything is
 conveniently packaged up on <a href="https://gitlab.com/slotThe/query-replace-many">GitLab</a> and
 <a href="https://github.com/slotThe/query-replace-many">GitHub</a>—get it while it’s hot!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>This isn’t <em>quite</em> what’s actually done, but it’s the right mental
@@ -5703,7 +5703,7 @@ suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
 out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -5952,7 +5952,7 @@ useful, also let me know :)</p>
 XMonad config at all. In combination with the excellent <a href="https://hackage.haskell.org/package/turtle">turtle</a>
 library, I reckon it would be quite easy to produce Haskell versions of
 cool tools like magit.sh.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Go nuts!</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Alternatively, one could use the git versions of <code>xmonad</code> and
@@ -5970,7 +5970,7 @@ however!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></
 maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
@@ -6234,7 +6234,7 @@ convenience:
 <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad">my XMonad config</a>,
 <a href="https://www.orgroam.com/">org-roam</a>, <a href="https://github.com/oantolin/math-delimiters">math-delimiters</a>, <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a>, <a href="https://github.com/slotthe/change-env">latex-change-env</a>,
 <a href="https://github.com/slotthe/hmenu">hmenu</a>.</p>
-<aside id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>If you’d like some examples: being employed at a university also
@@ -6271,7 +6271,7 @@ part (scraping the arXiv xml for certain bits) was already done.
 On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </div>
 
       <!-- Body is included in the above file -->
