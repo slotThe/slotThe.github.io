@@ -38,6 +38,8 @@
     --fg-comment: #888888;
     --fg-comment2: #666666;
     --bg-code-accent: #f8edff;
+    --fg-diff-added: #005000;
+    --fg-diff-deleted: #8f1313;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -78,5 +80,7 @@
         --fg-comment: #aaa;
         --fg-comment2: #999;
         --bg-code-accent: #5e3f52;
+        --fg-diff-added: #a0e0a0;
+        --fg-diff-deleted: #ffbfbf;
     }
 }
