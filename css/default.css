@@ -446,3 +446,32 @@ a#to-top {
 div .highlight {
     padding-left: 1em;
 }
+
+/**********************************************************************
+  ACCORDEON MENUS
+*/
+
+summary {
+    padding-top: 1rem;
+    display: block;
+    padding-left: 2.2rem;
+    position: relative;
+    cursor: pointer;
+}
+
+summary:before {
+  content: '';
+  border-width: .4rem;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--fg);
+  position: absolute;
+  top: 1.5rem;
+  left: 1rem;
+  transform: rotate(0);
+  transform-origin: .2rem 50%;
+  transition: .25s transform ease;
+}
+
+details[open] > summary:before {
+  transform: rotate(90deg);
+}
