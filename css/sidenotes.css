@@ -137,7 +137,7 @@ label.margin-toggle:not(.sidenote-number) {
 
     /* Linkify sidenotes iff they are clickable */
     .sidenote-number:after {
-        color: #5b3355;
+        color: var(--fg-link);
         text-decoration: none;
     }
 
