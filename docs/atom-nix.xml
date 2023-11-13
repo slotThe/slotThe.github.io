@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Tony Zorman · Blog</title>
+    <link href="https://tony-zorman.com/atom-nix.xml" rel="self" />
+    <link href="https://tony-zorman.com" />
+    <id>https://tony-zorman.com/atom-nix.xml</id>
+    <author>
+        <name>Tony Zorman</name>
+        
+        <email>tonyzorman@mailbox.org</email>
+        
+    </author>
+    <updated>2023-11-13T00:00:00Z</updated>
+    <entry>
+    <title>Using XMonad with NixOS</title>
+    <link href="https://tony-zorman.com/posts/xmonad-on-nixos.html" />
+    <id>https://tony-zorman.com/posts/xmonad-on-nixos.html</id>
+    <published>2023-11-13T00:00:00Z</published>
+    <updated>2023-11-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2023-11-13
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1093 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'nix'." href="/tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html" rel="tag">xmonad</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>
+I recently switched to NixOS,
+and one of the first tasks was to properly set up my window manager of choice—XMonad, of course.
+Luckily, the project provides a custom flake that makes pretty very straightforward;
+if you know your way around flakes and Nix, that is.
+I don’t yet, so I hit some rough spots.
+Since providing more documentation always sounds like a worthwhile goal,
+this post is just that: a diff-by-diff guide on how everything was set up on my side.
+</p>
+<!--more-->
+As indicated, I’ll be working with direct diffs from my configuration;
+this seems to tell the story in the most accurate way.
+Because scrolling through lots of diffs is about as fun as a visit to the dentist,
+they are all tucked away in expandable sections
+<details>
+<summary>
+Like this one
+</summary>
+Hi :)
+</details>
+<h2 id="setup">Setup</h2>
+<p>First and foremost I should mention that XMonad does in fact have some documentation on how to set up the flake:
+it’s tucked away in <a href="https://github.com/xmonad/xmonad-contrib/blob/master/NIX.md">NIX.md</a>.
+The process mainly consists of two parts:
+adding an <code>xmonad-contrib</code> input to your system flake,
+and enabling this functionality in <code>windowManager.xmonad</code>.</p>
+<details>
+<summary>
+Modifying the system flake
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/flake.nix b/flake.nix</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>index 4cf35e4..dedd839 100644</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/flake.nix</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/flake.nix</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -6,13 +6,14 @@</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     emacs-overlay.url = github:nix-community/emacs-overlay;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     hmenu.url         = gitlab:slotThe/hmenu;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>     kmonad.url        = git+https://github.com/kmonad/kmonad?submodules=1&amp;dir=nix;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">+    xmonad-contrib.url= github:xmonad/xmonad-contrib;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     home-manager      = {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>       url = github:nix-community/home-manager;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>       inputs.nixpkgs.follows = &quot;nixpkgs&quot;;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>     };</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>   };</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">-  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, home-manager, ... }:</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="va">+  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, xmonad-contrib, home-manager, ... }:</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>     let my-overlays = {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>           nixpkgs.overlays = [</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>             emacs-overlay.overlays.default</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -20,7 +21,7 @@</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>           ];</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>         };</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>     in {</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="st">-      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem {</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="va">+      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem rec {</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>         system  = &quot;x86_64-linux&quot;;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>         modules = [</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>           ./nix/hardware-configuration.nix</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -34,6 +35,8 @@</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>             home-manager.useUserPackages = true;</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>             home-manager.users.slot      = import ./nix/home.nix;</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>           }</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="va">+        ] ++ xmonad-contrib.nixosModules ++ [</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="va">+          xmonad-contrib.modernise.${system}</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>         ];</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>       };</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>     };</span></code></pre></div>
+</details>
+<p>After having added the input, making use of the flake is quite easy.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<details>
+<summary>
+Enabling the flake
+</summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/nix/configuration.nix b/nix/configuration.nix</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>index 4700e14..50b1519 100644</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/nix/configuration.nix</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/nix/configuration.nix</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -63,6 +63,16 @@</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>     enable = true;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     layout = &quot;us&quot;;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>     displayManager.startx.enable = true;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="va">+    windowManager.xmonad = {</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="va">+      enable = true;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="va">+      enableContribAndExtras = true;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="va">+      flake  = {</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="va">+        enable   = true;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="va">+        compiler = &quot;ghc947&quot;;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="va">+      };</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="va">+      config = builtins.readFile ../xmonad/xmonad.hs;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="va">+      enableConfiguredRecompile = true;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="va">+    };</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>   };</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>   fonts.packages = with pkgs; [</span></code></pre></div>
+</details>
+<p>And that’s really it!
+No need to write a custom <code>launch</code> function and similar shenanigans,
+the flake takes care of all of those details for you—pretty neat, I think;
+thanks <a href="https://github.com/lsleary">Leary</a>!</p>
+<h2 id="primitive-emacs-integration">Primitive Emacs integration</h2>
+<p>Though not directly relevant to making the flake work,
+a nice-to-have feature is Emacs support.
+One could <a href="https://srid.ca/xmonad-conf-ide">create a cabal project</a> to get real <code>haskell-language-server</code> support,
+but that seems a bit overkill to me.
+I don’t really need more than a <code>ghci</code> session for my configuration<!--
+-->—anything complicated enough to warrant a language server should immediately be upstreamed into <code>xmonad-contrib</code>.</p>
+<p>In Emacs’s <code>haskell-mode</code>,
+executing <code>haskell-interactive-bring</code> (bound to <code>C-c C-c</code> by default)
+brings up a <code>ghci</code> session.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+Rather obviously, this fails out of the box.
+It tries to call the global <code>ghci</code>,
+which doesn’t come from the flake,
+and is thus not equipped with <code>xmonad-contrib</code> and other dependencies that I might have.</p>
+<p>The low-tech solution I chose here is twofold;
+first, I outsourced starting the Emacs daemon from my xinitrc to my XMonad configuration file.
+In this way, the resulting Emacs instance comes equipped with the <code>$XMONAD_GHC</code> environment variable.</p>
+<details>
+<summary>
+Moving Emacs
+</summary>
+<div class="sourceCode" id="cb4"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/nix/modules/emacs.nix b/nix/modules/emacs.nix</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>index 794f636..fad9cd0 100644</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/nix/modules/emacs.nix</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/nix/modules/emacs.nix</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -1,8 +1,6 @@</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a> { config, pkgs, ... }:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a> {</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">-  services.emacs.enable = true; # Start as daemon</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">-</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>   xdg.configFile.&quot;emacs&quot;.source = config.lib.my.mkSymlink &quot;emacs&quot;;</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>   home.packages = with pkgs; [</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/xinitrc/.xinitrc b/xinitrc/.xinitrc</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>index c9a6958..b8176bd 100755</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/xinitrc/.xinitrc</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/xinitrc/.xinitrc</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -32,10 +32,6 @@ kmonad ~/.config/kmonad/config.kbd &amp;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a> # 14dec2019</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a> redshift -l 55.7:12.6 -t 6500K:3200K -b 1.0:0.8 &amp;</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">-# Start emacs as a daemon.</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="st">-emacs --daemon &amp;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">-emacs --daemon=eshell &amp;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="st">-</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a> # Hide mouse cursor when idle.</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a> unclutter --ignore-scrolling &amp;</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -46,4 +42,4 @@ wallpaper-changer &amp;</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a> compton --blur-method kawase --blur-strength 5 --config ~/.config/compton/compton.conf &amp;</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a> # Start the window manager.</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="st">-exec &quot;$XMONAD_CONFIG_DIR&quot;/xmonad-x86_64-linux</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="va">+exec xmonad</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>index 5802888..933a274 100644</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/xmonad/xmonad.hs</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/xmonad/xmonad.hs</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -80,6 +80,7 @@ import XMonad.Prompt.Workspace (workspacePrompt)</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a> import XMonad.Util.Cursor (setDefaultCursor)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a> import XMonad.Util.EZConfig (additionalKeysP)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="va">+import XMonad.Util.SpawnOnce (spawnOnce)</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a> import XMonad.Util.Loggers (logTitlesOnScreen)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a> import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), customFloating, namedScratchpadAction, namedScratchpadManageHook, scratchpadWorkspaceTag)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a> import XMonad.Util.Run (EmacsLib (ElpaLib, Special), asBatch, asString, elispFun, eval, execute, executeNoQuote, findFile, getInput, inEditor, inEmacs, inProgram, inTerm, proc, progn, quote, require, setFrameName, setXClass, spawnExternalProcess, termInDir, toInput, withEmacsLibs, (&gt;&amp;&amp;&gt;), (&gt;-$), (&gt;-&gt;))</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -121,7 +122,10 @@ myConfig = def</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>   , normalBorderColor  = colorBg</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>   , focusedBorderColor = colorBlue</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>   , terminal           = &quot;alacritty&quot;</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="st">-  , startupHook        = setDefaultCursor xC_left_ptr</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="va">+  , startupHook        = do</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="va">+      setDefaultCursor xC_left_ptr</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="va">+      spawnOnce &quot;emacs --daemon&quot;        -- See Note [Emacs]</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="va">+      spawnOnce &quot;emacs --daemon=eshell&quot;</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>   , workspaces         = topicNames topics</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>   , manageHook         = myManageHook</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>   , layoutHook         = lessBorders (Combine Union Screen OnlyFloat) layoutOrder</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -132,6 +136,14 @@ myConfig = def</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>                          -- move pointer to exact center of that window.</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="va">+{- Note [Emacs]</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="va">+</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="va">+All of the Emacs daemons are spawned here, and *not* as systemd services</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="va">+or in the ~/.xinitrc. The reason is that, in this way, Emacs inherits</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="va">+all environment variables that are set by the XMonad executable, like</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="va">+$XMONAD_GHC. See the bottom of this file for a use-case.</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="va">+-}</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="va">+</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a> -- | Building my own pretty-printer.</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a> xmobarPP :: ScreenId -&gt; X PP</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a> xmobarPP sid = pure . filterOutWsPP [scratchpadWorkspaceTag] $ def</span></code></pre></div>
+</details>
+<p>All that’s left now is to set some local variable,
+making Emacs aware that it should use another GHC version for my <code>xmonad.hs</code>.</p>
+<details>
+<summary>
+Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
+</summary>
+<div class="sourceCode" id="cb5"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>index 933a274..185ed2e 100644</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/xmonad/xmonad.hs</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/xmonad/xmonad.hs</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -881,3 +881,8 @@ switchToLayout = sendMessage . JumpToLayout</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a> -- submap from a list of @(key, action)@ pairs.</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a> basicSubmapFromList :: Ord key =&gt; [(key, action)] -&gt; Map (KeyMask, key) action</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a> basicSubmapFromList = fromList . map \(k, a) -&gt; ((0, k), a)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="va">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="va">+--- Local Variables:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="va">+--- mode: haskell</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="va">+--- eval: (setopt haskell-process-path-ghci (concat (or (getenv &quot;XMONAD_GHC&quot;) &quot;ghc&quot;) &quot;i&quot;))</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="va">+--- End:</span></span></code></pre></div>
+</details>
+<p>Now <code>C-c C-c</code> works out of the box!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
+I figured that out so you don’t have to.
+Also, don’t forget to provide XMonad with your configuration,
+lest you will be greeted by a black screen upon login.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>More precisely, I have <code>C-c C-c</code> bound to</p>
+<pre class="emacs-lisp"><code>(defun slot/haskell-load-and-bring ()
+  &quot;Sane behaviour when loading the current file into ghci.&quot;
+  (interactive)
+  (save-buffer)
+  (haskell-process-load-file)
+  (haskell-interactive-bring))</code></pre>
+<p>but this is only a small quality of life wrapper.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+
+</feed>

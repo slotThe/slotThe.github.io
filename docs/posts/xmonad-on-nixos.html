@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Using XMonad with NixOS · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#primitive-emacs-integration">Primitive Emacs integration</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Using XMonad with NixOS</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2023-11-13
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1091 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'nix'." href="../tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html" rel="tag">xmonad</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#primitive-emacs-integration">Primitive Emacs integration</a></li>
+</ul>
+  </div>
+
+<div>
+  <p>
+I recently switched to NixOS,
+and one of the first tasks was to properly set up my window manager of choice—XMonad, of course.
+Luckily, the project provides a custom flake that makes pretty very straightforward;
+if you know your way around flakes and Nix, that is.
+I don’t yet, so I hit some rough spots.
+Since providing more documentation always sounds like a worthwhile goal,
+this post is just that: a diff-by-diff guide on how everything was set up on my side.
+</p>
+<!--more-->
+As indicated, I’ll be working with direct diffs from my configuration;
+this seems to tell the story in the most accurate way.
+Because scrolling through lots of diffs is about as fun as a visit to the dentist,
+they are all tucked away in expandable sections
+<details>
+<summary>
+Like this one
+</summary>
+Hi :)
+</details>
+<h2 id="setup">Setup<a href="#setup" class="floatleft sec-link">§</a></h2>
+<p></p>
+First and foremost I should mention that <span class="small-caps">xm</span>onad does in fact have some documentation on how to set up the flake:
+it’s tucked away in <a href="https://github.com/xmonad/xmonad-contrib/blob/master/NIX.md">NIX.md</a>.
+The process mainly consists of two parts:
+adding an <code>xmonad-contrib</code> input to your system flake,
+and enabling this functionality in <code>windowManager.xmonad</code>.
+<details>
+<summary>
+Modifying the system flake
+</summary>
+<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/flake.nix b/flake.nix</span>
+<span class="gh">index 4cf35e4..dedd839 100644</span>
+<span class="gd">--- a/flake.nix</span>
+<span class="gi">+++ b/flake.nix</span>
+<span class="gu">@@ -6,13 +6,14 @@</span>
+<span class="w"> </span>    emacs-overlay.url = github:nix-community/emacs-overlay;
+<span class="w"> </span>    hmenu.url         = gitlab:slotThe/hmenu;
+<span class="w"> </span>    kmonad.url        = git+https://github.com/kmonad/kmonad?submodules=1&amp;dir=nix;
+<span class="gi">+    xmonad-contrib.url= github:xmonad/xmonad-contrib;</span>
+<span class="w"> </span>    home-manager      = {
+<span class="w"> </span>      url = github:nix-community/home-manager;
+<span class="w"> </span>      inputs.nixpkgs.follows = &quot;nixpkgs&quot;;
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+
+<span class="gd">-  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, home-manager, ... }:</span>
+<span class="gi">+  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, xmonad-contrib, home-manager, ... }:</span>
+<span class="w"> </span>    let my-overlays = {
+<span class="w"> </span>          nixpkgs.overlays = [
+<span class="w"> </span>            emacs-overlay.overlays.default
+<span class="gu">@@ -20,7 +21,7 @@</span>
+<span class="w"> </span>          ];
+<span class="w"> </span>        };
+<span class="w"> </span>    in {
+<span class="gd">-      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem {</span>
+<span class="gi">+      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem rec {</span>
+<span class="w"> </span>        system  = &quot;x86_64-linux&quot;;
+<span class="w"> </span>        modules = [
+<span class="w"> </span>          ./nix/hardware-configuration.nix
+<span class="gu">@@ -34,6 +35,8 @@</span>
+<span class="w"> </span>            home-manager.useUserPackages = true;
+<span class="w"> </span>            home-manager.users.slot      = import ./nix/home.nix;
+<span class="w"> </span>          }
+<span class="gi">+        ] ++ xmonad-contrib.nixosModules ++ [</span>
+<span class="gi">+          xmonad-contrib.modernise.${system}</span>
+<span class="w"> </span>        ];
+<span class="w"> </span>      };
+<span class="w"> </span>    };
+</pre></div>
+
+</details>
+<p></p>
+After having added the input, making use of the flake is quite easy.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
+I figured that out so you don’t have to.
+Also, don’t forget to provide <span class="small-caps">xm</span>onad with your configuration,
+lest you will be greeted by a black screen upon login.</div><!--
+-->
+<details>
+<summary>
+Enabling the flake
+</summary>
+<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/nix/configuration.nix b/nix/configuration.nix</span>
+<span class="gh">index 4700e14..50b1519 100644</span>
+<span class="gd">--- a/nix/configuration.nix</span>
+<span class="gi">+++ b/nix/configuration.nix</span>
+<span class="gu">@@ -63,6 +63,16 @@</span>
+<span class="w"> </span>    enable = true;
+<span class="w"> </span>    layout = &quot;us&quot;;
+<span class="w"> </span>    displayManager.startx.enable = true;
+<span class="gi">+    windowManager.xmonad = {</span>
+<span class="gi">+      enable = true;</span>
+<span class="gi">+      enableContribAndExtras = true;</span>
+<span class="gi">+      flake  = {</span>
+<span class="gi">+        enable   = true;</span>
+<span class="gi">+        compiler = &quot;ghc947&quot;;</span>
+<span class="gi">+      };</span>
+<span class="gi">+      config = builtins.readFile ../xmonad/xmonad.hs;</span>
+<span class="gi">+      enableConfiguredRecompile = true;</span>
+<span class="gi">+    };</span>
+<span class="w"> </span>  };
+
+<span class="w"> </span>  fonts.packages = with pkgs; [
+</pre></div>
+
+</details>
+<p></p>
+And that’s really it!
+No need to write a custom <code>launch</code> function and similar shenanigans,
+the flake takes care of all of those details for you—pretty neat, I think;
+thanks <a href="https://github.com/lsleary">Leary</a>!
+<h2 id="primitive-emacs-integration">Primitive Emacs integration<a href="#primitive-emacs-integration" class="floatleft sec-link">§</a></h2>
+<p></p>
+Though not directly relevant to making the flake work,
+a nice-to-have feature is Emacs support.
+One could <a href="https://srid.ca/xmonad-conf-ide">create a cabal project</a> to get real <code>haskell-language-server</code> support,
+but that seems a bit overkill to me.
+I don’t really need more than a <code>ghci</code> session for my configuration<!--
+-->—anything complicated enough to warrant a language server should immediately be upstreamed into <code>xmonad-contrib</code>.
+<p></p>
+In Emacs’s <code>haskell-mode</code>,
+executing <code>haskell-interactive-bring</code> (bound to <code>C-c C-c</code> by default)
+brings up a <code>ghci</code> session.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">More precisely, I have <code>C-c C-c</code> bound to
+<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/haskell-load-and-bring</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Sane behaviour when loading the current file into ghci.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">save-buffer</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">haskell-process-load-file</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">haskell-interactive-bring</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+but this is only a small quality of life wrapper.</div><!--
+-->
+Rather obviously, this fails out of the box.
+It tries to call the global <code>ghci</code>,
+which doesn’t come from the flake,
+and is thus not equipped with <code>xmonad-contrib</code> and other dependencies that I might have.
+<p></p>
+The low-tech solution I chose here is twofold;
+first, I outsourced starting the Emacs daemon from my xinitrc to my <span class="small-caps">xm</span>onad configuration file.
+In this way, the resulting Emacs instance comes equipped with the <code>$XMONAD_GHC</code> environment variable.
+<details>
+<summary>
+Moving Emacs
+</summary>
+<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/nix/modules/emacs.nix b/nix/modules/emacs.nix</span>
+<span class="gh">index 794f636..fad9cd0 100644</span>
+<span class="gd">--- a/nix/modules/emacs.nix</span>
+<span class="gi">+++ b/nix/modules/emacs.nix</span>
+<span class="gu">@@ -1,8 +1,6 @@</span>
+<span class="w"> </span>{ config, pkgs, ... }:
+
+<span class="w"> </span>{
+<span class="gd">-  services.emacs.enable = true; # Start as daemon</span>
+<span class="gd">-</span>
+<span class="w"> </span>  xdg.configFile.&quot;emacs&quot;.source = config.lib.my.mkSymlink &quot;emacs&quot;;
+
+<span class="w"> </span>  home.packages = with pkgs; [
+<span class="gh">diff --git a/xinitrc/.xinitrc b/xinitrc/.xinitrc</span>
+<span class="gh">index c9a6958..b8176bd 100755</span>
+<span class="gd">--- a/xinitrc/.xinitrc</span>
+<span class="gi">+++ b/xinitrc/.xinitrc</span>
+<span class="gu">@@ -32,10 +32,6 @@ kmonad ~/.config/kmonad/config.kbd &amp;</span>
+<span class="w"> </span># 14dec2019
+<span class="w"> </span>redshift -l 55.7:12.6 -t 6500K:3200K -b 1.0:0.8 &amp;
+
+<span class="gd">-# Start emacs as a daemon.</span>
+<span class="gd">-emacs --daemon &amp;</span>
+<span class="gd">-emacs --daemon=eshell &amp;</span>
+<span class="gd">-</span>
+<span class="w"> </span># Hide mouse cursor when idle.
+<span class="w"> </span>unclutter --ignore-scrolling &amp;
+
+<span class="gu">@@ -46,4 +42,4 @@ wallpaper-changer &amp;</span>
+<span class="w"> </span>compton --blur-method kawase --blur-strength 5 --config ~/.config/compton/compton.conf &amp;
+
+<span class="w"> </span># Start the window manager.
+<span class="gd">-exec &quot;$XMONAD_CONFIG_DIR&quot;/xmonad-x86_64-linux</span>
+<span class="gi">+exec xmonad</span>
+<span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
+<span class="gh">index 5802888..933a274 100644</span>
+<span class="gd">--- a/xmonad/xmonad.hs</span>
+<span class="gi">+++ b/xmonad/xmonad.hs</span>
+<span class="gu">@@ -80,6 +80,7 @@ import XMonad.Prompt.Workspace (workspacePrompt)</span>
+
+<span class="w"> </span>import XMonad.Util.Cursor (setDefaultCursor)
+<span class="w"> </span>import XMonad.Util.EZConfig (additionalKeysP)
+<span class="gi">+import XMonad.Util.SpawnOnce (spawnOnce)</span>
+<span class="w"> </span>import XMonad.Util.Loggers (logTitlesOnScreen)
+<span class="w"> </span>import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), customFloating, namedScratchpadAction, namedScratchpadManageHook, scratchpadWorkspaceTag)
+<span class="w"> </span>import XMonad.Util.Run (EmacsLib (ElpaLib, Special), asBatch, asString, elispFun, eval, execute, executeNoQuote, findFile, getInput, inEditor, inEmacs, inProgram, inTerm, proc, progn, quote, require, setFrameName, setXClass, spawnExternalProcess, termInDir, toInput, withEmacsLibs, (&gt;&amp;&amp;&gt;), (&gt;-$), (&gt;-&gt;))
+<span class="gu">@@ -121,7 +122,10 @@ myConfig = def</span>
+<span class="w"> </span>  , normalBorderColor  = colorBg
+<span class="w"> </span>  , focusedBorderColor = colorBlue
+<span class="w"> </span>  , terminal           = &quot;alacritty&quot;
+<span class="gd">-  , startupHook        = setDefaultCursor xC_left_ptr</span>
+<span class="gi">+  , startupHook        = do</span>
+<span class="gi">+      setDefaultCursor xC_left_ptr</span>
+<span class="gi">+      spawnOnce &quot;emacs --daemon&quot;        -- See Note [Emacs]</span>
+<span class="gi">+      spawnOnce &quot;emacs --daemon=eshell&quot;</span>
+<span class="w"> </span>  , workspaces         = topicNames topics
+<span class="w"> </span>  , manageHook         = myManageHook
+<span class="w"> </span>  , layoutHook         = lessBorders (Combine Union Screen OnlyFloat) layoutOrder
+<span class="gu">@@ -132,6 +136,14 @@ myConfig = def</span>
+<span class="w"> </span>                         -- move pointer to exact center of that window.
+<span class="w"> </span>  }
+
+<span class="gi">+{- Note [Emacs]</span>
+<span class="gi">+</span>
+<span class="gi">+All of the Emacs daemons are spawned here, and *not* as systemd services</span>
+<span class="gi">+or in the ~/.xinitrc. The reason is that, in this way, Emacs inherits</span>
+<span class="gi">+all environment variables that are set by the XMonad executable, like</span>
+<span class="gi">+$XMONAD_GHC. See the bottom of this file for a use-case.</span>
+<span class="gi">+-}</span>
+<span class="gi">+</span>
+<span class="w"> </span>-- | Building my own pretty-printer.
+<span class="w"> </span>xmobarPP :: ScreenId -&gt; X PP
+<span class="w"> </span>xmobarPP sid = pure . filterOutWsPP [scratchpadWorkspaceTag] $ def
+</pre></div>
+
+</details>
+<p></p>
+All that’s left now is to set some local variable,
+making Emacs aware that it should use another <span class="small-caps">ghc</span> version for my <code>xmonad.hs</code>.
+<details>
+<summary>
+Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
+</summary>
+<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
+<span class="gh">index 933a274..185ed2e 100644</span>
+<span class="gd">--- a/xmonad/xmonad.hs</span>
+<span class="gi">+++ b/xmonad/xmonad.hs</span>
+<span class="gu">@@ -881,3 +881,8 @@ switchToLayout = sendMessage . JumpToLayout</span>
+<span class="w"> </span>-- submap from a list of @(key, action)@ pairs.
+<span class="w"> </span>basicSubmapFromList :: Ord key =&gt; [(key, action)] -&gt; Map (KeyMask, key) action
+<span class="w"> </span>basicSubmapFromList = fromList . map \(k, a) -&gt; ((0, k), a)
+<span class="gi">+</span>
+<span class="gi">+--- Local Variables:</span>
+<span class="gi">+--- mode: haskell</span>
+<span class="gi">+--- eval: (setopt haskell-process-path-ghci (concat (or (getenv &quot;XMONAD_GHC&quot;) &quot;ghc&quot;) &quot;i&quot;))</span>
+<span class="gi">+--- End:</span>
+</pre></div>
+
+</details>
+<p></p>
+Now <code>C-c C-c</code> works out of the box!
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
