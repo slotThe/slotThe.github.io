@@ -252,5 +252,8 @@ Now `C-c C-c` works out of the box!
 
 [^2]: Note the presence of the `enableConfiguredRecompile` flag—this is necessary for `M-q` recompilation to work out of the box!
       I figured that out so you don't have to.
+      Make sure that the revision of `nixpkgs` that you track is recent enough,
+      else this flag may not be available.
+
       Also, don't forget to provide XMonad with your configuration,
       lest you will be greeted by a black screen upon login.

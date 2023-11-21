@@ -24,7 +24,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1093 words">5 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1113 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'nix'." href="/tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html" rel="tag">xmonad</a>
@@ -260,7 +260,9 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 <ol>
 <li id="fn1"><p>Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
 I figured that out so you don’t have to.
-Also, don’t forget to provide XMonad with your configuration,
+Make sure that the revision of <code>nixpkgs</code> that you track is recent enough,
+else this flag may not be available.</p>
+<p>Also, don’t forget to provide XMonad with your configuration,
 lest you will be greeted by a black screen upon login.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>More precisely, I have <code>C-c C-c</code> bound to</p>
 <pre class="emacs-lisp"><code>(defun slot/haskell-load-and-bring ()

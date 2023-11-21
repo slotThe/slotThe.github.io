@@ -67,7 +67,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1091 words">5 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1111 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'nix'." href="../tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html" rel="tag">xmonad</a>
@@ -164,6 +164,9 @@ Modifying the system flake
 After having added the input, making use of the flake is quite easy.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
 I figured that out so you don’t have to.
+Make sure that the revision of <code>nixpkgs</code> that you track is recent enough,
+else this flag may not be available.
+<p></p>
 Also, don’t forget to provide <span class="small-caps">xm</span>onad with your configuration,
 lest you will be greeted by a black screen upon login.</div><!--
 -->
