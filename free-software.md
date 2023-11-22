@@ -74,24 +74,6 @@ one can't help but also be a contributor to the latter if one uses the former.
 The configuration I use is available
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs).
 
-## Void Linux
-
-I maintain a few packages for the [Void] GNU/Linux distribution:
-
-``` console
-$ xmypkgs
-cgrep
-ghc
-ghc-bin
-kmonad
-pandoc
-```
-
-The fact that this includes GHC also means bumping/updating _every_
-Haskell package in case of an update—lots of fun!
-
-[Void]: https://voidlinux.org/
-
 # Author
 
 ## [hmenu]
