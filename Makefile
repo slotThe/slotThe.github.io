@@ -6,10 +6,10 @@ build:
 
 .PHONY: watch
 watch:
-	cabal build
-	cabal exec site rebuild
-	cabal exec site watch
+	nix build
+	nix run . rebuild
+	nix run . watch
 
 .PHONY: clean
 clean:
-	cabal exec site clean
+	nix run . clean

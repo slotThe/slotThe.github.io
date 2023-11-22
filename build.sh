@@ -45,7 +45,7 @@ staticCompileMathJax () {
 export -f staticCompileMathJax
 
 git submodule foreach "git pull && git submodule update --recursive"
-cabal build
-cabal exec site build
+nix build
+nix run . build
 find docs/ -name '*.html' | parallel --jobs 31 --max-args=1 staticCompileMathJax
-cabal exec site server
+nix run . server
