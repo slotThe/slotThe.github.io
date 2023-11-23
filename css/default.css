@@ -467,3 +467,11 @@ summary:before {
 details[open] > summary:before {
   transform: rotate(90deg);
 }
+
+/**********************************************************************
+  EMAIL OBFUSCATION
+*/
+
+span.email b {
+    display: none;
+}

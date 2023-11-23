@@ -30,8 +30,8 @@ Most of the time, I'm fastest to reply via E-Mail or IRC, but you try
 any of the following channels:
 
 + E-Mail:
-  + `soliditsallgood (at) mailbox (dot) org`
-  + `tonyzorman      (at) mailbox (dot) org`
+  + <span class="email">soliditsallgood@mailbox<b>.mailbox</b>.org</span>
+  + <span class="email">tonyzorman@mailbox<b>.mailbox</b>.org</span>
 + PGP: [`4896FB6C952846C3414C2475C927DE8C7DFD57B8`](./key.txt)
 + IRC: `Solid`@[irc.libera.chat](https://libera.chat/)
 + Matrix: `slot-`@[matrix.org](https://matrix.org/)
