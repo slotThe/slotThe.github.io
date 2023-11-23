@@ -20,13 +20,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .cpf { color: var(--fg-comment2); font-style: italic } /* Comment.PreprocFile */
 .c1 { color: var(--fg-comment2); font-style: italic } /* Comment.Single */
 .cs { color: var(--fg-comment2); font-weight: bold } /* Comment.Special */
-.gd { color: #545454 } /* Generic.Deleted */
-div[style="diff"] .gd { color: var(--fg-diff-deleted) } /* Generic.Deleted */
+                .gd { color: #545454 } /* Generic.Deleted */
+.highlight-diff .gd { color: var(--fg-diff-deleted) } /* Generic.Deleted */
 .ge { font-style: italic } /* Generic.Emph */
 .gr { color: #898989 } /* Generic.Error */
 .gh { color: var(--fg-output); font-weight: bold } /* Generic.Heading */
-.gi { color: #7D7D7D } /* Generic.Inserted */
-div[style="diff"] .gi { color: var(--fg-diff-added) } /* Generic.Inserted */
+                .gi { color: #7D7D7D } /* Generic.Inserted */
+.highlight-diff .gi { color: var(--fg-diff-added) } /* Generic.Inserted */
 .go { color: var(--fg-output) } /* Generic.Output */
 .gp { font-weight: bold } /* Generic.Prompt */
 .gs { font-weight: bold } /* Generic.Strong */
@@ -47,8 +47,8 @@ div[style="diff"] .gi { color: var(--fg-diff-added) } /* Generic.Inserted */
 .nd { color: #555555; font-weight: bold } /* Name.Decorator */
 .ni { color: #848484; font-weight: bold } /* Name.Entity */
 .ne { color: var(--fg-exception) } /* Name.Exception */
-.nf                         { font-weight: bold   } /* Name.Function */
-div[style="emacs-lisp"] .nf { font-weight: normal } /* Name.Function */
+.nf                       { font-weight: bold   } /* Name.Function */
+.highlight-emacs-lisp .nf { font-weight: normal } /* Name.Function */
 .nl { color: #363636; font-weight: bold } /* Name.Label */
 .nn { background-color: var(--bg-code-accent) } /* Name.Namespace */
 .nt { color: var(--fg-nametag); font-weight: bold } /* Name.Tag */

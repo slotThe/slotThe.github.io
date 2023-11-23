@@ -433,7 +433,8 @@ myPandocCompiler =
     callPygs :: String -> String -> Compiler String
     callPygs lang = unixFilter "pygmentize" [ "-l", lang
                                             , "-f", "html"
-                                            , "-P", "cssstyles=" <> lang
+                                            , "-P", "cssclass=highlight-" <> lang
+                                            , "-P", "cssstyles=padding-left: 1em;"
                                             ]
 
   processBib :: Item Pandoc -> Compiler (Item Pandoc)

@@ -135,7 +135,7 @@ Additionally, there is also <code>selectSearch</code> to look up the current
 <p></p>
 This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.</div><!--
 -->
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span><span class="w">              </span><span class="c1">-- def is an optional prompt config</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">promptSearch</span><span class="w"> </span><span class="n">def</span><span class="w"> </span><span class="n">wikipedia</span><span class="p">)</span>
 <span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-u M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">selectSearch</span><span class="w">     </span><span class="n">wikipedia</span><span class="p">)</span>
@@ -147,7 +147,7 @@ This would enable us to search through Wikipedia normally by pressing
 <code>M-s</code>, and directly look up the currently selected text with <code>M-u M-s</code>.<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">As an aside, this is an ideal use case for <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>.
 With that module, one could define an equivalent keybinding along the lines of
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span><span class="p">)]</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
 <span class="w">      </span><span class="kt">Raw</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">selectSearch</span><span class="w">     </span><span class="n">wikipedia</span>
@@ -183,7 +183,7 @@ X.A.Search sports about 40 different ones. Thankfully, adding new
 engines is easy, even in one’s own configuration; e.g., to look up
 something on <a href="https://hoogle.haskell.org/">Hoogle</a>, one would simply
 define
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">hoogle</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">hoogle</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
 <span class="nf">hoogle</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">searchEngine</span><span class="w"> </span><span class="s">&quot;hoogle&quot;</span><span class="w"> </span><span class="s">&quot;https://hoogle.haskell.org/?hoogle=&quot;</span>
 </pre></div>
 
@@ -196,7 +196,7 @@ There also is the <code>searchEngineF</code> function, which instead of just a
 string takes a function to also modify that string.<!--
 --><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">For the following code examples, you may need to place extra
 pragmas along the lines of
-<div class="highlight" style="haskell"><pre><span></span><span class="cm">{-# LANGUAGE BlockArguments #-}</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="cm">{-# LANGUAGE BlockArguments #-}</span>
 <span class="cm">{-# LANGUAGE LambdaCase     #-}</span>
 <span class="cm">{-# LANGUAGE MultiWayIf     #-}</span>
 </pre></div>
@@ -207,7 +207,7 @@ at the top of your <span class="small-caps">xm</span>onad configuration file.</d
 can build more complicated search engines; for example, the following
 constitutes a very basic URL entry function, which may also work as a
 sort of lightweight bookmarking system:
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">url</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">url</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
 <span class="nf">url</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">searchEngineF</span><span class="w"> </span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="nf">\</span><span class="n">s</span><span class="w"> </span><span class="ow">-&gt;</span>
 <span class="w">  </span><span class="kr">let</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="s">&quot;https://&quot;</span>
 <span class="w">   </span><span class="kr">in</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="p">`</span><span class="n">isPrefixOf</span><span class="p">`</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
@@ -217,7 +217,7 @@ sort of lightweight bookmarking system:
 The whole <span class="small-caps">api</span> is quite flexible. In my personal configuration I have
 defined a <code>git</code> search engine to quickly jump to certain projects on
 several different forges:
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">git</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">git</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">SearchEngine</span>
 <span class="nf">git</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">searchEngineF</span><span class="w"> </span><span class="s">&quot;repo&quot;</span><span class="w"> </span><span class="nf">\</span><span class="n">s</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">if</span>
 <span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">`</span><span class="n">elem</span><span class="p">`</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;change-env&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;irc-bot&quot;</span><span class="p">]</span>
 <span class="w">    </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;https://gitlab.com/slotThe/&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">s</span>
@@ -254,7 +254,7 @@ it, and so here are a few more personal tweaks that I figure might also
 be of interest to others. First, my setup is integrated with
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>—I use the prefix argument to decide whether I
 want “normal” searches, or ones using the primary selection.
-<div class="highlight" style="haskell"><pre><span></span><span class="c1">-- | Search commands; integration with X.A.Prefix.</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="c1">-- | Search commands; integration with X.A.Prefix.</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Keybindings</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">submap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">searchEngineMap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
@@ -279,7 +279,7 @@ following.<!--
 --><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">Just for completeness, an in order to improve
 copy-pasteability, the definition of <code>basicSubmapFromList</code> used a
 lot in this piece of code is:
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">basicSubmapFromList</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">basicSubmapFromList</span>
 <span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">Ord</span><span class="w"> </span><span class="n">key</span>
 <span class="w">  </span><span class="ow">=&gt;</span><span class="w"> </span><span class="p">[(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="p">)]</span>
 <span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Map</span><span class="w"> </span><span class="p">(</span><span class="kt">KeyMask</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="n">action</span>
@@ -291,7 +291,7 @@ lot in this piece of code is:
 This is just creates a basic (i.e. there is no additional ‘KeyMask’ to consider)
 submap from a list of <code>(key, action)</code> pairs.</div><!--
 -->
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Keybindings</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">searchKeys</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Keybindings</span>
 <span class="nf">searchKeys</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;M-s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">withPrefixArgument</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">submap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">searchEngineMap</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
 <span class="w">      </span><span class="kt">Raw</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">selectSearchBrowser</span>

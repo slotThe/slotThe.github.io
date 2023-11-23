@@ -175,7 +175,7 @@ looking at the thing at point, I can live with this for the moment.
 As one might imagine, the code is actually quite straightforward—it only
 consists of two functions! The first one is a little helper, querying
 the user for multiple pairs.
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">query-replace-many--get-queries</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">pairs</span><span class="p">)</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">query-replace-many--get-queries</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">pairs</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Get multiple </span><span class="ss">`query-replace'</span><span class="s"> pairs from the user.</span>
 <span class="s">PAIRS is a list of replacement pairs of the form (FROM . TO).&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">pcase-let*</span><span class="w"> </span><span class="p">((</span><span class="o">`</span><span class="p">(</span><span class="o">,</span><span class="nv">from</span><span class="w"> </span><span class="o">,</span><span class="nv">to</span><span class="w"> </span><span class="o">,</span><span class="nv">delim</span><span class="w"> </span><span class="o">,</span><span class="nv">arg</span><span class="p">)</span>
@@ -204,7 +204,7 @@ the user for multiple pairs.
 The actual <code>query-replace-many</code> function now just reads some pairs from
 the user by virtue of the above function, and then calls
 <code>perform-replace</code> with an appropriately generated regular expression.
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">query-replace-many</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">query-replace-many</span>
 <span class="w">    </span><span class="p">(</span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">delimited</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="nv">backward</span><span class="w"> </span><span class="nv">region-noncontiguous-p</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Like </span><span class="ss">`query-replace'</span><span class="s">, but query for several replacements.</span>
 <span class="s">Query for replacement PAIRS until the users enters an empty</span>

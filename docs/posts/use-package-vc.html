@@ -84,7 +84,7 @@ and supersedes—indeed, is a rewrite of—<a href="https://github.com/slotThe/v
 which is now only needed for people who prefer to stick to released versions of Emacs.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">There is no reason for that, of course.
 Building Emacs is just a
-<div class="highlight" style="shell"><pre><span></span><span class="nv">BUILD_OPTS</span><span class="o">=</span><span class="k">$(</span>emacs<span class="w"> </span><span class="se">\</span>
+<div class="highlight-shell" style="padding-left: 1em;"><pre><span></span><span class="nv">BUILD_OPTS</span><span class="o">=</span><span class="k">$(</span>emacs<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--batch<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--eval<span class="w"> </span><span class="s2">&quot;(prin1 system-configuration-options)&quot;</span><span class="k">)</span>
 
@@ -100,7 +100,7 @@ away!</div><!--
 -->
 In short,
 the keyword enables one to install packages directly from their remote source:
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">modus-themes</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">modus-themes</span>
 <span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:url</span><span class="w"> </span><span class="s">&quot;https://gitlab.com/protesilaos/modus-themes&quot;</span>
 <span class="w">       </span><span class="nb">:branch</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">))</span>
 </pre></div>
@@ -120,7 +120,7 @@ can be done by giving <code>:vc</code> a <code>:rev :newest</code> argument.
 Additionally,
 <code>:rev</code> can also be used to pin specific revisions of a package.
 Other niceties, like specifying alternative lisp directories, are also included:
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">vertico</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">vertico</span>
 <span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:url</span><span class="w"> </span><span class="s">&quot;https://github.com/minad/vertico&quot;</span>
 <span class="w">       </span><span class="nb">:rev</span><span class="w"> </span><span class="nb">:newest</span>
 <span class="w">       </span><span class="nb">:lisp-dir</span><span class="w"> </span><span class="s">&quot;extensions/&quot;</span><span class="p">))</span>

@@ -119,7 +119,7 @@ and enabling this functionality in <code>windowManager.xmonad</code>.
 <summary>
 Modifying the system flake
 </summary>
-<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/flake.nix b/flake.nix</span>
+<div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/flake.nix b/flake.nix</span>
 <span class="gh">index 4cf35e4..dedd839 100644</span>
 <span class="gd">--- a/flake.nix</span>
 <span class="gi">+++ b/flake.nix</span>
@@ -174,7 +174,7 @@ lest you will be greeted by a black screen upon login.</div><!--
 <summary>
 Enabling the flake
 </summary>
-<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/nix/configuration.nix b/nix/configuration.nix</span>
+<div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/nix/configuration.nix b/nix/configuration.nix</span>
 <span class="gh">index 4700e14..50b1519 100644</span>
 <span class="gd">--- a/nix/configuration.nix</span>
 <span class="gi">+++ b/nix/configuration.nix</span>
@@ -216,7 +216,7 @@ In Emacs’s <code>haskell-mode</code>,
 executing <code>haskell-interactive-bring</code> (bound to <code>C-c C-c</code> by default)
 brings up a <code>ghci</code> session.<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">More precisely, I have <code>C-c C-c</code> bound to
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/haskell-load-and-bring</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/haskell-load-and-bring</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Sane behaviour when loading the current file into ghci.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">save-buffer</span><span class="p">)</span>
@@ -239,7 +239,7 @@ In this way, the resulting Emacs instance comes equipped with the <code>$XMONAD_
 <summary>
 Moving Emacs
 </summary>
-<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/nix/modules/emacs.nix b/nix/modules/emacs.nix</span>
+<div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/nix/modules/emacs.nix b/nix/modules/emacs.nix</span>
 <span class="gh">index 794f636..fad9cd0 100644</span>
 <span class="gd">--- a/nix/modules/emacs.nix</span>
 <span class="gi">+++ b/nix/modules/emacs.nix</span>
@@ -322,7 +322,7 @@ making Emacs aware that it should use another <span class="small-caps">ghc</span
 <summary>
 Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 </summary>
-<div class="highlight" style="diff"><pre><span></span><span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
+<div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
 <span class="gh">index 933a274..185ed2e 100644</span>
 <span class="gd">--- a/xmonad/xmonad.hs</span>
 <span class="gi">+++ b/xmonad/xmonad.hs</span>

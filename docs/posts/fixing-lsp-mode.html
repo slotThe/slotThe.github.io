@@ -118,7 +118,7 @@ Let’s do that!
 <p></p>
 Take any Haskell function with a long enough type signature, like the
 following:
-<div class="highlight" style="haskell"><pre><span></span><span class="nf">iAmTooLong</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">iAmTooLong</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
 <span class="nf">iAmTooLong</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">undefined</span>
 </pre></div>
 
@@ -134,7 +134,7 @@ when hovering over the function name:
 That’s… not correct.
 Executing <code>lsp-describe-thing-at-point</code> immediately reveals the problem;
 the request we get back looks like this:
-<div class="highlight" style="text"><pre><span></span>``` haskell
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>``` haskell
 iAmTooLong :: String
 -&gt; String
 -&gt; String
@@ -151,7 +151,7 @@ Defined at »PATH«
 <p></p>
 The type signature is so long that the server breaks it into several lines.
 Lsp-mode uses <code>lsp-clients-extract-signature-on-hover</code> to extract a signature on hover—by default, it looks like this:
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">cl-defgeneric</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span><span class="w"> </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="nv">_server-id</span><span class="p">)</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">cl-defgeneric</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span><span class="w"> </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="nv">_server-id</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Extract a representative line from CONTENTS, to show in the echo area.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="p">(</span><span class="nv">s-lines</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">lsp--render-element</span><span class="w"> </span><span class="nv">contents</span><span class="p">)))))</span>
 </pre></div>
@@ -170,7 +170,7 @@ This is swiftly done:<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Even more so because smart people have already written this for me;
 see the docstring.</div><!--
 -->
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="p">(</span><span class="nv">lang</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="p">(</span><span class="nv">lang</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Get LANGs type signature in STR.</span>
 <span class="s">Original implementation from https://github.com/emacs-lsp/lsp-mode/pull/1740.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">start</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;```&quot;</span><span class="w"> </span><span class="nv">lang</span><span class="p">))</span>
@@ -189,7 +189,7 @@ see the docstring.</div><!--
 
 <p></p>
 We can now override the method with our own implementation:
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="p">(</span><span class="nv">_server-id</span><span class="w"> </span><span class="p">(</span><span class="nf">eql</span><span class="w"> </span><span class="nv">lsp-haskell</span><span class="p">)))</span><span class="w"> </span><span class="c1">; Only for Haskell.</span>
 <span class="w">  </span><span class="s">&quot;Display the type signature of the function at point.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">slot/lsp-get-type-signature</span><span class="w"> </span><span class="s">&quot;haskell&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">plist-get</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nb">:value</span><span class="p">)))</span>
@@ -206,7 +206,7 @@ the idea is to paste the string into a temporary buffer,
 activate <code>haskell-mode</code>,
 and grab the propertised string from that.
 The only thing to take care of is that we dont want to run <code>lsp-mode</code> and friends <em>again</em> in the temporary buffer.
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/syntax-highlight-string</span><span class="w"> </span><span class="p">(</span><span class="nv">str</span><span class="w"> </span><span class="nv">mode</span><span class="p">)</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/syntax-highlight-string</span><span class="w"> </span><span class="p">(</span><span class="nv">str</span><span class="w"> </span><span class="nv">mode</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Syntax highlight STR in MODE.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
 <span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
@@ -238,7 +238,7 @@ If you don’t have the <code>lsp-use-plists</code> variable set<!--
   -->—and have recompiled lsp-mode afterwards—<!--
   -->then just replace <code>(plist-get contents :value)</code> with <code>(gethash "value" contents)</code>.</div><!--
 -->
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="c1">;; Fixes https://github.com/emacs-lsp/lsp-haskell/issues/151</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="c1">;; Fixes https://github.com/emacs-lsp/lsp-haskell/issues/151</span>
 <span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="p">(</span><span class="nv">_server-id</span><span class="w"> </span><span class="p">(</span><span class="nf">eql</span><span class="w"> </span><span class="nv">lsp-haskell</span><span class="p">)))</span>
 <span class="w">  </span><span class="s">&quot;Display the type signature of the function at point.&quot;</span>
@@ -272,7 +272,7 @@ which looks much more useful to me.
 Luckily, this is exactly the same situation as in the Haskell case,
 which we already fixed.
 Writing
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">cl-defmethod</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="p">(</span><span class="nv">_server-id</span><span class="w"> </span><span class="p">(</span><span class="nf">eql</span><span class="w"> </span><span class="nv">rust-analyzer</span><span class="p">)))</span><span class="w"> </span><span class="c1">; Only for Rust.</span>
 <span class="w">  </span><span class="s">&quot;Display the type signature of the function at point.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">slot/syntax-highlight-string</span>
@@ -310,7 +310,7 @@ Fixing this is not terribly difficult either;
 the hardest thing is having to look through lsp-mode’s codebase so one actually knows which functions to call.
 When defining the overrides for <code>lsp-clients-extract-signature-on-hover</code>, the <span class="small-caps">lsp</span> response was free,
 whereas now we want to create a request for the thing at point.
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-get-type-signature-at-point</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">lang</span><span class="p">)</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-get-type-signature-at-point</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">lang</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Get LANGs type signature at point.</span>
 <span class="s">LANG is not given, get it from </span><span class="ss">`lsp--buffer-language'</span><span class="s">.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
@@ -327,7 +327,7 @@ Once we have the type signature at point,
 all that’s left is to insert it into the buffer.<!--
 --><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">For when hovering inexplicably breaks again,
 this also enables for a quick definition of “show the type signature of the thing at point”:
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-show-type-signature</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-show-type-signature</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Show the type signature for the thing at</span>
 <span class="s">point.  This is essentially what</span>
 <span class="ss">`lsp-clients-extract-signature-on-hover'</span>
@@ -342,7 +342,7 @@ this also enables for a quick definition of “show the type signature of the th
 <p></p>
 This can, again, be bound to a key for convenient access.</div><!--
 -->
-<div class="highlight" style="emacs-lisp"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-haskell-type-signature</span><span class="w"> </span><span class="p">()</span>
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/lsp-haskell-type-signature</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Add a type signature for the thing at point.</span>
 <span class="s">This is very convenient, for example, when dealing with local</span>
 <span class="s">functions, since those—as opposed to top-level expressions—don't</span>
