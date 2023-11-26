@@ -55,6 +55,9 @@ All of my preprints are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *The Kelly–Deligne Tensor Product* \
+  2023-11-25, Seminar "Factorisation homology", Dresden.
+
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden. \
   2023-05-23, HATC23, Marburg; [slides][slides:duality] ([handout][slides:duality:handout]). \
@@ -94,7 +97,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 
 
 - *Abstract Schur Functors* \
-  2023-07-21, Block seminar "Operads", Bonn; [notes][slides:abstact-schur-functors]
+  2023-07-21, "Operads" seminar, Bonn; [notes][slides:abstact-schur-functors]
 
   Based on [this paper](https://arxiv.org/abs/2106.00190) by Baez, Moeller, and Trimble.
 
@@ -102,7 +105,7 @@ All of my preprints are readily available on the [arXiv].[^2]
   2023-07-15, Mackey functors seminar, Dresden; see Section 6 of the [script][slides:mackey-functors:handout].
 
 - *Operads as Functors* \
-  2022-12-15, Block seminar "Operads", Bonn.
+  2022-12-15, "Operads" seminar, Bonn.
 
 - *Pivotality, twisted centres and the anti-double of a Hopf monad* \
   2022-05-12, Seminar of the Czech Academy of Sciences, Prague; [slides][slides:piv:prague]. \
