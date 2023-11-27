@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Integrating Zsh's History Into Eshell · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+        
+        
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Integrating Zsh's History Into Eshell</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2023-11-27
+      
+      
+      
+        &thinsp;·&thinsp; <span title="415 words">2 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<div>
+  I use eshell as my main shell.
+Still,
+a terminal emulator with zsh is kept around for longer running processes and <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpads</a>.
+One thing that’s essential for this setup to make sense is that eshell and zsh share the same history file.
+Sadly,
+this doesn’t work out of the box:
+zsh stores its history in a metafied format<!--
+-->—nothing that’s not fixable on the Emacs side, of course!
+<!--more-->
+<p></p>
+<a href="https://www.zsh.org/mla/users/2011/msg00154.html">This email</a> explains the problem quite well.
+In short:
+<blockquote>
+<p></p>
+[…] when 0x80-0x9F characters are used, then always 0x83 Meta
+character is inserted and following character is bit shifted, […]
+</blockquote>
+<p></p>
+This is not a bug, but expected behaviour;
+zsh’s history is saved in exactly such a metafied format.
+The upshot is that,
+when setting <code>eshell-history-file-name</code> to e.g. <code>"~/.config/zsh/zsh_history"</code>,
+Emacs either won’t know how to properly encode the file upon exiting eshell,
+or one will get suggestions<!--
+-->—using a package like <a href="https://github.com/dieggsy/esh-autosuggest">esh-autosuggest</a>—<!--
+-->containing garbage like <code>\304§</code> instead of <code>ć</code>.
+<p></p>
+The linked discussion helpfully contains a small C program to unmetafy the history:
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define Meta ((char) 0x83)</span>
+
+<span class="cm">/* from zsh utils.c */</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">unmetafy</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">len</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">t</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Meta</span><span class="p">;</span><span class="w"> </span><span class="n">p</span><span class="o">++</span><span class="p">);</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">++</span><span class="p">);)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="o">++</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Meta</span><span class="p">)</span>
+<span class="w">      </span><span class="n">t</span><span class="p">[</span><span class="mi">-1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">++</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="p">)</span>
+<span class="w">    </span><span class="o">*</span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+This looks pretty terse,
+at least to my non-C-reading-eyes,
+but essentially every time <code>0x83</code> is encountered,
+we delete it and <span class="small-caps">xor</span> the following character with the number 32.
+An implementation in elisp might look like the following:
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/unmetafy</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">cl-flet</span><span class="w"> </span><span class="p">((</span><span class="nv">unmetafy</span><span class="w"> </span><span class="p">(</span><span class="nv">input</span><span class="p">)</span>
+<span class="w">              </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">i</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nv">output</span><span class="p">)</span>
+<span class="w">                </span><span class="p">(</span><span class="nv">while-let</span><span class="w"> </span><span class="p">((</span><span class="nv">char</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">input</span><span class="p">))</span>
+<span class="w">                            </span><span class="p">(</span><span class="nv">inc-and-char</span>
+<span class="w">                             </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">=</span><span class="w"> </span><span class="nv">char</span><span class="w"> </span><span class="mh">#x83</span><span class="p">)</span>
+<span class="w">                                 </span><span class="c1">;; Skip meta character and unmetafy.</span>
+<span class="w">                                 </span><span class="o">`</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="o">,</span><span class="p">(</span><span class="nf">logxor</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="p">(</span><span class="nf">1+</span><span class="w"> </span><span class="nv">i</span><span class="p">)</span><span class="w"> </span><span class="nv">input</span><span class="p">)</span><span class="w"> </span><span class="mi">32</span><span class="p">))</span>
+<span class="w">                               </span><span class="c1">;; Advance as usual.</span>
+<span class="w">                               </span><span class="o">`</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="o">,</span><span class="nv">char</span><span class="p">))))</span>
+<span class="w">                  </span><span class="p">(</span><span class="nb">cl-incf</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">inc-and-char</span><span class="p">))</span>
+<span class="w">                  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">output</span><span class="w"> </span><span class="p">(</span><span class="nf">cons</span><span class="w"> </span><span class="p">(</span><span class="nf">cdr</span><span class="w"> </span><span class="nv">inc-and-char</span><span class="p">)</span><span class="w"> </span><span class="nv">output</span><span class="p">)))</span>
+<span class="w">                </span><span class="p">(</span><span class="nf">decode-coding-string</span>
+<span class="w">                 </span><span class="p">(</span><span class="nf">apply</span><span class="w"> </span><span class="nf">#'unibyte-string</span><span class="w"> </span><span class="p">(</span><span class="nf">nreverse</span><span class="w"> </span><span class="nv">output</span><span class="p">))</span>
+<span class="w">                 </span><span class="ss">'utf-8-unix</span>
+<span class="w">                 </span><span class="no">t</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">hist-file</span><span class="w"> </span><span class="s">&quot;~/.config/zsh/zsh_history&quot;</span><span class="p">))</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="p">(</span><span class="nf">mapconcat</span><span class="w"> </span><span class="p">(</span><span class="nv">-compose</span><span class="w"> </span><span class="nf">#'</span><span class="nv">unmetafy</span><span class="w"> </span><span class="nf">#'</span><span class="nv">string-to-list</span><span class="p">)</span>
+<span class="w">                           </span><span class="p">(</span><span class="nv">s-lines</span><span class="w"> </span><span class="p">(</span><span class="nv">f-read-bytes</span><span class="w"> </span><span class="nv">hist-file</span><span class="p">))</span>
+<span class="w">                           </span><span class="s">&quot;\n&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="p">(</span><span class="nv">write-file</span><span class="w"> </span><span class="nv">hist-file</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+This can be conveniently integrated into an <code>eshell/exit</code>-like function,
+such as
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/eshell-exit</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Exit eshell and kill the current frame.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">slot/unmetafy</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">eshell-write-history</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">save-buffers-kill-terminal</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+Finally, one just need to take care to bind that function to a key,
+and to unmetafy the history when eshell starts.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Unmetafying when quitting resolves the “Emacs can’t decide on an encoding” issue,
+and doing so at the start solves <code>esh-autosuggest</code> et al producing garbage suggestions.</div><!--
+-->
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">eshell</span>
+<span class="w">  </span><span class="nb">:hook</span><span class="w"> </span><span class="p">(</span><span class="nv">eshell-hist-load</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">slot/unmetafy</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">:bind</span><span class="w"> </span><span class="p">(</span><span class="nb">:map</span><span class="w"> </span><span class="nv">eshell-mode-map</span>
+<span class="w">              </span><span class="p">(</span><span class="s">&quot;C-x C-c&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">slot/eshell-exit</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -10,8 +10,132 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2023-11-13T00:00:00Z</updated>
+    <updated>2023-11-27T00:00:00Z</updated>
     <entry>
+    <title>Integrating Zsh's History Into Eshell</title>
+    <link href="https://tony-zorman.com/posts/eshell-zsh-history.html" />
+    <id>https://tony-zorman.com/posts/eshell-zsh-history.html</id>
+    <published>2023-11-27T00:00:00Z</published>
+    <updated>2023-11-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2023-11-27
+      
+      
+      
+        &thinsp;·&thinsp; <span title="416 words">2 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<div>
+  <p>I use eshell as my main shell.
+Still,
+a terminal emulator with zsh is kept around for longer running processes and <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpads</a>.
+One thing that’s essential for this setup to make sense is that eshell and zsh share the same history file.
+Sadly,
+this doesn’t work out of the box:
+zsh stores its history in a metafied format<!--
+-->—nothing that’s not fixable on the Emacs side, of course!</p>
+<!--more-->
+<p><a href="https://www.zsh.org/mla/users/2011/msg00154.html">This email</a> explains the problem quite well.
+In short:</p>
+<blockquote>
+<p>[…] when 0x80-0x9F characters are used, then always 0x83 Meta
+character is inserted and following character is bit shifted, […]</p>
+</blockquote>
+<p>This is not a bug, but expected behaviour;
+zsh’s history is saved in exactly such a metafied format.
+The upshot is that,
+when setting <code>eshell-history-file-name</code> to e.g. <code>"~/.config/zsh/zsh_history"</code>,
+Emacs either won’t know how to properly encode the file upon exiting eshell,
+or one will get suggestions<!--
+-->—using a package like <a href="https://github.com/dieggsy/esh-autosuggest">esh-autosuggest</a>—<!--
+-->containing garbage like <code>\304§</code> instead of <code>ć</code>.</p>
+<p>The linked discussion helpfully contains a small C program to unmetafy the history:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Meta </span><span class="op">((</span><span class="dt">char</span><span class="op">)</span><span class="pp"> </span><span class="bn">0x83</span><span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* from zsh utils.c */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> <span class="op">*</span>unmetafy<span class="op">(</span><span class="dt">char</span> <span class="op">*</span>s<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>len<span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> <span class="op">*</span>p<span class="op">,</span> <span class="op">*</span>t<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>p <span class="op">=</span> s<span class="op">;</span> <span class="op">*</span>p <span class="op">&amp;&amp;</span> <span class="op">*</span>p <span class="op">!=</span> Meta<span class="op">;</span> p<span class="op">++);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>t <span class="op">=</span> p<span class="op">;</span> <span class="op">(*</span>t <span class="op">=</span> <span class="op">*</span>p<span class="op">++);)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(*</span>t<span class="op">++</span> <span class="op">==</span> Meta<span class="op">)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      t<span class="op">[-</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="op">*</span>p<span class="op">++</span> <span class="op">^</span> <span class="dv">32</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>len<span class="op">)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>len <span class="op">=</span> t <span class="op">-</span> s<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> s<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>This looks pretty terse,
+at least to my non-C-reading-eyes,
+but essentially every time <code>0x83</code> is encountered,
+we delete it and XOR the following character with the number 32.
+An implementation in elisp might look like the following:</p>
+<pre class="emacs-lisp"><code>(defun slot/unmetafy ()
+  (cl-flet ((unmetafy (input)
+              (let ((i 0) output)
+                (while-let ((char (nth i input))
+                            (inc-and-char
+                             (if (= char #x83)
+                                 ;; Skip meta character and unmetafy.
+                                 `(2 . ,(logxor (nth (1+ i) input) 32))
+                               ;; Advance as usual.
+                               `(1 . ,char))))
+                  (cl-incf i (car inc-and-char))
+                  (setq output (cons (cdr inc-and-char) output)))
+                (decode-coding-string
+                 (apply #'unibyte-string (nreverse output))
+                 'utf-8-unix
+                 t))))
+    (let ((hist-file &quot;~/.config/zsh/zsh_history&quot;))
+      (with-temp-buffer
+        (insert (mapconcat (-compose #'unmetafy #'string-to-list)
+                           (s-lines (f-read-bytes hist-file))
+                           &quot;\n&quot;))
+        (write-file hist-file)))))
+</code></pre>
+<p>This can be conveniently integrated into an <code>eshell/exit</code>-like function,
+such as</p>
+<pre class="emacs-lisp"><code>(defun slot/eshell-exit (&amp;optional arg)
+  &quot;Exit eshell and kill the current frame.&quot;
+  (interactive &quot;P&quot;)
+  (slot/unmetafy)
+  (eshell-write-history)
+  (save-buffers-kill-terminal))
+</code></pre>
+<p>Finally, one just need to take care to bind that function to a key,
+and to unmetafy the history when eshell starts.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<pre class="emacs-lisp"><code>(use-package eshell
+  :hook (eshell-hist-load . slot/unmetafy)
+  :bind (:map eshell-mode-map
+              (&quot;C-x C-c&quot; . slot/eshell-exit)))
+</code></pre>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Unmetafying when quitting resolves the “Emacs can’t decide on an encoding” issue,
+and doing so at the start solves <code>esh-autosuggest</code> et al producing garbage suggestions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Using XMonad with NixOS</title>
     <link href="https://tony-zorman.com/posts/xmonad-on-nixos.html" />
     <id>https://tony-zorman.com/posts/xmonad-on-nixos.html</id>
