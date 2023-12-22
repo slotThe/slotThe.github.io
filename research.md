@@ -23,6 +23,14 @@ Some more keywords include [Hopf monads], [graphical calculi], [duoidal] and [li
 
 All of my preprints are readily available on the [arXiv].[^2]
 
+- *[Diagrammatics for Comodule Monads]* \
+   Joint work with Sebastian Halbig.
+
+    We extend Willerton's [@willerton08] graphical calculus for bimonads
+    to comodule monads, a monadic interpretation of module categories
+    over a monoidal category. As an application, we prove a version of
+    Tannaka–Krein duality for these structures.
+
 - *[Duality in Monoidal Categories]* \
    Joint work with Sebastian Halbig.
 
@@ -58,6 +66,9 @@ All of my preprints are readily available on the [arXiv].[^2]
 - *The Kelly–Deligne Tensor Product* \
   2023-11-25, Seminar "Factorisation homology", Dresden.
 
+  Based on *Tensor products of finitely cocomplete and abelian categories* by
+  López Franco [@lopez13:tensor].
+
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden. \
   2023-05-23, HATC23, Marburg; [slides][slides:duality] ([handout][slides:duality:handout]). \
@@ -92,14 +103,13 @@ All of my preprints are readily available on the [arXiv].[^2]
   Additionally, a weaker version of the above statement is true:
   every monoidal category with tensor representable internal-hom is Grothendieck–Verdier.
 
-  This talk is based on
-  [joint work with Sebastian Halbig](https://arxiv.org/abs/2301.03545).
-
+  This talk is based on joint work with Sebastian Halbig [@halbig23:dualit-monoid-categ].
 
 - *Abstract Schur Functors* \
   2023-07-21, "Operads" seminar, Bonn; [notes][slides:abstact-schur-functors]
 
-  Based on [this paper](https://arxiv.org/abs/2106.00190) by Baez, Moeller, and Trimble.
+  Based on the paper *Schur Functors and Categorified Plethysm* by Baez, Moeller, and Trimble
+  [@baez21:schur-funct-categ-pleth].
 
 - *Abstract Mackey Functors* \
   2023-07-15, Mackey functors seminar, Dresden; see Section 6 of the [script][slides:mackey-functors:handout].
@@ -122,21 +132,21 @@ All of my preprints are readily available on the [arXiv].[^2]
   monads allows us to combine the algebraic and categorical perspective
   on such pairs.
 
-  Based on [joint work with Sebastian Halbig](https://arxiv.org/abs/2201.05361).
+  Based on joint work with Sebastian Halbig [@halbig22:pivot-hopf].
 
 - *Optics in functional programming—a categorical perspective* \
    2022-01-10, Seminar GMM, Dresden; [slides][slides:profunctor].
 
   A talk about the categorical aspects of (profunctor) optics, as done
-  by [Riley] and [Clark et.al.], as well as connections to earlier
-  mathematical work by [Pastro and Street].
+  by Riley [@riley18:categ-optic] and Clark et al [@clarke20:profun-optic-categ-updat],
+  as well as connections to earlier mathematical work by Pastro and Street [@pastro08:doubl].
 
 - *Visual Category Theory* \
   2021-07-26, Seminar GMM, Dresden.
 
   The defense of my master's thesis, concentrating on a
   higher-dimensional graphical calculus, as first introduced by
-  [Willerton] and extended in the thesis.  The "basic"
+  Willerton [@willerton2008] and extended in the thesis.  The "basic"
   [slides][slides:visual-cat] are available—the talk was given on a
   Wacom tablet and thus contained many live drawings to illustrate the
   concepts.  These, however, are lost to time.
@@ -148,7 +158,7 @@ All of my preprints are readily available on the [arXiv].[^2]
   in [portrait][ct23:portrait] and
   [landscape][ct23:landscape] format.
 
-  Based on a paper with Sebastian Halbig of the [same name][Duality in Monoidal Categories].
+  Based on a paper with Sebastian Halbig of the same name [@halbig23:dualit-monoid-categ].
 
 # Seminars
 
@@ -172,12 +182,9 @@ All of my preprints are readily available on the [arXiv].[^2]
   Bachelor's thesis with a focus on keis; objects arising naturally when
   trying to generalize the number of 3-colourings of a knot.
 
-[Clark et.al.]: https://arxiv.org/abs/2001.07488
+[Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
-[Pastro and Street]: https://arxiv.org/abs/0711.1859
 [Pivotality, twisted centres and the anti-double of a Hopf monad]: https://arxiv.org/abs/2201.05361
-[Riley]: https://arxiv.org/abs/1809.00738
-[Willerton]: https://arxiv.org/abs/0807.0658
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
