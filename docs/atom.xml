@@ -10,8 +10,192 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2023-11-27T00:00:00Z</updated>
+    <updated>2024-01-03T00:00:00Z</updated>
     <entry>
+    <title>Parentheses-Aware Yanking</title>
+    <link href="https://tony-zorman.com/posts/yanking.html" />
+    <id>https://tony-zorman.com/posts/yanking.html</id>
+    <published>2024-01-03T00:00:00Z</published>
+    <updated>2024-01-03T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2024-01-03
+      
+      
+      
+        &thinsp;·&thinsp; <span title="875 words">4 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>
+</p>
+<p>Copying, killing, and yanking<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> text in Emacs is quite straightforward,
+and very little is done to manipulate the contents of the string during these operations.
+Rightfully so, of course,
+as this might yield pretty surprising behaviour to many people.
+To me, however, inserting unbalanced expressions is even more surprising
+than not preprocessing anything at all, so let’s change that.</p>
+<!--more-->
+<h2 id="the-problem">The problem</h2>
+<p>Say you have the following s-expression:</p>
+<pre class="emacs-lisp"><code>(insert-for-yank
+ (current-kill
+  (cond
+   ((listp arg) 0)
+   ((eq arg '-) -2)
+   (t (1- arg)))))</code></pre>
+<p>Now, for whatever reason,
+you might want to copy the <code>(t (1- arg))</code> on the last line.
+One way to do that would be to navigate to it,
+set the mark with <code>M-SPC</code>,
+jump to its end with <code>M-C-f</code>,
+and save everything to the kill ring with <code>M-w</code>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+This works, but it feels a bit slow sometimes,
+even when navigating to the expression is fast thanks to
+<a href="https://paredit.org/">paredit</a>.</p>
+<p>There is the wonderful
+<a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>
+package,
+which makes many commands act on the current line if no region is selected.
+With that, copying the last line of the above expression just involves navigating to it and pressing <code>M-w</code>.
+Alas, when yanking the line into the buffer again, we are greeted with</p>
+<pre class="emacs-lisp"><code>(t (1- arg)))))</code></pre>
+<p>Lots of unbalanced parentheses!
+This is especially troublesome when one uses
+<a href="https://github.com/Malabarba/aggressive-indent-mode">aggressive-indent-mode</a><!--
+-->—as I do—since then you run the chance of your buffer shifting around you.</p>
+<p>All of this would be fixed with a version of <code>yank</code> that correctly trims off these extraneous parentheses
+before yanking the killed text into the buffer.
+Let’s make one.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<h2 id="an-approximate-solution">An approximate solution</h2>
+<p>We first create a small function that gives us some info about how many
+open delimiters<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> there are in the current buffer.
+The implementation is straightforward,
+we just need to make sure to take care of a few special cases<!--
+-->—and I almost certainly missed one—<!--
+-->like delimiters appearing inside of strings or comments.</p>
+<pre class="emacs-lisp"><code>(defun slot/get-delimiters ()
+  &quot;Return delimiter count in current buffer.
+Returns a list, each element being of the form (OPEN CLOSE AMNT),
+where OPEN and CLOSE are the respective opening and closing
+delimiters, and AMNT is an integer; a positive (negative) number
+signalling that there are that many extraneous opening (closing)
+delimiters.  Thus, a value of 0 signifies a balanced buffer.
+
+Do not count a delimiter towards the global total if it is
+escaped (prefixed by a backslash), part of a string, or part of a
+comment.&quot;
+  (goto-char (point-min))
+  (let-alist '((paren . 0) (square . 0) (curly . 0))
+    (while-let ((char (char-after)))
+      (unless (or (-intersection (text-properties-at (point))
+                                 '(font-lock-string-face
+                                   font-lock-comment-face))
+                  (eq ?\\ (char-before)))
+        (pcase char
+          (?\( (cl-incf .paren)) (?\[ (cl-incf .square)) (?\{ (cl-incf .curly))
+          (?\) (cl-decf .paren)) (?\] (cl-decf .square)) (?\} (cl-decf .curly))))
+      (forward-char))
+    `((&quot;(&quot; &quot;)&quot; ,.paren)
+      (&quot;[&quot; &quot;]&quot; ,.square)
+      (&quot;{&quot; &quot;}&quot; ,.curly))))</code></pre>
+<p>Having <code>slot/get-delimiters</code>, which does most of the actual work,
+all that’s left to get this running is to actually trim the string before yanking it.
+No tricks needed here.</p>
+<pre class="emacs-lisp"><code>(defun slot/trim-delimiter (open close n)
+  &quot;Trim delimiter in current buffer.
+OPEN and CLOSE are the respective opening and closing delimiters.
+The number N indicates how many—and which—delimiters to trim.  If
+it is positive, trim CLOSE; otherwise, trim OPEN.&quot;
+  (-let (((pt del) (if (&lt; n 0)          ; More closing than opening?
+                       `(point-max (when (search-backward ,close (point-min) t)
+                                     (delete-forward-char 1)))
+                     `(point-min (when (search-forward ,open (point-max) t)
+                                   (delete-backward-char 1))))))
+    (goto-char (funcall pt))
+    (dotimes (_ (abs n))
+      (eval del))))
+
+(defun slot/trim-delimiters (str)
+  &quot;Trim delimiters in current buffer.
+See `slot/get-delimiters' for a list of all relevant delimiters,
+and `slot/trim-delimiter' for how delimiters are actually
+trimmed.&quot;
+  (with-temp-buffer
+    (insert str)
+    (--each (slot/get-delimiters)
+      (apply #'slot/trim-delimiter it))
+    (buffer-string)))
+
+;; Implementation copied verbatim from `yank', except for the insertion
+;; of `slot/trim-delimiters'.
+(defun slot/yank (&amp;optional arg)
+  &quot;Delimiter-aware yanking.
+Like `yank' (which see), but trim non-matching delimiters from
+the string before actually yanking it into the current buffer.
+The kill-ring itself remains untouched.&quot;
+  (interactive &quot;*P&quot;)
+  (setq yank-window-start (window-start))
+  ;; If we don't get all the way through, make `last-command' indicate
+  ;; that for the following command.
+  (setq this-command t)
+  (push-mark)
+  (insert-for-yank (slot/trim-delimiters        ; &lt;- HERE
+                    (current-kill
+                     (cond
+                      ((listp arg) 0)
+                      ((eq arg '-) -2)
+                      (t (1- arg))))))
+  (when (consp arg)
+    ;; This is like `exchange-point-and-mark', but doesn't activate
+    ;; the mark.  It is cleaner to avoid activation, even though the
+    ;; command loop would deactivate the mark because we inserted text.
+    (goto-char (prog1 (mark t)
+                 (set-marker (mark-marker) (point) (current-buffer)))))
+  ;; If we do get all the way through, make `this-command' indicate that.
+  (when (eq this-command t)
+    (setq this-command 'yank))
+  nil)</code></pre>
+<p>Instead of defining <code>slot/yank</code>,
+one might also just override <code>yank</code> with the new definition.
+That, however, seems a bit uncouth,
+and it’s not terribly difficult to assign the same key to the new function:</p>
+<pre class="emacs-lisp"><code>(bind-key &quot;C-y&quot; #'slot/yank)</code></pre>
+<p>Killing <code>(t (1- arg)))))</code> and yanking it again yields <code>(t (1- arg))</code>,
+as desired.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Also known as copying, cutting, and pasting in every other context ever.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>One might also use <code>C-k C-y</code> (<code>paredit-kill</code> followed by <code>yank</code>) instead of <code>M-SPC M-C-f M-w</code>,
+but that only works at the end of an expression.
+Plus, what <code>paredit-kill</code> kills might be more than the current line.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Doing it this way also has the added benefit of working for every major mode,
+not just ones where I happen to use paredit
+(or <a href="https://github.com/AmaiKinono/puni">puni</a>).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>By “delimiter” I mean parentheses, square brackets, and curly braces.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Integrating Zsh's History Into Eshell</title>
     <link href="https://tony-zorman.com/posts/eshell-zsh-history.html" />
     <id>https://tony-zorman.com/posts/eshell-zsh-history.html</id>

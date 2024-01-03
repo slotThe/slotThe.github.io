@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Parentheses-Aware Yanking · Tony Zorman</title>
+    
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#the-problem">The problem</a></li>
+<li><a href="#an-approximate-solution">An approximate solution</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Parentheses-Aware Yanking</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2024-01-03
+      
+      
+      
+        &thinsp;·&thinsp; <span title="871 words">4 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#the-problem">The problem</a></li>
+<li><a href="#an-approximate-solution">An approximate solution</a></li>
+</ul>
+  </div>
+
+<div>
+  <p>
+</p>
+<p></p>
+Copying, killing, and yanking<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Also known as copying, cutting, and pasting in every other context ever.</div><!--
+--> text in Emacs is quite straightforward,
+and very little is done to manipulate the contents of the string during these operations.
+Rightfully so, of course,
+as this might yield pretty surprising behaviour to many people.
+To me, however, inserting unbalanced expressions is even more surprising
+than not preprocessing anything at all, so let’s change that.
+<!--more-->
+<h2 id="the-problem">The problem<a href="#the-problem" class="floatleft sec-link">§</a></h2>
+<p></p>
+Say you have the following s-expression:
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">insert-for-yank</span>
+<span class="w"> </span><span class="p">(</span><span class="nv">current-kill</span>
+<span class="w">  </span><span class="p">(</span><span class="k">cond</span>
+<span class="w">   </span><span class="p">((</span><span class="nf">listp</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">   </span><span class="p">((</span><span class="nf">eq</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="ss">'-</span><span class="p">)</span><span class="w"> </span><span class="mi">-2</span><span class="p">)</span>
+<span class="w">   </span><span class="p">(</span><span class="no">t</span><span class="w"> </span><span class="p">(</span><span class="nf">1-</span><span class="w"> </span><span class="nv">arg</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+Now, for whatever reason,
+you might want to copy the <code>(t (1- arg))</code> on the last line.
+One way to do that would be to navigate to it,
+set the mark with <code>M-SPC</code>,
+jump to its end with <code>M-C-f</code>,
+and save everything to the kill ring with <code>M-w</code>.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">One might also use <code>C-k C-y</code> (<code>paredit-kill</code> followed by <code>yank</code>) instead of <code>M-SPC M-C-f M-w</code>,
+but that only works at the end of an expression.
+Plus, what <code>paredit-kill</code> kills might be more than the current line.</div><!--
+-->
+This works, but it feels a bit slow sometimes,
+even when navigating to the expression is fast thanks to
+<a href="https://paredit.org/">paredit</a>.
+<p></p>
+There is the wonderful
+<a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>
+package,
+which makes many commands act on the current line if no region is selected.
+With that, copying the last line of the above expression just involves navigating to it and pressing <code>M-w</code>.
+Alas, when yanking the line into the buffer again, we are greeted with
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="no">t</span><span class="w"> </span><span class="p">(</span><span class="nf">1-</span><span class="w"> </span><span class="nv">arg</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+Lots of unbalanced parentheses!
+This is especially troublesome when one uses
+<a href="https://github.com/Malabarba/aggressive-indent-mode">aggressive-indent-mode</a><!--
+-->—as I do—since then you run the chance of your buffer shifting around you.
+<p></p>
+All of this would be fixed with a version of <code>yank</code> that correctly trims off these extraneous parentheses
+before yanking the killed text into the buffer.
+Let’s make one.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Doing it this way also has the added benefit of working for every major mode,
+not just ones where I happen to use paredit
+(or <a href="https://github.com/AmaiKinono/puni">puni</a>).</div><!--
+-->
+<h2 id="an-approximate-solution">An approximate solution<a href="#an-approximate-solution" class="floatleft sec-link">§</a></h2>
+<p></p>
+We first create a small function that gives us some info about how many
+open delimiters<!--
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">By “delimiter” I mean parentheses, square brackets, and curly braces.</div><!--
+--> there are in the current buffer.
+The implementation is straightforward,
+we just need to make sure to take care of a few special cases<!--
+-->—and I almost certainly missed one—<!--
+-->like delimiters appearing inside of strings or comments.
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-delimiters</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Return delimiter count in current buffer.</span>
+<span class="s">Returns a list, each element being of the form (OPEN CLOSE AMNT),</span>
+<span class="s">where OPEN and CLOSE are the respective opening and closing</span>
+<span class="s">delimiters, and AMNT is an integer; a positive (negative) number</span>
+<span class="s">signalling that there are that many extraneous opening (closing)</span>
+<span class="s">delimiters.  Thus, a value of 0 signifies a balanced buffer.</span>
+
+<span class="s">Do not count a delimiter towards the global total if it is</span>
+<span class="s">escaped (prefixed by a backslash), part of a string, or part of a</span>
+<span class="s">comment.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">let-alist</span><span class="w"> </span><span class="o">'</span><span class="p">((</span><span class="nv">paren</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">square</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">curly</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">while-let</span><span class="w"> </span><span class="p">((</span><span class="nv">char</span><span class="w"> </span><span class="p">(</span><span class="nf">char-after</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">-intersection</span><span class="w"> </span><span class="p">(</span><span class="nf">text-properties-at</span><span class="w"> </span><span class="p">(</span><span class="nf">point</span><span class="p">))</span>
+<span class="w">                                 </span><span class="o">'</span><span class="p">(</span><span class="nv">font-lock-string-face</span>
+<span class="w">                                   </span><span class="nv">font-lock-comment-face</span><span class="p">))</span>
+<span class="w">                  </span><span class="p">(</span><span class="nf">eq</span><span class="w"> </span><span class="sc">?\\</span><span class="w"> </span><span class="p">(</span><span class="nf">char-before</span><span class="p">)))</span>
+<span class="w">        </span><span class="p">(</span><span class="nb">pcase</span><span class="w"> </span><span class="nv">char</span>
+<span class="w">          </span><span class="p">(</span><span class="sc">?\(</span><span class="w"> </span><span class="p">(</span><span class="nb">cl-incf</span><span class="w"> </span><span class="o">.</span><span class="nv">paren</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="sc">?\[</span><span class="w"> </span><span class="p">(</span><span class="nb">cl-incf</span><span class="w"> </span><span class="o">.</span><span class="nv">square</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="sc">?\{</span><span class="w"> </span><span class="p">(</span><span class="nb">cl-incf</span><span class="w"> </span><span class="o">.</span><span class="nv">curly</span><span class="p">))</span>
+<span class="w">          </span><span class="p">(</span><span class="sc">?\)</span><span class="w"> </span><span class="p">(</span><span class="nb">cl-decf</span><span class="w"> </span><span class="o">.</span><span class="nv">paren</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="sc">?\]</span><span class="w"> </span><span class="p">(</span><span class="nb">cl-decf</span><span class="w"> </span><span class="o">.</span><span class="nv">square</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="sc">?\}</span><span class="w"> </span><span class="p">(</span><span class="nb">cl-decf</span><span class="w"> </span><span class="o">.</span><span class="nv">curly</span><span class="p">))))</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">forward-char</span><span class="p">))</span>
+<span class="w">    </span><span class="o">`</span><span class="p">((</span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="w"> </span><span class="o">,.</span><span class="nv">paren</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="w"> </span><span class="o">,.</span><span class="nv">square</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="w"> </span><span class="s">&quot;}&quot;</span><span class="w"> </span><span class="o">,.</span><span class="nv">curly</span><span class="p">))))</span>
+</pre></div>
+
+<p></p>
+Having <code>slot/get-delimiters</code>, which does most of the actual work,
+all that’s left to get this running is to actually trim the string before yanking it.
+No tricks needed here.
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/trim-delimiter</span><span class="w"> </span><span class="p">(</span><span class="nv">open</span><span class="w"> </span><span class="nv">close</span><span class="w"> </span><span class="nv">n</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Trim delimiter in current buffer.</span>
+<span class="s">OPEN and CLOSE are the respective opening and closing delimiters.</span>
+<span class="s">The number N indicates how many—and which—delimiters to trim.  If</span>
+<span class="s">it is positive, trim CLOSE; otherwise, trim OPEN.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">-let</span><span class="w"> </span><span class="p">(((</span><span class="nv">pt</span><span class="w"> </span><span class="nv">del</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">&lt;</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">          </span><span class="c1">; More closing than opening?</span>
+<span class="w">                       </span><span class="o">`</span><span class="p">(</span><span class="nf">point-max</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">search-backward</span><span class="w"> </span><span class="o">,</span><span class="nv">close</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
+<span class="w">                                     </span><span class="p">(</span><span class="nv">delete-forward-char</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
+<span class="w">                     </span><span class="o">`</span><span class="p">(</span><span class="nf">point-min</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="o">,</span><span class="nv">open</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">)</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
+<span class="w">                                   </span><span class="p">(</span><span class="nv">delete-backward-char</span><span class="w"> </span><span class="mi">1</span><span class="p">))))))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">pt</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">dotimes</span><span class="w"> </span><span class="p">(</span><span class="nv">_</span><span class="w"> </span><span class="p">(</span><span class="nf">abs</span><span class="w"> </span><span class="nv">n</span><span class="p">))</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">eval</span><span class="w"> </span><span class="nv">del</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/trim-delimiters</span><span class="w"> </span><span class="p">(</span><span class="nv">str</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Trim delimiters in current buffer.</span>
+<span class="s">See </span><span class="ss">`slot/get-delimiters'</span><span class="s"> for a list of all relevant delimiters,</span>
+<span class="s">and </span><span class="ss">`slot/trim-delimiter'</span><span class="s"> for how delimiters are actually</span>
+<span class="s">trimmed.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">--each</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/get-delimiters</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">apply</span><span class="w"> </span><span class="nf">#'</span><span class="nv">slot/trim-delimiter</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">buffer-string</span><span class="p">)))</span>
+
+<span class="c1">;; Implementation copied verbatim from `yank', except for the insertion</span>
+<span class="c1">;; of `slot/trim-delimiters'.</span>
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/yank</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Delimiter-aware yanking.</span>
+<span class="s">Like </span><span class="ss">`yank'</span><span class="s"> (which see), but trim non-matching delimiters from</span>
+<span class="s">the string before actually yanking it into the current buffer.</span>
+<span class="s">The kill-ring itself remains untouched.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="w"> </span><span class="s">&quot;*P&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">yank-window-start</span><span class="w"> </span><span class="p">(</span><span class="nf">window-start</span><span class="p">))</span>
+<span class="w">  </span><span class="c1">;; If we don't get all the way through, make `last-command' indicate</span>
+<span class="w">  </span><span class="c1">;; that for the following command.</span>
+<span class="w">  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">this-command</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">push-mark</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">insert-for-yank</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/trim-delimiters</span><span class="w">        </span><span class="c1">; &lt;- HERE</span>
+<span class="w">                    </span><span class="p">(</span><span class="nv">current-kill</span>
+<span class="w">                     </span><span class="p">(</span><span class="k">cond</span>
+<span class="w">                      </span><span class="p">((</span><span class="nf">listp</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">                      </span><span class="p">((</span><span class="nf">eq</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="ss">'-</span><span class="p">)</span><span class="w"> </span><span class="mi">-2</span><span class="p">)</span>
+<span class="w">                      </span><span class="p">(</span><span class="no">t</span><span class="w"> </span><span class="p">(</span><span class="nf">1-</span><span class="w"> </span><span class="nv">arg</span><span class="p">))))))</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">consp</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">;; This is like `exchange-point-and-mark', but doesn't activate</span>
+<span class="w">    </span><span class="c1">;; the mark.  It is cleaner to avoid activation, even though the</span>
+<span class="w">    </span><span class="c1">;; command loop would deactivate the mark because we inserted text.</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="k">prog1</span><span class="w"> </span><span class="p">(</span><span class="nv">mark</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
+<span class="w">                 </span><span class="p">(</span><span class="nf">set-marker</span><span class="w"> </span><span class="p">(</span><span class="nf">mark-marker</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">current-buffer</span><span class="p">)))))</span>
+<span class="w">  </span><span class="c1">;; If we do get all the way through, make `this-command' indicate that.</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">eq</span><span class="w"> </span><span class="nv">this-command</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">this-command</span><span class="w"> </span><span class="ss">'yank</span><span class="p">))</span>
+<span class="w">  </span><span class="no">nil</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+Instead of defining <code>slot/yank</code>,
+one might also just override <code>yank</code> with the new definition.
+That, however, seems a bit uncouth,
+and it’s not terribly difficult to assign the same key to the new function:
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">bind-key</span><span class="w"> </span><span class="s">&quot;C-y&quot;</span><span class="w"> </span><span class="nf">#'</span><span class="nv">slot/yank</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+Killing <code>(t (1- arg)))))</code> and yanking it again yields <code>(t (1- arg))</code>,
+as desired.
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
