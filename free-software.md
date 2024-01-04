@@ -142,14 +142,22 @@ I've written too many Emacs packages—and none of them popular, at that!
   A tiny package that wraps `query-replace` in order to support multiple matches.
   I've written about it [here][post:query-replace-many].
 
++ [yank-delimiters]
+
+  Another tiny package that (subjectively) improves the experience of
+  yanking within Emacs by trimming extraneous delimiters before inserting the string into the buffer.
+  I've written about this package [here][post:yanking].
+
 # Talks
 
 + [Git Introduction]
 
   An introduction to Git for people at the mathematics faculty at TU Dresden.
 
+[Atreus]: https://tony-zorman.com/posts/atreus-review.html
 [Git Introduction]: ./talks/git-introduction.html
 [KMonad]: https://github.com/kmonad/kmonad
+[QMK configuration]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
 [XMonad]: https://xmonad.org/
@@ -168,14 +176,14 @@ I've written too many Emacs packages—and none of them popular, at that!
 [post:package-vc-install]: https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
 [post:query-replace-many]: https://tony-zorman.com/posts/query-replace-many.html
 [post:vc-use-package]: https://tony-zorman.com/posts/2022-12-22-vc-use-package.html
+[post:yanking]: https://tony-zorman.com/posts/yanking.html
 [query-replace-many]: https://github.com/slotThe/query-replace-many
 [vc-use-package]: https://github.com/slotThe/vc-use-package
 [vmensa]: https://gitlab.com/slotThe/vmensa
-[xmobar]: https://codeberg.org/xmobar/xmobar
-[yeganesh]: https://hackage.haskell.org/package/yeganesh
-[Atreus]: https://tony-zorman.com/posts/atreus-review.html
 [xmobar:#656]: https://codeberg.org/xmobar/xmobar/issues/656
-[QMK configuration]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/
+[xmobar]: https://codeberg.org/xmobar/xmobar
+[yank-delimiters]: https://github.com/slotThe/yank-delimiters
+[yeganesh]: https://hackage.haskell.org/package/yeganesh
 
 [^1]: {-} Relatedly, I also maintain a [QMK configuration] for my [Atreus] keyboard.
 
