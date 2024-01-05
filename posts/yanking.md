@@ -64,7 +64,7 @@ open delimiters[^1] there are in the current buffer.
 The implementation is straightforward,
 we just need to make sure to take care of a few special cases<!--
 -->—and I almost certainly missed one—<!--
--->like delimiters appearing inside of strings or comments.
+-->like delimiters appearing inside of strings or comments.[^8]
 
 ``` emacs-lisp
 (defun slot/get-delimiters ()
@@ -178,3 +178,11 @@ as desired.
 [^7]: Doing it this way also has the added benefit of working for every major mode,
       not just ones where I happen to use paredit
       (or [puni](https://github.com/AmaiKinono/puni)).
+
+[^8]: {-} 󠀠
+
+      󠀠
+
+      󠀠
+
+      This code now also lives [here](https://github.com/slotThe/yank-delimiters).

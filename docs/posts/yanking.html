@@ -67,7 +67,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="871 words">4 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="879 words">4 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
@@ -157,7 +157,15 @@ open delimiters<!--
 The implementation is straightforward,
 we just need to make sure to take care of a few special cases<!--
 -->—and I almost certainly missed one—<!--
--->like delimiters appearing inside of strings or comments.
+-->like delimiters appearing inside of strings or comments.<!--
+--><label for="sn-4" class="margin-toggle">⊕</label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+This code now also lives <a href="https://github.com/slotThe/yank-delimiters">here</a>.</div><!--
+-->
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-delimiters</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Return delimiter count in current buffer.</span>
 <span class="s">Returns a list, each element being of the form (OPEN CLOSE AMNT),</span>

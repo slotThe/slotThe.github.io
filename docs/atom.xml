@@ -24,7 +24,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="875 words">4 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="885 words">4 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
@@ -85,7 +85,7 @@ open delimiters<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref
 The implementation is straightforward,
 we just need to make sure to take care of a few special cases<!--
 -->—and I almost certainly missed one—<!--
--->like delimiters appearing inside of strings or comments.</p>
+-->like delimiters appearing inside of strings or comments.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <pre class="emacs-lisp"><code>(defun slot/get-delimiters ()
   &quot;Return delimiter count in current buffer.
 Returns a list, each element being of the form (OPEN CLOSE AMNT),
@@ -186,6 +186,10 @@ Plus, what <code>paredit-kill</code> kills might be more than the current line.<
 not just ones where I happen to use paredit
 (or <a href="https://github.com/AmaiKinono/puni">puni</a>).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>By “delimiter” I mean parentheses, square brackets, and curly braces.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>This code now also lives <a href="https://github.com/slotThe/yank-delimiters">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
