@@ -34,17 +34,20 @@ All of my preprints are readily available on the [arXiv].[^2]
 - *[Duality in Monoidal Categories]* \
    Joint work with Sebastian Halbig.
 
-   We compare closed and rigid monoidal categories.  Closedness is
-   defined by the tensor product having a right adjoint: the
-   internal-hom functor.  Rigidity on the other hand generalises the
-   concept of duals in the sense of finite-dimensional vector spaces.  A
-   consequence of these axioms is that the internal-hom functor is
-   implemented by tensoring with the respective duals.  This raises the
-   question: can one decide whether a closed monoidal category is rigid,
-   simply by verifying that the internal-hom is tensor-representable?
-   At the *Research School on Bicategories, Categorification and Quantum
-   Theory*, Heunen suggested that this is not the case.  In this note,
-   we will prove his claim by constructing an explicit counterexample.
+  We compare closed and rigid monoidal categories.
+  Closedness is defined by the tensor product having a right adjoint:
+  the internal hom functor.
+  Rigidity, on the other hand, generalises the duality of finite-dimensional vector spaces.
+  In the latter, the internal hom functor is implemented by tensoring with the respective duals.
+  This raises the question:
+  can one decide whether a closed monoidal category is rigid,
+  simply by verifying that the internal hom is tensor-representable?
+  We provide a counterexample in terms of finitely-generated projective objects in an abelian k-linear category.
+  A byproduct of our work is that we obtain characterisations of the Grothendieck–Verdier duality,
+  also called *-autonomy,
+  and rigidity of functor categories endowed with Day convolution as their tensor product.
+  Applied to Mackey functors,
+  this yields a proof of a sketched argument by Bouc linking rigidity of an object to it being finitely-generated projective.
 
 - *[Pivotality, twisted centres and the anti-double of a Hopf monad]* \
   Joint work with Sebastian Halbig.
@@ -71,7 +74,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 
 - *Duality in Monoidal Categories* \
   2023-01-16, Seminar GMM, Dresden. \
-  2023-05-23, HATC23, Marburg; [slides][slides:duality] ([handout][slides:duality:handout]). \
+  2023-05-23, HATC23, Marburg. \
   2023-07-26, Uppsala Algebra Seminar, Uppsala.
 
   Dualities are an important tool in the study of monoidal categories and their applications.
@@ -99,7 +102,7 @@ All of my preprints are readily available on the [arXiv].[^2]
 
   While it is expected that this is not true in general,
   constructing counterexamples is non-trivial;
-  we will provide one in the form of the category of Mackey functors.
+  we will provide one.
   Additionally, a weaker version of the above statement is true:
   every monoidal category with tensor representable internal-hom is Grothendieck–Verdier.
 
@@ -189,8 +192,6 @@ All of my preprints are readily available on the [arXiv].[^2]
 [ct23:portrait]: /talks/ct23-portrait.pdf
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
 [slides:abstact-schur-functors]: /talks/abstract-schur-functors.pdf
-[slides:duality:handout]: /talks/duality-in-monoidal-categories-handout.pdf
-[slides:duality]: /talks/duality-in-monoidal-categories.pdf
 [slides:mackey-functors:handout]: /talks/mackey-functors.pdf
 [slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
 [slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
