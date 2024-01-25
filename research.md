@@ -23,7 +23,7 @@ Some more keywords include [Hopf monads], [graphical calculi], [duoidal] and [li
 
 All of my preprints are readily available on the [arXiv].[^2]
 
-- *[Diagrammatics for Comodule Monads]* \
+- *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
    Joint work with Sebastian Halbig.
 
     We extend Willerton's [@willerton08] graphical calculus for bimonads
@@ -31,7 +31,7 @@ All of my preprints are readily available on the [arXiv].[^2]
     over a monoidal category. As an application, we prove a version of
     Tannaka–Krein duality for these structures.
 
-- *[Duality in Monoidal Categories]* \
+- *[Duality in Monoidal Categories]* <span class="floatright">[@halbig23:dualit-monoid-categ]</span> \
    Joint work with Sebastian Halbig.
 
   We compare closed and rigid monoidal categories.
@@ -49,7 +49,7 @@ All of my preprints are readily available on the [arXiv].[^2]
   Applied to Mackey functors,
   this yields a proof of a sketched argument by Bouc linking rigidity of an object to it being finitely-generated projective.
 
-- *[Pivotality, twisted centres and the anti-double of a Hopf monad]* \
+- *[Pivotality, twisted centres and the anti-double of a Hopf monad]* <span class="floatright">[@halbig22:pivot-hopf]</span> \
   Joint work with Sebastian Halbig.
 
   Finite-dimensional Hopf algebras admit a correspondence between
