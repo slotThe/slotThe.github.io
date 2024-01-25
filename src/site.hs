@@ -465,8 +465,8 @@ myPandocCompiler =
      where
       citToRow :: Block -> [Many Block]
       citToRow = map Many.singleton . \case
-        Div attr [Para [s1, s2]] -> [Div attr [Plain [s1]], Plain [Space], Plain [s2]]
-        _                        -> error "citToRow: unexpected citation format."
+        Div attr [Para (s1 : ss)] -> [Div attr [Plain [s1]], Plain [Space], Plain ss]
+        d                         -> error $ "citToRow: unexpected citation format: " <> show d
 
   -- This is very manual, but for now that's "good enough".
   smallCaps :: Pandoc -> Pandoc
