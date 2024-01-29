@@ -19,9 +19,28 @@ Some more keywords include [Hopf monads], [graphical calculi], [duoidal] and [li
 [rigid]: https://ncatlab.org/nlab/show/rigid+monoidal+category
 [zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
 
-# Preprints
+# Papers
 
-All of my preprints are readily available on the [arXiv].[^2]
+All of my papers are readily available on the [arXiv].[^2]
+
+[arXiv]: https://arxiv.org/a/zorman_t_1
+
+## Published
+
+- *[Pivotality, twisted centres and the anti-double of a Hopf monad]* <span class="floatright">[@halbig24:pivot-hopf]</span> \
+  Joint work with Sebastian Halbig.
+
+  Finite-dimensional Hopf algebras admit a correspondence between
+  so-called pairs in involution, one-dimensional anti-Yetter–Drinfeld
+  modules and algebra isomorphisms between the Drinfeld and
+  anti-Drinfeld double.  We extend it to general rigid monoidal
+  categories and provide a monadic interpretation under the assumption
+  that certain coends exist.  Hereto we construct and study the
+  anti-Drinfeld double of a Hopf monad.  As an application the
+  connection with the pivotality of Drinfeld centres and their
+  underlying categories is discussed.
+
+## Preprints
 
 - *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
    Joint work with Sebastian Halbig.
@@ -48,21 +67,6 @@ All of my preprints are readily available on the [arXiv].[^2]
   and rigidity of functor categories endowed with Day convolution as their tensor product.
   Applied to Mackey functors,
   this yields a proof of a sketched argument by Bouc linking rigidity of an object to it being finitely-generated projective.
-
-- *[Pivotality, twisted centres and the anti-double of a Hopf monad]* <span class="floatright">[@halbig22:pivot-hopf]</span> \
-  Joint work with Sebastian Halbig.
-
-  Finite-dimensional Hopf algebras admit a correspondence between
-  so-called pairs in involution, one-dimensional anti-Yetter–Drinfeld
-  modules and algebra isomorphisms between the Drinfeld and
-  anti-Drinfeld double.  We extend it to general rigid monoidal
-  categories and provide a monadic interpretation under the assumption
-  that certain coends exist.  Hereto we construct and study the
-  anti-Drinfeld double of a Hopf monad.  As an application the
-  connection with the pivotality of Drinfeld centres and their
-  underlying categories is discussed.
-
-[arXiv]: https://arxiv.org/a/zorman_t_1
 
 # Talks
 
@@ -135,7 +139,7 @@ All of my preprints are readily available on the [arXiv].[^2]
   monads allows us to combine the algebraic and categorical perspective
   on such pairs.
 
-  Based on joint work with Sebastian Halbig [@halbig22:pivot-hopf].
+  Based on joint work with Sebastian Halbig [@halbig24:pivot-hopf].
 
 - *Optics in functional programming—a categorical perspective* \
    2022-01-10, Seminar GMM, Dresden; [slides][slides:profunctor].
