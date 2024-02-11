@@ -78,14 +78,18 @@ The configuration I use is available
 
 ## [hmenu]
 
-I'm the author of hmenu, a wrapper for [dmenu] in the spirit of [yeganesh].
-More concretely, it displays commands in order of usage
+A wrapper for [dmenu] in the spirit of [yeganesh].
+More concretely, hmenu displays commands in order of usage
 (with an optional decay for frequency sorting),
 and can open programs or given files inside of your terminal or any other chosen program.
 
 ## [vmensa]
 
 CLI application to query and filter the menus of the different canteens at TU Dresden.
+
+## [rq]
+
+A tiny statically typed functional language for processing JSON on the command-line.
 
 ## Haskell Libraries
 
@@ -178,6 +182,7 @@ I've written too many Emacs packages—and none of them popular, at that!
 [post:vc-use-package]: https://tony-zorman.com/posts/2022-12-22-vc-use-package.html
 [post:yanking]: https://tony-zorman.com/posts/yanking.html
 [query-replace-many]: https://github.com/slotThe/query-replace-many
+[rq]: https://github.com/slotThe/rq
 [vc-use-package]: https://github.com/slotThe/vc-use-package
 [vmensa]: https://gitlab.com/slotThe/vmensa
 [xmobar:#656]: https://codeberg.org/xmobar/xmobar/issues/656
