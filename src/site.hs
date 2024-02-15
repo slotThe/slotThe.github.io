@@ -33,7 +33,7 @@ main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
   match "css/*" do
     route   idRoute
     compile compressCssCompiler
-  match ("images/**" .||. "talks/**.pdf" .||. "fonts/**") do
+  match ("images/**" .||. "talks/**.pdf" .||. "fonts/**" .||. "robots.txt") do
     route   idRoute
     compile copyFileCompiler
 
