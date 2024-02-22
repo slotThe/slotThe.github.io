@@ -39,19 +39,25 @@ div#content {           /* body width */
 
 @media (min-width: 1367px) { /* On bigger screens, move the body text closer towards the centre */
     body {
+        width: 82%;
+        padding-right: 18%;
         margin-left: auto;
         margin-right: auto;
     }
 }
 @media (max-width: 1366px) {  /* Adjust size for smaller screens */
     body {
+        width: 87%;
+        padding-right: 13%;
         max-width: 960px;
         margin-right: 3em;
-        font-size: 21px;
+        font-size: 20px;
     }
 }
-@media (max-width: 768px) {  /* Ease up on this again for *very* small screens */
+@media (max-width: 960px) {  /* Ease up on this again for *very* small screens */
     body {
+        width: 100%;
+        padding-right: 0%;
         margin-right: 0;
     }
 }
@@ -344,6 +350,11 @@ div#contents-big {
     position: sticky;
     top: 0;
     left: 100%;
+}
+@media (max-width: 1366px) {  /* Adjust padding for smaller screens */
+    div#contents-big {
+        padding-left: 1.25em;
+    }
 }
 
 /* Smaller screens */

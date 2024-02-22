@@ -24,6 +24,14 @@ body {
     position: relative;
     text-align: left;
 }
+@media (max-width: 1120px) {
+    .sidenote,
+    .marginnote,
+    .marginnote-left {
+        margin-right: -40%;
+        width: 33%;
+    }
+}
 
 .marginnote-left {
     float: left;
@@ -33,9 +41,14 @@ body {
     position: relative;
     text-align: right;
 }
+/* The first condition is for the case of a left-aligned layout (on a
+   smaller screen), and the second condition for a more centered layout
+   on a larger screen.  It's a bit awkward, sadly :/ */
 @media (max-width: 1349px) or ((min-width: 1367px) and (max-width: 1620px)) {
-    margin-left: -47%;
-    width: 40%;
+    .marginnote-left {
+        margin-left: -33%;
+        width: 30%;
+    }
 }
 
 .sidenote code {
@@ -121,10 +134,7 @@ label.margin-toggle:not(.sidenote-number) {
     height: 100%;
 }
 
-/* The first condition is for the case of a left-aligned layout (on a
-   smaller screen), and the second condition for a more centered layout
-   on a larger screen.  It's a bit awkward, sadly :/ */
-@media (max-width: 1349px) or ((min-width: 1367px) and (max-width: 1620px)) {
+@media (max-width: 960px) {
     label.margin-toggle:not(.sidenote-number) {
         display: inline;
     }
