@@ -36,7 +36,7 @@ any of the following channels:
 + IRC: `Solid`@[irc.libera.chat](https://libera.chat/)
 + Matrix: `slot-`@[matrix.org](https://matrix.org/)
 + GitHub: [slotThe](https://github.com/slotThe)
-+ GitLab: [slotThe](https://gitlab.com/slotThe) and [tozor](https://gitlab.com/tozor)
++ GitLab: [slotThe](https://gitlab.com/slotThe)
 
 [Emacs]: https://www.gnu.org/software/emacs/
 [Grothendieck–Verdier]: https://ncatlab.org/nlab/show/star-autonomous+category
