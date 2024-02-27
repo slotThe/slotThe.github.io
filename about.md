@@ -23,7 +23,7 @@ The full source code is available [here][site].
   and [KMonad][cfg:layout]
   configurations.
 </span>
-All posts are written on a ThinkPad X220 in GNU Emacs, probably on an [Atreus][site:atreus].
+All posts are written on a TUXEDO Aura 14 in GNU Emacs, probably on an [Atreus][site:atreus].
 If the latter is unavailable, [KMonad] supplies me with a proper keyboard layout.
 
 Most of the time, I'm fastest to reply via E-Mail or IRC, but you try
