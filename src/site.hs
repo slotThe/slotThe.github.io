@@ -11,14 +11,13 @@ import Data.Text qualified as T
 
 import Control.Monad
 import Data.List (foldl')
-import qualified Data.Map.Strict as Map
 import Data.Maybe
 import Data.Text (Text)
 import Hakyll
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
-import Text.Pandoc.Builder (simpleTable, Many)
+import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
 import qualified Text.Pandoc.Builder as Many (toList, singleton)
-import Text.Pandoc.Definition (Block (..), Inline (..), Meta (..), MetaValue (..), Pandoc (Pandoc))
+import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc)
 import Text.Pandoc.Options
 import Text.Pandoc.Shared (headerShift)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
@@ -443,11 +442,7 @@ myPandocCompiler =
     csl <- load @CSL    "bib/style.csl"
     bib <- load @Biblio "bib/bibliography.bib"
     -- We do want to link citations.
-    p <- withItemBody
-           (\(Pandoc (Meta meta) bs) -> pure $
-             Pandoc (Meta $ Map.insert "link-citations" (MetaBool True) meta)
-                    bs)
-           pandoc
+    p <- withItemBody (pure . setMeta "link-citations" True) pandoc
     fmap (tableiseBib . insertRefHeading) <$> processPandocBiblio csl bib p
    where
     -- Insert a heading for the citations.
