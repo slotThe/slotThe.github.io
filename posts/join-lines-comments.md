@@ -1,6 +1,7 @@
 ---
 title: Smartly join comments with join-line
 date: 2024-03-02
+no-toc: true
 tags: emacs
 ---
 
