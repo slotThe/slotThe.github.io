@@ -1,7 +1,7 @@
 ---
 title: A Potpourri of Emacs Tweaks
 date: 2022-10-22
-last-modified: 2023-10-15
+last-modified: 2024-03-02
 tags: emacs
 ---
 
@@ -486,6 +486,77 @@ All one has to do is to execute this before sending a mail:
 
 and we're good to go.
 
+# Sane type signatures with lsp-mode
+
+By default, `lsp-mode`s type signatures for certain languages are… not great.
+
+<img class="pure-img"
+     style="padding-left: 1em;"
+     src="../images/fixing-lsp-mode/lsp-mode-default.png"
+     alt="By default, lsp-mode only shows `iamTooLong :: Stirng`">
+
+However, with a bit of hacking around this turns out to be quite fixable:
+
+<img class="pure-img"
+     style="padding-left: 1em;"
+     src="../images/fixing-lsp-mode/lsp-mode-fixed.png"
+     alt="Properly syntax highlighted type signature">
+
+[The full post with all the code is here](https://tony-zorman.com/posts/fixing-lsp-mode.html).
+
+# Integrating zsh's history into eshell
+
+If you use zsh and eshell together, you—like me—will soon be annoyed at the fact that the two programs use separate history files.
+However, unification is not as easy as `(setq eshell-history-file-name "~/.config/zsh/zsh_history")`,
+since zsh stores its history file in a metafied format.[^5]
+This means that,
+on the eshell side,
+we have to make sure unmetafy the history file before writing to it.
+
+[The implementation and more details can be found here](https://tony-zorman.com/posts/eshell-zsh-history.html).
+
+# Parentheses-aware yanking
+
+Normally, when you have an expression like
+
+``` emacs-lisp
+(insert-for-yank
+ (current-kill
+  (cond
+   ((listp arg) 0)
+   ((eq arg '-) -2)
+   (t (1- arg)))))
+```
+
+and you try to copy the last line and insert it again,
+it will be returned exactly as-is:
+
+``` emacs-lisp
+   (t (1- arg)))))
+
+```
+
+While this is expected behaviour, it gravely messes with awesome tools like paredit.
+As I'm in the habit—using the power of [whole-line-or-region](https://github.com/purcell/whole-line-or-region)—of lazily copying with with `M-w` all the time,
+this posits a problem.[^6]
+
+The solution, thankfully, does not involve all that much code.
+[You can read about it here](https://tony-zorman.com/posts/yanking.html).
+
+# Make `join-line` handle comments sanely
+
+By default, the `join-line` function does not handle comments at all,
+and is thus quite useless for a majority of cases
+
+<img class="pure-img"
+     src="../images/join-line/join-line-comment.gif"
+     alt="Original join-line behaviour with respect to comments.">
+
+However,
+with a bit of [monkey-patching],
+one can get a result that approximated a sane solution!
+[Here is the corresponding post for this](https://tony-zorman.com/posts/join-lines-comments.html).
+
 [XMonad]: https://xmonad.org
 [cfg:emacs:erc]: https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el
 [cfg:emacs:inhibit]: https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51
@@ -494,6 +565,7 @@ and we're good to go.
 [emacs:erc]: https://www.gnu.org/software/emacs/erc.html
 [emacs:repeat-mode:1]: https://tildegit.org/acdw/define-repeat-map.el
 [emacs:repeat-mode:2]: https://github.com/mmarshall540/repeaters
+[monkey-patching]: https://en.wikipedia.org/wiki/Monkey_patch
 [posts:people:repeat-mode]: https://karthinks.com/software/it-bears-repeating/
 [posts:phd-workflow:entry]: ./my-phd-workflow.html#digital-notes
 [posts:phd-workflow]: ./my-phd-workflow.html
@@ -550,3 +622,9 @@ and we're good to go.
       ```
 
       Alternatively, check the source code of `notmuch-mua-attachment-check` directly.
+
+[^5]: For whatever reason, when any character from the `0x80`–`0x9F` range is encountered
+      the "Meta character" `0x83` is inserted and the following character gets XORed with 32.
+
+[^6]: Of course, the *real problem* is my lack of discipline,
+      but I'm certainly not going to change my habits if I can instead change my editor around me!
