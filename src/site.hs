@@ -134,14 +134,28 @@ standalones tagCtx = do
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…
         asTxt (T.replace "./transcript.md" "./git-introduction/transcript.html")
-  mkStandalone "talks/git-introduction.md" fixTranscript $
-    gitCtx "Git Introduction" <> constField "no-toc" "true"
-  mkStandalone "talks/git-introduction/transcript.md" pure $
-    gitCtx "How to Use Git—an Interactive Tutorial"
+  mkStandalone "talks/git-introduction.md"
+               fixTranscript
+               (gitCtx "Git Introduction" <> constField "no-toc" "true")
+  mkStandalone "talks/git-introduction/transcript.md"
+               pure
+               (gitCtx "How to Use Git—an Interactive Tutorial")
   -- Key
   match "key.txt" do
     route idRoute
     compile copyFileCompiler
+ where
+  -- Compile a standalone site.
+  mkStandalone :: Pattern -> (Item String -> Compiler (Item String)) -> Context String -> Rules ()
+  mkStandalone ptn action baseCtx = match ptn do
+    route $ setExtension "html"
+    compile do
+      ctx <- getTocCtx baseCtx
+      myPandocCompiler
+        >>= loadAndApplyTemplate "templates/post.html"       ctx
+        >>= loadAndApplyTemplate "templates/standalone.html" ctx
+        >>= action
+        >>= relativizeUrls
 
 rss :: Tags -> Rules ()
 rss tags = do
@@ -245,10 +259,10 @@ getTocCtx ctx = do
       , writerTemplate        = tmpl
       }
 
-  -- Pandoc now IDs for its table of contents.[1, 2] However, since the
+  -- Pandoc adds IDs for its table of contents.[1, 2] However, since the
   -- site has two TOCs (where only one is shown at a given time via
   -- CSS), this results in two elements having the same identifier,
-  -- which is invalid HTML.  This may or may not matter, but it's
+  -- which is invalid HTML. This may or may not matter, but it's
   -- certainly better to fix it.
   --
   -- [1]: https://github.com/jgm/pandoc/issues/7907
@@ -282,22 +296,6 @@ addTitle title body = "<span title=\"" <> title <> "\">" <> body <> "</span>"
 
 asTxt :: (Text -> Text) -> String -> String
 asTxt f = T.unpack . f . T.pack
-
--- | Compile a standalone site.
-mkStandalone
-  :: Pattern
-  -> (Item String -> Compiler (Item String))
-  -> Context String
-  -> Rules ()
-mkStandalone matcher action baseCtx = match matcher do
-  route $ setExtension "html"
-  compile do
-    ctx <- getTocCtx baseCtx
-    myPandocCompiler
-      >>= loadAndApplyTemplate "templates/post.html"       ctx
-      >>= loadAndApplyTemplate "templates/standalone.html" ctx
-      >>= action
-      >>= relativizeUrls
 
 --- Tags
 
