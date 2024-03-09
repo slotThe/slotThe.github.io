@@ -509,9 +509,9 @@ plus, building something yourself is much more rewarding than buying it!
 [qmk:macros]: https://docs.qmk.fm/#/feature_macros
 [qmk:mod-tap]: https://docs.qmk.fm/#/mod_tap
 [qmk:repeat-key]: https://docs.qmk.fm/#/feature_repeat_key
-[qmk:slotthe:rules.mk]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk
-[qmk:slotthe:tapdances]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L181
-[qmk:slotthe]: https://github.com/qmk/qmk_firmware/tree/master/keyboards/keyboardio/atreus/keymaps/slotthe
+[qmk:slotthe:rules.mk]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk
+[qmk:slotthe:tapdances]: https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L190
+[qmk:slotthe]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe
 [qmk:tap-dance]: https://docs.qmk.fm/#/feature_tap_dance
 [qmk:tri-layer]: https://docs.qmk.fm/#/feature_tri_layer
 [qmk]: https://qmk.fm/
@@ -557,7 +557,7 @@ plus, building something yourself is much more rewarding than buying it!
 [^14]: I will try to keep this post updated with newer versions.
 
 [^16]: This may seem debatable at this point,
-       but I guess part of this post is convincing the skeptics that 44 keys really are enough.
+       but I guess part of this post is convincing the sceptics that 44 keys really are enough.
        Indeed, one might even argue that the form-factor is a big strength of the keyboard,
        irrespective of the potential ergonomic benefits.
        After all,

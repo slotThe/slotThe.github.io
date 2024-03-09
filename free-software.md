@@ -161,7 +161,7 @@ I've written too many Emacs packages—and none of them popular, at that!
 [Atreus]: https://tony-zorman.com/posts/atreus-review.html
 [Git Introduction]: ./talks/git-introduction.html
 [KMonad]: https://github.com/kmonad/kmonad
-[QMK configuration]: https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/
+[QMK configuration]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
 [XMonad]: https://xmonad.org/

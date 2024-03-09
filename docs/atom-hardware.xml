@@ -156,7 +156,7 @@ creation—and while fiddling with it, of course—are quite important,
 given the unusual form-factor.
 Plus, there aren’t very many detailed resources on actually using a 40% keyboard that I could find,
 so perhaps this will also turn out to be useful to people not using an Atreus.
-For the impatient: you can find my finished layout <a href="https://github.com/qmk/qmk_firmware/tree/master/keyboards/keyboardio/atreus/keymaps/slotthe">here</a>.</p>
+For the impatient: you can find my finished layout <a href="https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe">here</a>.</p>
 <h3 id="key-chord-considerations">Key chord considerations</h3>
 <p>As I extensively use both Emacs and XMonad,
 there are quite a few modifier combinations to consider.
@@ -265,7 +265,7 @@ in order to do even more.
 Tap dances are very similar to mod-taps,
 only in addition to just differentiating between a “pressed” and a “held” state,
 QMK now also keeps track of <em>how often</em> a key has been tapped.
-So far, <a href="https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L181">my setup</a> here is quite basic;
+So far, <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/keymap.c#L190">my setup</a> here is quite basic;
 I only check whether a key was pressed once, twice, or is being held.
 This allows me to not need extra keys for parentheses,
 as they can fit on the modifier keys:</p>
@@ -363,7 +363,7 @@ although this is less critical since my laptop keyboard is never far away.</p>
 <h2 id="other-features">Other features</h2>
 <p>There are some features that aren’t necessarily reflected in the keys themselves,
 yet are quite essential for day-to-day use.
-The TL;DR can be found in <a href="https://github.com/qmk/qmk_firmware/blob/master/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk">rules.mk</a>.</p>
+The TL;DR can be found in <a href="https://github.com/slotThe/qmk_firmware/blob/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe/rules.mk">rules.mk</a>.</p>
 <p>One notable omission from the following list will be Unicode entry.
 This is solely due to the fact that QMK’s built-in support for this utilises some GTK-specific functionality,
 which is woefully inadequate for my setup.
@@ -469,7 +469,7 @@ make everything better!<a href="#fnref1" class="footnote-back" role="doc-backlin
 “Kailh deep sea tactile silent BOX islet switches”.
 Quite the mouthfull indeed!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>This may seem debatable at this point,
-but I guess part of this post is convincing the skeptics that 44 keys really are enough.
+but I guess part of this post is convincing the sceptics that 44 keys really are enough.
 Indeed, one might even argue that the form-factor is a big strength of the keyboard,
 irrespective of the potential ergonomic benefits.
 After all,
