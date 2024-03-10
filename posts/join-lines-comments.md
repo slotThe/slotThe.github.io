@@ -1,6 +1,7 @@
 ---
 title: Smartly join comments with join-line
 date: 2024-03-02
+last-modified: 2024-03-10
 no-toc: true
 tags: emacs
 ---
@@ -18,7 +19,7 @@ let's fix that.
 
 Actually an alias for `delete-indentation`,
 `join-line`'s behaviour is perhaps more easily seen
-rather than explained.
+rather than explained.[^8]
 
 <img class="pure-img"
      src="../images/join-line/join-line.gif"
@@ -121,23 +122,32 @@ does not have to do this by oneself."
     ;; (subtracting 1 in order to compare less than BOB).
     (setq beg (1- (line-beginning-position (and arg 2))))
     (when arg (forward-line)))
-  (let ((prefix (and (> (length comment-start) 0)
-                     (regexp-quote comment-start))))
+  (let* ((comment (string-trim-right comment-start))
+         (prefix-start (and (> (length comment-start) 0)
+                            (regexp-quote comment)))
+         ;; A continuation of a comment. This is important for
+         ;; languages such as Haskell, where -- starts a comment
+         ;; and --- still is one.
+         (prefix-cont (and prefix-start
+                           (regexp-quote (substring comment 0 1))))
+         (prev-comment?                 ; Comment on previous line?
+          (save-excursion
+            (forward-line -1)
+            (back-to-indentation)
+            (search-forward prefix-start (pos-eol) 'no-error))))
     (while (and (> (line-beginning-position) beg)
                 (forward-line 0)
                 (= (preceding-char) ?\n))
-      (if (save-excursion (forward-line -1) (eolp))
-          (delete-char -1)
-        (delete-char -1)
-        ;; If the appended line started with the fill prefix, delete it.
-        (let ((prev-comment?            ; Don't delete the start of a comment.
-               (save-excursion
-                 (back-to-indentation)
-                 (looking-at prefix))))
-          (delete-horizontal-space)
-          (while (and prev-comment? prefix (looking-at prefix))
-            (replace-match "" t t))
-          (fixup-whitespace))))))
+      (delete-char -1)
+      (unless (save-excursion (forward-line -1) (eolp))
+        (delete-horizontal-space)
+        ;; Delete the start of a comment once.
+        (when (and prev-comment? prefix-start (looking-at prefix-start))
+          (replace-match "" t t)
+          ;; Look for continuations.
+          (while (and prefix-cont (looking-at prefix-cont))
+            (replace-match "" t t)))
+        (fixup-whitespace)))))
 ```
 
 If you're interested in a diff with the original function, you can find that below.
@@ -145,13 +155,7 @@ If you're interested in a diff with the original function, you can find that bel
 <details>
   <summary>Click</summary>
 ``` diff
-@@ -1,13 +1,15 @@
- (defun delete-indentation (&optional arg beg end)
-   "Join this line to previous and fix up whitespace at join.
--
- If there is a fill prefix, delete it from the beginning of this
- line.
- With prefix ARG, join the current line to the following line.
+@@ -6,7 +6,10 @@
  When BEG and END are non-nil, join all lines in the region they
  define.  Interactively, BEG and END are, respectively, the start
  and end of the region if it is active, else nil.  (The region is
@@ -163,35 +167,42 @@ If you're interested in a diff with the original function, you can find that bel
    (interactive
     (progn (barf-if-buffer-read-only)
            (cons current-prefix-arg
-@@ -25,14 +27,20 @@
+@@ -24,14 +27,28 @@
      ;; (subtracting 1 in order to compare less than BOB).
      (setq beg (1- (line-beginning-position (and arg 2))))
      (when arg (forward-line)))
 -  (let ((prefix (and (> (length fill-prefix) 0)
 -                     (regexp-quote fill-prefix))))
-+  (let ((prefix (and (> (length comment-start) 0)
-+                     (regexp-quote comment-start))))
++  (let* ((comment (string-trim-right comment-start))
++         (prefix-start (and (> (length comment-start) 0)
++                            (regexp-quote comment)))
++         ;; A continuation of a comment. This is important for
++         ;; languages such as Haskell, where -- starts a comment
++         ;; and --- still is one.
++         (prefix-cont (and prefix-start (regexp-quote (substring comment 0 1))))
++         (prev-comment?                 ; Comment on previous line?
++          (save-excursion
++            (forward-line -1)
++            (back-to-indentation)
++            (search-forward prefix-start (pos-eol) 'no-error))))
      (while (and (> (line-beginning-position) beg)
                  (forward-line 0)
                  (= (preceding-char) ?\n))
--      (delete-char -1)
+       (delete-char -1)
 -      ;; If the appended line started with the fill prefix,
 -      ;; delete the prefix.
 -      (if (and prefix (looking-at prefix))
 -          (replace-match "" t t))
 -      (fixup-whitespace))))
-+      (if (save-excursion (forward-line -1) (eolp))
-+          (delete-char -1)
-+        (delete-char -1)
-+        ;; If the appended line started with the fill prefix, delete it.
-+        (let ((prev-comment?            ; Don't delete the start of a comment.
-+               (save-excursion
-+                 (back-to-indentation)
-+                 (looking-at prefix))))
-+          (delete-horizontal-space)
-+          (while (and prev-comment? prefix (looking-at prefix))
-+            (replace-match "" t t))
-+          (fixup-whitespace))))))
++      (unless (save-excursion (forward-line -1) (eolp))
++        (delete-horizontal-space)
++        ;; Delete the start of a comment once.
++        (when (and prev-comment? prefix-start (looking-at prefix-start))
++          (replace-match "" t t)
++          ;; Look for continuations.
++          (while (and prefix-cont (looking-at prefix-cont))
++            (replace-match "" t t)))
++        (fixup-whitespace)))
 ```
 </details>
 
@@ -213,3 +224,10 @@ If you're interested in a diff with the original function, you can find that bel
       If something doesn't work to your liking,
       just overwrite a builtin function;
       what's the worst that could happen?
+
+[^8]: {-} 󠀠
+
+      In daily usage, I have this bound to `C-u C-w`,
+      where `C-w` itself is bound to what's essentially `backward-kill-word`;
+      see [here](https://gitlab.com/slotThe/dotfiles/-/blob/5929dc10bcbdf0d3531bd6f9940f54f8294a27a3/emacs/lisp/hopf-keybindings.el#L131)
+      for the full function.

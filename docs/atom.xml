@@ -23,8 +23,10 @@
         Posted on 2024-03-02
       
       
+        &thinsp;·&thinsp; last modified: 2024-03-10
       
-        &thinsp;·&thinsp; <span title="921 words">4 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="997 words">4 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
@@ -49,12 +51,12 @@ let’s fix that.</p>
 <!--more-->
 <p>Actually an alias for <code>delete-indentation</code>,
 <code>join-line</code>’s behaviour is perhaps more easily seen
-rather than explained.</p>
+rather than explained.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p><img class="pure-img" src="../images/join-line/join-line.gif" alt="Original join-line behaviour"></p>
 <p>However, the default implementation of that function is quite oblivious to comments—in the sense that it doesn’t care about them at all!</p>
 <p><img class="pure-img" src="../images/join-line/join-line-comment.gif" alt="Original join-line behaviour with respect to comments."></p>
 <p>This is a bit annoying, though thankfully it’s not difficult to fix!
-<code>delete-indentation</code> already has some code that removes a possibly-present <code>fill-prefix</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> variable:</p>
+<code>delete-indentation</code> already has some code that removes a possibly-present <code>fill-prefix</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> variable:</p>
 <pre class="emacs-lisp"><code>(defun delete-indentation (&amp;optional arg beg end)
   …
   (let ((prefix (and (&gt; (length fill-prefix) 0)
@@ -69,7 +71,7 @@ rather than explained.</p>
           (replace-match &quot;&quot; t t))
       (fixup-whitespace))))</code></pre>
 <p>Adjusting this to my idiosyncratic preferences is quite straightforward:
-just set <code>fill-prefix</code> to the current comment syntax<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, and let the function do the rest.</p>
+just set <code>fill-prefix</code> to the current comment syntax<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, and let the function do the rest.</p>
 <pre class="emacs-lisp"><code>(advice-add 'delete-indentation :around
   (lambda (old-fun &amp;optional arg beg end)
     (let ((fill-prefix comment-start))
@@ -82,7 +84,7 @@ but by convention comments on their own line get two such semicolons instead.
 This is also not difficult to fix,
 but requires <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey-patching</a> <code>delete-indentation</code> itself,
 rather than just having to advise it.
-Ostensibly all we have to do is to change<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+Ostensibly all we have to do is to change<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <pre class="emacs-lisp"><code>(if (and prefix (looking-at prefix))
   …)</code></pre>
 <p>to</p>
@@ -92,7 +94,7 @@ Ostensibly all we have to do is to change<a href="#fn3" class="footnote-ref" id=
 we might as well remove the advice and hard-code the <code>fill-prefix</code> into the function.
 Modulo some minor details,
 this gives us the finished product,
-which works as expected in all situations I’ve cared to try it in!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+which works as expected in all situations I’ve cared to try it in!<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <pre class="emacs-lisp"><code>(defun delete-indentation (&amp;optional arg beg end)
   &quot;Join this line to previous and fix up whitespace at join.
 If there is a fill prefix, delete it from the beginning of this
@@ -122,90 +124,105 @@ does not have to do this by oneself.&quot;
     ;; (subtracting 1 in order to compare less than BOB).
     (setq beg (1- (line-beginning-position (and arg 2))))
     (when arg (forward-line)))
-  (let ((prefix (and (&gt; (length comment-start) 0)
-                     (regexp-quote comment-start))))
+  (let* ((comment (string-trim-right comment-start))
+         (prefix-start (and (&gt; (length comment-start) 0)
+                            (regexp-quote comment)))
+         ;; A continuation of a comment. This is important for
+         ;; languages such as Haskell, where -- starts a comment
+         ;; and --- still is one.
+         (prefix-cont (and prefix-start
+                           (regexp-quote (substring comment 0 1))))
+         (prev-comment?                 ; Comment on previous line?
+          (save-excursion
+            (forward-line -1)
+            (back-to-indentation)
+            (search-forward prefix-start (pos-eol) 'no-error))))
     (while (and (&gt; (line-beginning-position) beg)
                 (forward-line 0)
                 (= (preceding-char) ?\n))
-      (if (save-excursion (forward-line -1) (eolp))
-          (delete-char -1)
-        (delete-char -1)
-        ;; If the appended line started with the fill prefix, delete it.
-        (let ((prev-comment?            ; Don't delete the start of a comment.
-               (save-excursion
-                 (back-to-indentation)
-                 (looking-at prefix))))
-          (delete-horizontal-space)
-          (while (and prev-comment? prefix (looking-at prefix))
-            (replace-match &quot;&quot; t t))
-          (fixup-whitespace))))))</code></pre>
+      (delete-char -1)
+      (unless (save-excursion (forward-line -1) (eolp))
+        (delete-horizontal-space)
+        ;; Delete the start of a comment once.
+        (when (and prev-comment? prefix-start (looking-at prefix-start))
+          (replace-match &quot;&quot; t t)
+          ;; Look for continuations.
+          (while (and prefix-cont (looking-at prefix-cont))
+            (replace-match &quot;&quot; t t)))
+        (fixup-whitespace)))))</code></pre>
 <p>If you’re interested in a diff with the original function, you can find that below.</p>
 <details>
 <summary>
 Click
 </summary>
-<div class="sourceCode" id="cb6"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -1,13 +1,15 @@</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a> (defun delete-indentation (&amp;optional arg beg end)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   &quot;Join this line to previous and fix up whitespace at join.</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">-</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a> If there is a fill prefix, delete it from the beginning of this</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a> line.</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a> With prefix ARG, join the current line to the following line.</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a> When BEG and END are non-nil, join all lines in the region they</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a> define.  Interactively, BEG and END are, respectively, the start</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a> and end of the region if it is active, else nil.  (The region is</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="st">-ignored if prefix ARG is given.)&quot;</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="va">+ignored if prefix ARG is given.)</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="va">+</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="va">+When joining lines, smartly delete comment beginnings, such that one</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="va">+does not have to do this by oneself.&quot;</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>   (interactive</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    (progn (barf-if-buffer-read-only)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>           (cons current-prefix-arg</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -25,14 +27,20 @@</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>     ;; (subtracting 1 in order to compare less than BOB).</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>     (setq beg (1- (line-beginning-position (and arg 2))))</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>     (when arg (forward-line)))</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="st">-  (let ((prefix (and (&gt; (length fill-prefix) 0)</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="st">-                     (regexp-quote fill-prefix))))</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="va">+  (let ((prefix (and (&gt; (length comment-start) 0)</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="va">+                     (regexp-quote comment-start))))</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>     (while (and (&gt; (line-beginning-position) beg)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                 (forward-line 0)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                 (= (preceding-char) ?\n))</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="st">-      (delete-char -1)</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="st">-      ;; If the appended line started with the fill prefix,</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="st">-      ;; delete the prefix.</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="st">-      (if (and prefix (looking-at prefix))</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="st">-          (replace-match &quot;&quot; t t))</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="st">-      (fixup-whitespace))))</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="va">+      (if (save-excursion (forward-line -1) (eolp))</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="va">+          (delete-char -1)</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="va">+        (delete-char -1)</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="va">+        ;; If the appended line started with the fill prefix, delete it.</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="va">+        (let ((prev-comment?            ; Don't delete the start of a comment.</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="va">+               (save-excursion</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="va">+                 (back-to-indentation)</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="va">+                 (looking-at prefix))))</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="va">+          (delete-horizontal-space)</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="va">+          (while (and prev-comment? prefix (looking-at prefix))</span></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="va">+            (replace-match &quot;&quot; t t))</span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="va">+          (fixup-whitespace))))))</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -6,7 +6,10 @@</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a> When BEG and END are non-nil, join all lines in the region they</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a> define.  Interactively, BEG and END are, respectively, the start</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a> and end of the region if it is active, else nil.  (The region is</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">-ignored if prefix ARG is given.)&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="va">+ignored if prefix ARG is given.)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="va">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="va">+When joining lines, smartly delete comment beginnings, such that one</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="va">+does not have to do this by oneself.&quot;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>   (interactive</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (progn (barf-if-buffer-read-only)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>           (cons current-prefix-arg</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -24,14 +27,28 @@</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>     ;; (subtracting 1 in order to compare less than BOB).</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>     (setq beg (1- (line-beginning-position (and arg 2))))</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>     (when arg (forward-line)))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">-  (let ((prefix (and (&gt; (length fill-prefix) 0)</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">-                     (regexp-quote fill-prefix))))</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="va">+  (let* ((comment (string-trim-right comment-start))</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="va">+         (prefix-start (and (&gt; (length comment-start) 0)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="va">+                            (regexp-quote comment)))</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="va">+         ;; A continuation of a comment. This is important for</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="va">+         ;; languages such as Haskell, where -- starts a comment</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="va">+         ;; and --- still is one.</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="va">+         (prefix-cont (and prefix-start (regexp-quote (substring comment 0 1))))</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="va">+         (prev-comment?                 ; Comment on previous line?</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="va">+          (save-excursion</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="va">+            (forward-line -1)</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="va">+            (back-to-indentation)</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="va">+            (search-forward prefix-start (pos-eol) 'no-error))))</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>     (while (and (&gt; (line-beginning-position) beg)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>                 (forward-line 0)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>                 (= (preceding-char) ?\n))</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>       (delete-char -1)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="st">-      ;; If the appended line started with the fill prefix,</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="st">-      ;; delete the prefix.</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="st">-      (if (and prefix (looking-at prefix))</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="st">-          (replace-match &quot;&quot; t t))</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="st">-      (fixup-whitespace))))</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="va">+      (unless (save-excursion (forward-line -1) (eolp))</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="va">+        (delete-horizontal-space)</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="va">+        ;; Delete the start of a comment once.</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="va">+        (when (and prev-comment? prefix-start (looking-at prefix-start))</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="va">+          (replace-match &quot;&quot; t t)</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="va">+          ;; Look for continuations.</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="va">+          (while (and prefix-cont (looking-at prefix-cont))</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="va">+            (replace-match &quot;&quot; t t)))</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="va">+        (fixup-whitespace)))</span></span></code></pre></div>
 </details>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>This is a “String for filling to insert at front of new line, or nil for none.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>This is helpfully provided by the <code>comment-start</code> variable.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<p>Notice that the <code>if</code> in the code is really a <code>when</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>{-} 󠀠</p>
+<p>In daily usage, I have this bound to <code>C-u C-w</code>,
+where <code>C-w</code> itself is bound to what’s essentially <code>backward-kill-word</code>;
+see <a href="https://gitlab.com/slotThe/dotfiles/-/blob/5929dc10bcbdf0d3531bd6f9940f54f8294a27a3/emacs/lisp/hopf-keybindings.el#L131">here</a>
+for the full function.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This is a “String for filling to insert at front of new line, or nil for none.”<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This is helpfully provided by the <code>comment-start</code> variable.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>{-} 󠀠</p>
+<p>Notice that the <code>if</code> in the code is really a <code>when</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>{-} 󠀠</p>
 <p>It is in moments like these that I’m extremely glad about<!--
   -->—albeit a bit scared of—<!--
   -->Emacs’s infinite customisability.
 If something doesn’t work to your liking,
 just overwrite a builtin function;
-what’s the worst that could happen?<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+what’s the worst that could happen?<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
