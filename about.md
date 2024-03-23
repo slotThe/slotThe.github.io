@@ -26,12 +26,13 @@ The full source code is available [here][site].
 All posts are written on a TUXEDO Aura 14 in GNU Emacs, probably on an [Atreus][site:atreus].
 If the latter is unavailable, [KMonad] supplies me with a proper keyboard layout.
 
-Most of the time, I'm fastest to reply via E-Mail or IRC, but you try
-any of the following channels:
+Most of the time I'm fastest to reply via E-Mail,
+but you can try any of the following channels:
 
 + E-Mail:
-  + <span class="email">soliditsallgood@mailbox<b>.mailbox</b>.org</span>
+  + <span class="email">mail@tony-zorman<b>.mailbox</b>.com</span>
   + <span class="email">tonyzorman@mailbox<b>.mailbox</b>.org</span>
+  + <span class="email">soliditsallgood@mailbox<b>.mailbox</b>.org</span>
 + PGP: [`4896FB6C952846C3414C2475C927DE8C7DFD57B8`](./key.txt)
 + IRC: `Solid`@[irc.libera.chat](https://libera.chat/)
 + Matrix: `slot-`@[matrix.org](https://matrix.org/)
