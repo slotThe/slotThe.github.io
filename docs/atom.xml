@@ -10,8 +10,239 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2024-03-02T00:00:00Z</updated>
+    <updated>2024-03-23T00:00:00Z</updated>
     <entry>
+    <title>Announcing: rq Version 0.1.0</title>
+    <link href="https://tony-zorman.com/posts/rq.html" />
+    <id>https://tony-zorman.com/posts/rq.html</id>
+    <published>2024-03-23T00:00:00Z</published>
+    <updated>2024-03-23T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2024-03-23
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1282 words">6 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'rust'." href="/tags/rust.html" rel="tag">rust</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>
+</p>
+<p>I’ve just released version 0.1.0 of <a href="https://github.com/slotThe/rq"><code>rq</code></a>,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+a small functional language to manipulate JSON—and my excuse to learn Rust!
+This seems as good a time as any to talk about it,
+so let’s do that.</p>
+<!--more-->
+<h2 id="overview">Overview</h2>
+<p>As the name suggests,
+<code>rq</code> is heavily inspired by the venerable <code>jq</code>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+and looks quite similar in action:</p>
+<p><img class="pure-img" src="../images/rq/rq.png" alt="rq in action"></p>
+<p>Another example,
+printing out the name of <code>rq</code>s direct and transitive dependencies.</p>
+<pre class="console"><code>$ cargo metadata | rq '.packages | map .name | filter (!= &quot;rq&quot;)'
+[ahash, allocator-api2, anyhow, ariadne, cc, cfg-if, chumsky, hashbrown,
+libc, once_cell, proc-macro2, psm, quote, stacker, syn, unicode-ident,
+unicode-width, version_check, winapi, winapi-i686-pc-windows-gnu,
+winapi-x86_64-pc-windows-gnu, yansi, zerocopy, zerocopy-derive]</code></pre>
+<p>I will try to give a coarse overview of the language,
+adding some design considerations,
+without repeating too much of what is already in the projects
+<a href="https://github.com/slotThe/rq?tab=readme-ov-file#the-expression-language">README</a>.
+I would advise you to consult that if you’re interested in a more comprehensive description of <code>rq</code>.</p>
+<h2 id="the-language">The language</h2>
+<p>The tl;dr is that <code>rq</code>—as advertised—is a small functional language with the usual idioms.
+There is a small REPL to try out the language,
+which can be accessed executing <code>rq</code> without any arguments.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre><code>λ&gt; const 1 2
+1
+
+λ&gt; (\x -&gt; x + 1) 41
+42
+
+λ&gt; map (+ 1) [1, 2, 3, 4, 5]
+[2, 3, 4, 5, 6]
+
+λ&gt; foldl (+) 0 [9, 3, 13, 17]
+42
+
+# `get` gets the i'th index or key from a collection.
+λ&gt; get 1 [0, 2, 3, 4]
+2
+λ&gt; get &quot;name&quot; { name: &quot;Name&quot; }
+Name</code></pre>
+<p>The language has some <code>jq</code>-inspired syntactic sugar for working with JSON,
+like <code>x.1</code> desugaring to <code>get 1 x</code>, and <code>.1</code> meaning <code>λx → get 1 x</code>.
+Additionally, <code>|</code> designates covariant function composition.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<pre><code>λ&gt; (filter (get &quot;age&quot; | (&gt;= 42)) | map (\x -&gt; { x.name: x.age })) \
+     [{&quot;name&quot;: &quot;John Doe&quot;, &quot;age&quot;: 43, &quot;phone&quot;: &quot;+44 1234567&quot;},{&quot;name&quot;:&quot;Alice&quot;},{&quot;name&quot;:&quot;Bob&quot;, &quot;age&quot;:42}]
+[{John Doe: 43}, {Bob: 42}]</code></pre>
+<h3 id="type-system">Type system</h3>
+<p>I like statically typed languages,
+so why not make <code>rq</code> one as well?
+For a program whose sole purpose is to receive a one-line expression,
+this might seem overkill—and it is!</p>
+<p>Currently, the type system is a bit rudimentary and only features the most essential pieces:
+universally quantified type variables,
+arrows,
+as well as <code>Num</code> and <code>JSON</code> as “basic types”,
+where the former is a subtype of the latter.
+The <code>JSON</code> type is to be seen as a black hole of sorts,
+swallowing everything and
+enabling our statically typed language to come across as quite dynamic indeed.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>In the REPL, types can be queried with <code>:t</code>.</p>
+<pre><code>λ&gt; :t const
+∀a. ∀b. a → b → a
+
+λ&gt; :t get
+JSON → JSON → JSON
+
+λ&gt; :t \f g x -&gt; f x (g x)
+∀j. ∀i. ∀g. (g → i → j) → (g → i) → g → j
+
+λ&gt; :t id
+∀a. a → a
+
+λ&gt; :t id 1
+Num
+
+λ&gt; :t id 1 :: JSON
+JSON
+
+λ&gt; :t &quot;a&quot; :: Num
+JSON is not a subtype of Num</code></pre>
+<p>Implementation wise, one needs something that supports both polymorphism and subtyping.
+Sadly, this rules out any Hindley–Milner-inspired type system (at least to my knowledge).
+I settled on Dunfield and Krishnaswami’s bidirectional
+type checking algorithm from their paper<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> “Complete and easy
+bidirectional type checking for higher-rank polymorphism”
+<span class="citation" data-cites="dunfield13:higher">[@dunfield13:higher]</span>,
+as it seemed to be the most straightforward description of exactly what I needed.
+The paper is quite readable, actually,
+so I encourage you to check it out!</p>
+<p>And that’s <code>rq</code>, pretty much.
+besides <code>map</code>, <code>filter</code>, <code>foldl</code>, <code>get</code>, and <code>set</code>
+there are relatively few builtin functions that do interesting things right now.
+Someone should definitely do something about that…!</p>
+<h2 id="performance">Performance</h2>
+<p>Performance is “fine”;
+a bit slower than <code>jq</code>,
+though probably not enough to notice very often in practice.
+There currently is no streaming parser,
+though, so please don’t pump gigabytes of JSON through <code>rq</code> :)</p>
+<p>As a “real world” example,
+I ran <code>cargo metadata</code> on the
+<a href="https://github.com/rust-lang/rust-analyzer">rust-analyzer GitHub repository</a>,
+which produces ~1mb of JSON.
+On that data, <code>jq</code> takes 144ms and <code>rq</code> needs around 186ms.</p>
+<pre class="console"><code>$ hyperfine &quot;cargo metadata --format-version=1 | jq '.packages | map (.name)'&quot;
+Benchmark 1: cargo metadata --format-version=1 | jq '.packages | map (.name)'
+  Time (mean ± σ):     144.0 ms ±   3.6 ms    [User: 112.3 ms, System: 36.2 ms]
+  Range (min … max):   136.5 ms … 149.5 ms    19 runs
+
+$ hyperfine &quot;cargo metadata --format-version=1 | rq '.packages | map .name'&quot;
+Benchmark 1: cargo metadata --format-version=1 | rq '.packages | map .name'
+  Time (mean ± σ):     185.7 ms ±   4.0 ms    [User: 139.2 ms, System: 46.6 ms]
+  Range (min … max):   178.6 ms … 194.8 ms    16 runs</code></pre>
+<p><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>A cursory analysis reveals that parsing takes about 10ms,
+with the type checker and evaluator needing around 20ms each.
+The bulk of the time, 130ms, is spent actually reading in the string!</p>
+<p>Still, overall I’m quite happy with this,
+as I haven’t really tried optimising for performance at all,
+and yet the result is quite acceptable.</p>
+<h2 id="future-work">Future work</h2>
+<ul>
+<li><p>We need more functions to actually do useful things!
+This is both the most important
+and least exciting
+direction,
+so let’s see which feeling ends up winning :)</p></li>
+<li><p>Guessing at performance improvements,
+I suppose a case could be made to more closely look at the evaluator;
+currently conversion between the semantic and syntactic representation of the expression is done by copious amounts of copying.
+Perhaps a bit of this could be alleviated by making certain functions take mutable references instead,
+though I haven’t completely thought this through yet.</p></li>
+<li><p>I was initially thinking about implementing the standard library
+using
+<a href="https://en.wikipedia.org/wiki/Higher-order_abstract_syntax">higher-order abstract syntax</a>
+instead of
+<a href="https://github.com/slotThe/rq/blob/4ff7bb1e35dbbde201a069f5e2c588059c79149b/src/eval.rs#L148">hard coding</a>
+them into the evaluator itself.
+This would essentially involve a change in the expression type from</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> Expr <span class="op">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// …</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  Builtin(Builtin)<span class="op">,</span> <span class="co">// Builtin is a big enum of names</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>to something along the lines of</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> Expr <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// …</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  Builtin(<span class="kw">dyn</span> <span class="bu">Fn</span>(Expr) <span class="op">-&gt;</span> Expr)<span class="op">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>I reckon hard coding the builtin functions into the evaluator might be a net speed gain,
+though this seems like a fun exercise,
+so perhaps I will explore this on a separate branch.</p></li>
+<li><p>Implementing a more complete type system seems advisable;
+in particular list and object types should not be very difficult to add.
+I’m not totally sure how union types<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> would fit into the current algorithm,
+but this is definitely something I’d like to implement.
+Having a type signature like</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>get <span class="ot">:</span> <span class="ot">(</span>Num <span class="ot">|</span> Str<span class="ot">)</span> <span class="ot">→</span> <span class="ot">(</span>Arr <span class="ot">|</span> Obj<span class="ot">)</span> <span class="ot">→</span> JSON</span></code></pre></div>
+<p>or even</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>get <span class="ot">:</span> <span class="ot">(</span>Num <span class="ot">→</span> Arr <span class="ot">→</span> JSON<span class="ot">)</span> <span class="ot">|</span> <span class="ot">(</span>Str <span class="ot">→</span> Obj <span class="ot">→</span> JSON<span class="ot">)</span></span></code></pre></div>
+<p>would please me.</p></li>
+<li><p>I’m also interested to find other (bidirectional) type checking algorithms that may be worth studying more closely.</p></li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>{-} I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
+what are you talking about‽<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Though obviously it—right now—only covers a meagre subset of what <code>jq</code> can do.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>To appease… someone reading this,
+lambdas can also be written in Rust-esque notation,
+and can take multiple arguments:</p>
+<pre><code>|x, y| x y  ≡  λx y → x y  ≡  \x -&gt; \y -&gt; x y</code></pre>
+<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn4"><p>As in, <code>(f | g)(x)</code> means <code>g(f(x))</code>,
+to mirror how shells use pipes.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>After all, a dynamically typed language is just a statically typed one with a single base type.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>{-} The paper is freely available <a href="https://arxiv.org/abs/1306.6032">on the arXiv</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>{-} I’m quite surprised—though happy—by the type checker being this fast!
+Likewise, I’m glad that all of the praise I’ve read about
+<a href="https://en.wikipedia.org/wiki/Normalisation_by_evaluation">normalisation by evaluation</a>
+was justified.</p>
+<p>It does make we wonder
+if I’m doing something colossally wrong by reading the data in the way that I do.
+At the moment, it’s nothing more than a simple</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> input <span class="op">=</span> <span class="dt">String</span><span class="pp">::</span>new()<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">io::</span>stdin()<span class="op">.</span>read_to_string(<span class="op">&amp;</span><span class="kw">mut</span> input)<span class="op">?;</span></span></code></pre></div>
+<p>Oh well.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>As in, not coproducts but the other ones.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Smartly join comments with join-line</title>
     <link href="https://tony-zorman.com/posts/join-lines-comments.html" />
     <id>https://tony-zorman.com/posts/join-lines-comments.html</id>

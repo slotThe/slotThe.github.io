@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Announcing: rq Version 0.1.0 · Tony Zorman</title>
+    
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#the-language">The language</a>
+<ul>
+<li><a href="#type-system">Type system</a></li>
+</ul></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#future-work">Future work</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Announcing: rq Version 0.1.0</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2024-03-23
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1313 words">6 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'rust'." href="../tags/rust.html" rel="tag">rust</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#the-language">The language</a>
+<ul>
+<li><a href="#type-system">Type system</a></li>
+</ul></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#future-work">Future work</a></li>
+</ul>
+  </div>
+
+<div>
+  <p>
+</p>
+<p></p>
+I’ve just released version 0.1.0 of <a href="https://github.com/slotThe/rq"><code>rq</code></a>,<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
+what are you talking about‽</div><!--
+-->
+a small functional language to manipulate JSON—and my excuse to learn Rust!
+This seems as good a time as any to talk about it,
+so let’s do that.
+<!--more-->
+<h2 id="overview">Overview<a href="#overview" class="floatleft sec-link">§</a></h2>
+<p></p>
+As the name suggests,
+<code>rq</code> is heavily inspired by the venerable <code>jq</code>,<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Though obviously it—right now—only covers a meagre subset of what <code>jq</code> can do.</div><!--
+-->
+and looks quite similar in action:
+<p></p>
+<img class="pure-img" src="../images/rq/rq.png" alt="rq in action">
+<p></p>
+Another example,
+printing out the name of <code>rq</code>s direct and transitive dependencies.
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>cargo<span class="w"> </span>metadata<span class="w"> </span><span class="p">|</span><span class="w"> </span>rq<span class="w"> </span><span class="s1">'.packages | map .name | filter (!= &quot;rq&quot;)'</span>
+<span class="go">[ahash, allocator-api2, anyhow, ariadne, cc, cfg-if, chumsky, hashbrown,</span>
+<span class="go">libc, once_cell, proc-macro2, psm, quote, stacker, syn, unicode-ident,</span>
+<span class="go">unicode-width, version_check, winapi, winapi-i686-pc-windows-gnu,</span>
+<span class="go">winapi-x86_64-pc-windows-gnu, yansi, zerocopy, zerocopy-derive]</span>
+</pre></div>
+
+<p></p>
+I will try to give a coarse overview of the language,
+adding some design considerations,
+without repeating too much of what is already in the projects
+<a href="https://github.com/slotThe/rq?tab=readme-ov-file#the-expression-language"><span class="small-caps">readme</span></a>.
+I would advise you to consult that if you’re interested in a more comprehensive description of <code>rq</code>.
+<h2 id="the-language">The language<a href="#the-language" class="floatleft sec-link">§</a></h2>
+<p></p>
+The tl;dr is that <code>rq</code>—as advertised—is a small functional language with the usual idioms.
+There is a small REPL to try out the language,
+which can be accessed executing <code>rq</code> without any arguments.<!--
+--><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+To appease… someone reading this,
+lambdas can also be written in Rust-esque notation,
+and can take multiple arguments:
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>|x, y| x y  ≡  λx y → x y  ≡  \x -&gt; \y -&gt; x y
+</pre></div>
+</div><!--
+-->
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>λ&gt; const 1 2
+1
+
+λ&gt; (\x -&gt; x + 1) 41
+42
+
+λ&gt; map (+ 1) [1, 2, 3, 4, 5]
+[2, 3, 4, 5, 6]
+
+λ&gt; foldl (+) 0 [9, 3, 13, 17]
+42
+
+# `get` gets the i'th index or key from a collection.
+λ&gt; get 1 [0, 2, 3, 4]
+2
+λ&gt; get &quot;name&quot; { name: &quot;Name&quot; }
+Name
+</pre></div>
+
+<p></p>
+The language has some <code>jq</code>-inspired syntactic sugar for working with JSON,
+like <code>x.1</code> desugaring to <code>get 1 x</code>, and <code>.1</code> meaning <code>λx → get 1 x</code>.
+Additionally, <code>|</code> designates covariant function composition.<!--
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">As in, <code>(f | g)(x)</code> means <code>g(f(x))</code>,
+to mirror how shells use pipes.</div><!--
+-->
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>λ&gt; (filter (get &quot;age&quot; | (&gt;= 42)) | map (\x -&gt; { x.name: x.age })) \
+     [{&quot;name&quot;: &quot;John Doe&quot;, &quot;age&quot;: 43, &quot;phone&quot;: &quot;+44 1234567&quot;},{&quot;name&quot;:&quot;Alice&quot;},{&quot;name&quot;:&quot;Bob&quot;, &quot;age&quot;:42}]
+[{John Doe: 43}, {Bob: 42}]
+</pre></div>
+
+<h3 id="type-system">Type system<a href="#type-system" class="floatleft sec-link">§</a></h3>
+<p></p>
+I like statically typed languages,
+so why not make <code>rq</code> one as well?
+For a program whose sole purpose is to receive a one-line expression,
+this might seem overkill—and it is!
+<p></p>
+Currently, the type system is a bit rudimentary and only features the most essential pieces:
+universally quantified type variables,
+arrows,
+as well as <code>Num</code> and <code>JSON</code> as “basic types”,
+where the former is a subtype of the latter.
+The <code>JSON</code> type is to be seen as a black hole of sorts,
+swallowing everything and
+enabling our statically typed language to come across as quite dynamic indeed.<!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">After all, a dynamically typed language is just a statically typed one with a single base type.</div><!--
+-->
+<p></p>
+In the REPL, types can be queried with <code>:t</code>.
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>λ&gt; :t const
+∀a. ∀b. a → b → a
+
+λ&gt; :t get
+JSON → JSON → JSON
+
+λ&gt; :t \f g x -&gt; f x (g x)
+∀j. ∀i. ∀g. (g → i → j) → (g → i) → g → j
+
+λ&gt; :t id
+∀a. a → a
+
+λ&gt; :t id 1
+Num
+
+λ&gt; :t id 1 :: JSON
+JSON
+
+λ&gt; :t &quot;a&quot; :: Num
+JSON is not a subtype of Num
+</pre></div>
+
+<p></p>
+Implementation wise, one needs something that supports both polymorphism and subtyping.
+Sadly, this rules out any Hindley–Milner-inspired type system (at least to my knowledge).
+I settled on Dunfield and Krishnaswami’s bidirectional
+type checking algorithm from their paper<!--
+--><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">The paper is freely available <a href="https://arxiv.org/abs/1306.6032">on the arXiv</a>.</div><!--
+--> “Complete and easy
+bidirectional type checking for higher-rank polymorphism”
+<span class="citation" data-cites="dunfield13:higher">[<a href="#ref-dunfield13:higher" role="doc-biblioref">DuKr13</a>]</span>,
+as it seemed to be the most straightforward description of exactly what I needed.
+The paper is quite readable, actually,
+so I encourage you to check it out!
+<p></p>
+And that’s <code>rq</code>, pretty much.
+besides <code>map</code>, <code>filter</code>, <code>foldl</code>, <code>get</code>, and <code>set</code>
+there are relatively few builtin functions that do interesting things right now.
+Someone should definitely do something about that…!
+<h2 id="performance">Performance<a href="#performance" class="floatleft sec-link">§</a></h2>
+<p></p>
+Performance is “fine”;
+a bit slower than <code>jq</code>,
+though probably not enough to notice very often in practice.
+There currently is no streaming parser,
+though, so please don’t pump gigabytes of JSON through <code>rq</code> :)
+<p></p>
+As a “real world” example,
+I ran <code>cargo metadata</code> on the
+<a href="https://github.com/rust-lang/rust-analyzer">rust-analyzer GitHub repository</a>,
+which produces ~1mb of JSON.
+On that data, <code>jq</code> takes 144ms and <code>rq</code> needs around 186ms.
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s2">&quot;cargo metadata --format-version=1 | jq '.packages | map (.name)'&quot;</span>
+<span class="go">Benchmark 1: cargo metadata --format-version=1 | jq '.packages | map (.name)'</span>
+<span class="go">  Time (mean ± σ):     144.0 ms ±   3.6 ms    [User: 112.3 ms, System: 36.2 ms]</span>
+<span class="go">  Range (min … max):   136.5 ms … 149.5 ms    19 runs</span>
+
+<span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s2">&quot;cargo metadata --format-version=1 | rq '.packages | map .name'&quot;</span>
+<span class="go">Benchmark 1: cargo metadata --format-version=1 | rq '.packages | map .name'</span>
+<span class="go">  Time (mean ± σ):     185.7 ms ±   4.0 ms    [User: 139.2 ms, System: 46.6 ms]</span>
+<span class="go">  Range (min … max):   178.6 ms … 194.8 ms    16 runs</span>
+</pre></div>
+
+<p></p>
+<!--
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">I’m quite surprised—though happy—by the type checker being this fast!
+Likewise, I’m glad that all of the praise I’ve read about
+<a href="https://en.wikipedia.org/wiki/Normalisation_by_evaluation">normalisation by evaluation</a>
+was justified.
+<p></p>
+It does make we wonder
+if I’m doing something colossally wrong by reading the data in the way that I do.
+At the moment, it’s nothing more than a simple
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span>
+<span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</pre></div>
+
+<p></p>
+Oh well.</div><!--
+-->A cursory analysis reveals that parsing takes about 10ms,
+with the type checker and evaluator needing around 20ms each.
+The bulk of the time, 130ms, is spent actually reading in the string!
+<p></p>
+Still, overall I’m quite happy with this,
+as I haven’t really tried optimising for performance at all,
+and yet the result is quite acceptable.
+<h2 id="future-work">Future work<a href="#future-work" class="floatleft sec-link">§</a></h2>
+<ul>
+<li><p></p>
+
+We need more functions to actually do useful things!
+This is both the most important
+and least exciting
+direction,
+so let’s see which feeling ends up winning :)</li>
+<li><p></p>
+
+Guessing at performance improvements,
+I suppose a case could be made to more closely look at the evaluator;
+currently conversion between the semantic and syntactic representation of the expression is done by copious amounts of copying.
+Perhaps a bit of this could be alleviated by making certain functions take mutable references instead,
+though I haven’t completely thought this through yet.</li>
+<li><p></p>
+
+I was initially thinking about implementing the standard library
+using
+<a href="https://en.wikipedia.org/wiki/Higher-order_abstract_syntax">higher-order abstract syntax</a>
+instead of
+<a href="https://github.com/slotThe/rq/blob/4ff7bb1e35dbbde201a069f5e2c588059c79149b/src/eval.rs#L148">hard coding</a>
+them into the evaluator itself.
+This would essentially involve a change in the expression type from
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span> <span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// …</span>
+<span class="w">  </span><span class="n">Builtin</span><span class="p">(</span><span class="n">Builtin</span><span class="p">),</span><span class="w"> </span><span class="c1">// Builtin is a big enum of names</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+
+to something along the lines of
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span> <span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// …</span>
+<span class="w">  </span><span class="n">Builtin</span><span class="p">(</span><span class="k">dyn</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="n">Expr</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Expr</span><span class="p">),</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+
+I reckon hard coding the builtin functions into the evaluator might be a net speed gain,
+though this seems like a fun exercise,
+so perhaps I will explore this on a separate branch.</li>
+<li><p></p>
+
+Implementing a more complete type system seems advisable;
+in particular list and object types should not be very difficult to add.
+I’m not totally sure how union types<!--
+--><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">As in, not coproducts but the other ones.</div><!--
+--> would fit into the current algorithm,
+but this is definitely something I’d like to implement.
+Having a type signature like
+<div class="highlight-agda" style="padding-left: 1em;"><pre><span></span><span class="nf">get</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">(</span>Num<span class="w"> </span><span class="ow">|</span><span class="w"> </span>Str<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="o">(</span>Arr<span class="w"> </span><span class="ow">|</span><span class="w"> </span>Obj<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>JSON
+</pre></div>
+
+<p></p>
+
+or even
+<div class="highlight-agda" style="padding-left: 1em;"><pre><span></span><span class="nf">get</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">(</span>Num<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Arr<span class="w"> </span><span class="ow">→</span><span class="w"> </span>JSON<span class="o">)</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span><span class="o">(</span>Str<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Obj<span class="w"> </span><span class="ow">→</span><span class="w"> </span>JSON<span class="o">)</span>
+</pre></div>
+
+<p></p>
+
+would please me.</li>
+<li><p></p>
+
+I’m also interested to find other (bidirectional) type checking algorithms that may be worth studying more closely.</li>
+</ul>
+<h2 id="references">References<a href="#references" class="floatleft sec-link">§</a></h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr class="odd">
+<td><div id="ref-dunfield13:higher" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[DuKr13] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Dunfield, Jana</span>; <span class="smallcaps">Krishnaswami, Neelakantan R.</span>: <a href="https://doi.org/10.1145/2500365.2500582">Complete and easy bidirectional typechecking for higher-rank polymorphism</a>. In: <em>Proceedings of the 18th ACM SIGPLAN International Conference on Functional Programming</em>, <em>ICFP ’13</em>. New York, NY, USA : Association for Computing Machinery, 2013 — ISBN 9781450323260, S. 429–442</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
