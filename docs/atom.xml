@@ -24,7 +24,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1282 words">6 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1245 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'rust'." href="/tags/rust.html" rel="tag">rust</a>
@@ -159,7 +159,7 @@ Benchmark 1: cargo metadata --format-version=1 | rq '.packages | map .name'
   Range (min … max):   178.6 ms … 194.8 ms    16 runs</code></pre>
 <p><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>A cursory analysis reveals that parsing takes about 10ms,
 with the type checker and evaluator needing around 20ms each.
-The bulk of the time, 130ms, is spent actually reading in the string!</p>
+The bulk of the time, 130ms, is spent invoking <code>cargo metadata</code> and reading its output.</p>
 <p>Still, overall I’m quite happy with this,
 as I haven’t really tried optimising for performance at all,
 and yet the result is quite acceptable.</p>
@@ -182,15 +182,15 @@ instead of
 <a href="https://github.com/slotThe/rq/blob/4ff7bb1e35dbbde201a069f5e2c588059c79149b/src/eval.rs#L148">hard coding</a>
 them into the evaluator itself.
 This would essentially involve a change in the expression type from</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> Expr <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// …</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  Builtin(Builtin)<span class="op">,</span> <span class="co">// Builtin is a big enum of names</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>to something along the lines of</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> Expr <span class="op">{</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// …</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  Builtin(Builtin)<span class="op">,</span> <span class="co">// Builtin is a big enum of names</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  Builtin(<span class="kw">dyn</span> <span class="bu">Fn</span>(Expr) <span class="op">-&gt;</span> Expr)<span class="op">,</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>to something along the lines of</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> Expr <span class="op">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// …</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  Builtin(<span class="kw">dyn</span> <span class="bu">Fn</span>(Expr) <span class="op">-&gt;</span> Expr)<span class="op">,</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>I reckon hard coding the builtin functions into the evaluator might be a net speed gain,
 though this seems like a fun exercise,
 so perhaps I will explore this on a separate branch.</p></li>
@@ -199,9 +199,9 @@ in particular list and object types should not be very difficult to add.
 I’m not totally sure how union types<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> would fit into the current algorithm,
 but this is definitely something I’d like to implement.
 Having a type signature like</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>get <span class="ot">:</span> <span class="ot">(</span>Num <span class="ot">|</span> Str<span class="ot">)</span> <span class="ot">→</span> <span class="ot">(</span>Arr <span class="ot">|</span> Obj<span class="ot">)</span> <span class="ot">→</span> JSON</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>get <span class="ot">:</span> <span class="ot">(</span>Num <span class="ot">|</span> Str<span class="ot">)</span> <span class="ot">→</span> <span class="ot">(</span>Arr <span class="ot">|</span> Obj<span class="ot">)</span> <span class="ot">→</span> JSON</span></code></pre></div>
 <p>or even</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>get <span class="ot">:</span> <span class="ot">(</span>Num <span class="ot">→</span> Arr <span class="ot">→</span> JSON<span class="ot">)</span> <span class="ot">|</span> <span class="ot">(</span>Str <span class="ot">→</span> Obj <span class="ot">→</span> JSON<span class="ot">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode agda"><code class="sourceCode agda"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>get <span class="ot">:</span> <span class="ot">(</span>Num <span class="ot">→</span> Arr <span class="ot">→</span> JSON<span class="ot">)</span> <span class="ot">|</span> <span class="ot">(</span>Str <span class="ot">→</span> Obj <span class="ot">→</span> JSON<span class="ot">)</span></span></code></pre></div>
 <p>would please me.</p></li>
 <li><p>I’m also interested to find other (bidirectional) type checking algorithms that may be worth studying more closely.</p></li>
 </ul>
@@ -225,13 +225,7 @@ to mirror how shells use pipes.<a href="#fnref4" class="footnote-back" role="doc
 <li id="fn7"><p>{-} I’m quite surprised—though happy—by the type checker being this fast!
 Likewise, I’m glad that all of the praise I’ve read about
 <a href="https://en.wikipedia.org/wiki/Normalisation_by_evaluation">normalisation by evaluation</a>
-was justified.</p>
-<p>It does make we wonder
-if I’m doing something colossally wrong by reading the data in the way that I do.
-At the moment, it’s nothing more than a simple</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> input <span class="op">=</span> <span class="dt">String</span><span class="pp">::</span>new()<span class="op">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">io::</span>stdin()<span class="op">.</span>read_to_string(<span class="op">&amp;</span><span class="kw">mut</span> input)<span class="op">?;</span></span></code></pre></div>
-<p>Oh well.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>As in, not coproducts but the other ones.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

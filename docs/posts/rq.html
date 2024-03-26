@@ -73,7 +73,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1313 words">6 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1276 words">6 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'rust'." href="../tags/rust.html" rel="tag">rust</a>
@@ -269,20 +269,10 @@ On that data, <code>jq</code> takes 144ms and <code>rq</code> needs around 186ms
 --><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">I’m quite surprised—though happy—by the type checker being this fast!
 Likewise, I’m glad that all of the praise I’ve read about
 <a href="https://en.wikipedia.org/wiki/Normalisation_by_evaluation">normalisation by evaluation</a>
-was justified.
-<p></p>
-It does make we wonder
-if I’m doing something colossally wrong by reading the data in the way that I do.
-At the moment, it’s nothing more than a simple
-<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span>
-<span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_to_string</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-</pre></div>
-
-<p></p>
-Oh well.</div><!--
+was justified.</div><!--
 -->A cursory analysis reveals that parsing takes about 10ms,
 with the type checker and evaluator needing around 20ms each.
-The bulk of the time, 130ms, is spent actually reading in the string!
+The bulk of the time, 130ms, is spent invoking <code>cargo metadata</code> and reading its output.
 <p></p>
 Still, overall I’m quite happy with this,
 as I haven’t really tried optimising for performance at all,

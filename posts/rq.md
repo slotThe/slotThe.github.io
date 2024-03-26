@@ -159,7 +159,7 @@ Benchmark 1: cargo metadata --format-version=1 | rq '.packages | map .name'
 
 [^3]A cursory analysis reveals that parsing takes about 10ms,
 with the type checker and evaluator needing around 20ms each.
-The bulk of the time, 130ms, is spent actually reading in the string!
+The bulk of the time, 130ms, is spent invoking `cargo metadata` and reading its output.
 
 Still, overall I'm quite happy with this,
 as I haven't really tried optimising for performance at all,
@@ -231,17 +231,6 @@ and yet the result is quite acceptable.
       Likewise, I'm glad that all of the praise I've read about
       [normalisation by evaluation](https://en.wikipedia.org/wiki/Normalisation_by_evaluation)
       was justified.
-
-      It does make we wonder
-      if I'm doing something colossally wrong by reading the data in the way that I do.
-      At the moment, it's nothing more than a simple
-
-      ``` rust
-      let mut input = String::new();
-      io::stdin().read_to_string(&mut input)?;
-      ```
-
-      Oh well.
 
 [^4]: As in, not coproducts but the other ones.
 
