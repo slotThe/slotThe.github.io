@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="de-DE">
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="en-GB">
   <info>
     <title>DIN 1505-2 (alphanumeric, Deutsch) - standard superseded by ISO-690</title>
     <id>http://www.zotero.org/styles/din-1505-2-alphanumeric</id>
@@ -58,14 +58,14 @@
     <updated>2021-02-11T04:03:08+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
-  <locale xml:lang="de">
+  <locale xml:lang="en">
     <terms>
       <term name="anonymous" form="short">o.&#160;A.</term>
       <term name="no date" form="short">o.&#160;J.</term>
-      <term name="collection-editor" form="short">Hrsg.</term>
-      <term name="retrieved">abgerufen am</term>
-      <term name="composer" form="short">Komp.</term>
-      <term name="composer" form="long">Komponist</term>
+      <term name="collection-editor" form="short">editor</term>
+      <term name="retrieved">retrieved on</term>
+      <term name="composer" form="short">comp.</term>
+      <term name="composer" form="long">composer</term>
     </terms>
   </locale>
   <macro name="author">
@@ -183,7 +183,7 @@
   <macro name="pages">
     <choose>
       <if type="chapter paper-conference article-journal" match="any">
-        <label variable="page" form="short" suffix="&#160;"/>
+        <label variable="page" form="long" suffix="&#160;"/>
         <text variable="page"/>
       </if>
     </choose>
@@ -264,13 +264,13 @@
           <text prefix=". " macro="medium"/>
           <text prefix=". " macro="dimensions"/>
           <text prefix=". " variable="publisher-place"/>
-          <text prefix="&#160;: " variable="publisher"/>
+          <text prefix=": " variable="publisher"/>
           <date prefix=", " variable="issued" form="numeric" date-parts="year"/>
           <!-- " (1. Gesamttitel mit Zählung)"
             " (2. Gesamttitel mit Zählung)" -->
           <text prefix=" &#8211;&#160;" macro="scale"/>
           <text prefix=". &#8212;&#160;" variable="note"/>
-          <text prefix=" &#8212;&#160;ISBN&#160;" variable="ISBN"/>
+          <text prefix="; &#160;ISBN&#160;" variable="ISBN"/>
         </if>
         <!-- Tabelle 3 aus litverz.ps -->
         <else-if type="chapter paper-conference" match="any">
@@ -289,12 +289,12 @@
           <!-- <text prefix=" : " variable="title of volumes"/> what is this? -->
           <text prefix=". " macro="edition"/>
           <text prefix=". " variable="publisher-place"/>
-          <text prefix="&#160;: " variable="publisher"/>
+          <text prefix=": " variable="publisher"/>
           <date prefix=", " variable="issued" form="numeric" date-parts="year"/>
           <!-- " (1. Gesamttitel mit Zählung)"
             " (2. Gesamttitel mit Zählung)" -->
           <text prefix=". &#8212;&#160;" variable="note"/>
-          <text prefix=" &#8212;&#160;ISBN&#160;" variable="ISBN"/>
+          <text prefix="; &#160;ISBN&#160;" variable="ISBN"/>
           <text prefix=", " macro="pages"/>
         </else-if>
         <!-- Tabelle 5 aus litverz.ps - Hochschulschriften
@@ -337,7 +337,7 @@
           <text prefix=", Nr.&#160;" variable="issue"/>
           <text prefix=", " macro="pages"/>
           <text prefix=". &#8212;&#160;" variable="note"/>
-          <text prefix=" &#8212;&#160;ISBN&#160;" variable="ISBN"/>
+          <text prefix="; &#160;ISBN&#160;" variable="ISBN"/>
         </else-if>
         <!-- keiner der oben genannten fälle -->
         <else>
