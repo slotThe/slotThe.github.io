@@ -35,7 +35,7 @@
           (builtins.fetchGit {
             url = "https://github.com/slotThe/pandoc-sidenote";
             ref = "feat/html-sidenotes";
-            rev = "402116d7039a801bd600c5155bfd52faac394258";
+            rev = "a87380c13dd0433c2614164477f5a1b425329c22";
           })
           "-f html-sidenotes"
           { };
@@ -50,7 +50,7 @@
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
           zlib
-          (python311.withPackages (p: [ p.pygments ])) # Syntax highlighting
+          (python3.withPackages (p: [ p.pygments ])) # Syntax highlighting
           nodejs_20  # Offline LaTeX SVG creation
           parallel   # Process LaTeX snippets in parallel
         ];
