@@ -10,7 +10,7 @@ Originally inspired by https://github.com/gwern/gwern.net/tree/master/css
 */
 
 :root {
-    --proportional-fonts: "Alegreya Sans", sans-serif;
+    --proportional-fonts: "Alegreya", serif;
     --monospace-fonts: "Iosevka Custom", monospace;
     --serif-fonts: "Alegreya", serif;
 }
@@ -34,28 +34,6 @@ Originally inspired by https://github.com/gwern/gwern.net/tree/master/css
     font-weight: bold;
     font-style: normal;
     src: url('../fonts/Alegreya-Bold.woff2') format('woff2');
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Alegreya Sans';
-    font-weight: normal;
-    font-style: normal;
-    src: url('../fonts/AlegreyaSans-Regular.woff2') format('woff2');
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Alegreya Sans';
-    font-weight: normal;
-    font-style: italic;
-    src: url('../fonts/AlegreyaSans-Italic.woff2') format('woff2');
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Alegreya Sans';
-    font-weight: bold;
-    font-style: normal;
-    src: url('../fonts/AlegreyaSans-Bold.woff2') format('woff2');
     font-display: swap;
 }
 
