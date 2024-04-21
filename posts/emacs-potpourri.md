@@ -560,7 +560,7 @@ one can get a result that approximated a sane solution!
 [XMonad]: https://xmonad.org
 [cfg:emacs:erc]: https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el
 [cfg:emacs:inhibit]: https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51
-[cfg:emacs:readme]: https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs
+[cfg:emacs:readme]: https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs
 [emacs:ement]: https://github.com/alphapapa/ement.el
 [emacs:erc]: https://www.gnu.org/software/emacs/erc.html
 [emacs:repeat-mode:1]: https://tildegit.org/acdw/define-repeat-map.el

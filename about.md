@@ -45,8 +45,8 @@ but you can try any of the following channels:
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
 [KMonad]: https://github.com/kmonad/kmonad
 [arXiv]: https://arxiv.org/a/zorman_t_1
-[cfg:emacs]: https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs
-[cfg:layout]: https://gitlab.com/slotThe/dotfiles/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd
+[cfg:emacs]: https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs
+[cfg:layout]: https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/config.kbd
 [cfg:qmk]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe
 [duoidal]: https://ncatlab.org/nlab/show/duoidal+category
 [free software]: ./free-software.html

@@ -21,7 +21,7 @@ where the lean core of the program resides,
 
 As I strongly believe in dogfooding, I'm an avid user of course!
 My configuration can be found
-[here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad).
+[here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad).
 
 <p>
  <div class="pure-g">

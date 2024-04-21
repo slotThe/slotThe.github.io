@@ -284,8 +284,8 @@ pretty comfortable with this setup.
 Thanks to everyone who reached out!  I received some inquiries as to my
 configurations, so here are the most important bits again, for your
 convenience:
-[my Emacs config](https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs/.config/emacs),
-[my XMonad config](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad/.config/xmonad),
+[my Emacs config](https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs),
+[my XMonad config](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad),
 [org-roam], [math-delimiters], [arxiv-citation], [latex-change-env],
 [hmenu].
 
