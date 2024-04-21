@@ -105,8 +105,8 @@ code {                  /* Inline code */
     font-variant-numeric: normal;  /* No oldstyle figures in code */
     background: var(--bg-inline-code);
     border-radius: 0.25rem;
-    padding: 0 3px;
-    border: 1px solid #c8c8c8;
+    padding: 0 2px;
+    border: 1px solid var(--border-inline-code);
     word-break: break-word;
 }
 
