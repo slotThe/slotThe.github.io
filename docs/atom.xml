@@ -5281,7 +5281,7 @@ certainly know which of the two I’d rather write!</p>
         &thinsp;·&thinsp; last modified: 2024-03-02
       
       
-        &thinsp;·&thinsp; <span title="3093 words">13 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="3265 words">14 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>
@@ -5685,7 +5685,8 @@ check for a certain regular expression, whitespace, and say something if it matc
 <p>However, with a bit of hacking around this turns out to be quite fixable:</p>
 <p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature"></p>
 <p><a href="https://tony-zorman.com/posts/fixing-lsp-mode.html">The full post with all the code is here</a>.</p>
-<h2 id="integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</h2>
+<h2 id="eshell">Eshell</h2>
+<h3 id="integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</h3>
 <p>If you use zsh and eshell together, you—like me—will soon be annoyed at the fact that the two programs use separate history files.
 However, unification is not as easy as <code>(setq eshell-history-file-name "~/.config/zsh/zsh_history")</code>,
 since zsh stores its history file in a metafied format.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
@@ -5693,6 +5694,31 @@ This means that,
 on the eshell side,
 we have to make sure unmetafy the history file before writing to it.</p>
 <p><a href="https://tony-zorman.com/posts/eshell-zsh-history.html">The implementation and more details can be found here</a>.</p>
+<h3 id="integrating-zoxide-with-eshell">Integrating zoxide with eshell</h3>
+<p><a href="https://github.com/ajeetdsouza/zoxide">Zoxide</a> is a rewrite
+of the original <a href="https://github.com/rupa/z"><code>z</code></a> shell script
+to quickly jump around directories.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+Basically, it keeps a history of your most visited directories<!--
+-->—ranked by <a href="https://github.com/ajeetdsouza/zoxide/wiki/Algorithm">frecency</a>—<!--
+-->and jumps to the best match.
+Think of it as a more general version of <code>cd</code> that learns from your habits.</p>
+<p>Below is the most basic integration of zoxide with eshell,
+which has however been enough for me;
+at least for the time being.</p>
+<pre class="emacs-lisp"><code>(advice-add 'eshell/cd :around
+  (lambda (cd &amp;rest args)
+    &quot;On directory change, add the path to zoxide's database.&quot;
+    (let ((old-path (eshell/pwd))
+          (_ (apply cd args))
+          (new-path (eshell/pwd)))
+      (when (and old-path new-path (not (string= old-path new-path)))
+        (shell-command-to-string (concat &quot;zoxide add &quot; new-path))))))
+
+(defun eshell/n (dir)
+  &quot;Navigate to a previously visited directory.&quot;
+  (eshell/cd
+   (string-trim (shell-command-to-string (concat &quot;zoxide query &quot; dir))))
+  (eshell/ls))</code></pre>
 <h2 id="parentheses-aware-yanking">Parentheses-aware yanking</h2>
 <p>Normally, when you have an expression like</p>
 <pre class="emacs-lisp"><code>(insert-for-yank
@@ -5707,7 +5733,7 @@ it will be returned exactly as-is:</p>
 </code></pre>
 <p>While this is expected behaviour, it gravely messes with awesome tools like paredit.
 As I’m in the habit—using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>—of lazily copying with with <code>M-w</code> all the time,
-this posits a problem.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+this posits a problem.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
 <p>The solution, thankfully, does not involve all that much code.
 <a href="https://tony-zorman.com/posts/yanking.html">You can read about it here</a>.</p>
 <h2 id="make-join-line-handle-comments-sanely">Make <code>join-line</code> handle comments sanely</h2>
@@ -5761,8 +5787,12 @@ However, this is not important for what follows, so I simply omitted it.</p>
 <p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>For whatever reason, when any character from the <code>0x80</code>–<code>0x9F</code> range is encountered
 the “Meta character” <code>0x83</code> is inserted and the following character gets XORed with 32.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>Of course, the <em>real problem</em> is my lack of discipline,
-but I’m certainly not going to change my habits if I can instead change my editor around me!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Eshell’s own <code>cd=</code> command only keeps track of the last <code>n</code> directories without filtering or ranking anything.
+I know about <a href="https://github.com/xuchunyang/eshell-z">eshell-z</a>,
+but since I’m using zoxide within zsh anyways
+it seems prudent to not depend on an additional package here.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Of course, the <em>real problem</em> is my lack of discipline,
+but I’m certainly not going to change my habits if I can instead change my editor around me!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

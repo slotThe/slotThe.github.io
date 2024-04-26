@@ -504,7 +504,9 @@ However, with a bit of hacking around this turns out to be quite fixable:
 
 [The full post with all the code is here](https://tony-zorman.com/posts/fixing-lsp-mode.html).
 
-# Integrating zsh's history into eshell
+# Eshell
+
+## Integrating zsh's history into eshell
 
 If you use zsh and eshell together, you—like me—will soon be annoyed at the fact that the two programs use separate history files.
 However, unification is not as easy as `(setq eshell-history-file-name "~/.config/zsh/zsh_history")`,
@@ -514,6 +516,37 @@ on the eshell side,
 we have to make sure unmetafy the history file before writing to it.
 
 [The implementation and more details can be found here](https://tony-zorman.com/posts/eshell-zsh-history.html).
+
+## Integrating zoxide with eshell
+
+[Zoxide](https://github.com/ajeetdsouza/zoxide) is a rewrite
+of the original [`z`](https://github.com/rupa/z) shell script
+to quickly jump around directories.[^7]
+Basically, it keeps a history of your most visited directories<!--
+-->—ranked by [frecency](https://github.com/ajeetdsouza/zoxide/wiki/Algorithm)—<!--
+-->and jumps to the best match.
+Think of it as a more general version of `cd` that learns from your habits.
+
+Below is the most basic integration of zoxide with eshell,
+which has however been enough for me;
+at least for the time being.
+
+``` emacs-lisp
+(advice-add 'eshell/cd :around
+  (lambda (cd &rest args)
+    "On directory change, add the path to zoxide's database."
+    (let ((old-path (eshell/pwd))
+          (_ (apply cd args))
+          (new-path (eshell/pwd)))
+      (when (and old-path new-path (not (string= old-path new-path)))
+        (shell-command-to-string (concat "zoxide add " new-path))))))
+
+(defun eshell/n (dir)
+  "Navigate to a previously visited directory."
+  (eshell/cd
+   (string-trim (shell-command-to-string (concat "zoxide query " dir))))
+  (eshell/ls))
+```
 
 # Parentheses-aware yanking
 
@@ -628,3 +661,8 @@ one can get a result that approximated a sane solution!
 
 [^6]: Of course, the *real problem* is my lack of discipline,
       but I'm certainly not going to change my habits if I can instead change my editor around me!
+
+[^7]: Eshell's own `cd=` command only keeps track of the last `n` directories without filtering or ranking anything.
+      I know about [eshell-z](https://github.com/xuchunyang/eshell-z),
+      but since I'm using zoxide within zsh anyways
+      it seems prudent to not depend on an additional package here.

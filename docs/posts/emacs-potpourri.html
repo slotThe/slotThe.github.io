@@ -64,7 +64,11 @@
 <li><a href="#a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
 <li><a href="#warn-on-empty-subjects">Warn on empty subjects</a></li>
 <li><a href="#sane-type-signatures-with-lsp-mode">Sane type signatures with lsp-mode</a></li>
+<li><a href="#eshell">Eshell</a>
+<ul>
 <li><a href="#integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</a></li>
+<li><a href="#integrating-zoxide-with-eshell">Integrating zoxide with eshell</a></li>
+</ul></li>
 <li><a href="#parentheses-aware-yanking">Parentheses-aware yanking</a></li>
 <li><a href="#make-join-line-handle-comments-sanely">Make <code>join-line</code> handle comments sanely</a></li>
 </ul>
@@ -88,7 +92,7 @@
         &thinsp;·&thinsp; last modified: 2024-03-02
       
       
-        &thinsp;·&thinsp; <span title="3087 words">13 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="3258 words">14 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
@@ -120,7 +124,11 @@
 <li><a href="#a-macro-for-repeat-mode">A macro for <code>repeat-mode</code></a></li>
 <li><a href="#warn-on-empty-subjects">Warn on empty subjects</a></li>
 <li><a href="#sane-type-signatures-with-lsp-mode">Sane type signatures with lsp-mode</a></li>
+<li><a href="#eshell">Eshell</a>
+<ul>
 <li><a href="#integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</a></li>
+<li><a href="#integrating-zoxide-with-eshell">Integrating zoxide with eshell</a></li>
+</ul></li>
 <li><a href="#parentheses-aware-yanking">Parentheses-aware yanking</a></li>
 <li><a href="#make-join-line-handle-comments-sanely">Make <code>join-line</code> handle comments sanely</a></li>
 </ul>
@@ -632,7 +640,8 @@ However, with a bit of hacking around this turns out to be quite fixable:
 <img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature">
 <p></p>
 <a href="https://tony-zorman.com/posts/fixing-lsp-mode.html">The full post with all the code is here</a>.
-<h2 id="integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell<a href="#integrating-zshs-history-into-eshell" class="floatleft sec-link">§</a></h2>
+<h2 id="eshell">Eshell<a href="#eshell" class="floatleft sec-link">§</a></h2>
+<h3 id="integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell<a href="#integrating-zshs-history-into-eshell" class="floatleft sec-link">§</a></h3>
 <p></p>
 If you use zsh and eshell together, you—like me—will soon be annoyed at the fact that the two programs use separate history files.
 However, unification is not as easy as <code>(setq eshell-history-file-name "~/.config/zsh/zsh_history")</code>,
@@ -645,6 +654,40 @@ on the eshell side,
 we have to make sure unmetafy the history file before writing to it.
 <p></p>
 <a href="https://tony-zorman.com/posts/eshell-zsh-history.html">The implementation and more details can be found here</a>.
+<h3 id="integrating-zoxide-with-eshell">Integrating zoxide with eshell<a href="#integrating-zoxide-with-eshell" class="floatleft sec-link">§</a></h3>
+<p></p>
+<a href="https://github.com/ajeetdsouza/zoxide">Zoxide</a> is a rewrite
+of the original <a href="https://github.com/rupa/z"><code>z</code></a> shell script
+to quickly jump around directories.<!--
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Eshell’s own <code>cd=</code> command only keeps track of the last <code>n</code> directories without filtering or ranking anything.
+I know about <a href="https://github.com/xuchunyang/eshell-z">eshell-z</a>,
+but since I’m using zoxide within zsh anyways
+it seems prudent to not depend on an additional package here.</div><!--
+-->
+Basically, it keeps a history of your most visited directories<!--
+-->—ranked by <a href="https://github.com/ajeetdsouza/zoxide/wiki/Algorithm">frecency</a>—<!--
+-->and jumps to the best match.
+Think of it as a more general version of <code>cd</code> that learns from your habits.
+<p></p>
+Below is the most basic integration of zoxide with eshell,
+which has however been enough for me;
+at least for the time being.
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">advice-add</span><span class="w"> </span><span class="ss">'eshell/cd</span><span class="w"> </span><span class="nb">:around</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">cd</span><span class="w"> </span><span class="kp">&amp;rest</span><span class="w"> </span><span class="nv">args</span><span class="p">)</span>
+<span class="w">    </span><span class="s">&quot;On directory change, add the path to zoxide's database.&quot;</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">old-path</span><span class="w"> </span><span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">))</span>
+<span class="w">          </span><span class="p">(</span><span class="nv">_</span><span class="w"> </span><span class="p">(</span><span class="nf">apply</span><span class="w"> </span><span class="nv">cd</span><span class="w"> </span><span class="nv">args</span><span class="p">))</span>
+<span class="w">          </span><span class="p">(</span><span class="nv">new-path</span><span class="w"> </span><span class="p">(</span><span class="nv">eshell/pwd</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">old-path</span><span class="w"> </span><span class="nv">new-path</span><span class="w"> </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="p">(</span><span class="nf">string=</span><span class="w"> </span><span class="nv">old-path</span><span class="w"> </span><span class="nv">new-path</span><span class="p">)))</span>
+<span class="w">        </span><span class="p">(</span><span class="nv">shell-command-to-string</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;zoxide add &quot;</span><span class="w"> </span><span class="nv">new-path</span><span class="p">))))))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">eshell/n</span><span class="w"> </span><span class="p">(</span><span class="nv">dir</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Navigate to a previously visited directory.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">eshell/cd</span>
+<span class="w">   </span><span class="p">(</span><span class="nv">string-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">shell-command-to-string</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;zoxide query &quot;</span><span class="w"> </span><span class="nv">dir</span><span class="p">))))</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">eshell/ls</span><span class="p">))</span>
+</pre></div>
+
 <h2 id="parentheses-aware-yanking">Parentheses-aware yanking<a href="#parentheses-aware-yanking" class="floatleft sec-link">§</a></h2>
 <p></p>
 Normally, when you have an expression like
@@ -666,7 +709,7 @@ it will be returned exactly as-is:
 While this is expected behaviour, it gravely messes with awesome tools like paredit.
 As I’m in the habit—using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>—of lazily copying with with <code>M-w</code> all the time,
 this posits a problem.<!--
---><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Of course, the <em>real problem</em> is my lack of discipline,
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Of course, the <em>real problem</em> is my lack of discipline,
 but I’m certainly not going to change my habits if I can instead change my editor around me!</div><!--
 -->
 <p></p>
