@@ -279,7 +279,7 @@ media queries to hide what we don't want to see.
 /* Settings that are the same regardless of size */
 div#contents,
 div#contents-big {
-    font-size: 0.85em;
+    font-size: 90%;
     font-family: var(--serif-fonts);
     padding-top: 0.25em;
     max-width: 240px;
@@ -289,9 +289,9 @@ div#contents-big {
     min-width: 180px;
     text-align: left;
 }
-div#contents ul,
+div#contents     ul,
 div#contents-big ul {
-    font-size: 85%;
+    font-size: 85%;      /* In relation to div#contents */
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     padding-left: 1em;
@@ -309,18 +309,14 @@ div#contents-big li + li {
    intrusivity, since it is now visible most of the time. */
 div#contents-big a:link,
 div#contents     a:link {
+    font-size: 110%;         /* In relation to div#contents ul */
     color: var(--fg);
-    font-variant: small-caps;
-    word-spacing: 0.06em;
-    letter-spacing: 0.02em;
     text-decoration: none;
 }
 div#contents-big a:visited,
 div#contents     a:visited {
+    font-size: 110%;         /* In relation to div#contents ul */
     color: var(--fg);
-    font-variant: small-caps;
-    word-spacing: 0.06em;
-    letter-spacing: 0.02em;
     text-decoration: none;
 }
 div#contents-big a:hover,
@@ -328,10 +324,28 @@ div#contents     a:hover {
     color: var(--fg-link-hover);
 }
 
-a:link > code,     /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
+/* This horrible contraption matches against the outermost headings; only
+   these should be small-capsed. */
+div#contents-big > ul > li > a:link,
+div#contents     > ul > li > a:link {
+    font-size: 100%;         /* In relation to div#contents ul */
+    word-spacing: 0.06em;
+    letter-spacing: 0.02em;
+    font-variant: small-caps;
+}
+div#contents-big > ul > li > a:visited,
+div#contents     > ul > li > a:visited {
+    font-size: 100%;         /* In relation to div#contents ul */
+    word-spacing: 0.06em;
+    letter-spacing: 0.02em;
+    font-variant: small-caps;
+}
+
+a:link    > code, /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
 a:visited > code {
     font-variant: normal;
 }
+
 /* The "↑" link in the TOC */
 a#up-arrow {
     float: right;
