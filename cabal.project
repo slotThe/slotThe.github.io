@@ -1,9 +1,9 @@
-with-compiler: ghc-9.4.7
+with-compiler: ghc-9.6.4
 
 source-repository-package
   type: git
   location: https://github.com/slotThe/pandoc-sidenote
-  tag: 402116d7039a801bd600c5155bfd52faac394258
+  tag: a87380c13dd0433c2614164477f5a1b425329c22
 
 packages: ./tonys-site.cabal
 
