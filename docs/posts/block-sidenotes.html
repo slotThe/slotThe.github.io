@@ -288,7 +288,7 @@ to inline elements.
 <p></p>
 The <code>coerceToInline</code> function behaves sensibly with respect to the
 simplest kinds of blocks, but already mentions that the <code>RawBlock → RawInline</code> transformation may have some caveats. For example,
-<a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">prerendering code blocks</a> puts one in exactly such a
+<a href="https://tony-zorman.com/posts/pygmentising-hakyll.html" class="local-link">prerendering code blocks</a> puts one in exactly such a
 “now we have a <code>&lt;div&gt;</code> tag inside of a <code>RawInline</code> element” situation.
 Well, what happens?
 <span class="sidenote-wrapper">
@@ -389,7 +389,7 @@ So what to do? Well, life wouldn’t be fun if we didn’t at least try to
 hack our way around a standard, would it?
 <h2 id="rewriting-pandoc-sidenote">Rewriting <code>pandoc-sidenote</code><a href="#rewriting-pandoc-sidenote" class="floatleft sec-link">§</a></h2>
 <p></p>
-As I’ve learned while <a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">writing</a> about using
+As I’ve learned while <a href="https://tony-zorman.com/posts/pygmentising-hakyll.html" class="local-link">writing</a> about using
 <code>pygmentize</code> to syntax highlight code for this site, pandoc has quite
 good support for changing its <span class="small-caps">ast</span> in creative ways. A strategy unfolds:
 find every <code>Note</code> block in a document, somehow render its contents, and

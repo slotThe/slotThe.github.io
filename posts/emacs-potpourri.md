@@ -603,7 +603,7 @@ one can get a result that approximated a sane solution!
 [posts:phd-workflow:entry]: ./my-phd-workflow.html#digital-notes
 [posts:phd-workflow]: ./my-phd-workflow.html
 [posts:prett-latex]: ./pretty-latex.html
-[posts:query-replace]: https://tony-zorman.com/posts/query-replace/2022-08-06-query-replace-many.html
+[posts:query-replace]: ./query-replace-many.html
 [quiver]: https://q.uiver.app/
 [use-package]: https://github.com/jwiegley/use-package
 [x11:reparenting]: https://old.reddit.com/r/emacs/comments/xjyuni/weekly_tips_tricks_c_thread/ipfjlw0/

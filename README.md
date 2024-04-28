@@ -38,8 +38,8 @@ For various definitions of "notable".
 [site:citations]: https://tony-zorman.com/posts/hakyll-and-bibtex.html
 [site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
 [site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
-[site:pygmentise]: https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html
-[site:sidenotes]: https://tony-zorman.com/posts/2023-01-27-block-sidenotes.html
+[site:pygmentise]: https://tony-zorman.com/posts/pygmentising-hakyll.html
+[site:sidenotes]: https://tony-zorman.com/posts/block-sidenotes.html
 
 ## Build
 

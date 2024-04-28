@@ -12,6 +12,7 @@ import Data.Text qualified as T
 import Control.Monad
 import Data.List (foldl')
 import Data.Maybe
+import Data.String (IsString)
 import Data.Text (Text)
 import Hakyll
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
@@ -24,6 +25,9 @@ import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Walk (walk, walkM)
 
+
+siteURL :: IsString s => s
+siteURL = "https://tony-zorman.com"
 
 main :: IO ()
 main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
@@ -179,7 +183,7 @@ rss tags = do
     , feedDescription = "Maths, Haskell, Emacs, and whatever else comes to mind."
     , feedAuthorName  = "Tony Zorman"
     , feedAuthorEmail = "tonyzorman@mailbox.org"
-    , feedRoot        = "https://tony-zorman.com"
+    , feedRoot        = siteURL
     }
 
 -----------------------------------------------------------------------
@@ -409,9 +413,18 @@ myPandocCompiler =
       <=< pygmentsHighlight
       .   addSectionLinks
       .   smallCaps
+      .   styleLocalLinks
       )
     <=< processBib
  where
+  -- Links that go to the site itself get a special CSS class.
+  styleLocalLinks :: Pandoc -> Pandoc
+  styleLocalLinks = walk \case
+    Link (ident, cs, kvs) inlines target@(url, _)
+      | any (`T.isPrefixOf` url) [ "./", "../", siteURL ]
+     -> Link (ident, "local-link" : cs, kvs) inlines target
+    inline -> inline
+
   -- https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
   addSectionLinks :: Pandoc -> Pandoc
   addSectionLinks = walk \case

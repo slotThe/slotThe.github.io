@@ -1283,7 +1283,7 @@ to inline elements.</p>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  deNote x        <span class="ot">=</span> x</span></code></pre></div>
 <p>The <code>coerceToInline</code> function behaves sensibly with respect to the
 simplest kinds of blocks, but already mentions that the <code>RawBlock → RawInline</code> transformation may have some caveats. For example,
-<a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">prerendering code blocks</a> puts one in exactly such a
+<a href="https://tony-zorman.com/posts/pygmentising-hakyll.html">prerendering code blocks</a> puts one in exactly such a
 “now we have a <code>&lt;div&gt;</code> tag inside of a <code>RawInline</code> element” situation.
 Well, what happens?</p>
 <span class="sidenote-wrapper">
@@ -1308,7 +1308,7 @@ variant.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>
 <p>So what to do? Well, life wouldn’t be fun if we didn’t at least try to
 hack our way around a standard, would it?</p>
 <h2 id="rewriting-pandoc-sidenote">Rewriting <code>pandoc-sidenote</code></h2>
-<p>As I’ve learned while <a href="https://tony-zorman.com/posts/2023-01-21-pygmentising-hakyll.html">writing</a> about using
+<p>As I’ve learned while <a href="https://tony-zorman.com/posts/pygmentising-hakyll.html">writing</a> about using
 <code>pygmentize</code> to syntax highlight code for this site, pandoc has quite
 good support for changing its AST in creative ways. A strategy unfolds:
 find every <code>Note</code> block in a document, somehow render its contents, and
@@ -2192,8 +2192,8 @@ that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
 generic enough API, I decided to turn it into an XMonad module!</p>
 <p>These changes now live as part of the <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a> repository and
-are—from version 0.17.1 onwards—available for everyone to try out.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>I’d like to use this opportunity to both showcase the module—how and why
+are—from version 0.17.1 onwards—available for everyone to try out.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+I’d like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
 implementation detail.</p>
 <!--more-->

@@ -422,6 +422,12 @@ a#to-top {
     }
 }
 
+/* Local links are specially indicated. */
+.local-link::after {
+    content: "°";
+    margin-left: 1px;
+}
+
 /**********************************************************************
   SECTION LINKS
 */

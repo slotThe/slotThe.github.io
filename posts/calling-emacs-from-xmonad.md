@@ -13,7 +13,6 @@ generic enough API, I decided to turn it into an XMonad module!
 
 These changes now live as part of the [xmonad-contrib] repository and
 are—from version 0.17.1 onwards—available for everyone to try out.[^5]
-
 I'd like to use this opportunity to both showcase the module—how and why
 one would use it—and talk a little bit about its only redeeming
 implementation detail.

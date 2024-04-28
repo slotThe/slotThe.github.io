@@ -12,7 +12,7 @@ is a first attempt at integrating the new (as of Emacs 29)
 about how these two interact in my [last post][post:package-vc]—you can
 see this package as automating things juuuust a little more.
 
-[post:package-vc]: https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
+[post:package-vc]: https://tony-zorman.com/posts/package-vc-install.html
 [vc-use-package]: https://github.com/slotThe/vc-use-package
 
 <!--more-->
