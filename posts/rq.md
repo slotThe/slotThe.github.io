@@ -43,9 +43,12 @@ I would advise you to consult that if you're interested in a more comprehensive 
 
 The tl;dr is that `rq`—as advertised—is a small functional language with the usual idioms.
 There is a small REPL to try out the language,
-which can be accessed executing `rq` without any arguments.[^11]
+which can be accessed by executing `rq` with a `repl` argument.[^11]
 
 ```
+$ rq repl
+λ>
+
 λ> const 1 2
 1
 

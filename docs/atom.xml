@@ -24,7 +24,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1245 words">5 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1251 words">6 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'rust'." href="/tags/rust.html" rel="tag">rust</a>
@@ -66,8 +66,11 @@ I would advise you to consult that if you’re interested in a more comprehensiv
 <h2 id="the-language">The language</h2>
 <p>The tl;dr is that <code>rq</code>—as advertised—is a small functional language with the usual idioms.
 There is a small REPL to try out the language,
-which can be accessed executing <code>rq</code> without any arguments.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<pre><code>λ&gt; const 1 2
+which can be accessed by executing <code>rq</code> with a <code>repl</code> argument.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre><code>$ rq repl
+λ&gt;
+
+λ&gt; const 1 2
 1
 
 λ&gt; (\x -&gt; x + 1) 41

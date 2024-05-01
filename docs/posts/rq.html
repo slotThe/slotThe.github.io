@@ -73,7 +73,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="1274 words">6 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1280 words">6 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'rust'." href="../tags/rust.html" rel="tag">rust</a>
@@ -139,7 +139,7 @@ I would advise you to consult that if you’re interested in a more comprehensiv
 <p></p>
 The tl;dr is that <code>rq</code>—as advertised—is a small functional language with the usual idioms.
 There is a small REPL to try out the language,
-which can be accessed executing <code>rq</code> without any arguments.<!--
+which can be accessed by executing <code>rq</code> with a <code>repl</code> argument.<!--
 --><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
@@ -151,7 +151,10 @@ and can take multiple arguments:
 </pre></div>
 </div><!--
 -->
-<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>λ&gt; const 1 2
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>$ rq repl
+λ&gt;
+
+λ&gt; const 1 2
 1
 
 λ&gt; (\x -&gt; x + 1) 41
