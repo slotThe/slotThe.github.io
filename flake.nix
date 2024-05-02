@@ -50,7 +50,11 @@
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
           zlib
-          (python3.withPackages (p: [ p.pygments ])) # Syntax highlighting
+          (python3.withPackages (p: [
+            p.fonttools # Compressing fonts
+            p.brotli    # Compressing fonts
+            p.pygments  # Syntax highlighting
+          ]))
           nodejs_20  # Offline LaTeX SVG creation
           parallel   # Process LaTeX snippets in parallel
         ];
