@@ -10,8 +10,212 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2024-03-23T00:00:00Z</updated>
+    <updated>2024-05-11T00:00:00Z</updated>
     <entry>
+    <title>Using LaTeX with Anki</title>
+    <link href="https://tony-zorman.com/posts/anki-latex.html" />
+    <id>https://tony-zorman.com/posts/anki-latex.html</id>
+    <published>2024-05-11T00:00:00Z</published>
+    <updated>2024-05-11T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2024-05-11
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1016 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'anki'." href="/tags/anki.html" rel="tag">anki</a>, <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>
+</p>
+<p>Recently, I’ve been quite invested in learning maths with <a href="https://apps.ankiweb.net/index.html">Anki</a>.
+Sadly, there are relatively few good resources out there on how to
+twist Anki’s LaTeX pipeline into something generally acceptable,
+without having to rely on MathJax.
+As such, this post collects some bits and pieces from all over,
+hoping to weave them together into something coherent.</p>
+<!--more-->
+<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>Note that I will only concerns myself with
+“how to make LaTeX work to an acceptable degree”,
+instead of
+“how to write mathematics notes”.
+The latter is extremely dependent on the desired outcome,
+types of maths that one studies,
+experience of the person writing the notes, and so on.
+Too many facets for me—or anyone, really—to give blanket recommendations.</p>
+<p>A lot of things here are rehashes of <a href="https://unhewn-thoughts.org/anki/guide-on-using-latex-xetex-luatex-with-anki.html">Unhewn Thought’s</a>
+post about the same thing,
+as well as the official <a href="https://docs.ankiweb.net/math.html#latex">Anki documentation</a>
+on the matter.
+As always, this post is mostly about reminding myself about some details in two months’ time.</p>
+<h2 id="mathjax-is-not-enough">MathJax is not enough</h2>
+<p>Anki fully supports MathJax as a backend for its LaTeX previewing system.
+This is great for most users:
+MathJax is trivial to set up, and fits snugly into the generated HTML<!--
+-->—there’s a reason it’s used so widely all over the internet!</p>
+<p>However,
+especially for personal notes like these,
+MathJax might be amongst the worst solutions for me:
+its <a href="https://docs.mathjax.org/en/latest/input/tex/extensions.html">macro support</a>
+is awkward at best,
+and since it only implements maths macros,
+many of the packages that I’m using on a daily basis are not available at all.
+I for one am certainly not going to rewrite my bespoke <a href="https://github.com/slotThe/latex-styles">style file</a>,
+just so I get something that half-works with MathJax,
+when I could be using the real thing instead!</p>
+<h2 id="actually-writing-latex">Actually writing LaTeX</h2>
+<p>To get this out of the way:
+I have absolutely no opinions on how to <em>write</em> LaTeX with Anki.
+I haven’t ever actually composed a note inside of the program,
+and I’m doubtful that I ever will.</p>
+<p>Instead, I write all of my notes in Org and then export them via <a href="https://github.com/anki-editor/anki-editor">anki-editor</a>.
+This is very convenient,
+as it means that I have all of the key bindings and snippets available that I normally write LaTeX with.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+Plus, rough edges that one would otherwise have to care about,
+like <code>}}</code> inside of maths closing the current cloze deletion,
+are solved completely by <code>anki-editor</code> without me even having to think about them.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+As an added bonus,
+Org mode’s <a href="https://www.youtube.com/watch?v=n-AfvuV-bYo">new LaTeX preview functionality</a> is just fantastic,
+and makes crafting notes quite fun!</p>
+<h2 id="aligning-fragments-vertically">Aligning fragments vertically</h2>
+<p>One thing that MathJax does <em>very</em> well is its pixel-perfect alignment of LaTeX fragments.
+In contrast, the default alignment is really rather bad.
+It can, however, be somewhat improved by using CSS to vertically centre the image:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>img<span class="ex">[</span><span class="ss">src</span><span class="op">*=</span><span class="st">&quot;latex&quot;</span><span class="ex">]</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>It looks like this:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p><img class="pure-img" src="../images/anki-latex/centered.png" alt="A note with approrimately centred LaTeX"></p>
+<p>Very far from perfect, but readable.
+Since this seems to be the only drawback with not using MathJax,
+I’ll take it.
+Content over form—at least in this case.</p>
+<h2 id="preview-generation-with-preview.sty">Preview generation with <code>preview.sty</code></h2>
+<p>The <code>preview</code> package is specifically designed for these kinds of previews.
+Originally written for <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>,
+it has made its way into all TeX distributions that I know of.
+In addition to being used all over Emacs,
+<code>preview</code> is being employed by quite a few other programs as well.</p>
+<p>Amongst intangible benefits such as familiarity,
+I chose <code>preview</code> mostly because
+it “correctly” tightens display maths environments not just to the maths itself,
+but to the whole line.
+Operationally this means that display maths is automatically centred on my Anki card,
+even if the rest of the text is left-aligned.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>To use <code>preview.sty</code> in this way,
+one simply has to include it Anki’s LaTeX preamble—<code>C-S-n</code> and then “Options”—and wrap the whole document (i.e., the formula being rendered) with the <code>preview</code> environment:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">%%% Header</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[active,tightpage]{<span class="ex">preview</span>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">% Remove extra space above display maths.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">\setlength</span>{<span class="fu">\abovedisplayskip</span>}{0pt}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">preview</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">%%% Footer</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">preview</span>}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<p>For this to work smoothly, I also highly recommend to enable SVG support,
+and to tweak Anki’s LaTeX compilation pipeline.
+The handy <a href="https://ankiweb.net/shared/info/937148547">Edit LaTeX build process</a> addon can be used for that purpose.
+My <code>svgCommands</code> settings look like this:<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<pre><code> &quot;svgCommands&quot;: [
+      [
+          &quot;latex&quot;,
+          &quot;-interaction=nonstopmode&quot;,
+          &quot;tmp.tex&quot;
+      ],
+      [
+          &quot;dvisvgm&quot;,
+          &quot;--page=1-&quot;,
+          &quot;--optimize&quot;,
+          &quot;--clipjoin&quot;,
+          &quot;--relative&quot;,
+          &quot;--bbox=preview&quot;,
+          &quot;--no-fonts&quot;,
+          &quot;tmp.dvi&quot;,
+          &quot;-o&quot;,
+          &quot;tmp.svg&quot;
+      ]
+  ]</code></pre>
+<p>The generated LaTeX might be too small,
+though fixing this just involves a small CSS modification to the <code>latex</code> class:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.latex</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  zoom<span class="ch">:</span> <span class="dv">160</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If you want to dig deeper into how Anki generates maths, I recommend looking at
+<a href="https://github.com/ankitects/anki/blob/c29125939db1dbb9ef48d42f425eb70abaee53ad/pylib/anki/latex.py">latex.py</a>,
+<a href="https://github.com/ankitects/anki/blob/c29125939db1dbb9ef48d42f425eb70abaee53ad/rslib/src/latex.rs">latex.rs</a>,
+and the
+<a href="https://unhewn-thoughts.org/anki/guide-on-using-latex-xetex-luatex-with-anki.html#tex-generation"><code>.tex</code> Generation</a>
+section in Unhewn Thought’s blog post.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<h3 id="complete-preamble">Complete preamble</h3>
+<p>My complete preamble is not much larger than what I have shown above;
+it merely also includes my <a href="https://github.com/slotThe/latex-styles">personal style file</a>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">%%% Header</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[type=org,math=fancy]{<span class="ss">$HOME/.tex/styles/style}</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="sc">\usepackage</span><span class="ss">[active,tightpage]{preview}</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">\usepackage</span><span class="ss">{xcolor}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="sc">\setlength</span><span class="ss">{</span><span class="sc">\parindent</span><span class="ss">}{0in}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="sc">\setlength</span><span class="ss">{</span><span class="sc">\abovedisplayskip</span><span class="ss">}{0pt}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">preview</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">%%% Footer</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">preview</span>}</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>With these relatively straightforward tweaks,
+Anki’s LaTeX integration is really plug and play—I can just use my whole style file as-is,
+no extra care needed.
+Nice.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>{-} I will not waste the reader’s time with an introduction of what Anki is or why spaced repetition is useful;
+<a href="https://gwern.net/spaced-repetition">other</a>
+<a href="https://augmentingcognition.com/ltm.html">people</a>
+have done a much better job at that than I ever could.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See, for example,
+<a href="https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes">here</a>,
+<a href="https://tony-zorman.com/posts/emacs-potpourri.html#latex">here</a>,
+<a href="https://tony-zorman.com/posts/pretty-latex.html">here</a>,
+or
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/emacs/lisp/hopf-latex-math.el?ref_type=heads">here</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For the specific example of maths and cloze deletions,
+one needs to set <code>anki-editor-break-consecutive-braces-in-LaTeX</code>.
+This should probably be the default—and perhaps it will be in the future!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} As you can see, I haven’t bothered with fancy CSS to make the cards pretty. Content over form.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>One could solve this by making <code>anki-editor</code> output an extra <code>div</code> that it only wraps display maths with<!--
+  -->—and I have done that in the past—but using <code>preview.sty</code> feels much cleaner to me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>{-} For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
+In case you are not bound by these restrictions—or more adventurous than me—I would recommend you use lualatex instead.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>{-} It should be noted that Anki—thankfully—caches previews by hashing their contents,
+and reuses the same SVG every time it encounters a LaTeX fragment with the same hash.
+Thus, if you want to completely regenerate everything, just delete the respective directory.
+For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Announcing: rq Version 0.1.0</title>
     <link href="https://tony-zorman.com/posts/rq.html" />
     <id>https://tony-zorman.com/posts/rq.html</id>

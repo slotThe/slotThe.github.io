@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    
+      <title>Using LaTeX with Anki · Tony Zorman</title>
+    
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../css/pygments.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#mathjax-is-not-enough">MathJax is not enough</a></li>
+<li><a href="#actually-writing-latex">Actually writing LaTeX</a></li>
+<li><a href="#aligning-fragments-vertically">Aligning fragments vertically</a></li>
+<li><a href="#preview-generation-with-preview.sty">Preview generation with <code>preview.sty</code></a>
+<ul>
+<li><a href="#complete-preamble">Complete preamble</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Using LaTeX with Anki</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2024-05-11
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1005 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'anki'." href="../tags/anki.html" rel="tag">anki</a>, <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'maths'." href="../tags/maths.html" rel="tag">maths</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#mathjax-is-not-enough">MathJax is not enough</a></li>
+<li><a href="#actually-writing-latex">Actually writing LaTeX</a></li>
+<li><a href="#aligning-fragments-vertically">Aligning fragments vertically</a></li>
+<li><a href="#preview-generation-with-preview.sty">Preview generation with <code>preview.sty</code></a>
+<ul>
+<li><a href="#complete-preamble">Complete preamble</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+
+<div>
+  <p>
+</p>
+<p></p>
+Recently, I’ve been quite invested in learning maths with <a href="https://apps.ankiweb.net/index.html">Anki</a>.
+Sadly, there are relatively few good resources out there on how to
+twist Anki’s LaTeX pipeline into something generally acceptable,
+without having to rely on MathJax.
+As such, this post collects some bits and pieces from all over,
+hoping to weave them together into something coherent.
+<!--more-->
+<p></p>
+<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">I will not waste the reader’s time with an introduction of what Anki is or why spaced repetition is useful;
+<a href="https://gwern.net/spaced-repetition">other</a>
+<a href="https://augmentingcognition.com/ltm.html">people</a>
+have done a much better job at that than I ever could.</div><!--
+-->Note that I will only concerns myself with
+“how to make LaTeX work to an acceptable degree”,
+instead of
+“how to write mathematics notes”.
+The latter is extremely dependent on the desired outcome,
+types of maths that one studies,
+experience of the person writing the notes, and so on.
+Too many facets for me—or anyone, really—to give blanket recommendations.
+<p></p>
+A lot of things here are rehashes of <a href="https://unhewn-thoughts.org/anki/guide-on-using-latex-xetex-luatex-with-anki.html">Unhewn Thought’s</a>
+post about the same thing,
+as well as the official <a href="https://docs.ankiweb.net/math.html#latex">Anki documentation</a>
+on the matter.
+As always, this post is mostly about reminding myself about some details in two months’ time.
+<h2 id="mathjax-is-not-enough">MathJax is not enough<a href="#mathjax-is-not-enough" class="floatleft sec-link">§</a></h2>
+<p></p>
+Anki fully supports MathJax as a backend for its LaTeX previewing system.
+This is great for most users:
+MathJax is trivial to set up, and fits snugly into the generated <span class="small-caps">html</span><!--
+-->—there’s a reason it’s used so widely all over the internet!
+<p></p>
+However,
+especially for personal notes like these,
+MathJax might be amongst the worst solutions for me:
+its <a href="https://docs.mathjax.org/en/latest/input/tex/extensions.html">macro support</a>
+is awkward at best,
+and since it only implements maths macros,
+many of the packages that I’m using on a daily basis are not available at all.
+I for one am certainly not going to rewrite my bespoke <a href="https://github.com/slotThe/latex-styles">style file</a>,
+just so I get something that half-works with MathJax,
+when I could be using the real thing instead!
+<h2 id="actually-writing-latex">Actually writing LaTeX<a href="#actually-writing-latex" class="floatleft sec-link">§</a></h2>
+<p></p>
+To get this out of the way:
+I have absolutely no opinions on how to <em>write</em> LaTeX with Anki.
+I haven’t ever actually composed a note inside of the program,
+and I’m doubtful that I ever will.
+<p></p>
+Instead, I write all of my notes in Org and then export them via <a href="https://github.com/anki-editor/anki-editor">anki-editor</a>.
+This is very convenient,
+as it means that I have all of the key bindings and snippets available that I normally write LaTeX with.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">See, for example,
+<a href="https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes" class="local-link">here</a>,
+<a href="https://tony-zorman.com/posts/emacs-potpourri.html#latex" class="local-link">here</a>,
+<a href="https://tony-zorman.com/posts/pretty-latex.html" class="local-link">here</a>,
+or
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/emacs/lisp/hopf-latex-math.el?ref_type=heads">here</a>.</div><!--
+-->
+Plus, rough edges that one would otherwise have to care about,
+like <code>}}</code> inside of maths closing the current cloze deletion,
+are solved completely by <code>anki-editor</code> without me even having to think about them.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">For the specific example of maths and cloze deletions,
+one needs to set <code>anki-editor-break-consecutive-braces-in-LaTeX</code>.
+This should probably be the default—and perhaps it will be in the future!</div><!--
+-->
+As an added bonus,
+Org mode’s <a href="https://www.youtube.com/watch?v=n-AfvuV-bYo">new LaTeX preview functionality</a> is just fantastic,
+and makes crafting notes quite fun!
+<h2 id="aligning-fragments-vertically">Aligning fragments vertically<a href="#aligning-fragments-vertically" class="floatleft sec-link">§</a></h2>
+<p></p>
+One thing that MathJax does <em>very</em> well is its pixel-perfect alignment of LaTeX fragments.
+In contrast, the default alignment is really rather bad.
+It can, however, be somewhat improved by using <span class="small-caps">css</span> to vertically centre the image:
+<div class="highlight-css" style="padding-left: 1em;"><pre><span></span><span class="nt">img</span><span class="o">[</span><span class="nt">src</span><span class="o">*=</span><span class="s2">&quot;latex&quot;</span><span class="o">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">vertical-align</span><span class="p">:</span><span class="w"> </span><span class="kc">middle</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+It looks like this:<!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">As you can see, I haven’t bothered with fancy <span class="small-caps">css</span> to make the cards pretty. Content over form.</div><!--
+-->
+<p></p>
+<img class="pure-img" src="../images/anki-latex/centered.png" alt="A note with approrimately centred LaTeX">
+<p></p>
+Very far from perfect, but readable.
+Since this seems to be the only drawback with not using MathJax,
+I’ll take it.
+Content over form—at least in this case.
+<h2 id="preview-generation-with-preview.sty">Preview generation with <code>preview.sty</code><a href="#preview-generation-with-preview.sty" class="floatleft sec-link">§</a></h2>
+<p></p>
+The <code>preview</code> package is specifically designed for these kinds of previews.
+Originally written for <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>,
+it has made its way into all TeX distributions that I know of.
+In addition to being used all over Emacs,
+<code>preview</code> is being employed by quite a few other programs as well.
+<p></p>
+Amongst intangible benefits such as familiarity,
+I chose <code>preview</code> mostly because
+it “correctly” tightens display maths environments not just to the maths itself,
+but to the whole line.
+Operationally this means that display maths is automatically centred on my Anki card,
+even if the rest of the text is left-aligned.<!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">One could solve this by making <code>anki-editor</code> output an extra <code>div</code> that it only wraps display maths with<!--
+  -->—and I have done that in the past—but using <code>preview.sty</code> feels much cleaner to me.</div><!--
+-->
+<p></p>
+To use <code>preview.sty</code> in this way,
+one simply has to include it Anki’s LaTeX preamble—<code>C-S-n</code> and then “Options”—and wrap the whole document (i.e., the formula being rendered) with the <code>preview</code> environment:
+<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%%% Header</span>
+<span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="na">[active,tightpage]</span><span class="nb">{</span>preview<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+<span class="c">% Remove extra space above display maths.</span>
+<span class="k">\setlength</span><span class="nb">{</span><span class="k">\abovedisplayskip</span><span class="nb">}{</span>0pt<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>preview<span class="nb">}</span>
+</pre></div>
+
+<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%%% Footer</span>
+<span class="k">\end</span><span class="nb">{</span>preview<span class="nb">}</span>
+<span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
+</pre></div>
+
+<p></p>
+For this to work smoothly, I also highly recommend to enable <span class="small-caps">svg</span> support,
+and to tweak Anki’s LaTeX compilation pipeline.
+The handy <a href="https://ankiweb.net/shared/info/937148547">Edit LaTeX build process</a> addon can be used for that purpose.
+My <code>svgCommands</code> settings look like this:<!--
+--><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
+In case you are not bound by these restrictions—or more adventurous than me—I would recommend you use lualatex instead.</div><!--
+-->
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span> &quot;svgCommands&quot;: [
+      [
+          &quot;latex&quot;,
+          &quot;-interaction=nonstopmode&quot;,
+          &quot;tmp.tex&quot;
+      ],
+      [
+          &quot;dvisvgm&quot;,
+          &quot;--page=1-&quot;,
+          &quot;--optimize&quot;,
+          &quot;--clipjoin&quot;,
+          &quot;--relative&quot;,
+          &quot;--bbox=preview&quot;,
+          &quot;--no-fonts&quot;,
+          &quot;tmp.dvi&quot;,
+          &quot;-o&quot;,
+          &quot;tmp.svg&quot;
+      ]
+  ]
+</pre></div>
+
+<p></p>
+The generated LaTeX might be too small,
+though fixing this just involves a small <span class="small-caps">css</span> modification to the <code>latex</code> class:
+<div class="highlight-css" style="padding-left: 1em;"><pre><span></span><span class="p">.</span><span class="nc">latex</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">zoom</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+If you want to dig deeper into how Anki generates maths, I recommend looking at
+<a href="https://github.com/ankitects/anki/blob/c29125939db1dbb9ef48d42f425eb70abaee53ad/pylib/anki/latex.py">latex.py</a>,
+<a href="https://github.com/ankitects/anki/blob/c29125939db1dbb9ef48d42f425eb70abaee53ad/rslib/src/latex.rs">latex.rs</a>,
+and the
+<a href="https://unhewn-thoughts.org/anki/guide-on-using-latex-xetex-luatex-with-anki.html#tex-generation"><code>.tex</code> Generation</a>
+section in Unhewn Thought’s blog post.<!--
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">It should be noted that Anki—thankfully—caches previews by hashing their contents,
+and reuses the same <span class="small-caps">svg</span> every time it encounters a LaTeX fragment with the same hash.
+Thus, if you want to completely regenerate everything, just delete the respective directory.
+For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.</div><!--
+-->
+<h3 id="complete-preamble">Complete preamble<a href="#complete-preamble" class="floatleft sec-link">§</a></h3>
+<p></p>
+My complete preamble is not much larger than what I have shown above;
+it merely also includes my <a href="https://github.com/slotThe/latex-styles">personal style file</a>.
+<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%%% Header</span>
+<span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="na">[type=org,math=fancy]</span><span class="nb">{</span><span class="s">$</span><span class="nb">HOME</span><span class="o">/</span><span class="nb">.tex</span><span class="o">/</span><span class="nb">styles</span><span class="o">/</span><span class="nb">style}</span>
+<span class="nv">\usepackage</span><span class="o">[</span><span class="nb">active,tightpage</span><span class="o">]</span><span class="nb">{preview}</span>
+<span class="nv">\usepackage</span><span class="nb">{xcolor}</span>
+<span class="nv">\begin</span><span class="nb">{document}</span>
+<span class="nv">\setlength</span><span class="nb">{</span><span class="nv">\parindent</span><span class="nb">}{</span><span class="m">0</span><span class="nb">in}</span>
+<span class="nv">\setlength</span><span class="nb">{</span><span class="nv">\abovedisplayskip</span><span class="nb">}{</span><span class="m">0</span><span class="nb">pt}</span>
+<span class="nv">\begin</span><span class="nb">{preview}</span>
+</pre></div>
+
+<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%%% Footer</span>
+<span class="k">\end</span><span class="nb">{</span>preview<span class="nb">}</span>
+<span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
+</pre></div>
+
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
+<p></p>
+With these relatively straightforward tweaks,
+Anki’s LaTeX integration is really plug and play—I can just use my whole style file as-is,
+no extra care needed.
+Nice.
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
