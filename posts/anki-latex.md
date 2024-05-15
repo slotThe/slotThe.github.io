@@ -1,5 +1,5 @@
 ---
-title: Using LaTeX with Anki
+title: Leveraging LaTeX in Anki
 date: 2024-05-11
 tags: anki, emacs, maths
 ---
