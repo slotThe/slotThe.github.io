@@ -74,6 +74,10 @@ div.csl-right-inline {
 div#refs td {
     vertical-align: top;
 }
+/* No justification for references, as otherwise it's rivers galore. */
+div#refs {
+    text-align: left;
+}
 
 /* For some tables we'd like visual separators. */
 div#border-table table tr {
