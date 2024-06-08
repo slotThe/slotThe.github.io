@@ -153,6 +153,16 @@ hr {                    /* That line before the footnotes */
     margin: 1em 0; padding: 0;
 }
 
+/* A fleuron at the end of a post */
+img.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 100%;
+    height: auto;
+    padding: 1rem 1rem 0 1rem;
+}
+
 /**********************************************************************
   HEADINGS
 */

@@ -19,4 +19,12 @@
       $partial("templates/toc.html")$
       <!-- Body is included in the above file -->
     </section>
+    $if(no-comment)$$else$
+      <!-- A footer-ish thing above the actual boring footer for pretty
+           fleurons and things that should only appear on posts. -->
+      <div style="text-align:center;">
+        <img class="center-block" src="/images/fleuron.gif">
+        Have a comment? Write me an <a href="/about.html">email!</a>
+      </div>
+    $endif$
 </article>
