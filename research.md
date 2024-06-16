@@ -153,7 +153,7 @@ All of my papers are readily available on the [arXiv].[^2]
 
   The defense of my master's thesis, concentrating on a
   higher-dimensional graphical calculus, as first introduced by
-  Willerton [@willerton2008] and extended in the thesis.  The "basic"
+  Willerton [@willerton08] and extended in the thesis.  The "basic"
   [slides][slides:visual-cat] are available—the talk was given on a
   Wacom tablet and thus contained many live drawings to illustrate the
   concepts.  These, however, are lost to time.
