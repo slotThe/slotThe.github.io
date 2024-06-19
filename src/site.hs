@@ -134,6 +134,11 @@ standalones :: Context String -> Rules ()
 standalones tagCtx = do
   -- Mackey functors seminar
   mkStandalone "mackey-functors.md" pure tagCtx
+  -- CT2024 poster
+  match ("ct2024-poster/**") do
+    route   idRoute
+    compile copyFileCompiler
+  mkStandalone "ct2024.md" pure tagCtx
   -- Git introduction
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…
