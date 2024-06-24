@@ -40,18 +40,18 @@ All of my papers are readily available on the [arXiv].[^2]
   connection with the pivotality of Drinfeld centres and their
   underlying categories is discussed.
 
+- *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
+  Joint work with Sebastian Halbig.
+
+  We extend Willerton's [@willerton08] graphical calculus for bimonads
+  to comodule monads, a monadic interpretation of module categories
+  over a monoidal category. As an application, we prove a version of
+  Tannaka–Krein duality for these structures.
+
 ## Preprints
 
-- *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
-   Joint work with Sebastian Halbig.
-
-    We extend Willerton's [@willerton08] graphical calculus for bimonads
-    to comodule monads, a monadic interpretation of module categories
-    over a monoidal category. As an application, we prove a version of
-    Tannaka–Krein duality for these structures.
-
 - *[Duality in Monoidal Categories]* <span class="floatright">[@halbig23:dualit-monoid-categ]</span> \
-   Joint work with Sebastian Halbig.
+  Joint work with Sebastian Halbig.
 
   We compare closed and rigid monoidal categories.
   Closedness is defined by the tensor product having a right adjoint:
