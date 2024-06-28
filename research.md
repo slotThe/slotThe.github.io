@@ -70,6 +70,9 @@ All of my papers are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *Locally Finitely Presentable Categories and Ind-Completions* \
+  2024-06-13, Seminar "Factorisation homology", Bonn.
+
 - *The Kelly–Deligne Tensor Product* \
   2023-11-25, Seminar "Factorisation homology", Dresden.
 
