@@ -160,6 +160,14 @@ All of my papers are readily available on the [arXiv].[^2]
 
 # Posters
 
+- *Pivotality, Twisted Centres, and the Anti-Double of a Hopf Monad* \
+  2024-06-27, CT24, Santiago de Compostela;
+  [PDF](./ct2024-poster/poster.png)
+  and
+  [accompanying website](./ct2024.html);
+
+  Based on joint work with Sebastian Halbig—[@halbig24:pivot-hopf] and [@halbig23:diagr-comod-monad]—as well as Mateusz Stroiński, [@stroinski2024:reconstr].
+
 - *Duality in Monoidal Categories* \
   2023-07-07, CT23, Louvain-la-Neuve;
   in [portrait][ct23:portrait] and
