@@ -17,13 +17,10 @@ Some more keywords include [Hopf monads], [graphical calculi], [duoidal] and [li
 [linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
 [operads]: https://ncatlab.org/nlab/show/string+diagram
 [rigid]: https://ncatlab.org/nlab/show/rigid+monoidal+category
-[zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
 
 # Papers
 
 All of my papers are readily available on the [arXiv].[^2]
-
-[arXiv]: https://arxiv.org/a/zorman_t_1
 
 ## Published
 
@@ -213,8 +210,12 @@ All of my papers are readily available on the [arXiv].[^2]
 [slides:profunctor]: /talks/profunctor-optics.pdf
 [slides:visual-cat]: /talks/visual-category-theory.pdf
 
-[^1]: {-} I may be found on the [arXiv] and [zbmath].
+[^1]: {-} I may be found on the [arXiv], [orcid], and [zbmath].
 
 [^2]: {-} A general note: one can download the source code for every
           paper on the arXiv.  Clicking on "Other formats" on the
           relevant article will guide one through that.
+
+[orcid]: https://orcid.org/0009-0009-4940-2864
+[arXiv]: https://arxiv.org/a/zorman_t_1
+[zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony

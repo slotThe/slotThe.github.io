@@ -505,9 +505,10 @@ myPandocCompiler =
     -- its small-caps variants, but leave things like
     -- "XMonad.Prompt.OrgMode" alone.
     replaceSpecial :: Text -> Text
-    replaceSpecial = zbmath . go "KMonad" . go "XMonad"
+    replaceSpecial = zbmath . orcid . go "KMonad" . go "XMonad"
      where
-      zbmath :: Text -> Text
+      orcid, zbmath :: Text -> Text
+      orcid  s = if s == "orcid"  then sc "orc" <> "i" <> sc "d" else s
       zbmath s = if s == "zbmath" then "zb" <> sc "math"         else s
 
       go :: Text -> Text -> Text
