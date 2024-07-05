@@ -368,7 +368,7 @@ the rest of the machinery. It compares certain features of the entry
 increasing the total score of the entry every time it matches something.
 <p></p>
 Speaking of the arXiv, in <span class="small-caps">xm</span>onad I have bound <code>M-s a</code> to look up the
-given string there. Likewise, <a href="https://zbmath.org/">zbmath</a> is searched with <code>M-s z</code>. When
+given string there. Likewise, <a href="https://zbmath.org/">zb<span class="small-caps">math</span></a> is searched with <code>M-s z</code>. When
 these commands get a “universal argument”—an Emacs concept that <span class="small-caps">xm</span>onad
 borrowed—they automatically start a search with the current selection
 instead. Briefly, pressing <code>M-u</code> before a command can modify it in
@@ -402,7 +402,7 @@ perhaps doing it like this will help more people anyways.</div><!--
 --> with <a href="https://gitlab.com/slotThe/dotfiles/-/blob/afa8fd39cea2647152038e3f4dd42f1dbd66c413/xmonad/.config/xmonad/src/xmonad.hs#L576">a bit of
 plumbing</a>
 on the <span class="small-caps">xm</span>onad side to get Emacs going. The basic idea is that—given an
-arXiv or zbmath link—we first look up the paper on zbmath to see if it
+arXiv or zb<span class="small-caps">math</span> link—we first look up the paper on zb<span class="small-caps">math</span> to see if it
 was published and, if not, just use the arXiv data to construct our own
 bibliography entry instead. By default, my keybinding for this acts on
 the primary selection, so I merely have to highlight the link, press
