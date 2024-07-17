@@ -126,11 +126,13 @@ This talk introduces both Dress' and Green's definition of *Mackey functor*, and
       For any Mackey functor $(M_{\ast}, M^{\ast}) \colon G\text{-}\mathsf{Set} \to \text{Mod-}{R}$ in the sense of Dress
       we define for all $H\leq G$ the $R$-Module $M(H) = M_{\ast}(G/H)$.
       We can now define for any $K \leq H \leq G$ and $g \in G$ the prototypical operations of a Mackey functor à la Green:
-      \begin{align*}
-        I_K^H &= M_{\ast}(\pi_H^K)\colon M(K) \to M(H), \\
-        R^H_{K} &= M_{\ast}(\pi_H^K) \colon M(H) \to M(K), \\
-        c_g^H &= M_{\ast}(c^H_g) =M^{\ast}(c^{gHg^{-1}}_{g^{-1}}) \colon M(H) \to M(gHg^{-1}).
-      \end{align*}
+      $$
+        \begin{aligned}
+          I_K^H &= M_{\ast}(\pi_H^K)\colon M(K) \to M(H), \\
+          R^H_{K} &= M_{\ast}(\pi_H^K) \colon M(H) \to M(K), \\
+          c_g^H &= M_{\ast}(c^H_g) =M^{\ast}(c^{gHg^{-1}}_{g^{-1}}) \colon M(H) \to M(gHg^{-1}).
+        \end{aligned}
+      $$
       Note that the two equivalent ways to define the conjugation operation is a first application of the pullback axiom for Dress Mackey functors.
 
 2. **The Mackey algebra**:

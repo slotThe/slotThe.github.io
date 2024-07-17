@@ -2,11 +2,10 @@
 
 .PHONY: build
 build:
-	./build.sh
+	nix run . rebuild
 
 .PHONY: watch
 watch:
-	nix build
 	nix run . rebuild
 	nix run . watch
 

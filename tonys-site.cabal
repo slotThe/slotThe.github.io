@@ -15,6 +15,7 @@ executable site
                   , tagsoup
                   , text
                   , containers
+                  , process
   ghc-options:    -Weverything
                   -Wno-implicit-prelude
                   -Wno-missing-import-lists

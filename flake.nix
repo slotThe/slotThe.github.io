@@ -49,14 +49,13 @@
         packages          = p: [ p.site ];
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
-          zlib
+          deno       # KaTeX rendering of maths—see scripts/math.ts
           (python3.withPackages (p: [
             p.fonttools # Compressing fonts
             p.brotli    # Compressing fonts
             p.pygments  # Syntax highlighting
           ]))
-          nodejs_20  # Offline LaTeX SVG creation
-          parallel   # Process LaTeX snippets in parallel
+          zlib
         ];
       };
     };

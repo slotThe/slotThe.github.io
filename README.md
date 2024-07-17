@@ -21,9 +21,14 @@ For various definitions of "notable".
 + In comparison to pandoc's default, better [syntax highlighting][site:pygmentise]
   via the `pygmentize` command line utility.
 
-+ All LaTeX output is pregenerated with [mathjax-node-page] and directly
-  embedded in the HTML.  This is both faster when loading the page, and
-  does not require any JavaScript on the client side.
++ All LaTeX output is pregenerated with [KaTeX] and directly embedded in
+  the HTML. This is both faster when loading the page, and does not
+  require any JavaScript on the client side.
+
+  Interfacing with KaTeX is done with [math.ts](./scripts/math.ts),
+  a tiny TS script originally from [here][pandoc:katex],
+  which starts up a server that one can talk to.
+  See the relevant [hlKaTeX][site:impl:hlkatex] function for more information.
 
 + [Automatic smallcaps][site:impl:smallcaps] for certain abbreviations,
   like `HTML` or `GNU`.  As such, a font that actually supports this
@@ -33,25 +38,21 @@ For various definitions of "notable".
 
 + [Citation handling][site:citations] with BibTeX.
 
+[KaTeX]: https://katex.org/
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
+[pandoc:katex]: https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774
 [sidenotes-hs]: https://github.com/slotThe/pandoc-sidenote/blob/feat/html-sidenotes/src/Text/Pandoc/SideNoteHTML.hs
 [site:citations]: https://tony-zorman.com/posts/hakyll-and-bibtex.html
 [site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
+[site:impl:hlkatex]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L530
 [site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
 [site:pygmentise]: https://tony-zorman.com/posts/pygmentising-hakyll.html
 [site:sidenotes]: https://tony-zorman.com/posts/block-sidenotes.html
 
 ## Build
 
-Because building got more complicated, there is `build.sh`, which `make`
-or `make build` calls.  Most notably, this script—with the help of
-[mathjax-node-page]—it pre-generates all mathematics.  This also means
-that one needs to clone this repository recursively, as `math-node-page`
-is included as a submodule.
-
-For speed reasons, `make watch` disregards this, so be sure to build the
-website with `make` to see the final result.
-
-[mathjax-node-page]: https://github.com/pkra/mathjax-node-page/
+The tiny [Makefile][./Makefile] should be reasonably self-explanatory.
+The TL;DR is to use `make` to build the website once,
+or `make watch` to create an updating preview on `localhost:8000`.
 
 [^1]: The [pull request](https://github.com/jez/pandoc-sidenote/pull/26) is currently pending.

@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns        #-}
 {-# LANGUAGE BlockArguments      #-}
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE LambdaCase          #-}
@@ -7,19 +8,22 @@
 {-# LANGUAGE TypeApplications    #-}
 {-# LANGUAGE ViewPatterns        #-}
 
-import Data.Text qualified as T
+import Data.Text    qualified as T
+import Data.Text.IO qualified as T
 
 import Control.Monad
 import Data.List (foldl')
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
+import GHC.IO.Handle (BufferMode (NoBuffering), Handle, hSetBuffering)
 import Hakyll
+import System.Process (runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
 import qualified Text.Pandoc.Builder as Many (toList, singleton)
-import Text.Pandoc.Definition (Block (..), Inline (..), Pandoc)
-import Text.Pandoc.Options
+import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..), Pandoc)
+import Text.Pandoc.Options (HTMLMathMethod (..), ReaderOptions, WriterOptions (..))
 import Text.Pandoc.Shared (headerShift)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
@@ -36,9 +40,14 @@ main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
   match "css/*" do
     route   idRoute
     compile compressCssCompiler
-  match ("favicon.png" .||. "images/**" .||. "talks/**.pdf" .||. "fonts/**" .||. "robots.txt") do
-    route   idRoute
-    compile copyFileCompiler
+  match (     "favicon.png"
+         .||. "images/**"
+         .||. "talks/**.pdf"
+         .||. "css/fonts/**"
+         .||. "robots.txt"
+        )
+    do route   idRoute
+       compile copyFileCompiler
 
   -- Redirects
   version "redirects" $ createRedirects redirects
@@ -135,7 +144,7 @@ standalones tagCtx = do
   -- Mackey functors seminar
   mkStandalone "mackey-functors.md" pure tagCtx
   -- CT2024 poster
-  match ("ct2024-poster/**") do
+  match "ct2024-poster/**" do
     route   idRoute
     compile copyFileCompiler
   mkStandalone "ct2024.md" pure tagCtx
@@ -387,7 +396,7 @@ myPandocCompilerWithTransformM ropt wopt f =
     getResourceBody >>= myRenderPandocWithTransformM ropt wopt f
 
 myWriter :: WriterOptions
-myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
+myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = KaTeX "" }
 
 -- | A simple pandoc compiler for RSS/Atom feeds, with none of the
 -- fanciness that 'myPandocCompiler' has.
@@ -414,8 +423,10 @@ myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
   pandocCompilerWorker $
     traverse
-      (   pure . usingSideNotesHTML myWriter  -- needs to be last because it renders html
+      (   pure . usingSideNotesHTML myWriter
       <=< pygmentsHighlight
+      <=< hlKaTeX
+      -- ↑ render HMTL in various forms and ↓ do not
       .   addSectionLinks
       .   smallCaps
       .   styleLocalLinks
@@ -515,6 +526,50 @@ myPandocCompiler =
       go pfx s = if pfx `T.isPrefixOf` s && T.length s < 9
                  then sc (T.toLower (T.take 2 pfx)) <> T.drop 2 s
                  else s
+
+  hlKaTeX :: Pandoc -> Compiler Pandoc
+  hlKaTeX pandoc = recompilingUnsafeCompiler do
+    (hin, hout, _, _) <- runInteractiveCommand "deno run scripts/math.ts"
+    hSetBuffering hin  NoBuffering
+    hSetBuffering hout NoBuffering
+
+    (`walkM` pandoc) \case
+      Math mathType (T.unwords . T.lines . T.strip -> text) -> do
+        let math :: Text
+              = foldl' (\str (repl, with) -> T.replace repl with str)
+                       case mathType of
+                         DisplayMath{-s-} -> ":DISPLAY " <> text
+                         InlineMath{-s-}  ->                text
+                       macros
+        T.hPutStrLn hin math
+        RawInline "html" <$> getResponse hout
+      block -> pure block
+   where
+    -- KaTeX might sent the input back as multiple lines if it involves a
+    -- matrix of coordinates. The big assumption here is that it does so only
+    -- when matrices—or other such constructs—are involved, and not when it
+    -- sends back "normal" HTML.
+    getResponse :: Handle -> IO Text
+    getResponse handle = go ""
+     where
+      go :: Text -> IO Text
+      go !str = do
+        more <- (str <>) <$> T.hGetLine handle
+        if ">" `T.isSuffixOf` more  -- end of HTML snippet
+        then pure more
+        else go   more
+
+    -- I know that one could supply macros to KaTeX directly, but where is the
+    -- fun in that‽
+    macros :: [(Text, Text)]
+    macros =
+      [ ("≔"       , "\\mathrel{\\vcenter{:}}=")
+      , ("\\defeq" , "\\mathrel{\\vcenter{:}}=")
+      , ("\\to"    , "\\longrightarrow")
+      , ("\\mapsto", "\\longmapsto")
+      , ("\\cat"   , "\\mathcal")
+      , ("\\kVect" , "\\mathsf{Vect}_{\\mathtt{k}}")
+      ]
 
 -----------------------------------------------------------------------
 -- Redirects

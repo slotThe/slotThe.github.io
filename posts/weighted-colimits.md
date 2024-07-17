@@ -317,11 +317,13 @@ What's left is to define the two parallel arrows.[^5]
      $\mathcal{J}$ on $F$, indexed by arrows $f \colon a \longrightarrow
      b$ in $\mathcal{J}$; i.e.,
 
-     \begin{align*}
-     (\mathcal{J}(a,b) \times F a \longrightarrow F b)
-     &= \left( \coprod_{f \in \mathcal{J}(a,b)} F a \longrightarrow F b \right) \\
-     &= \langle Ff \colon Fa \longrightarrow F b \rangle_{f \in \mathcal{J}(a,b)}.
-     \end{align*}
+     $$
+       \begin{aligned}
+         (\mathcal{J}(a,b) \times F a \longrightarrow F b)
+         &= \left( \coprod_{f \in \mathcal{J}(a,b)} F a \longrightarrow F b \right) \\
+         &= \langle Ff \colon Fa \longrightarrow F b \rangle_{f \in \mathcal{J}(a,b)}.
+       \end{aligned}
+     $$
 
 So that's the story with expressing colimits as coequalisers.  We now
 need to completely reframe this in terms of actions.  For the second

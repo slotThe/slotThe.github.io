@@ -1,7 +1,9 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     
       <meta name="robots" content="noai, noimageai">
     
@@ -12,89 +14,18 @@
 
     <link rel="shortcut icon" href="../favicon.png">
     <!-- https://purecss.io/ -->
-    <link rel="stylesheet" type="text/css" href="../css/pure-min.css">
-    <link rel="stylesheet" type="text/css" href="../css/skin.css">
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
     <!-- Default appearance -->
-    <link rel="stylesheet" type="text/css" href="../css/colours.css">
-    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="../css/default.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
     <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../css/katex.css" />
     <!-- Margin and sidenotes -->
-    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
-  <style type="text/css">
-                            .mjpage .MJX-monospace {
-                            font-family: monospace
-                            }
-
-                            .mjpage .MJX-sans-serif {
-                            font-family: sans-serif
-                            }
-
-                            .mjpage {
-                            display: inline;
-                            font-style: normal;
-                            font-weight: normal;
-                            line-height: normal;
-                            font-size: 100%;
-                            font-size-adjust: none;
-                            text-indent: 0;
-                            text-align: left;
-                            text-transform: none;
-                            letter-spacing: normal;
-                            word-spacing: normal;
-                            word-wrap: normal;
-                            white-space: nowrap;
-                            float: none;
-                            direction: ltr;
-                            max-width: none;
-                            max-height: none;
-                            min-width: 0;
-                            min-height: 0;
-                            border: 0;
-                            padding: 0;
-                            margin: 0
-                            }
-
-                            .mjpage * {
-                            transition: none;
-                            -webkit-transition: none;
-                            -moz-transition: none;
-                            -ms-transition: none;
-                            -o-transition: none
-                            }
-
-                            .mjx-svg-href {
-                            fill: blue;
-                            stroke: blue
-                            }
-
-                            .MathJax_SVG_LineBox {
-                            display: table!important
-                            }
-
-                            .MathJax_SVG_LineBox span {
-                            display: table-cell!important;
-                            width: 10000em!important;
-                            min-width: 0;
-                            max-width: none;
-                            padding: 0;
-                            border: 0;
-                            margin: 0
-                            }
-
-                            .mjpage__block {
-                            text-align: center;
-                            margin: 1em 0em;
-                            position: relative;
-                            display: block!important;
-                            text-indent: 0;
-                            max-width: none;
-                            max-height: none;
-                            min-width: 0;
-                            min-height: 0;
-                            width: 100%
-                            }</style></head>
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
 
   <body class="pure-skin-solid">
     <div class="pure-g-r">
@@ -140,10 +71,10 @@
         Posted on 2023-01-27
       
       
-         ·  last modified: 2023-02-16
+        &thinsp;·&thinsp; last modified: 2023-02-16
       
       
-         ·  <span title="2078 words">9 min read</span>  ·&nbsp;
+        &thinsp;·&thinsp; <span title="2076 words">9 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>
@@ -179,7 +110,7 @@ of these features.
 <p></p>
 If you don’t know: sidenotes are footnotes, just on the side of the
 page!<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"><div class="sidenote">For example, this is one.</div><!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">For example, this is one.</div><!--
 --> More specifically they are footnotes placed inside of the
 margins, in order to avoid having to click or scroll, breaking the flow
 of reading—a flick of the eyes is enough. This is very convenient,
@@ -197,7 +128,7 @@ there is the fantastic <a href="https://hackage.haskell.org/package/pandoc-siden
 provides an appropriate pandoc filter. After extracting the relevant
 <span class="small-caps">css</span> into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
 <code>usingSidenotes</code> function into my pandoc compiler,<!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><div class="sidenote">Just like you would expect:
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Just like you would expect:
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
@@ -214,10 +145,10 @@ worked!
 <p></p>
 There is but one problem with this setup: paragraphs. A sidenote
 roughly looks like the following:
-<div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote-wrapper"</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">"sn-NAME"</span> <span class="na">class</span><span class="o">=</span><span class="s">"margin-toggle sidenote-number"</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"checkbox"</span> <span class="na">id</span><span class="o">=</span><span class="s">"sn-NAME"</span> <span class="na">class</span><span class="o">=</span><span class="s">"margin-toggle"</span><span class="p">/&gt;</span>
-  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote"</span><span class="p">&gt;</span>
+<div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote-wrapper&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;sn-NAME&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;margin-toggle sidenote-number&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;sn-NAME&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;margin-toggle&quot;</span><span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote&quot;</span><span class="p">&gt;</span>
     SIDENOTEn
   <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
@@ -236,7 +167,7 @@ elements are allowed inside paragraphs per the <span class="small-caps">html</sp
 <p></p>
 I know what you’re thinking: people don’t usually let themselves be
 hampered by standards, do they?<!--
---><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><div class="sidenote">Just ask any person who’s ever worked on a window manager what
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Just ask any person who’s ever worked on a window manager what
 creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</div><!--
 --> Alas, the <code>pandoc-sidenote</code> package
 quite sensibly converts a given footnote into an approximation of the
@@ -248,10 +179,10 @@ above <span class="small-caps">html</span> by using pandoc’s native <code>Span
 <span class="w">  </span><span class="kt">Note</span><span class="w"> </span><span class="n">blocks</span><span class="w"> </span><span class="ow">-&gt;</span>
 <span class="w">    </span><span class="kr">let</span><span class="w"> </span><span class="c1">-- Note has a [Block], but Span needs [Inline]</span>
 <span class="w">        </span><span class="n">content</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">coerceToInline</span><span class="w"> </span><span class="n">blocks</span>
-<span class="w">     </span><span class="kr">in</span><span class="w"> </span><span class="kt">Span</span><span class="w"> </span><span class="p">(</span><span class="s">""</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">"sidenote-wrapper"</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span>
-<span class="w">             </span><span class="p">[</span><span class="w"> </span><span class="kt">RawInline</span><span class="w"> </span><span class="s">"html"</span><span class="w"> </span><span class="s">"&lt;label for …"</span>
-<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="kt">RawInline</span><span class="w"> </span><span class="s">"html"</span><span class="w"> </span><span class="s">"&lt;input type …"</span>
-<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="kt">Span</span><span class="w"> </span><span class="p">(</span><span class="s">""</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">"sidenote"</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span><span class="w"> </span><span class="n">content</span>
+<span class="w">     </span><span class="kr">in</span><span class="w"> </span><span class="kt">Span</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;sidenote-wrapper&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span>
+<span class="w">             </span><span class="p">[</span><span class="w"> </span><span class="kt">RawInline</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="s">&quot;&lt;label for …&quot;</span>
+<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="kt">RawInline</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="s">&quot;&lt;input type …&quot;</span>
+<span class="w">             </span><span class="p">,</span><span class="w"> </span><span class="kt">Span</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;sidenote&quot;</span><span class="p">],</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span><span class="w"> </span><span class="n">content</span>
 <span class="w">             </span><span class="p">]</span>
 <span class="w">  </span><span class="n">inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">inline</span>
 </pre></div>
@@ -283,7 +214,7 @@ to inline elements.
 <span class="w">  </span><span class="n">deBlock</span><span class="w"> </span><span class="kr">_</span><span class="w">                  </span><span class="ow">=</span><span class="w"> </span><span class="kt">[]</span>
 
 <span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
-<span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="p">(</span><span class="kt">Note</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Str</span><span class="w"> </span><span class="s">""</span>
+<span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="p">(</span><span class="kt">Note</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Str</span><span class="w"> </span><span class="s">&quot;&quot;</span>
 <span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="n">x</span><span class="w">        </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span>
 </pre></div>
 
@@ -295,12 +226,12 @@ simplest kinds of blocks, but already mentions that the <code>RawBlock → RawIn
 Well, what happens?
 <span class="sidenote-wrapper">
 <label for="sn-test" class="margin-toggle sidenote-number"></label>
-<input type="checkbox" id="sn-test" class="margin-toggle">
+<input type="checkbox" id="sn-test" class="margin-toggle" />
 <p><span class="sidenote">Now simulating <code>pandoc-sidenode</code>s behaviour, the following is a piece of code <em>in the sidenote:</em>
-</span></p><div class="highlight"><pre><span></span><span class="nf">a</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span> <span class="nf">
+<div class="highlight"><pre><span></span><span class="nf">a</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span> <span class="nf">
 a</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">42</span> </pre></div>
-</span><p></p>
-
+</span></p>
+</span>
 <p></p>
 This is the next line in the main document; the above code block was
 supposed to be in the relevant sidenote, but “spilled” into the text
@@ -314,16 +245,16 @@ different purposes most of the time. Pandoc itself has a
 attempts to convert tables, figures, and the like, but this also yields
 some surprising behaviour when used instead of <code>pandoc-sidenote</code>s
 variant.<!--
---><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><div class="sidenote">Whereas now, things like
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">Whereas now, things like
 <ul>
 <li><p></p>
 
 tables
 <table style="width:66%;">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 26%">
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 26%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -355,33 +286,7 @@ they said that …
 display maths
 <p></p>
 
-<span class="math display"><span class="mjpage mjpage__block"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="26.388ex" height="6.343ex" style="vertical-align: -2.338ex;" viewBox="0 -1724.2 11361.7 2730.8" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
-<title id="MathJax-SVG-1-Title">
-\int^{a, b} \mathcal{C}(a \otimes b, {-}) \cdot Fa \otimes Gb
-</title>
-<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
- <use xlink:href="#MJSZ2-222B" x="0" y="0"></use>
-<g transform="translate(1060,1089)">
- <use transform="scale(0.707)" xlink:href="#MJMATHI-61" x="0" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMAIN-2C" x="529" y="0"></use>
- <use transform="scale(0.707)" xlink:href="#MJMATHI-62" x="808" y="0"></use>
-</g>
- <use xlink:href="#MJCAL-43" x="2202" y="0"></use>
- <use xlink:href="#MJMAIN-28" x="2736" y="0"></use>
- <use xlink:href="#MJMATHI-61" x="3125" y="0"></use>
- <use xlink:href="#MJMAIN-2297" x="3877" y="0"></use>
- <use xlink:href="#MJMATHI-62" x="4878" y="0"></use>
- <use xlink:href="#MJMAIN-2C" x="5307" y="0"></use>
- <use xlink:href="#MJMAIN-2212" x="5752" y="0"></use>
- <use xlink:href="#MJMAIN-29" x="6531" y="0"></use>
- <use xlink:href="#MJMAIN-22C5" x="7142" y="0"></use>
- <use xlink:href="#MJMATHI-46" x="7643" y="0"></use>
- <use xlink:href="#MJMATHI-61" x="8393" y="0"></use>
- <use xlink:href="#MJMAIN-2297" x="9144" y="0"></use>
- <use xlink:href="#MJMATHI-47" x="10145" y="0"></use>
- <use xlink:href="#MJMATHI-62" x="10932" y="0"></use>
-</g>
-</svg></span></span></li>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mo>∫</mo><mrow><mi>a</mi><mo separator="true">,</mo><mi>b</mi></mrow></msup><mi mathvariant="script">C</mi><mo stretchy="false">(</mo><mi>a</mi><mo>⊗</mo><mi>b</mi><mo separator="true">,</mo><mo lspace="0em" rspace="0em">−</mo><mo stretchy="false">)</mo><mo>⋅</mo><mi>F</mi><mi>a</mi><mo>⊗</mo><mi>G</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">\int^{a, b} \mathcal{C}(a \otimes b, {-}) \cdot Fa \otimes Gb</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4613em;vertical-align:-0.8622em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.44445em;position:relative;top:-0.0011em;">∫</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.599em;"><span style="top:-3.8129em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">b</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathcal" style="margin-right:0.05834em;">C</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⊗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord">−</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⊗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">G</span><span class="mord mathnormal">b</span></span></span></span></span></li>
 </ul>
 <p></p>
 and the like are no problem at all!</div><!--
@@ -456,7 +361,7 @@ the functions come from.
 Rendering the actual sidenote isn’t very complicated, and amounts to
 picking out the <code>Note</code> constructor, rendering it, and putting everything
 back together.<!--
---><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"><div class="sidenote">The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
 which keeps track of the sidenote number, as well as the supplied
 <code>WriterOption</code>s; nothing fancy.</div><!--
 -->
@@ -475,8 +380,8 @@ which keeps track of the sidenote number, as well as the supplied
 <span class="w">  </span><span class="n">renderBlock</span><span class="w"> </span><span class="n">blocks</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">    </span><span class="c1">-- Update sidenote counter and get the `WriterOption's.</span>
 <span class="w">    </span><span class="kt">SNS</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="o">&lt;*</span><span class="w"> </span><span class="n">modify'</span><span class="w"> </span><span class="p">(</span><span class="nf">\</span><span class="n">sns</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">sns</span><span class="p">{</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="n">sns</span><span class="w"> </span><span class="p">})</span>
-<span class="w">    </span><span class="n">pure</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">"html"</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="c1">-- … all the opening html stuff</span>
-<span class="w">                             </span><span class="n">writePandocWith</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">mempty</span><span class="w"> </span><span class="n">blocks</span><span class="p">))</span>
+<span class="w">    </span><span class="n">pure</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="c1">-- … all the opening html stuff</span>
+<span class="w">                             </span><span class="n">writePandocWith</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">mempty</span><span class="w"> </span><span class="n">blocks</span><span class="p">))</span>
 <span class="w">                             </span><span class="c1">-- … all the closing html stuff</span>
 </pre></div>
 
@@ -496,7 +401,7 @@ elements, and so we are replacing a single <code>Block</code> by a list of
 <span class="w">    </span><span class="c1">-- Simulate a paragraph by inserting a dummy block; this is needed</span>
 <span class="w">    </span><span class="c1">-- in case two consecutive paragraphs have sidenotes, or a paragraph</span>
 <span class="w">    </span><span class="c1">-- doesn't have one at all.</span>
-<span class="w">    </span><span class="kt">Para</span><span class="w"> </span><span class="n">inlines</span><span class="w">         </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Para</span><span class="w"> </span><span class="p">[</span><span class="kt">Str</span><span class="w"> </span><span class="s">""</span><span class="p">]</span><span class="w"> </span><span class="kt">:</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">renderSidenote</span><span class="w"> </span><span class="n">inlines</span>
+<span class="w">    </span><span class="kt">Para</span><span class="w"> </span><span class="n">inlines</span><span class="w">         </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Para</span><span class="w"> </span><span class="p">[</span><span class="kt">Str</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">]</span><span class="w"> </span><span class="kt">:</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">renderSidenote</span><span class="w"> </span><span class="n">inlines</span>
 <span class="w">    </span><span class="kt">OrderedList</span><span class="w"> </span><span class="n">attrs</span><span class="w"> </span><span class="n">bs</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">:[]</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">OrderedList</span><span class="w"> </span><span class="n">attrs</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">traverse</span><span class="w"> </span><span class="n">mkSidenote</span><span class="w"> </span><span class="n">bs</span>
 <span class="w">    </span><span class="kt">BulletList</span><span class="w">        </span><span class="n">bs</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">:[]</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">BulletList</span><span class="w">        </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">traverse</span><span class="w"> </span><span class="n">mkSidenote</span><span class="w"> </span><span class="n">bs</span>
 <span class="w">    </span><span class="n">block</span><span class="w">                </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="p">[</span><span class="n">block</span><span class="p">]</span>
@@ -558,16 +463,16 @@ block containers.
 So far, I had assumed that there was a reason why Tufte <span class="small-caps">css</span> used <code>span</code>
 elements instead of <code>div</code>s in their sidenote, but this does not seem to
 be the case.<!--
---><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"><div class="sidenote">At least not to my current knowledge.</div><!--
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">At least not to my current knowledge.</div><!--
 --> Instead of writing
-<div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote"</span><span class="p">&gt;</span>
+<div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote&quot;</span><span class="p">&gt;</span>
   «sidenote»
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </pre></div>
 
 <p></p>
 one may well use
-<div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"sidenote"</span><span class="p">&gt;</span>
+<div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote&quot;</span><span class="p">&gt;</span>
   «sidenote»
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
@@ -582,7 +487,7 @@ It does work, but pre-rendering everything and not using pandoc’s built in con
 <p></p>
 However, this solution seems to be quite comfortable from a Hakyll
 perspective,<!--
---><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle"><div class="sidenote">Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also
 <a href="https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553">thought about this issue</a>,
 and concluded that perhaps a custom pandoc <code>Writer</code> would be the
 most elegant solution to this problem. However, since using
@@ -625,6 +530,5 @@ of the alternative filter.
         </div>
       </div>
     </div>
-  
-
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs id="MathJax_SVG_glyphs"><path stroke-width="1" id="MJSZ2-222B" d="M114 -798Q132 -824 165 -824H167Q195 -824 223 -764T275 -600T320 -391T362 -164Q365 -143 367 -133Q439 292 523 655T645 1127Q651 1145 655 1157T672 1201T699 1257T733 1306T777 1346T828 1360Q884 1360 912 1325T944 1245Q944 1220 932 1205T909 1186T887 1183Q866 1183 849 1198T832 1239Q832 1287 885 1296L882 1300Q879 1303 874 1307T866 1313Q851 1323 833 1323Q819 1323 807 1311T775 1255T736 1139T689 936T633 628Q574 293 510 -5T410 -437T355 -629Q278 -862 165 -862Q125 -862 92 -831T55 -746Q55 -711 74 -698T112 -685Q133 -685 150 -700T167 -741Q167 -789 114 -798Z"></path><path stroke-width="1" id="MJMATHI-61" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path><path stroke-width="1" id="MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path stroke-width="1" id="MJMATHI-62" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path><path stroke-width="1" id="MJCAL-43" d="M201 -25Q167 -25 136 -14T75 23T29 94T12 202Q12 290 50 394T161 574Q227 642 303 673T433 704Q435 705 457 705Q533 701 533 640Q533 606 507 548T464 474Q431 444 396 444Q381 444 381 453Q381 459 388 473T407 513T428 563Q433 580 433 594Q433 636 381 636Q314 636 260 594T175 489T128 363T112 247Q112 157 153 101T273 44Q347 44 398 121Q413 144 437 157T481 171Q496 171 496 160Q496 150 476 123Q426 56 350 16T201 -25Z"></path><path stroke-width="1" id="MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="MJMAIN-2297" d="M56 250Q56 394 156 488T384 583Q530 583 626 485T722 250Q722 110 625 14T390 -83Q249 -83 153 14T56 250ZM582 471Q531 510 496 523Q446 542 381 542Q324 542 272 519T196 471L389 278L485 375L582 471ZM167 442Q95 362 95 250Q95 137 167 58L359 250L167 442ZM610 58Q682 138 682 250Q682 363 610 442L418 250L610 58ZM196 29Q209 16 230 2T295 -27T388 -42Q409 -42 429 -40T465 -33T496 -23T522 -11T544 1T561 13T574 22T582 29L388 222L196 29Z"></path><path stroke-width="1" id="MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="1" id="MJMAIN-22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path><path stroke-width="1" id="MJMATHI-46" d="M48 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H742Q749 676 749 669Q749 664 736 557T722 447Q720 440 702 440H690Q683 445 683 453Q683 454 686 477T689 530Q689 560 682 579T663 610T626 626T575 633T503 634H480Q398 633 393 631Q388 629 386 623Q385 622 352 492L320 363H375Q378 363 398 363T426 364T448 367T472 374T489 386Q502 398 511 419T524 457T529 475Q532 480 548 480H560Q567 475 567 470Q567 467 536 339T502 207Q500 200 482 200H470Q463 206 463 212Q463 215 468 234T473 274Q473 303 453 310T364 317H309L277 190Q245 66 245 60Q245 46 334 46H359Q365 40 365 39T363 19Q359 6 353 0H336Q295 2 185 2Q120 2 86 2T48 1Z"></path><path stroke-width="1" id="MJMATHI-47" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path></defs></svg></body></html>
+  </body>
+</html>

@@ -123,12 +123,11 @@ blockquote {            /* Block quotes */
     padding-left: 20px;
 }
 
-span.mjpage {           /* All maths */
-    font-size: 0.85em;
+.katex {                /* All maths */
+    font-size: 0.9em !important;
 }
-
-span.mjpage__block {    /* Display maths */
-    font-size: 0.9em;
+.katex-display {        /* Display maths */
+    font-size: 1.1em !important;
 }
 
 /**********************************************************************
