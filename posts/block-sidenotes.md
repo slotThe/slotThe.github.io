@@ -1,14 +1,15 @@
 ---
 title: Using Sidenotes with Hakyll
 date: 2023-01-27
-last-modified: 2023-02-16
+last-modified: 2024-07-17
 tags: haskell
 ---
+<p></p>
 
 I've become quite enamoured with sidenotes recently, and so of course
 this website now has them as well!  Thankfully, the integration with
 pandoc and Hakyll is quite straightforward, because other people have
-already done the hard work.  Depending on your use-case, however, the
+already done the hard work.[^9]  Depending on your use-case, however, the
 existing libraries might not entirely fit the bill; for example, by
 default blocks that are more complicated than just paragraphs of pure
 text don't work.  In this post, I'd like to explain an alternative
@@ -359,14 +360,15 @@ perspective,[^8] and people have told me that the functionality provided
 is still useful to them.  Since what I've done here amounts to a
 complete rewrite—and almost certainly a regression in places—I don't
 think that this will ever replace `Text.​Pandoc.​SideNote` wholesale.
-However, I have now created a [pull request][github:pandoc-sidenote:html-pr],
-which adds a module called `Text.​Pandoc.​SideNoteHTML` as an alternative.
-This keeps backwards compatibility, yet still allows people to make use
-of the alternative filter.
+However, the `pandoc-sidenote` library now features a
+[Text.​Pandoc.​SideNoteHTML][github:pandoc-sidenote:HTML]
+module as an alternative.
+This keeps backwards compatibility,
+yet still allows people to make use of the alternative filter.
 
 [github:pandoc-sidenote:custom-writer]: https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553
-[github:pandoc-sidenote:html-pr]: https://github.com/jez/pandoc-sidenote/pull/26
 [site:sidenotes-hs]: https://github.com/slotThe/slotThe.github.io/blob/main/src/Sidenote.hs
+[github:pandoc-sidenote:HTML]: https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs
 
 [^1]: For example, this is one.
 
@@ -422,10 +424,14 @@ of the alternative filter.
 
 [^7]: At least not to my current knowledge.
 
-
 [^8]: Jake Zimmerman—the author of `pandoc-sidenote`—also
       [thought about this issue][github:pandoc-sidenote:custom-writer],
       and concluded that perhaps a custom pandoc `Writer` would be the
       most elegant solution to this problem.  However, since using
       pandoc's HTML5 writer is quite hard-coded into Hakyll, I don't think
       that I will go down that path.
+
+[^9]: {-} To put this front and centre:
+      the `pandoc-sidenote` library now features a
+      [Text.​Pandoc.​SideNoteHTML][github:pandoc-sidenote:HTML]
+      module, which is an implementation of what's discussed in this post!

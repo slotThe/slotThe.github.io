@@ -1202,10 +1202,10 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
         Posted on 2023-01-27
       
       
-        &thinsp;·&thinsp; last modified: 2023-02-16
+        &thinsp;·&thinsp; last modified: 2024-07-17
       
       
-        &thinsp;·&thinsp; <span title="2084 words">9 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="2104 words">9 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'haskell'." href="/tags/haskell.html" rel="tag">haskell</a>
@@ -1220,10 +1220,12 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
   
 
 <div>
-  <p>I’ve become quite enamoured with sidenotes recently, and so of course
+  <p>
+</p>
+<p>I’ve become quite enamoured with sidenotes recently, and so of course
 this website now has them as well! Thankfully, the integration with
 pandoc and Hakyll is quite straightforward, because other people have
-already done the hard work. Depending on your use-case, however, the
+already done the hard work.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Depending on your use-case, however, the
 existing libraries might not entirely fit the bill; for example, by
 default blocks that are more complicated than just paragraphs of pure
 text don’t work. In this post, I’d like to explain an alternative
@@ -1232,7 +1234,7 @@ of these features.</p>
 <!--more-->
 <h2 id="introduction">Introduction</h2>
 <p>If you don’t know: sidenotes are footnotes, just on the side of the
-page!<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> More specifically they are footnotes placed inside of the
+page!<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> More specifically they are footnotes placed inside of the
 margins, in order to avoid having to click or scroll, breaking the flow
 of reading—a flick of the eyes is enough. This is very convenient,
 especially for longer entries with lots of asides that don’t necessarily
@@ -1247,7 +1249,7 @@ mainly because it seemed to be the most popular non-JS solution. Plus,
 there is the fantastic <a href="https://hackage.haskell.org/package/pandoc-sidenote">pandoc-sidenote</a>, which
 provides an appropriate pandoc filter. After extracting the relevant
 CSS into <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> and plugging the exported
-<code>usingSidenotes</code> function into my pandoc compiler,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> things just
+<code>usingSidenotes</code> function into my pandoc compiler,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> things just
 worked!</p>
 <p>There is but one problem with this setup: paragraphs. A sidenote
 roughly looks like the following:</p>
@@ -1267,7 +1269,7 @@ paragraphs:</p>
 elements are allowed inside paragraphs per the HTML standard.</p>
 </blockquote>
 <p>I know what you’re thinking: people don’t usually let themselves be
-hampered by standards, do they?<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Alas, the <code>pandoc-sidenote</code> package
+hampered by standards, do they?<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Alas, the <code>pandoc-sidenote</code> package
 quite sensibly converts a given footnote into an approximation of the
 above HTML by using pandoc’s native <code>Span</code> data constructor. Here is a
 (heavily) simplified version of the relevant function.</p>
@@ -1331,7 +1333,7 @@ different purposes most of the time. Pandoc itself has a
 <a href="https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Shared.html#v:blocksToInlines">function</a> of the same name that
 attempts to convert tables, figures, and the like, but this also yields
 some surprising behaviour when used instead of <code>pandoc-sidenote</code>s
-variant.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+variant.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <p>So what to do? Well, life wouldn’t be fun if we didn’t at least try to
 hack our way around a standard, would it?</p>
 <h2 id="rewriting-pandoc-sidenote">Rewriting <code>pandoc-sidenote</code></h2>
@@ -1388,7 +1390,7 @@ the functions come from.</p>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Text.Pandoc.Walk</span> (walkM)</span></code></pre></div>
 <p>Rendering the actual sidenote isn’t very complicated, and amounts to
 picking out the <code>Note</code> constructor, rendering it, and putting everything
-back together.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+back together.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">renderSidenote ::</span> [<span class="dt">Inline</span>]            <span class="co">-- ^ Inlines from a single @Note@</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>               <span class="ot">-&gt;</span> <span class="dt">Sidenote</span> [<span class="dt">Block</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>renderSidenote <span class="ot">=</span> go []</span>
@@ -1471,7 +1473,7 @@ block containers.</p>
 </blockquote>
 <p>So far, I had assumed that there was a reason why Tufte CSS used <code>span</code>
 elements instead of <code>div</code>s in their sidenote, but this does not seem to
-be the case.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> Instead of writing</p>
+be the case.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Instead of writing</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;sidenote&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  «sidenote»</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span></code></pre></div>
@@ -1485,19 +1487,24 @@ This means no more standard violations!</p>
 <p>Being perfectly honest, I’m not very satisfied with the module.
 It does work, but pre-rendering everything and not using pandoc’s built in constructors feels like a big hack.</p>
 <p>However, this solution seems to be quite comfortable from a Hakyll
-perspective,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and people have told me that the functionality provided
+perspective,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> and people have told me that the functionality provided
 is still useful to them. Since what I’ve done here amounts to a
 complete rewrite—and almost certainly a regression in places—I don’t
 think that this will ever replace <code>Text.​Pandoc.​SideNote</code> wholesale.
-However, I have now created a <a href="https://github.com/jez/pandoc-sidenote/pull/26">pull request</a>,
-which adds a module called <code>Text.​Pandoc.​SideNoteHTML</code> as an alternative.
-This keeps backwards compatibility, yet still allows people to make use
-of the alternative filter.</p>
+However, the <code>pandoc-sidenote</code> library now features a
+<a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNoteHTML</a>
+module as an alternative.
+This keeps backwards compatibility,
+yet still allows people to make use of the alternative filter.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>For example, this is one.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Just like you would expect:</p>
+<li id="fn1"><p>{-} To put this front and centre:
+the <code>pandoc-sidenote</code> library now features a
+<a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNoteHTML</a>
+module, which is an implementation of what’s discussed in this post!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>For example, this is one.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Just like you would expect:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">myPandocCompiler ::</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>myPandocCompiler <span class="ot">=</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  pandocCompilerWithTransformM</span>
@@ -1507,10 +1514,10 @@ of the alternative filter.</p>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span> usingSidenotes    <span class="co">-- sidenotes</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span> addSectionLinks   <span class="co">-- link on hover</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
-<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn3"><p>Just ask any person who’s ever worked on a window manager what
-creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Whereas now, things like</p>
+<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn4"><p>Just ask any person who’s ever worked on a window manager what
+creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Whereas now, things like</p>
 <ul>
 <li><p>tables</p>
 <table style="width:66%;">
@@ -1546,17 +1553,17 @@ creative “interpretations” programs have of <a href="https://x.org/releases/
 \int^{a, b} \mathcal{C}(a \otimes b, {-}) \cdot Fa \otimes Gb
 </span></p></li>
 </ul>
-<p>and the like are no problem at all!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
+<p>and the like are no problem at all!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>The <code>Sidenote</code> type you are seeing is just some alias for <code>State</code>,
 which keeps track of the sidenote number, as well as the supplied
-<code>WriterOption</code>s; nothing fancy.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>At least not to my current knowledge.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also
+<code>WriterOption</code>s; nothing fancy.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>At least not to my current knowledge.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also
 <a href="https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553">thought about this issue</a>,
 and concluded that perhaps a custom pandoc <code>Writer</code> would be the
 most elegant solution to this problem. However, since using
 pandoc’s HTML5 writer is quite hard-coded into Hakyll, I don’t think
-that I will go down that path.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+that I will go down that path.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

@@ -424,10 +424,18 @@ own post.
       <span style="font-size: 19px"> (<a title="All pages tagged 'haskell'." href="./tags/haskell.html" rel="tag">haskell</a>) </span>
     </div>
     <p>
-      I’ve become quite enamoured with sidenotes recently, and so of course
+      <p>
+</p>
+<p></p>
+I’ve become quite enamoured with sidenotes recently, and so of course
 this website now has them as well! Thankfully, the integration with
 pandoc and Hakyll is quite straightforward, because other people have
-already done the hard work. Depending on your use-case, however, the
+already done the hard work.<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">To put this front and centre:
+the <code>pandoc-sidenote</code> library now features a
+<a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNote<span class="small-caps">html</span></a>
+module, which is an implementation of what’s discussed in this post!</div><!--
+--> Depending on your use-case, however, the
 existing libraries might not entirely fit the bill; for example, by
 default blocks that are more complicated than just paragraphs of pure
 text don’t work. In this post, I’d like to explain an alternative
