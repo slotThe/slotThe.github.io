@@ -33,9 +33,8 @@
         site            = self.callCabal2nix "site" (haskellSourceFilter ./.) { };
         pandoc-sidenote = self.callCabal2nixWithOptions "pandoc-sidenote"
           (builtins.fetchGit {
-            url = "https://github.com/slotThe/pandoc-sidenote";
-            ref = "feat/html-sidenotes";
-            rev = "a87380c13dd0433c2614164477f5a1b425329c22";
+            url = "https://github.com/jez/pandoc-sidenote";
+            rev = "3658e7da9453fb6ab817d8eef5d1928cbcd3afbf";
           })
           "-f html-sidenotes"
           { };
