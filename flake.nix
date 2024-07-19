@@ -11,21 +11,12 @@
           let file = toString name;
               baseName = baseNameOf file;
           in nixpkgs.lib.cleanSourceFilter name type
-             && !(nixpkgs.lib.hasPrefix "_" baseName
-                  || nixpkgs.lib.hasPrefix "." baseName
-                  || nixpkgs.lib.hasSuffix ".md" file
-                  || nixpkgs.lib.hasSuffix ".css" file
-                  || nixpkgs.lib.hasSuffix ".html" file
-                  || baseName == "bib"
-                  || baseName == "css"
-                  || baseName == "dist-newstyle"
-                  || baseName == "docs"
-                  || baseName == "fonts"
-                  || baseName == "images"
-                  || baseName == "mathjax-node-page"
-                  || baseName == "posts"
-                  || baseName == "talks"
-                  || baseName == "templates");
+             && (nixpkgs.lib.hasPrefix "src" baseName
+                 || nixpkgs.lib.hasSuffix ".cabal" file
+                 || nixpkgs.lib.hasSuffix ".project" file
+                 || nixpkgs.lib.hasSuffix ".hs" file
+                 || nixpkgs.lib.hasSuffix ".nix" file
+             );
       };
       system = "x86_64-linux";
       pkgs   = nixpkgs.legacyPackages.${system};
