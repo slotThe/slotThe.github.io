@@ -162,6 +162,10 @@ standalones tagCtx = do
   match "key.txt" do
     route idRoute
     compile copyFileCompiler
+  -- 404 page
+  match "404.html" do
+    route idRoute
+    compile $ getResourceBody >>= relativizeUrls
  where
   -- Compile a standalone site.
   mkStandalone :: Pattern -> (Item String -> Compiler (Item String)) -> Context String -> Rules ()
