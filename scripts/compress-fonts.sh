@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 #
-# Should this ever be necessary.
-#
 # Source: https://xeiaso.net/blog/iaso-fonts/
 
 pyftsubset \
