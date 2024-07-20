@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+      <meta name="robots" content="noai, noimageai">
+    
+
+    
+      <title>Integrating KaTeX Into Hakyll · Tony Zorman</title>
+    
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="../css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../css/katex.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="../" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="../posts.html">Posts</a></li>
+              <li><a href="../research.html">Research</a></li>
+              <li><a href="../free-software.html">Free Software</a></li>
+              <li><a href="../about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#my-dark-mathjax-past">My dark MathJax past</a></li>
+<li><a href="#a-brighter-future-with-katex">A brighter future with KaTeX</a>
+<ul>
+<li><a href="#adding-css">Adding CSS</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>Integrating KaTeX Into Hakyll</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2024-07-20
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1198 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#my-dark-mathjax-past">My dark MathJax past</a></li>
+<li><a href="#a-brighter-future-with-katex">A brighter future with KaTeX</a>
+<ul>
+<li><a href="#adding-css">Adding CSS</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+
+<div>
+  <p>
+</p>
+<p></p>
+Being quite into mathematics,
+I sometimes blog about it.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Not as much as I should,
+I guess,
+but nowadays when I write maths it feels like a waste to not have it go into either
+<a href="./anki-latex.html" class="local-link">Anki</a>, <a href="./my-phd-workflow.html" class="local-link">Org Roam</a>, or a paper,
+and these notes are not necessarily written/ready for public consumption.
+Oh well.</div><!--
+-->
+There are very capable solutions for rendering LaTeX in <span class="small-caps">html</span> documents out there,
+which in particular solve the problem of properly aligning the fragments with the rest of the text.
+One of them is KaTeX,
+advertising itself to be easily executed on the server-side,
+avoiding the use of extraneous client-side JavaScript.
+Integrating it with Hakyll turned out to be relatively straightforward,
+yet I haven’t seen an actual implementation anywhere;
+this post is supposed to fill that gap.
+<!--more-->
+<h2 id="my-dark-mathjax-past">My dark MathJax past<a href="#my-dark-mathjax-past" class="floatleft sec-link">§</a></h2>
+<p></p>
+One of my quite strongly held opinions is that,
+for static websites such as this one,
+client-side LaTeX rendering is completely unnecessary,
+and actually just a waste of resources.
+As a result, I’ve been using MathJax
+to insert LaTeX fragments into the <span class="small-caps">html</span> after it’s compiled from Markdown.
+This setup<!--
+-->—stolen essentially verbatim from <a href="https://github.com/gwern/gwern.net/blob/c3d90bf1d6248d5e80dc030304c72b3f4a234455/build/sync.sh#L421">Gwern</a>—<!--
+-->uses the now deprecated <a href="https://github.com/pkra/mathjax-node-page">mathjax-node-page</a>
+to crawl through the already rendered <span class="small-caps">html</span> pages, and, upon recognising a math fragment,
+replaces that text with the rendered formula.
+The call to <code>mathjax-node-page</code> is trivial to parallelise on a per-file level with something like <a href="https://www.gnu.org/software/parallel/"><span class="small-caps">gnu</span> parallel</a>,
+and so the whole thing actually works quite well.
+<p></p>
+However, the fact that this is “external” to Pandoc’s pipeline
+and requires a separate <code>build.sh</code> file to be created has always felt a bit awkward to me.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Especially because, unlike in Gwern’s case, this site is not super complex to build;
+there aren’t any other moving parts that would require me to leave Haskell.</div><!--
+-->
+Plus, Hakyll is already capable of using <span class="small-caps">ghc</span>’s parallel runtime<!--
+-->—why outsource a part of that to an external tool?
+At some point, the annoyance I felt at this became stronger than the inertia my old setup had, so here we are.
+<h2 id="a-brighter-future-with-katex">A brighter future with KaTeX<a href="#a-brighter-future-with-katex" class="floatleft sec-link">§</a></h2>
+<p></p>
+Naturally, when you change something you <em>really</em> want to change something<!--
+-->—at least I do—<!--
+-->so instead of using MathJax v3’s native support for these kinds of things,
+why not try something new?
+An often cited alternative to MathJax is <a href="https://katex.org/">KaTeX</a>,
+yet another JavaScript library that promises decent maths rendering on the web.
+This one is pretty good, though;
+it’s supposed to be faster than MathJax,
+and has “server side rendering” as a big bullet point on its landing page.
+Sounds exactly like what I’m looking for.
+<p></p>
+KaTeX has a <span class="small-caps">cli</span> of the same name,
+but booting up the node runtime for every single maths fragment sounds perfectly dreadful to me,
+so let’s not do that.
+As such, one probably can’t avoid writing at least a little bit of JavaScript.
+Thankfully, integrating KaTeX into Pandoc itself seems to be a well-trodden path,
+so other people have already done this for me.
+For example,
+<a href="https://github.com/jgm/pandoc/issues/6651">pandoc#6651</a>
+has a tiny script—essentially just calling <code>katex.​render​To​String</code>—that
+is fed maths on stdin,
+and then produces <span class="small-caps">html</span> on stdout.
+Slightly adjusted to support inline and display maths, it looks like this:
+<div class="highlight-typescript" style="padding-left: 1em;"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">readLines</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;https://deno.land/std@0.224.0/io/mod.ts&quot;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">katex</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.mjs&quot;</span><span class="p">;</span>
+
+<span class="k">for</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">readLines</span><span class="p">(</span><span class="nx">Deno</span><span class="p">.</span><span class="nx">stdin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">DISPLAY</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;:DISPLAY &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">useDisplay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">DISPLAY</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">cleanLine</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">useDisplay</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">DISPLAY</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">line</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">katex</span><span class="p">.</span><span class="nx">renderToString</span><span class="p">(</span><span class="nx">cleanLine</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">displayMode</span><span class="o">:</span><span class="w"> </span><span class="kt">useDisplay</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">strict</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">throwOnError</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}));</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`Input: </span><span class="si">${</span><span class="nx">line</span><span class="si">}</span><span class="sb">\n\nError: </span><span class="si">${</span><span class="nx">error</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+Having this in place,
+all that’s left is to crawl through Pandoc’s <span class="small-caps">ast</span>,
+and feed each maths fragment to KaTeX.
+Transforming its <span class="small-caps">ast</span> is something that Pandoc does
+<a href="./pygmentising-hakyll.html" class="local-link">very</a> <a href="./hakyll-and-bibtex.html" class="local-link">well</a>,
+so the code is usually swiftly written.
+Indeed, both the <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Block">Block</a> and <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Inline">Inline</a> types
+have a <code>Math</code> constructor which we can match on.<!--
+--><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+Mind the <code>BlockArguments</code>—and the “s”.</div><!--
+-->
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w">    </span><span class="n">qualified</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="kt">T</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Data.Text.IO</span><span class="w"> </span><span class="n">qualified</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="kt">T</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">GHC.IO.Handle</span><span class="w"> </span><span class="p">(</span><span class="kt">BufferMode</span><span class="w"> </span><span class="p">(</span><span class="kt">NoBuffering</span><span class="p">),</span><span class="w"> </span><span class="kt">Handle</span><span class="p">,</span><span class="w"> </span><span class="nf">hSetBuffering</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Hakyll</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">System.Process</span><span class="w"> </span><span class="p">(</span><span class="nf">runInteractiveCommand</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Definition</span><span class="w"> </span><span class="p">(</span><span class="kt">Block</span><span class="w"> </span><span class="p">(</span><span class="o">..</span><span class="p">),</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="p">(</span><span class="o">..</span><span class="p">),</span><span class="w"> </span><span class="kt">MathType</span><span class="w"> </span><span class="p">(</span><span class="o">..</span><span class="p">),</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Walk</span><span class="w"> </span><span class="p">(</span><span class="nf">walk</span><span class="p">,</span><span class="w"> </span><span class="nf">walkM</span><span class="p">)</span>
+
+<span class="nf">hlKaTeX</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="kt">Pandoc</span>
+<span class="nf">hlKaTeX</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">recompilingUnsafeCompiler</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="p">(</span><span class="n">hin</span><span class="p">,</span><span class="w"> </span><span class="n">hout</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">runInteractiveCommand</span><span class="w"> </span><span class="s">&quot;deno run scripts/math.ts&quot;</span>
+<span class="w">  </span><span class="n">hSetBuffering</span><span class="w"> </span><span class="n">hin</span><span class="w">  </span><span class="kt">NoBuffering</span>
+<span class="w">  </span><span class="n">hSetBuffering</span><span class="w"> </span><span class="n">hout</span><span class="w"> </span><span class="kt">NoBuffering</span>
+
+<span class="w">  </span><span class="p">(`</span><span class="n">walkM</span><span class="p">`</span><span class="w"> </span><span class="n">pandoc</span><span class="p">)</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="kt">Math</span><span class="w"> </span><span class="n">mathType</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unwords</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">lines</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">strip</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">text</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">      </span><span class="kr">let</span><span class="w"> </span><span class="n">math</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Text</span>
+<span class="w">            </span><span class="ow">=</span><span class="w"> </span><span class="n">foldl'</span><span class="w"> </span><span class="p">(</span><span class="nf">\</span><span class="n">str</span><span class="w"> </span><span class="p">(</span><span class="n">repl</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">replace</span><span class="w"> </span><span class="n">repl</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">str</span><span class="p">)</span>
+<span class="w">                     </span><span class="kr">case</span><span class="w"> </span><span class="n">mathType</span><span class="w"> </span><span class="kr">of</span>
+<span class="w">                       </span><span class="kt">DisplayMath</span><span class="cm">{-s-}</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;:DISPLAY &quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">text</span>
+<span class="w">                       </span><span class="kt">InlineMath</span><span class="cm">{-s-}</span><span class="w">  </span><span class="ow">-&gt;</span><span class="w">                </span><span class="n">text</span>
+<span class="w">                     </span><span class="n">macros</span>
+<span class="w">      </span><span class="kt">T</span><span class="o">.</span><span class="n">hPutStrLn</span><span class="w"> </span><span class="n">hin</span><span class="w"> </span><span class="n">math</span>
+<span class="w">      </span><span class="kt">RawInline</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">getResponse</span><span class="w"> </span><span class="n">hout</span>
+<span class="w">    </span><span class="n">block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="n">block</span>
+<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="c1">-- KaTeX might sent the input back as multiple lines if it involves a</span>
+<span class="w">  </span><span class="c1">-- matrix of coordinates. The big assumption here is that it does so only</span>
+<span class="w">  </span><span class="c1">-- when matrices—or other such constructs—are involved, and not when it</span>
+<span class="w">  </span><span class="c1">-- sends back &quot;normal&quot; HTML.</span>
+<span class="w">  </span><span class="n">getResponse</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Handle</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="kt">Text</span>
+<span class="w">  </span><span class="n">getResponse</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">   </span><span class="kr">where</span>
+<span class="w">    </span><span class="n">go</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Text</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="kt">Text</span>
+<span class="w">    </span><span class="n">go</span><span class="w"> </span><span class="o">!</span><span class="n">str</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">      </span><span class="n">more</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">str</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">hGetLine</span><span class="w"> </span><span class="n">handle</span>
+<span class="w">      </span><span class="kr">if</span><span class="w"> </span><span class="s">&quot;&gt;&quot;</span><span class="w"> </span><span class="p">`</span><span class="kt">T</span><span class="o">.</span><span class="n">isSuffixOf</span><span class="p">`</span><span class="w"> </span><span class="n">more</span><span class="w">  </span><span class="c1">-- end of HTML snippet</span>
+<span class="w">      </span><span class="kr">then</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="n">more</span>
+<span class="w">      </span><span class="kr">else</span><span class="w"> </span><span class="n">go</span><span class="w">   </span><span class="n">more</span>
+
+<span class="w">  </span><span class="c1">-- I know that one could supply macros to KaTeX directly, but where is the</span>
+<span class="w">  </span><span class="c1">-- fun in that‽</span>
+<span class="w">  </span><span class="n">macros</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[(</span><span class="kt">Text</span><span class="p">,</span><span class="w"> </span><span class="kt">Text</span><span class="p">)]</span>
+<span class="w">  </span><span class="n">macros</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;≔&quot;</span><span class="w">       </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\\</span><span class="s">mathrel{</span><span class="se">\\</span><span class="s">vcenter{:}}=&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">defeq&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\\</span><span class="s">mathrel{</span><span class="se">\\</span><span class="s">vcenter{:}}=&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">to&quot;</span><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\\</span><span class="s">longrightarrow&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">mapsto&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\\</span><span class="s">longmapsto&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">cat&quot;</span><span class="w">   </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\\</span><span class="s">mathcal&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">kVect&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\\</span><span class="s">mathsf{Vect}_{</span><span class="se">\\</span><span class="s">mathtt{k}}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">]</span>
+</pre></div>
+
+<p></p>
+The <code>(T.unwords . T.lines . T.strip -&gt; text)</code>
+<a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/view_patterns.html">view pattern</a>
+is because KaTeX <em>really</em> does not seem to like it when there is a line break<!--
+-->—even a semantically irrelevant one—<!--
+-->in a formula.
+Perhaps this is a setting I’ve overlooked.
+Other than that the code should be reasonably self-explanatory;
+there are a few macro definitions that are copied from the now deleted
+<a href="https://github.com/slotThe/slotThe.github.io/blob/6cd02aab18e63a42a4b889e3cf4bba951277cad4/build.sh#L15">build.sh</a>
+and some fiddling to make the stdout handle actually output the full response.<!--
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">Seemingly as always when subprocesses are involved,
+the hardest thing is to actually get all of the incantations right
+such that buffering does not deadlock your program indefinitely.</div><!--
+-->
+<p></p>
+The <code>hlKaTeX</code> function,
+having a <code>Pandoc -&gt; Compiler Pandoc</code> signature,
+can be given to <a href="https://hackage.haskell.org/package/hakyll/docs/Hakyll-Web-Pandoc.html#v:pandocCompilerWithTransformM">pandocCompilerWithTransformM</a> like any other function:
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
+<span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
+<span class="w">    </span><span class="n">defaultHakyllReaderOptions</span>
+<span class="w">    </span><span class="n">defaultHakyllWriterOptions</span>
+<span class="w">    </span><span class="n">hlKaTeX</span>
+</pre></div>
+
+<p></p>
+And that’s pretty much it!
+<h3 id="adding-css">Adding <span class="small-caps">css</span><a href="#adding-css" class="floatleft sec-link">§</a></h3>
+<p></p>
+All that’s left is to include the custom <span class="small-caps">css</span> and special fonts that KaTeX relies upon.
+The former can be downloaded from <a href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">their <span class="small-caps">cdn</span></a>,
+and the latter are easily obtained from
+<a href="https://github.com/KaTeX/KaTeX/releases/">the latest release</a>
+by copying the <code>fonts</code> directory.
+The fonts are both reasonably small and loaded on demand,
+such that the website does not blow up in size with this switch.
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
+<p></p>
+The whole affair was much easier than I<!--
+-->—not knowing any JavaScript—<!--
+-->expected it to be, and actually turned out to be quite fun.
+Of course, nothing at all has changed on the user-side of things,
+which is to say that the new KaTeX fragments look pretty much exactly the same as the old MathJax maths.
+Still, the warm feeling I had when deleting that <code>build.sh</code> shell script tells me that this was not solely an exercise in futility.
+Or perhaps I’ve fully embraced rolling the boulder up the hill by now.
+<p></p>
+If you’re interested,
+the commit adding it to my setup can be found
+<a href="https://github.com/slotThe/slotThe.github.io/commit/6114e0e2a568122c01236dee38e2bf772efbf1e5">here</a>.
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+      <!-- A footer-ish thing above the actual boring footer for pretty
+           fleurons and things that should only appear on posts. -->
+      <div style="text-align:center;">
+        <img class="center-block-dark" media="prefers-color-scheme: dark" src="../images/fleuron-dark.svg" style="max-width: 3cm">
+        <img class="center-block-light" media="prefers-color-scheme: light" src="../images/fleuron.svg" style="max-width: 3cm">
+        Have a comment? Write me an <a href="../about.html">email!</a>
+      </div>
+    
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="../impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

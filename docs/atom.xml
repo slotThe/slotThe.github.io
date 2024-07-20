@@ -10,8 +10,248 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2024-05-11T00:00:00Z</updated>
+    <updated>2024-07-20T00:00:00Z</updated>
     <entry>
+    <title>Integrating KaTeX Into Hakyll</title>
+    <link href="https://tony-zorman.com/posts/katex-with-hakyll.html" />
+    <id>https://tony-zorman.com/posts/katex-with-hakyll.html</id>
+    <published>2024-07-20T00:00:00Z</published>
+    <updated>2024-07-20T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2024-07-20
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1203 words">5 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'haskell'." href="/tags/haskell.html" rel="tag">haskell</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>
+</p>
+<p>Being quite into mathematics,
+I sometimes blog about it.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+There are very capable solutions for rendering LaTeX in HTML documents out there,
+which in particular solve the problem of properly aligning the fragments with the rest of the text.
+One of them is KaTeX,
+advertising itself to be easily executed on the server-side,
+avoiding the use of extraneous client-side JavaScript.
+Integrating it with Hakyll turned out to be relatively straightforward,
+yet I haven’t seen an actual implementation anywhere;
+this post is supposed to fill that gap.</p>
+<!--more-->
+<h2 id="my-dark-mathjax-past">My dark MathJax past</h2>
+<p>One of my quite strongly held opinions is that,
+for static websites such as this one,
+client-side LaTeX rendering is completely unnecessary,
+and actually just a waste of resources.
+As a result, I’ve been using MathJax
+to insert LaTeX fragments into the HTML after it’s compiled from Markdown.
+This setup<!--
+-->—stolen essentially verbatim from <a href="https://github.com/gwern/gwern.net/blob/c3d90bf1d6248d5e80dc030304c72b3f4a234455/build/sync.sh#L421">Gwern</a>—<!--
+-->uses the now deprecated <a href="https://github.com/pkra/mathjax-node-page">mathjax-node-page</a>
+to crawl through the already rendered HTML pages, and, upon recognising a math fragment,
+replaces that text with the rendered formula.
+The call to <code>mathjax-node-page</code> is trivial to parallelise on a per-file level with something like <a href="https://www.gnu.org/software/parallel/">GNU parallel</a>,
+and so the whole thing actually works quite well.</p>
+<p>However, the fact that this is “external” to Pandoc’s pipeline
+and requires a separate <code>build.sh</code> file to be created has always felt a bit awkward to me.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+Plus, Hakyll is already capable of using GHC’s parallel runtime<!--
+-->—why outsource a part of that to an external tool?
+At some point, the annoyance I felt at this became stronger than the inertia my old setup had, so here we are.</p>
+<h2 id="a-brighter-future-with-katex">A brighter future with KaTeX</h2>
+<p>Naturally, when you change something you <em>really</em> want to change something<!--
+-->—at least I do—<!--
+-->so instead of using MathJax v3’s native support for these kinds of things,
+why not try something new?
+An often cited alternative to MathJax is <a href="https://katex.org/">KaTeX</a>,
+yet another JavaScript library that promises decent maths rendering on the web.
+This one is pretty good, though;
+it’s supposed to be faster than MathJax,
+and has “server side rendering” as a big bullet point on its landing page.
+Sounds exactly like what I’m looking for.</p>
+<p>KaTeX has a CLI of the same name,
+but booting up the node runtime for every single maths fragment sounds perfectly dreadful to me,
+so let’s not do that.
+As such, one probably can’t avoid writing at least a little bit of JavaScript.
+Thankfully, integrating KaTeX into Pandoc itself seems to be a well-trodden path,
+so other people have already done this for me.
+For example,
+<a href="https://github.com/jgm/pandoc/issues/6651">pandoc#6651</a>
+has a tiny script—essentially just calling <code>katex.​render​To​String</code>—that
+is fed maths on stdin,
+and then produces HTML on stdout.
+Slightly adjusted to support inline and display maths, it looks like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { readLines } <span class="im">from</span> <span class="st">&quot;https://deno.land/std@0.224.0/io/mod.ts&quot;</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> katex <span class="im">from</span> <span class="st">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.mjs&quot;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="cf">await</span> (<span class="kw">const</span> line <span class="kw">of</span> <span class="fu">readLines</span>(Deno<span class="op">.</span><span class="at">stdin</span>)) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> DISPLAY    <span class="op">=</span> <span class="st">&quot;:DISPLAY &quot;</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> useDisplay <span class="op">=</span> line<span class="op">.</span><span class="fu">startsWith</span>(DISPLAY)<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> cleanLine  <span class="op">=</span> useDisplay <span class="op">?</span> line<span class="op">.</span><span class="fu">substring</span>(DISPLAY<span class="op">.</span><span class="at">length</span>) <span class="op">:</span> line<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(katex<span class="op">.</span><span class="fu">renderToString</span>(cleanLine<span class="op">,</span> {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      displayMode<span class="op">:</span> useDisplay<span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      strict<span class="op">:</span> <span class="st">&quot;error&quot;</span><span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      throwOnError<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    }))<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (error) {</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="vs">`Input: </span><span class="sc">${</span>line<span class="sc">}\n\n</span><span class="vs">Error: </span><span class="sc">${</span>error<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Having this in place,
+all that’s left is to crawl through Pandoc’s AST,
+and feed each maths fragment to KaTeX.
+Transforming its AST is something that Pandoc does
+<a href="./pygmentising-hakyll.html">very</a> <a href="./hakyll-and-bibtex.html">well</a>,
+so the code is usually swiftly written.
+Indeed, both the <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Block">Block</a> and <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Inline">Inline</a> types
+have a <code>Math</code> constructor which we can match on.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Text</span>    <span class="kw">qualified</span> <span class="kw">as</span> <span class="dt">T</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Text.IO</span> <span class="kw">qualified</span> <span class="kw">as</span> <span class="dt">T</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">GHC.IO.Handle</span> (<span class="dt">BufferMode</span> (<span class="dt">NoBuffering</span>), <span class="dt">Handle</span>, hSetBuffering)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Hakyll</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">System.Process</span> (runInteractiveCommand)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Text.Pandoc.Definition</span> (<span class="dt">Block</span> (..), <span class="dt">Inline</span> (..), <span class="dt">MathType</span> (..), <span class="dt">Pandoc</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Text.Pandoc.Walk</span> (walk, walkM)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ot">hlKaTeX ::</span> <span class="dt">Pandoc</span> <span class="ot">-&gt;</span> <span class="dt">Compiler</span> <span class="dt">Pandoc</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>hlKaTeX pandoc <span class="ot">=</span> recompilingUnsafeCompiler <span class="kw">do</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  (hin, hout, _, _) <span class="ot">&lt;-</span> runInteractiveCommand <span class="st">&quot;deno run scripts/math.ts&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  hSetBuffering hin  <span class="dt">NoBuffering</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  hSetBuffering hout <span class="dt">NoBuffering</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  (<span class="ot">`walkM`</span> pandoc) \<span class="kw">case</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Math</span> mathType (T.unwords <span class="op">.</span> T.lines <span class="op">.</span> T.strip <span class="ot">-&gt;</span> text) <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span><span class="ot"> math ::</span> <span class="dt">Text</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            <span class="ot">=</span> foldl' (\str (repl, with) <span class="ot">-&gt;</span> T.replace repl with str)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">case</span> mathType <span class="kw">of</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                       <span class="dt">DisplayMath</span><span class="co">{-s-}</span> <span class="ot">-&gt;</span> <span class="st">&quot;:DISPLAY &quot;</span> <span class="op">&lt;&gt;</span> text</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                       <span class="dt">InlineMath</span><span class="co">{-s-}</span>  <span class="ot">-&gt;</span>                text</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                     macros</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>      T.hPutStrLn hin math</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">RawInline</span> <span class="st">&quot;html&quot;</span> <span class="op">&lt;$&gt;</span> getResponse hout</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    block <span class="ot">-&gt;</span> <span class="fu">pure</span> block</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- KaTeX might sent the input back as multiple lines if it involves a</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- matrix of coordinates. The big assumption here is that it does so only</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- when matrices—or other such constructs—are involved, and not when it</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- sends back &quot;normal&quot; HTML.</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="ot">  getResponse ::</span> <span class="dt">Handle</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Text</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  getResponse handle <span class="ot">=</span> go <span class="st">&quot;&quot;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>   <span class="kw">where</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="ot">    go ::</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Text</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    go <span class="op">!</span>str <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      more <span class="ot">&lt;-</span> (str <span class="op">&lt;&gt;</span>) <span class="op">&lt;$&gt;</span> T.hGetLine handle</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> <span class="st">&quot;&gt;&quot;</span> <span class="ot">`T.isSuffixOf`</span> more  <span class="co">-- end of HTML snippet</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>      <span class="kw">then</span> <span class="fu">pure</span> more</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> go   more</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- I know that one could supply macros to KaTeX directly, but where is the</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- fun in that‽</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ot">  macros ::</span> [(<span class="dt">Text</span>, <span class="dt">Text</span>)]</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  macros <span class="ot">=</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    [ (<span class="st">&quot;≔&quot;</span>       , <span class="st">&quot;\\mathrel{\\vcenter{:}}=&quot;</span>)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    , (<span class="st">&quot;\\defeq&quot;</span> , <span class="st">&quot;\\mathrel{\\vcenter{:}}=&quot;</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    , (<span class="st">&quot;\\to&quot;</span>    , <span class="st">&quot;\\longrightarrow&quot;</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    , (<span class="st">&quot;\\mapsto&quot;</span>, <span class="st">&quot;\\longmapsto&quot;</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    , (<span class="st">&quot;\\cat&quot;</span>   , <span class="st">&quot;\\mathcal&quot;</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    , (<span class="st">&quot;\\kVect&quot;</span> , <span class="st">&quot;\\mathsf{Vect}_{\\mathtt{k}}&quot;</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    ]</span></code></pre></div>
+<p>The <code>(T.unwords . T.lines . T.strip -&gt; text)</code>
+<a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/view_patterns.html">view pattern</a>
+is because KaTeX <em>really</em> does not seem to like it when there is a line break<!--
+-->—even a semantically irrelevant one—<!--
+-->in a formula.
+Perhaps this is a setting I’ve overlooked.
+Other than that the code should be reasonably self-explanatory;
+there are a few macro definitions that are copied from the now deleted
+<a href="https://github.com/slotThe/slotThe.github.io/blob/6cd02aab18e63a42a4b889e3cf4bba951277cad4/build.sh#L15">build.sh</a>
+and some fiddling to make the stdout handle actually output the full response.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>The <code>hlKaTeX</code> function,
+having a <code>Pandoc -&gt; Compiler Pandoc</code> signature,
+can be given to <a href="https://hackage.haskell.org/package/hakyll/docs/Hakyll-Web-Pandoc.html#v:pandocCompilerWithTransformM">pandocCompilerWithTransformM</a> like any other function:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">myPandocCompiler ::</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>myPandocCompiler <span class="ot">=</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  pandocCompilerWithTransformM</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    defaultHakyllReaderOptions</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    defaultHakyllWriterOptions</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    hlKaTeX</span></code></pre></div>
+<p>And that’s pretty much it!</p>
+<h3 id="adding-css">Adding CSS</h3>
+<p>All that’s left is to include the custom CSS and special fonts that KaTeX relies upon.
+The former can be downloaded from <a href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">their CDN</a>,
+and the latter are easily obtained from
+<a href="https://github.com/KaTeX/KaTeX/releases/">the latest release</a>
+by copying the <code>fonts</code> directory.
+The fonts are both reasonably small and loaded on demand,
+such that the website does not blow up in size with this switch.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The whole affair was much easier than I<!--
+-->—not knowing any JavaScript—<!--
+-->expected it to be, and actually turned out to be quite fun.
+Of course, nothing at all has changed on the user-side of things,
+which is to say that the new KaTeX fragments look pretty much exactly the same as the old MathJax maths.
+Still, the warm feeling I had when deleting that <code>build.sh</code> shell script tells me that this was not solely an exercise in futility.
+Or perhaps I’ve fully embraced rolling the boulder up the hill by now.</p>
+<p>If you’re interested,
+the commit adding it to my setup can be found
+<a href="https://github.com/slotThe/slotThe.github.io/commit/6114e0e2a568122c01236dee38e2bf772efbf1e5">here</a>.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Not as much as I should,
+I guess,
+but nowadays when I write maths it feels like a waste to not have it go into either
+<a href="./anki-latex.html">Anki</a>, <a href="./my-phd-workflow.html">Org Roam</a>, or a paper,
+and these notes are not necessarily written/ready for public consumption.
+Oh well.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Especially because, unlike in Gwern’s case, this site is not super complex to build;
+there aren’t any other moving parts that would require me to leave Haskell.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>Mind the <code>BlockArguments</code>—and the “s”.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Seemingly as always when subprocesses are involved,
+the hardest thing is to actually get all of the incantations right
+such that buffering does not deadlock your program indefinitely.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+      <!-- A footer-ish thing above the actual boring footer for pretty
+           fleurons and things that should only appear on posts. -->
+      <div style="text-align:center;">
+        <img class="center-block-dark" media="prefers-color-scheme: dark" src="/images/fleuron-dark.svg" style="max-width: 3cm">
+        <img class="center-block-light" media="prefers-color-scheme: light" src="/images/fleuron.svg" style="max-width: 3cm">
+        Have a comment? Write me an <a href="/about.html">email!</a>
+      </div>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Leveraging LaTeX in Anki</title>
     <link href="https://tony-zorman.com/posts/anki-latex.html" />
     <id>https://tony-zorman.com/posts/anki-latex.html</id>
