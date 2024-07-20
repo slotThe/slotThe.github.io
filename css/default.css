@@ -524,7 +524,7 @@ summary:before {
   transition: .25s transform ease;
 }
 
-details[open] > summary:before {
+details[open] > summary:before {  /* Turn ▸ (closed) into ▾ (open) on click. */
   transform: rotate(90deg);
 }
 
