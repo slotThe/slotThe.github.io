@@ -441,7 +441,7 @@ myPandocCompiler =
   styleLocalLinks :: Pandoc -> Pandoc
   styleLocalLinks = walk \case
     Link (ident, cs, kvs) inlines target@(url, _)
-      | any (`T.isPrefixOf` url) [ "./", "../", siteURL ]
+      | any (`T.isPrefixOf` url) [ "/", "./", "../", siteURL ]
      -> Link (ident, "local-link" : cs, kvs) inlines target
     inline -> inline
 
