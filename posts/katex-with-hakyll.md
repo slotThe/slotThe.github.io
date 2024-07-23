@@ -211,8 +211,8 @@ the commit adding it to my setup can be found
 [GHC:ViewPatterns]: https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/view_patterns.html
 [site:old:build.sh]: https://github.com/slotThe/slotThe.github.io/blob/6cd02aab18e63a42a4b889e3cf4bba951277cad4/build.sh#L15
 [pandocCompilerWithTransformM]: https://hackage.haskell.org/package/hakyll/docs/Hakyll-Web-Pandoc.html#v:pandocCompilerWithTransformM
-[post:anki]: ./anki-latex.html
-[post:phd-workflow]: ./my-phd-workflow.html
+[post:anki]: /posts/anki-latex.html
+[post:phd-workflow]: /posts/my-phd-workflow.html#digital-notes
 
 [^1]: Seemingly as always when subprocesses are involved,
       the hardest thing is to actually get all of the incantations right
