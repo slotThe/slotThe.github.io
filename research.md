@@ -162,7 +162,7 @@ All of my papers are readily available on the [arXiv].[^2]
 
 - *Pivotality, Twisted Centres, and the Anti-Double of a Hopf Monad* \
   2024-06-27, CT24, Santiago de Compostela;
-  [PDF](./ct2024-poster/poster.png)
+  [PDF](./ct2024-poster/poster.pdf)
   and
   [accompanying website](./ct2024.html);
 
