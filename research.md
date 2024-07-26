@@ -24,7 +24,7 @@ All of my papers are readily available on the [arXiv].[^2]
 
 ## Published
 
-- *[Pivotality, twisted centres and the anti-double of a Hopf monad]* <span class="floatright">[@halbig24:pivot-hopf]</span> \
+- *[Pivotality, twisted centres, and the anti-double of a Hopf monad]* <span class="floatright">[@halbig24:pivot-hopf]</span> \
   Joint work with Sebastian Halbig.
 
   Finite-dimensional Hopf algebras admit a correspondence between
@@ -199,7 +199,7 @@ All of my papers are readily available on the [arXiv].[^2]
 
 [Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
-[Pivotality, twisted centres and the anti-double of a Hopf monad]: https://arxiv.org/abs/2201.05361
+[Pivotality, twisted centres, and the anti-double of a Hopf monad]: http://www.tac.mta.ca/tac/volumes/41/4/41-04abs.html
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
