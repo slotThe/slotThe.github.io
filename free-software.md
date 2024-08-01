@@ -62,7 +62,7 @@ it is implemented in software and thus works anywhere<!--
 
 My personal keyboard configuration—[colemak-dh],
 with some extras to facilitate more convenient Haskell and LaTeX programming—can be found
-[here](https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd).
+[here](https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/config.kbd).
 
 ## Xmobar
 
@@ -72,7 +72,7 @@ As these programs have to work together quite closely,
 one can't help but also be a contributor to the latter if one uses the former.
 
 The configuration I use is available
-[here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs).
+[here](https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/xmobarrc.hs).
 
 # Author
 
@@ -152,6 +152,11 @@ I've written too many Emacs packages—and none of them popular, at that!
   yanking within Emacs by trimming extraneous delimiters before inserting the string into the buffer.
   I've written about this package [here][post:yanking].
 
++ [anki-whitespace][^2]
+
+  A minor mode built on top of [anki-editor] that—due to a more lightweight syntax—provides better integration into Zettelkasten-like systems
+  It is written in such a way that implementing ones own note syntax just consists of overwriting a few functions.
+
 # Talks
 
 + [Git Introduction]
@@ -165,26 +170,29 @@ I've written too many Emacs packages—and none of them popular, at that!
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
 [XMonad]: https://xmonad.org/
-[arxiv-citation]: https://gitlab.com/slotThe/arxiv-citation
+[anki-editor]: https://github.com/anki-editor/anki-editor
+[anki-whitespace]: https://github.com/anki-editor/anki-whitespace
+[arxiv-citation]: https://github.com/slotThe/arxiv-citation
 [colemak-dh]: https://colemakmods.github.io/mod-dh/
 [dmenu]: https://tools.suckless.org/dmenu/
 [elfeed]: https://github.com/skeeto/elfeed
 [emacs:vc-keyword]: https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe
-[hmenu]: https://gitlab.com/slotThe/hmenu
+[hmenu]: https://github.com/slotThe/hmenu
 [html-parse-util]: https://github.com/slotThe/html-parse-util
 [html-parse]: https://hackage.haskell.org/package/html-parse
+[html:vc-use-package]: https://tony-zorman.com/posts/vc-use-package.html
 [kbd-mode]: https://github.com/kmonad/kbd-mode
-[latex-change-env]: https://gitlab.com/slotThe/change-env
+[latex-change-env]: https://github.com/slotThe/change-env
 [optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
 [optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
 [post:package-vc-install]: https://tony-zorman.com/posts/package-vc-install.html
-[post:query-replace-many]: https://tony-zorman.com/posts/query-replace-many.html
+[post:query-replace-many]: https://tony-zorman.com/posts/query-replace-many.post
 [post:vc-use-package]: https://tony-zorman.com/posts/vc-use-package.html
 [post:yanking]: https://tony-zorman.com/posts/yanking.html
 [query-replace-many]: https://github.com/slotThe/query-replace-many
 [rq]: https://github.com/slotThe/rq
 [vc-use-package]: https://github.com/slotThe/vc-use-package
-[vmensa]: https://gitlab.com/slotThe/vmensa
+[vmensa]: https://github.com/slotThe/vmensa
 [xmobar:#656]: https://codeberg.org/xmobar/xmobar/issues/656
 [xmobar]: https://codeberg.org/xmobar/xmobar
 [yank-delimiters]: https://github.com/slotThe/yank-delimiters
@@ -192,7 +200,4 @@ I've written too many Emacs packages—and none of them popular, at that!
 
 [^1]: {-} Relatedly, I also maintain a [QMK configuration] for my [Atreus] keyboard.
 
-[^2]: {-} Note that my contributions to xmobar have come to a bit of a halt,
-      as—see [#656][xmobar:#656]—xmobar 0.45 and up does not work with musl libc,
-      which happens to be the libc that I'm currently using on my main machine.
-      One day!
+[^2]: Actual name still pending.

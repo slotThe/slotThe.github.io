@@ -154,29 +154,26 @@ it is implemented in software and thus works anywhere<!--
 <p></p>
 My personal keyboard configuration—<a href="https://colemakmods.github.io/mod-dh/">colemak-dh</a>,
 with some extras to facilitate more convenient Haskell and LaTeX programming—can be found
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/.config/kmonad/x220-slot-us-colemak-dh-z.kbd">here</a>.
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/config.kbd">here</a>.
 <h3 id="xmobar">Xmobar<a href="#xmobar" class="floatleft sec-link">§</a></h3>
 <p></p>
 Since <span class="small-caps">xm</span>onad does not have a built-in status bar,
 one has to use a third party program instead—<a href="https://codeberg.org/xmobar/xmobar">xmobar</a>!<!--
---><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote">Note that my contributions to xmobar have come to a bit of a halt,
-as—see <a href="https://codeberg.org/xmobar/xmobar/issues/656">#656</a>—xmobar 0.45 and up does not work with musl libc,
-which happens to be the libc that I’m currently using on my main machine.
-One day!</div><!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Actual name still pending.</div><!--
 -->
 As these programs have to work together quite closely,
 one can’t help but also be a contributor to the latter if one uses the former.
 <p></p>
 The configuration I use is available
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/.config/xmobarrc/src/xmobarrc.hs">here</a>.
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmobar/xmobarrc.hs">here</a>.
 <h2 id="author">Author<a href="#author" class="floatleft sec-link">§</a></h2>
-<h3 id="hmenu"><a href="https://gitlab.com/slotThe/hmenu">hmenu</a><a href="#hmenu" class="floatleft sec-link">§</a></h3>
+<h3 id="hmenu"><a href="https://github.com/slotThe/hmenu">hmenu</a><a href="#hmenu" class="floatleft sec-link">§</a></h3>
 <p></p>
 A wrapper for <a href="https://tools.suckless.org/dmenu/">dmenu</a> in the spirit of <a href="https://hackage.haskell.org/package/yeganesh">yeganesh</a>.
 More concretely, hmenu displays commands in order of usage
 (with an optional decay for frequency sorting),
 and can open programs or given files inside of your terminal or any other chosen program.
-<h3 id="vmensa"><a href="https://gitlab.com/slotThe/vmensa">vmensa</a><a href="#vmensa" class="floatleft sec-link">§</a></h3>
+<h3 id="vmensa"><a href="https://github.com/slotThe/vmensa">vmensa</a><a href="#vmensa" class="floatleft sec-link">§</a></h3>
 <p></p>
 <span class="small-caps">cli</span> application to query and filter the menus of the different canteens at TU Dresden.
 <h3 id="rq"><a href="https://github.com/slotThe/rq">rq</a><a href="#rq" class="floatleft sec-link">§</a></h3>
@@ -190,7 +187,7 @@ A tiny statically typed functional language for processing JSON on the command-l
 <p></p>
 
 Utility functions for writing command line interfaces with <a href="https://hackage.haskell.org/package/optparse-applicative">optparse-applicative</a>.
-This is used, for example, in <a href="https://gitlab.com/slotThe/vmensa">vmensa</a>.</li>
+This is used, for example, in <a href="https://github.com/slotThe/vmensa">vmensa</a>.</li>
 <li><p></p>
 
 <a href="https://github.com/slotThe/html-parse-util">html-parse-util</a> (<a href="https://hackage.haskell.org/package/html-parse-util">Hackage</a>)
@@ -214,7 +211,7 @@ A major more for <code>.kbd</code> files,
 serving as the Emacs integration for <span class="small-caps">km</span>onad’s configuration.</li>
 <li><p></p>
 
-<a href="https://gitlab.com/slotThe/arxiv-citation">arxiv-citation</a> (<a href="https://melpa.org/#/arxiv-citation"><span class="small-caps">melpa</span></a>)
+<a href="https://github.com/slotThe/arxiv-citation">arxiv-citation</a> (<a href="https://melpa.org/#/arxiv-citation"><span class="small-caps">melpa</span></a>)
 <p></p>
 
 Generate citation data for <span class="small-caps">pdf</span> files from the arXiv.
@@ -222,7 +219,7 @@ Additionally, download preprints to a specified directory and open them.
 Includes <a href="https://github.com/skeeto/elfeed">elfeed</a> support.</li>
 <li><p></p>
 
-<a href="https://gitlab.com/slotThe/change-env">latex-change-env</a> (<a href="https://melpa.org/#/latex-change-env"><span class="small-caps">melpa</span></a>)
+<a href="https://github.com/slotThe/change-env">latex-change-env</a> (<a href="https://melpa.org/#/latex-change-env"><span class="small-caps">melpa</span></a>)
 <p></p>
 
 Provides a way to modify LaTeX environments,
@@ -251,7 +248,7 @@ this package is built into Emacs!</li>
 <p></p>
 
 A tiny package that wraps <code>query-replace</code> in order to support multiple matches.
-I’ve written about it <a href="https://tony-zorman.com/posts/query-replace-many.html" class="local-link">here</a>.</li>
+I’ve written about it <a href="https://tony-zorman.com/posts/query-replace-many.post" class="local-link">here</a>.</li>
 <li><p></p>
 
 <a href="https://github.com/slotThe/yank-delimiters">yank-delimiters</a>
@@ -260,6 +257,15 @@ I’ve written about it <a href="https://tony-zorman.com/posts/query-replace-man
 Another tiny package that (subjectively) improves the experience of
 yanking within Emacs by trimming extraneous delimiters before inserting the string into the buffer.
 I’ve written about this package <a href="https://tony-zorman.com/posts/yanking.html" class="local-link">here</a>.</li>
+<li><p></p>
+
+<a href="https://github.com/anki-editor/anki-whitespace">anki-whitespace</a><!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Actual name still pending.</div><!--
+-->
+<p></p>
+
+A minor mode built on top of <a href="https://github.com/anki-editor/anki-editor">anki-editor</a> that—due to a more lightweight syntax—provides better integration into Zettelkasten-like systems
+It is written in such a way that implementing ones own note syntax just consists of overwriting a few functions.</li>
 </ul>
 <h2 id="talks">Talks<a href="#talks" class="floatleft sec-link">§</a></h2>
 <ul>
