@@ -88,7 +88,9 @@ posts tagCtx = match allPosts do
     -- Atom feeds get their own compiler; the website uses a lot of stuff
     -- (sidenotes, small-caps, …) that doesn't work in feeds.
     void $ pandocRssCompiler
-       >>= loadAndApplyTemplate "templates/post.html"    tocCtx
+       >>= loadAndApplyTemplate
+             "templates/post.html"
+             (tocCtx <> boolField "no-comment" (pure True))
        >>= mkCleanSnapshot "post-for-feed"  -- See 'rss'
     -- Actual compiler for a page.
     myPandocCompiler
