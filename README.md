@@ -52,6 +52,6 @@ For various definitions of "notable".
 
 ## Build
 
-The tiny [Makefile][./Makefile] should be reasonably self-explanatory.
+The tiny [Makefile](./Makefile) should be reasonably self-explanatory.
 The TL;DR is to use `make` to build the website once,
 or `make watch` to create an updating preview on `localhost:8000`.
