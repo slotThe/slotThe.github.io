@@ -144,12 +144,16 @@ aboutMe = do
 standalones :: Context String -> Rules ()
 standalones tagCtx = do
   -- Mackey functors seminar
-  mkStandalone "mackey-functors.md" pure tagCtx
-  -- CT2024 poster
-  match "ct2024-poster/**" do
+  mkStandalone "mackey-functors.md" pure tagCtx Nothing
+  -- Posters
+  let posterGlob :: String -> Pattern
+        = \pth -> fromGlob ("posters/" <> pth <> "/**") .&&. complement "**.md"
+  --- CT2024
+  match (posterGlob "ct2024") do
     route   idRoute
     compile copyFileCompiler
-  mkStandalone "ct2024.md" pure tagCtx
+  mkStandalone "posters/ct2024/ct2024.md" pure tagCtx (Just "ct2024.html")
+  --- Ferrara 2024
   -- Git introduction
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…
@@ -157,9 +161,11 @@ standalones tagCtx = do
   mkStandalone "talks/git-introduction.md"
                fixTranscript
                (gitCtx "Git Introduction" <> constField "no-toc" "true")
+               Nothing
   mkStandalone "talks/git-introduction/transcript.md"
                pure
                (gitCtx "How to Use Git—an Interactive Tutorial")
+               Nothing
   -- Key
   match "key.txt" do
     route idRoute
@@ -170,9 +176,14 @@ standalones tagCtx = do
     compile $ getResourceBody >>= relativizeUrls
  where
   -- Compile a standalone site.
-  mkStandalone :: Pattern -> (Item String -> Compiler (Item String)) -> Context String -> Rules ()
-  mkStandalone ptn action baseCtx = match ptn do
-    route $ setExtension "html"
+  mkStandalone
+    :: Pattern                                 -- Match the main standalone page
+    -> (Item String -> Compiler (Item String))  -- Additional compilation step
+    -> Context String                          -- Context
+    -> Maybe String                            -- Alternative route
+    -> Rules ()
+  mkStandalone ptn action baseCtx altRoute = match ptn do
+    route $ maybe (setExtension "html") constRoute altRoute
     compile do
       ctx <- getTocCtx baseCtx
       myPandocCompiler
