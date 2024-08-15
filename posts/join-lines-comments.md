@@ -225,6 +225,10 @@ If you're interested in a diff with the original function, you can find that bel
       just overwrite a builtin function;
       what's the worst that could happen?
 
+      In case you don't want to copy the whole function,
+      you can find a small package for it
+      on [Microsoft GitHub](https://github.com/slotThe/delete-indentation-comments).
+
 [^8]: {-} 󠀠
 
       In daily usage, I have this bound to `C-u C-w`,

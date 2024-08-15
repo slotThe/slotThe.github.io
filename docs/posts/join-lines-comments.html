@@ -66,7 +66,7 @@
         &thinsp;·&thinsp; last modified: 2024-03-10
       
       
-        &thinsp;·&thinsp; <span title="989 words">4 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1010 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
@@ -176,7 +176,11 @@ It is in moments like these that I’m extremely glad about<!--
   -->Emacs’s infinite customisability.
 If something doesn’t work to your liking,
 just overwrite a builtin function;
-what’s the worst that could happen?</div><!--
+what’s the worst that could happen?
+<p></p>
+In case you don’t want to copy the whole function,
+you can find a small package for it
+on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft GitHub</a>.</div><!--
 -->
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">delete-indentation</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">beg</span><span class="w"> </span><span class="nv">end</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Join this line to previous and fix up whitespace at join.</span>
