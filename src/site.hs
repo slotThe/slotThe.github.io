@@ -154,6 +154,10 @@ standalones tagCtx = do
     compile copyFileCompiler
   mkStandalone "posters/ct2024/ct2024.md" pure tagCtx (Just "ct2024.html")
   --- Ferrara 2024
+  match (posterGlob "ferrara2024") do
+    route   idRoute
+    compile copyFileCompiler
+  mkStandalone "posters/ferrara2024/ferrara2024.md" pure tagCtx (Just "ferrara2024.html")
   -- Git introduction
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…

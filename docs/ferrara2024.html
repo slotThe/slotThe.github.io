@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+    <title>Lax module functors, reconstruction, and Hopf algebras</title>
+
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" href="./css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="./css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="./css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="./css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="./css/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="./css/katex.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="./css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        
+        
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+           
+            <h1>Lax module functors, reconstruction, and Hopf algebras</h1>
+           
+
+          <article>
+    <p class="header">
+      
+      
+      
+      
+        
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+<div>
+  Click on the preview image for a full-scale version.
+<div style="text-align: center">
+<p></p>
+<a href="./posters/ferrara2024/poster.pdf">
+<img class="pure-img" style="text-align: center; max-width: 30%;" src="./posters/ferrara2024/poster.png" alt="A preview of the poster">
+</a>
+</div>
+<p></p>
+The poster is based on the article <span class="citation" data-cites="stroinski2024:reconstr">[<a href="#ref-stroinski2024:reconstr" role="doc-biblioref">StZo</a>]</span>;
+a repository with the full source code is available <a href="https://github.com/slotThe/ferrara2024">here</a>.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In the unlikely case that ever goes away before this website does,
+<a href="./posters/ferrara2024/source.tar.gz" class="local-link">a tarball</a> is also available.</div><!--
+-->
+<!-- References; site.hs does not have 'no-cite' support right now. -->
+<p></p>
+<span class="email">
+<b>
+<span class="citation" data-cites="kelly74">[<a href="#ref-kelly74" role="doc-biblioref"><strong>kelly74?</strong></a>]</span>
+<span class="citation" data-cites="hausser99:integ-theor-quasi-hopf-algeb">[<a href="#ref-hausser99:integ-theor-quasi-hopf-algeb" role="doc-biblioref">HaNi99</a>]</span>
+<span class="citation" data-cites="Moerdijk2002">[<a href="#ref-Moerdijk2002" role="doc-biblioref">Moer02</a>]</span>
+<span class="citation" data-cites="deligne02:categ">[<a href="#ref-deligne02:categ" role="doc-biblioref">Deli02</a>]</span>
+<span class="citation" data-cites="ostrik03:modul-hopf">[<a href="#ref-ostrik03:modul-hopf" role="doc-biblioref">Ostr03</a>]</span>
+<span class="citation" data-cites="ostrik04:tensor-p">[<a href="#ref-ostrik04:tensor-p" role="doc-biblioref">Ostr04</a>]</span>
+<span class="citation" data-cites="Bruguieres2011">[<a href="#ref-Bruguieres2011" role="doc-biblioref">BrLaVi11</a>]</span>
+<span class="citation" data-cites="saracco17:hopf">[<a href="#ref-saracco17:hopf" role="doc-biblioref">Sara17</a>]</span>
+<span class="citation" data-cites="halbig23:diagr-comod-monad">[<a href="#ref-halbig23:diagr-comod-monad" role="doc-biblioref">HaZo24</a>]</span>
+</b>
+</span>
+<h2 id="references">References<a href="#references" class="floatleft sec-link">§</a></h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr class="odd">
+<td><div id="ref-Bruguieres2011" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[BrLaVi11] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Alain Bruguières</span> and <span class="smallcaps">Steve Lack</span> and <span class="smallcaps">Alexis Virelizier</span>: <a href="https://doi.org/10.1016/j.aim.2011.02.008">Hopf monads on monoidal categories</a>. In: <em>Advances in Mathematics</em> vol. 227 (2011), Nr. 2, pages 745–800</div></td>
+</tr>
+<tr class="even">
+<td><div id="ref-deligne02:categ" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Deli02] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">P. Deligne</span>: <a href="https://www.ams.org/distribution/mmj/vol2-2-2002/abst2-2-2002.html">Cat<span>é</span>gories tensorielles. (<span>Tensor</span> categories)</a>. In: <em>Mosc. Math. J.</em> vol. 2 (2002), Nr. 2, pages 227–248</div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-hausser99:integ-theor-quasi-hopf-algeb" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[HaNi99] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Frank Hausser</span> and <span class="smallcaps">Florian Nill</span>: <a href="https://arxiv.org/abs/math/9904164"><span>I</span>ntegral <span>T</span>heory for <span>Q</span>uasi-<span>H</span>opf <span>A</span>lgebras</a>. In: <em>arXiv e-prints</em> (1999)</div></td>
+</tr>
+<tr class="even">
+<td><div id="ref-halbig23:diagr-comod-monad" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[HaZo24] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Sebastian Halbig</span> and <span class="smallcaps">Tony Zorman</span>: <span>D</span>iagrammatics for <span>C</span>omodule <span>M</span>onads. In: <em>Applied Categorical Structures</em>, to appear (2024)</div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-Moerdijk2002" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Moer02] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Ieke Moerdijk</span>: <a href="https://doi.org/10.1016/S0022-4049(01)00096-2">Monads on tensor categories</a>. In: <em>J. Pure Appl. Algebra</em> vol. 168 (2002), Nr. 2-3, pages 189–208. — Category theory 1999 (Coimbra)</div></td>
+</tr>
+<tr class="even">
+<td><div id="ref-ostrik03:modul-hopf" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Ostr03] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Viktor Ostrik</span>: <a href="https://doi.org/10.1007/s00031-003-0515-6">Module categories, weak <span>Hopf</span> algebras and modular invariants</a>. In: <em>Transform. Groups</em> vol. 8 (2003), Nr. 2, pages 177–206</div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-ostrik04:tensor-p" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Ostr04] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Victor Ostrik</span>: <a href="https://arxiv.org/abs/math/0401347"><span>T</span>ensor categories (after <span>P</span>. <span>D</span>eligne)</a>. In: <em>arXiv e-prints</em> (2004)</div></td>
+</tr>
+<tr class="even">
+<td><div id="ref-saracco17:hopf" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Sara17] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Paolo Saracco</span>: <a href="https://doi.org/10.1007/s10485-015-9408-9">On the structure theorem for quasi-<span>Hopf</span> bimodules</a>. In: <em>Appl. Categ. Struct.</em> vol. 25 (2017), Nr. 1, pages 3–28</div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-stroinski2024:reconstr" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[StZo] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Mateusz Stroiński</span> and <span class="smallcaps">Tony Zorman</span>: Reconstruction of module categories in the infinite and non-rigid settings, Forthcoming.</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="./impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

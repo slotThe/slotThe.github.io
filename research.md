@@ -160,6 +160,14 @@ All of my papers are readily available on the [arXiv].[^2]
 
 # Posters
 
+- *Lax module functors, reconstruction, and Hopf algebras* \
+  2024-09-02, Hopf Algebras and Monoidal Categories, Ferrara; \
+  [PDF](./posters/ferrara2024/poster.pdf)
+  and
+  [accompanying website](./ferrara2024.html);
+
+  Based on joint work with Mateusz Stroiński, [@stroinski2024:reconstr].
+
 - *Pivotality, Twisted Centres, and the Anti-Double of a Hopf Monad* \
   2024-06-27, CT24, Santiago de Compostela;
   [PDF](./posters/ct2024/poster.pdf)
