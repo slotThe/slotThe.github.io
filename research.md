@@ -40,7 +40,7 @@ All of my papers are readily available on the [arXiv].[^2]
 - *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
   Joint work with Sebastian Halbig.
 
-  We extend Willerton's [@willerton08] graphical calculus for bimonads
+  We extend Willerton's [@Willerton2008] graphical calculus for bimonads
   to comodule monads, a monadic interpretation of module categories
   over a monoidal category. As an application, we prove a version of
   Tannaka–Krein duality for these structures.
@@ -153,7 +153,7 @@ All of my papers are readily available on the [arXiv].[^2]
 
   The defense of my master's thesis, concentrating on a
   higher-dimensional graphical calculus, as first introduced by
-  Willerton [@willerton08] and extended in the thesis.  The "basic"
+  Willerton [@Willerton2008] and extended in the thesis.  The "basic"
   [slides][slides:visual-cat] are available—the talk was given on a
   Wacom tablet and thus contained many live drawings to illustrate the
   concepts.  These, however, are lost to time.

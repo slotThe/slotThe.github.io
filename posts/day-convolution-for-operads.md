@@ -18,7 +18,7 @@ to show that it is nothing but the usual tensor product of modules.
 <!--more-->
 
 While there is more to this
-story—all of which is wonderfully explained in [@kelly05:operads]—I
+story—all of which is wonderfully explained in [@kelly05:j]—I
 think focusing on the tensor product of $\mathbb{S}$-modules in the case of vector spaces already gives one a clue
 as to how this whole translation works in general.
 

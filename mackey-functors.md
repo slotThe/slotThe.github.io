@@ -145,7 +145,7 @@ This talk introduces both Dress' and Green's definition of *Mackey functor*, and
 
 ## Relative homological algebra (*Edoardo*)
 
-This talk is mainly based on [@dress73:ind-rep] and [@enochs00:relat].
+This talk is mainly based on [@dress73:contrib-ind-rep] and [@enochs00:relat].
 
 ### Outline
 
@@ -200,7 +200,7 @@ I will follow
 [@kelly05:basic],
 [@lindner76:mackey],
 [@loregian2021],
-[@benabou67:bicats],
+[@benabou67:introd],
 [@panchadcharam07:mackey],
 [@day70],
 and [@garner22].
