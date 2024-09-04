@@ -15,7 +15,7 @@ Click on the preview image for a full-scale version.
   </a>
 </div>
 
-The poster is based on the article [@stroinski2024:reconstr];
+The poster is based on the article [@stroinski2024:reconstr] ([arXiv](https://arxiv.org/abs/2409.00793));
 a repository with the full source code is available [here][ghub:source-code].[^1]
 
 <!-- References; site.hs does not have 'no-cite' support right now. -->
