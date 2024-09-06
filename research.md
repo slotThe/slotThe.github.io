@@ -47,6 +47,21 @@ All of my papers are readily available on the [arXiv].[^2]
 
 ## Preprints
 
+- *[Reconstruction of module categories in the infinite and non-rigid settings]* <span class="floatright">[@stroinski2024:reconstr]</span> \
+  Joint work with Mateusz Stroiński.
+
+  By building on the notions of internal projective and injective objects in a module category
+  introduced by Douglas, Schommer-Pries, and Snyder,
+  we extend the reconstruction theory for module categories of Etingof and Ostrik.
+  More explicitly, instead of algebra objects in finite tensor categories,
+  we consider quasi-finite coalgebra objects in locally finite tensor categories.
+  Moreover, we show that module categories over non-rigid monoidal categories can be reconstructed via lax module monads, which generalise algebra objects.
+  For the category of finite-dimensional comodules over a bialgebra, we give this result a more concrete form,
+  realising module categories as categories of contramodules over Hopf trimodule algebras—this specialises to our tensor-categorical results in the Hopf case.
+  Using lax module functors we give a categorical proof of the variant of the fundamental theorem of Hopf modules which applies to Hopf trimodules.
+  We also give a characterisation of fusion operators for a Hopf monad as coherence cells for a module functor structure,
+  using which we similarly reinterpret and reprove the Hopf-monadic fundamental theorem of Hopf modules due to Bruguières, Lack, and Virelizier.
+
 - *[Duality in Monoidal Categories]* <span class="floatright">[@halbig23:dualit-monoid-categ]</span> \
   Joint work with Sebastian Halbig.
 
@@ -208,6 +223,7 @@ All of my papers are readily available on the [arXiv].[^2]
 [Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
 [Pivotality, twisted centres, and the anti-double of a Hopf monad]: http://www.tac.mta.ca/tac/volumes/41/4/41-04abs.html
+[Reconstruction of module categories in the infinite and non-rigid settings]: https://arxiv.org/abs/2409.00793
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
