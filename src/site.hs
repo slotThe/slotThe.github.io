@@ -78,7 +78,26 @@ landingPage tagCtx = match "index.html" do
     getResourceBody
       >>= applyAsTemplate                               indexCtx
       >>= loadAndApplyTemplate "templates/default.html" indexCtx
+      >>= withItemBody (pure . recountSidenotes)
       >>= relativizeUrls
+ where
+  -- Recount sidenotes for the landing page, as otherwise they all have the
+  -- same IDs, resulting in invalid HTML and weirdly behaving sidenotes when
+  -- they are clickable. The format is something like
+  --
+  --     <label for="sn-0" …></label><… id="sn-0" …/>
+  --
+  -- so we need to count in steps of two.
+  recountSidenotes :: String -> String
+  recountSidenotes = asTxt (go 0)
+   where
+    go :: Double -> Text -> Text
+    go n str = case T.breakOn "=\"sn-" str of
+      (r, "") -> r
+      (h, t ) -> h <> "=\"sn-" <> tshow @Int (floor n) <> "\"" <> go (n + 0.5) (killSn t)
+
+    killSn :: Text -> Text
+    killSn = let d = T.drop 1 . T.dropWhile (/= '\"') in d . d
 
 posts :: Context String -> Rules ()
 posts tagCtx = match allPosts do
@@ -335,6 +354,9 @@ addTitle title body = "<span title=\"" <> title <> "\">" <> body <> "</span>"
 
 asTxt :: (Text -> Text) -> String -> String
 asTxt f = T.unpack . f . T.pack
+
+tshow :: Show a => a -> Text
+tshow = T.pack . show
 
 --- Tags
 
