@@ -23,28 +23,27 @@ As I strongly believe in dogfooding, I'm an avid user of course!
 My configuration can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad).
 
-<p>
- <div class="pure-g">
-  <div class="pure-u-1-2">
-   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true"
-        alt="GitHub stats for xmonad/xmonad">
-  </div>
-  <div class="pure-u-1-2">
-   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true"
-        alt="GitHub stats for xmonad/xmonad-extras">
-  </div>
+<p></p>
+<div class="pure-g">
+ <div class="pure-u-1-2">
+  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true"
+       alt="GitHub stats for xmonad/xmonad">
  </div>
- <div class="pure-g">
-  <div class="pure-u-1-2">
-   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true"
-        alt="GitHub stats for xmonad/xmonad-contrib">
-  </div>
-  <div class="pure-u-1-2">
-   <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true"
-        alt="GitHub stats for xmonad/X11">
-  </div>
+ <div class="pure-u-1-2">
+  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true"
+       alt="GitHub stats for xmonad/xmonad-extras">
  </div>
-</p>
+</div>
+<div class="pure-g">
+ <div class="pure-u-1-2">
+  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true"
+       alt="GitHub stats for xmonad/xmonad-contrib">
+ </div>
+ <div class="pure-u-1-2">
+  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true"
+       alt="GitHub stats for xmonad/X11">
+ </div>
+</div>
 
 ## KMonad
 
@@ -56,7 +55,7 @@ it is implemented in software and thus works anywhere<!--
 -->—even on your laptop![^1]
 
 <p style="text-align:center;">
- <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=kmonad&repo=kmonad&show_owner=true" width="50%"
+ <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=kmonad&repo=kmonad&show_owner=true"
       alt="GitHub stats for kmonad/kmonad">
 </p>
 
