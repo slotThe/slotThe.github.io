@@ -185,7 +185,7 @@ I've written too many Emacs packages—and none of them popular, at that!
 [optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
 [optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
 [post:package-vc-install]: https://tony-zorman.com/posts/package-vc-install.html
-[post:query-replace-many]: https://tony-zorman.com/posts/query-replace-many.post
+[post:query-replace-many]: https://tony-zorman.com/posts/query-replace-many.html
 [post:vc-use-package]: https://tony-zorman.com/posts/vc-use-package.html
 [post:yanking]: https://tony-zorman.com/posts/yanking.html
 [query-replace-many]: https://github.com/slotThe/query-replace-many
