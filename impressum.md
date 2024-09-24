@@ -19,14 +19,14 @@ Die verwendeten Begriffe sind nicht geschlechtsspezifisch.
 
 ## Verantwortlicher
 
-  Tony Zorman                        \
-  Z21 Bürogebäude, Zellescher Weg 25 \
-  Technische Universität Dresden     \
-  Fakultät Mathematik                \
-  Institut für Geometrie             \
-  01062 Dresden, Germany             \
+  Tony Zorman                    \
+  WIL/B217, Zellescher Weg 12–14 \
+  Technische Universität Dresden \
+  Fakultät Mathematik            \
+  Institut für Geometrie         \
+  01062 Dresden, Germany         \
 
-E-Mail-Adresse: `tonyzorman@mailbox.org`
+E-Mail-Adresse: `mail@tony-zorman.com`
 
 ## Hosting
 
