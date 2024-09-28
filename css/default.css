@@ -528,6 +528,13 @@ details[open] > summary:before {  /* Turn ▸ (closed) into ▾ (open) on click.
   transform: rotate(90deg);
 }
 
+details {
+    border-left: 4px solid var(--border-inline-code);
+    margin: 20px 0;
+    padding-left: 20px;
+    padding-bottom: 0.4em;
+}
+
 /**********************************************************************
   EMAIL OBFUSCATION
 */
