@@ -39,14 +39,18 @@ For various definitions of "notable".
 
 + [Citation handling][site:citations] with BibTeX.
 
++ Straightforward [file inclusions][site:include-files] with pandoc's [fenced divs][pandoc:fenced-divs].
+
 [KaTeX]: https://katex.org/
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
+[pandoc:fenced-divs]: https://pandoc.org/MANUAL.html#extension-fenced_divs
 [pandoc:katex]: https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774
 [sidenotes-hs]: https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs
 [site:citations]: https://tony-zorman.com/posts/hakyll-and-bibtex.html
 [site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
 [site:impl:hlkatex]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L530
 [site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
+[site:include-files]: https://github.com/slotThe/slotThe.github.io/blob/e0c723fbff7ebd21551752c2039a7cf4aef7643f/src/site.hs#L511-L525
 [site:pygmentise]: https://tony-zorman.com/posts/pygmentising-hakyll.html
 [site:sidenotes]: https://tony-zorman.com/posts/block-sidenotes.html
 
