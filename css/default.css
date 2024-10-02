@@ -123,6 +123,13 @@ blockquote {            /* Block quotes */
     padding-left: 20px;
 }
 
+.included {             /* Included verbatim files */
+    border-left: 4px solid var(--border-inline-code);
+    margin: 20px 0;
+    padding-left: 20px;
+    padding-bottom: 0.4em;
+}
+
 .katex {                /* All maths */
     font-size: 0.9em !important;
 }

@@ -18,6 +18,7 @@ import Data.String (IsString)
 import Data.Text (Text)
 import GHC.IO.Handle (BufferMode (NoBuffering), Handle, hSetBuffering)
 import Hakyll
+import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
 import System.Process (runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
@@ -470,6 +471,7 @@ myPandocCompiler =
       <=< pygmentsHighlight
       <=< hlKaTeX
       -- ↑ render HMTL in various forms and ↓ do not
+      <=< includeFiles
       .   addSectionLinks
       .   smallCaps
       .   styleLocalLinks
@@ -505,6 +507,22 @@ myPandocCompiler =
                                             , "-P", "cssclass=highlight-" <> lang
                                             , "-P", "cssstyles=padding-left: 1em;"
                                             ]
+
+  includeFiles :: Pandoc -> Compiler Pandoc
+  includeFiles = walkM \case
+    Div (_, cs, kvs) _ | "include" `elem` cs -> do
+      let file = T.unpack
+               . fromMaybe (error "includeFiles: no `from` key given!")
+               $ lookup "from" kvs
+      content <- unsafeCompiler $ T.readFile file
+      -- Give the file it's correct code block header if it's code. Note that
+      -- I'm *not* using Skylighting for the actual highlighting part; see
+      -- 'pygmentsHighlight'.
+      pure case listToMaybe (syntaxesByFilename defaultSyntaxMap file) of
+        Nothing                  -> Div ("", ["included"], []) [Para [Str content]]
+        Just (sName -> "Default") -> Div ("", ["included"], []) [Para [Str content]]
+        Just (sName -> l)         -> CodeBlock ("", [l], []) content
+    block -> pure block
 
   processBib :: Item Pandoc -> Compiler (Item Pandoc)
   processBib pandoc = do
