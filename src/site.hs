@@ -152,6 +152,15 @@ aboutMe = do
         >>= loadAndApplyTemplate "templates/default.html" tocCtx
         >>= relativizeUrls
 
+  match (fromList ["site.md"]) do
+    route $ setExtension "html"
+    compile do
+      tocCtx <- getTocCtx defaultContext
+      myPandocCompiler
+        >>= loadAndApplyTemplate "templates/post.html"    tocCtx
+        >>= loadAndApplyTemplate "templates/default.html" tocCtx
+        >>= relativizeUrls
+
   match (fromList ["about.md", "impressum.md"]) do
     route   $ setExtension "html"
     compile $ myPandocCompiler

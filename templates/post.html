@@ -6,9 +6,9 @@
       $if(last-modified)$
         &thinsp;·&thinsp; last modified: $last-modified$
       $endif$
-      $if(date)$
+      $if(date)$$if(no-reading-time)$$else$
         &thinsp;·&thinsp; $estimated-reading-time$ &thinsp;·&nbsp;
-      $endif$
+      $endif$$endif$
       $if(tags)$
         $tags$
       $endif$

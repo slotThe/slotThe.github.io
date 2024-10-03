@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+      <meta name="robots" content="noai, noimageai">
+    
+
+    
+      <title>About This Website · Tony Zorman</title>
+    
+
+    <link rel="shortcut icon" href="./favicon.png">
+    <!-- https://purecss.io/ -->
+    <link rel="stylesheet" type="text/css" href="./css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/skin.css" />
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="./css/colours.css" />
+    <link rel="stylesheet" type="text/css" href="./css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="./css/default.css" />
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="./css/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="./css/katex.css" />
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="./css/sidenotes.css" />
+  </head>
+
+  <body class="pure-skin-solid">
+    <div class="pure-g-r">
+      <div class="pure-u-1-4">
+        <div id="navigation" class="no-print">
+          <div class="pure-menu pure-menu-open">
+            <a href="./" class="pure-menu-heading menu-title">
+              Blog<br>
+              <span class="menu-subtitle">Tony Zorman</span>
+            </a>
+            <ul>
+              <li><a href="./posts.html">Posts</a></li>
+              <li><a href="./research.html">Research</a></li>
+              <li><a href="./free-software.html">Free Software</a></li>
+              <li><a href="./about.html">About</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- A table of contents on the left side, but only for screens
+             that are big enough -->
+         
+          <div id="contents-big">
+            <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+            <ul>
+<li><a href="#sidenotes">Sidenotes</a></li>
+<li><a href="#syntax-highlighting">Syntax highlighting</a></li>
+<li><a href="#katex-rendering">KaTeX rendering</a></li>
+<li><a href="#section-marks">Section marks</a></li>
+<li><a href="#bibtex">BibTeX</a></li>
+<li><a href="#no-javascript">No JavaScript</a></li>
+<li><a href="#fonts">Fonts</a></li>
+</ul>
+          </div>
+         
+      </div>
+      <div class="pure-u-3-4">
+        <div id="content">
+          <!-- We want to include the RSS/Atom feed in certain scenarios,
+               but this shouldn't mangle the above header title. -->
+           
+            <h1>About This Website</h1>
+           
+
+          <article>
+    <p class="header">
+      
+        Posted on 2024-10-03
+      
+      
+      
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#sidenotes">Sidenotes</a></li>
+<li><a href="#syntax-highlighting">Syntax highlighting</a></li>
+<li><a href="#katex-rendering">KaTeX rendering</a></li>
+<li><a href="#section-marks">Section marks</a></li>
+<li><a href="#bibtex">BibTeX</a></li>
+<li><a href="#no-javascript">No JavaScript</a></li>
+<li><a href="#fonts">Fonts</a></li>
+</ul>
+  </div>
+
+<div>
+  First of: this site is hosted via <a href="https://pages.github.com/">GitHub Pages</a>,
+and the full source code is available on <a href="https://github.com/slotThe/slotThe.github.io">Microsoft GitHub</a>.
+<p></p>
+My static site generator of choice is <a href="https://jaspervdj.be/hakyll/">hakyll</a>,
+which leverages <a href="https://pandoc.org/">pandoc</a> for the actual rendering.
+While the bulk of the work is done by these two programs,
+there are a few thin layers on top for, e.g., prerendering LaTeX.
+With the bundled nix flake,
+building should hopefully be deterministic enough that a simple <code>make watch</code> creates a preview server.
+<p></p>
+Most of what makes the site “unique” is already stated in the <span class="small-caps">readme</span>;
+however, this page gives me the chance to expand on some of the ideas,
+should they not have gotten their own blog post already.
+<h2 id="sidenotes">Sidenotes<a href="#sidenotes" class="floatleft sec-link">§</a></h2>
+<p></p>
+Sidenotes—as opposed to footnotes—are implemented using
+(a somewhat customised) <a href="https://github.com/edwardtufte/tufte-css">Tufte <span class="small-caps">css</span></a>,
+as well as <a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">SideNotes<span class="small-caps">html</span>.hs</a> from the <code>pandoc-sidenote</code> library.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Here is an example!
+By the way, you might notice some links having a little <code>°</code> after them—these are links to this domain.
+I’m honestly still not sure this is useful in any way, but I quite like the eye candy.</div><!--
+-->
+While this uses absolutely no JavaScript,
+unlike most pure <span class="small-caps">css</span> implementations
+it allows arbitrary blocks to be placed inside of sidenotes.
+I’ve written about the implementation details <a href="https://tony-zorman.com/posts/block-sidenotes.html" class="local-link">here</a>.
+<h2 id="syntax-highlighting">Syntax highlighting<a href="#syntax-highlighting" class="floatleft sec-link">§</a></h2>
+<p></p>
+Syntax highlighting it not provided by
+<a href="https://hackage.haskell.org/package/skylighting">Skylighting</a>,
+as pandoc would normally do,
+but rather by
+<a href="https://pygments.org/">pygments</a>.
+It provides better highlighting and supports a lot more languages,
+so I really see no reason not to use it.
+I’ve written about transitioning to pygments <a href="https://tony-zorman.com/posts/pygmentising-hakyll.html" class="local-link">here</a>.
+<h2 id="katex-rendering">KaTeX rendering<a href="#katex-rendering" class="floatleft sec-link">§</a></h2>
+<p></p>
+All LaTeX output is pregenerated with <a href="https://katex.org/">KaTeX</a> and directly embedded into the <span class="small-caps">html</span>.
+This speeds up page loading, and eliminates the need for client-side JavaScript completely.
+Since this is a static site without comments or any other kind of user-generated content,
+it seems almost comical to still require every visitor to render the same thing,
+rather than doing it once server-side.
+<p></p>
+Interfacing with KaTeX is done with the tiny <a href="./scripts/math.ts" class="local-link">math.ts</a> script:
+<div class="highlight-TypeScript" style="padding-left: 1em;"><pre><span></span><span class="c1">// Source: https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774</span>
+
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">readLines</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;https://deno.land/std@0.224.0/io/mod.ts&quot;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">katex</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.mjs&quot;</span><span class="p">;</span>
+
+<span class="k">for</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">readLines</span><span class="p">(</span><span class="nx">Deno</span><span class="p">.</span><span class="nx">stdin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">DISPLAY</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;:DISPLAY &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">useDisplay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">DISPLAY</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">cleanLine</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nx">useDisplay</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">line</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">DISPLAY</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">line</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">katex</span><span class="p">.</span><span class="nx">renderToString</span><span class="p">(</span><span class="nx">cleanLine</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">displayMode</span><span class="o">:</span><span class="w"> </span><span class="kt">useDisplay</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">strict</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">throwOnError</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}));</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`Input: </span><span class="si">${</span><span class="nx">line</span><span class="si">}</span><span class="sb">\n\nError: </span><span class="si">${</span><span class="nx">error</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p></p>
+On the hakyll site, all that’s needed to interface with this is <a href="https://github.com/slotThe/slotThe.github.io/blob/e0c723fbff7ebd21551752c2039a7cf4aef7643f/src/site.hs#L591">hlKaTeX</a>.
+Some more implementation considerations are mentioned in a
+<a href="https://tony-zorman.com/posts/katex-with-hakyll.html" class="local-link">dedicated post</a>.
+<h2 id="section-marks">Section marks<a href="#section-marks" class="floatleft sec-link">§</a></h2>
+<p></p>
+This is a very small thing,
+but I think many sites get section marks “wrong” by placing them at the <em>end</em> of the headline.
+This makes them appear somewhat “ragged” to me,
+even if they are hidden most of the time anyways.
+Here, they are instead moved to the left side of the heading,
+in the space between the table of contents (or sidebar) and the main content.
+<h2 id="bibtex">BibTeX<a href="#bibtex" class="floatleft sec-link">§</a></h2>
+<p></p>
+Citations are handled by BibTeX;
+I’m used to it from writing LaTeX, and it sports some neat pandoc integration.
+There is a “References” section—not mentioned in the <span class="small-caps">toc</span>—at the end of the document,
+where all citations the page may have mentioned reside and are properly aligned in a table.
+Clicking on any of
+<span class="citation" data-cites="category-theory-in-context_riehl">[<a href="#ref-category-theory-in-context_riehl" role="doc-biblioref">Rieh17</a>]</span>,
+<span class="citation" data-cites="kelly82:basic">[<a href="#ref-kelly82:basic" role="doc-biblioref">Kell82</a>]</span>, or
+<span class="citation" data-cites="Etingof2015">[<a href="#ref-Etingof2015" role="doc-biblioref">EGNO15</a>]</span>
+should jump you to it.
+<p></p>
+Under the hood, pandoc—by means of <a href="https://github.com/jgm/citeproc">citeproc</a>—uses some convoluted <span class="small-caps">xml</span> format to describe how citations ought to look.
+Not finding anything that I’m completely happy with, the site is currently using a
+<a href="https://github.com/slotThe/slotThe.github.io/blob/main/bib/style.csl">hacked-on version</a>
+of an
+<a href="https://www.zotero.org/styles/din-1505-2-alphanumeric">alphanumeric DIN 1505-2 style</a>,
+which most reminded me of BibLaTeX’s <code>alphabetic</code> style.
+I’ve written many more words about this <a href="https://tony-zorman.com/posts/hakyll-and-bibtex.html" class="local-link">here</a>.
+<h2 id="no-javascript">No JavaScript<a href="#no-javascript" class="floatleft sec-link">§</a></h2>
+<p></p>
+As many of the above points already hint at,
+not using any JavaScript is an explicit goal.
+Relatedly, I am aiming for a usable site in text-based browser such as <code>eww</code>.
+Some eye candy like small-caps, as well as features such as sidenotes are obviously lost,
+but the main content should still be comfortably viewable.
+<h2 id="fonts">Fonts<a href="#fonts" class="floatleft sec-link">§</a></h2>
+<p></p>
+This website uses—at least if you let it—lots of <a href="https://github.com/slotThe/slotThe.github.io/tree/main/css/fonts">custom fonts</a>.
+The default serif font is Alegreya,
+and my own build of Iosevka stands in for anything monospaced.
+Plus, since I’m using KaTeX for <a href="#katex-rendering">rendering maths</a>,
+there are quite a few LaTeX fonts loaded whenever a page needs them.
+While the site of course works with system fonts as well,
+there has been a somewhat conscious choice to deviate from them.
+Especially code should look exactly as it appears in my editor,
+which is especially relevant when it comes to alignment<!--
+-->—Unicode characters may indeed have different apparent widths!
+Further, lots of system fonts do not support some typographical features,
+such as small caps,
+that I think give this site a certain “flair”.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Instead of proper small caps, many system fonts scale down their capital letters.
+This makes them entirely too thin, and really rather ugly looking.</div><!--
+-->
+<p></p>
+I do, however, want to make sure that I’m not sending 2mb per font to every visitor.
+The <a href="https://en.wikipedia.org/wiki/Web_Open_Font_Format">Web Open Font Format</a> exists specifically for this purpose,
+but even that is not enough in a lot of cases.
+Fonts are quite fully featured nowadays,
+containing almost every glyph under the sun,
+which just blows up their size a lot.
+There thankfully exist some neat tools for ripping out unwanted Unicode code points,
+only retaining a subset of them;
+I’m using <a href="https://fonttools.readthedocs.io/en/latest/subset/">pyftsubset</a>.
+Here’s the script to do this, mostly stolen from <a href="https://xeiaso.net/blog/iaso-fonts">Xe Iaso</a>:
+<div class="highlight-Bash" style="padding-left: 1em;"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#</span>
+<span class="c1"># Source: https://xeiaso.net/blog/iaso-fonts/</span>
+<span class="c1">#</span>
+<span class="c1"># Some Unicode symbols added.</span>
+
+pyftsubset<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">$1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-file<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="p">%.*</span><span class="si">}</span><span class="s2">&quot;</span>.woff2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--flavor<span class="o">=</span>woff2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--layout-features<span class="o">=</span>*<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--no-hinting<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--desubroutinize<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--unicodes<span class="o">=</span><span class="s2">&quot;U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,\</span>
+<span class="s2">      U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,\</span>
+<span class="s2">      U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,\</span>
+<span class="s2">      U+FFFD,U+00E8,U+00E9,U+00F2,U+00F3,U+00E4,U+00C4,U+00D6,\</span>
+<span class="s2">      U+00DC,U+00F6,U+00FC&quot;</span>
+</pre></div>
+
+<hr />
+<p></p>
+Getting code points in bulk,
+without explicitly looking them up one by one,
+is just a matter of converting characters to their hex representations,
+which is trivial to do.
+For example, the Emacs lisp snippet
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nf">mapconcat</span>
+<span class="w"> </span><span class="p">(</span><span class="nv">-partial</span><span class="w"> </span><span class="nf">#'format</span><span class="w"> </span><span class="s">&quot;U+%04X&quot;</span><span class="p">)</span>
+<span class="w"> </span><span class="s">&quot;∘○⊸⟜⌾⊘◶⎉⚇⍟⎊˙˜˘¨⌜⁼´˝`+×÷⋆√⌊⌈|¬∧∨&lt;&gt;…&quot;</span>
+<span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p></p>
+results in an output along the lines of
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="s">&quot;U+2218,U+25CB,U+22B8,U+27DC,U+233E…&quot;</span>
+</pre></div>
+
+<h2 id="references">References<a href="#references" class="floatleft sec-link">§</a></h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr class="odd">
+<td><div id="ref-Etingof2015" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[EGNO15] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Pavel Etingof</span> and <span class="smallcaps">Shlomo Gelaki</span> and <span class="smallcaps">Dmitri Nikshych</span> and <span class="smallcaps">Victor Ostrik</span>: <em><a href="https://doi.org/10.1090/surv/205">Tensor categories</a></em>, <em>Mathematical surveys and monographs</em>. vol. 205: American Mathematical Society, Providence, RI, 2015;  ISBN 978-1-4704-2024-6</div></td>
+</tr>
+<tr class="even">
+<td><div id="ref-kelly82:basic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Kell82] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Gregory Maxwell Kelly</span>: <em>Basic concepts of enriched category theory</em>, <em>Lond. Math. Soc. Lect. Note ser.</em> vol. 64: Cambridge University Press, Cambridge. London Mathematical Society, London, 1982</div></td>
+</tr>
+<tr class="odd">
+<td><div id="ref-category-theory-in-context_riehl" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Rieh17] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">E. Riehl</span>: <em><a href="https://math.jhu.edu/~eriehl/context.pdf">Category theory in context</a></em>, <em>Aurora: Dover modern math originals</em>: Dover Publications, 2017;  ISBN 9780486820804</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+
+
+        </div>
+        <div id="footer">
+          <!-- Left -->
+          <a id="to-top" href="#">top</a>
+          <!-- Right -->
+          <a href="./atom.xml" style="font-variant:small-caps">rss</a>
+          &nbsp;|&nbsp;
+          <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+          &nbsp;|&nbsp;
+          <a href="./impressum.html">Legal notice and privacy policy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

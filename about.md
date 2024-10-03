@@ -13,7 +13,8 @@ If you're interested in my publications, you can check out my name on the [arXiv
 I've also given some talks, slides of which are available [here](./research.html).
 
 As for the site itself: everything is statically generated—with the power of [hakyll] and [pandoc]—from markdown.[^2]
-The full source code is available [here][site].
+The [full source code][site] is available,
+and a separate page detailing some design decisions is [here](./site.html).
 <label for="mn-configs" class="margin-toggle">&#8853;</label>
 <input type="checkbox" id="mn-configs" class="margin-toggle"/>
 <span class="marginnote-left">
