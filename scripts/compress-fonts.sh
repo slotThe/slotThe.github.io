@@ -13,9 +13,10 @@ bqn_symbols="U+2218,U+25CB,U+22B8,U+27DC,U+233E,U+2298,U+25F6,U+2389,U+2687,U+23
 # using everything, but only the defaults that pyftsubset picks.
 if [ "$1" = "-m" ]; then
     shift
-    symbols=( "--unicodes=${base},${bqn_symbols}" )
+    symbols=("--unicodes=${base},${bqn_symbols}")
 else
-    symbols=( "--layout-features=*" "--unicodes=${base}" )
+    symbols=("--layout-features=*" "--unicodes=${base}")
 fi
 
-pyftsubset $1 --output-file="${1%.*}".woff2 --flavor=woff2 --no-hinting --desubroutinize ${symbols[@]}
+pyftsubset $1 --output-file="${1%.*}".woff2 --flavor=woff2 \
+           --no-hinting --desubroutinize ${symbols[@]}
