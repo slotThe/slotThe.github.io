@@ -10,8 +10,2997 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2024-07-20T00:00:00Z</updated>
+    <updated>2024-10-27T00:00:00Z</updated>
     <entry>
+    <title>BQNing Advent of Code</title>
+    <link href="https://tony-zorman.com/posts/aoc-in-bqn.html" />
+    <id>https://tony-zorman.com/posts/aoc-in-bqn.html</id>
+    <published>2024-10-27T00:00:00Z</published>
+    <updated>2024-10-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2024-10-27
+      
+      
+      
+        &thinsp;·&thinsp; <span title="22158 words">89 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>I did all of Advent of Code 2017 in BQN so you don’t have to.
+Let me tell you about that in as few as 20’000 words.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<!--more-->
+<h2 id="the-setup">The setup</h2>
+<p>Advent of Code is a yearly puzzle-coding-challenge-thing,
+in which one has to solve two riddles every day from the 1st until the 25th of December,
+with the second part of each puzzle being unknown until one solves the first one.
+I’ve found it to be a great way to learn the basics of a language—how it “feels”.</p>
+<p>The puzzles are accompanied by an endearing—and at times pretty funny—story.
+I will, however, leave out most of it for this post,
+as I feel like it would distract too much from the point I’m trying to make.</p>
+<h3 id="conventions-throughout-the-article">Conventions throughout the article</h3>
+<p>One thing I will not leave out is the full solution for every day.
+Normally this would result in a rather large amount of code having to be shown for the later days,
+but BQN’s terseness saves us here:
+excluding comments and empty lines, all days combined are just under 300 lines of code!
+I will be a tiny bit economical with the different parts, though;
+think of every heading as introducing its own namespace.
+For example,
+in the code block solving the first part of every day I will generally include parsing the input.</p>
+<pre class="bqn"><code>inp ← …
+# Hypothetical solution for first part
+inp - 1</code></pre>
+<p>The second part will then freely refer to <code>inp</code> without me having to define it again.</p>
+<pre class="bqn"><code># Second part
+inp + 1</code></pre>
+<h3 id="who-reads-all-of-this-anyways">Who reads all of this anyways?</h3>
+<p>A surprisingly hard question is who this article is for.
+Someone new to Advent of Code, but familiar with BQN?
+The other way around?
+New to both?
+Familiar with both?
+The answer—as is so often the case—is that I don’t know.
+Realistically, I’m actually talking to my present and future self here<!--
+-->—writing about things is a great way to solidify understanding—<!--
+-->so the article will be structured accordingly:
+I will talk about BQN’s core concepts and language features,
+but put the more dreary parts of that exposition in collapsible boxes,
+for people who either already know, or don’t care.</p>
+<p>Keep in mind that I started solving these puzzles to learn the language.
+Further, BQN is my very first array programming language,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+so my understanding of a lot of concepts is still quite shallow.
+The official documentation is really quite good, so I will link to it a lot.
+As mentioned, the tangents in which I talk about language features are more for my own understanding.
+Still, perhaps they are useful in case someone who does not know BQN has somehow found their way here,
+and didn’t run away after seeing the Unicode characters.
+As such, the focus of this post should be on how I<!--
+-->—as a total newcomer to this kind of thing—<!--
+-->approach solving problems in such an unusual language;
+what works and what doesn’t, that kind of thing.
+In short, I want to impart the <em>vibe</em> of the language to the reader<!--
+-->—and that AOC is actually a lot of fun!<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<h3 id="acknowledgements">Acknowledgements</h3>
+<p>I want to explicitly thank the super welcoming
+<a href="https://mlochbaum.github.io/BQN/community/index.html">community</a>
+that this language has!
+Next to fantastic sites such as <a href="https://mlochbaum.github.io/bqncrate/">BQNcrate</a><!--
+-->—a great way to pick up on idiomatic ways to write certain things—<!--
+-->there is a
+<a href="https://app.element.io/#/room/%23bqn:matrix.org">#bqn:matrix.org</a>
+matrix room, which is part of the larger
+<a href="https://app.element.io/#/room/%23array:matrix.org">#array:matrix.org</a> space.
+Someone knowledgeable is always there to answer your stupid questions.
+Special thank to
+Marshall Lochbaum (the creator of the language!),
+dzaima, and
+brian_e.
+Without them a lot of solutions presented here would be even uglier than they already are.</p>
+<h2 id="a-crash-course-on-syntax">A crash course on syntax</h2>
+<p>Here is an entirely too short crash course on the syntax of the language,
+with a bit of semantics sprinkled in here and there.
+Throughout, I will present most examples in a REPL-esque fashion;
+input is indented by 4 spaces, and output is flush to the left.
+Line comments in BQN start with <code>#</code>.</p>
+<pre class="bqn"><code>    1+4+6 # Everything normal so far…
+11
+    2×4+6 # …but actually not!
+20</code></pre>
+<p>That last one probably already needs explanation.
+First, multiplication is <code>×</code>, instead of <code>*</code> as in most other languages.
+More importantly, however: there is no precedence for mathematical operators!
+BQN is evaluated (strictly) from right to left,
+and most of the time this is also the direction you should read expressions in.</p>
+<p>Assigning values to variables works with <em>define</em> (<code>←</code>):</p>
+<pre class="bqn"><code>    v ← 2×4+6
+20</code></pre>
+<p>A block is something in between curly braces,
+containing several assignments and expressions separated by line breaks, or, alternatively, the <code>⋄</code> character.
+Further, a block starts its own <a href="https://mlochbaum.github.io/BQN/doc/namespace.html">namespace</a>;
+nothing all that surprising coming from almost any other language.</p>
+<pre class="bqn"><code>    v ← 2×4+6
+20
+    {v←0 ⋄ v}
+0
+    v
+20</code></pre>
+<p>I will talk a little bit more about namespaces later,
+but let’s not get too hung up on that right now.
+Instead, let’s talk about functions.
+A user-defined function is something in curly braces that mentions the special names <code>𝕨</code> and <code>𝕩</code>,
+standing in for the left and right argument to it.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+Functions are always infix, and can only be called with either one or two arguments.
+In the former case, the function takes its argument on the right and <code>𝕨</code> will be given a special value:
+<em>nothing</em> (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>)!.</p>
+<pre class="bqn"><code>    1 {𝕨+𝕩} 2
+3
+    1 {𝕨-𝕩} 2
+¯1
+    2 {𝕨⋆𝕩} 8  # Careful: exponentiation!
+256
+    {√𝕩} 9     # Could also just write √9
+3</code></pre>
+<p>I should note that the <code>⋆</code> above is the Unicode code point <code>0x22C6</code> (STAR OPERATOR),
+and not just a normal asterisk.</p>
+<p>Because Greek is much cooler than Latin,
+BQN calls functions taking one argument <em>monadic</em>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+and ones taking two arguments <em>dyadic</em>.
+When in doubt, just substitute “unary” and “binary” in your head.
+One thing that might seem very confusing at the start is that
+many functions are actually overloaded depending on whether they are called monadically or dyadically<!--
+-->—often with seemingly unrelated (or only barely so) functions!</p>
+<pre class="bqn"><code>    # Dyadic ×; N.b. we use the upper minus ¯ here because ¯2 is its own
+    # number literal. We could also use the function -, but then (because
+    # remember everything is evaluated right to left) we would have to
+    # use parentheses: (-2)×4. Otherwise, the expression would be parsed
+    # as -(2×4).
+    ¯2×4
+¯8
+    ×¯2 # Monadic × is the signum function!
+¯1
+    ×2
+1
+    ×0
+0</code></pre>
+<p>The signum function hints at a fundamental design decision that basically all array languages share:
+instead of a name,
+all builtin functions are given a unique symbol.
+However, the documentation of each of them does mention a pronounceable name as well,
+so that it’s easier to talk to other people about a given piece of code.</p>
+<pre class="bqn"><code>    ↕9                 # Monadic ↕: Range. Gives you the integer range [0, 𝕩-1].
+⟨ 0 1 2 3 4 5 6 7 8 ⟩
+    7↕(↕9)             # Dyadic ↕: Windows. Create all windows of size 𝕨 in 𝕩.
+                       # N.b: the parentheses are not technically needed.
+┌─
+╵ 0 1 2 3 4 5 6
+  1 2 3 4 5 6 7
+  2 3 4 5 6 7 8
+                ┘</code></pre>
+<p>In particular, the above examples showcase how BQN displays <em>vectors</em> (or <em>lists</em>) and <em>arrays</em>.
+Definitionally, vectors are “rank 1 arrays”—we will talk about what exactly this means when we talk about major cells.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+We can define our own arrays in a few different ways,
+the two most important ones being</p>
+<pre class="bqn"><code>    ⟨1,2,3,4⟩ # Using list notation
+⟨ 1 2 3 4 ⟩
+    1‿2‿3‿4   # Using strand notation
+⟨ 1 2 3 4 ⟩</code></pre>
+<p>Here’s another example of monadic and dyadic uses of functions:</p>
+<pre class="bqn"><code>    r←↕9
+⟨ 0 1 2 3 4 5 6 7 8 ⟩
+    ⌽r                 # Monadic ⌽: Reverse.
+⟨ 8 7 6 5 4 3 2 1 0 ⟩
+    3⌽r                # Dyadic ⌽: Rotate. Rotates 𝕩 by 𝕨 places to the
+                       # left (to the right if 𝕨 is negative).
+⟨ 3 4 5 6 7 8 0 1 2 ⟩</code></pre>
+<p>This takes some time getting used to.
+However, after a while you really start to think that
+<a href="https://dl.acm.org/doi/pdf/10.1145/1283920.1283935">notation as a tool for thought</a>
+has a point.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>
+I believe BQN’s creator once called the syntax “scribbles on a whiteboard”, and honestly that’s my feeling about it too<!--
+-->—with the slight addendum that blackboards are obviously vastly superior to whiteboards.</p>
+<p>One more piece of syntax that we have to discuss before diving into day 1: modifiers.
+These are <em>things</em> that take either one or two functions, and spit out a new, modified, one.
+I would imagine that this comes from the APL tradition and is actually not strictly needed,
+given that BQN supports <a href="https://mlochbaum.github.io/BQN/doc/functional.html">higher order functions</a>.
+However, since these things have their own precedence and binding rules, the separate concept may nonetheless be useful.</p>
+<p>We can write our own modifiers by using <code>𝔽</code> and <code>𝔾</code> inside of a block,
+but for most of this article we will only use the builtin ones.
+Monadic modifiers take their function argument <em>to the left</em>,
+and are not called monadic any longer,
+but 1-modifiers.
+Likewise, modifiers taking two functions are called 2-modifiers.</p>
+<pre class="bqn"><code>    1 - 3  # Normal subtraction
+¯2
+
+    1 -˜ 3 # ˜ is the *flip* or *swap* 1-modifier:
+           # it takes a dyadic function and returns
+           # one with its arguments flipped.
+2
+    3 - 1
+2
+
+    -˜ 3  # If a flipped function is called with
+          # only one argument, it gets duplicated.
+0
+    3 - 3
+0
+
+    {𝕩+1}∘{𝕩-3} 4 # ∘ is the function composition 2-modifier called *atop*.
+                  # Called monatically, 𝔽∘𝔾 𝕩 is just 𝔽𝔾𝕩
+2
+    1 {𝕩+1}∘{𝕩-𝕨} 4 # Called dyadically, 𝕨 𝔽∘𝔾 𝕩 transforms to 𝔽(𝕨𝔾𝕩)
+4
+    1 +⟜1∘- 4     # ⟜ is *after*: 𝔽⟜𝔾 𝕩 evaluates to 𝕩𝔽(𝔾𝕩).
+                  # If a constant or variable is given as 𝔽 or 𝔾,
+                  # it is promoted to its constant function.
+                  # The whole expression associates as 1 (+⟜1)∘- 4,
+                  # and so evaluates to (+⟜1) (1-4) = (1-4)+1.
+¯2</code></pre>
+<p>Besides this being quite a lot to take in,
+you might have already noticed something strange in the last example:
+how come <code>+⟜1∘-</code> is parsed like <code>(+⟜1)∘-</code> when I previously said everything is evaluated right to left?
+While there are no precedence rules among functions or among modifiers,
+the latter does <a href="https://mlochbaum.github.io/BQN/doc/syntax.html#precedence">bind tighter</a> than the former.
+Additionally, modifiers associate left to right, instead of right to left:
+given functions <code>F</code>, <code>G</code>, and <code>H</code>, then <code>F∘G∘H</code> is parsed as <code>(F∘G)∘H</code> instead of <code>F∘(G∘H)</code>.
+As you can imagine, getting used to reading BQN expressions takes quite some time.
+It gets better, though, I promise.</p>
+<p>Something to ease the pain:
+there is a purely syntactic way to decide whether a given symbol is a (builtin) function, 1-, or 2-modifier!<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+Thankfully, someone thought about this, and there is a consistent morphology to the chosen symbols:</p>
+<ul>
+<li>1-modifiers are always superscripts;</li>
+<li>2-modifiers always contain an <em>unbroken</em> circle; and</li>
+<li>everything else is a function.</li>
+</ul>
+<p>For example, <code>× + - ⋆ ⌽ ⍉ ⊔ ≢</code> are functions (remember the unbroken part),
+<code>˘ ¨ ⁼ ´</code> are 1-modifiers,
+and <code>∘ ⍟ ⚇ ◶ ⌾</code> are 2-modifiers.
+Quite neat, I think.</p>
+<p>This should be plenty to get a feeling for the language.
+Anything more will be introduced as needed.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<h2 id="days-15">Days 1–5</h2>
+<h3 id="day-1"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day01.bqn">Day 1</a></h3>
+<p>Let’s get into the swing of things!
+Day 1 starts with us getting sucked into Santa’s computer,
+where we have to solve a captcha, proving we’re not human.</p>
+<p>For part one,
+we are given a (circular) list of numbers,
+and are asked to identify repeating digits, starting from the beginning
+(i.e., all digits that match the next element).
+For example, in <code>311223</code> this would be <code>1</code>, <code>2</code>, and <code>3</code> (in that order).
+Our input is a long string of digits
+that we first have to convert to a long string of numbers:</p>
+<pre class="bqn"><code>inp ← '0'-˜ ⊑ •FLines&quot;../inputs/day01.txt&quot;</code></pre>
+<p>Reading the input line-by-line and converting it to a vector works via the builtin <code>•FLines</code> function.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
+The only other function we haven’t see so far is
+<em>first</em> <a href="https://mlochbaum.github.io/BQN/doc/pick.html"><code>⊑</code></a>,
+which gives us the first element in the list—our input is on a single long line.
+Much more interesting is the <code>'0'-˜</code> part,
+which immediately gives me a chance to talk about character–number conversions in BQN.</p>
+<details>
+<summary>
+Affine characters in BQN
+</summary>
+<p>The <a href="https://mlochbaum.github.io/BQN/tutorial/expression.html#character-arithmetic">documentation</a>
+says that characters form an affine space;
+this is not technically true, but a good guide on what kinds of operations we have access to:<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<ol type="1">
+<li><p><code>(+) : Num  → Char → Char</code>, adding a number to a character gives a character:</p>
+<pre class="bqn"><code>    97+@   # @ is the literal &quot;null&quot; character;
+           # i.e., '\0' in most other languages.
+'a'</code></pre></li>
+<li><p><code>(-) : Char → Num  → Char</code>, subtracting a number from a character gives a character:</p>
+<pre class="bqn"><code>    'a'-32
+'A'</code></pre></li>
+<li><p><code>(-) : Char → Char → Num</code>, subtracting two characters gives a number:</p>
+<pre class="bqn"><code>    'a'-@
+97
+    '0'-@
+48
+    'a'-'0'
+49</code></pre></li>
+</ol>
+<p>Since the numbers from 0 to 9 are ordered sequentially in UTF-8,
+this in particular gives a neat way to transform a vector of characters<!--
+-->—also known as a string—<!--
+-->into a vector of digits:
+simply subtract <code>'0'</code> from them!</p>
+<pre class="bqn"><code>    '9'-'0'
+9
+    &quot;1939102&quot;-'0'
+⟨ 1 9 3 9 1 0 2 ⟩</code></pre>
+The last example shows another important feature of pretty much all array oriented languages:
+<a href="https://mlochbaum.github.io/BQN/doc/arithmetic.html#pervasion">scalar pervasion</a>.
+Simply put, arithmetic functions like <code>-</code> know how to “penetrate” arrays,
+in that they apply to each element individually, instead of to the whole thing as one.
+In this case, the scalar <code>'0'</code> is “duplicated” and supplied to all elements of the string <code>"1939102"</code>.
+</details>
+<p>After the input is parsed, the solution is not so complicated:<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<pre class="bqn"><code>+´ inp/˜ inp= -1⌽inp</code></pre>
+<p>We <em>rotate</em> (<a href="https://mlochbaum.github.io/BQN/doc/reverse.html#rotate"><code>⌽</code></a>)
+the whole list by 1 to the right,
+and then compare it with its original (<code>inp= -1⌽inp</code>).
+This creates a <em>Boolean mask</em>: a list with the same length as <code>inp</code>, only consisting of zeros and ones.
+We can use this to pick the elements of the list corresponding to 1 with
+<em>replicate</em> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html#replicate"><code>/</code></a>).</p>
+<pre class="bqn"><code>    # &quot;Only give me the elements of 𝕩
+    # that correspond to 1's in 𝕨&quot;.
+    ⟨1,1,0,1,1,0⟩ / ↕6
+⟨ 0 1 3 4 ⟩</code></pre>
+<p>All that’s left is to sum up the numbers by using
++-<em>fold</em> (<a href="https://mlochbaum.github.io/BQN/doc/fold.html#fold"><code>`</code></a>),
+which is just a right fold over the list.
+A few more notes:</p>
+<ol type="1">
+<li><p>Boolean masks are an important concept to internalise,
+and will often be used to filter results, or serve as control flow<!--
+     -->—BQN does not have a builtin if-then-else expression!</p></li>
+<li><p><em>Swap</em> (<a href="https://mlochbaum.github.io/BQN/doc/swap.html"><code>˜</code></a>),
+as seen in the <a href="#a-crash-course-on-syntax">crash course on syntax</a> makes an appearance again.
+Recall that this 1-modifier simply takes a function, and returns a function with its arguments flipped,
+so <code>X f˜ Y</code> is the same as <code>Y f X</code>.
+When given only one argument, <em>swap</em> becomes <em>self</em> and duplicates its argument: <code>f˜ Y</code> is <code>Y f Y</code>.
+The modifier mostly exists to allow the reading order to flow more naturally from right to left.
+Without it, we would have to write the above expression as <code>+´(inp=-1⌽inp)/inp</code>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p></li>
+</ol>
+<hr />
+<p>Part two is basically the same,
+only a number doesn’t consider its first successor,
+but the one that’s exactly halfway around the list.
+Adjusting for this just means that we have to adjust how much we shift before comparing:</p>
+<pre class="bqn"><code>+´ inp/˜ inp= (-2÷˜≠inp)⌽inp</code></pre>
+<p>Even in this simple example,
+one can already see what goes into writing code in this language:
+aim for branchless, array-based, solutions rather than iterating through elements.
+However, if you ever miss <code>if-then-else</code> or <code>while</code> constructs,
+<a href="https://mlochbaum.github.io/BQN/doc/control.html">you can make your own</a>.</p>
+<h3 id="day-2"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day02.bqn">Day 2</a></h3>
+<p>Today we have to help some programs repair a corrupted spreadsheet.
+Our puzzle input is a table of numbers, like so:</p>
+<pre><code>5 9 2 8
+9 4 7 3
+3 8 6 5</code></pre>
+<p>For part one we have to calculate the smallest and largest values of all rows in the table.
+This is easy enough once we have the data in a usable format;
+however, getting to that format is actually the much more interesting part of the day.
+For one, we have to learn how to split strings!
+For these kinds of partitioning tasks, BQN sports the very general
+<em>group</em> (<a href="https://mlochbaum.github.io/BQN/doc/group.html"><code>⊔</code></a>)
+function.
+Briefly, <code>X⊔Y</code> groups <code>Y</code> according to the indices supplied by <code>X</code>,
+while omitting elements that are associated to <code>¯1</code>.
+For example, in</p>
+<pre class="bqn"><code>    1‿0‿¯1‿1 ⊔ &quot;abcd&quot;
+⟨ &quot;b&quot; &quot;ad&quot; ⟩</code></pre>
+<p>both <code>a</code> and <code>d</code> are associated to the same index, <code>1</code>, so they are grouped together;
+<code>b</code> is alone (and in front of <code>a</code> and <code>d</code> because it is associated to index <code>0</code>);
+and <code>c</code> is omitted.
+The strategy is, then, to somehow associate <code>¯1</code> to the separator in the input, and have all digits of a number be associated to the same index.
+If you want you can black box that such a <code>Split</code> function exists;
+if not, feel free to peruse the insert below.</p>
+<details>
+<summary>
+The long and painful walkthrough
+</summary>
+<p>We start by checking which elements of the given string match the separator,
+and call it <code>ws</code>.
+I will use a string with a space separator for illustrative purposes, but the function itself is really quite general.</p>
+<pre class="bqn"><code>    ' ' { ws←𝕨=𝕩 } &quot;13 259 39999 4&quot;
+⟨ 0 0 1 0 0 0 1 0 0 0 0 0 1 0 ⟩</code></pre>
+<p>Now, a
++-<em>scan</em> (<a href="https://mlochbaum.github.io/BQN/doc/scan.html"><code>`</code></a>)
+yields a running sum, indicating when we encounter a separator.</p>
+<pre class="bqn"><code>    ' ' { +`ws←𝕨=𝕩 } &quot;13 259 39999 4&quot;
+⟨ 1 1 2 2 2 2 3 3 3 3 3 3 4 4 ⟩</code></pre>
+<p>This looks a bit weird, but the <code>ws←𝕨=𝕩</code> is an inline assignment—we do the comparison <code>𝕨=𝕩</code>, call the result <code>ws</code>, and then scan over it.
+In this way, we can refer to <code>ws</code> again at a later point.
+It’s not the best style to write code this way, but here it kind of fits.
+If we just <em>group</em>ed the string now, we
+would get the separators “attached” to the word that follows them:</p>
+<pre class="bqn"><code>    ' ' { 𝕩⊔˜+`ws←𝕨=𝕩 } &quot;13 259 39999 4&quot;
+⟨ &quot;13&quot; &quot; 259&quot; &quot; 39999&quot; &quot; 4&quot; ⟩</code></pre>
+<p>One thing we can do,
+since <code>ws</code> gives us the positions of the separators,
+is to
+<em>negate</em> (<a href="https://mlochbaum.github.io/BQN/doc/logic.html"><code>¬</code></a>)
+the entire vector and multiply it with what we already have.
+This would turn all separators into zeros in the output:</p>
+<pre class="bqn"><code>    ' ' { (¬ws)×+`ws←𝕨=𝕩 } &quot;13 259 39999 4&quot;
+⟨ 0 0 0 1 1 1 0 2 2 2 2 2 0 3 ⟩</code></pre>
+<p>Now we can’t differentiate between the separators and our first word!
+However, there is an easy fix for this;
+we just take the original <code>ws</code>, which—remember—contains the positions of the separators,
+and subtract it from the result that we have:</p>
+<pre class="bqn"><code>    ' ' { ws-˜(¬ws)×+`ws←𝕨=𝕩 } &quot;13 259 39999 4&quot;
+⟨ 0 0 ¯1 1 1 1 ¯1 2 2 2 2 2 ¯1 3 ⟩</code></pre>
+<p>And that’s it!</p>
+<pre class="bqn"><code>    ' ' { 𝕩⊔˜ws-˜(¬ws)×+`ws←𝕨=𝕩 } &quot;13 259 39999 4&quot;
+⟨ &quot;13&quot; &quot;259&quot; &quot;39999&quot; &quot;4&quot; ⟩</code></pre>
+<p>If you wanted to make it unreadable (see the bit on trains below), you could also write it as</p>
+<pre class="bqn"><code>    ' ' ((⊢-˜¬×+`)∘=⊔⊢) &quot;13 259 39999 4&quot;
+⟨ &quot;13&quot; &quot;259&quot; &quot;39999&quot; &quot;4&quot; ⟩</code></pre>
+We can bind that to a function <code>Split</code> and be on our way!<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
+</details>
+<p>The input separates each number by a tab,
+so we just need <code>'\t' Split input</code>, right?</p>
+<p>Wrong!</p>
+<p>BQN’s characters and strings are almost completely void of any kind of escaping mechanism.
+That is to say, besides for double quotes, which are inserted by duplicating them,
+every character entered into a string it interpreted verbatim.
+Indeed, <code>'\t'</code> is not even a valid character,
+as it actually comprises two characters: <code>'\'</code> and <code>'t'</code>!
+To write a tab we either need to actually insert a tab character,<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>
+or make use of the “affine” part of affine characters:</p>
+<pre class="bqn"><code>    '	'
+'	'
+    @+9
+'	'</code></pre>
+<p>Because both <code>Split</code> and <code>tab←@+9</code> will be needed quite a few times this year,
+let’s put it into a small utility file.
+We can use BQN’s system function <code>•Import</code> to import a namespace<!--
+-->—which I don’t want to get into right now, but it works as one would expect—<!--
+-->from somewhere.
+Parsing the input and solving part one is straightforward:</p>
+<pre class="bqn"><code>⟨Split, tab⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+inp ← &gt;(•ParseFloat¨ tab⊸Split)¨ •FLines &quot;../inputs/day02.txt&quot;
+
++´ (⌈´-⌊´)˘ inp</code></pre>
+<p>…except that this solution uses two new concepts that we haven’t seen before:
+multidimensional arrays, and tacit programming!</p>
+<details>
+<summary>
+Arrays
+</summary>
+<p>The fateful day has come that we need to talk about arrays in this array language.
+I will probably not do this topic justice here, so <a href="https://mlochbaum.github.io/BQN/doc/array.html">have a link</a> to the BQN array docs.
+For now, let’s look at an array as a blob with the following properties:</p>
+<ul>
+<li><p>It has a <em>rank</em>, which is its number of axes.
+Pictorially, it is the number of dimensions one can walk in.
+The <em>leading axis</em> is the first one.</p></li>
+<li><p>It has a <em>shape</em>, which is the number of positions that it has along each of its axes.</p></li>
+<li><p>It has <em>elements</em>, which are the values at every position.</p></li>
+</ul>
+<p>One can query the <em>rank</em> of an array with monadic
+<a href="https://mlochbaum.github.io/BQN/doc/shape.html"><code>=</code></a>
+and the <em>shape</em> with monadic
+<a href="https://mlochbaum.github.io/BQN/doc/shape.html"><code>≢</code></a>.</p>
+<p>For example,</p>
+<pre class="bqn"><code>    10+↕9
+⟨ 10 11 12 13 14 15 16 17 18 ⟩</code></pre>
+<p>is an array of <em>rank</em> <code>1</code> with <em>shape</em> <code>⟨9⟩</code>.
+At every possible position (0–9), we find a corresponding element: <code>10</code> for 0, <code>11</code> for 1, etc.</p>
+<p>We can use <em>reshape</em> to create a higher-dimensional array from a flat vector:</p>
+<pre class="bqn"><code>    3‿3⥊↕9
+┌─
+╵ 0 1 2
+  3 4 5
+  6 7 8
+        ┘</code></pre>
+<p>This is an array of <em>rank</em> <code>2</code> with <em>shape</em> <code>⟨3 3⟩</code>.
+The element at position <code>1‿1</code> (notice how we have two indices to specify) is <code>4</code>.</p>
+<p>Why am I blabbering on about this when everyone intuitively knows what an array is?
+Because this is <em>really</em> important:
+arrays are an intrinsic concept.
+Many things that seem intuitive at first,
+coming from another language, are just not true in BQN.</p>
+<ul>
+<li><p>Lists of lists are not arrays:</p>
+<pre class="bqn"><code>    a ← ⟨⟨1,2⟩,⟨3,4⟩⟩
+⟨ ⟨ 1 2 ⟩ ⟨ 3 4 ⟩ ⟩
+    b ← &gt;a              # monadic &gt; is called *merge*
+                        # and creates an array from a list
+┌─
+╵ 1 2
+  3 4
+      ┘
+   b≡a
+0</code></pre></li>
+<li><p>Piggybacking off of that: “depth is not rank”.
+The type of the elements is not at all important in determining the arrays rank.</p>
+<pre class="bqn"><code>   =1‿2‿3‿4‿5 # vector
+1
+   =3‿3⥊↕9    # matrix
+2
+   m←1‿(3‿4)‿(2‿2⥊↕4) # Nested array
+┌─
+· 1 ⟨ 3 4 ⟩ ┌─
+            ╵ 0 1
+              2 3
+                  ┘
+                    ┘
+   =m # The rank of the elements does
+      # *not* affect the rank of the array.
+1</code></pre></li>
+</ul>
+<p>A <em>cell</em> of an array is just a subarray of any size.
+Now, a <em>major cell</em> of an array of rank <code>n</code> is a cell of rank <code>n-1</code> that leaves out the leading axis.
+For example, <code>3‿3⥊↕9</code> has three major cells, <code>⟨0 1 2⟩</code>, <code>⟨3 4 5⟩</code>, and <code>⟨6 7 8⟩</code>.</p>
+<p>This concept is quite central to the way a lot of array primitives work,
+in that they often only apply to the first axis of the argument.
+The 1-modifier
+<em>cells</em> (<a href="https://mlochbaum.github.io/BQN/doc/rank.html"><code>˘</code></a>)
+changes a function to instead operate on the major cells of its argument.
+For example, we already saw that <em>reverse</em> reverses lists.
+If we have more dimensions, we instead reverse along the leading axis:</p>
+<pre class="bqn"><code>    m←3‿3⥊↕9
+┌─
+╵ 0 1 2
+  3 4 5
+  6 7 8
+        ┘
+    ⌽m   # Reverse the first axis of m
+┌─
+╵ 6 7 8
+  3 4 5
+  0 1 2
+        ┘
+    ⌽˘m  # Reverse each major cell separately
+┌─
+╵ 2 1 0
+  5 4 3
+  8 7 6
+        ┘</code></pre>
+</details>
+<details>
+<summary>
+Tacit programming
+</summary>
+<p>If you, after reading this far,
+thought that BQN was really a little too verbose for you,
+<a href="https://mlochbaum.github.io/BQN/doc/tacit.html">you’re in luck</a>!</p>
+<p>The basic idea of trains is deceptively simple.
+Pick your favourite algebraic structure with a binary operation, say a monoid.
+Given two monoid morphisms <span class="math inline">f, g \colon M \to N</span>, we can define another map
+<span class="math display">
+  f \cdot g \colon M \to N, \qquad (f \cdot g)(x) \defeq f(x) \cdot g(x).
+</span>
+It is an easy exercise to prove that this is again a morphism of monoids.</p>
+<p>What BQN now does is twofold:
+first, it takes the expression <span class="math inline">f \cdot g</span>, and allows it to be called both monadically and dyadically.
+Second, it allows one to replace the operation in the middle with any dyadic function whatsoever.</p>
+<p>Train syntax is essentially just “writing functions after each other”.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>
+This in particular does not use any blocks, so you can’t refer to named arguments at all.
+More explicitly, we have the following two relationships:</p>
+<pre><code>(FGH)y  ≡  (Fy)G(Hy)   and   x(FGH)y  ≡  (xFy)G(xHy)</code></pre>
+<p>Replace <code>G</code> with <span class="math inline">\cdot</span> in the first of these and you essentially have the above mathematical notation.</p>
+<p>Since this train is composed of three functions, it is called a <em>3-train</em>.
+Naturally, <em>2-trains</em> also exist; these are just 3-trains in which the function <code>F</code> is <em>nothing</em>
+(<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>):</p>
+<pre><code>(GH)y  ≡  GHy   and   x(GH)y  ≡  G(xHy)</code></pre>
+<p>For example, suppose we wanted to write a function that takes two arrays <code>X</code> and <code>Y</code> and gives us back only those major cells of <code>X</code> that do not exist in <code>Y</code>.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>
+Sort of like a set difference for arrays.
+We just need a few functions for this purpose:
+<em>negate</em> (<a href="https://mlochbaum.github.io/BQN/doc/logic.html"><code>¬</code></a>) and
+<em>member of</em> (<a href="https://mlochbaum.github.io/BQN/doc/search.html#member-of"><code>∊</code></a>),
+which do what you would expect them to.</p>
+<p>Additionally, we will make use of the scalar pervasion of <em>member of</em>,
+where for every element in <code>𝕨</code>, we test whether it is in <code>𝕩</code>.</p>
+<pre class="bqn"><code>    &quot;.b#d.#zz#&quot; ∊ &quot;.#&quot;
+⟨ 1 0 1 0 1 1 0 0 1 ⟩</code></pre>
+<p>Let’s now write the function with and without trains:</p>
+<pre class="bqn"><code>    W1 ← {(¬𝕨∊𝕩)/𝕨}   # no trains at all
+    W2 ← (¬∊)/⊣       # A 3-train whose left argument is a 2-train
+    W3 ← ¬∘∊/⊣        # A single 3-train because of precedence
+
+    3‿1⥊⟨(↕9)W1⟨2,5,1⟩, (↕9)W2⟨2,5,1⟩, (↕9)W3⟨2,5,1⟩⟩
+┌─
+╵ ⟨ 0 3 4 6 7 8 ⟩
+  ⟨ 0 3 4 6 7 8 ⟩
+  ⟨ 0 3 4 6 7 8 ⟩
+                  ┘</code></pre>
+<p>That last example used the
+<em>atop</em> (<a href="https://mlochbaum.github.io/BQN/doc/compose.html#atop"><code>∘</code></a>)
+2-modifier; one of several
+<a href="https://mlochbaum.github.io/BQN/doc/tacit.html#combinators">combinators</a>
+that BQN sports to complement this syntax.
+I will generally introduce them on a call by need basis;
+<em>atop</em> is basically a 2-train as a modifier:</p>
+<pre><code>F∘G𝕩  ≡  FG𝕩   and   𝕨F∘G𝕩  ≡  F(𝕨G𝕩)</code></pre>
+<p>The <code>(¬∊)/⊣</code> example above shows that trains can “stack”.
+Parentheses are really important here, by the way, since
+depending on whether the overall length of an expression is even or odd
+things may get parsed as a 2- or 3- train!
+This is horribly confusing at first, but thankfully BQN has an <code>)explain</code> system function that prints the parse tree of an expression:</p>
+<pre><code>    )explain (¬∊)/⊣
+ (¬∊)/⊣
+   │  │
+  ¬∊  │
+  └──/⊣
+╶────┘
+
+    )explain ¬∘∊/⊣
+ ¬∘∊/⊣
+ │ │ │
+ ¬∘∊ │
+  └─/⊣
+╶───┘</code></pre>
+Playing around with this was immensely helpful for me in the beginning.
+</details>
+<p>The 1-modifier
+<em>each</em> (<a href="https://mlochbaum.github.io/BQN/doc/map.html"><code>¨</code></a>)
+does what it says on the tin—it’s comparable to <code>map</code> in many other languages.
+Parsing the input works as expected,
+in that we split each line on the tab character,
+and parse all the resulting sequences of digits as numbers.
+All that’s left to do is to assembly the table in to a rank two array.
+By means of <em>cells</em> we get the maximum and minimum for every row<!--
+-->—using the <code>⌈´-⌊´</code> train, which is a great one to reason through—<!--
+-->and sum up the resulting vector to get our answer.</p>
+<hr />
+<p>Part two asks a bit of a different question:
+instead of the smallest and largest number in each row,
+we instead need to find the two (unique) numbers such that one evenly divides the other,
+and take the result of that division.</p>
+<p>I didn’t think too hard about this and just decided to brute-force a solution.
+The idea is to proceed row-wise and first create a division table for each row with <code>÷⌜˜</code>.
+This uses the 1-modifier
+<em>table</em> (<a href="https://mlochbaum.github.io/BQN/doc/map.html#table"><code>⌜</code></a>),
+which is essentially a generalised outer product in the sense of linear algebra.
+Written out explicitly, this definition is equivalent to <code>{ 𝕩÷⌜𝕩 }</code>:
+it applies the given function to every element of <code>𝕩</code> on the left and all of <code>𝕩</code> on the right
+and makes that one row in a new matrix (or, table, hence the name).
+Since arithmetic functions support scalar pervasion,
+this ends up giving us the division table we want:</p>
+<pre><code>    (÷⌜˜) ⟨2, 4, 8, 16⟩
+┌─
+╵ 1 0.5 0.25 0.125    # 2÷2  2÷4  2÷8  2÷16
+  2   1  0.5  0.25    # 4÷2  …
+  4   2    1   0.5    # 8÷2  …
+  8   4    2     1    # 16÷2 …
+                   ┘</code></pre>
+<p>As the problem explicitly says,
+there will be exactly one pair of <em>different</em> numbers where one evenly divides the other.
+As such, we just need to select an integer<!--
+-->—e.g., some number that’s equal to its floor—<!--
+-->that is not one:</p>
+<pre class="bqn"><code>Two ← {
+  t ← ÷⌜˜𝕩            # Division table
+  ⊑((1≠t)∧t=⌊t)(/○⥊)t # Select integer that is not 1
+}
++´ Two˘ inp</code></pre>
+<p>As before, selection is done with <code>/</code> (<em>replicate</em>).
+We use <em>over</em>, <code>○</code>, which is one of the combinators mentioned earlier, to
+<em>deshape</em> (<a href="https://mlochbaum.github.io/BQN/doc/reshape.html#deshape"><code>⥊</code></a>)
+the array beforehand,
+as <em>replicate</em> only operates on vectors and not arrays.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>
+Briefly, one has that <code>𝕨(𝔽○𝔾)𝕩</code> is <code>(𝔾𝕨)𝔽(𝔾𝕩)</code>.
+We then just have to pick the first element of the array,
+which we know will have exactly one match.
+All that’s left to do is to apply the function <code>Two</code> to all rows of <code>inp</code>,
+which is but a <em>cells</em> away, and sum up the result.</p>
+<h3 id="day-3"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day03.bqn">Day 3</a></h3>
+<p>Day 3 asks us to implement an experimental memory layout: an infinite spiral grid.</p>
+<pre><code>17  16  15  14  13
+18   5   4   3  12
+19   6   1   2  11
+20   7   8   9  10
+21  22  23---&gt; ...</code></pre>
+<p>Part one is all about calculating the
+<a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan distance</a><a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>
+between the start point <code>1</code> in the middle of the grid, and wherever we end up with after taking
+as many steps as our puzzle input demands.
+As such, parsing is straightforward.</p>
+<pre class="bqn"><code>inp ← •ParseFloat⊑•FLines&quot;../inputs/day03.txt&quot;</code></pre>
+<p>I found no good array solution for this,
+so I just stared hard at the spiral until noticing the general pattern in which we are moving:
+<code>R U 2L 2D 3R 3U 4L 4D 5R 5U…</code>.
+The function that outputs all of the coordinates we’ve been to looks like this:</p>
+<pre class="bqn"><code>Coords ← { # 2×𝕩: Number of steps to go.
+  dirs ← (2×𝕩)⥊⟨0‿1, 1‿0, 0‿¯1, ¯1‿0⟩ # r u l d
+  natnat ← ∾(↕⋈¨↕)𝕩                   # 0 0 1 1 2 2 3 3 …
+  +`∾natnat{&lt;˘𝕨‿2⥊𝕩}¨dirs             # expand
+}</code></pre>
+<p>We create the <code>R U 2L 2D…</code> pattern in two steps,
+first assembling the directions and then the associated numbers.
+Notice that if <code>𝕨</code> is larger than the length of <code>𝕩</code>, <em>reshape</em> duplicates <code>𝕩</code> until it fits:</p>
+<pre class="bqn"><code>    5⥊⟨1,2,3⟩
+⟨ 1 2 3 1 2 ⟩
+    {(2×≠𝕩)⥊𝕩} ↕5       # Monadic ≠ is *length*
+⟨ 0 1 2 3 4 0 1 2 3 4 ⟩
+    (2×≠)⊸⥊ ↕5          # Bonus: the same thing tacitly
+⟨ 0 1 2 3 4 0 1 2 3 4 ⟩</code></pre>
+<p>The train <code>↕⋈¨↕</code> is interesting because of the middle component, <code>⋈¨</code>.
+It’s what one might call <code>zip</code> in other languages.
+In the last line, we first use <em>reshape</em> to replicate the vector <code>𝕩</code> exactly <code>𝕨</code> times:</p>
+<pre class="bqn"><code>    3 {𝕨‿2⥊𝕩} 0‿1
+┌─
+╵ 0 1
+  0 1
+  0 1
+      ┘</code></pre>
+<p>Then, since we actually want a nested vector instead of a rank two array,
+<em>enclosing</em> (<a href="https://mlochbaum.github.io/BQN/doc/enclose.html"><code>&lt;</code></a>)
+every major cell creates a
+<a href="https://mlochbaum.github.io/BQN/doc/enclose.html">unit array</a><!--
+-->—an array of shape <code>⟨⟩</code> containing the thing we enclosed as its only element—<!--
+-->which reduces the rank by one, yielding the desired flat structure.</p>
+<pre class="bqn"><code>    3 {&lt;˘𝕨‿2⥊𝕩} 0‿1
+⟨ ⟨ 0 1 ⟩ ⟨ 0 1 ⟩ ⟨ 0 1 ⟩ ⟩
+    ≢ 3 {&lt;˘𝕨‿2⥊𝕩} 0‿1         # rank
+⟨ 3 ⟩
+    ≡ 3 {&lt;˘𝕨‿2⥊𝕩} 0‿1         # depth
+2</code></pre>
+<p>Walking around the grid can now be simulated by summing up every individual move.
+Scanning over the array keeps all intermediate steps,
+which is useful since we are looking for a specific index:</p>
+<pre class="bqn"><code>    steps ← ∾ 3‿2 {&lt;˘𝕨‿2⥊𝕩}¨ ⟨0‿1, ¯1‿0⟩
+⟨ ⟨ 0 1 ⟩ ⟨ 0 1 ⟩ ⟨ 0 1 ⟩ ⟨ ¯1 0 ⟩ ⟨ ¯1 0 ⟩ ⟩
+   +`steps
+⟨ ⟨ 0 1 ⟩ ⟨ 0 2 ⟩ ⟨ 0 3 ⟩ ⟨ ¯1 3 ⟩ ⟨ ¯2 3 ⟩ ⟩</code></pre>
+<p>All that’s left is to <em>pick</em> the right coordinate
+(keeping in mind we skip the starting position),
+and calculate the Manhattan distance.</p>
+<pre class="bqn"><code>+´| (inp-2) ⊑ Coords 1000 # ⇒ 552</code></pre>
+<p>The <code>1000</code> above is a magic number,
+because the whole thing is really naturally a lazy infinite stream,<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>
+but that’s not how BQN works.</p>
+<hr />
+<p>Part two modifies how the spiral is constructed.
+Instead of just being the ascending natural numbers,
+a more elaborate iterative process is given:
+for every number,
+sum up the values of all the neighbours of a cell at the time of its creation.
+With an initial seed of <code>1</code>, this would look like</p>
+<pre><code>    147  142  133  122   59
+    304    5    4    2   57
+    330   10    1    1   54
+    351   11   23   25   26
+    362  747  806---&gt;   ...</code></pre>
+<p>Our task is to find the first number that’s bigger than our input.</p>
+<p>Again, no array-oriented solution presented itself to me,
+so I just did the obvious thing: for the point under consideration,
+generate a list of all neighbours,
+see whether they appear in the grid already,
+sum the values of those that do,
+and associate the point with that value in the grid.</p>
+<p>In this case, “grid” actually means hash map—yup, we have those.
+BQN exposes a simple interface under the <code>•HashMap</code> system value.
+The function names—<code>Has</code>, <code>Get</code>, <code>Set</code>, and so on—are relatively self-explanatory.</p>
+<pre class="bqn"><code>N ← { x‿y: ⥊(x+⟨¯1, 0, 1⟩)⋈⌜(y+⟨¯1, 0, 1⟩) }</code></pre>
+<p>We first calculate all of the neighbours of a given point,
+represented as a vector with two elements.
+The <code>x‿y:</code> part at the start of the function is a
+<a href="https://mlochbaum.github.io/BQN/doc/block.html#block-headers">header</a>,
+which I guess I should go into now.</p>
+<details>
+<summary>
+Headers
+</summary>
+<p>At the most basic level,
+headers can be used to name the arguments of, say, a function,
+instead of using the special names <code>𝕨</code> and <code>𝕩</code>:</p>
+<pre class="bqn"><code>    17 {left_arg 𝕊 right_arg: left_arg} 42
+17
+    17 {left_arg 𝕊 right_arg: right_arg} 42
+42</code></pre>
+<p>The colon ends the header, and begins the body of the block.
+The <code>𝕊</code> here is just a way to signal that the block is a function, instead of something else.
+Recursion can then be done by calling <code>𝕊</code> with some arguments, the same as with “anonymous” blocks.
+We can also give the function a name:</p>
+<pre class="bqn"><code>    { Fib n: n&lt;2? n;
+      Fib n: (Fib n-1) + Fib n-2
+    } 17
+1597</code></pre>
+<p>This example already highlights a few more features—and shortcomings—of blocks.
+First, a block can contain multiple bodies, separated by <code>;</code>, as well as multiple headers associated to them.
+When such a block is called,
+its headers are checked for compatibility with the arguments,
+until something appropriate is found (otherwise you get an error).</p>
+<p>Additionally, predicates in the form of <code>n&lt;2?</code> appear.
+Basically, this only evaluates the rest of the body if the predicate is true; otherwise, it jumps to the next header.
+Control flow!
+This is at the same time syntactically nice (chaining is quite concise: <code>𝕩&lt;2? 6=+´𝕩? …</code>),
+but also forces us to repeat the header in the “else” branch,
+as everything after <code>;</code> is in a new scope.
+This is especially annoying with more elaborate headers,
+but even here it feels unnecessarily verbose.</p>
+<p>Headers can also do some light destructuring:</p>
+<pre class="bqn"><code>    {x‿y: x} ⟨1, 2⟩    # Ok, vector should have exactly two elements
+1
+    {x‿y: x} ⟨1, 2, 3⟩ # Too long
+Error: No header matched argument
+    {x‿y: x} ⟨1⟩       # Too short
+Error: No header matched argument</code></pre>
+</details>
+<p>The rest of <code>N</code> is straightforward.
+Add all possible directions to every coordinate individually,
+pair them up again in a table,
+and flatten everything down to a vector with coordinate entries.</p>
+<pre class="bqn"><code>    ⥊(2+⟨¯1, 0, 1⟩)⋈⌜(3+⟨¯1, 0, 1⟩)
+⟨ ⟨ 1 2 ⟩ ⟨ 1 3 ⟩ ⟨ 1 4 ⟩ ⟨ 2 2 ⟩ # Line break for clarity
+  ⟨ 2 3 ⟩ ⟨ 2 4 ⟩ ⟨ 3 2 ⟩ ⟨ 3 3 ⟩ ⟨ 3 4 ⟩ ⟩</code></pre>
+<p>Let’s get to simulating!</p>
+<pre class="bqn"><code>Sim ← { # 𝕨 = grid = (x‿y)→n, …; 𝕩 = coords = ⟨x‿y, …⟩
+  (¯1⊑𝕨.Values@)&gt;inp?           # Newest value larger than input?
+    ¯1⊑𝕨.Values@;
+  grid 𝕊 coords:
+    p‿cs ← 1(↑⋈↓)coords ⋄ p⊑↩   # Point and rest
+    p grid.Set +´0⊸grid.Get¨N p # Get neighbour sums and set for point
+    grid 𝕊 cs                   # Recurse
+}</code></pre>
+<p>We smuggle a bit of control flow into <code>Sim</code> via the header <code>(¯1⊑𝕨.Values@)&gt;inp?</code>
+that checks whether the value added last is larger than the input,
+in which case we are done.
+Otherwise, we divide the list into a head and a tail with <code>1(↑⋈↓)</code>,
+compute the neighbours for the head,
+look each of them up in the grid,
+sum the results together,
+and assign that to the point under consideration.
+Then we just recurse to handle the other coordinates.</p>
+<p>All that’s left to do is to supply a source of coordinates, and a fresh hash map with <code>1</code> at index <code>0‿0</code>.</p>
+<pre class="bqn"><code>{h←⟨⟩•HashMap⟨⟩ ⋄ 0‿0 h.Set 1 ⋄ h} Sim Coords 10 # ⇒ 330785</code></pre>
+<h3 id="day-4"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day04.bqn">Day 4</a></h3>
+<p>Today we are asked to validate some passphrases (our puzzle input).
+One such phrase comprises some completely lowercase words separated by spaces: <code>x y</code>, <code>aa bb eix</code>, and so on.
+Our input is a list of these things</p>
+<pre><code>sayndz zfxlkl attjtww cti sokkmty brx fhh suelqbp
+xmuf znkhaes pggrlp zia znkhaes znkhaes
+nti rxr bogebb zdwrin
+sryookh unrudn zrkz jxhrdo gctlyz</code></pre>
+<p>Part one wants us to calculate how many passphrases do not contain duplicate words.
+BQN essentially gives us everything we need for this: we
+<em>sort</em> (<a href="https://mlochbaum.github.io/BQN/doc/order.html#sort"><code>∧</code></a>)
+each passphrase,
+use
+<em>mark firsts</em> (<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html#mark-firsts"><code>∊</code></a>)
+to mark the first occurrences of every element,
+and then check that the resulting vector we get is all ones:</p>
+<pre class="bqn"><code>⟨Split⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
++´ ∧´∘∊∘(' '⊸Split)¨ •FLines&quot;../inputs/day04.txt&quot; # ⇒ 383</code></pre>
+<p>Easy.</p>
+<hr />
+<p>Part two slightly expands on this;
+instead of being unique, words in a passphrase now only have to be unique up to permutation.
+This means that no word may be the anagram of another word.
+Solving this only requires a small adjustment to the above solution,
+in that we now have to sort every word before using <em>mark firsts</em>:</p>
+<pre class="bqn"><code>+´ ∧´∘∊∘(∧¨)∘(' '⊸Split)¨ •FLines&quot;../inputs/day04.txt&quot; # ⇒ 265</code></pre>
+<p>The actually interesting bit about this day was how to combine these two solutions,
+which involved writing my first real 1-modifier:</p>
+<pre class="bqn"><code>_Sol ← { +´ (∧´∊∘𝔽∘(' '⊸Split))¨ •FLines &quot;../inputs/day04.txt&quot; }
+⊢  _Sol # ⇒ 383
+∧¨ _Sol # ⇒ 265</code></pre>
+<details>
+<summary>
+The underscore in the name is syntactically relevant.
+</summary>
+<p>I’ve not mentioned this until now,
+but BQN has a pretty cute system in order to achieve its
+<a href="https://mlochbaum.github.io/BQN/doc/context.html">context free grammar</a>;
+namely, <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic roles</a>.
+Think of it sort of like a language enforced version of
+<a href="https://en.wikipedia.org/wiki/Hungarian_notation">Hungarian notation</a><!--
+-->—trust me, it’s not as horrendous as it sounds!</p>
+<p>First, here’s a fun one:
+the following variants all refer to <em>the same</em> identifier: <code>foo</code>, <code>fOo</code>, <code>FOO</code>, <code>___f_o____o</code>, <code>_foo_</code>.
+Quite outrageous, but the only way this system can work.</p>
+<p>There are just a few roles one needs to keep track of:
+subjects like variables, spelled with an initial lower case letter;
+functions, featuring an initial upper case letter;
+1-modifiers, starting with an underscore;
+and 2-modifiers, starting and ending with an underscore.
+Keep in mind that builtin functions, 1-modifiers, and 2-modifiers also have consistent syntactic features.
+This means that you can decide to which role any identifier belongs by just looking at it,
+which can be very useful when trying to decide how an expression should be parenthesised.</p>
+<p>The roles themselves are pretty self-explanatory;
+functions take variables as their right and left inputs,
+modifiers operate on functions, and so on.
+The fact that roles can change is how
+<a href="https://mlochbaum.github.io/BQN/doc/functional.html">functional programming</a>
+works in BQN:</p>
+<pre class="bqn"><code>    ⟨×˜,√⟩ {𝕎𝕩}⌜ 1‿4‿9
+┌─
+╵ 1 16 81
+  1  2  3
+          ┘</code></pre>
+<p>The function <code>{𝕎𝕩}</code> a priori takes two subjects—as all functions do—but then just turns around and treats the left one as a function.
+Since we give it a list of functions, this works and we can apply it to the right arguments.
+It’s important that we supplied a list here, btw; <code>×˜ {𝕎𝕩} 4</code> would not work, since <code>×˜</code> has a function role.
+In that case, we need to work with variables:</p>
+<pre class="bqn"><code>    Square ← ×˜
+×˜
+    square {𝕎𝕩} 4
+16</code></pre>
+<p>Honestly, I find this system super interesting,
+and quite expressive.
+It might be a bit confusing at first,
+so I would encourage the reader who made it this far to peruse BQN’s entire
+<a href="https://mlochbaum.github.io/BQN/doc/expression.html">expression syntax article</a>.</p>
+</details>
+<p>We can supply a function to <code>_Sol</code> that additionally transforms the individual words, before doing the uniqueness check.
+Then, for part one the supplied function may simply be
+<em>identity</em> (<a href="https://mlochbaum.github.io/BQN/doc/identity.html"><code>⊢</code></a>),
+which does what it says on the tin.</p>
+<h3 id="day-5"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day05.bqn">Day 5</a></h3>
+<p>Day 5 asks us to walk through a maze of self-rewriting jump instructions.
+Concretely, this means that we are given a vector of numbers,
+indicating how far (and in which direction) the jump is; for example,</p>
+<pre><code>2
+0
+0
+1
+2
+0
+1
+-4</code></pre>
+<p>After having jumped, the number at the last instruction is increased by one.
+For part one we have to find out when we would exit the vector.
+There is no real algorithm to speak of here, so we can just verbatim do what the instructions ask of us:</p>
+<pre class="bqn"><code>inp ← •ParseFloat¨ •FLines &quot;../inputs/day05.txt&quot;
+¯1⊑{ 𝕊i‿s: # index‿step
+  inp (1⊸+)⌾(i⊸⊑)↩  # Increase offset
+  ⟨1-˜i+i⊑inp, s+1⟩ # Subtract one from new index; we just increased the offset
+}•_while_{ 𝕊i‿s: (i&lt;≠inp)∧i≥0 } 0‿0   # ⇒ 351282</code></pre>
+<p>There are nevertheless a few interesting things about the solution:
+<code>inp F↩︎</code> <em>modifies</em> <code>inp</code> with the result of calling <code>F inp</code>.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>
+Much more interestingly, however, we can use
+<em>under</em> (<a href="https://mlochbaum.github.io/BQN/doc/under.html"><code>⌾</code></a>)
+to change only a part of the input vector.
+How it works in this “structural mode”<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> is that <code>𝔽⌾𝔾 𝕩</code>
+replaces the part of <code>𝕩</code> that’s picked out by <code>𝔾𝕩</code>
+with the result of <code>𝔽𝔾𝕩</code>.
+As such, it first focuses in on the structure with <code>𝔾</code>, applies <code>𝔽</code>,
+and then somehow “undoes” the first transformation,
+such that the result of <code>𝔽</code> gets embedded into the original array.</p>
+<p>The <code>•_while_</code> 2-modifier is used for iteration:
+<code>𝔽•_while_𝔾 𝕩</code> checks <code>𝔾v</code>, where <code>v</code> is initially <code>𝕩</code>, to see if it should keep iterating;
+if yes, it essentially does <code>v 𝔽↩︎</code> and goes back to <code>𝔾v</code> (where <code>v</code> is now updated!).
+I have to say that I would much rather think in terms of recursive functions,
+but—alas—the standard implementation of BQN, <code>cbqn</code>, does not support tail call optimisation.</p>
+<hr />
+<p>With that done, we have part two waiting for us.
+Now, how an instruction changes after we jumped depends on its value:
+if it’s three or more, we decrease it by one;
+otherwise, we proceed as before and increase it by one.</p>
+<pre class="bqn"><code>¯1⊑ {𝕊 i‿s: # index‿step
+  n ← i+i⊑inp
+  inp ((3≤i⊑inp)⊑⟨1⊸+, ¯1⊸+⟩)⌾(i⊸⊑)↩
+  ⟨ n, s+1 ⟩
+}•_while_{ 𝕊i‿s: (i&lt;≠inp)∧i≥0 } 0‿0  # ⇒ 24568703</code></pre>
+<p>This is another neat example of how to use Boolean expressions for control flow:
+depending on the result of <code>3≤i⊑inp</code>, we <em>pick</em> the correct function to apply.</p>
+<p>Wrapping this in a function that works for both days is not super interesting,
+only that we need to find a value <code>t</code> such that <code>t≤i⊑inp</code> will always be false.
+BQN has the aptly named <code>∞</code> for that,
+which is an infinity according to IEEE 754—BQN really only deals with <code>f64</code>’s.
+While we’re at it, we can add the instruction set as an additional argument to <code>Sim</code>,
+so that we don’t have to mutate the input directly.</p>
+<pre class="bqn"><code>Sim ← { thresh 𝕊 ins‿i‿s: # instructions‿index‿step
+  n ← i+i⊑ins
+  ins ((thresh ≤ i⊑ins)⊑⟨1⊸+, ¯1⊸+⟩)⌾(i⊸⊑)↩
+  ins‿n‿(s+1)
+}
+¯1⊑ ∞ Sim •_while_ { ·𝕊ins‿i‿s: (i&lt;≠ins)∧i≥0 } inp‿0‿0 # ⇒ 351282
+¯1⊑ 3 Sim •_while_ { ·𝕊ins‿i‿s: (i&lt;≠ins)∧i≥0 } inp‿0‿0 # ⇒ 24568703</code></pre>
+<h2 id="days-610">Days 6–10</h2>
+<h3 id="day-6"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day06.bqn">Day 6</a></h3>
+<p>Today we are tasked with redistributing blocks in a memory bank.
+Concretely, we are given a vector like <code>⟨0, 2, 7, 0⟩</code> and,
+in every step,
+we look for the maximal element <code>m</code>, and “redistribute” its value by adding one to each successor in the circular list until <code>m</code> steps have been taken.
+For example, the first few redistributions with the above start look like this:</p>
+<pre class="bqn"><code>⟨0, 2, 7, 0⟩  →  ⟨2, 4, 1, 2⟩  →  ⟨3, 1, 2, 3⟩</code></pre>
+<p>Notice in particular that the redistribution starts by “emptying” the bank with the highest value,
+so <code>⟨0, 2, 7, 0⟩</code> is first transformed into <code>⟨0, 2, 0, 0⟩</code>, then into <code>⟨0, 2, 0, 1⟩</code>, then into <code>⟨1, 2, 0, 1⟩</code>, and so on.
+At some point, we will—so the problem says—reach a configuration that we were already in before,
+and part one asks us to find the number of cycles before that happens.</p>
+<p>Parsing is the easy part, as the input just comprises a bunch of numbers on the first line:</p>
+<pre class="bqn"><code>⟨Split, tab⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+inp ← •ParseFloat¨ tab Split ⊑•FLines &quot;../inputs/day06.txt&quot;</code></pre>
+<p>The only interesting part of the solution is, I guess,
+the encoding of the redistribution.
+The basic idea is to take a number <code>n</code> at position <code>i</code>,
+create a vector of 1’s of length <code>n</code>,
+pad with <code>i</code> zeros on the left,
+and then press that into the length of the vector.</p>
+<pre class="bqn"><code>    v←⟨0,2,7,0⟩         # Test vector with max 7 at position 2
+⟨ 0 2 7 0 ⟩
+    ⟨-7⟩∾7⥊1            # Shape of 1's and ¯7
+⟨ ¯7 1 1 1 1 1 1 1 ⟩
+    (2⥊0)∾⟨-7⟩∾7⥊1      # Pad with zeros up to index
+⟨ 0 0 ¯7 1 1 1 1 1 1 1 ⟩
+    ↑‿4⥊(2⥊0)∾⟨-7⟩∾7⥊1  # Reshape to dimensions of v, and use fills
+┌─
+╵ 0 0 ¯7 1
+  1 1  1 1
+  1 1  0 0
+           ┘
+   +˝↑‿4⥊(2⥊0)∾⟨-7⟩∾7⥊1 # Sum up columns
+⟨ 2 2 ¯6 2 ⟩
+    v + ⟨ 2, 2, ¯6, 2 ⟩ # And we get the second step!
+⟨ 2 4 1 2 ⟩</code></pre>
+<details>
+<summary>
+Fills and special symbols for <em>reshape</em>
+</summary>
+<p>As you may have noticed, we gave the symbol <code>↑</code> to <em>reshape</em> above.
+Ordinarily, this is the <em>take</em> (or <em>prefixes</em>) function, but here it stands in as a special symbol to alter the behaviour of <em>reshape</em>.
+This, as well as various other values, is documented
+<a href="https://mlochbaum.github.io/BQN/doc/reshape.html#computed-lengths">here</a>,
+the relevant excerpt being</p>
+<blockquote>
+<p><code>↑</code> rounds the length up, but uses the argument’s fill for the needed extra elements.</p>
+</blockquote>
+<hr />
+<p><a href="https://mlochbaum.github.io/BQN/doc/fill.html">Fill elements</a>
+are basically certain “default” values of a given array.
+Operations on the array might make use of them if the array would otherwise end up having holes in it.
+Atomically, they are either <code>0</code> (for numbers) or <code>' '</code> (for characters),
+and higher dimensional arrays—being inductively defined in BQN—can inherit from this.
+A canonical example is <em>take</em> when the number of elements to be taken is longer than the length of the argument:</p>
+<pre class="bqn"><code>    3‿3⥊↕9
+┌─
+╵ 0 1 2
+  3 4 5
+  6 7 8
+        ┘
+   4↑3‿3⥊↕9
+┌─
+╵ 0 1 2
+  3 4 5
+  6 7 8
+  0 0 0
+        ┘</code></pre>
+<p>This is also how things like <em>nudge</em> decide what to pad the array with.</p>
+<pre class="bqn"><code>    1+↕9
+⟨ 1 2 3 4 5 6 7 8 9 ⟩
+    »1+↕9
+⟨ 0 1 2 3 4 5 6 7 8 ⟩
+    «1+↕9
+⟨ 2 3 4 5 6 7 8 9 0 ⟩</code></pre>
+<hr />
+<p>Reshaping may also use a fill element,
+if the dimensions of the reshape are not exactly divisible by the shape of the original array:</p>
+<pre class="bqn"><code>  3‿↑ ⥊ 7⥊1 # After running out of 1's, use 0's for padding
+┌─
+╵ 1 1 1
+  1 1 1
+  1 0 0
+        ┘</code></pre>
+</details>
+<p>To keep track of the already seen configurations,
+we could again use a hash map as in day 3.
+However, the number of configurations isn’t actually that large, so a normal list suffices.
+Appropriately generalising the above construction nets us the result for part one:</p>
+<pre class="bqn"><code>s‿d ← { seen‿xs:
+    m ← ⌈´xs              # max elements -&gt; to be redistributed
+    ⟨ seen∾&lt;xs, xs+ +˝↑‿(≠xs)⥊(0⥊˜⊑xs⊐m)∾⟨-m⟩∾m⥊1 ⟩
+    #                 reshape  before     at  after
+  } •_while_ {
+    seen‿xs: ⊑¬(&lt;xs)∊seen # while not seen
+  } ⟨⟩‿inp
+≠s                        # ⇒ 7864</code></pre>
+<hr />
+<p>Part two is just a slight variation on this idea:
+we now also have to calculate the exact cycle length.
+Since <code>•_while_</code> does not actually add the last memory bank state <code>d</code> to the vector <code>s</code>,
+this just involves checking for <code>d</code>‘s index in <code>s</code>
+and subtracting that from the vectors’ length:</p>
+<pre class="bqn"><code>⊑(≠s)-s⊐&lt;d # ⇒ 1695</code></pre>
+<p>Notice how we need to <em>enclose</em> <code>d</code> before using
+<em>index of</em> (<a href="https://mlochbaum.github.io/BQN/doc/search.html#index-of"><code>⊐</code></a>).
+Since <code>d</code> is a vector itself, the pervasive aspect of <em>index of</em> would otherwise ruin our day.</p>
+<h3 id="day-7"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day07.bqn">Day 7</a></h3>
+<p>This day has us study a tree of programs.
+To every program, one associates a weight and a (possibly empty) number of children.
+Our input is in the form of an adjacency list:</p>
+<pre><code>ktlj (57)
+fwft (72) -&gt; ktlj, cntj, xhth
+qoyq (66)
+padx (45) -&gt; pbga, havc, qoyq</code></pre>
+<p>More visually, such a tree can be written as</p>
+<pre><code>                gyxo
+              /
+         ugml - ebii
+       /      \
+      |         jptl
+      |
+      |         pbga
+     /        /
+tknk --- padx - havc
+     \        \
+      |         qoyq
+      |
+      |         ktlj
+       \      /
+         fwft - cntj
+              \
+                xhth</code></pre>
+<p>Part one asks us for the root node.
+Parsing is a bit ad-hoc, but not all that complicated:
+for a single line of the form <code>a (7) -&gt; b, c</code>,
+we first split every line by whitespace,
+use the first and second entry in the resulting vector verbatim,
+drop the <code>-&gt;</code>, and
+split the rest on <code>,</code>.</p>
+<pre class="bqn"><code>⟨Split⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+inp ← {
+  ws ← ' ' Split 𝕩
+  ⟨ ⊑ws, •BQN 1⊑ws, ','Split∾3↓ws ⟩ # name‿weight‿children
+}¨ •FLines&quot;../inputs/day07.txt&quot;
+# ⇒ ⟨ ⟨&quot;mmqyju&quot; 156 ⟨&quot;rjzvwv&quot; &quot;noybkx&quot;⟩⟩ … ⟩</code></pre>
+<p>The <code>•BQN</code> function is something like <code>eval</code> in lisps, or <code>⍎</code> in APL:
+it evaluates the given string
+(though, unlike APL, it does so in an isolated environment)
+and returns the result, whatever it may be.
+This is how we get away with parsing <code>"(8)"</code> to <code>8</code>,
+which is something that an ordinary <code>•ParseFloat</code> would fail at.</p>
+<p>The root node can be found without thinking about the tree at all:
+just check which node does not appear as a child of another one.</p>
+<pre class="bqn"><code>root ← ⊑ (⊑¨inp)(¬∘∊/⊣)(∾¯1⊑¨inp) # ⇒ &quot;svugo&quot;
+#        nodes  not-in  children</code></pre>
+<p>Recall the “not-in” idiom <code>¬∘∊/⊣</code> from when we talked about trains.</p>
+<hr />
+<p>Part two now makes use of the weights, which we haven’t at all needed so far.
+Our goal is to balance the tower of programs, so that the children of every node sum up to the same value.
+For example, given the input</p>
+<pre><code>pbga (66)
+xhth (57)
+ebii (61)
+havc (66)
+ktlj (57)
+fwft (72) -&gt; ktlj, cntj, xhth
+qoyq (66)
+padx (45) -&gt; pbga, havc, qoyq
+tknk (41) -&gt; ugml, padx, fwft
+jptl (61)
+ugml (68) -&gt; gyxo, ebii, jptl
+gyxo (61)
+cntj (57)</code></pre>
+<p>for the root, <code>tknk</code>, we would get the following sums of children:</p>
+<ul>
+<li><code>ugml</code> + (<code>gyxo</code> + <code>ebii</code> + <code>jptl</code>) = 68 + (61 + 61 + 61) = 251</li>
+<li><code>padx</code> + (<code>pbga</code> + <code>havc</code> + <code>qoyq</code>) = 45 + (66 + 66 + 66) = 243</li>
+<li><code>fwft</code> + (<code>ktlj</code> + <code>cntj</code> + <code>xhth</code>) = 72 + (57 + 57 + 57) = 243</li>
+</ul>
+<p>The problem tells us that, actually, only one program has the wrong weight.
+Above, that’d be <code>ugml</code>, which would have to change from weight <code>68</code> to <code>60</code>—the answer.</p>
+<pre class="bqn"><code>h ← ⟨⟩•HashMap⟨⟩ ⋄ { n‿w‿ch: n h.Set w‿ch }¨inp # name -&gt; weight, children
+M ← =´2↑⊑¨ # Do the first two elements have matching cumulative weights?
+SpotOutlier ← {
+  w‿ch ← h.Get 𝕩
+  sums ← ∧𝕊¨ch       # Sort by ascending w+wc
+  { 𝕊⟨⟩: w‿w;        # No children
+    𝕊s : M s? M⌽s?   # All child nodes's weights match
+      ⟨w++´⊑¨s, w⟩;
+    𝕊s : M s?        # Last weight is higher than the [o]ther[w]eights
+      wwc‿mw←¯1⊑s ⋄ ow‿·←  ⊑s ⋄ (mw-wwc-ow)!0;
+    𝕊s : M⌽s?        # First weight is lower than the [o]ther[w]eights
+      wwc‿mw←  ⊑s ⋄ ow‿·←¯1⊑s ⋄ (mw-wwc-ow)!0
+  } sums
+}
+
+SpotOutlier⎊•CurrentError root # ⇒ 1152</code></pre>
+<p>This looks like a lot of code, but the underlying recursive algorithm is not so complicated:</p>
+<ul>
+<li>For all children of the given node,
+create tuples of the total weight of each child <code>c</code> (including <code>c</code>’s children) and <code>c</code>’s own weight,
+and sort the resulting list in ascending order.
+This split of “weight” and “weight with children” is necessary,
+since we want to adjust the weight of the node at the end.</li>
+<li>Then, we check for the only conditions that can occur.<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>
+<ul>
+<li>If the list is empty that means there are no children and the node is leaf,
+so we hit the base case.</li>
+<li>If the weights of all children match,
+then we return the weight of the node and its children.</li>
+<li>Otherwise, the weight that doesn’t match is singled out,
+and the correct weight the node should have is thrown as an exception.</li>
+</ul></li>
+</ul>
+<p>Yes, feeling like a Python programmer, exceptions are used for control flow!
+Since we immediately want to exit the function, no questions asked,
+this seems as good a time as any to do something like that.
+The <em>assert</em> function <a href="https://mlochbaum.github.io/BQN/doc/assert.html#assert"><code>!</code></a>
+throws an exception if its right argument is not <code>1</code>.
+In case it’s supplied a left argument, this is the value of the exception.
+In the call to <code>SpotOutlier</code>, we can use the
+<em>catch</em> (<a href="https://mlochbaum.github.io/BQN/doc/assert.html#catch"><code>⎊</code></a>) 2-modifier to catch the exception.
+Since <em>catch</em> doesn’t actually know anything about the error<!--
+-->—only that one occurred—<!--
+-->we need the system value <code>•CurrentError</code> to access it.</p>
+<h3 id="day-8"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day08.bqn">Day 8</a></h3>
+<p>Today we have to help the CPU simulate a small language,
+consisting of simple register instructions like the following:</p>
+<pre><code>b inc 5 if a &gt; 1
+a inc 1 if b &lt; 5
+c dec -10 if a &gt;= 1
+c inc -20 if c == 10</code></pre>
+<p>The instructions are given in a pretty rigid form;
+abstractly, one has something like</p>
+<pre><code>«register» «operation» «number» if «register» «comparison» «number»</code></pre>
+<p>where <code>«operation»</code> is one of <code>inc dec</code>, and <code>«comparison»</code> is one of <code>&gt; &lt; &gt;= == &lt;= !=</code>.
+Part one asks us what the largest value in any register is after executing each instruction once.</p>
+<p>Perhaps unexpectedly, there is a relatively obvious bijection between the instruction syntax and the relevant BQN code!</p>
+<ul>
+<li>A number is a number.
+Due to the right hand side only being zero or one,
+we don’t even need to change <code>-20</code> into <code>¯20</code>,
+but can keep <code>-</code> as a function.</li>
+<li>A register is a variable holding a number.</li>
+<li>A register operation is a call to <em>modify</em> for that register.</li>
+<li>A comparison is a comparison.</li>
+<li>An <code>if</code> instruction is a multiplication of the condition with the “then branch”.
+Since BQN is evaluated right to left,
+this works on-the-nose and no extra parentheses are needed.</li>
+</ul>
+<p>Here are some sample translations:</p>
+<pre><code>b inc 5   if a  &gt; 1   ↔  b+↩5   × a&gt;1
+a inc 1   if b  &lt; 5   ↔  a+↩1   × b&lt;5
+c dec -10 if a &gt;= 1   ↔  c-↩-10 × a≥1
+c inc -20 if c == 10  ↔  c+↩-20 × c=10</code></pre>
+<p>Pretty neat, huh?
+The plan is clear: transform every line into its equivalent BQN code,
+and evaluate everything with <code>•BQN</code>.
+We have previously seen this function on <a href="#day-7">day 7</a>,
+where it’s essentially used as a shorthand for <code>•ParseFloat</code>—now we really want it to execute some code!
+Let’s first split every instruction into a list of its constituent words.</p>
+<pre class="bqn"><code>⟨Split⟩←•Import&quot;../../util/bqn_util/util.bqn&quot;
+inp ← ' '⊸Split¨ •FLines&quot;../inputs/day08.txt&quot;
+# e.g., &quot;c inc -20 if c == 10&quot; → ⟨&quot;c&quot;, &quot;inc&quot;, &quot;-20&quot;, &quot;if&quot;, &quot;c&quot;, &quot;==&quot;, &quot;10&quot;⟩</code></pre>
+<p>Now we can replace every element with its BQN equivalent.</p>
+<pre class="bqn"><code>C ← { # Convert instruction 𝕩 to BQN code
+  from ← ⟨&quot;if&quot;, &quot;dec&quot;, &quot;inc&quot;, &quot;&gt;=&quot;, &quot;==&quot;, &quot;&lt;=&quot;, &quot;!=&quot;⟩
+  to   ← ⟨&quot;×&quot; , &quot;-↩&quot; , &quot;+↩&quot; , &quot;≥&quot; , &quot;=&quot; , &quot;≤&quot; , &quot;≠&quot; , ⊢⟩ # last is fallthrough
+  {⊑from⊐&lt;𝕩}◶to¨𝕩
+}</code></pre>
+<p>This can be conveniently done with the
+<em>choose</em> (<a href="https://mlochbaum.github.io/BQN/doc/choose.html"><code>◶</code></a>) 2-modifier.
+Abstractly, <code>𝔽◶𝕘 𝕩</code> applies <code>𝔽</code> to <code>𝕩</code>, which should return an index.
+It then <em>picks</em> that index from the list <code>𝕘</code> (remember syntactic roles?).
+This should result in a function <code>G</code>, which is then applied to <code>𝕩</code>, yielding the final result:</p>
+<pre class="bqn"><code>_choose_ ← {
+  g ← (𝔽𝕩)⊑𝕘
+  G𝕩
+}</code></pre>
+<p>In this specific example, for each string in <code>𝕩</code>,
+we first get its index in the <code>from</code> vector.
+If the element is not found, then <em>index of</em> returns the length of the vector—an invalid index—instead.
+Then, we apply the picked function in <code>to</code> to the element we started with.
+In almost all cases, what’s being picked from <code>to</code> is actually a string, which is interpreted as the constant function on that value, so nothing happens.
+In case the element is not found, however, we apply <em>identity</em>, in order to not lose any information.</p>
+<pre class="bqn"><code>    {⊑from⊐&lt;𝕩}¨⟨ &quot;d&quot;, &quot;dec&quot;, &quot;683&quot;, &quot;if&quot;, &quot;qn&quot;, &quot;==&quot;, &quot;0&quot; ⟩
+⟨ 7 1 7 0 7 4 7 ⟩
+    {⊑from⊐&lt;𝕩}◶to¨⟨ &quot;d&quot;, &quot;dec&quot;, &quot;683&quot;, &quot;if&quot;, &quot;qn&quot;, &quot;==&quot;, &quot;0&quot; ⟩
+⟨ &quot;d&quot; &quot;-↩&quot; &quot;683&quot; &quot;×&quot; &quot;qn&quot; &quot;=&quot; &quot;0&quot; ⟩</code></pre>
+<p>Let’s get to simulating!
+As I said before, <code>•BQN</code> evaluates everything in a rather sandboxed environment.
+While it’s possible to inject some variable definitions into the namespace it uses,
+it seemed easiest to me to just shove everything we need into a single invocation of the function.
+That means lots of tasty string manipulation.</p>
+<pre class="bqn"><code>r ← ∊⊸/ ⊑¨inp        # all registers   ⇒ ⟨ &quot;d&quot; &quot;rak&quot; … ⟩
+•BQN ∾⟨
+  ∾ ∾⟜&quot;←0⋄&quot;¨r        # zero everything ⇒ &quot;d←0 ⋄ rak←0 ⋄ …&quot;
+  (∾⟜&quot;⋄&quot;⊸∾)´(∾C)¨inp # instructions    ⇒ &quot;d-↩683×qn=0 ⋄ d-↩-220×h=0 ⋄ …&quot;
+  &quot;⋄⌈´&quot;∾(∾⟜&quot;‿&quot;⊸∾)´r  # get max         ⇒ &quot;⋄⌈´d‿rak‿…&quot;
+⟩ # ⇒ 4416</code></pre>
+<hr />
+<p>Part two instead asks us for the largest value that is ever held in any register during the execution of the program.
+This introduces some notational, if not conceptual, difficulties—but nothing we can’t manage!
+Simply introduce an additional register that contains this information,
+and update it after every “normal” instruction.</p>
+<pre class="bqn"><code>•BQN ∾⟨
+  &quot;h_r←0⋄&quot;∾∾∾⟜&quot;←0⋄&quot;¨r # zero everything ⇒ &quot;h_r←0 ⋄ d←0 ⋄ rak←0 ⋄ …&quot;
+  (∾⟜&quot;⋄&quot;⊸∾)´({∾𝕩∾&quot;⋄h_r⌈↩&quot;∾⊑𝕩}C)¨inp
+                      # Check highest after every instruction
+                      # ⇒ &quot;d-↩683×qn=0 ⋄ h_r⌈↩d ⋄ d-↩-220×h=0 ⋄ h_r⌈↩d…&quot;
+  &quot;⋄ h_r&quot;
+⟩ # ⇒ 5199</code></pre>
+<h3 id="day-9"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day08.bqn">Day 9</a></h3>
+<p>Today, we need to clean up garbage from a stream of characters like <code>{&lt;{o"i!a,&lt;{i&lt;a&gt;e}</code>.
+There are a few special characters that one needs to watch out for:
+<code>{</code> and <code>}</code> delimit a group,
+<code>&lt;</code> and <code>&gt;</code> start and end garbage,
+and <code>!</code> ignores the next symbol.
+We are given a few examples of self-contained pieces of garbage:</p>
+<blockquote>
+<ul>
+<li><code>&lt;&lt;&lt;&lt;&gt;</code>, because the extra &lt; are ignored.</li>
+<li><code>&lt;{!&gt;}&gt;</code>, because the first &gt; is canceled.</li>
+<li><code>&lt;!!&gt;</code>, because the second ! is canceled, allowing the &gt; to terminate the garbage.</li>
+<li><code>&lt;!!!&gt;&gt;</code>, because the second ! and the first &gt; are canceled.</li>
+</ul>
+</blockquote>
+<p>By assumption, the whole input is one big group;
+part one asks how many small groups are contained in it.
+Groups are counted according to their depth, so <code>{{{}}}</code> gets a score of <code>1+2+3</code>,
+and <code>{{},{}}</code> gets a score of <code>1+2+2</code>.</p>
+<p>My solution here is actually quite crude and not all that interesting.
+My first idea was to use regular expressions to clean up the stream<!--
+-->—seems like a good fit—<!--
+-->but, alas, <code>cbqn</code> does not support any sort of regexp, as far as I can tell.
+Oh well.
+Doing it in a single pass would be nice, though,
+so let’s do what any psychopath would,
+and simply pattern match on the hard-coded invariants:</p>
+<pre class="bqn"><code>Solve ← {
+  𝕩⊑ 0‿0‿0‿0‿0 { # char 𝕊 inGarbage?‿ignored?‿depth‿score‿garbageCount
+    '{' 𝕊 0‿i‿d‿s‿c: 0‿0‿(d+¬i)‿s‿c;
+    '}' 𝕊 0‿i‿d‿s‿c: 0‿0‿(d-¬i)‿(s+d×¬i)‿c;
+    '!' 𝕊 g‿0‿d‿s‿c: g‿1‿d‿s‿c;
+    '&lt;' 𝕊 0‿0‿d‿s‿c: 1‿0‿d‿s‿c;
+    '&gt;' 𝕊 1‿i‿d‿s‿c: i‿0‿d‿s‿c;
+    cr  𝕊 g‿i‿d‿s‿c: g‿0‿d‿s‿(c+g∧¬i)
+  }´ ⌽•FChars&quot;../inputs/day09.txt&quot;
+}
+Solve ¯2 # ⇒ 16869</code></pre>
+<p>It works, I guess.
+Some of the invariants are packed inside of one clause;
+e.g., the line</p>
+<pre class="bqn"><code>'{' 𝕊 0‿i‿d‿s‿c: 0‿0‿(d+¬i)‿s‿c;</code></pre>
+<p>adds one to the depth only if the character is not ignored
+(<code>d+¬i</code> evaluates to <code>d</code> for <code>i=1</code>, and to <code>d+1</code> in case <code>i=0</code>).</p>
+<hr />
+<p>Part two asks us to find all non-cancelled characters hiding within the garbage.
+There are some special rules in that we don’t want to count the enclosing <code>&lt;&gt;</code>’s,
+but other than that this is pretty straightforward (and already included in <code>Solve</code>):</p>
+<pre class="bqn"><code>Solve ¯1 # ⇒ 7284</code></pre>
+<h3 id="day-10"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day10.bqn">Day 10</a></h3>
+<p>On day 10 we are asked to implement a custom hashing algorithm, based on knots.
+The basis of the algorithm is a “pinch and twist” move.</p>
+<pre><code>  4--5   pinch   4  5           4   1
+ /    \  5,0,1  / \/ \  twist  / \ / \
+3      0  --&gt;  3      0  --&gt;  3   X   0
+ \    /         \ /\ /         \ / \ /
+  2--1           2  1           2   5</code></pre>
+<p>Rather bravely, the problem… just gives us the instructions on how to do this with a flat list.</p>
+<blockquote>
+<p>To achieve this, begin with a list of numbers from 0 to 255, a current position which begins at 0 (the first element in the list), a skip size (which starts at 0), and a sequence of lengths (your puzzle input). Then, for each length:</p>
+<ul>
+<li>Reverse the order of that length of elements in the list, starting with the element at the current position.</li>
+<li>Move the current position forward by that length plus the skip size.</li>
+<li>Increase the skip size by one.</li>
+</ul>
+</blockquote>
+<p>Part one essentially asks us to simulate our input,
+and to multiply the first two numbers in the resulting list.
+As written above, the puzzle input looks like <code>3, 4, 1, 5</code>, and represents the sequence of lengths.
+We can (ab)use <code>•BQN</code> again to directly parse this into a vector.</p>
+<pre class="bqn"><code>inp ← •BQN '⟨'∾'⟩'∾˜ ⊑•FLines&quot;../inputs/day10.txt&quot;</code></pre>
+<p>Simulating one round works as described above.</p>
+<pre class="bqn"><code># One round; 𝕨: one length; 𝕩: ⟨list of marks, position, skip size⟩
+R ← { n 𝕊 xs‿p‿ss:
+  l←≠xs
+  ⟨ ⌽⌾((l|p+↕n)⊸⊏)xs , l|p+n+ss , ss+1 ⟩
+}
+×´ 2↑ ⊑ (↕256)‿0‿0 R´ ⌽inp # ⇒ 13760</code></pre>
+<p>The only thing we have to keep in mind is that indexing has to be circular.
+Due to the fantastic <em>under</em> 2-modifier, this is all pretty ergonomic.</p>
+<hr />
+<p>Part two now wants us to implement the whole hashing algorithm.
+Here’s essentially what we have to do:</p>
+<ul>
+<li>Treat our input a bit differently, to get a different “length” vector;</li>
+<li>repeat the algorithm from part one exactly 64 times, keeping the index and skip size intact across runs;</li>
+<li>from the 256 numbers in the vector, create blocks of 16 numbers each and XOR them together; and</li>
+<li>convert each of the resulting 16 bytes into their hex representation.</li>
+</ul>
+<p>Regarding the first point: we now treat every character—including the commas—of the input string as a separate input number.
+So given <code>1,2,3</code> as an input, we would first transform it to <code>49 44 50 44 51</code> before continuing.
+Additionally, we have to append the magic numbers <code>17 31 73 47 23</code> to the input.
+This neatly showcases one of the many uses for affine characters:<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
+<pre class="bqn"><code>inp2 ← ⌽ ⟨17, 31, 73, 47, 23⟩∾˜ -⟜@¨ ⊑•FLines&quot;../inputs/day10.txt&quot;</code></pre>
+<p>Since BQN does not have any format strings,
+one has to implement base conversions from scratch.
+Here is one from decimal to hexadecimal, specialised to one byte—always two characters, padded with <code>0</code> if need be:<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a></p>
+<pre class="bqn"><code>DecToHex←{
+  𝕩{ 0𝕊n: n∾˜(2-≠n)⥊'0';
+     x𝕊n: (⌊x÷16)𝕊(n∾˜&quot;0123456789abcdef&quot;⊑˜16|x)
+  }&quot;&quot;
+}</code></pre>
+<p>Finally, we get to XORing!
+One thing that bit me here is that BQN does not support bit operations on unsigned types, only signed and float.
+As such, even though all of the numbers are 8-bit unsigned integers, we have to operate on 16-bit <em>signed</em> integers instead.</p>
+<pre class="bqn"><code>X ← ⊑⋈⊸(16•bit._xor)´ # XOR two 16 bit signed ints together</code></pre>
+<p><em>Enlist</em>
+(<a href="https://mlochbaum.github.io/BQN/doc/pair.html"><code>⋈</code></a>)
+is needed here because at least one of the inputs to <code>•bit.xor</code> should have rank larger than zero
+(no, I don’t know why).
+We can now assemble all the pieces together:</p>
+<pre class="bqn"><code>∾ DecToHex∘X¨ 16(/⥊˜)⊸⊔ ⊑ R´⟜inp2⍟64 (↕256)‿0‿0
+# ⇒ &quot;2da93395f1a6bb3472203252e3b17fe5&quot;</code></pre>
+<p>I think the <code>n (/⥊˜)⊸⊔ xs</code> is quite cute.
+We first <em>reshape</em> the number <code>n</code> into a vector <code>n n …</code> of length <code>n</code>,
+and then use <em>indices</em> to create a list like <code>0 0 0 … 1 1 1 … n n n …</code>,
+with each number appearing exactly <code>n</code> times.
+Then we can use the vanilla <em>group</em> function to partition the given list into that many chunks.
+This obviously only makes sense in this specific scenario; still, cute.</p>
+<h2 id="days-1115">Days 11–15</h2>
+<h3 id="day-11"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day11.bqn">Day 11</a></h3>
+<p>This day wants us to walk some steps on a <a href="https://en.wikipedia.org/wiki/Hexagonal_tiling">hexagonal grid</a>.
+The coordinate system is defined like this:</p>
+<pre><code>  \ n  /
+nw +--+ ne
+  /    \
+-+      +-
+  \    /
+sw +--+ se
+  / s  \</code></pre>
+<p>Part one asks us to follow our input<!--
+-->—which is a string of instructions where to walk, like <code>ne,sw,ne,s,…</code>—<!--
+-->and then calculate a Manhattan-type distance from from the origin to the stopping point.</p>
+<p>The difficult part here would be to find a comprehensible coordinate system to represent hexagonal grids.
+Thankfully—or sadly?—I remember doing the exact same thing in a previous year.
+I wanted to use
+<a href="https://en.wikipedia.org/wiki/Hexagonal_Efficient_Coordinate_System">HECS</a>
+just for the name, but since all we really do is to calculate neighbours,
+an <a href="https://www.redblobgames.com/grids/hexagons/#coordinates-axial">axial</a><a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a> coordinate system seems like a safer bet.
+Basically, since a hex grid has three major axes that one can walk along,
+we embed the grid in a cube with standard Cartesian coordinates <code>x y z</code>, with the additional constraint that <code>0=x+y+z</code>.
+This in particular means that we don’t actually have to care about <code>z</code> at all.
+Given any coordinate, it’s neighbours have the following offsets:</p>
+<pre><code>    \ 0,¯1 /
+     \    /
+¯1,0  +--+  1,¯1
+     /    \
+ ---+      +---
+     \    /
+¯1,1  +--+  1,0
+     /    \
+    / 0, 1 \</code></pre>
+<p>The Manhattan distance in this encoding is just the sum of the two coordinates.</p>
+<pre class="bqn"><code>⟨Split⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+dirs ← &quot;n&quot;‿&quot;ne&quot;‿&quot;se&quot;‿&quot;s&quot;‿&quot;sw&quot;‿&quot;nw&quot;
+movs ← ⟨ 0‿¯1, 1‿¯1, 1‿0, 0‿1, ¯1‿1, ¯1‿0 ⟩
+pts ← {⊑movs/˜(&lt;𝕩)⍷dirs}¨ ','Split ⊑•FLines &quot;../inputs/day11.txt&quot;
++´| +´pts # ⇒ 707</code></pre>
+<p>We immediately translate each direction into a coordinate using a combination of <em>find</em>
+(<a href="https://mlochbaum.github.io/BQN/doc/find.html"><code>⍷</code></a>)
+and <em>replicate</em>,
+and that’s basically it.</p>
+<hr />
+<p>Part two is a slight variation of this idea:
+what is the furthest away we have ever been during this process?
+This just means that, instead of a <em>fold</em> over the list,
+we use a <em>scan</em> and take the maximum distance.</p>
+<pre class="bqn"><code>⌈´ +´∘|¨ +`pts # ⇒ 1490</code></pre>
+<h3 id="day-12"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day12.bqn">Day 12</a></h3>
+<p>It’s another graph problem!
+Today, we have to help a village of processes to communicate via pipes.
+The input datum is an adjacency list of nodes and their neighbours.</p>
+<pre><code>0 &lt;-&gt; 2
+1 &lt;-&gt; 1
+2 &lt;-&gt; 0, 3, 4
+3 &lt;-&gt; 2, 4
+4 &lt;-&gt; 2, 3, 6
+5 &lt;-&gt; 6
+6 &lt;-&gt; 4, 5</code></pre>
+<p>Parsing this is not terribly difficult:</p>
+<pre class="bqn"><code>inp ← (⊑⋈2⊸↓)∘(•BQN¨)∘(' '⊸Split)¨•FLines&quot;../inputs/day12.txt&quot;
+# ⇒ ⟨ ⟨0,⟨2⟩⟩, ⟨1,⟨1⟩⟩, ⟨2,⟨0,3,4⟩⟩, … ⟩</code></pre>
+<p>We first split each line on spaces, and then <code>•BQN</code> the whole thing.
+This is convenient for two reasons:
+it parses numbers followed by commas, like <code>10,</code>, as numbers,
+and interprets the <code>&lt;-&gt;</code> part as a train, so we don’t even have to do any further filtering.</p>
+<p>The first part wants us to find the path-component of <code>0</code>.
+One could now think hard about how to efficiently encode a graph in BQN for these path finding types of problems…
+or one could brute force the solution.
+Since the input graph is not that big,
+let’s just do the latter.
+Starting from <code>0</code>, maintain a list of neighbours that are known to connect to it.
+Then fold over the adjacency list and add the neighbours of every vertex we’ve already seen along the way.
+In code (monadic <code>⍷</code> is called <em>deduplicate</em> and does what it says on the tin):</p>
+<pre class="bqn"><code>Group ← { # 𝕩: adjacency list: ⟨ ⟨n, neighbours⟩, … ⟩
+  ⟨0⟩ { v‿ns 𝕊 seen: ⊑v∊seen? ⍷seen∾ns; 𝕩 }´ 𝕩
+}</code></pre>
+<p>Now, the above snippet does not work at all, because obviously the list does not have to be in order.
+Consider</p>
+<pre><code>3 &lt;-&gt; 1
+2 &lt;-&gt; 0, 1
+1 &lt;-&gt; 1, 3
+0 &lt;-&gt; 2</code></pre>
+<p>Calling <code>Group</code> on this input would result in <code>⟨ 0 2 1 ⟩</code>,<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a> even though <code>3</code> is also part of the group!
+To fix this we could… just run the algorithm until nothing changes?
+Yes, that sounds perfectly sensible.</p>
+<p>We need a helper 1-modifier <code>Fix</code>, which performs the iteration for us.<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a></p>
+<pre class="bqn"><code>_Fix ← { 𝔽∘⊢⍟≢⟜𝔽_𝕣∘⊢⍟≢⟜𝔽𝕩 }</code></pre>
+<details>
+<summary>
+I’m sure you wanted to see another gory walkthrough by someone who has no idea what they’re talking about.
+</summary>
+<p>Let’s first start with the simpler expression</p>
+<pre class="bqn"><code>_Fix ← { 𝕊∘⊢⍟≢⟜𝔽𝕩 }</code></pre>
+<p>the rest is just some icing on top.
+The parse tree for this does not look so bad:</p>
+<pre><code>    )explain {𝕊∘⊢⍟≢⟜𝔽𝕩}
+{𝕊∘⊢⍟≢⟜𝔽𝕩}
+{│ │ │ ││
+ 𝕊∘⊢ │ ││
+  └─⍟≢ ││
+    └─⟜𝔽│
+      ├─𝕩
+──────┘
+</code></pre>
+<p>Thus, fully parenthesised and without <em>after</em>, it looks like</p>
+<pre class="bqn"><code>{ 𝕩((𝕊∘⊢)⍟≢)𝔽𝕩 }</code></pre>
+<p>at which point even a simpleton like me may guess that it will execute something like
+<code>𝕊𝔽𝕩 if 𝕩≢𝔽𝕩 else 𝕩</code> (remember that using Boolean expression for control flow is a thing).</p>
+<p>The problem with this code is, again, that BQN does not support tail recursion.
+Let’s now look at the real deal.</p>
+<pre class="bqn"><code>_Fix ← { 𝔽∘⊢⍟≢⟜𝔽_𝕣∘⊢⍟≢⟜𝔽𝕩 }</code></pre>
+<p>Fully parenthesised this is</p>
+<pre class="bqn"><code>_Fix ⇐ { (((((((𝔽∘⊢)⍟≢)⟜𝔽)_𝕣)∘⊢)⍟≢)⟜𝔽)𝕩 }</code></pre>
+<p>In particular, notice how we already understand almost all of this modifier!
+The <code>𝔽∘⊢⍟≢⟜𝔽</code> part is the same as before, only we now don’t recurse,
+but build up another level of “apply <code>𝔽</code>”.
+The rest sort of also works as before—the outer <em>after</em> has the same shape—so
+we are looking at</p>
+<pre class="bqn"><code>_D ← {𝔽∘⊢⍟≢⟜𝔽} # Double F
+_Fix ← {𝕩(((𝔽_D _𝕣)∘⊢)⍟≢)𝔽𝕩}</code></pre>
+So if <code>𝕩≢𝔽𝕩</code>, we change the function <code>𝔽</code> to essentially <code>𝔽𝔽</code>, and then recurse.
+This happens on every iteration, so we actually go from <code>𝔽</code> to <code>𝔽𝔽</code> to <code>𝔽𝔽𝔽𝔽</code>, and so on.
+In short, we bring down the stack size to <span class="math inline">\log n</span> instead of <span class="math inline">n</span>.
+Neat.
+</details>
+<p>Equipped with <code>_Fix</code>,
+we can swiftly change the definition of <code>Group</code> to solve part one:</p>
+<pre class="bqn"><code>Group ← {
+  { v‿ns 𝕊 seen: ⊑v∊seen? ⍷seen∾ns; 𝕩 }´⟜𝕩 _Fix ⟨0⟩
+}
+≠Group inp # ⇒ 380</code></pre>
+<p>Because we fold over the same list every time,
+we can glue it to the right side of the function using <em>after</em>.</p>
+<hr />
+<p>Part two tasks us with finding all of the connected components of the graph,
+instead of just the one containing <code>0</code>.
+For that we first need to adjust our <code>Group</code> function a little; instead of the hard-coded <code>0</code>,
+let’s search for the group of the first node in the given adjacency list.</p>
+<pre class="bqn"><code>Group ← { # 𝕩 = ⟨ ⟨0,⟨2⟩⟩, ⟨1,⟨1⟩⟩, ⟨2,⟨0,3,4⟩⟩, … ⟩
+  { v‿ns 𝕊 seen: ⊑v∊seen? ⍷seen∾ns; 𝕩 }´⟜𝕩 _Fix ⟨⊑⊑𝕩⟩
+}</code></pre>
+<p>Now, we can successively obtain a single connected component, and delete it from the graph.
+Since the graph is undirected, this just means looking for the nodes in our list.
+For iteration, <code>•_while_</code> can be used as before:</p>
+<pre class="bqn"><code>c ← 0
+{ c +⟜1↩ ⋄ (⊑¨⊸(¬∊)/⊣)⟜Group 𝕩 } •_while_ (⟨⟩⊸≢) inp
+c            # ⇒ 181</code></pre>
+<p>The result of <code>Group</code> applied to <code>𝕩</code>
+is a single connected component,
+so we want to throw out all of these nodes.
+After that, just increment the counter and move on.
+The whole thing stops when the list is empty—easy!</p>
+<h3 id="day-13"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day13.bqn">Day 13</a></h3>
+<p>We need to make our way across a firewall without being detected by packet scanners.
+The firewall is represented by layers, each of which has a certain depth to it.
+For example, given the input</p>
+<pre><code>0: 3
+1: 2
+4: 4
+6: 4</code></pre>
+<p>one can visualise the firewall like this:</p>
+<pre><code> 0   1   2   3   4   5   6
+[ ] [ ] ... ... [ ] ... [ ]
+[ ] [ ]         [ ]     [ ]
+[ ]             [ ]     [ ]
+                [ ]     [ ]</code></pre>
+<p>In each layer, there is a scanner starting at the top.
+Every tick, it moves one layer down, bouncing off the bottom and coming up again.
+We start in an imagined layer <code>¯1</code> at the very top.
+Part one asks us to calculate how often we are <em>caught</em>—that is, overlap with a scanner.
+Let’s quickly go through the first few steps of the simulation for the above input:</p>
+<pre><code>Initial state:
+     0   1   2   3   4   5   6
+ () [S] [S] ... ... [S] ... [S]
+    [ ] [ ]         [ ]     [ ]
+    [ ]             [ ]     [ ]
+                    [ ]     [ ]
+
+Tick 1 (not caught):
+ 0   1   2   3   4   5   6
+( ) [ ] ... ... [ ] ... [ ]
+[S] [S]         [S]     [S]
+[ ]             [ ]     [ ]
+                [ ]     [ ]
+
+Tick 2 (caught):
+ 0   1   2   3   4   5   6
+[ ] (S) ... ... [ ] ... [ ]
+[ ] [ ]         [ ]     [ ]
+[S]             [S]     [S]
+                [ ]     [ ]</code></pre>
+<p>You get the idea.
+For every layer <span class="math inline">l</span> of size <span class="math inline">n</span>,
+the question whether the probe is caught in step <span class="math inline">l</span> is equivalent to <span class="math inline">2(n - 1) \equiv 0 \mod l</span>,
+where we need to subtract <span class="math inline">2</span> due to the bouncing off mechanic.
+To get the score of a collision, multiply <span class="math inline">l</span> and <span class="math inline">n</span> together.
+We can just verbatim copy this to BQN.</p>
+<pre class="bqn"><code>⟨Split⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+inp ← (•BQN¨':'⊸Split)¨ •FLines &quot;../inputs/day13.txt&quot;
++´{l‿n: l×n×0=l|˜2×n-1}¨inp # ⇒ 1316</code></pre>
+<hr />
+<p>Part two wants us to not get caught;
+however, the only thing we can control is our starting time.
+This would be a pretty cool problem if it were not brute forcable.
+Alas, it is.</p>
+<pre class="bqn"><code>+⟜1 •_while_ {𝕊d: ⊑0∊{l‿n: (l+d)|˜2×n-1}¨inp} 0 # ⇒ 3840052</code></pre>
+<p>The algorithm is the same as above,
+only that we now have an additional delay to factor into the equation.
+We iterate until we find a delay <code>d</code> such that <code>0</code> is not a member of <code>{l‿n: (l+d)|˜2×n-1}¨inp</code>;
+i.e., such that we are not caught by any sensor.</p>
+<h3 id="day-14"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day14.bqn">Day 14</a></h3>
+<p>Today we are asked to defragment a disk,
+represented by a 128×128 grid,
+with each square being either used or free.
+It’s built like this:
+given our input, e.g., <code>"abc"</code>,
+create strings <code>"abc-0"</code> through <code>"abc-127"</code>.
+For each of them, run the knot hash function from <a href="#day-10">day 10</a>,
+convert every single hex
+<a href="https://en.wikipedia.org/wiki/Nibble">nibble</a>
+to its 4-digit binary representation—e.g., for <code>"0f"</code> we would get <code>"00001111"</code>—<!--
+-->and merge things together into a big 128×128 matrix.
+The finished grid might look a little bit like this:</p>
+<pre><code>##.#.#..--&gt;
+.#.#.#.#
+....#.#.
+#.#.##.#
+.##.#...
+##..#..#
+.#...#..
+##.#.##.--&gt;
+|      |
+V      V</code></pre>
+<p>To get the grid representation, we first need to rewrite our solution for day 10,
+and export a function to compute the knot hash of the given argument.</p>
+<pre class="bqn"><code>KnotHash ⇐ {
+  ls ← ⌽ ⟨17, 31, 73, 47, 23⟩∾˜ -⟜@¨ 𝕩
+  ∾ DecToHex∘X¨ 16(/⥊˜)⊸⊔ ⊑ R´⟜ls⍟64 (↕256)‿0‿0
+}
+•Show KnotHash inp2 # ⇒ &quot;2da93395f1a6bb3472203252e3b17fe5&quot;</code></pre>
+<p>Nothing too unusual here,
+only that exporting from a namespace works by binding with <em>export</em>
+(<a href="https://mlochbaum.github.io/BQN/doc/namespace.html"><code>⇐</code></a>)
+instead of <em>define</em>.
+We can now import this function as we did for ones in the utility file,<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a></p>
+<pre class="bqn"><code>⟨Split,_Fix⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+⟨KnotHash⟩ ← •Import &quot;./day10.bqn&quot;</code></pre>
+<p>and translate the recipe above into BQN code.</p>
+<pre class="bqn"><code>grid ← {
+  HexToBin ← {  𝕊p: p𝕊⟨⟩;              # Start
+               0𝕊r: r∾˜0⥊˜4-≠r;        # End: pad with zeros
+               p𝕊r: (⌊p÷2)𝕊(r∾˜2|p)    # Conversion
+             }¨∘(&quot;0123456789abcdef&quot;⊸⊐) # Convert hex to decimal, then to binary
+  Start ← (⊑•FLines&quot;../inputs/day14.txt&quot;)∾&quot;-&quot;∾•Fmt
+  Row ← ∾∘HexToBin∘KnotHash
+  &gt;Row∘Start¨↕128
+}</code></pre>
+<p>Not too many new things here.
+<code>HexToBin</code> essentially runs on the same logic as <code>DecToHex</code> from day 10,
+and the <code>•Fmt</code> function just pretty-prints the given value to a string.
+This is, however, the first time that we see an ambidextrous function definition<!--
+-->—one that can be called both monadically and dyadically.
+The monadic case is used in lieu of an internal worker function,
+like what Haskell people often call <code>go</code>.
+This could have also been achieved with a construct like <code>{…}⟜⟨⟩¨…</code>, but I feel like that wouldn’t read as nicely.</p>
+<p>Part one just asks us how many cells are alive:</p>
+<pre class="bqn"><code>+´⥊grid # ⇒ 8222</code></pre>
+<p>We need to convert the matrix into a vector first, because <em>fold</em> only works on vectors.
+Alternatively, we could have also summed up all major cells separately with <em>insert</em>
+(<a href="https://mlochbaum.github.io/BQN/doc/fold.html"><code>˝</code></a>),
+and then summed up the resulting vector.</p>
+<pre class="bqn"><code>+´+˝grid # ⇒ 8222</code></pre>
+<hr />
+<p>Part two is more interesting, and is probably among the top three parts for me in terms of fun.
+Instead of simply counting the number of alive cells, we now need to find the number of distinct <em>regions</em>—<!--
+-->live cells adjacent to each other in any of the four cardinal directions.
+For example, the grid shown above would have the following regions<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a></p>
+<pre><code>11.2.3..--&gt;
+.1.2.3.4
+....5.6.
+7.8.55.9
+.88.5...
+88..5..8
+.8...8..
+88.8.88.--&gt;
+|      |
+V      V</code></pre>
+<p>So, what do we do?
+This question reminds me a little bit of a game of life–type situation,
+only that we don’t have to evolve the grid.
+Starting with</p>
+<pre class="bqn"><code>    m ← 3‿3⥊0‿0‿1‿1‿1‿0‿1‿0‿0
+┌─
+╵ 0 0 1
+  1 1 0
+  1 0 0
+        ┘</code></pre>
+<p>the first step is to associate a unique number with each <code>1</code> in the grid.
+One way of doing this is to <em>deshape</em> the array into a vector, and then take a +-<em>scan</em> of it.
+This will only increase when another <code>1</code> is encountered:</p>
+<pre class="bqn"><code>    +`⥊m
+⟨ 0 0 1 2 3 3 4 4 4 ⟩
+   3‿3⥊+`⥊m
+┌─
+╵ 0 0 1
+  2 3 3
+  4 4 4
+        ┘</code></pre>
+<p>If we now multiply with the original matrix,
+all of the zeros will kill the redundant numbers in that representation.</p>
+<pre class="bqn"><code>    um ← m×3‿3⥊+`⥊m
+┌─
+╵ 0 0 1
+  2 3 0
+  4 0 0
+        ┘</code></pre>
+<p>Packing this up into its own function,
+a clever user of <em>under</em> takes care of all of the de- and reshaping for us.</p>
+<pre class="bqn"><code>+`⊸×⌾⥊</code></pre>
+<p>Now, the idea is to proceed in the following way:
+take the maximum of every cell with its four neighbours<!--
+-->—to get group the cell should belong to if it’s alive—<!--
+-->and then multiply by the original value of the cell, to again make sure we only care about live cells.
+Now, because BQN is an array language, we can do all of this for the whole array at the same time!
+We can use <em>nudge</em> in either direction to get the North and South neighbour (remember that first axis stuff?),
+and <em>nudge</em> <em>cells</em> to get the East and West one:</p>
+<pre class="bqn"><code>    m ← 3‿3⥊1
+┌─
+╵ 1 1 1
+  1 1 1
+  1 1 1
+        ┘
+   ⟨«,»,«˘,»˘⟩{𝕎𝕩}¨&lt;m
+┌─
+· ┌─        ┌─        ┌─        ┌─
+  ╵ 1 1 1   ╵ 0 0 0   ╵ 1 1 0   ╵ 0 1 1
+    1 1 1     1 1 1     1 1 0     0 1 1
+    0 0 0     1 1 1     1 1 0     0 1 1
+          ┘         ┘         ┘         ┘
+                                          ┘</code></pre>
+<p>There are a few things going on here.
+First, we use BQN’s
+<a href="https://mlochbaum.github.io/BQN/doc/functional.html">functional programming capabilities</a>,
+which work just about as one would expect.<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>
+Second, we need to <em>enclose</em> <code>m</code> and make it a
+<a href="https://mlochbaum.github.io/BQN/doc/enclose.html">unit array</a>,
+as otherwise <em>each</em> is trying to match up the major cells of <code>m</code> with the elements of our vector (the functions).
+We don’t want that, and making <code>m</code> a unit will correctly “duplicate” it to each function instead.
+Finally, <em>nudge</em> correctly inserts the fill elements for the edge cases;
+our grid is only 128×128 and we are not on a torus.<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a></p>
+<p>Now, we can just compare every neighbour with the original value,
+and kick out the zeros.
+Using our <code>um</code> array from above:</p>
+<pre class="bqn"><code>    (×um)×⌈´⟨«,»,«˘,»˘,⊢⟩{𝕎𝕩}¨&lt;um
+┌─
+╵ 0 0 1
+  4 3 0
+  4 0 0
+        ┘</code></pre>
+<p>For kicking out the zeros we have to use
+<em>signum</em> (<a href="https://mlochbaum.github.io/BQN/doc/arithmetic.html"><code>×</code></a>),
+so as to not falsify the group.
+Now, you may notice that this process hasn’t converged yet; <code>3</code> is in the same group as <code>4</code>,
+but there wasn’t enough time for it to be swallowed up yet.
+But we have a <code>_Fix</code> for that, don’t we?</p>
+<pre class="bqn"><code>    { (×𝕩)×⌈´⟨«,»,«˘,»˘,⊢⟩{𝕎𝕩}¨&lt;𝕩 }_Fix um
+┌─
+╵ 0 0 1
+  4 4 0
+  4 0 0
+        ┘</code></pre>
+<p>To get the number of regions,
+we just have to pull everything together<!--
+-->—and remember to subtract one, for <code>0</code>’s region.</p>
+<pre class="bqn"><code>{ 𝕊g:
+  g (+`⊸×⌾⥊)↩
+  g {(×𝕩)×⌈´⟨»˘,«˘,»,«,⊢⟩{𝕎𝕩}¨&lt;𝕩}_Fix↩
+  1-˜+´∊⥊g # Count all unique numbers minus 0
+} grid     # ⇒ 1086</code></pre>
+<h3 id="day-15"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day15.bqn">Day 15</a></h3>
+<p>For day 15 we have to help a pair of duelling generators decide which of them is malfunctioning.
+Each generator produces a value in the following way:
+take the previous value, multiply it by <code>16807</code> (generator A) or <code>48271</code> (generator B),
+and then keep the remainder of dividing the resulting product by <code>2147483647</code>.<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a>
+Our puzzle input comprises the initial seeds whence this process starts.
+The task for part one is to check whether the lowest 16 bits of both of these numbers match up,
+and count the number of times this happens after 40 million pairs.</p>
+<p>Parsing is simple.</p>
+<pre class="bqn"><code>⟨Split⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+a‿b ← •ParseFloat∘(¯1⊸⊑)∘(' '⊸Split)¨ •FLines &quot;../inputs/day15.txt&quot;</code></pre>
+<p>The rest is similarly straightforward.
+One could drop down to bit-wise operations again,
+but the lowest 16 bits of <span class="math inline">x</span> and <span class="math inline">y</span> matching up is equivalent to <span class="math inline">x \equiv y \mod 2^{16}</span>;
+let’s do that instead.</p>
+<pre class="bqn"><code>S ← { 𝕊a‿b‿n:
+  na ← 2147483647|a×16807
+  nb ← 2147483647|b×48271
+  nn ← na =○(65536⊸|) nb
+  ⟨na,nb,n+nn⟩
+}
+S⍟40e6 a‿b‿0 # ⇒ 631</code></pre>
+<p>We use <em>over</em>
+(<a href="https://mlochbaum.github.io/BQN/doc/compose.html"><code>○</code></a>)
+to apply this transformation to the two arguments,
+and then check for equality (i.e., <code>𝕨𝔽○𝔾𝕩</code> is <code>(𝔾𝕨)𝔽(𝔾𝕩)</code>).</p>
+<hr />
+<p>Part two asks us to change up the algorithm, so that generator A only considers multiples of 4,
+and generator B only cares about multiples of 8.
+That is, both generators independently generate numbers until these conditions are met,
+and only then are these numbers compared.
+We also only have to check 5 million pairs, instead of the 40 million of part one.
+First and foremost, this means that we have to decouple the comparison aspect from the generation of the numbers.</p>
+<pre class="bqn"><code>Gen ← { fac 𝕊 n:
+  res ← ⟨⟩
+  {res∾↩2147483647|(¯1⊑⥊𝕩)×fac}⍟40e6 n
+  res 65536⊸|↩
+}
+as ← 16807 Gen a
+bs ← 48271 Gen b</code></pre>
+<p>The calculations are the same as in part one, only now we use <em>change</em> to build a list that we can return.
+Luckily, simply generating 40 million pairs as above and filtering for the right properties works out for us here.</p>
+<pre class="bqn"><code>F ← 5e6↑(0⊸=|)/⊢
++´(8 F bs)=(4 F as) # ⇒ 279</code></pre>
+<h2 id="days-1620">Days 16–20</h2>
+<h3 id="day-16"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day16.bqn">Day 16</a></h3>
+<p>This day involves analysing the dance of a few programs.
+Part one is about mutating a small vector—characters <code>'a'</code> through <code>'p'</code>—according to the puzzle input,
+which is a single line that looks a bit like this:</p>
+<pre><code>s11,x10/2,pl/d,…</code></pre>
+<p>The valid moves are:</p>
+<ul>
+<li><code>sA</code> rotates the vector <code>A</code> positions to the right.</li>
+<li><code>xA/B</code> exchanges the positions <code>A</code> and <code>B</code>.</li>
+<li><code>pA/B</code> exchanges the characters <code>A</code> and <code>B</code>.</li>
+</ul>
+<p>So starting with just <code>abcd</code>, the sequence <code>s1,x3/4,pe/b</code> would go</p>
+<pre><code>abcd  →  eabcd  →  eabdc  →  baedc</code></pre>
+<p>Parsing the moves is not terribly complicated.
+The cool thing is that we can use BQN’s functional programming facilities again
+and immediately translate the instructions above into functions to be applied!</p>
+<pre class="bqn"><code>⟨Split⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+P ← {
+  a‿&quot;s&quot;: (-•ParseFloat a)⊸⌽;                # sA
+  a‿&quot;x&quot;: ⌽⌾((•ParseFloat¨'/'Split a)⊸⊏);    # xA/B
+  a‿&quot;p&quot;: { 𝕊xs: ⌽⌾((xs⊐∾'/'Split a)⊸⊏) xs } # pA/B
+}
+inp ← ⌽ P∘(1⊸(↓⋈↑))¨ ','Split ⊑•FLines&quot;../inputs/day16.txt&quot;
+# Reverse because we want to fold over the list later.</code></pre>
+<p>Since the format of the instructions is so predictable,
+we can just match on the first character and decide where to go from there.
+Also, the <code>1(↓⋈↑)</code> idiom returns as a useful tool yet again.
+Do note the <code>xs⊐∾…</code> in the third line; we want to get the indices of the <em>characters</em>
+in the string, and not the indices of a substring of length one; compare:</p>
+<pre class="bqn"><code>    '/'Split&quot;a/b&quot;
+⟨ &quot;a&quot; &quot;b&quot; ⟩
+    ∾'/'Split&quot;a/b&quot;
+&quot;ab&quot;
+    &quot;abcde&quot;⊐'/'Split&quot;a/b&quot; # ⊐ returns ≠𝕨 if it can't find 𝕩 in 𝕨
+⟨ 5 5 ⟩
+    &quot;abcde&quot;⊐∾'/'Split&quot;a/b&quot;
+⟨ 0 1 ⟩</code></pre>
+<p>With all of that in place,
+we can successively apply all the functions to the seed value <code>abcdefghijklmnop</code>.</p>
+<pre class="bqn"><code>('a'+↕16){𝕎𝕩}´inp # ⇒ &quot;eojfmbpkldghncia&quot;</code></pre>
+<hr />
+<p>Part two asks us to keep the result of part one, <code>"eojfmbpkldghncia"</code>,
+and repeat the whole dance one billion times.
+Now, that number is obviously much too large to simulate the whole thing.
+Instead, let’s try to find a loop.</p>
+<pre class="bqn"><code>h  ← ⟨⟩•HashMap⟨⟩
+d  ← {𝕎𝕩}´⟜inp•_while_{ (𝕩h.Set@) ⊢ ¬h.Has𝕩 } ('a'+↕16) # dup
+di ← ⊑(h.Keys@)⊐&lt;d                                      # dup index
+{𝕎𝕩}´⟜inp⍟(di+(h.Count@)|10e9-di) d # ⇒ &quot;iecopnahgdflmkjb&quot;</code></pre>
+<p>I used a hash map here since I figured the loop was still going to be substantial
+(it wasn’t—oh well).
+The test function supplied to while <code>•_while_</code> (ab)uses the fact that,
+while <code>⊢</code> only ever returns <code>𝕩</code>,
+it actually evaluates both of its arguments.
+Remember that evaluation happens right-to-left, though;
+<code>(¬h.Has𝕩) ⊣ 𝕩h.Set@</code> wouldn’t work!</p>
+<p>At the end, the loop returns the first duplicate it found,
+so all that’s left to do is to simulate that many steps upfront,
+and then whatever we have left over.<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a>
+The little <code>@</code>’s after the function calls to <code>h.Count</code> and <code>h.Keys</code>
+(but not to <code>h.Set</code>, as we need to associate some kind of value to the keys—that value just happens to be the null character)
+function as dummy arguments.
+To return something,
+the upper case (function) variants need to be called,
+but the argument is actually ignored.
+This is a bit ugly, but sort of how BQN’s “object system”<!--
+-->—which really rather seems like an accident of having a module system and syntactic roles—<!--
+-->works.</p>
+<h3 id="day-17"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day17.bqn">Day 17</a></h3>
+<p>Today we have to escape a deadly spinlock!
+To do that, we have to simulate a circular buffer with the following rules:</p>
+<blockquote>
+<p>[The spinlock] starts with a circular buffer containing only the value 0, which it marks as the current position.
+It then steps forward through the circular buffer some number of steps (your puzzle input) before inserting the first new value, 1, after the value it stopped on.
+The inserted value becomes the current position.
+Then, it steps forward from there the same number of steps, and wherever it stops, inserts after it the second new value, 2, and uses that as the new current position again.</p>
+</blockquote>
+<p>All in all, we have to insert the numbers 0 to 2017 in this way.
+For example, suppose our puzzle input was <code>3</code>.
+Using <code>()</code> to indicate the current position, the list would grow thusly:</p>
+<pre><code>(0)  →  0 (1)  →  0 (2) 1  →  0 2 (3) 1  →  …</code></pre>
+<p>Part one asks us for the value after 2017 in the final buffer.</p>
+<p>With a puzzle input of <span class="math inline">n</span> and a position <span class="math inline">p</span> in step <span class="math inline">i</span>,
+the stepping forward process is just <span class="math inline">1 + (p + n \mod i)</span><!--
+-->—the list is exactly of length <span class="math inline">i</span> in that step—<!--
+-->and inserting after the element means adding one.
+As such, a straightforward solution for part one looks like this:</p>
+<pre class="bqn"><code>n ← •ParseFloat⊑•FLines&quot;../inputs/day17.txt&quot;
+((1+⊑)⊐⟜2017)⊸⊑ ¯1⊑ { 𝕊i‿p‿b:         # index, position, buffer
+  np←1+i|p+n ⋄ ⟨i+1,np,(np↑b)∾i∾np↓b⟩
+}⍟2017 1‿0‿⟨0⟩                        # ⇒ 1487</code></pre>
+<p>However, this feel immensely unsatisfactory to me.
+Repeatedly breaking apart an array and assembling it again (<code>(np↑b)∾i∾np↓b</code>) sort of signals that something must be amiss.
+Instead, it would be much better to not have to care about the position at all,
+always insert the element at the front, and rotate the array instead.
+After entirely too much thinking, something pops up.
+Say we only looked at the small example above of going from <code>(0)</code> to <code>0 2 (3) 1</code>.
+Again starting with <code>⟨0⟩</code>,
+we can do the following:</p>
+<pre class="bqn"><code>    Rot ← { xs𝕊i: i∾(3+1)⌽xs }
+(function block)
+    ⟨0⟩ Rot 1
+⟨ 1 0 ⟩
+    (⟨0⟩ Rot 1) Rot 2
+⟨ 2 1 0 ⟩
+    ((⟨0⟩ Rot 1) Rot 2) Rot 3
+⟨ 3 1 0 2 ⟩</code></pre>
+<p>The final result, <code>3 1 0 2</code> is indeed—up to circular permutation—the same as <code>0 2 3 1</code>!
+The <code>3+1</code> comprises the step size <code>3</code>, and keeps track of the fact that we need to insert the value after the index.
+Even more, the final inserted value will be the head of the vector,
+so getting the element at index <code>1</code> is what we want—no more <em>select</em>ing stuff.
+Do note that walking to the <em>right</em> in terms of indices translates to rotating the buffer to the <em>left</em> (i.e., using positive numbers).
+We can pack this function up in a fold, yielding an alternative solution for part one:<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a></p>
+<pre class="bqn"><code>1⊑⟨0⟩{𝕨∾(n+1)⌽𝕩}´⌽1+↕2017 # ⇒ 1487</code></pre>
+<hr />
+<p>Part two now wants us to identify the value following <code>0</code>—after fifty million iterations!
+This is much too big to simulate in the same way as the first part.
+Instead, we can come back to the formula <span class="math inline">1 + (p + n \mod i)</span>
+that predicts the index at which a given number is going to be inserted.
+We can use a <em>scan</em> over the vector to get that index for each insertion.
+Since the steps are increasing, the solution looks for the last time a <code>1</code> was inserted.</p>
+<pre class="bqn"><code>⊑ (≠-⊐⟜1∘⌽) 0{1+𝕩|n+𝕨}`1+↕50e6 # ⇒ 25674054</code></pre>
+<details>
+<summary>
+This is the first time that we use a non-associative scan, so a few words of warning.
+</summary>
+<p>While <em>fold</em> is consuming its input array in the same direction as BQN’s evaluation model—right-to-left—<em>scan</em> is evaluating its argument left-to-right!</p>
+<pre class="bqn"><code>    ⟨10, 10-15, (10-15)-9⟩ ≡ -`⟨10,15,9⟩
+1
+    ⟨10, 10-15, 10-15-9⟩   ≡ -`⟨10,15,9⟩
+0</code></pre>
+<p>As such, the default argument in a scan is given as the initial <em>left</em> argument,
+instead of the initial right one as in a fold:</p>
+<pre class="bqn"><code>    ⟨20-10, (20-10)-15, ((20-10)-15)-9⟩ ≡ 20-`⟨10,15,9⟩
+1
+    (10-(15-(9-20))) = 20-´⟨10,15,9⟩
+1</code></pre>
+<p>The reason this is done is more of a pragmatic one,
+from what I can tell:
+left scans are simply more common than right ones.</p>
+One may argue the same for left over right folds, actually,
+but I suppose the æsthetics of having <code>20-´⟨10,15,9⟩</code> be <code>10-15-9-20</code> won out there.
+</details>
+<p>Other than that, the train <code>≠-⊐⟜1∘⌽</code> computes the first occurrence of <code>1</code> in the reversed vector,
+and then corrects the index by subtracting it from the length of the vector.</p>
+<h3 id="day-18"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day18.bqn">Day 18</a></h3>
+<p>Today we have to simulate some assembly in order to play music!
+The computer has 16 registers, all starting at 0,
+with the instructions being as follows:</p>
+<blockquote>
+<ul>
+<li><code>snd X</code> plays a sound with a frequency equal to the value of <code>X</code>.</li>
+<li><code>set X Y</code> sets register <code>X</code> to the value of <code>Y</code>.</li>
+<li><code>add X Y</code> increases register <code>X</code> by the value of <code>Y</code>.</li>
+<li><code>mul X Y</code> sets register <code>X</code> to the result of multiplying the value contained in register <code>X</code> by the value of <code>Y</code>.</li>
+<li><code>mod X Y</code> sets register <code>X</code> to the remainder of dividing the value contained in register <code>X</code> by the value of <code>Y</code> (that is, it sets <code>X</code> to the result of <code>X</code> modulo <code>Y</code>).</li>
+<li><code>rcv X</code> recovers the frequency of the last sound played, but only when the value of <code>X</code> is not zero. (If it is zero, the command does nothing.)</li>
+<li><code>jgz X Y</code> jumps with an offset of the value of <code>Y</code>, but only if the value of <code>X</code> is greater than zero. (An offset of <code>2</code> skips the next instruction, an offset of <code>-1</code> jumps to the previous instruction, and so on.)</li>
+</ul>
+</blockquote>
+<p>Our input consists of one instruction on each line; for example:</p>
+<pre><code>set a 1
+add a 2
+mul a a
+mod a 5
+…</code></pre>
+<p>Part one asks us what value is recovered the first time an <code>rcv</code> instruction is actually executed
+(i.e., called with a non-zero argument).
+Let’s first to some parsing.</p>
+<pre class="bqn"><code>⟨Split⟩←•Import&quot;../../util/bqn_util/util.bqn&quot;
+inp ← •ParseFloat⎊⊢¨∘(' '⊸Split)¨•FLines &quot;../inputs/day18.txt&quot;</code></pre>
+<p>Note the <code>•ParseFloat⎊⊢</code>.
+We’ve used <em>catch</em> before on <a href="#day-7">day 7</a>, but for a different reason.
+Here, we use it as a shorthand to parse a number if possible, and return the argument as-is otherwise.</p>
+<pre class="bqn"><code>    •ParseFloat⎊⊢¨ ' 'Split&quot;set a 102&quot;
+⟨ &quot;set&quot; &quot;a&quot; 102 ⟩</code></pre>
+<p>Simulating an instruction is easy—if verbose—for the most part;
+the only slight challenge is that we have instructions along the lines of <code>mul a 2</code>, as well as <code>mul a a</code>;
+in the latter case, we first need to get the current value out of register <code>a</code> before execution.
+An easy way to do this is to match on the
+<a href="https://mlochbaum.github.io/BQN/spec/system.html#operation-properties"><code>•Type</code></a>
+of the argument.
+The function returns <code>1</code> for integers,
+in which case we just take the value;
+otherwise, we can look it up as a register.</p>
+<pre class="bqn"><code>V ← { 1=•Type 𝕩? 𝕩; (⊑𝕩-&quot;a&quot;)⊑𝕨 } # [V]alue, 𝕨=arr, 𝕩=el</code></pre>
+<p>The registers <code>a…p</code> are translated into indices <code>0…15</code> in the usual way.
+All that’s left to do is to write a change modifier.
+It takes the vector of registers, a function <code>F</code>, and an <code>x‿y</code> pair,
+and changes <code>x</code> to <code>x F y</code>.
+<em>Under</em> is quite nice for these sorts of things.</p>
+<pre class="bqn"><code>_C ← { regs F _𝕣 x‿y: F⟜(regs V y)⌾((⊑x-&quot;a&quot;)⊸⊑) regs } # [C]hange</code></pre>
+<p>Finally, here is the rest of the simulation.</p>
+<pre class="bqn"><code>snd ← 0
+SD ← { 𝕊⟨ix,regs,ins‿x‿y⟩:
+  { 𝕊&quot;set&quot;: ⟨ix+1, regs  ⊢_C x‿y⟩;
+    𝕊&quot;add&quot;: ⟨ix+1, regs  +_C x‿y⟩;
+    𝕊&quot;mul&quot;: ⟨ix+1, regs  ×_C x‿y⟩;
+    𝕊&quot;mod&quot;: ⟨ix+1, regs |˜_C x‿y⟩;
+    𝕊&quot;jgz&quot;: 0&lt;regs V x? ⟨ix+regs V y, regs⟩;
+    𝕊&quot;jgz&quot;: ⟨ix+1, regs⟩
+  } ins
+}
+One ← {
+  𝕊⟨ix,regs,ins‿x⟩:
+    { 𝕊&quot;snd&quot;: snd↩regs V x ⋄ ⟨ix+1, regs⟩;
+      𝕊&quot;rcv&quot;: snd!0=regs V x ⋄ ⟨ix+1, regs⟩
+    } ins;
+  SD 𝕩
+}</code></pre>
+<p>Quite a lot of code!<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a>
+However, nothing very interesting happening here;
+we use <em>assert</em> (<code>!</code>) in the same way as in <a href="#day-7">day 7</a>,
+only that we now have a genuine condition to test.
+Recall that <code>𝕨!𝕩</code> checks whether <code>𝕩</code> is 1.
+If it is, nothing happens;
+if it’s not, an exception with value <code>𝕨</code> is thrown.
+We use it here so that we immediately exit upon receiving<a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a> our first recovery signal.
+As in any other “simulate indexing into this array”–type situations,
+<code>•_while_</code> is used for iteration,
+only this time we have to wrap the whole thing inside of <em>catch</em>.</p>
+<pre class="bqn"><code>{ 𝕊i‿r: One⟨i,r,i⊑inp⟩
+}•_while_{
+  𝕊i‿·: (i≥0)∧i&lt;≠inp
+}⎊•CurrentError ⟨0,16⥊0⟩ # ⇒ 9423</code></pre>
+<hr />
+<p>Part two informs us that we actually completely misunderstood the instructions.
+In reality, the assembly is about simulating a concurrent system comprising of program <code>0</code> and program <code>1</code>.
+The simulations run completely separately,
+save for the “send” and “receive”—instead of “sound” and “recover”—instructions they use to communicate:</p>
+<blockquote>
+<ul>
+<li>snd X sends the value of X to the other program. These values wait in a queue until that program is ready to receive them. Each program has its own message queue, so a program can never receive a message it sent.</li>
+<li>rcv X receives the next value and stores it in register X. If no values are in the queue, the program waits for a value to be sent to it. Programs do not continue to the next instruction until they have received a value. Values are received in the order they are sent.</li>
+</ul>
+</blockquote>
+<p>Further, program <code>1</code> starts with a <code>1</code> in its last register.
+Our task is to simulate both programs until they deadlock<!--
+-->—both are stuck on <code>rcv</code> calls but both send queues are empty—<!--
+-->and count the number of times program <code>1</code> pushed something to program <code>0</code>’s queue.</p>
+<p>Are you ready to simulate concurrency in an array language?
+I wasn’t.
+Anyways, my idea was to run both programs in lockstep, with two lists of additional state that we have to keep track of.
+This is only important for <code>snd</code> and <code>rcv</code>—the other instructions don’t have to change.</p>
+<pre class="bqn"><code>Two ← { # my queue, other queue, index, registers, instruction
+  # Push to other queue.
+  𝕊⟨my,ot,ix,rs,&quot;snd&quot;‿x⟩: ot∾↩rs V x ⋄ ⟨my, ot, ix+1, rs⟩;
+  # Don't advance on empty queue.
+  𝕊⟨⟨⟩,ot,ix,rs,&quot;rcv&quot;‿x⟩: ⟨⟨⟩,ot,ix,rs⟩;
+  # Pop from my queue.
+  𝕊⟨my,ot,ix,rs,&quot;rcv&quot;‿x⟩: q‿qs ← 1(↑⋈↓)my ⋄ ⟨qs, ot, ix+1, rs⊢_C⟨x,⊑q⟩⟩;
+  𝕊⟨my,ot,ix,rs,ins⟩    : ⟨my,ot⟩∾SD⟨ix,rs,ins⟩
+}</code></pre>
+<p>Now all we have to do is take a deep breath and write the following code.</p>
+<pre class="bqn"><code># Concurrency at home:
+⊑{ 𝕊s1‿q0‿q1‿i1‿r1‿i2‿r2‿xs:
+  ⟨q0,q1,i1,r1⟩ ↩ Two⟨q0,q1,i1,r1,i1⊑xs⟩
+  old0 ← ≠q0
+  ⟨q1,q0,i2,r2⟩ ↩ Two⟨q1,q0,i2,r2,i2⊑xs⟩ # q0 and q1 swap here
+  ⟨s1+old0&lt;≠q0,q0,q1,i1,r1,i2,r2,xs⟩
+}•_while_{ 𝕊·‿q0‿q1‿i1‿·‿i2‿·‿xs:
+  ∨´⟨ q0≢⟨⟩, q1≢⟨⟩, &quot;rcv&quot;≢⊑i1⊑xs, &quot;rcv&quot;≢⊑i2⊑xs ⟩
+} ⟨0, ⟨⟩,⟨⟩, 0,(15⥊0)∾0, 0,(15⥊0)∾1, inp⟩ # ⇒ 7620</code></pre>
+<p><code>s1</code> keeps track of how many times program <code>1</code> sent a signal;
+the two <code>q</code>’s are the queues; and
+the two <code>i</code>’s and <code>r</code>’s correspond to the respective indices and registers.
+We simulate the whole thing until a deadlock occurs as per the above considerations.
+Technically, I guess, both programs could also run to completion,
+so there would have to be some extra index shenanigans in the check,
+but this doesn’t happen for my input so I’m going to pretend it never does.</p>
+<h3 id="day-19"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day19.bqn">Day 19</a></h3>
+<p>For day 19 we have to help a network packet traverse a routing diagram.
+The diagram we get is pretty self-explanatory; an example
+(the real path is much more complicated)
+looks like this:</p>
+<pre><code>     |
+     |  +--+
+     A  |  C
+ F---|----E|--+
+     |  |  |  D
+     +B-+  +--+</code></pre>
+<p>The question lets us know that there will be a unique line connected to the top,
+which is our starting point.
+This in particular means that we will start out going down.
+Letters are simply passed through, and the path we can take is always unique;
+we only change directions when absolutely necessary.</p>
+<p>Part one asks what letters we see in order.
+This is a straightforward simulation, so let’s get to it;
+first, parsing and massaging the input:</p>
+<pre class="bqn"><code>⟨Split,cr⟩←•Import&quot;../../util/bqn_util/util.bqn&quot;
+inp ← ⌽⍉∘({(' '⥊˜≠𝕩)∾⌽⍉𝕩}⍟3) &gt;•FLines&quot;../inputs/day19.txt&quot;</code></pre>
+<p>We pad the input matrix with spaces on the right, bottom, and left, in order to make changing directions easier.
+This way, we only have to check if the next cell is a space character;
+since we never move into that space, we don’t have to special case indexing around the edges of the array.</p>
+<details>
+<summary>
+The <code>⌽⍉</code> bit is a neat trick to compute all rotations of a matrix.
+</summary>
+<p>When padding the input,
+we essentially want to rotate the matrix by 90 degrees three times,
+and add spaces afterwards.
+It is well known that every rotation is merely the product of two reflections,
+like
+<em>reverse</em> (<a href="https://mlochbaum.github.io/BQN/doc/reverse.html#reverse"><code>⌽</code></a>) and
+<em>transpose</em> (<a href="https://mlochbaum.github.io/BQN/doc/transpose.html"><code>⍉</code></a>).</p>
+<pre class="bqn"><code>    m ← 3‿3⥊↕9
+┌─
+╵ 0 1 2
+  3 4 5
+  6 7 8
+        ┘
+    ⍉m
+┌─
+╵ 0 3 6
+  1 4 7
+  2 5 8
+        ┘
+    ⌽m
+┌─
+╵ 6 7 8
+  3 4 5
+  0 1 2
+        ┘</code></pre>
+<p>Depending on whether we rotate or transpose first,
+we turn either right or left.</p>
+<pre class="bqn"><code>    m
+┌─
+╵ 0 1 2
+  3 4 5
+  6 7 8
+        ┘
+    ⌽⍉ m
+┌─
+╵ 2 5 8
+  1 4 7
+  0 3 6
+        ┘
+    ⍉⌽ m
+┌─
+╵ 6 3 0
+  7 4 1
+  8 5 2
+        ┘</code></pre>
+<p>Doing this four times gives us every rotation of the matrix:</p>
+<pre class="bqn"><code>    (⍉⌽)⍟(↕4) m
+┌─
+· ┌─        ┌─        ┌─        ┌─
+  ╵ 0 1 2   ╵ 6 3 0   ╵ 8 7 6   ╵ 2 5 8
+    3 4 5     7 4 1     5 4 3     1 4 7
+    6 7 8     8 5 2     2 1 0     0 3 6
+          ┘         ┘         ┘         ┘
+                                          ┘</code></pre>
+<p>Padding all of the sides can be done during this rotation
+by just adding the elements with which to pad in the right quantity (the number of major cells) to every side:</p>
+<pre class="bqn"><code>    {((≠𝕩)⥊0)∾⌽⍉𝕩}⍟4 m  # Pad every side
+┌─
+╵ 0 0 0 0 0
+  0 0 1 2 0
+  0 3 4 5 0
+  0 6 7 8 0
+  0 0 0 0 0
+            ┘</code></pre>
+</details>
+<p>Changing direction involves picking the unique (per the question) next direction to go in.
+In particular, we never want to turn around.</p>
+<pre class="bqn"><code>ND ← { pos 𝕊 dir:
+  ds ← (&lt;¯1×dir)(¬∘⍷/⊢)⟨1‿0, 0‿1, ¯1‿0, 0‿¯1⟩ # Not where we came from
+  ds/˜' '≠inp⊑˜ds+&lt;pos                        # Not empty space
+}</code></pre>
+<p>Notice how the result of <code>ND</code> is still a list—when it’s empty,
+we know that we have reached the end.
+Getting the path now simply involves simulating what we need to simulate.</p>
+<pre class="bqn"><code>path ← {
+  ·‿pth‿pos ← { 𝕊dir‿pth‿pos:
+      {' '=inp⊑˜dir+pos? dir(⊑pos⊸ND)↩;@} # Change direction if necessary
+      ⟨dir, pth∾pos⊑inp, pos+dir⟩
+  }•_while_{
+    𝕊dir‿·‿pos: 0&lt; ≠pos ND dir   # While we can move somewhere
+  } ⟨1‿0, &quot;&quot;, ⟨1, ⊑'|'⊐˜1⊏inp⟩⟩  # Unique start
+  pth∾pos⊑inp                    # Add last position to final path
+}</code></pre>
+<p>We just continue going into the same direction until the next cell would be a space.
+In that case, we correct and move on until we can’t move anymore.
+As said above, the start is the unique <code>|</code> connected to the top;
+the index is quickly obtained with <em>index of</em> after a <em>first cell</em>,
+to get the first major cell (row, in this case).</p>
+<p>All that’s left to do is to get all letters from the path:</p>
+<pre class="bqn"><code>∊⟜('A'+↕26)⊸/ path # ⇒ &quot;RUEDAHWKSM&quot;</code></pre>
+<hr />
+<p>Part two is short and sweet—probably a breather from yesterday—and asks us for the length of the path.</p>
+<pre class="bqn"><code>≠path # ⇒ 17264</code></pre>
+<h3 id="day-20"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day20.bqn">Day 20</a></h3>
+<p>Today, we have to help the GPU simulate particles.
+Our input consists of the particle positions,
+together with their velocity and acceleration.</p>
+<pre><code>p=&lt;-3770,-455,1749&gt;, v=&lt;-4,-77,53&gt;, a=&lt;11,7,-9&gt;
+p=&lt;1430,195,-903&gt;, v=&lt;-123,60,20&gt;, a=&lt;5,-5,1&gt;
+p=&lt;-2964,-3029,2594&gt;, v=&lt;-8,157,7&gt;, a=&lt;9,-3,-8&gt;
+…</code></pre>
+<p>Part one asks us the following, slightly handwavy, question.</p>
+<blockquote>
+<p>Which particle will stay closest to position &lt;0,0,0&gt; in the long term?</p>
+</blockquote>
+<p>Before thinking about this too much, let’s first parse the input.</p>
+<pre class="bqn"><code>P←{p‿r←3(↑⋈↓)𝕩 ⋄ v‿a←3(↑⋈↓)r ⋄ ⟨p,v,a⟩}
+inp←{P•BQN'⟨'∾𝕩∾'⟩'}∘(∊⟜(&quot;-,&quot;∾'0'+↕10)⊸/)¨•FLines&quot;../inputs/day20.txt&quot;</code></pre>
+<p>Very dirty!
+We first filter every line, only keeping the important bits for processing,
+and then parse the whole thing as a list.</p>
+<pre class="bqn"><code>    (∊⟜(&quot;-,&quot;∾'0'+↕10)⊸/) &quot;p=&lt;-3770,-455,1749&gt;, v=&lt;-4,-77,53&gt;, a=&lt;11,7,-9&gt;&quot;
+&quot;-3770,-455,1749,-4,-77,53,11,7,-9&quot;</code></pre>
+<p>Now, “in the long term” is a bit of a flexible formulation,
+but what the question essentially wants us to recognise is that a higher acceleration always wins<!--
+-->—doesn’t matter how fast the other particle started.
+In particular, if we want to find out which particle will stay closest to the origin,
+we need to find the one that has the smallest acceleration.
+I will discuss two ways of doing this, each slightly flawed in its own way.</p>
+<p>First, my input has the neat property that there is a unique particle with a smallest total acceleration.
+In such cases, part one just amounts to picking that.</p>
+<pre class="bqn"><code>⊑∘(⊢⊐⌊´) {+´|¯1⊑𝕩}¨ inp # ⇒ 376</code></pre>
+<p><code>{+´|¯1⊑𝕩}</code> computes the maximal acceleration,
+and <code>(⊢⊐⌊´)</code> is a neat train to pick the index of the minimal element.</p>
+<p>In the absence of a unique particle with smallest total acceleration,
+things get a bit more complicated.
+One would have to include velocity and direction of travel into the equation,
+which is much harder than to just simulate everything “for a bit”.</p>
+<pre class="bqn"><code>U←{p‿v‿a: ⟨p+v+a, v+a, a⟩}
+⊑(⊢⊐⌊´)(+´|)∘⊑∘(U⍟1000)¨inp # ⇒ 376</code></pre>
+<p>Get the absolute value of each position after 1000 steps,
+and then compute the minimum as before.</p>
+<hr />
+<p>Part two wants us to take care of “colliding” particles—those whose positions match up at any point in time.
+Since I’m not going to solve quadratic equations, let’s also just simulate this one “long enough”.</p>
+<pre class="bqn"><code>≠{(∊∧1⌽∊)∘(⊑¨)⊸/ ∨U¨𝕩}⍟1000 inp # ⇒ 574</code></pre>
+<p>We advance every particle in the input by one,
+sort the resulting list by position,
+and kick out all particles that are equal to any adjacent ones.</p>
+<details>
+<summary>
+The <code>∊∧1⌽∊</code> part is probably reasonably obfuscated, so let’s go through it.
+</summary>
+<p>First, one could write that piece of code in a slightly different—perhaps more understandable—way:<a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a></p>
+<pre class="bqn"><code>(≢˘⟜«)∧(≢˘⟜»)</code></pre>
+<p>This very symmetrical looking expression checks which elements in a given vector
+are unequal to their successor and predecessor:</p>
+<pre class="bqn"><code>    (≢˘⟜«) ⟨1,1,3,⟨4⟩,⟨4⟩⟩
+⟨ 0 1 1 0 1 ⟩
+    (≢˘⟜») ⟨1,1,3,⟨4⟩,⟨4⟩⟩
+⟨ 1 0 1 1 0 ⟩
+    ((≢˘⟜«)∧(≢˘⟜»)) ⟨1,1,3,⟨4⟩,⟨4⟩⟩
+⟨ 0 0 1 0 0 ⟩</code></pre>
+<p>The first thing to notice is that, in a sorted list,
+a number not being equal to its predecessor just means that it’s the first occurrence of that number in the vector:</p>
+<pre class="bqn"><code>    (≢˘⟜») ⟨1,1,3,4,4,4,5,6,6⟩
+⟨ 1 0 1 1 0 0 1 1 0 ⟩
+    ∊ ⟨1,1,3,4,4,4,5,6,6⟩
+⟨ 1 0 1 1 0 0 1 1 0 ⟩
+    ∊ ⟨1,1,3,4,4,5,6,6⟩
+⟨ 1 0 1 1 0 1 1 0 ⟩
+   (≢˘⟜») ⟨1,1,3,4,4,5,6,6⟩
+⟨ 1 0 1 1 0 1 1 0 ⟩</code></pre>
+<p>The more interesting questions is how to capture that a number is not equal to its successor.
+For that, one can still use <em>mark firsts</em> and then simply <em>rotate</em> the vector by one to the left.
+This will instead give you the last occurrence of every element in the vector.</p>
+<pre class="bqn"><code>    (≢˘⟜«) ⟨1,1,3,4,4,4,5,6,6,7⟩
+⟨ 0 1 1 0 0 1 1 0 1 1 ⟩
+   1⌽∊ ⟨1,1,3,4,4,4,5,6,6,7⟩
+⟨ 0 1 1 0 0 1 1 0 1 1 ⟩</code></pre>
+<p>Thus, to get the unique elements of our sorted list, <code>∊∧1⌽∊</code> will do!<a href="#fn39" class="footnote-ref" id="fnref39" role="doc-noteref"><sup>39</sup></a></p>
+</details>
+<h2 id="days-2125">Days 21–25</h2>
+<h3 id="day-21"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day21.bqn">Day 21</a></h3>
+<p>In today’s very array-oriented problem,
+we have to help a program create art by repeatedly enhancing an image.
+The following is our starting pattern:</p>
+<pre><code>.#.
+..#
+###</code></pre>
+<p>The task says to apply the following two simple rules over and over again.</p>
+<blockquote>
+<ul>
+<li>If the size [of the array] is evenly divisible by 2, break the pixels up into 2x2 squares, and convert each 2x2 square into a 3x3 square by following the corresponding enhancement rule.</li>
+<li>Otherwise, the size is evenly divisible by 3; break the pixels up into 3x3 squares, and convert each 3x3 square into a 4x4 square by following the corresponding enhancement rule.</li>
+</ul>
+</blockquote>
+<p>An “enhancement rule” look like <code>../.# =&gt; ##./#../...</code>, where <code>/</code> signals a line break.
+An important part of the problem is that not only does <code>../.#</code> match this pattern, but also any rotation or flip of it,
+which means the following configurations are all matches:</p>
+<pre><code>..     .#     #.     ..
+.#     ..     ..     #.</code></pre>
+<p>Note that regardless of how the match is formed, the output pattern is never rotated or flipped.</p>
+<p>Beginning with the above starting configuration and applying enhancement rule <code>.#./..#/### =&gt; #..#/..../..../#..#</code>,
+we end up with</p>
+<pre><code>#..#
+....
+....
+#..#</code></pre>
+<p>Applying rule <code>../.# =&gt; ##./#../...</code> to each of the four 2×2 squares, we get</p>
+<pre><code>##.##.
+#..#..
+......
+##.##.
+#..#..
+......</code></pre>
+<p>and so on.</p>
+<p>Part one asks us to simulate the whole thing five times,
+and determine how many <code>#</code>’s are in the resulting grid.
+Let’s start by parsing a single enhancement line:</p>
+<pre class="bqn"><code>⟨Split⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
+P ← { # Parse a line into from‿to pairs
+  f‿t ← '='Split𝕩 ⋄ f ¯1⊸↓↩ ⋄ t 2⊸↓↩
+  &gt;∘(&quot;.#&quot;⊸⊐¨)∘('/'⊸Split)¨ f‿t
+}</code></pre>
+<p>This isn’t too surprising; we first essentially split on <code>" =&gt; "</code> in an awkward way,<a href="#fn40" class="footnote-ref" id="fnref40" role="doc-noteref"><sup>40</sup></a>
+split every individual array on <code>/</code>,
+change the dots and hashes to zeros and ones,
+and <em>merge</em> each of the vectors into a proper array.</p>
+<pre class="bqn"><code>    P &quot;.../.../... =&gt; ...#/#.##/.##./#..#&quot;
+┌─
+· ┌─        ┌─
+  ╵ 0 0 0   ╵ 0 0 0 1
+    0 0 0     1 0 1 1
+    0 0 0     0 1 1 0
+          ┘   1 0 0 1
+                      ┘
+                        ┘</code></pre>
+<p>Since all rotations and flips are valid for the pattern match,
+we might as well immediately “expand” each of the substitutions into all eight possibilities.
+This essentially boils down to applying every transformation of the
+<a href="https://en.wikipedia.org/wiki/Dihedral_group#Matrix_representation">dihedral group</a>
+<span class="math inline">D_4</span> of the square to our array.
+One way to do this is to compute all of the rotations,
+and all of the rotations with reversed rows.
+We already saw that we can use <code>(⍉⌽)⍟(↕4)</code> to obtain all rotations on <a href="#day-19">day 19</a>,
+and reversing the rows is easy enough to do with <code>⌽˘</code>:</p>
+<pre class="bqn"><code>    ⟨⌽˘,⊢⟩{𝕎𝕩}⌜(⍉⌽)⍟(↕4) &gt;⟨⟨1,2⟩,⟨3,4⟩⟩
+┌─
+╵ ┌─      ┌─      ┌─      ┌─
+  ╵ 2 1   ╵ 1 3   ╵ 3 4   ╵ 4 2
+    4 3     2 4     1 2     3 1
+        ┘       ┘       ┘       ┘
+  ┌─      ┌─      ┌─      ┌─
+  ╵ 1 2   ╵ 3 1   ╵ 4 3   ╵ 2 4
+    3 4     4 2     2 1     1 3
+        ┘       ┘       ┘       ┘
+                                  ┘</code></pre>
+<p>We now just have to do some plumbing to associate every one of the resulting eight input patterns to the same output.</p>
+<pre class="bqn"><code>E ← { 𝕊 f‿t: (⥊⟨⌽˘,⊢⟩{𝕎𝕩}⌜(⍉⌽)⍟(↕4)f)⋈¨&lt;t }</code></pre>
+<details>
+<summary>
+For example (line wrapped for readability):
+</summary>
+<pre class="bqn"><code>┌─
+· ┌─
+  · ┌─      ┌─
+    ╵ 1 0   ╵ 0 0 1
+      0 1     1 0 0
+          ┘   1 1 0
+                    ┘
+                      ┘
+  ┌─
+  · ┌─      ┌─
+    ╵ 1 0   ╵ 0 0 1
+      0 1     1 0 0
+          ┘   1 1 0
+                    ┘
+                      ┘
+  ┌─
+  · ┌─      ┌─
+    ╵ 0 1   ╵ 0 0 1
+      1 0     1 0 0
+          ┘   1 1 0
+                    ┘
+                      ┘
+  ┌─
+  · ┌─      ┌─
+    ╵ 0 1   ╵ 0 0 1
+      1 0     1 0 0
+          ┘   1 1 0
+                    ┘
+                      ┘
+  ┌─
+  · ┌─      ┌─
+    ╵ 1 0   ╵ 0 0 1
+      0 1     1 0 0
+          ┘   1 1 0
+                    ┘
+                      ┘
+  ┌─
+  · ┌─      ┌─
+    ╵ 0 1   ╵ 0 0 1
+      1 0     1 0 0
+          ┘   1 1 0
+                    ┘
+                      ┘
+  ┌─
+  · ┌─      ┌─
+    ╵ 1 0   ╵ 0 0 1
+      0 1     1 0 0
+          ┘   1 1 0
+                    ┘
+                      ┘
+                        ┘</code></pre>
+</details>
+<p>Now, as you can imagine by either thinking about or looking at the output,
+there are usually a lot of duplicates in this list.
+We can fix this by using
+<em>deduplicate</em> (<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html#deduplicate"><code>⍷</code></a>)
+to only keep the first occurrence of every major cell.</p>
+<pre class="bqn"><code>E ← { 𝕊 f‿t: (⍷⥊⟨⌽˘,⊢⟩{𝕎𝕩}⌜(⍉⌽)⍟(↕4)f)⋈¨&lt;t }
+inp ← ∾ E∘P¨ •FLines&quot;../inputs/day21.txt&quot;</code></pre>
+<p>Next up is enhancing the grid as described.
+Let’s do this generically:
+given an array, a target <code>k</code> (for <code>k×k</code> subarrays),
+and a list of <code>k×k → (k+1)×(k+1)</code> substitutions,
+perform one enhancement step.<a href="#fn41" class="footnote-ref" id="fnref41" role="doc-noteref"><sup>41</sup></a></p>
+<pre class="bqn"><code>Widen ← { k‿substs 𝕊 grid:
+  ∾{ 𝕊sg: # A k×k submatrix of `grid'
+    1⊑⊑ (sg≡⊑)¨⊸/substs
+  }¨ (2⥊&lt;⌊k÷˜↕≠grid)⊔grid
+}</code></pre>
+<p><em>Group</em> is used to partition the grid into the necessary <code>k×k</code> subarrays:
+<code>⌊k÷˜↕≠grid</code> creates a vector like <code>⟨0,…,0, 1,…,1 …, n,…,n⟩</code>,
+where <code>n = ((≠grid)÷k)-1</code> and each number appears exactly <code>k</code> times:</p>
+<pre class="bqn"><code>    (⌊3÷˜↕≠↕21)
+⟨ 0 0 0 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 ⟩
+    (⌊7÷˜↕≠↕21)
+⟨ 0 0 0 0 0 0 0 1 1 1 1 1 1 1 2 2 2 2 2 2 2 ⟩</code></pre>
+<p>We can then use the fact that the left argument to <em>group</em> can be a nested vector,
+where each element corresponds to one axis of the right argument;
+see <a href="https://mlochbaum.github.io/BQN/doc/group.html#multidimensional-grouping">multidimensional grouping</a>.
+For the simple partition that we want, doubling the vector suffices.</p>
+<pre class="bqn"><code>    2⥊&lt;⌊3÷˜↕6
+⟨ ⟨ 0 0 0 1 1 1 ⟩ ⟨ 0 0 0 1 1 1 ⟩ ⟩
+    (2⥊&lt;⌊3÷˜↕6)⊔(6‿6⥊↕36)
+┌─
+╵ ┌─           ┌─
+  ╵  0  1  2   ╵  3  4  5
+     6  7  8      9 10 11
+    12 13 14     15 16 17
+             ┘            ┘
+  ┌─           ┌─
+  ╵ 18 19 20   ╵ 21 22 23
+    24 25 26     27 28 29
+    30 31 32     33 34 35
+             ┘            ┘
+                            ┘</code></pre>
+<p>The rest of the code is kind of straightforward;
+in <code>{𝕊sg: 1⊑⊑ (sg≡⊑)¨⊸/substs}</code> we look for the substitution that fits the current subset of the grid<!--
+-->—we are guaranteed by the question that we have exactly one such match—<!--
+-->and take the enhancement (<code>1⊑</code>).
+This already has the right shape in that the resulting array consists of <code>(k+1)×(k+1)</code> blocks in the right order,
+so we just need to <em>join</em> everything together.</p>
+<pre class="bqn"><code>    t ← ⟨2, {2=≠⊑𝕩}¨⊸/inp⟩ {
+      k‿ss𝕊g: {𝕊sg: 1⊑⊑ (sg≡⊑)¨⊸/ss}¨ (2⥊&lt;⌊k÷˜↕≠g)⊔g
+    } [[1,1,0,1],[0,1,1,0],[1,1,0,1],[0,0,0,1]]
+┌─
+╵ ┌─        ┌─
+  ╵ 1 1 0   ╵ 0 0 1
+    0 0 1     1 0 0
+    1 0 1     1 1 0
+          ┘         ┘
+  ┌─        ┌─
+  ╵ 0 1 0   ╵ 0 1 0
+    1 1 0     1 1 0
+    1 1 1     1 1 1
+          ┘         ┘
+                      ┘
+    ∾t
+┌─
+╵ 1 1 0 0 0 1
+  0 0 1 1 0 0
+  1 0 1 1 1 0
+  0 1 0 0 1 0
+  1 1 0 1 1 0
+  1 1 1 1 1 1
+              ┘</code></pre>
+<p>When plugging everything together we just need to make sure to pass the right substitutions to <code>Widen</code>
+(and to have the case for <code>2</code> come before that for <code>3</code>).</p>
+<pre class="bqn"><code>Sim ← { # Only take valid substitutions.
+  0=2|≠𝕩? ⟨2, {2=≠⊑𝕩}¨⊸/inp⟩ Widen 𝕩;
+  0=3|≠𝕩? ⟨3, {3=≠⊑𝕩}¨⊸/inp⟩ Widen 𝕩
+}
+
+start ← &gt;&quot;.#&quot;⊸⊐¨⟨&quot;.#.&quot;, &quot;..#&quot;, &quot;###&quot;⟩
++´⥊ Sim⍟5  start # ⇒ 155</code></pre>
+<hr />
+<p>Part two asks us to instead simulate 18 enhancement steps.</p>
+<pre class="bqn"><code>+´⥊ Sim⍟18 start # ⇒ 2449665</code></pre>
+<h3 id="day-22"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day22.bqn">Day 22</a></h3>
+<p>Today we are tasked with helping a computer cluster fend off a virus.
+Our puzzle input is a populated part of an infinite grid:</p>
+<pre><code>..#
+#..
+...</code></pre>
+<p>The virus starts square in the middle, looking up.</p>
+<p>Part one has two types of cells, clean (<code>.</code>) and infected (<code>#</code>),
+and wants us to count the number of cells that have been infected (at any point) after 10’000 steps.
+A single step in the simulation proceeds according to the following rules:</p>
+<blockquote>
+<ul>
+<li>If the current node is infected, it turns to its right. Otherwise, it turns to its left. (Turning is done in-place; the current node does not change.)</li>
+<li>If the current node is clean, it becomes infected. Otherwise, it becomes cleaned. (This is done after the node is considered for the purposes of changing direction.)</li>
+<li>The virus carrier moves forward one node in the direction it is facing</li>
+</ul>
+</blockquote>
+<p>We will use a hash map to simulate the infinite grid.
+Parsing is easy this time:</p>
+<pre class="bqn"><code>inp ← &gt;•FLines &quot;../inputs/day22.txt&quot;
+Start ← {⟨(⥊↕≢inp)•HashMap𝕩, 0, ⌊(≢inp)÷2, ¯1‿0⟩}</code></pre>
+<p>Note the unusual coordinates:
+since I don’t want to change the “direction” in the array itself,
+up, right, down, and left are <code>¯1‿0</code>, <code>0‿1</code>, <code>1‿0</code>, and <code>0‿¯1</code>, respectively.
+For the simulation, we also need the ability to change direction.
+The idea is to get the index of <code>𝕩</code> in a list of directions,
+add <code>𝕨</code> mod 4 (to turn <code>𝕨</code> steps to the right),
+and <em>pick</em> the element at that index.</p>
+<pre class="bqn"><code>Turn ← { # Given direction 𝕩, turn 𝕨 steps to the right.
+  ts ← ⟨¯1‿0, 0‿1, 1‿0, 0‿¯1⟩
+  (⊑4|𝕨+ts⊐&lt;𝕩)⊑ts
+}</code></pre>
+<p>The simulation now just does what the rules say.</p>
+<pre class="bqn"><code>Sim ← { 𝕊g‿i‿p‿d:     # grid, index, position, direction
+  pv ← 0 g.Get p      # Don't keep track of clean (= 0) cells.
+  nd ← ({𝕊0:¯1;𝕩}pv) Turn d
+  p g.Set ¬pv         # New value for p.
+  ⟨g, i+0=pv, p+nd, nd⟩
+}
+
+1⊑ Sim⍟10_000 Start(⥊&quot;.#&quot;⊐inp) # ⇒ 5460</code></pre>
+<p>Since we want to turn left when we see a clean cell,
+we have to have a substitution like <code>0→¯1</code>,
+which is what <code>{𝕊0:¯1;𝕩}</code> accomplishes.
+We again don’t keep track of additional clean cells by supplying a default argument to <code>Get</code>, in case <code>p</code> is not found.</p>
+<hr />
+<p>Part two wants us to simulate the same thing, but instead of two we now have four states to keep track of:
+clean, weakened, infected, and flagged—in that order.
+We also have to simulate everything for 10’000’000 instead of only 10’000 steps,
+and the rules are a bit different:</p>
+<blockquote>
+<ul>
+<li>Decide which way to turn based on the current node:
+<ul>
+<li>If it is clean, it turns left.</li>
+<li>If it is weakened, it does not turn, and will continue moving in the same direction.</li>
+<li>If it is infected, it turns right.</li>
+<li>If it is flagged, it reverses direction, and will go back the way it came.</li>
+</ul></li>
+<li>Modify the state of the current node, as described above [clean → weakened → infected → flagged → clean …].</li>
+<li>The virus carrier moves forward one node in the direction it is facing.</li>
+</ul>
+</blockquote>
+<p>After some staring one figures out that while the infected state has moved from <code>1</code> to <code>2</code>, the whole thing just switches out numbers mod 2 for numbers mod 4.
+Looking at our <code>Sim</code> function,
+we only need to change a few things to make it more generic:</p>
+<pre class="bqn"><code># mod‿infectedTarget‿TurnOffset 𝕊 grid‿infectCount‿position‿direction
+Sim ← { m‿t‿TO 𝕊 g‿i‿p‿d:
+  pv ← 0 g.Get p      # Don't keep track of clean (= 0) cells.
+  nd ← (TO pv) Turn d
+  p g.Set m|pv+1      # New value for p.
+  ⟨g, i+t=pv, p+nd, nd⟩
+}
+
+# Part one still works:
+1⊑ ⟨2, 0, {𝕊0:¯1;𝕩}⟩ Sim⍟10_000 Start(⥊&quot;.#&quot;⊐inp) # ⇒ 5460</code></pre>
+<p>Some bits of additional state, like the modulus used or which number we want to count in the end, are needed.
+Other than that, though, it’s the same function as before.</p>
+<pre class="bqn"><code>1⊑ ⟨4, 1, -⟜1⟩ Sim⍟10_000_000 Start(⥊&quot;. #&quot;⊐inp) # ⇒ 2511702</code></pre>
+<h3 id="day-23"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day23.bqn">Day 23</a></h3>
+<p>Today we have to help an experimental coprocessor to not halt and catch fire.
+This again boils down to simulating some small assembly language—or so one would think.
+The instruction set is similar to that of <a href="#day-18">day 18</a>:</p>
+<blockquote>
+<ul>
+<li><code>set X Y</code> sets register <code>X</code> to the value of <code>nY</code>.</li>
+<li><code>sub X Y</code> decreases register <code>X</code> by the value of <code>Y</code>.</li>
+<li><code>mul X Y</code> sets register <code>X</code> to the result of multiplying the value contained in register <code>X</code> by the value of <code>Y</code>.</li>
+<li><code>jnz X Y</code> jumps with an offset of the value of <code>Y</code>, but only if the value of <code>X</code> is not zero. (An offset of 2 skips the next instruction, an offset of -1 jumps to the previous instruction, and so on.)</li>
+</ul>
+<p>Only the instructions listed above are used. The eight registers here, named <code>a</code> through <code>h</code>, all start at 0.</p>
+</blockquote>
+<p>Part one asks us how many times the <code>mul</code> instruction is invoked.
+My solution is this one:</p>
+<pre class="bqn"><code>63×63 # ⇒ 3969</code></pre>
+<p>Oh yeah.</p>
+<hr />
+<p>So what’s that all about?
+Well, originally the code looked very different<!--
+-->—almost an exact copy-paste of what we did for day 18—<!--
+-->but part two reveals what the task actually wants us to do.</p>
+<blockquote>
+<p>You flip the switch, which makes register <code>a</code> now start at <code>1</code> when the program is executed.</p>
+<p>Immediately, the coprocessor begins to overheat. Whoever wrote this program obviously didn’t choose a very efficient implementation. You’ll need to optimize the program if it has any hope of completing before Santa needs that printer working.
+The coprocessor’s ultimate goal is to determine the final value left in register <code>h</code> once the program completes. Technically, if it had that… it wouldn’t even need to run the program.</p>
+</blockquote>
+<p>This is a very big nudge into the direction of “go and read the assembly”.
+There are, I suppose, several ways to go about finding the solution.
+The sane one might be to translate the assembly into a more human readable form,<a href="#fn42" class="footnote-ref" id="fnref42" role="doc-noteref"><sup>42</sup></a>
+and then try to see patterns in this simpler representation (remember notation as a tool for thought?).
+Instead, I employed a trusted method that I learned from studying maths for too long:
+stare at it until it makes sense.</p>
+<details>
+<summary>
+Here’s the input if you want to give it a try.
+</summary>
+<pre><code>set b 65
+set c b
+jnz a 2
+jnz 1 5
+mul b 100
+sub b -100000
+set c b
+sub c -17000
+set f 1
+set d 2
+set e 2
+set g d
+mul g e
+sub g b
+jnz g 2
+set f 0
+sub e -1
+set g e
+sub g b
+jnz g -8
+sub d -1
+set g d
+sub g b
+jnz g -13
+jnz f 2
+sub h -1
+set g b
+sub g c
+jnz g 2
+jnz 1 3
+sub b -17
+jnz 1 -23</code></pre>
+</details>
+<p><a href="#fn43" class="footnote-ref" id="fnref43" role="doc-noteref"><sup>43</sup></a>
+After quite a lot of staring, one figures out that <code>h</code> will fill up with all non-primes between <code>106500</code> and <code>123500</code> in steps of <code>17</code>.</p>
+<pre class="bqn"><code>+´{1≠+´0=𝕩|˜↕⌈√𝕩}¨+⟜17⍟(↕1+17÷˜123500-106500) 106500 # ⇒ 917</code></pre>
+<h3 id="day-24"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day24.bqn">Day 24</a></h3>
+<p>The penultimate day wants us to build a bridge to get across a
+<a href="https://knowyourmeme.com/memes/bottomless-pit-supervisor">bottomless pit</a>.
+Our puzzle input comprises components that we have to connect to each other:</p>
+<pre><code>0/2
+2/2
+2/3
+3/4
+3/5
+0/1
+10/1
+9/10</code></pre>
+<p>We start at <code>0</code>; the “ports” of connected components have to match up, but only up to rotation:
+<code>0/2—2/3—4/3</code> is a valid bridge.
+The only restriction we have in that regard is that a port can only be used once,
+so <code>0/2—2/3—2/4</code> is not valid.
+Part one asks us for the strongest bridge we can make of our input (without replacement),
+where the strength is just all ports added together.
+Parsing is trivial:</p>
+<pre class="bqn"><code>⟨Split,_Fix,cr⟩ ← •Import&quot;../../util/bqn_util/util.bqn&quot;
+inp ← •ParseFloat¨∘('/'⊸Split)¨ •FLines&quot;../inputs/day24.txt&quot;</code></pre>
+<p>This creates a nested vector like <code>⟨⟨0 2⟩ ⟨2 2⟩ ⟨2 3⟩ …⟩</code>.
+For selecting a part, we want to match a number against that list and pick all ports where at least one port matches that number:</p>
+<pre class="bqn"><code>    Sel ← (&gt;∊¨)/⊢
+(function block)
+    0 Sel inp      # Starting states
+⟨ ⟨ 50 0 ⟩ ⟨ 28 0 ⟩ ⟨ 0 33 ⟩ ⟩</code></pre>
+<p>For each of these starting states, we can formulate a naturally recursive algorithm:
+given a target value <code>t</code> and a list <code>xs</code> of components, do the following:</p>
+<ul>
+<li>if no components match <code>t</code>, return <code>0</code>;</li>
+<li>otherwise, recurse on each match
+(using the value that <code>t</code> didn’t match as the new target),
+pick the maximum over all branches,
+and add the value of the current match to it.</li>
+</ul>
+<pre class="bqn"><code>SM ← ¬∘∊/⊣ # Set minus
+Sim ← { t Rec xs:
+  {(+´𝕩)+ 0⌈´ (𝕩⊑˜t=⊑𝕩)Rec xs SM⟨𝕩⟩}¨ t Sel xs
+}</code></pre>
+<p>We use our old friend <code>¬∘∊/⊣</code> to take care of the “without replacement” part of the whole thing,
+<code>𝕩⊑˜t=⊑𝕩</code> picks the number that did not match <code>t</code> for the recursion, and
+the maximum over all branches has a default value of <code>0</code>, which is supplied in case the list is empty.</p>
+<p>To complete part one we just have to pick the maximum over all starting values:</p>
+<pre class="bqn"><code>⌈´∾{𝕊0‿b: b+ b Sim inp SM⟨0‿b,b‿0⟩}∘∧¨0 Sel inp # ⇒ 1656</code></pre>
+<p>We sort the starting values for easier pattern matching,
+and then just have to take some extra care of actually removing it from the list.</p>
+<hr />
+<p>Part two wants us to get the strongest bridge only amongst those that are longest overall.
+For example, given the bridges</p>
+<ul>
+<li><code>0/1—10/1—9/10</code></li>
+<li><code>0/2</code></li>
+<li><code>0/2—2/3—3/5</code></li>
+<li><code>0/2—2/2—2/3—3/4</code></li>
+<li><code>0/2—2/2—2/3—3/5</code></li>
+</ul>
+<p>for part one <code>0/1—10/1—9/10</code> would win with a score of <code>31</code>,
+and for part two <code>0/2—2/2—2/3—3/5</code> would win with a score of <code>19</code>.
+Conceptually, this is sort of the same code, only with more bookkeeping.</p>
+<pre class="bqn"><code>Sim2 ← { i‿t Rec xs: # Step i, target value t, list xs
+  {i‿(+´𝕩)+ ⊑∨ (&lt;0‿0)∾ ⟨i+1, 𝕩⊑˜t=⊑𝕩⟩ Rec xs SM ⟨𝕩⟩}¨t Sel xs
+}
+1⊑⌈´∾{𝕊0‿b: 0‿b⊸+¨ 1‿b Sim2 inp SM ⟨0‿b,b‿0⟩}∘∧¨0 Sel inp # ⇒ 1642</code></pre>
+<p>Instead of just the current strength, we also keep track of the depth.
+The maximum thus has to prefer the first index of that tuple to the second one.
+Thankfully, the default
+<em>sort down</em> (<a href="https://mlochbaum.github.io/BQN/doc/order.html#sort"><code>∨</code></a>)
+already does this,
+which gives us our answer for part two.</p>
+<p>If we really wanted to, we could now combine these two solutions,
+and even get rid of the <code>SM</code> and <code>Sel</code> functions, because why have human readable names if you could use funny symbols?</p>
+<pre class="bqn"><code>_sol ← { Mx _𝕣:               # Max function Mx
+  ⌈´∾{ 𝕊0‿b:
+    b+ 1⊑¨ 1‿b { i‿t Rec xs:  # Step i, Target value t, list xs
+      {⟨i,+´𝕩⟩+ Mx ⟨i+1, 𝕩⊑˜t=⊑𝕩⟩Rec xs(¬∘∊/⊣)⟨𝕩⟩}¨t((&gt;∊¨)/⊢)xs
+    } inp(¬∘∊/⊣)⟨0‿b,b‿0⟩
+  }∘∧¨0((&gt;∊¨)/⊢)inp
+}
+
+{0⌈´1⊑¨𝕩}    _sol # ⇒ 1656
+{⊑∨(&lt;0‿0)∾𝕩} _sol # ⇒ 1642</code></pre>
+<h3 id="day-25"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day25.bqn">Day 25</a></h3>
+<p>Appropriately, for the final day we have to simulate a Turing machine!
+Actually, it starts with a parsing problem:
+the transition function of the Turing machine is given in the following format:</p>
+<pre><code>In state A:
+  If the current value is 0:
+    - Write the value 1.
+    - Move one slot to the right.
+    - Continue with state B.
+  If the current value is 1:
+    - Write the value 0.
+    - Move one slot to the left.
+    - Continue with state C.</code></pre>
+<p>Some additional information,
+like the starting state and the number of iterations we should simulate the machine for,
+is also given.
+Frankly, on the last day I have no intention of doing a bunch of parsing in a language which is, in my opinion, not at all suited for that kind of task.
+Since the transition function is small enough, however, we can do what we did two days ago and just… inspect the input.</p>
+<pre class="bqn"><code>tape←⟨⟩•HashMap⟨⟩
+G←0⊸tape.Get   # Get
+W←tape.Set     # Write
+A←B←C←D←E←F←⊢  # Forward declarations!
+A↩{ix𝕊0: ix W 1 ⋄ ⟨ix+1,B⟩; ix𝕊1: ix W 0 ⋄ ⟨ix-1,C⟩}
+B↩{ix𝕊0: ix W 1 ⋄ ⟨ix-1,A⟩; ix𝕊1: ix W 1 ⋄ ⟨ix+1,D⟩}
+C↩{ix𝕊0: ix W 1 ⋄ ⟨ix+1,A⟩; ix𝕊1: ix W 0 ⋄ ⟨ix-1,E⟩}
+D↩{ix𝕊0: ix W 1 ⋄ ⟨ix+1,A⟩; ix𝕊1: ix W 0 ⋄ ⟨ix+1,B⟩}
+E↩{ix𝕊0: ix W 1 ⋄ ⟨ix-1,F⟩; ix𝕊1: ix W 1 ⋄ ⟨ix-1,C⟩}
+F↩{ix𝕊0: ix W 1 ⋄ ⟨ix+1,D⟩; ix𝕊1: ix W 1 ⋄ ⟨ix+1,A⟩}</code></pre>
+<p>The tape is just a hash map that only keeps track of the non-zero entries.
+Each of the states is a separate function that takes the current index and the value at that index,
+and gives back the next index and state.
+To solve part one, we just have to simulate this for the appropriate amount of time and then count the number of ones still on the tape.</p>
+<pre class="bqn"><code>{𝕊i‿Sim: i Sim G i}⍟12_919_244 0‿A
++´tape.Values@ # ⇒ 4287</code></pre>
+<p>There is probably a more array-oriented solution to this:
+the transition function of this Turing machine is something like
+<span class="math display">
+  \delta\colon Q \times \Gamma \to Q \times \Gamma \times \{ \mathrm{L}, \mathrm{R} \},
+</span>
+where <span class="math inline">Q \defeq \{\, \mathrm{A,B,C,D,E,F} \,\}</span> and <span class="math inline">\Gamma \defeq \{\, 0, 1 \,\}</span>.
+In particular,
+for any of the 12 possible inputs, one obtains a single 3-tuple as an output.
+This means that one should be able to use an array of shape <code>⟨6, 2⟩</code> to solve this problem,
+where every element would be a vector of length <code>3</code>, indicating the new state, tape cell, and direction.
+Alternatively, I suppose, an array of shape <code>⟨6, 2, 3⟩</code> also works
+(and <a href="https://saltysylvi.github.io/blog/flat1.html">would be flat</a>).
+I haven’t explored this further, but it would probably be fun to implement—I will leave it as an exercise for the eager reader.</p>
+<hr />
+<p>As every year, part two is a freebie if one has completed all of the puzzles up until now,
+as it asks for the 49 stars collected so far to reboot the printer.
+Nice.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you’re impatient, I think I had the most fun on days
+<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-8">8</a>,
+<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-14">14</a>,
+<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-17">17</a>, and
+<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-21">21</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I flirted with APL for about a week before picking up BQN,
+but the dialect that everyone seems to use is Dyalog APL,
+and I didn’t have the guts to commit to a proprietary language implementation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This sentence is also true for the axiom of choice;
+jokes on you, constructivists!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Depending on your font, <code>𝕨</code> and <code>𝕩</code> might not look so different from <code>w</code> and <code>x</code>:
+the former really are the blackboard bold variants of the respective letters.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>No relation.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Perhaps it is unwise to postpone actually talking about arrays in an array language,
+but I feel like if this gets even longer I will lose the one reader who gets this far.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Beyond the headline that is;
+the fact that notation influences one’s thoughts seems obviously true to me.
+Please indulge me for a second (or don’t and go back to the main text) and let me derail this post about BQN with maths.
+There is an abundance of different notations one might use to talk about Hopf-ish objects in monoidal categories.
+Don’t worry about actually understanding the maths, btw, just look at the notation.
+Suppose we have maps
+<span class="math inline">\mu \colon H \otimes H \to H</span>, <span class="math inline">\Delta\colon H \to H \otimes H</span>, <span class="math inline">S\colon  H\to H</span>, and <span class="math inline">\varepsilon \colon H \to \Bbbk</span>, for <span class="math inline">H \in \mathsf{Vect}_{\Bbbk}</span>.
+Assume that this map satisfies
+<span class="math display">
+       \mu \circ (S \otimes \mathrm{id}) \circ \Delta
+       = \eta \circ \varepsilon
+       = \mu \circ (\mathrm{id} \otimes S) \circ \Delta.
+   </span>
+First of all, notice how there are already lots of notational decisions that could have been written up differently!
+One might omit all of the <span class="math inline">\circ</span>’s, and just write <span class="math inline">\mu(S \otimes \mathrm{id})\Delta</span>,
+or highlight the symmetry between two of the maps and write <span class="math inline">\nabla</span> instead of <span class="math inline">\mu</span>.</p>
+<p>Even more extreme, however, are the following alternative ways of writing the same equation.
+One might also express it</p>
+<ul>
+<li>in <em>Sweedler notation</em> by
+<span class="math display">
+  S(a_{(1)})a_{(2)} = \varepsilon(a) 1 =  S(a_{(1)})a_{(2)};
+</span></li>
+<li>with <em>commutative diagrams</em>:
+<img class="pure-img" src="../images/bqn-aoc/commutative-diagram.png" alt="A commutative diagram for the above equation.">
+and</li>
+<li>with <em>string diagrams</em>:
+<img class="pure-img" src="../images/bqn-aoc/string-diagram.png" alt="A string diagram for the above equation."></li>
+</ul>
+<p>Needless to say, these all look <em>vastly</em> different,
+each—in my opinion—enabling a certain mode of thought better than the others.
+For example, I happen to like the string diagrammatic version the best,
+and try to use it as often as possible.
+However, try doing that when you have to juggle 10+ strings!
+At that point, Sweedler notation becomes extremely concise and much easier to reason about.</p>
+<p>Let’s get back to that array programming thing, though.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>This is actually also true for the respective user-defined analogues,
+but let’s talk about <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">that</a> later.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>{-} The grouping of days is mostly done so the TOC doesn’t completely explode,
+while retaining some sort of directional aid.
+In either case, it’s probably fastest to just <code>C-f</code> for the respective day.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>The <code>•</code> is not a separate function, but really part of the name <code>•FLines</code>.
+All names starting with that symbol are [system values]—<!--
+   -->things provided by the BQN interpreter that are not the builtin primitives.
+We will see other important system values, like <code>•HashMap</code> or <code>•Type</code>, a bit later.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>There are many definitions of affine space, here is a simple one:
+an <em>affine space</em> comprises a set <span class="math inline">A</span> and a vector space <span class="math inline">V</span>,
+such that the underlying abelian group of <span class="math inline">V</span> acts freely and transitively on <span class="math inline">A</span>.
+In our specific case, <span class="math inline">A</span> would be the set of “numeric Unicode codepoints”,
+and <span class="math inline">V</span> is the field of “numbers”.</p>
+<p>The latter is where this falls quite flat;
+even leaving aside all the “floating points are evil” rhetoric,
+we can actually only act on a character with an integer.
+Now, ℤ is just a ring, not a field, and has no hope of being a vector space over any field.
+Rather, one should talk about characters forming an affine <em>module</em> over ℤ,
+which would at least be a bit more formal.
+I swear I will stop with the maths at some point.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>{-} All whitespace here, and indeed in most places, is completely redundant.
+I choose to still include it, to “logically group” certain operations.
+It helps me with reading the code, anyways.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Or, if you wanted to make it extra confusing,
+as <code>+´⊢/⊢=¯1⊸⌽</code>,
+but we’ll get to that later on.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Note that the actual implementation of <code>Split</code> I’m using is</p>
+<pre class="bqn"><code>Split ⇐ (¬-˜⊢×·+`»⊸&gt;)∘≠⊔⊢</code></pre>
+<p>which is subtly different in its behaviour.
+I leave it as an exercise for the reader—or my future self—to figure out how exactly this version differs to the one I just explained,
+and what problem it fixes.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>E.g., Emacs supports this by means of <code>quoted-insert</code> (<code>C-q</code>).<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Technically, it’s
+<a href="https://mlochbaum.github.io/BQN/doc/train.html#longer-trains">“any function expression with multiple functions or subjects in it”</a>,
+which means a string of functions and subjects that ends with a function.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>This is a primitive in APL, dyadic <code>~</code>,
+but it’s easy enough to remember that it doesn’t feel all that bothersome to write it out in BQN.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Don’t want to somehow end up with an array that has holes in it!<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>In two dimensions this is <span class="math inline">|x_1 - x_2| + |y_1 - y_2|</span>;
+or, as <span class="math inline">y</span> is always the origin, just <span class="math inline">|x_1|+|x_2|</span>.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>Guess which other language I like to program in!<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>I mean, not really—arrays in BQN are immutable.
+But we can at least pretend it does that.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>There is also a “computational” <em>under</em>,
+in which the BQN implementation tries to find a right inverse to the given function.
+It’s a pretty interesting modifier.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>That’s actually false: this algorithm doesn’t provide a general solution,
+as it banks on the fact that a node never contains two children
+(in which case we would have to try both branches).
+It works for my input, though, so I figured this was good enough.
+Let’s say that tree manipulations are not necessarily my favourite thing to do in an array language.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p>{-} I’m reversing the list because we have to right fold over it later.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><p>{-} For example,</p>
+<pre class="bqn"><code>    DecToHex 15
+&quot;0f&quot;
+    DecToHex 32
+&quot;20&quot;</code></pre>
+<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn26"><p>This is a phenomenal article, btw, definitely give it a read.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>Or <code>⟨0 2⟩</code>, depending in which direction your list points.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28"><p>Unlike APL, BQN’s <em>repeat</em> operator does not support this out of the box.<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29"><p>Indeed, <code>utils.bqn</code> just looks like</p>
+<pre class="bqn"><code>Split ⇐ (¬-˜⊢×·+`»⊸&gt;)∘≠⊔⊢
+_Fix  ⇐ { 𝔽∘⊢⍟≢⟜𝔽_𝕣∘⊢⍟≢⟜𝔽𝕩 }
+tab   ⇐ @+9
+cr    ⇐ @+10</code></pre>
+<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn30"><p>{-} Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn31"><p>We can’t just use <code>⟨«,»,«˘,»˘⟩¨&lt;x</code>
+because the <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic role</a> of a list is a subject,
+which can’t be applied as a function.<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn32"><p>In that case, using <em>rotate</em> would be more appropriate.<a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33"><p>Notice that <span class="math inline">2147483647 = 2^{31} - 1</span>
+so this challenge was doable even for esolangs
+that only support signed 32bit integers.
+Nice touch.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn34"><p>My loop happens to start with at 0,
+but I don’t know if this is universal across all inputs.<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn35"><p>I suppose inserting <code>i</code> in the back of the array would be cheaper:</p>
+<pre class="bqn"><code>¯2⊑⟨0⟩{𝕨∾˜(-n+1)⌽𝕩}´⌽1+↕2017</code></pre>
+<p>However, this doesn’t really matter;
+we need a different solution for part two either way.<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn36"><p>In fact, since simulating these instructions is so verbose,
+the file contains 36 lines of pure code (without comments or empty lines)!
+This is not only 15 more lines than the second place, <a href="#day-7">day 7</a>,
+but a big anomaly in general;
+the average is around 12 lines, and the median is 11:</p>
+<pre class="bqn"><code>    ((+´÷≠)⋈{(⌊2÷˜≠𝕩)⊑∨𝕩}){•BQN&quot;⟨&quot;∾𝕩∾&quot;⟩&quot;}1⊑•SH⟨
+      &quot;/bin/sh&quot;
+      &quot;-c&quot;
+      &quot;tokei -f «path» \
+        | awk '{ print $3 }' \
+        | head -n-3 | tail -n25&quot;
+    ⟩
+⟨ 11.76 11 ⟩</code></pre>
+<a href="#fnref36" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn37"><p>Foreshadowing.<a href="#fnref37" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn38"><p>This is modulo some shenanigans when <code>0</code> is the first element of the list,
+but let’s completely ignore that case for the purposes of this exposition.
+Indeed, since we are dealing with a vector of three numbers and the fill element is still <code>0</code>,
+this does not affect the actual solution.<a href="#fnref38" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn39"><p>After writing this, I saw that <a href="https://mlochbaum.github.io/bqncrate/">BQNcrate</a> suggests <code>∊∧∊⌾⌽</code>,
+which should also work for non-sorted lists.<a href="#fnref39" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn40"><p>A version of <code>Split</code> that splits on subarrays would have probably been useful here.
+Certainly something to write before this year’s event.<a href="#fnref40" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn41"><p>Note that this is all under the assumption that <code>k</code> divides <code>n</code>.<a href="#fnref41" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn42"><p>There’s a great (apocryphal) anecdote about John von Neumann
+shouting at his PhD students because they were writing assembly.
+Obviously, this just wasted resources because it was much too high-level,
+and they should have written their programs directly in binary instead.
+A more civilised age.<a href="#fnref42" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn43"><p>{-} There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
+Honestly, I’m not sure what to think of that;
+I used to really dislike these days, but this one was unexpectedly fun.
+It <em>is</em> a breath of fresh air after over 20 days of solving puzzles, I guess.
+However, it also helps that doing these problems “out of season”
+is a lot more relaxed than trying to bash out both parts before work every day.<a href="#fnref43" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Integrating KaTeX Into Hakyll</title>
     <link href="https://tony-zorman.com/posts/katex-with-hakyll.html" />
     <id>https://tony-zorman.com/posts/katex-with-hakyll.html</id>

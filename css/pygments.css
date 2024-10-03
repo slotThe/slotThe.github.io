@@ -49,7 +49,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .nd { color: #555555; font-weight: bold } /* Name.Decorator */
 .ni { color: #848484; font-weight: bold } /* Name.Entity */
 .ne { color: var(--fg-exception) } /* Name.Exception */
-.nf                       { font-weight: bold   } /* Name.Function */
+                      .nf { font-weight: bold   } /* Name.Function */
 .highlight-emacs-lisp .nf { font-weight: normal } /* Name.Function */
 .nl { color: #363636; font-weight: bold } /* Name.Label */
 .nn { background-color: var(--bg-code-accent) } /* Name.Namespace */
