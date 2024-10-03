@@ -125,19 +125,19 @@ This is elucidated in, for example,
 <blockquote>
 <p></p>
 When using change-inner with rust-mode, the following code (with <code>|</code> as the cursor):
-<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span>::<span class="n">parse</span><span class="p">(</span><span class="o">|</span>
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span><span class="p">::</span><span class="n">parse</span><span class="p">(</span><span class="o">|</span>
 <span class="w">    </span><span class="s">&quot;https://github.com/rust-lang/rust/issues?labels=E-easy&amp;state=open&quot;</span>
 <span class="w">        </span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
 </pre></div>
 
 <p></p>
 calling <code>M-x change-inner (</code> gives:
-<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span>::<span class="n">parse</span><span class="o">|</span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span><span class="p">::</span><span class="n">parse</span><span class="o">|</span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
 </pre></div>
 
 <p></p>
 whereas I would expect:
-<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span>::<span class="n">parse</span><span class="p">(</span><span class="o">|</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span><span class="p">::</span><span class="n">parse</span><span class="p">(</span><span class="o">|</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
 </pre></div>
 
 <p></p>
@@ -440,10 +440,10 @@ For anyone interested, here is the full code.
 It also includes a <code>mode</code> setting, which can be set to <code>outer</code>,
 in order to kill around the parentheses; e.g.,
 <div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="c1">// before</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span>::<span class="n">parse</span><span class="p">(</span><span class="o">|</span><span class="s">&quot;https://my-url.com&quot;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span><span class="p">::</span><span class="n">parse</span><span class="p">(</span><span class="o">|</span><span class="s">&quot;https://my-url.com&quot;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
 
 <span class="c1">// after</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span>::<span class="n">parse</span><span class="o">|</span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">issue_list_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Url</span><span class="p">::</span><span class="n">parse</span><span class="o">|</span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
 </pre></div>
 
 <p></p>

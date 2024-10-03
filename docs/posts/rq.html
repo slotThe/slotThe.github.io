@@ -308,7 +308,7 @@ instead of
 <a href="https://github.com/slotThe/rq/blob/4ff7bb1e35dbbde201a069f5e2c588059c79149b/src/eval.rs#L148">hard coding</a>
 them into the evaluator itself.
 This would essentially involve a change in the expression type from
-<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span> <span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// …</span>
 <span class="w">  </span><span class="n">Builtin</span><span class="p">(</span><span class="n">Builtin</span><span class="p">),</span><span class="w"> </span><span class="c1">// Builtin is a big enum of names</span>
 <span class="p">}</span>
@@ -317,9 +317,9 @@ This would essentially involve a change in the expression type from
 <p></p>
 
 to something along the lines of
-<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span> <span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// …</span>
-<span class="w">  </span><span class="n">Builtin</span><span class="p">(</span><span class="k">dyn</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="n">Expr</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Expr</span><span class="p">),</span>
+<span class="w">  </span><span class="n">Builtin</span><span class="p">(</span><span class="k">dyn</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="n">Expr</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Expr</span><span class="p">),</span>
 <span class="p">}</span>
 </pre></div>
 
