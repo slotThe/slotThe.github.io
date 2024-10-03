@@ -24,7 +24,7 @@ import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
 import qualified Text.Pandoc.Builder as Many (toList, singleton)
 import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..), Pandoc)
-import Text.Pandoc.Options (HTMLMathMethod (..), ReaderOptions, WriterOptions (..))
+import Text.Pandoc.Options (Extension (..), HTMLMathMethod (..), ReaderOptions (readerExtensions), WriterOptions (..), extensionsFromList)
 import Text.Pandoc.Shared (headerShift)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
@@ -300,7 +300,7 @@ getTocCtx ctx = do
   noToc      <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "no-toc"))
   bib        <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "bib"))
   writerOpts <- mkTocWriter defaultHakyllWriterOptions
-  toc        <- renderPandocWith defaultHakyllReaderOptions writerOpts =<< getResourceBody
+  toc        <- renderPandocWith myReader writerOpts =<< getResourceBody
   pure $ mconcat [ ctx
                  , constField "toc" $
                      (if bib then addBibHeading else id) $ killLinkIds (itemBody toc)
@@ -442,6 +442,13 @@ myPandocCompilerWithTransformM ropt wopt f =
 myWriter :: WriterOptions
 myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = KaTeX "" }
 
+myReader :: ReaderOptions
+myReader = defaultHakyllReaderOptions
+  { readerExtensions =
+      readerExtensions defaultHakyllReaderOptions
+        <> extensionsFromList [Ext_tex_math_single_backslash]
+  }
+
 -- | A simple pandoc compiler for RSS/Atom feeds, with none of the
 -- fanciness that 'myPandocCompiler' has.
 pandocRssCompiler :: Compiler (Item String)
@@ -450,7 +457,7 @@ pandocRssCompiler = pandocCompilerWorker pure
 pandocCompilerWorker :: (Item Pandoc -> Compiler (Item Pandoc)) -> Compiler (Item String)
 pandocCompilerWorker =
   myPandocCompilerWithTransformM
-    defaultHakyllReaderOptions
+    myReader
     myWriter
     -- Only the `title' should be <h1>. This needs to be here so that
     -- headings are shifted down for both 'myPandocCompiler', and
