@@ -12,6 +12,7 @@ import Data.Text    qualified as T
 import Data.Text.IO qualified as T
 
 import Control.Monad
+import Data.Functor ((<&>))
 import Data.List (foldl')
 import Data.Maybe
 import Data.String (IsString)
@@ -319,11 +320,12 @@ getTocCtx ctx = do
   mkTocWriter :: WriterOptions -> Compiler WriterOptions
   mkTocWriter writerOpts = do
     tmpl <- either (const Nothing) Just <$> unsafeCompiler (compileTemplate "" "$toc$")
+    dpth <- fromMaybe 3 <$> (getUnderlying >>= (`getMetadataField` "toc-depth") <&> fmap read)
     -- Headings will NOT be shifted down by this point because this
     -- happens before `myPandocCompiler'.
     pure $ writerOpts
       { writerTableOfContents = True
-      , writerTOCDepth        = 3
+      , writerTOCDepth        = dpth
       , writerTemplate        = tmpl
       }
 
