@@ -767,8 +767,10 @@ and doing so at the start solves <code>esh-autosuggest</code> et al producing ga
         Posted on 2023-11-13
       
       
+        &thinsp;·&thinsp; last modified: 2024-10-15
       
-        &thinsp;·&thinsp; <span title="1113 words">5 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1173 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'nix'." href="/tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html" rel="tag">xmonad</a>
@@ -813,6 +815,7 @@ and enabling this functionality in <code>windowManager.xmonad</code>.</p>
 <summary>
 Modifying the system flake
 </summary>
+<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/flake.nix b/flake.nix</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>index 4cf35e4..dedd839 100644</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/flake.nix</span></span>
@@ -852,7 +855,7 @@ Modifying the system flake
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>       };</span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>     };</span></code></pre></div>
 </details>
-<p>After having added the input, making use of the flake is quite easy.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>After having added the input, making use of the flake is quite easy.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <details>
 <summary>
 Enabling the flake
@@ -892,7 +895,7 @@ I don’t really need more than a <code>ghci</code> session for my configuration
 -->—anything complicated enough to warrant a language server should immediately be upstreamed into <code>xmonad-contrib</code>.</p>
 <p>In Emacs’s <code>haskell-mode</code>,
 executing <code>haskell-interactive-bring</code> (bound to <code>C-c C-c</code> by default)
-brings up a <code>ghci</code> session.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+brings up a <code>ghci</code> session.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
 Rather obviously, this fails out of the box.
 It tries to call the global <code>ghci</code>,
 which doesn’t come from the flake,
@@ -1002,20 +1005,43 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
+<li id="fn1"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
+If you still have this in your flake, you should probably remove it—it might lead to quirky behaviour upon evaluation!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
 I figured that out so you don’t have to.
 Make sure that the revision of <code>nixpkgs</code> that you track is recent enough,
 else this flag may not be available.</p>
 <p>Also, don’t forget to provide XMonad with your configuration,
-lest you will be greeted by a black screen upon login.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>More precisely, I have <code>C-c C-c</code> bound to</p>
+lest you will be greeted by a black screen upon login.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>More precisely, I have <code>C-c C-c</code> bound to</p>
 <pre class="emacs-lisp"><code>(defun slot/haskell-load-and-bring ()
   &quot;Sane behaviour when loading the current file into ghci.&quot;
   (interactive)
   (save-buffer)
   (haskell-process-load-file)
   (haskell-interactive-bring))</code></pre>
-<p>but this is only a small quality of life wrapper.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<p>but this is only a small quality of life wrapper.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

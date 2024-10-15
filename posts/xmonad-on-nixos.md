@@ -1,6 +1,7 @@
 ---
 title: Using XMonad with NixOS
 date: 2023-11-13
+last-modified: 2024-10-15
 tags: emacs, nix, xmonad
 ---
 
@@ -35,6 +36,7 @@ and enabling this functionality in `windowManager.xmonad`.
 
 <details>
   <summary>Modifying the system flake</summary>
+[^3]
 ``` diff
 diff --git a/flake.nix b/flake.nix
 index 4cf35e4..dedd839 100644
@@ -257,3 +259,48 @@ Now `C-c C-c` works out of the box!
 
       Also, don't forget to provide XMonad with your configuration,
       lest you will be greeted by a black screen upon login.
+
+[^3]: {-}  󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      󠀠
+
+      Note that `xmonad-contrib.modernise.${system}` was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
+      If you still have this in your flake, you should probably remove it—it might lead to quirky behaviour upon evaluation!

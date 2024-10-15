@@ -70,8 +70,10 @@
         Posted on 2023-11-13
       
       
+        &thinsp;·&thinsp; last modified: 2024-10-15
       
-        &thinsp;·&thinsp; <span title="1111 words">5 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1169 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'nix'." href="../tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html" rel="tag">xmonad</a>
@@ -123,6 +125,53 @@ and enabling this functionality in <code>windowManager.xmonad</code>.
 <summary>
 Modifying the system flake
 </summary>
+<p></p>
+<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+󠀠
+<p></p>
+Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in <span class="small-caps">xm</span>onad.
+If you still have this in your flake, you should probably remove it—it might lead to quirky behaviour upon evaluation!</div><!--
+-->
 <div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/flake.nix b/flake.nix</span>
 <span class="gh">index 4cf35e4..dedd839 100644</span>
 <span class="gd">--- a/flake.nix</span>
@@ -166,7 +215,7 @@ Modifying the system flake
 </details>
 <p></p>
 After having added the input, making use of the flake is quite easy.<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
 I figured that out so you don’t have to.
 Make sure that the revision of <code>nixpkgs</code> that you track is recent enough,
 else this flag may not be available.
@@ -219,7 +268,7 @@ I don’t really need more than a <code>ghci</code> session for my configuration
 In Emacs’s <code>haskell-mode</code>,
 executing <code>haskell-interactive-bring</code> (bound to <code>C-c C-c</code> by default)
 brings up a <code>ghci</code> session.<!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">More precisely, I have <code>C-c C-c</code> bound to
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">More precisely, I have <code>C-c C-c</code> bound to
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/haskell-load-and-bring</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Sane behaviour when loading the current file into ghci.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
