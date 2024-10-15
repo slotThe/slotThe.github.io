@@ -43,7 +43,15 @@
           (python3.withPackages (p: [
             p.fonttools # Compressing fonts
             p.brotli    # Compressing fonts
-            p.pygments  # Syntax highlighting
+            (p.pygments.overrideAttrs (old: {
+              version = "2.18.1b";
+              src = fetchFromGitHub {
+                owner = "slotThe";
+                repo = "pygments";
+                rev = "48b1625c0ce926d9f752edc20dcbe332a99ab85a";
+                hash = "sha256-c1pbOvb4mF1OIgKZkJPMMBl66B82zF8xwNyfQ+vUgNs=";
+              };
+            }))
           ]))
           zlib
         ];
