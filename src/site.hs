@@ -9,7 +9,7 @@
 {-# LANGUAGE ViewPatterns        #-}
 
 import Data.Text    qualified as T
-import Data.Text.IO qualified as T
+import Data.Text.IO qualified as T -- XXX: text 2.1 has Data.Text.IO.Utf8
 
 import Control.Monad
 import Data.Functor ((<&>))
@@ -17,9 +17,11 @@ import Data.List (foldl')
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
-import GHC.IO.Handle (BufferMode (NoBuffering), Handle, hSetBuffering)
+import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll
+import Hakyll.Core.Store (hash)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
+import System.IO (hPrint)
 import System.Process (runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
@@ -512,19 +514,25 @@ myPandocCompiler =
        in Header n attr (inlines <> [link])
     block -> block
 
+  -- Bidirectional process communication is a real pain, so just use files.
+  -- They're cheap.
   pygmentsHighlight :: Pandoc -> Compiler Pandoc
-  pygmentsHighlight = walkM \case
-    CodeBlock (_, listToMaybe -> mbLang, _) (T.unpack -> body) -> do
-      let lang = T.unpack (fromMaybe "text" mbLang)
-      RawBlock "html" . T.pack <$> callPygs lang body
-    block -> pure block
-   where
-    callPygs :: String -> String -> Compiler String
-    callPygs lang = unixFilter "pygmentize" [ "-l", lang
-                                            , "-f", "html"
-                                            , "-P", "cssclass=highlight-" <> lang
-                                            , "-P", "cssstyles=padding-left: 1em;"
-                                            ]
+  pygmentsHighlight pandoc = recompilingUnsafeCompiler do
+    (hin, _, _, _) <- runInteractiveCommand "python scripts/pygmentize.py"
+    hSetBuffering hin NoBuffering
+    void $ (`walkM` pandoc) \case
+      cb@(CodeBlock (_, listToMaybe -> mbLang, _) body) -> do
+        let cod = mconcat [ T.pack ("/tmp/" <> hash [T.unpack body]), "\n"
+                          , fromMaybe "text" mbLang <> "\n"
+                          , body ]
+        hPrint hin (T.length cod)
+        T.hPutStr hin cod
+        pure cb
+      block -> pure block
+    (`walkM` pandoc) \case
+      CodeBlock _ body ->
+        RawBlock "html" <$> T.readFile ("/tmp/" <> hash [T.unpack body])
+      block -> pure block
 
   includeFiles :: Pandoc -> Compiler Pandoc
   includeFiles = walkM \case
