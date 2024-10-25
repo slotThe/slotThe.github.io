@@ -10,7 +10,8 @@ td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5
 span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 .hll { background-color: #ffffcc }
 .c { color: var(--fg-comment); font-style: italic } /* Comment */
-.err { border: 1px solid #898989 } /* Error */
+               .err { border: 1px solid #898989 } /* Error */
+.highlight-bqn .err { color: var(--fg); border: none; } /* Ignore errors in BQN, since the parser is not that good */
 .k { font-weight: bold } /* Keyword */
 .o { font-weight: bold } /* Operator */
 .p { } /* Punctuation */
@@ -38,7 +39,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .kp { color: var(--fg-keyword); font-weight: bold } /* Keyword.Pseudo */
 .kr { font-weight: bold } /* Keyword.Reserved */
 .kt { background-color: var(--bg-code-accent) } /* Keyword.Type */
-.m { color: var(--fg-comment) } /* Literal.Number */
+               .m { color: var(--fg-comment) } /* Literal.Number */
+.highlight-bqn .m { color: var(--fg-output) } /* Literal.Number */
 .s { color: var(--fg-string) } /* Literal.String */
 .na { color: var(--fg-output) } /* Name.Attribute */
 .nb { font-weight: bold } /* Name.Builtin */
