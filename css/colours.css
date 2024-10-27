@@ -39,6 +39,10 @@
     --bg-code-accent: #f8edff;
     --fg-diff-added: #005000;
     --fg-diff-deleted: #8f1313;
+    --fg-bqn-sub: #005e8b;
+    --fg-bqn-1-mod: #731c52;
+    --fg-bqn-2-mod: #531ab6;
+    --fg-bqn-string: #3548cf;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -80,5 +84,9 @@
         --bg-code-accent: #5e3f52;
         --fg-diff-added: #a0e0a0;
         --fg-diff-deleted: #ffbfbf;
+        --fg-bqn-sub: #00d3d0;
+        --fg-bqn-1-mod: #cf7fa7;
+        --fg-bqn-2-mod: #b6a0ff;
+        --fg-bqn-string: #79a8ff;
     }
 }
