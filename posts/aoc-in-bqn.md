@@ -913,7 +913,7 @@ Notice that if `𝕨` is larger than the length of `𝕩`, *reshape* duplicates 
 ```
 
 The train `↕⋈¨↕` is interesting because of the middle component, `⋈¨`.
-It's what one might call `zip` in other languages.
+It's what one might call `zip` in other languages.[^66]
 In the last line, we first use *reshape* to replicate the vector `𝕩` exactly `𝕨` times:
 
 ``` bqn
@@ -4025,6 +4025,18 @@ Nice.
          }""
        }
        ```
+
+[^66]: Dzaima alerted me to the fact that `∾(↕⋈¨↕)𝕩` as a whole is probably better written as `2/↕𝕩`,
+       using the magic of
+       *replicate* ([`/`](https://mlochbaum.github.io/BQN/doc/replicate.html#replicate)).
+
+       ``` bqn
+           2/↕6
+       ⟨ 0 0 1 1 2 2 3 3 4 4 5 5 ⟩
+       ```
+
+       However, since I wanted to showcase `zip`,
+       I will keep the slightly longer version in the main text.
 
 [namespace]: https://mlochbaum.github.io/BQN/doc/namespace.html
 [system-value]: https://mlochbaum.github.io/BQN/spec/system.html

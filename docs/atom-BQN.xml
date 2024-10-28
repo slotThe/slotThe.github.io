@@ -26,7 +26,7 @@
         &thinsp;·&thinsp; last modified: 2024-10-28
       
       
-        &thinsp;·&thinsp; <span title="22234 words">89 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="22290 words">90 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
@@ -717,7 +717,7 @@ Notice that if <code>𝕨</code> is larger than the length of <code>𝕩</code>,
     (2×≠)⊸⥊ ↕5          # Bonus: the same thing tacitly
 ⟨ 0 1 2 3 4 0 1 2 3 4 ⟩</code></pre>
 <p>The train <code>↕⋈¨↕</code> is interesting because of the middle component, <code>⋈¨</code>.
-It’s what one might call <code>zip</code> in other languages.
+It’s what one might call <code>zip</code> in other languages.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>
 In the last line, we first use <em>reshape</em> to replicate the vector <code>𝕩</code> exactly <code>𝕨</code> times:</p>
 <pre class="bqn"><code>    3 {𝕨‿2⥊𝕩} 0‿1
 ┌─
@@ -752,7 +752,7 @@ which is useful since we are looking for a specific index:</p>
 and calculate the Manhattan distance.</p>
 <pre class="bqn"><code>+´| (inp-2) ⊑ Coords 1000 # ⇒ 552</code></pre>
 <p>The <code>1000</code> above is a magic number,
-because the whole thing is really naturally a lazy infinite stream,<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>
+because the whole thing is really naturally a lazy infinite stream,<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>
 but that’s not how BQN works.</p>
 <hr />
 <p>Part two modifies how the spiral is constructed.
@@ -952,11 +952,11 @@ There is no real algorithm to speak of here, so we can just verbatim do what the
   ⟨1-˜i+i⊑inp, s+1⟩ # Subtract one from new index; we just increased the offset
 }•_while_{ 𝕊i‿s: (i&lt;≠inp)∧i≥0 } 0‿0   # ⇒ 351282</code></pre>
 <p>There are nevertheless a few interesting things about the solution:
-<code>inp F↩︎</code> <em>modifies</em> <code>inp</code> with the result of calling <code>F inp</code>.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>
+<code>inp F↩︎</code> <em>modifies</em> <code>inp</code> with the result of calling <code>F inp</code>.<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>
 Much more interestingly, however, we can use
 <em>under</em> (<a href="https://mlochbaum.github.io/BQN/doc/under.html"><code>⌾</code></a>)
 to change only a part of the input vector.
-How it works in this “structural mode”<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> is that <code>𝔽⌾𝔾 𝕩</code>
+How it works in this “structural mode”<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> is that <code>𝔽⌾𝔾 𝕩</code>
 replaces the part of <code>𝕩</code> that’s picked out by <code>𝔾𝕩</code>
 with the result of <code>𝔽𝔾𝕩</code>.
 As such, it first focuses in on the structure with <code>𝔾</code>, applies <code>𝔽</code>,
@@ -1198,7 +1198,7 @@ create tuples of the total weight of each child <code>c</code> (including <code>
 and sort the resulting list in ascending order.
 This split of “weight” and “weight with children” is necessary,
 since we want to adjust the weight of the node at the end.</li>
-<li>Then, we check for the only conditions that can occur.<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>
+<li>Then, we check for the only conditions that can occur.<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>
 <ul>
 <li>If the list is empty that means there are no children and the node is leaf,
 so we hit the base case.</li>
@@ -1398,11 +1398,11 @@ Here’s essentially what we have to do:</p>
 <p>Regarding the first point: we now treat every character—including the commas—of the input string as a separate input number.
 So given <code>1,2,3</code> as an input, we would first transform it to <code>49 44 50 44 51</code> before continuing.
 Additionally, we have to append the magic numbers <code>17 31 73 47 23</code> to the input.
-This neatly showcases one of the many uses for affine characters:<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
+This neatly showcases one of the many uses for affine characters:<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a></p>
 <pre class="bqn"><code>inp2 ← ⌽ ⟨17, 31, 73, 47, 23⟩∾˜ @-˜ ⊑•FLines&quot;../inputs/day10.txt&quot;</code></pre>
 <p>Since BQN does not have any format strings,
 one has to implement base conversions from scratch.
-Here is one from decimal to hexadecimal, specialised to one byte—always two characters, padded with <code>0</code> if need be:<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a></p>
+Here is one from decimal to hexadecimal, specialised to one byte—always two characters, padded with <code>0</code> if need be:<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a></p>
 <pre class="bqn"><code>DecToHex ← { &quot;0123456789abcdef&quot; ⊏˜ 16(⌊∘÷˜ ⋈ |)𝕩 }</code></pre>
 <p>Finally, we get to XORing!
 One thing that bit me here is that BQN does not support bit operations on unsigned types, only signed and float.
@@ -1440,7 +1440,7 @@ Thankfully—or sadly?—I remember doing the exact same thing in a previous yea
 I wanted to use
 <a href="https://en.wikipedia.org/wiki/Hexagonal_Efficient_Coordinate_System">HECS</a>
 just for the name, but since all we really do is to calculate neighbours,
-an <a href="https://www.redblobgames.com/grids/hexagons/#coordinates-axial">axial</a><a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a> coordinate system seems like a safer bet.
+an <a href="https://www.redblobgames.com/grids/hexagons/#coordinates-axial">axial</a><a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a> coordinate system seems like a safer bet.
 Basically, since a hex grid has three major axes that one can walk along,
 we embed the grid in a cube with standard Cartesian coordinates <code>x y z</code>, with the additional constraint that <code>0=x+y+z</code>.
 This in particular means that we don’t actually have to care about <code>z</code> at all.
@@ -1505,10 +1505,10 @@ Consider</p>
 2 &lt;-&gt; 0, 1
 1 &lt;-&gt; 1, 3
 0 &lt;-&gt; 2</code></pre>
-<p>Calling <code>Group</code> on this input would result in <code>⟨ 0 2 1 ⟩</code>,<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a> even though <code>3</code> is also part of the group!
+<p>Calling <code>Group</code> on this input would result in <code>⟨ 0 2 1 ⟩</code>,<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a> even though <code>3</code> is also part of the group!
 To fix this we could… just run the algorithm until nothing changes?
 Yes, that sounds perfectly sensible.</p>
-<p>We need a helper 1-modifier <code>Fix</code>, which performs the iteration for us.<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a></p>
+<p>We need a helper 1-modifier <code>Fix</code>, which performs the iteration for us.<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a></p>
 <pre class="bqn"><code>_Fix ← { 𝔽∘⊢⍟≢⟜𝔽_𝕣∘⊢⍟≢⟜𝔽𝕩 }</code></pre>
 <details>
 <summary>
@@ -1667,7 +1667,7 @@ and export a function to compute the knot hash of the given argument.</p>
 only that exporting from a namespace works by binding with <em>export</em>
 (<a href="https://mlochbaum.github.io/BQN/doc/namespace.html"><code>⇐</code></a>)
 instead of <em>define</em>.
-We can now import this function as we did for ones in the utility file,<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a></p>
+We can now import this function as we did for ones in the utility file,<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a></p>
 <pre class="bqn"><code>⟨Split,_Fix⟩ ← •Import &quot;../../util/bqn_util/util.bqn&quot;
 ⟨KnotHash⟩ ← •Import &quot;./day10.bqn&quot;</code></pre>
 <p>and translate the recipe above into BQN code.</p>
@@ -1681,7 +1681,7 @@ We can now import this function as we did for ones in the utility file,<a href="
   &gt;Row∘Start¨↕128
 }</code></pre>
 <p>Not too many new things here.
-<code>HexToBin</code> essentially runs on the same logic as a more verbose version of <code>DecToHex</code> from day 10,<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>
+<code>HexToBin</code> essentially runs on the same logic as a more verbose version of <code>DecToHex</code> from day 10,<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>
 and the <code>•Fmt</code> function just pretty-prints the given value to a string.
 This is, however, the first time that we see an ambivalent function definition<!--
 -->—one that can be called both monadically and dyadically.
@@ -1699,7 +1699,7 @@ and then summed up the resulting vector.</p>
 <p>Part two is more interesting, and is probably among the top three parts for me in terms of fun.
 Instead of simply counting the number of alive cells, we now need to find the number of distinct <em>regions</em>—<!--
 -->live cells adjacent to each other in any of the four cardinal directions.
-For example, the grid shown above would have the following regions<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a></p>
+For example, the grid shown above would have the following regions<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a></p>
 <pre><code>11.2.3..--&gt;
 .1.2.3.4
 ....5.6.
@@ -1766,13 +1766,13 @@ and <em>nudge</em> <em>cells</em> to get the East and West one:</p>
 <p>There are a few things going on here.
 First, we use BQN’s
 <a href="https://mlochbaum.github.io/BQN/doc/functional.html">functional programming capabilities</a>,
-which work just about as one would expect.<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>
+which work just about as one would expect.<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a>
 Second, we need to <em>enclose</em> <code>m</code> and make it a
 <a href="https://mlochbaum.github.io/BQN/doc/enclose.html">unit array</a>,
 as otherwise <em>each</em> is trying to match up the major cells of <code>m</code> with the elements of our vector (the functions).
 We don’t want that, and making <code>m</code> a unit will correctly “duplicate” it to each function instead.
 Finally, <em>nudge</em> correctly inserts the fill elements for the edge cases;
-our grid is only 128×128 and we are not on a torus.<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a></p>
+our grid is only 128×128 and we are not on a torus.<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a></p>
 <p>Now, we can just compare every neighbour with the original value,
 and kick out the zeros.
 Using our <code>um</code> array from above:</p>
@@ -1806,7 +1806,7 @@ we just have to pull everything together<!--
 <p>For day 15 we have to help a pair of duelling generators decide which of them is malfunctioning.
 Each generator produces a value in the following way:
 take the previous value, multiply it by <code>16807</code> (generator A) or <code>48271</code> (generator B),
-and then keep the remainder of dividing the resulting product by <code>2147483647</code>.<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a>
+and then keep the remainder of dividing the resulting product by <code>2147483647</code>.<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a>
 Our puzzle input comprises the initial seeds whence this process starts.
 The task for part one is to check whether the lowest 16 bits of both of these numbers match up,
 and count the number of times this happens after 40 million pairs.</p>
@@ -1905,7 +1905,7 @@ Remember that evaluation happens right-to-left, though;
 <code>(¬h.Has𝕩) ⊣ 𝕩h.Set@</code> wouldn’t work!</p>
 <p>At the end, the loop returns the first duplicate it found,
 so all that’s left to do is to simulate that many steps upfront,
-and then whatever we have left over.<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a>
+and then whatever we have left over.<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a>
 The little <code>@</code>’s after the function calls to <code>h.Count</code> and <code>h.Keys</code>
 (but not to <code>h.Set</code>, as we need to associate some kind of value to the keys—that value just happens to be the null character)
 function as dummy arguments.
@@ -1959,7 +1959,7 @@ The <code>3+1</code> comprises the step size <code>3</code>, and keeps track of 
 Even more, the final inserted value will be the head of the vector,
 so getting the element at index <code>1</code> is what we want—no more <em>select</em>ing stuff.
 Do note that walking to the <em>right</em> in terms of indices translates to rotating the buffer to the <em>left</em> (i.e., using positive numbers).
-We can pack this function up in a fold, yielding an alternative solution for part one:<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a></p>
+We can pack this function up in a fold, yielding an alternative solution for part one:<a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a></p>
 <pre class="bqn"><code>1⊑⟨0⟩{𝕨∾(n+1)⌽𝕩}´⌽1+↕2017 # ⇒ 1487</code></pre>
 <hr />
 <p>Part two now wants us to identify the value following <code>0</code>—after fifty million iterations!
@@ -2057,14 +2057,14 @@ One ← {
     } ins;
   SD 𝕩
 }</code></pre>
-<p>Quite a lot of code!<a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a>
+<p>Quite a lot of code!<a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a>
 However, nothing very interesting happening here;
 we use <em>assert</em> (<code>!</code>) in the same way as in <a href="#day-7">day 7</a>,
 only that we now have a genuine condition to test.
 Recall that <code>𝕨!𝕩</code> checks whether <code>𝕩</code> is 1.
 If it is, nothing happens;
 if it’s not, an exception with value <code>𝕨</code> is thrown.
-We use it here so that we immediately exit upon receiving<a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a> our first recovery signal.
+We use it here so that we immediately exit upon receiving<a href="#fn39" class="footnote-ref" id="fnref39" role="doc-noteref"><sup>39</sup></a> our first recovery signal.
 As in any other “simulate indexing into this array”–type situations,
 <code>•_while_</code> is used for iteration,
 only this time we have to wrap the whole thing inside of <em>catch</em>.</p>
@@ -2288,7 +2288,7 @@ and kick out all particles that are equal to any adjacent ones.</p>
 <summary>
 The <code>∊∧1⌽∊</code> part is probably reasonably obfuscated, so let’s go through it.
 </summary>
-<p>First, one could write that piece of code in a slightly different—perhaps more understandable—way:<a href="#fn39" class="footnote-ref" id="fnref39" role="doc-noteref"><sup>39</sup></a></p>
+<p>First, one could write that piece of code in a slightly different—perhaps more understandable—way:<a href="#fn40" class="footnote-ref" id="fnref40" role="doc-noteref"><sup>40</sup></a></p>
 <pre class="bqn"><code>(≢˘⟜«)∧(≢˘⟜»)</code></pre>
 <p>This very symmetrical looking expression checks which elements in a given vector
 are unequal to their successor and predecessor:</p>
@@ -2315,7 +2315,7 @@ This will instead give you the last occurrence of every element in the vector.</
 ⟨ 0 1 1 0 0 1 1 0 1 1 ⟩
    1⌽∊ ⟨1,1,3,4,4,4,5,6,6,7⟩
 ⟨ 0 1 1 0 0 1 1 0 1 1 ⟩</code></pre>
-<p>Thus, to get the unique elements of our sorted list, <code>∊∧1⌽∊</code> will do!<a href="#fn40" class="footnote-ref" id="fnref40" role="doc-noteref"><sup>40</sup></a></p>
+<p>Thus, to get the unique elements of our sorted list, <code>∊∧1⌽∊</code> will do!<a href="#fn41" class="footnote-ref" id="fnref41" role="doc-noteref"><sup>41</sup></a></p>
 </details>
 <h2 id="days-2125">Days 21–25</h2>
 <h3 id="day-21"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day21.bqn">Day 21</a></h3>
@@ -2360,7 +2360,7 @@ P ← { # Parse a line into from‿to pairs
   f‿t ← '='Split𝕩 ⋄ f ¯1⊸↓↩ ⋄ t 2⊸↓↩
   &gt;∘(&quot;.#&quot;⊸⊐¨)∘('/'⊸Split)¨ f‿t
 }</code></pre>
-<p>This isn’t too surprising; we first essentially split on <code>" =&gt; "</code> in an awkward way,<a href="#fn41" class="footnote-ref" id="fnref41" role="doc-noteref"><sup>41</sup></a>
+<p>This isn’t too surprising; we first essentially split on <code>" =&gt; "</code> in an awkward way,<a href="#fn42" class="footnote-ref" id="fnref42" role="doc-noteref"><sup>42</sup></a>
 split every individual array on <code>/</code>,
 change the dots and hashes to zeros and ones,
 and <em>merge</em> each of the vectors into a proper array.</p>
@@ -2462,7 +2462,7 @@ inp ← ∾ E∘P¨ •FLines&quot;../inputs/day21.txt&quot;</code></pre>
 Let’s do this generically:
 given an array, a target <code>k</code> (for <code>k×k</code> subarrays),
 and a list of <code>k×k → (k+1)×(k+1)</code> substitutions,
-perform one enhancement step.<a href="#fn42" class="footnote-ref" id="fnref42" role="doc-noteref"><sup>42</sup></a></p>
+perform one enhancement step.<a href="#fn43" class="footnote-ref" id="fnref43" role="doc-noteref"><sup>43</sup></a></p>
 <pre class="bqn"><code>Widen ← { k‿substs 𝕊 grid:
   ∾{ 𝕊sg: # A k×k submatrix of `grid'
     1⊑⊑ (sg≡⊑)¨⊸/substs
@@ -2644,7 +2644,7 @@ The coprocessor’s ultimate goal is to determine the final value left in regist
 </blockquote>
 <p>This is a very big nudge into the direction of “go and read the assembly”.
 There are, I suppose, several ways to go about finding the solution.
-The sane one might be to translate the assembly into a more human readable form,<a href="#fn43" class="footnote-ref" id="fnref43" role="doc-noteref"><sup>43</sup></a>
+The sane one might be to translate the assembly into a more human readable form,<a href="#fn44" class="footnote-ref" id="fnref44" role="doc-noteref"><sup>44</sup></a>
 and then try to see patterns in this simpler representation (remember notation as a tool for thought?).
 Instead, I employed a trusted method that I learned from studying maths for too long:
 stare at it until it makes sense.</p>
@@ -2685,7 +2685,7 @@ jnz 1 3
 sub b -17
 jnz 1 -23</code></pre>
 </details>
-<p><a href="#fn44" class="footnote-ref" id="fnref44" role="doc-noteref"><sup>44</sup></a>
+<p><a href="#fn45" class="footnote-ref" id="fnref45" role="doc-noteref"><sup>45</sup></a>
 After quite a lot of staring, one figures out that <code>h</code> will fill up with all non-primes between <code>106500</code> and <code>123500</code> in steps of <code>17</code>.</p>
 <pre class="bqn"><code>+´{1≠+´0=𝕩|˜↕⌈√𝕩}¨+⟜17⍟(↕1+17÷˜123500-106500) 106500 # ⇒ 917</code></pre>
 <h3 id="day-24"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day24.bqn">Day 24</a></h3>
@@ -2916,56 +2916,63 @@ but it’s easy enough to remember that it doesn’t feel all that bothersome to
 <li id="fn18"><p>Don’t want to somehow end up with an array that has holes in it!<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn19"><p>In two dimensions this is <span class="math inline">|x_1 - x_2| + |y_1 - y_2|</span>;
 or, as <span class="math inline">y</span> is always the origin, just <span class="math inline">|x_1|+|x_2|</span>.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn20"><p>Guess which other language I like to program in!<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn21"><p>I mean, not really—arrays in BQN are immutable.
-But we can at least pretend it does that.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn22"><p>There is also a “computational” <em>under</em>,
+<li id="fn20"><p>Dzaima alerted me to the fact that <code>∾(↕⋈¨↕)𝕩</code> as a whole is probably better written as <code>2/↕𝕩</code>,
+using the magic of
+<em>replicate</em> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html#replicate"><code>/</code></a>).</p>
+<pre class="bqn"><code>    2/↕6
+⟨ 0 0 1 1 2 2 3 3 4 4 5 5 ⟩</code></pre>
+<p>However, since I wanted to showcase <code>zip</code>,
+I will keep the slightly longer version in the main text.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>Guess which other language I like to program in!<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>I mean, not really—arrays in BQN are immutable.
+But we can at least pretend it does that.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>There is also a “computational” <em>under</em>,
 in which the BQN implementation tries to find a right inverse to the given function.
-It’s a pretty interesting modifier.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn23"><p>That’s actually false: this algorithm doesn’t provide a general solution,
+It’s a pretty interesting modifier.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p>That’s actually false: this algorithm doesn’t provide a general solution,
 as it banks on the fact that a node never contains two children
 (in which case we would have to try both branches).
 It works for my input, though, so I figured this was good enough.
-Let’s say that tree manipulations are not necessarily my favourite thing to do in an array language.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn24"><p>{-} I’m reversing the list because we have to right fold over it later.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn25"><p>{-} For example,</p>
+Let’s say that tree manipulations are not necessarily my favourite thing to do in an array language.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><p>{-} I’m reversing the list because we have to right fold over it later.<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26"><p>{-} For example,</p>
 <pre class="bqn"><code>    DecToHex 15
 &quot;0f&quot;
     DecToHex 32
 &quot;20&quot;</code></pre>
-<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn26"><p>This is a phenomenal article, btw, definitely give it a read.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn27"><p>Or <code>⟨0 2⟩</code>, depending in which direction your list points.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn28"><p>Unlike APL, BQN’s <em>repeat</em> operator does not support this out of the box.<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn29"><p>Indeed, <code>utils.bqn</code> just looks like</p>
+<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn27"><p>This is a phenomenal article, btw, definitely give it a read.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28"><p>Or <code>⟨0 2⟩</code>, depending in which direction your list points.<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29"><p>Unlike APL, BQN’s <em>repeat</em> operator does not support this out of the box.<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30"><p>Indeed, <code>utils.bqn</code> just looks like</p>
 <pre class="bqn"><code>Split ⇐ (¬-˜⊢×·+`»⊸&gt;)∘≠⊔⊢
 _Fix  ⇐ { 𝔽∘⊢⍟≢⟜𝔽_𝕣∘⊢⍟≢⟜𝔽𝕩 }
 tab   ⇐ @+9
 lf    ⇐ @+10</code></pre>
-<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn30"><p>That is, the first version of that code, before dzaima told me how to clean it up:</p>
+<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn31"><p>That is, the first version of that code, before dzaima told me how to clean it up:</p>
 <pre class="bqn"><code>DecToHex←{
   𝕩{ 0𝕊n: n∾˜(2-≠n)⥊'0';
      x𝕊n: (⌊x÷16)𝕊(n∾˜&quot;0123456789abcdef&quot;⊑˜16|x)
   }&quot;&quot;
 }</code></pre>
-<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn31"><p>{-} Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn32"><p>We can’t just use <code>⟨«,»,«˘,»˘⟩¨&lt;x</code>
+<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn32"><p>{-} Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.<a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33"><p>We can’t just use <code>⟨«,»,«˘,»˘⟩¨&lt;x</code>
 because the <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic role</a> of a list is a subject,
-which can’t be applied as a function.<a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn33"><p>In that case, using <em>rotate</em> would be more appropriate.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn34"><p>Notice that <span class="math inline">2147483647 = 2^{31} - 1</span>
+which can’t be applied as a function.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn34"><p>In that case, using <em>rotate</em> would be more appropriate.<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn35"><p>Notice that <span class="math inline">2147483647 = 2^{31} - 1</span>
 so this challenge was doable even for esolangs
 that only support signed 32bit integers.
-Nice touch.<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn35"><p>My loop happens to start with at 0,
-but I don’t know if this is universal across all inputs.<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn36"><p>I suppose inserting <code>i</code> in the back of the array would be cheaper:</p>
+Nice touch.<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn36"><p>My loop happens to start with at 0,
+but I don’t know if this is universal across all inputs.<a href="#fnref36" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn37"><p>I suppose inserting <code>i</code> in the back of the array would be cheaper:</p>
 <pre class="bqn"><code>¯2⊑⟨0⟩{𝕨∾˜(-n+1)⌽𝕩}´⌽1+↕2017</code></pre>
 <p>However, this doesn’t really matter;
-we need a different solution for part two either way.<a href="#fnref36" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn37"><p>In fact, since simulating these instructions is so verbose,
+we need a different solution for part two either way.<a href="#fnref37" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn38"><p>In fact, since simulating these instructions is so verbose,
 the file contains 36 lines of pure code (without comments or empty lines)!
 This is not only 15 more lines than the second place, <a href="#day-7">day 7</a>,
 but a big anomaly in general;
@@ -2978,28 +2985,28 @@ the average is around 12 lines, and the median is 11:</p>
         | head -n-3 | tail -n25&quot;
     ⟩
 ⟨ 11.6 11 ⟩</code></pre>
-<a href="#fnref37" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn38"><p>Foreshadowing.<a href="#fnref38" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn39"><p>This is modulo some shenanigans when <code>0</code> is the first element of the list,
+<a href="#fnref38" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn39"><p>Foreshadowing.<a href="#fnref39" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn40"><p>This is modulo some shenanigans when <code>0</code> is the first element of the list,
 but let’s completely ignore that case for the purposes of this exposition.
 Indeed, since we are dealing with a vector of three numbers and the fill element is still <code>0</code>,
-this does not affect the actual solution.<a href="#fnref39" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn40"><p>After writing this, I saw that <a href="https://mlochbaum.github.io/bqncrate/">BQNcrate</a> suggests <code>∊∧∊⌾⌽</code>,
-which should also work for non-sorted lists.<a href="#fnref40" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn41"><p>A version of <code>Split</code> that splits on subarrays would have probably been useful here.
-Certainly something to write before this year’s event.<a href="#fnref41" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn42"><p>Note that this is all under the assumption that <code>k</code> divides <code>n</code>.<a href="#fnref42" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn43"><p>There’s a great (apocryphal) anecdote about John von Neumann
+this does not affect the actual solution.<a href="#fnref40" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn41"><p>After writing this, I saw that <a href="https://mlochbaum.github.io/bqncrate/">BQNcrate</a> suggests <code>∊∧∊⌾⌽</code>,
+which should also work for non-sorted lists.<a href="#fnref41" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn42"><p>A version of <code>Split</code> that splits on subarrays would have probably been useful here.
+Certainly something to write before this year’s event.<a href="#fnref42" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn43"><p>Note that this is all under the assumption that <code>k</code> divides <code>n</code>.<a href="#fnref43" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn44"><p>There’s a great (apocryphal) anecdote about John von Neumann
 shouting at his PhD students because they were writing assembly.
 Obviously, this just wasted resources because it was much too high-level,
 and they should have written their programs directly in binary instead.
-A more civilised age.<a href="#fnref43" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn44"><p>{-} There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
+A more civilised age.<a href="#fnref44" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn45"><p>{-} There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
 Honestly, I’m not sure what to think of that;
 I used to really dislike these days, but this one was unexpectedly fun.
 It <em>is</em> a breath of fresh air after over 20 days of solving puzzles, I guess.
 However, it also helps that doing these problems “out of season”
-is a lot more relaxed than trying to bash out both parts before work every day.<a href="#fnref44" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+is a lot more relaxed than trying to bash out both parts before work every day.<a href="#fnref45" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
