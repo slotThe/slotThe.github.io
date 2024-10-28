@@ -78,7 +78,7 @@
         &thinsp;·&thinsp; last modified: 2024-10-28
       
       
-        &thinsp;·&thinsp; <span title="22246 words">89 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="22308 words">90 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="../tags/BQN.html" rel="tag">BQN</a>
@@ -480,22 +480,29 @@ Affine characters in <span class="small-caps">bqn</span>
 </summary>
 <p></p>
 The <a href="https://mlochbaum.github.io/BQN/tutorial/expression.html#character-arithmetic">documentation</a>
-says that characters form an affine space;
-this is not technically true, but a good guide on what kinds of operations we have access to:<!--
---><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote">There are many definitions of affine space, here is a simple one:
+says that characters reside in an affine space,<!--
+--><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote">The “reside in” is crucial.
+There are many definitions of affine space, here is a simple one:
 an <em>affine space</em> comprises a set <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> and a vector space <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span>,
 such that the underlying abelian group of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> acts freely and transitively on <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span>.
-In our specific case, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> would be the set of “numeric Unicode codepoints”,
-and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> is the field of “numbers”.
 <p></p>
-The latter is where this falls quite flat;
-even leaving aside all the “floating points are evil” rhetoric,
-we can actually only act on a character with an integer.
-Now, ℤ is just a ring, not a field, and has no hope of being a vector space over any field.
+What I actually want to say now is that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> the set of Unicode codepoints,
+and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> is the field of “numbers”.
+This, however, falls quite flat almost immediately.
+Even leaving aside all the “floating points are evil” rhetoric,
+we can only reasonably act on a character with an integer.
+Now, ℤ is just a ring, not a field, and indeed has no hope of being a vector space over any field.
 Rather, one should talk about characters forming an affine <em>module</em> over ℤ,
 which would at least be a bit more formal.
+<p></p>
+“Reside in” can now mean that we embed both ℤ and the set of Unicode codepoints into bigger structures,
+such that the restriction to them yields the action we care about.
+This could, for example, be the regular action of ℝ on itself,
+but I personally don’t think that this helps much with reasoning about the original action.
+<p></p>
 I swear I will stop with the maths at some point.</div><!--
 -->
+which is a good guide on what kinds of operations we have access to:
 <ol type="1">
 <li><p></p>
 

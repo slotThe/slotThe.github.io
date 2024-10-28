@@ -26,7 +26,7 @@
         &thinsp;·&thinsp; last modified: 2024-10-28
       
       
-        &thinsp;·&thinsp; <span title="22290 words">90 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="22352 words">90 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
@@ -298,8 +298,8 @@ which immediately gives me a chance to talk about character–number conversions
 Affine characters in BQN
 </summary>
 <p>The <a href="https://mlochbaum.github.io/BQN/tutorial/expression.html#character-arithmetic">documentation</a>
-says that characters form an affine space;
-this is not technically true, but a good guide on what kinds of operations we have access to:<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+says that characters reside in an affine space,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
+which is a good guide on what kinds of operations we have access to:</p>
 <ol type="1">
 <li><p><code>(+) : Num  → Char → Char</code>, adding a number to a character gives a character:</p>
 <pre class="bqn"><code>    97+@   # @ is the literal &quot;null&quot; character;
@@ -2884,18 +2884,23 @@ In either case, it’s probably fastest to just <code>C-f</code> for the respect
 All names starting with that symbol are [system values]—<!--
    -->things provided by the BQN interpreter that are not the builtin primitives.
 We will see other important system values, like <code>•HashMap</code> or <code>•Type</code>, a bit later.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>There are many definitions of affine space, here is a simple one:
+<li id="fn11"><p>The “reside in” is crucial.
+There are many definitions of affine space, here is a simple one:
 an <em>affine space</em> comprises a set <span class="math inline">A</span> and a vector space <span class="math inline">V</span>,
-such that the underlying abelian group of <span class="math inline">V</span> acts freely and transitively on <span class="math inline">A</span>.
-In our specific case, <span class="math inline">A</span> would be the set of “numeric Unicode codepoints”,
-and <span class="math inline">V</span> is the field of “numbers”.</p>
-<p>The latter is where this falls quite flat;
-even leaving aside all the “floating points are evil” rhetoric,
-we can actually only act on a character with an integer.
-Now, ℤ is just a ring, not a field, and has no hope of being a vector space over any field.
+such that the underlying abelian group of <span class="math inline">V</span> acts freely and transitively on <span class="math inline">A</span>.</p>
+<p>What I actually want to say now is that <span class="math inline">A</span> the set of Unicode codepoints,
+and <span class="math inline">V</span> is the field of “numbers”.
+This, however, falls quite flat almost immediately.
+Even leaving aside all the “floating points are evil” rhetoric,
+we can only reasonably act on a character with an integer.
+Now, ℤ is just a ring, not a field, and indeed has no hope of being a vector space over any field.
 Rather, one should talk about characters forming an affine <em>module</em> over ℤ,
-which would at least be a bit more formal.
-I swear I will stop with the maths at some point.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+which would at least be a bit more formal.</p>
+<p>“Reside in” can now mean that we embed both ℤ and the set of Unicode codepoints into bigger structures,
+such that the restriction to them yields the action we care about.
+This could, for example, be the regular action of ℝ on itself,
+but I personally don’t think that this helps much with reasoning about the original action.</p>
+<p>I swear I will stop with the maths at some point.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>{-} All whitespace here, and indeed in most places, is completely redundant.
 I choose to still include it, to “logically group” certain operations.
 It helps me with reading the code, anyways.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

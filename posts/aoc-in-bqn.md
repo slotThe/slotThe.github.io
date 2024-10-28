@@ -331,8 +331,8 @@ which immediately gives me a chance to talk about character–number conversions
 <details><summary>Affine characters in BQN</summary>
 
 The [documentation](https://mlochbaum.github.io/BQN/tutorial/expression.html#character-arithmetic)
-says that characters form an affine space;
-this is not technically true, but a good guide on what kinds of operations we have access to:[^8]
+says that characters reside in an affine space,[^8]
+which is a good guide on what kinds of operations we have access to:
 
   1. `(+) : Num  → Char → Char`, adding a number to a character gives a character:
 
@@ -3802,18 +3802,25 @@ Nice.
 
 [^6]: Guess which other language I like to program in!
 
-[^8]: There are many definitions of affine space, here is a simple one:
+[^8]: The "reside in" is crucial.
+      There are many definitions of affine space, here is a simple one:
       an *affine space* comprises a set $A$ and a vector space $V$,
       such that the underlying abelian group of $V$ acts freely and transitively on $A$.
-      In our specific case, $A$ would be the set of "numeric Unicode codepoints",
-      and $V$ is the field of "numbers".
 
-      The latter is where this falls quite flat;
-      even leaving aside all the "floating points are evil" rhetoric,
-      we can actually only act on a character with an integer.
-      Now, ℤ is just a ring, not a field, and has no hope of being a vector space over any field.
+      What I actually want to say now is that $A$ the set of Unicode codepoints,
+      and $V$ is the field of "numbers".
+      This, however, falls quite flat almost immediately.
+      Even leaving aside all the "floating points are evil" rhetoric,
+      we can only reasonably act on a character with an integer.
+      Now, ℤ is just a ring, not a field, and indeed has no hope of being a vector space over any field.
       Rather, one should talk about characters forming an affine *module* over ℤ,
       which would at least be a bit more formal.
+
+      "Reside in" can now mean that we embed both ℤ and the set of Unicode codepoints into bigger structures,
+      such that the restriction to them yields the action we care about.
+      This could, for example, be the regular action of ℝ on itself,
+      but I personally don't think that this helps much with reasoning about the original action.
+
       I swear I will stop with the maths at some point.
 
 [^10]: Or, if you wanted to make it extra confusing,
