@@ -3864,7 +3864,7 @@ Nice.
 
        - in *Sweedler notation* by
          \[
-           S(a_{(1)})a_{(2)} = \varepsilon(a) 1 =  S(a_{(1)})a_{(2)};
+           S(a_{(1)})a_{(2)} = \varepsilon(a) 1 =  a_{(1)}S(a_{(2)});
          \]
        - with *commutative diagrams*:
          <img class="pure-img" src="../images/bqn-aoc/commutative-diagram.png" alt="A commutative diagram for the above equation.">
