@@ -75,8 +75,10 @@
         Posted on 2024-10-27
       
       
+        &thinsp;·&thinsp; last modified: 2024-10-28
       
-        &thinsp;·&thinsp; <span title="22117 words">89 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="22191 words">89 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="../tags/BQN.html" rel="tag">BQN</a>
@@ -194,6 +196,8 @@ Marshall Lochbaum (the creator of the language!),
 dzaima, and
 brian_e.
 Without them a lot of solutions presented here would be even uglier than they already are.
+A separate big thanks goes out to dzaima (again!)
+for sending me lots of code improvements and suggestions for this post.
 <h2 id="a-crash-course-on-syntax">A crash course on syntax<a href="#a-crash-course-on-syntax" class="floatleft sec-link">§</a></h2>
 <p></p>
 Here is an entirely too short crash course on the syntax of the language,
@@ -544,7 +548,7 @@ After the input is parsed, the solution is not so complicated:<!--
 I choose to still include it, to “logically group” certain operations.
 It helps me with reading the code, anyways.</div><!--
 -->
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">´</span><span class="w"> </span><span class="nv">inp</span><span class="o">/</span><span class="na">˜</span><span class="w"> </span><span class="nv">inp</span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="m">1</span><span class="o">⌽</span><span class="nv">inp</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">´</span><span class="w"> </span><span class="nv">inp</span><span class="o">/</span><span class="na">˜</span><span class="w"> </span><span class="nv">inp</span><span class="o">=</span><span class="w"> </span><span class="m">¯1</span><span class="o">⌽</span><span class="nv">inp</span>
 </pre></div>
 
 <p></p>
@@ -591,7 +595,7 @@ Part two is basically the same,
 only a number doesn’t consider its first successor,
 but the one that’s exactly halfway around the list.
 Adjusting for this just means that we have to adjust how much we shift before comparing:
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">´</span><span class="w"> </span><span class="nv">inp</span><span class="o">/</span><span class="na">˜</span><span class="w"> </span><span class="nv">inp</span><span class="o">=</span><span class="w"> </span><span class="sr">(</span><span class="o">-</span><span class="m">2</span><span class="o">÷</span><span class="na">˜</span><span class="o">≠</span><span class="nv">inp</span><span class="sr">)</span><span class="o">⌽</span><span class="nv">inp</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">´</span><span class="w"> </span><span class="nv">inp</span><span class="o">/</span><span class="na">˜</span><span class="w"> </span><span class="nv">inp</span><span class="o">=</span><span class="w"> </span><span class="sr">(</span><span class="m">¯2</span><span class="o">÷</span><span class="na">˜</span><span class="o">≠</span><span class="nv">inp</span><span class="sr">)</span><span class="o">⌽</span><span class="nv">inp</span>
 </pre></div>
 
 <p></p>
@@ -798,7 +802,7 @@ coming from another language, are just not true in <span class="small-caps">bqn<
 <ul>
 <li><p></p>
 
-Lists of lists are not arrays:
+Lists of lists are not equivalent to higher-dimensional arrays:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">a</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="p">⟨⟨</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">⟩,⟨</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">⟩⟩</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">b</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">&gt;</span><span class="nv">a</span><span class="w">              </span><span class="c1"># monadic &gt; is called *merge*</span>
@@ -1092,13 +1096,16 @@ In the last line, we first use <em>reshape</em> to replicate the vector <code>�
 <p></p>
 Then, since we actually want a nested vector instead of a rank two array,
 <em>enclosing</em> (<a href="https://mlochbaum.github.io/BQN/doc/enclose.html"><code>&lt;</code></a>)
-every major cell creates a
-<a href="https://mlochbaum.github.io/BQN/doc/enclose.html">unit array</a><!--
--->—an array of shape <code>⟨⟩</code> containing the thing we enclosed as its only element—<!--
--->which reduces the rank by one, yielding the desired flat structure.
+every major cell creates
+<a href="https://mlochbaum.github.io/BQN/doc/enclose.html">unit arrays</a>
+out of the individual cells.
+Each of these is an array of shape <code>⟨⟩</code> containing the thing we enclosed as its only element.
+This reduces the rank of the outer array by one, yielding the desired flat structure.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">3</span><span class="w"> </span><span class="kt">{</span><span class="o">&lt;</span><span class="na">˘</span><span class="ni">𝕨</span><span class="p">‿</span><span class="m">2</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">1</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
-<span class="w">    </span><span class="o">≢</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="kt">{</span><span class="o">&lt;</span><span class="na">˘</span><span class="ni">𝕨</span><span class="p">‿</span><span class="m">2</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">1</span><span class="w">         </span><span class="c1"># rank</span>
+<span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="kt">{</span><span class="o">&lt;</span><span class="na">˘</span><span class="ni">𝕨</span><span class="p">‿</span><span class="m">2</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">1</span><span class="w">         </span><span class="c1"># rank</span>
+<span class="m">1</span>
+<span class="w">    </span><span class="o">≢</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="kt">{</span><span class="o">&lt;</span><span class="na">˘</span><span class="ni">𝕨</span><span class="p">‿</span><span class="m">2</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">1</span><span class="w">         </span><span class="c1"># shape</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="o">≡</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="kt">{</span><span class="o">&lt;</span><span class="na">˘</span><span class="ni">𝕨</span><span class="p">‿</span><span class="m">2</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">1</span><span class="w">         </span><span class="c1"># depth</span>
 <span class="m">2</span>
@@ -1472,17 +1479,17 @@ pad with <code>i</code> zeros on the left,
 and then press that into the length of the vector.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">v</span><span class="kd">←</span><span class="p">⟨</span><span class="m">0</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">0</span><span class="p">⟩</span><span class="w">         </span><span class="c1"># Test vector with max 7 at position 2</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
-<span class="w">    </span><span class="p">⟨</span><span class="o">-</span><span class="m">7</span><span class="p">⟩</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w">            </span><span class="c1"># Shape of 1's and ¯7</span>
+<span class="w">    </span><span class="m">¯7</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w">              </span><span class="c1"># Shape of 1's and ¯7</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">¯7</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
-<span class="w">    </span><span class="sr">(</span><span class="m">2</span><span class="o">⥊</span><span class="m">0</span><span class="sr">)</span><span class="o">∾</span><span class="p">⟨</span><span class="o">-</span><span class="m">7</span><span class="p">⟩</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w">      </span><span class="c1"># Pad with zeros up to index</span>
+<span class="w">    </span><span class="sr">(</span><span class="m">2</span><span class="o">⥊</span><span class="m">0</span><span class="sr">)</span><span class="o">∾</span><span class="m">¯7</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w">        </span><span class="c1"># Pad with zeros up to index</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">¯7</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
-<span class="w">    </span><span class="o">↑</span><span class="p">‿</span><span class="m">4</span><span class="o">⥊</span><span class="sr">(</span><span class="m">2</span><span class="o">⥊</span><span class="m">0</span><span class="sr">)</span><span class="o">∾</span><span class="p">⟨</span><span class="o">-</span><span class="m">7</span><span class="p">⟩</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w">  </span><span class="c1"># Reshape to dimensions of v, and use fills</span>
+<span class="w">    </span><span class="o">↑</span><span class="p">‿</span><span class="m">4</span><span class="o">⥊</span><span class="sr">(</span><span class="m">2</span><span class="o">⥊</span><span class="m">0</span><span class="sr">)</span><span class="o">∾</span><span class="m">¯7</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w">    </span><span class="c1"># Reshape to dimensions of v, and use fills</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">¯7</span><span class="w"> </span><span class="m">1</span>
 <span class="w">  </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="m">1</span><span class="w"> </span><span class="m">1</span>
 <span class="w">  </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
 <span class="w">           </span><span class="err">┘</span>
-<span class="w">   </span><span class="o">+</span><span class="na">˝</span><span class="o">↑</span><span class="p">‿</span><span class="m">4</span><span class="o">⥊</span><span class="sr">(</span><span class="m">2</span><span class="o">⥊</span><span class="m">0</span><span class="sr">)</span><span class="o">∾</span><span class="p">⟨</span><span class="o">-</span><span class="m">7</span><span class="p">⟩</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w"> </span><span class="c1"># Sum up columns</span>
+<span class="w">   </span><span class="o">+</span><span class="na">˝</span><span class="o">↑</span><span class="p">‿</span><span class="m">4</span><span class="o">⥊</span><span class="sr">(</span><span class="m">2</span><span class="o">⥊</span><span class="m">0</span><span class="sr">)</span><span class="o">∾</span><span class="m">¯7</span><span class="o">∾</span><span class="m">7</span><span class="o">⥊</span><span class="m">1</span><span class="w">   </span><span class="c1"># Sum up columns</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">¯6</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">v</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">¯6</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="c1"># And we get the second step!</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
@@ -1550,7 +1557,7 @@ if the dimensions of the reshape are not exactly divisible by the shape of the o
 </details>
 <p></p>
 To keep track of the already seen configurations,
-we could again use a hash map as in day 3.
+we could again use a hash map as in <a href="#day-3">day 3</a>.
 However, the number of configurations isn’t actually that large, so a normal list suffices.
 Appropriately generalising the above construction nets us the result for part one:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="nv">s</span><span class="p">‿</span><span class="nv">d</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="nv">seen</span><span class="p">‿</span><span class="nv">xs</span><span class="ni">:</span>
@@ -1841,7 +1848,7 @@ and update it after every “normal” instruction.
 <span class="p">⟩</span><span class="w"> </span><span class="c1"># ⇒ 5199</span>
 </pre></div>
 
-<h3 id="day-9"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day08.bqn">Day 9</a><a href="#day-9" class="floatleft sec-link">§</a></h3>
+<h3 id="day-9"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day09.bqn">Day 9</a><a href="#day-9" class="floatleft sec-link">§</a></h3>
 <p></p>
 Today, we need to clean up garbage from a stream of characters like <code>{&lt;{o"i!a,&lt;{i&lt;a&gt;e}</code>.
 There are a few special characters that one needs to watch out for:
@@ -1962,7 +1969,7 @@ Additionally, we have to append the magic numbers <code>17 31 73 47 23</code> to
 This neatly showcases one of the many uses for affine characters:<!--
 --><label for="sn-23" class="margin-toggle">⊕</label><input type="checkbox" id="sn-23" class="margin-toggle" /><div class="marginnote">I’m reversing the list because we have to right fold over it later.</div><!--
 -->
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="nv">inp2</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⌽</span><span class="w"> </span><span class="p">⟨</span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">73</span><span class="p">,</span><span class="w"> </span><span class="m">47</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">⟩</span><span class="o">∾</span><span class="na">˜</span><span class="w"> </span><span class="o">-</span><span class="py">⟜</span><span class="ss">@</span><span class="na">¨</span><span class="w"> </span><span class="o">⊑•FLines</span><span class="s2">&quot;../inputs/day10.txt&quot;</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="nv">inp2</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⌽</span><span class="w"> </span><span class="p">⟨</span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">73</span><span class="p">,</span><span class="w"> </span><span class="m">47</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">⟩</span><span class="o">∾</span><span class="na">˜</span><span class="w"> </span><span class="ss">@</span><span class="o">-</span><span class="na">˜</span><span class="w"> </span><span class="o">⊑•FLines</span><span class="s2">&quot;../inputs/day10.txt&quot;</span>
 </pre></div>
 
 <p></p>
@@ -1977,11 +1984,7 @@ Here is one from decimal to hexadecimal, specialised to one byte—always two ch
 </pre></div>
 </div><!--
 -->
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">DecToHex</span><span class="kd">←</span><span class="kt">{</span>
-<span class="w">  </span><span class="ni">𝕩</span><span class="kt">{</span><span class="w"> </span><span class="m">0</span><span class="o">𝕊</span><span class="nv">n</span><span class="ni">:</span><span class="w"> </span><span class="nv">n</span><span class="o">∾</span><span class="na">˜</span><span class="sr">(</span><span class="m">2</span><span class="o">-≠</span><span class="nv">n</span><span class="sr">)</span><span class="o">⥊</span><span class="s1">'0'</span><span class="ni">;</span>
-<span class="w">     </span><span class="nv">x</span><span class="o">𝕊</span><span class="nv">n</span><span class="ni">:</span><span class="w"> </span><span class="sr">(</span><span class="o">⌊</span><span class="nv">x</span><span class="o">÷</span><span class="m">16</span><span class="sr">)</span><span class="o">𝕊</span><span class="sr">(</span><span class="nv">n</span><span class="o">∾</span><span class="na">˜</span><span class="s2">&quot;0123456789abcdef&quot;</span><span class="o">⊑</span><span class="na">˜</span><span class="m">16</span><span class="o">|</span><span class="nv">x</span><span class="sr">)</span>
-<span class="w">  </span><span class="kt">}</span><span class="s2">&quot;&quot;</span>
-<span class="kt">}</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">DecToHex</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="s2">&quot;0123456789abcdef&quot;</span><span class="w"> </span><span class="o">⊏</span><span class="na">˜</span><span class="w"> </span><span class="m">16</span><span class="sr">(</span><span class="o">⌊</span><span class="py">∘</span><span class="o">÷</span><span class="na">˜</span><span class="w"> </span><span class="o">⋈</span><span class="w"> </span><span class="o">|</span><span class="sr">)</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span>
 </pre></div>
 
 <p></p>
@@ -2332,7 +2335,7 @@ V      V
 To get the grid representation, we first need to rewrite our solution for day 10,
 and export a function to compute the knot hash of the given argument.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">KnotHash</span><span class="w"> </span><span class="kd">⇐</span><span class="w"> </span><span class="kt">{</span>
-<span class="w">  </span><span class="nv">ls</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⌽</span><span class="w"> </span><span class="p">⟨</span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">73</span><span class="p">,</span><span class="w"> </span><span class="m">47</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">⟩</span><span class="o">∾</span><span class="na">˜</span><span class="w"> </span><span class="o">-</span><span class="py">⟜</span><span class="ss">@</span><span class="na">¨</span><span class="w"> </span><span class="ni">𝕩</span>
+<span class="w">  </span><span class="nv">ls</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⌽</span><span class="w"> </span><span class="p">⟨</span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">73</span><span class="p">,</span><span class="w"> </span><span class="m">47</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">⟩</span><span class="o">∾</span><span class="na">˜</span><span class="w"> </span><span class="ni">𝕩</span><span class="o">-</span><span class="ss">@</span>
 <span class="w">  </span><span class="o">∾</span><span class="w"> </span><span class="o">DecToHex</span><span class="py">∘</span><span class="o">X</span><span class="na">¨</span><span class="w"> </span><span class="m">16</span><span class="sr">(</span><span class="o">/⥊</span><span class="na">˜</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊔</span><span class="w"> </span><span class="o">⊑</span><span class="w"> </span><span class="o">R</span><span class="na">´</span><span class="py">⟜</span><span class="nv">ls</span><span class="py">⍟</span><span class="m">64</span><span class="w"> </span><span class="sr">(</span><span class="o">↕</span><span class="m">256</span><span class="sr">)</span><span class="p">‿</span><span class="m">0</span><span class="p">‿</span><span class="m">0</span>
 <span class="kt">}</span>
 <span class="o">•Show</span><span class="w"> </span><span class="o">KnotHash</span><span class="w"> </span><span class="nv">inp2</span><span class="w"> </span><span class="c1"># ⇒ &quot;2da93395f1a6bb3472203252e3b17fe5&quot;</span>
@@ -2348,7 +2351,7 @@ We can now import this function as we did for ones in the utility file,<!--
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Split</span><span class="w"> </span><span class="kd">⇐</span><span class="w"> </span><span class="sr">(</span><span class="o">¬-</span><span class="na">˜</span><span class="o">⊢×</span><span class="m">·</span><span class="o">+</span><span class="na">`</span><span class="o">»</span><span class="py">⊸</span><span class="o">&gt;</span><span class="sr">)</span><span class="py">∘</span><span class="o">≠⊔⊢</span>
 <span class="na">_Fix</span><span class="w">  </span><span class="kd">⇐</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="o">𝔽</span><span class="py">∘</span><span class="o">⊢</span><span class="py">⍟</span><span class="o">≢</span><span class="py">⟜</span><span class="o">𝔽</span><span class="na">_𝕣</span><span class="py">∘</span><span class="o">⊢</span><span class="py">⍟</span><span class="o">≢</span><span class="py">⟜</span><span class="o">𝔽</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span>
 <span class="nv">tab</span><span class="w">   </span><span class="kd">⇐</span><span class="w"> </span><span class="ss">@</span><span class="o">+</span><span class="m">9</span>
-<span class="nv">cr</span><span class="w">    </span><span class="kd">⇐</span><span class="w"> </span><span class="ss">@</span><span class="o">+</span><span class="m">10</span>
+<span class="nv">lf</span><span class="w">    </span><span class="kd">⇐</span><span class="w"> </span><span class="ss">@</span><span class="o">+</span><span class="m">10</span>
 </pre></div>
 </div><!--
 -->
@@ -2360,7 +2363,7 @@ We can now import this function as we did for ones in the utility file,<!--
 and translate the recipe above into <span class="small-caps">bqn</span> code.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="nv">grid</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="o">HexToBin</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w">  </span><span class="o">𝕊</span><span class="nv">p</span><span class="ni">:</span><span class="w"> </span><span class="nv">p</span><span class="o">𝕊</span><span class="p">⟨⟩</span><span class="ni">;</span><span class="w">              </span><span class="c1"># Start</span>
-<span class="w">               </span><span class="m">0</span><span class="o">𝕊</span><span class="nv">r</span><span class="ni">:</span><span class="w"> </span><span class="nv">r</span><span class="o">∾</span><span class="na">˜</span><span class="m">0</span><span class="o">⥊</span><span class="na">˜</span><span class="m">4</span><span class="o">-≠</span><span class="nv">r</span><span class="ni">;</span><span class="w">        </span><span class="c1"># End: pad with zeros</span>
+<span class="w">               </span><span class="m">0</span><span class="o">𝕊</span><span class="nv">r</span><span class="ni">:</span><span class="w"> </span><span class="nv">r</span><span class="o">«</span><span class="m">4</span><span class="o">⥊</span><span class="m">0</span><span class="ni">;</span><span class="w">             </span><span class="c1"># End: pad with zeros</span>
 <span class="w">               </span><span class="nv">p</span><span class="o">𝕊</span><span class="nv">r</span><span class="ni">:</span><span class="w"> </span><span class="sr">(</span><span class="o">⌊</span><span class="nv">p</span><span class="o">÷</span><span class="m">2</span><span class="sr">)</span><span class="o">𝕊</span><span class="sr">(</span><span class="nv">r</span><span class="o">∾</span><span class="na">˜</span><span class="m">2</span><span class="o">|</span><span class="nv">p</span><span class="sr">)</span><span class="w">    </span><span class="c1"># Conversion</span>
 <span class="w">             </span><span class="kt">}</span><span class="na">¨</span><span class="py">∘</span><span class="sr">(</span><span class="s2">&quot;0123456789abcdef&quot;</span><span class="py">⊸</span><span class="o">⊐</span><span class="sr">)</span><span class="w"> </span><span class="c1"># Convert hex to decimal, then to binary</span>
 <span class="w">  </span><span class="o">Start</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="o">⊑•FLines</span><span class="s2">&quot;../inputs/day14.txt&quot;</span><span class="sr">)</span><span class="o">∾</span><span class="s2">&quot;-&quot;</span><span class="o">∾•Fmt</span>
@@ -2371,9 +2374,18 @@ and translate the recipe above into <span class="small-caps">bqn</span> code.
 
 <p></p>
 Not too many new things here.
-<code>HexToBin</code> essentially runs on the same logic as <code>DecToHex</code> from day 10,
+<code>HexToBin</code> essentially runs on the same logic as a more verbose version of <code>DecToHex</code> from day 10,<!--
+--><label for="sn-29" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-29" class="margin-toggle" /><div class="sidenote">That is, the first version of that code, before dzaima told me how to clean it up:
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">DecToHex</span><span class="kd">←</span><span class="kt">{</span>
+<span class="w">  </span><span class="ni">𝕩</span><span class="kt">{</span><span class="w"> </span><span class="m">0</span><span class="o">𝕊</span><span class="nv">n</span><span class="ni">:</span><span class="w"> </span><span class="nv">n</span><span class="o">∾</span><span class="na">˜</span><span class="sr">(</span><span class="m">2</span><span class="o">-≠</span><span class="nv">n</span><span class="sr">)</span><span class="o">⥊</span><span class="s1">'0'</span><span class="ni">;</span>
+<span class="w">     </span><span class="nv">x</span><span class="o">𝕊</span><span class="nv">n</span><span class="ni">:</span><span class="w"> </span><span class="sr">(</span><span class="o">⌊</span><span class="nv">x</span><span class="o">÷</span><span class="m">16</span><span class="sr">)</span><span class="o">𝕊</span><span class="sr">(</span><span class="nv">n</span><span class="o">∾</span><span class="na">˜</span><span class="s2">&quot;0123456789abcdef&quot;</span><span class="o">⊑</span><span class="na">˜</span><span class="m">16</span><span class="o">|</span><span class="nv">x</span><span class="sr">)</span>
+<span class="w">  </span><span class="kt">}</span><span class="s2">&quot;&quot;</span>
+<span class="kt">}</span>
+</pre></div>
+</div><!--
+-->
 and the <code>•Fmt</code> function just pretty-prints the given value to a string.
-This is, however, the first time that we see an ambidextrous function definition<!--
+This is, however, the first time that we see an ambivalent function definition<!--
 -->—one that can be called both monadically and dyadically.
 The monadic case is used in lieu of an internal worker function,
 like what Haskell people often call <code>go</code>.
@@ -2397,7 +2409,7 @@ Part two is more interesting, and is probably among the top three parts for me i
 Instead of simply counting the number of alive cells, we now need to find the number of distinct <em>regions</em>—<!--
 -->live cells adjacent to each other in any of the four cardinal directions.
 For example, the grid shown above would have the following regions<!--
---><label for="sn-29" class="margin-toggle">⊕</label><input type="checkbox" id="sn-29" class="margin-toggle" /><div class="marginnote">Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.</div><!--
+--><label for="sn-30" class="margin-toggle">⊕</label><input type="checkbox" id="sn-30" class="margin-toggle" /><div class="marginnote">Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.</div><!--
 -->
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>11.2.3..--&gt;
 .1.2.3.4
@@ -2484,7 +2496,7 @@ There are a few things going on here.
 First, we use <span class="small-caps">bqn</span>’s
 <a href="https://mlochbaum.github.io/BQN/doc/functional.html">functional programming capabilities</a>,
 which work just about as one would expect.<!--
---><label for="sn-30" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-30" class="margin-toggle" /><div class="sidenote">We can’t just use <code>⟨«,»,«˘,»˘⟩¨&lt;x</code>
+--><label for="sn-31" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-31" class="margin-toggle" /><div class="sidenote">We can’t just use <code>⟨«,»,«˘,»˘⟩¨&lt;x</code>
 because the <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic role</a> of a list is a subject,
 which can’t be applied as a function.</div><!--
 -->
@@ -2494,7 +2506,7 @@ as otherwise <em>each</em> is trying to match up the major cells of <code>m</cod
 We don’t want that, and making <code>m</code> a unit will correctly “duplicate” it to each function instead.
 Finally, <em>nudge</em> correctly inserts the fill elements for the edge cases;
 our grid is only 128×128 and we are not on a torus.<!--
---><label for="sn-31" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-31" class="margin-toggle" /><div class="sidenote">In that case, using <em>rotate</em> would be more appropriate.</div><!--
+--><label for="sn-32" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-32" class="margin-toggle" /><div class="sidenote">In that case, using <em>rotate</em> would be more appropriate.</div><!--
 -->
 <p></p>
 Now, we can just compare every neighbour with the original value,
@@ -2540,7 +2552,7 @@ For day 15 we have to help a pair of duelling generators decide which of them is
 Each generator produces a value in the following way:
 take the previous value, multiply it by <code>16807</code> (generator A) or <code>48271</code> (generator B),
 and then keep the remainder of dividing the resulting product by <code>2147483647</code>.<!--
---><label for="sn-32" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-32" class="margin-toggle" /><div class="sidenote">Notice that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2147483647</mn><mo>=</mo><msup><mn>2</mn><mn>31</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2147483647 = 2^{31} - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2147483647</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">31</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>
+--><label for="sn-33" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-33" class="margin-toggle" /><div class="sidenote">Notice that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2147483647</mn><mo>=</mo><msup><mn>2</mn><mn>31</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2147483647 = 2^{31} - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2147483647</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">31</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>
 so this challenge was doable even for esolangs
 that only support signed 32bit integers.
 Nice touch.</div><!--
@@ -2678,7 +2690,7 @@ Remember that evaluation happens right-to-left, though;
 At the end, the loop returns the first duplicate it found,
 so all that’s left to do is to simulate that many steps upfront,
 and then whatever we have left over.<!--
---><label for="sn-33" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-33" class="margin-toggle" /><div class="sidenote">My loop happens to start with at 0,
+--><label for="sn-34" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-34" class="margin-toggle" /><div class="sidenote">My loop happens to start with at 0,
 but I don’t know if this is universal across all inputs.</div><!--
 -->
 The little <code>@</code>’s after the function calls to <code>h.Count</code> and <code>h.Keys</code>
@@ -2748,7 +2760,7 @@ Even more, the final inserted value will be the head of the vector,
 so getting the element at index <code>1</code> is what we want—no more <em>select</em>ing stuff.
 Do note that walking to the <em>right</em> in terms of indices translates to rotating the buffer to the <em>left</em> (i.e., using positive numbers).
 We can pack this function up in a fold, yielding an alternative solution for part one:<!--
---><label for="sn-34" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-34" class="margin-toggle" /><div class="sidenote">I suppose inserting <code>i</code> in the back of the array would be cheaper:
+--><label for="sn-35" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-35" class="margin-toggle" /><div class="sidenote">I suppose inserting <code>i</code> in the back of the array would be cheaper:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="m">¯2</span><span class="o">⊑</span><span class="p">⟨</span><span class="m">0</span><span class="p">⟩</span><span class="kt">{</span><span class="ni">𝕨</span><span class="o">∾</span><span class="na">˜</span><span class="sr">(</span><span class="o">-</span><span class="nv">n</span><span class="o">+</span><span class="m">1</span><span class="sr">)</span><span class="o">⌽</span><span class="ni">𝕩</span><span class="kt">}</span><span class="na">´</span><span class="o">⌽</span><span class="m">1</span><span class="o">+↕</span><span class="m">2017</span>
 </pre></div>
 
@@ -2887,7 +2899,7 @@ Finally, here is the rest of the simulation.
 
 <p></p>
 Quite a lot of code!<!--
---><label for="sn-35" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-35" class="margin-toggle" /><div class="sidenote">In fact, since simulating these instructions is so verbose,
+--><label for="sn-36" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-36" class="margin-toggle" /><div class="sidenote">In fact, since simulating these instructions is so verbose,
 the file contains 36 lines of pure code (without comments or empty lines)!
 This is not only 15 more lines than the second place, <a href="#day-7">day 7</a>,
 but a big anomaly in general;
@@ -2899,7 +2911,7 @@ the average is around 12 lines, and the median is 11:
 <span class="s2">        | awk '{ print $3 }' \</span>
 <span class="s2">        | head -n-3 | tail -n25&quot;</span>
 <span class="w">    </span><span class="p">⟩</span>
-<span class="p">⟨</span><span class="w"> </span><span class="m">11.76</span><span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="p">⟩</span>
+<span class="p">⟨</span><span class="w"> </span><span class="m">11.6</span><span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
 </div><!--
 -->
@@ -2910,7 +2922,7 @@ Recall that <code>𝕨!𝕩</code> checks whether <code>𝕩</code> is 1.
 If it is, nothing happens;
 if it’s not, an exception with value <code>𝕨</code> is thrown.
 We use it here so that we immediately exit upon receiving<!--
---><label for="sn-36" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-36" class="margin-toggle" /><div class="sidenote">Foreshadowing.</div><!--
+--><label for="sn-37" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-37" class="margin-toggle" /><div class="sidenote">Foreshadowing.</div><!--
 --> our first recovery signal.
 As in any other “simulate indexing into this array”–type situations,
 <code>•_while_</code> is used for iteration,
@@ -2999,7 +3011,7 @@ we only change directions when absolutely necessary.
 Part one asks what letters we see in order.
 This is a straightforward simulation, so let’s get to it;
 first, parsing and massaging the input:
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="p">⟨</span><span class="o">Split</span><span class="p">,</span><span class="nv">cr</span><span class="p">⟩</span><span class="kd">←</span><span class="o">•Import</span><span class="s2">&quot;../../util/bqn_util/util.bqn&quot;</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="p">⟨</span><span class="o">Split</span><span class="p">⟩</span><span class="kd">←</span><span class="o">•Import</span><span class="s2">&quot;../../util/bqn_util/util.bqn&quot;</span>
 <span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⌽⍉</span><span class="py">∘</span><span class="sr">(</span><span class="kt">{</span><span class="sr">(</span><span class="s1">' '</span><span class="o">⥊</span><span class="na">˜</span><span class="o">≠</span><span class="ni">𝕩</span><span class="sr">)</span><span class="o">∾⌽⍉</span><span class="ni">𝕩</span><span class="kt">}</span><span class="py">⍟</span><span class="m">3</span><span class="sr">)</span><span class="w"> </span><span class="o">&gt;•FLines</span><span class="s2">&quot;../inputs/day19.txt&quot;</span>
 </pre></div>
 
@@ -3205,7 +3217,7 @@ The <code>∊∧1⌽∊</code> part is probably reasonably obfuscated, so let’
 </summary>
 <p></p>
 First, one could write that piece of code in a slightly different—perhaps more understandable—way:<!--
---><label for="sn-37" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-37" class="margin-toggle" /><div class="sidenote">This is modulo some shenanigans when <code>0</code> is the first element of the list,
+--><label for="sn-38" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-38" class="margin-toggle" /><div class="sidenote">This is modulo some shenanigans when <code>0</code> is the first element of the list,
 but let’s completely ignore that case for the purposes of this exposition.
 Indeed, since we are dealing with a vector of three numbers and the fill element is still <code>0</code>,
 this does not affect the actual solution.</div><!--
@@ -3249,7 +3261,7 @@ This will instead give you the last occurrence of every element in the vector.
 
 <p></p>
 Thus, to get the unique elements of our sorted list, <code>∊∧1⌽∊</code> will do!<!--
---><label for="sn-38" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-38" class="margin-toggle" /><div class="sidenote">After writing this, I saw that <a href="https://mlochbaum.github.io/bqncrate/"><span class="small-caps">bqn</span>crate</a> suggests <code>∊∧∊⌾⌽</code>,
+--><label for="sn-39" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-39" class="margin-toggle" /><div class="sidenote">After writing this, I saw that <a href="https://mlochbaum.github.io/bqncrate/"><span class="small-caps">bqn</span>crate</a> suggests <code>∊∧∊⌾⌽</code>,
 which should also work for non-sorted lists.</div><!--
 -->
 </details>
@@ -3316,7 +3328,7 @@ Let’s start by parsing a single enhancement line:
 
 <p></p>
 This isn’t too surprising; we first essentially split on <code>" =&gt; "</code> in an awkward way,<!--
---><label for="sn-39" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-39" class="margin-toggle" /><div class="sidenote">A version of <code>Split</code> that splits on subarrays would have probably been useful here.
+--><label for="sn-40" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-40" class="margin-toggle" /><div class="sidenote">A version of <code>Split</code> that splits on subarrays would have probably been useful here.
 Certainly something to write before this year’s event.</div><!--
 -->
 split every individual array on <code>/</code>,
@@ -3435,7 +3447,7 @@ Let’s do this generically:
 given an array, a target <code>k</code> (for <code>k×k</code> subarrays),
 and a list of <code>k×k → (k+1)×(k+1)</code> substitutions,
 perform one enhancement step.<!--
---><label for="sn-40" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-40" class="margin-toggle" /><div class="sidenote">Note that this is all under the assumption that <code>k</code> divides <code>n</code>.</div><!--
+--><label for="sn-41" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-41" class="margin-toggle" /><div class="sidenote">Note that this is all under the assumption that <code>k</code> divides <code>n</code>.</div><!--
 -->
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Widen</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="nv">k</span><span class="p">‿</span><span class="nv">substs</span><span class="w"> </span><span class="o">𝕊</span><span class="w"> </span><span class="nv">grid</span><span class="ni">:</span>
 <span class="w">  </span><span class="o">∾</span><span class="kt">{</span><span class="w"> </span><span class="o">𝕊</span><span class="nv">sg</span><span class="ni">:</span><span class="w"> </span><span class="c1"># A k×k submatrix of `grid'</span>
@@ -3448,9 +3460,9 @@ perform one enhancement step.<!--
 <em>Group</em> is used to partition the grid into the necessary <code>k×k</code> subarrays:
 <code>⌊k÷˜↕≠grid</code> creates a vector like <code>⟨0,…,0, 1,…,1 …, n,…,n⟩</code>,
 where <code>n = ((≠grid)÷k)-1</code> and each number appears exactly <code>k</code> times:
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="o">⌊</span><span class="m">3</span><span class="o">÷</span><span class="na">˜</span><span class="o">↕≠↕</span><span class="m">21</span><span class="sr">)</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="o">⌊</span><span class="m">3</span><span class="o">÷</span><span class="na">˜</span><span class="o">↕</span><span class="m">21</span><span class="sr">)</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span>
-<span class="w">    </span><span class="sr">(</span><span class="o">⌊</span><span class="m">7</span><span class="o">÷</span><span class="na">˜</span><span class="o">↕≠↕</span><span class="m">21</span><span class="sr">)</span>
+<span class="w">    </span><span class="sr">(</span><span class="o">⌊</span><span class="m">7</span><span class="o">÷</span><span class="na">˜</span><span class="o">↕</span><span class="m">21</span><span class="sr">)</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
 
@@ -3668,7 +3680,7 @@ The coprocessor’s ultimate goal is to determine the final value left in regist
 This is a very big nudge into the direction of “go and read the assembly”.
 There are, I suppose, several ways to go about finding the solution.
 The sane one might be to translate the assembly into a more human readable form,<!--
---><label for="sn-41" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-41" class="margin-toggle" /><div class="sidenote">There’s a great (apocryphal) anecdote about John von Neumann
+--><label for="sn-42" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-42" class="margin-toggle" /><div class="sidenote">There’s a great (apocryphal) anecdote about John von Neumann
 shouting at his PhD students because they were writing assembly.
 Obviously, this just wasted resources because it was much too high-level,
 and they should have written their programs directly in binary instead.
@@ -3718,7 +3730,7 @@ jnz 1 -23
 </details>
 <p></p>
 <!--
---><label for="sn-42" class="margin-toggle">⊕</label><input type="checkbox" id="sn-42" class="margin-toggle" /><div class="marginnote">There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
+--><label for="sn-43" class="margin-toggle">⊕</label><input type="checkbox" id="sn-43" class="margin-toggle" /><div class="marginnote">There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
 Honestly, I’m not sure what to think of that;
 I used to really dislike these days, but this one was unexpectedly fun.
 It <em>is</em> a breath of fresh air after over 20 days of solving puzzles, I guess.
@@ -3752,7 +3764,7 @@ so <code>0/2—2/3—2/4</code> is not valid.
 Part one asks us for the strongest bridge we can make of our input (without replacement),
 where the strength is just all ports added together.
 Parsing is trivial:
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="p">⟨</span><span class="o">Split</span><span class="p">,</span><span class="na">_Fix</span><span class="p">,</span><span class="nv">cr</span><span class="p">⟩</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•Import</span><span class="s2">&quot;../../util/bqn_util/util.bqn&quot;</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="p">⟨</span><span class="o">Split</span><span class="p">,</span><span class="na">_Fix</span><span class="p">⟩</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•Import</span><span class="s2">&quot;../../util/bqn_util/util.bqn&quot;</span>
 <span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•ParseFloat</span><span class="na">¨</span><span class="py">∘</span><span class="sr">(</span><span class="s1">'/'</span><span class="py">⊸</span><span class="o">Split</span><span class="sr">)</span><span class="na">¨</span><span class="w"> </span><span class="o">•FLines</span><span class="s2">&quot;../inputs/day24.txt&quot;</span>
 </pre></div>
 

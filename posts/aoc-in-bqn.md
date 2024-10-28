@@ -1,6 +1,7 @@
 ---
 title: BQNing Advent of Code
 date: 2024-10-27
+last-modified: 2024-10-28
 tags: BQN
 toc-depth: 1
 ---
@@ -91,6 +92,8 @@ Marshall Lochbaum (the creator of the language!),
 dzaima, and
 brian\_e.
 Without them a lot of solutions presented here would be even uglier than they already are.
+A separate big thanks goes out to dzaima (again!)
+for sending me lots of code improvements and suggestions for this post.
 
 # A crash course on syntax
 
@@ -380,7 +383,7 @@ In this case, the scalar `'0'` is "duplicated" and supplied to all elements of t
 After the input is parsed, the solution is not so complicated:[^3]
 
 ``` bqn
-+´ inp/˜ inp= -1⌽inp
++´ inp/˜ inp= ¯1⌽inp
 ```
 
 We *rotate* ([`⌽`](https://mlochbaum.github.io/BQN/doc/reverse.html#rotate))
@@ -422,7 +425,7 @@ but the one that's exactly halfway around the list.
 Adjusting for this just means that we have to adjust how much we shift before comparing:
 
 ``` bqn
-+´ inp/˜ inp= (-2÷˜≠inp)⌽inp
++´ inp/˜ inp= (¯2÷˜≠inp)⌽inp
 ```
 
 Even in this simple example,
@@ -622,7 +625,7 @@ arrays are an intrinsic concept.
 Many things that seem intuitive at first,
 coming from another language, are just not true in BQN.
 
-- Lists of lists are not arrays:
+- Lists of lists are not equivalent to higher-dimensional arrays:
 
   ``` bqn
       a ← ⟨⟨1,2⟩,⟨3,4⟩⟩
@@ -924,15 +927,18 @@ In the last line, we first use *reshape* to replicate the vector `𝕩` exactly 
 
 Then, since we actually want a nested vector instead of a rank two array,
 *enclosing* ([`<`](https://mlochbaum.github.io/BQN/doc/enclose.html))
-every major cell creates a
-[unit array](https://mlochbaum.github.io/BQN/doc/enclose.html)<!--
--->—an array of shape `⟨⟩` containing the thing we enclosed as its only element—<!--
--->which reduces the rank by one, yielding the desired flat structure.
+every major cell creates
+[unit arrays](https://mlochbaum.github.io/BQN/doc/enclose.html)
+out of the individual cells.
+Each of these is an array of shape `⟨⟩` containing the thing we enclosed as its only element.
+This reduces the rank of the outer array by one, yielding the desired flat structure.
 
 ``` bqn
     3 {<˘𝕨‿2⥊𝕩} 0‿1
 ⟨ ⟨ 0 1 ⟩ ⟨ 0 1 ⟩ ⟨ 0 1 ⟩ ⟩
-    ≢ 3 {<˘𝕨‿2⥊𝕩} 0‿1         # rank
+    = 3 {<˘𝕨‿2⥊𝕩} 0‿1         # rank
+1
+    ≢ 3 {<˘𝕨‿2⥊𝕩} 0‿1         # shape
 ⟨ 3 ⟩
     ≡ 3 {<˘𝕨‿2⥊𝕩} 0‿1         # depth
 2
@@ -1321,17 +1327,17 @@ and then press that into the length of the vector.
 ``` bqn
     v←⟨0,2,7,0⟩         # Test vector with max 7 at position 2
 ⟨ 0 2 7 0 ⟩
-    ⟨-7⟩∾7⥊1            # Shape of 1's and ¯7
+    ¯7∾7⥊1              # Shape of 1's and ¯7
 ⟨ ¯7 1 1 1 1 1 1 1 ⟩
-    (2⥊0)∾⟨-7⟩∾7⥊1      # Pad with zeros up to index
+    (2⥊0)∾¯7∾7⥊1        # Pad with zeros up to index
 ⟨ 0 0 ¯7 1 1 1 1 1 1 1 ⟩
-    ↑‿4⥊(2⥊0)∾⟨-7⟩∾7⥊1  # Reshape to dimensions of v, and use fills
+    ↑‿4⥊(2⥊0)∾¯7∾7⥊1    # Reshape to dimensions of v, and use fills
 ┌─
 ╵ 0 0 ¯7 1
   1 1  1 1
   1 1  0 0
            ┘
-   +˝↑‿4⥊(2⥊0)∾⟨-7⟩∾7⥊1 # Sum up columns
+   +˝↑‿4⥊(2⥊0)∾¯7∾7⥊1   # Sum up columns
 ⟨ 2 2 ¯6 2 ⟩
     v + ⟨ 2, 2, ¯6, 2 ⟩ # And we get the second step!
 ⟨ 2 4 1 2 ⟩
@@ -1398,7 +1404,7 @@ if the dimensions of the reshape are not exactly divisible by the shape of the o
 </details>
 
 To keep track of the already seen configurations,
-we could again use a hash map as in day 3.
+we could again use a hash map as in [day 3](#day-3).
 However, the number of configurations isn't actually that large, so a normal list suffices.
 Appropriately generalising the above construction nets us the result for part one:
 
@@ -1701,7 +1707,7 @@ and update it after every "normal" instruction.
 ⟩ # ⇒ 5199
 ```
 
-## [Day 9](https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day08.bqn)
+## [Day 9](https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day09.bqn)
 
 Today, we need to clean up garbage from a stream of characters like `{<{o"i!a,<{i<a>e}`.
 There are a few special characters that one needs to watch out for:
@@ -1824,7 +1830,7 @@ Additionally, we have to append the magic numbers `17 31 73 47 23` to the input.
 This neatly showcases one of the many uses for affine characters:[^34]
 
 ``` bqn
-inp2 ← ⌽ ⟨17, 31, 73, 47, 23⟩∾˜ -⟜@¨ ⊑•FLines"../inputs/day10.txt"
+inp2 ← ⌽ ⟨17, 31, 73, 47, 23⟩∾˜ @-˜ ⊑•FLines"../inputs/day10.txt"
 ```
 
 Since BQN does not have any format strings,
@@ -1832,11 +1838,7 @@ one has to implement base conversions from scratch.
 Here is one from decimal to hexadecimal, specialised to one byte—always two characters, padded with `0` if need be:[^61]
 
 ``` bqn
-DecToHex←{
-  𝕩{ 0𝕊n: n∾˜(2-≠n)⥊'0';
-     x𝕊n: (⌊x÷16)𝕊(n∾˜"0123456789abcdef"⊑˜16|x)
-  }""
-}
+DecToHex ← { "0123456789abcdef" ⊏˜ 16(⌊∘÷˜ ⋈ |)𝕩 }
 ```
 
 Finally, we get to XORing!
@@ -2215,7 +2217,7 @@ and export a function to compute the knot hash of the given argument.
 
 ``` bqn
 KnotHash ⇐ {
-  ls ← ⌽ ⟨17, 31, 73, 47, 23⟩∾˜ -⟜@¨ 𝕩
+  ls ← ⌽ ⟨17, 31, 73, 47, 23⟩∾˜ 𝕩-@
   ∾ DecToHex∘X¨ 16(/⥊˜)⊸⊔ ⊑ R´⟜ls⍟64 (↕256)‿0‿0
 }
 •Show KnotHash inp2 # ⇒ "2da93395f1a6bb3472203252e3b17fe5"
@@ -2237,7 +2239,7 @@ and translate the recipe above into BQN code.
 ``` bqn
 grid ← {
   HexToBin ← {  𝕊p: p𝕊⟨⟩;              # Start
-               0𝕊r: r∾˜0⥊˜4-≠r;        # End: pad with zeros
+               0𝕊r: r«4⥊0;             # End: pad with zeros
                p𝕊r: (⌊p÷2)𝕊(r∾˜2|p)    # Conversion
              }¨∘("0123456789abcdef"⊸⊐) # Convert hex to decimal, then to binary
   Start ← (⊑•FLines"../inputs/day14.txt")∾"-"∾•Fmt
@@ -2247,9 +2249,9 @@ grid ← {
 ```
 
 Not too many new things here.
-`HexToBin` essentially runs on the same logic as `DecToHex` from day 10,
+`HexToBin` essentially runs on the same logic as a more verbose version of `DecToHex` from day 10,[^65]
 and the `•Fmt` function just pretty-prints the given value to a string.
-This is, however, the first time that we see an ambidextrous function definition<!--
+This is, however, the first time that we see an ambivalent function definition<!--
 -->—one that can be called both monadically and dyadically.
 The monadic case is used in lieu of an internal worker function,
 like what Haskell people often call `go`.
@@ -2873,7 +2875,7 @@ This is a straightforward simulation, so let's get to it;
 first, parsing and massaging the input:
 
 ``` bqn
-⟨Split,cr⟩←•Import"../../util/bqn_util/util.bqn"
+⟨Split⟩←•Import"../../util/bqn_util/util.bqn"
 inp ← ⌽⍉∘({(' '⥊˜≠𝕩)∾⌽⍉𝕩}⍟3) >•FLines"../inputs/day19.txt"
 ```
 
@@ -3334,9 +3336,9 @@ Widen ← { k‿substs 𝕊 grid:
 where `n = ((≠grid)÷k)-1` and each number appears exactly `k` times:
 
 ``` bqn
-    (⌊3÷˜↕≠↕21)
+    (⌊3÷˜↕21)
 ⟨ 0 0 0 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 ⟩
-    (⌊7÷˜↕≠↕21)
+    (⌊7÷˜↕21)
 ⟨ 0 0 0 0 0 0 0 1 1 1 1 1 1 1 2 2 2 2 2 2 2 ⟩
 ```
 
@@ -3630,7 +3632,7 @@ where the strength is just all ports added together.
 Parsing is trivial:
 
 ``` bqn
-⟨Split,_Fix,cr⟩ ← •Import"../../util/bqn_util/util.bqn"
+⟨Split,_Fix⟩ ← •Import"../../util/bqn_util/util.bqn"
 inp ← •ParseFloat¨∘('/'⊸Split)¨ •FLines"../inputs/day24.txt"
 ```
 
@@ -3910,7 +3912,7 @@ Nice.
        Split ⇐ (¬-˜⊢×·+`»⊸>)∘≠⊔⊢
        _Fix  ⇐ { 𝔽∘⊢⍟≢⟜𝔽_𝕣∘⊢⍟≢⟜𝔽𝕩 }
        tab   ⇐ @+9
-       cr    ⇐ @+10
+       lf    ⇐ @+10
        ```
 
 [^42]: {-} Region `8` just extends beyond the bounds of the part of the grid that we see and loops back around.
@@ -3975,7 +3977,7 @@ Nice.
                | awk '{ print $3 }' \
                | head -n-3 | tail -n25"
            ⟩
-       ⟨ 11.76 11 ⟩
+       ⟨ 11.6 11 ⟩
        ```
 
 [^55]: Foreshadowing.
@@ -4013,6 +4015,16 @@ Nice.
 
 [^63]: After writing this, I saw that [BQNcrate] suggests `∊∧∊⌾⌽`,
        which should also work for non-sorted lists.
+
+[^65]: That is, the first version of that code, before dzaima told me how to clean it up:
+
+       ``` bqn
+       DecToHex←{
+         𝕩{ 0𝕊n: n∾˜(2-≠n)⥊'0';
+            x𝕊n: (⌊x÷16)𝕊(n∾˜"0123456789abcdef"⊑˜16|x)
+         }""
+       }
+       ```
 
 [namespace]: https://mlochbaum.github.io/BQN/doc/namespace.html
 [system-value]: https://mlochbaum.github.io/BQN/spec/system.html
