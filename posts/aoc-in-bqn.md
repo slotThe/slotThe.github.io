@@ -702,12 +702,12 @@ thought that BQN was really a little too verbose for you,
 [you're in luck](https://mlochbaum.github.io/BQN/doc/tacit.html)!
 
 The basic idea of trains is deceptively simple.
-Pick your favourite algebraic structure with a binary operation, say a monoid.
-Given two monoid morphisms \(f, g \colon M \to N\), we can define another map
+Pick your favourite algebraic structure with a binary operation, say an abelian monoid.
+Given two morphisms \(f, g \colon M \to N\) of such structures, we can define another map
 \[
-  f \cdot g \colon M \to N, \qquad (f \cdot g)(x) \defeq f(x) \cdot g(x).
+  f \cdot g \colon M \to N, \qquad (f \cdot g)(x) \defeq f(x) \cdot_N g(x).
 \]
-It is an easy exercise to prove that this is again a morphism of monoids.
+It is an easy exercise to prove that this is again a morphism of abelian monoids.[^67]
 
 What BQN now does is twofold:
 first, it takes the expression \(f \cdot g\), and allows it to be called both monadically and dyadically.
@@ -4044,6 +4044,9 @@ Nice.
 
        However, since I wanted to showcase `zip`,
        I will keep the slightly longer version in the main text.
+
+[^67]: The abelian assumption is important here; otherwise, you won't get that
+       \((f \cdot g)(x \cdot_M y) = (f\cdot g)(x) \cdot_N (f\cdot g)(y)\).
 
 [namespace]: https://mlochbaum.github.io/BQN/doc/namespace.html
 [system-value]: https://mlochbaum.github.io/BQN/spec/system.html
