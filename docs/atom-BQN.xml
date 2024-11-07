@@ -10,8 +10,428 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2024-10-27T00:00:00Z</updated>
+    <updated>2024-11-08T00:00:00Z</updated>
     <entry>
+    <title>Integer Volutes in BQN</title>
+    <link href="https://tony-zorman.com/posts/volutes-in-bqn.html" />
+    <id>https://tony-zorman.com/posts/volutes-in-bqn.html</id>
+    <published>2024-11-08T00:00:00Z</published>
+    <updated>2024-11-08T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2024-11-08
+      
+      
+      
+        &thinsp;·&thinsp; <span title="3031 words">13 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>On <a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-3">day 3</a>
+of my post about doing some
+<a href="https://tony-zorman.com/posts/aoc-in-bqn.html">Advent of Code problems in BQN</a>,
+the task was to walk along some <em>integer volutes</em>:
+spirals, either spiralling inwards—involutes—or outwards—evolutes—in either direction.
+While the specific problem didn’t require it,
+I think it’s a pretty neat exercise to think about how to generate these things.
+Let’s talk about that.</p>
+<!--more-->
+<p>For example, the following is a left-spiraling evolute.</p>
+<pre class="bqn"><code>    Evolute 9
+┌─
+╵ 64 63 62 61 60 59 58 57 56
+  65 36 35 34 33 32 31 30 55
+  66 37 16 15 14 13 12 29 54
+  67 38 17  4  3  2 11 28 53
+  68 39 18  5  0  1 10 27 52
+  69 40 19  6  7  8  9 26 51
+  70 41 20 21 22 23 24 25 50
+  71 42 43 44 45 46 47 48 49
+  72 73 74 75 76 77 78 79 80
+                             ┘</code></pre>
+<p>Quite pretty, isn’t it?</p>
+<p>Before we start, a big disclaimer:
+this is neither my work, nor did I come up with any of the novel insights presented here.
+Rather, there is an article by Eugene McDonnell (available
+<a href="https://code.jsoftware.com/wiki/Doc/Articles/Play132">here</a>
+or <a href="https://www.jsoftware.com/papers/play132.htm">here</a>)
+who talks about a solution to this problem by Joey Tuttle.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+Both of the links above are not entirely satisfactory digitisations of the original article,
+so in writing this post I’m trying to contribute a perhaps more palatable version.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>This post is written in the REPL-like fashion that I’ve already used above:
+input is indented by four spaces,
+and output is flush to the left.
+As such, there will be lots of examples that highlight certain aspects of the current sub-problem to be solved.</p>
+<p>Finally, the article probably won’t make much sense unless you know a little bit of BQN already,
+the basics of which are probably best learned from the
+<a href="https://mlochbaum.github.io/BQN/">official website</a>.</p>
+<h2 id="the-coordinate-based-solution">The coordinate based solution</h2>
+<p>Let’s initially produce a coordinate-based solution.
+Our first sub-goal is to generate the correct indices in order.
+Put the origin <code>⟨0 0⟩</code> into the middle, at the number <code>0</code>.
+Our coordinate system will be that of indexing into the array; i.e.,
+<code>0‿1</code>, <code>¯1‿0</code>, <code>0‿¯1</code>, and <code>1‿0</code> represent east, north, west, and south, respectively.
+Looking at the 9×9 spiral above,
+let’s think about what kind of steps we’re taking:</p>
+<pre><code>0  -E-&gt;  1  -N-&gt;  2  -W-&gt;  3  -W-&gt;  4  -S-&gt;  5  -S-&gt;  6  -E-&gt;  7  -E-&gt;  8 …</code></pre>
+<p>Just writing out the directions yields something like <code>ENWWSSEEENNNWWWWSSSS…</code>.
+We alternate between east, north, west, and south in that order,
+and always bunch up two of them with the same frequency—first one, then two, etc.
+In particular, we “break into” a new iteration in the spiralling
+every time a number is increased:</p>
+<pre><code>0     0 1       2     4 3 2     4 3 2     4 3 2
+              0 1       0 1     5 0 1     5 0 1
+                                6         6 7 8 9</code></pre>
+<p>If we want to end up with a square,
+our sequence would look like <span class="math inline">1, 1, 2, 2, … k-1, k-1, k, k, k</span>;
+repeating the last number three times instead of continuing with <span class="math inline">k+1</span>.</p>
+<p>All in all, we need to generate two sequences of numbers:
+the coordinates, and their associated frequencies.
+Given a grid of size <span class="math inline">n</span>, some quick maths tells us that
+we have to generate a sequence with <span class="math inline">2n - 1</span> directions.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre class="bqn"><code>    { (1-˜𝕩×2)⥊⟨0‿1,¯1‿0,0‿¯1,1‿0⟩ } 3 # Generate this many indices
+⟨ ⟨ 0 1 ⟩ ⟨ ¯1 0 ⟩ ⟨ 0 ¯1 ⟩ ⟨ 1 0 ⟩ ⟨ 0 1 ⟩ ⟩
+    {(𝕩-1)∾˜2/1+↕𝕩-1} 3 # Double with an extra bit at the end
+⟨ 1 1 2 2 2 ⟩</code></pre>
+<p>For doubling a given vector of numbers,
+we can conveniently use
+<em>replicate</em> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html"><code>/</code></a>),
+and then manually add the number that should be repeated three times to the end.</p>
+<pre class="bqn"><code>    { 𝕊n: # Smush everything together.
+      ((n-1)∾˜2/1+↕n-1){&lt;˘𝕨‿2⥊𝕩}¨(1-˜n×2)⥊⟨0‿1,¯1‿0,0‿¯1,1‿0⟩
+    } 3
+┌─
+· ⟨ ⟨ 0 1 ⟩ ⟩ ⟨ ⟨ ¯1 0 ⟩ ⟩ ⟨ ⟨ 0 ¯1 ⟩ ⟨ 0 ¯1 ⟩ ⟩ ⟨ ⟨ 1 0 ⟩ ⟨ 1 0 ⟩ ⟩ ⟨ ⟨ 0 1 ⟩ ⟨ 0 1 ⟩ ⟩
+                                                                                         ┘
+    { 𝕊n: # Flatten.
+      ∾((n-1)∾˜2/1+↕n-1){&lt;˘𝕨‿2⥊𝕩}¨(1-˜n×2)⥊⟨0‿1,¯1‿0,0‿¯1,1‿0⟩
+    } 3
+⟨ ⟨ 0 1 ⟩ ⟨ ¯1 0 ⟩ ⟨ 0 ¯1 ⟩ ⟨ 0 ¯1 ⟩ ⟨ 1 0 ⟩ ⟨ 1 0 ⟩ ⟨ 0 1 ⟩ ⟨ 0 ⟩ ⟩</code></pre>
+<p>Smushing everything together works by
+<em>reshaping</em> (<a href="https://mlochbaum.github.io/BQN/doc/reshape.html"><code>⥊</code></a>)
+the vector of length two into an array with two columns,
+and as many rows as the desired frequency.
+Flattening everything is done by calling
+<em>enclose</em> (<a href="https://mlochbaum.github.io/BQN/doc/enclose.html"><code>&lt;</code></a>)
+on each major cell.</p>
+<pre class="bqn"><code>    3 {𝕨‿2⥊𝕩} ¯1‿0
+┌─
+╵ ¯1 0
+  ¯1 0
+  ¯1 0
+       ┘
+    3 {&lt;˘𝕨‿2⥊𝕩} ¯1‿0
+⟨ ⟨ ¯1 0 ⟩ ⟨ ¯1 0 ⟩ ⟨ ¯1 0 ⟩ ⟩</code></pre>
+<p>This yields the function to generate a vector of directions.</p>
+<pre class="bqn"><code>    Dirs ← { 𝕊n: # Directions for an n×n grid
+      ∾((𝕩-1)∾˜2/1+↕𝕩-1){&lt;˘𝕨‿2⥊𝕩}¨(1-˜n×2)⥊⟨0‿1,¯1‿0,0‿¯1,1‿0⟩
+    }
+(function block)</code></pre>
+<p>To get the coordinates, we just have to “walk the path”—that is,
+compute the
+<code>+</code>-<em>scan</em> (<a href="https://mlochbaum.github.io/BQN/doc/scan.html"><code>`</code></a>)
+and add the origin.</p>
+<pre class="bqn"><code>    Coords ← { (&lt;0‿0)∾ +` Dirs𝕩 }
+(function block)
+    Coords 3
+⟨ ⟨ 0 0 ⟩ ⟨ 0 1 ⟩ ⟨ ¯1 1 ⟩ ⟨ ¯1 0 ⟩ ⟨ ¯1 ¯1 ⟩ ⟨ 0 ¯1 ⟩ ⟨ 1 ¯1 ⟩ ⟨ 1 0 ⟩ ⟨ 1 1 ⟩ ⟩</code></pre>
+<p>These coordinates are associated to the numbers that their respective index represents:
+<code>0</code> for <code>⟨0 0⟩</code>, <code>1</code> for <code>⟨0 1⟩</code>, and so on.</p>
+<pre class="bqn"><code>    (↕9) ≍ Coords 3
+┌─
+╵ 0       1       2        3        4         5        6        7       8
+  ⟨ 0 0 ⟩ ⟨ 0 1 ⟩ ⟨ ¯1 1 ⟩ ⟨ ¯1 0 ⟩ ⟨ ¯1 ¯1 ⟩ ⟨ 0 ¯1 ⟩ ⟨ 1 ¯1 ⟩ ⟨ 1 0 ⟩ ⟨ 1 1 ⟩
+                                                                                ┘</code></pre>
+<p>All that’s left to do is to <em>reshape</em> the argument into the correct form.
+This uses the fact that coordinates have a nice lexicographic ordering.</p>
+<pre class="bqn"><code>    ↕3‿3          # Origin top left
+┌─
+╵ ⟨ 0 0 ⟩ ⟨ 0 1 ⟩ ⟨ 0 2 ⟩
+  ⟨ 1 0 ⟩ ⟨ 1 1 ⟩ ⟨ 1 2 ⟩
+  ⟨ 2 0 ⟩ ⟨ 2 1 ⟩ ⟨ 2 2 ⟩
+                          ┘
+    (↕3‿3) - &lt;1‿1 # Origin in the middle, where we want it
+┌─
+╵ ⟨ ¯1 ¯1 ⟩ ⟨ ¯1 0 ⟩ ⟨ ¯1 1 ⟩
+  ⟨ 0 ¯1 ⟩  ⟨ 0 0 ⟩  ⟨ 0 1 ⟩
+  ⟨ 1 ¯1 ⟩  ⟨ 1 0 ⟩  ⟨ 1 1 ⟩
+                              ┘</code></pre>
+<p>We first order the coordinates by their columns (the first number), and then by their rows (the second).
+A verbose way of doing that would be the following:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<pre class="bqn"><code>    (Coords 3) ⋈¨ ↕9        # Zip coordinates to indices
+┌─
+· ⟨ ⟨ 0 0 ⟩ 0 ⟩ ⟨ ⟨ 0 1 ⟩ 1 ⟩ ⟨ ⟨ ¯1 1 ⟩ 2 ⟩ ⟨ ⟨ ¯1 0 ⟩ 3 ⟩ ⟨ ⟨ ¯1 ¯1 ⟩ 4 ⟩
+  ⟨ ⟨ 0 ¯1 ⟩ 5 ⟩ ⟨ ⟨ 1 ¯1 ⟩ 6 ⟩ ⟨ ⟨ 1 0 ⟩ 7 ⟩ ⟨ ⟨ 1 1 ⟩ 8 ⟩
+                                                                            ┘
+    ∧ (Coords 3) ⋈¨ ↕9      # Sort
+┌─
+· ⟨ ⟨ ¯1 ¯1 ⟩ 4 ⟩ ⟨ ⟨ ¯1 0 ⟩ 3 ⟩ ⟨ ⟨ ¯1 1 ⟩ 2 ⟩ ⟨ ⟨ 0 ¯1 ⟩ 5 ⟩ ⟨ ⟨ 0 0 ⟩ 0 ⟩
+  ⟨ ⟨ 0 1 ⟩ 1 ⟩ ⟨ ⟨ 1 ¯1 ⟩ 6 ⟩ ⟨ ⟨ 1 0 ⟩ 7 ⟩ ⟨ ⟨ 1 1 ⟩ 8 ⟩
+                                                                            ┘
+    1⊑¨ ∧ (Coords 3) ⋈¨ ↕9  # Get indices
+⟨ 4 3 2 5 0 1 6 7 8 ⟩
+    3‿3⥊1⊑¨∧(Coords 3)⋈¨↕9  # Reshape
+┌─
+╵ 4 3 2
+  5 0 1
+  6 7 8
+        ┘</code></pre>
+<p>This works, but feels a bit unsatisfactory.
+We seem to be doing a lot of extra work just to get the correct ordering of the indices.
+Luckily, BQN has a primitive function—two, actually—that exactly encapsulates operations like the above:
+a <em>grade</em>.
+Briefly,
+given an array with major cells <span class="math inline">(c_1, \dots, c_n)</span>,
+<em>grade up</em> (<a href="https://mlochbaum.github.io/BQN/doc/order.html#grade"><code>⍋</code></a>)
+returns a permutation <span class="math inline">(i_1, \dots, i_n)</span> of the indices,
+which yields the order that would sort the cells:
+<span class="math inline">c_{i_1}</span> is the smallest element, <span class="math inline">c_{i_2}</span> is the second smallest, and so on.
+This can be used to sort the vector by <em>picking</em> each <span class="math inline">i_j</span> in order.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<pre class="bqn"><code>    a ← ⟨3,1,0,4,4,6,7,19,16⟩
+⟨ 3 1 0 4 4 6 7 19 16 ⟩
+    g ← ⍋a
+⟨ 2 1 0 3 4 5 6 8 7 ⟩
+    (⊑g)⊑a    # smallest element
+0
+    (¯1⊑g)⊑a  # Largest element
+19
+    g⊑¨&lt;a     # Sort: g is a vector of indices into a
+⟨ 0 1 3 4 4 6 7 16 19 ⟩
+    # Grading is the same as sorting and getting the indices
+    (⍋a) ≡ 1⊑¨∧a⋈¨↕9
+1</code></pre>
+<p>Putting everything together, we can write the first version of <code>Evolute</code>.</p>
+<pre class="bqn"><code>    Evolute ← { 𝕩‿𝕩⥊ ⍋ Coords𝕩 }
+(function block)
+    Evolute 3
+┌─
+╵ 4 3 2
+  5 0 1
+  6 7 8
+        ┘
+    Evolute 5
+┌─
+╵ 16 15 14 13 12
+  17  4  3  2 11
+  18  5  0  1 10
+  19  6  7  8  9
+  20 21 22 23 24
+                 ┘</code></pre>
+<p>Nice.</p>
+<h2 id="a-flat-solution">A flat solution</h2>
+<p>While I think <code>Evolute</code> is quite neat,
+a fun aspect of array programming is to come up with
+<a href="https://saltysylvi.github.io/blog/flat1.html">completely</a>
+<a href="https://saltysylvi.github.io/blog/flat2.html">flat</a>
+solutions to problems.
+That is, solutions that do not use any nested arrays—like vectors of coordinates—whatsoever.
+This is often much more efficient,
+and may yield new insights in how the problem actually works.
+Plus, working in a more constrained setting can be fun just in and of itself.</p>
+<p>Let’s start with the flat version of the completed spiral.</p>
+<pre class="bqn"><code>    spiral ← ⥊Evolute 3
+⟨ 4 3 2 5 0 1 6 7 8 ⟩</code></pre>
+<p>Naively, the general strategy is this:
+throw transformations <code>fᵢ</code> at <code>spiral</code>
+until we arrive at some vector <code>v</code> that is reasonably easy to generate;
+i.e., <code>v ≡ f₁ … fₙ spiral</code>.
+Then, invert all of the <code>fᵢ</code> to re-generate the original vector:
+<code>spiral ≡ fₙ⁻¹ … f₁⁻¹ v</code>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+As far as I can tell, one just needs enough intuition about these flat arrays to guess nice enough functions.</p>
+<p>Now, from the first solution we already know that <code>spiral</code> is the <em>grade</em> of some list of coordinates,
+which we however have no hope of recovering.
+After enough staring, one notices that <code>spiral</code> itself looks like a permutation<!--
+-->—why not try to find the inverse of that?
+Thankfully this is very easy, as <em>grade up</em> is self-inverse in this case:<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<pre class="bqn"><code>    ⍋⍋spiral
+⟨ 4 3 2 5 0 1 6 7 8 ⟩
+    spiral≡⍋⍋spiral
+1
+    ⍋spiral # This is the permutation we want.
+⟨ 4 5 2 1 0 3 6 7 8 ⟩</code></pre>
+<p>I think that <code>⍋spiral</code> doesn’t look any less random than <code>spiral</code>,
+but Tuttle evidently saw something,
+and instead checked whether this list was the running sum of a good one;
+i.e., whether there exists some nice <code>y</code> such that <code>(⍋spiral) ≡ +`y</code>.
+This in particular means that we have to compute the inverse of <code>+`</code>:
+subtract each element from its predecessor, or <code>-⟜»</code> for short.</p>
+<pre class="bqn"><code>    -⟜» ⍋spiral
+⟨ 4 1 ¯3 ¯1 ¯1 3 3 1 1 ⟩
+    +` -⟜» ⍋spiral
+⟨ 4 5 2 1 0 3 6 7 8 ⟩
+    (⍋spiral) ≡ (+`-⟜»⍋spiral)
+1</code></pre>
+<p>In fact, we can even ask BQN to do this for us by means of
+<em>undo</em> (<a href="https://mlochbaum.github.io/BQN/doc/undo.html"><code>⁼</code></a>).</p>
+<pre class="bqn"><code>    +`⁼ ⍋spiral
+⟨ 4 1 ¯3 ¯1 ¯1 3 3 1 1 ⟩</code></pre>
+<p>Finally, this looks like something we can generate!
+Let’s take a look at a 5×5 grid, so the structure becomes even more obvious:</p>
+<pre class="bqn"><code>    +`⁼⍋⥊Evolute 5
+⟨ 12 1 ¯5 ¯1 ¯1 5 5 1 1 1 ¯5 ¯5 ¯5 ¯1 ¯1 ¯1 ¯1 5 5 5 5 1 1 1 1 ⟩</code></pre>
+<p>Ignoring the number at the start, we have an alternation of <code>1 ¯n ¯1 n</code>, where <code>n</code> is the size of the evolute.
+Disregarding multiple occurrences and the first number,
+there are exactly <code>(2×n)-1</code> “primitive” numbers
+to which we need to associate frequencies,
+which matches with the coordinate generation from before.</p>
+<pre class="bqn"><code>    { (1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩ } 3
+⟨ 1 ¯3 ¯1 3 1 ⟩
+    { (1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩ } 5
+⟨ 1 ¯5 ¯1 5 1 ¯5 ¯1 5 1 ⟩</code></pre>
+<p>These numbers grow in their frequency in blocks of two; first one of each, then two, and so on.
+Everything here is entirely analogous to the coordinate case,
+including the fact that we need to repeat the last number three times in order to obtain a square grid.</p>
+<pre class="bqn"><code>    { 2/1+↕𝕩-1 } 5
+⟨ 1 1 2 2 3 3 4 4 ⟩
+    { (𝕩-1)∾˜2/1+↕𝕩-1 } 5 # Need correcting term at the end
+⟨ 1 1 2 2 3 3 4 4 4 ⟩
+    { ((𝕩-1)∾˜2/1+↕𝕩-1)/(1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩ } 3
+⟨ 1 ¯3 ¯1 ¯1 3 3 1 1 ⟩</code></pre>
+<p>As for the first number that we ignored so far: it’s not actually important!
+What we do with this list is a <code>+</code>-<em>scan</em>, followed by a <em>grade up</em> to sort the indices.
+This means that only the relative value of the <em>scan</em> is important for the following <em>grade</em>,
+so outside of special cases like <code>∞</code>, the first number could be almost anything.</p>
+<pre class="bqn"><code>    { 0∾((𝕩-1)∾˜2/1+↕𝕩-1)/(1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩ } 5
+⟨ 0 1 ¯5 ¯1 ¯1 5 5 1 1 1 ¯5 ¯5 ¯5 ¯1 ¯1 ¯1 ¯1 5 5 5 5 1 1 1 1 ⟩</code></pre>
+<p>In particular, this opens up a nice shortcut.
+Instead of manually adding <code>𝕩-1</code> to the back and <code>0</code> to the front,
+we can just add <code>𝕩</code> itself to the back,
+and then <em>nudge</em> the whole array to the right,
+inserting the filler <code>0</code> as the first element.</p>
+<pre class="bqn"><code>    { 0∾((𝕩-1)∾˜2/1+↕𝕩-1) } 5
+⟨ 0 1 1 2 2 3 3 4 4 4 ⟩
+    { »(𝕩∾˜2/1+↕𝕩-1) } 5
+⟨ 0 1 1 2 2 3 3 4 4 ⟩
+    { »(¯1↓2/1+↕𝕩) } 5
+⟨ 0 1 1 2 2 3 3 4 4 ⟩
+    { »(¯1↓2/1+↕𝕩)/(1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩ } 5
+⟨ 0 1 ¯5 ¯1 ¯1 5 5 1 1 1 ¯5 ¯5 ¯5 ¯1 ¯1 ¯1 ¯1 5 5 5 5 1 1 1 1 ⟩</code></pre>
+<p>We obtain a completely flat version of <code>Evolute</code>,
+which works just like the original function.</p>
+<pre class="bqn"><code>    EvoluteFlat ← { 𝕩‿𝕩⥊⍋+`»(¯1↓2/1+↕𝕩)/(1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩ }
+(function block)
+    EvoluteFlat 3
+┌─
+╵ 4 3 2
+  5 0 1
+  6 7 8
+        ┘
+    EvoluteFlat 5
+┌─
+╵ 16 15 14 13 12
+  17  4  3  2 11
+  18  5  0  1 10
+  19  6  7  8  9
+  20 21 22 23 24
+                 ┘</code></pre>
+<p>Getting a rightwards spiral just involves
+twiddling with the vector <code>⟨1,-𝕩,¯1,𝕩⟩</code> a little bit.
+I’ll leave that as an exercise for the interested reader.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Here’s a complete definition of both solutions.</p>
+<pre class="bqn"><code>E1 ← {𝕩‿𝕩⥊⍋(&lt;0‿0)∾+`∾((2/1+↕𝕩-2)∾3⥊𝕩-1){&lt;˘𝕨‿2⥊𝕩}¨(1-˜𝕩×2)⥊⟨0‿1,¯1‿0,0‿¯1,1‿0⟩}
+E2 ← {𝕩‿𝕩⥊⍋+`»(¯1↓2/1+↕𝕩)/(1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩}</code></pre>
+<p>I certainly think that <code>E2</code> is much prettier than <code>E1</code>;
+not only because it’s shorter, but also because there seems to be less wrangling to get everything to line up correctly.
+Seeing these side by side does reveal that they use a lot of the same techniques,
+however, which I think is interesting.</p>
+<hr />
+<p>As a bonus, here is the mandatory golfed solution,
+this time as an involute.</p>
+<pre class="bqn"><code>    G ← {(⊒˜∾⍉∘⌽+≠)⍟2⍟𝕩↕0‿0}
+(function block)
+    SLG ← {(↕∘≠∾⍉∘⌽+≠)⍟(2×𝕩)↕0‿0} # Slighly less golfed
+(function block)
+    G 5
+┌─
+╵  0  1  2  3 4
+  15 16 17 18 5
+  14 23 24 19 6
+  13 22 21 20 7
+  12 11 10  9 8
+                ┘
+    (SLG 5) ≡ G 5
+1</code></pre>
+<p>I will leave it to the interested reader to figure out that one—or to consult the
+<a href="https://codegolf.stackexchange.com/questions/241803/print-a-nxn-integer-involute">relevant StackExchange thread</a>,
+which I perhaps should have looked up before writing this whole thing.
+Still, all of this transposing and reversing the matrix means that this solution is on the slower side.
+Here’s a quick an dirty comparison:</p>
+<pre class="bqn"><code>    )time G   1000  # Golfed version
+1.0114s
+    )time G   2000
+13.885s
+    )time SLG 1000  # Slightly less golfed version
+651.3ms
+    )time SLG 2000
+8.1603s
+    )time E1  1000  # Using indices
+218ms
+    )time E1  2000
+950.2ms
+    )time E2  1000  # Flat
+4.197ms
+    )time E2  2000
+12.98ms</code></pre>
+<p>While both are cubic and thus degrade fast,
+<code>SLG</code> is faster than <code>G</code> because <code>↕≠</code> to generate a list of integers is much quicker than some <em>progressive index of</em> shenanigans to do the same thing.
+At the end of the day, I think I prefer the flat solution :)</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Special thanks to Marshall Lochbaum for providing these links.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Plus, I don’t know any J, so reading the article in detail is a lot more work than just writing it in BQN myself.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The frequencies have to add up to <span class="math inline">n^2 - 1</span>, covering all points but the origin.
+A given sequence <span class="math inline">1, 1, 2, 2, \dots, k-1, k-1, k, k, k</span> has <span class="math inline">2k + 1</span> members
+and sums up to <span class="math inline">k^2 + 2k</span>.
+Solving <span class="math inline">k^2 + 2k = n^2 - 1</span> for <span class="math inline">k</span> has sensible roots,
+<span class="math inline">\pm n - 1</span>, of which we of course pick <span class="math inline">n-1</span>.
+Substituting <span class="math inline">k=n-1</span>,
+we have to generate <span class="math inline">2n - 1</span> frequencies,
+the values of which indeed sum up to <span class="math inline">(n-1)^2 + 2(n-1) = n^2 - 1</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} Line breaks in the output for clarity.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>In fact, in APL this is the only way to do this—there is no other sorting primitive!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Note that, in particular, we are interested in left inverses of all the <code>fᵢ</code>.
+This is a bit in opposition to the facilities that BQN provides by default, like
+<em>undo</em> to find the right inverse.
+However, we’ll manage.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>A quick justification:
+suppose that we have a vector <span class="math inline">n \defeq (n_1, \dots, n_k)</span> of natural numbers,
+such that every number from <span class="math inline">0</span> to <span class="math inline">k-1</span> appears exactly once.
+Using <em>grade up</em>, we obtain a permutation <span class="math inline">\sigma \defeq (i_1, \dots, i_k)</span>.
+If one <em>grades</em> that permutation in the same direction,
+then whatever index <span class="math inline">i_j</span> has value <span class="math inline">0</span>
+will be the very first element of the new permutation <span class="math inline">\tau \defeq (i_j, \dots, i_\ell)</span>,
+and likewise for the other numbers.
+Thus, <span class="math inline">\tau \sigma (n) = n</span>.</p>
+<p>Of course, <code>⍋⍋</code> it not the identity in general, but it is a useful operation nonetheless:
+it “ranks” the elements of the input,
+with <code>0</code> corresponding to the smallest element, and so on.
+This is known as the
+<a href="https://mlochbaum.github.io/BQN/doc/order.html#ordinals">ordinal idiom</a>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>BQNing Advent of Code</title>
     <link href="https://tony-zorman.com/posts/aoc-in-bqn.html" />
     <id>https://tony-zorman.com/posts/aoc-in-bqn.html</id>
