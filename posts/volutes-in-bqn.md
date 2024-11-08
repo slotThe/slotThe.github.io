@@ -226,7 +226,7 @@ This can be used to sort the vector by *picking* each \(i_j\) in order.[^3]
 0
     (¯1⊑g)⊑a  # Largest element
 19
-    g⊑¨<a     # Sort: g is a vector of indices into a
+    g⊏a       # Sort: g is a vector of indices into a
 ⟨ 0 1 3 4 4 6 7 16 19 ⟩
     # Grading is the same as sorting and getting the indices
     (⍋a) ≡ 1⊑¨∧a⋈¨↕9
