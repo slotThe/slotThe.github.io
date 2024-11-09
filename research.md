@@ -82,6 +82,11 @@ All of my papers are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *2-Categorical Centre Constructions* \
+  2024-11-01, Seminar "Factorisation homology", Kleinwalsertal.
+
+  Based on [@femić23:categ-yetter] and [@street04].
+
 - *Locally Finitely Presentable Categories and Ind-Completions* \
   2024-06-13, Seminar "Factorisation homology", Bonn.
 
