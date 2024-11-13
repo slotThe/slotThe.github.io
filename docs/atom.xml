@@ -427,7 +427,7 @@ This is known as the
 one could even shorten <code>E2</code> a little further:</p>
 <pre class="bqn"><code>E3 ← {𝕩‿𝕩⥊⍋+`»(¯1↓2/1+↕𝕩)(⊣/≠⊸⥊)⟨1,-𝕩,¯1,𝕩⟩}</code></pre>
 <p>This <em>reshapes</em> the list <code>⟨1,-𝕩,¯1,𝕩⟩</code> according to the length of <code>¯1↓2/1+↕𝕩</code>,
-without us having to explicitly specify that it will be <code>1-˝2×𝕩</code>.
+without us having to explicitly specify that it will be <code>1-˜2×𝕩</code>.
 I think, however, that arriving at this number yields some insights that one would otherwise not have had,
 so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

@@ -521,6 +521,6 @@ At the end of the day, I think I prefer the flat solution :)
        ```
 
        This *reshapes* the list `⟨1,-𝕩,¯1,𝕩⟩` according to the length of `¯1↓2/1+↕𝕩`,
-       without us having to explicitly specify that it will be `1-˝2×𝕩`.
+       without us having to explicitly specify that it will be `1-˜2×𝕩`.
        I think, however, that arriving at this number yields some insights that one would otherwise not have had,
        so I prefer leaving it in the final solution.
