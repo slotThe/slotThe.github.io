@@ -71,8 +71,10 @@
         Posted on 2024-11-08
       
       
+        &thinsp;·&thinsp; last modified: 2024-11-13
       
-        &thinsp;·&thinsp; <span title="3023 words">13 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="3085 words">13 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="../tags/BQN.html" rel="tag">BQN</a>
@@ -512,14 +514,25 @@ twiddling with the vector <code>⟨1,-𝕩,¯1,𝕩⟩</code> a little bit.
 I’ll leave that as an exercise for the interested reader.
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
-Here’s a complete definition of both solutions.
+Here are complete definitions of both solutions.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">E1</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕩</span><span class="p">‿</span><span class="ni">𝕩</span><span class="o">⥊⍋</span><span class="sr">(</span><span class="o">&lt;</span><span class="m">0</span><span class="p">‿</span><span class="m">0</span><span class="sr">)</span><span class="o">∾+</span><span class="na">`</span><span class="o">∾</span><span class="sr">((</span><span class="m">2</span><span class="o">/</span><span class="m">1</span><span class="o">+↕</span><span class="ni">𝕩</span><span class="o">-</span><span class="m">2</span><span class="sr">)</span><span class="o">∾</span><span class="m">3</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="o">-</span><span class="m">1</span><span class="sr">)</span><span class="kt">{</span><span class="o">&lt;</span><span class="na">˘</span><span class="ni">𝕨</span><span class="p">‿</span><span class="m">2</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="na">¨</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="ni">𝕩</span><span class="o">×</span><span class="m">2</span><span class="sr">)</span><span class="o">⥊</span><span class="p">⟨</span><span class="m">0</span><span class="p">‿</span><span class="m">1</span><span class="p">,</span><span class="m">¯1</span><span class="p">‿</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">‿</span><span class="m">¯1</span><span class="p">,</span><span class="m">1</span><span class="p">‿</span><span class="m">0</span><span class="p">⟩</span><span class="kt">}</span>
 <span class="o">E2</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕩</span><span class="p">‿</span><span class="ni">𝕩</span><span class="o">⥊⍋+</span><span class="na">`</span><span class="o">»</span><span class="sr">(</span><span class="m">¯1</span><span class="o">↓</span><span class="m">2</span><span class="o">/</span><span class="m">1</span><span class="o">+↕</span><span class="ni">𝕩</span><span class="sr">)</span><span class="o">/</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="m">2</span><span class="o">×</span><span class="ni">𝕩</span><span class="sr">)</span><span class="o">⥊</span><span class="p">⟨</span><span class="m">1</span><span class="p">,</span><span class="o">-</span><span class="ni">𝕩</span><span class="p">,</span><span class="m">¯1</span><span class="p">,</span><span class="ni">𝕩</span><span class="p">⟩</span><span class="kt">}</span>
 </pre></div>
 
 <p></p>
 I certainly think that <code>E2</code> is much prettier than <code>E1</code>;
-not only because it’s shorter, but also because there seems to be less wrangling to get everything to line up correctly.
+not only because it’s shorter, but also because there seems to be less wrangling to get everything to line up correctly.<!--
+--><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Looking at <a href="https://mlochbaum.github.io/bqncrate/"><span class="small-caps">bqn</span>crate</a>,
+one could even shorten <code>E2</code> a little further:
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">E3</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕩</span><span class="p">‿</span><span class="ni">𝕩</span><span class="o">⥊⍋+</span><span class="na">`</span><span class="o">»</span><span class="sr">(</span><span class="m">¯1</span><span class="o">↓</span><span class="m">2</span><span class="o">/</span><span class="m">1</span><span class="o">+↕</span><span class="ni">𝕩</span><span class="sr">)(</span><span class="o">⊣/≠</span><span class="py">⊸</span><span class="o">⥊</span><span class="sr">)</span><span class="p">⟨</span><span class="m">1</span><span class="p">,</span><span class="o">-</span><span class="ni">𝕩</span><span class="p">,</span><span class="m">¯1</span><span class="p">,</span><span class="ni">𝕩</span><span class="p">⟩</span><span class="kt">}</span>
+</pre></div>
+
+<p></p>
+This <em>reshapes</em> the list <code>⟨1,-𝕩,¯1,𝕩⟩</code> according to the length of <code>¯1↓2/1+↕𝕩</code>,
+without us having to explicitly specify that it will be <code>1-˝2×𝕩</code>.
+I think, however, that arriving at this number yields some insights that one would otherwise not have had,
+so I prefer leaving it in the final solution.</div><!--
+-->
 Seeing these side by side does reveal that they use a lot of the same techniques,
 however, which I think is interesting.
 <hr />

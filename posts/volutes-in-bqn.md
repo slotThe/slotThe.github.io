@@ -1,6 +1,7 @@
 ---
 title: Integer Volutes in BQN
 date: 2024-11-08
+last-modified: 2024-11-13
 tags: BQN
 ---
 
@@ -411,7 +412,7 @@ I'll leave that as an exercise for the interested reader.
 
 # Conclusion
 
-Here's a complete definition of both solutions.
+Here are complete definitions of both solutions.
 
 ``` bqn
 E1 ← {𝕩‿𝕩⥊⍋(<0‿0)∾+`∾((2/1+↕𝕩-2)∾3⥊𝕩-1){<˘𝕨‿2⥊𝕩}¨(1-˜𝕩×2)⥊⟨0‿1,¯1‿0,0‿¯1,1‿0⟩}
@@ -419,7 +420,7 @@ E2 ← {𝕩‿𝕩⥊⍋+`»(¯1↓2/1+↕𝕩)/(1-˜2×𝕩)⥊⟨1,-𝕩,¯1,
 ```
 
 I certainly think that `E2` is much prettier than `E1`;
-not only because it's shorter, but also because there seems to be less wrangling to get everything to line up correctly.
+not only because it's shorter, but also because there seems to be less wrangling to get everything to line up correctly.[^12]
 Seeing these side by side does reveal that they use a lot of the same techniques,
 however, which I think is interesting.
 
@@ -511,3 +512,15 @@ At the end of the day, I think I prefer the flat solution :)
 [^9]: {-} Line breaks in the output for clarity.
 
 [^11]: Plus, I don't know any J, so reading the article in detail is a lot more work than just writing it in BQN myself.
+
+[^12]: Looking at [BQNcrate](https://mlochbaum.github.io/bqncrate/),
+       one could even shorten `E2` a little further:
+
+       ``` bqn
+       E3 ← {𝕩‿𝕩⥊⍋+`»(¯1↓2/1+↕𝕩)(⊣/≠⊸⥊)⟨1,-𝕩,¯1,𝕩⟩}
+       ```
+
+       This *reshapes* the list `⟨1,-𝕩,¯1,𝕩⟩` according to the length of `¯1↓2/1+↕𝕩`,
+       without us having to explicitly specify that it will be `1-˝2×𝕩`.
+       I think, however, that arriving at this number yields some insights that one would otherwise not have had,
+       so I prefer leaving it in the final solution.

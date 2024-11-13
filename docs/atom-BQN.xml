@@ -23,8 +23,10 @@
         Posted on 2024-11-08
       
       
+        &thinsp;·&thinsp; last modified: 2024-11-13
       
-        &thinsp;·&thinsp; <span title="3031 words">13 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="3094 words">13 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
@@ -340,11 +342,11 @@ which works just like the original function.</p>
 twiddling with the vector <code>⟨1,-𝕩,¯1,𝕩⟩</code> a little bit.
 I’ll leave that as an exercise for the interested reader.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>Here’s a complete definition of both solutions.</p>
+<p>Here are complete definitions of both solutions.</p>
 <pre class="bqn"><code>E1 ← {𝕩‿𝕩⥊⍋(&lt;0‿0)∾+`∾((2/1+↕𝕩-2)∾3⥊𝕩-1){&lt;˘𝕨‿2⥊𝕩}¨(1-˜𝕩×2)⥊⟨0‿1,¯1‿0,0‿¯1,1‿0⟩}
 E2 ← {𝕩‿𝕩⥊⍋+`»(¯1↓2/1+↕𝕩)/(1-˜2×𝕩)⥊⟨1,-𝕩,¯1,𝕩⟩}</code></pre>
 <p>I certainly think that <code>E2</code> is much prettier than <code>E1</code>;
-not only because it’s shorter, but also because there seems to be less wrangling to get everything to line up correctly.
+not only because it’s shorter, but also because there seems to be less wrangling to get everything to line up correctly.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
 Seeing these side by side does reveal that they use a lot of the same techniques,
 however, which I think is interesting.</p>
 <hr />
@@ -421,6 +423,13 @@ it “ranks” the elements of the input,
 with <code>0</code> corresponding to the smallest element, and so on.
 This is known as the
 <a href="https://mlochbaum.github.io/BQN/doc/order.html#ordinals">ordinal idiom</a>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Looking at <a href="https://mlochbaum.github.io/bqncrate/">BQNcrate</a>,
+one could even shorten <code>E2</code> a little further:</p>
+<pre class="bqn"><code>E3 ← {𝕩‿𝕩⥊⍋+`»(¯1↓2/1+↕𝕩)(⊣/≠⊸⥊)⟨1,-𝕩,¯1,𝕩⟩}</code></pre>
+<p>This <em>reshapes</em> the list <code>⟨1,-𝕩,¯1,𝕩⟩</code> according to the length of <code>¯1↓2/1+↕𝕩</code>,
+without us having to explicitly specify that it will be <code>1-˝2×𝕩</code>.
+I think, however, that arriving at this number yields some insights that one would otherwise not have had,
+so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
