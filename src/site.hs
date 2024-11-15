@@ -433,25 +433,6 @@ mkCleanSnapshot name item = item <$
 -----------------------------------------------------------------------
 -- Compilers
 
--- | Like 'renderPandocWithTransformM', but work on an 'Item' 'Pandoc'
--- instead of just a 'Pandoc'.
-myRenderPandocWithTransformM
-  :: ReaderOptions -> WriterOptions
-  -> (Item Pandoc -> Compiler (Item Pandoc))
-  -> Item String
-  -> Compiler (Item String)
-myRenderPandocWithTransformM ropt wopt f i =
-    writePandocWith wopt <$> (f =<< readPandocWith ropt i)
-
--- | Like 'pandocCompilerWithTransformM', but work on an 'Item' 'Pandoc'
--- instead of just a 'Pandoc'.
-myPandocCompilerWithTransformM
-  :: ReaderOptions -> WriterOptions
-  -> (Item Pandoc -> Compiler (Item Pandoc))
-  -> Compiler (Item String)
-myPandocCompilerWithTransformM ropt wopt f =
-    getResourceBody >>= myRenderPandocWithTransformM ropt wopt f
-
 myWriter :: WriterOptions
 myWriter = defaultHakyllWriterOptions{ writerHTMLMathMethod = KaTeX "" }
 
@@ -469,7 +450,7 @@ pandocRssCompiler = pandocCompilerWorker pure
 
 pandocCompilerWorker :: (Item Pandoc -> Compiler (Item Pandoc)) -> Compiler (Item String)
 pandocCompilerWorker =
-  myPandocCompilerWithTransformM
+  pandocItemCompilerWithTransformM
     myReader
     myWriter
     -- Only the `title' should be <h1>. This needs to be here so that

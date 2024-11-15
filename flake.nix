@@ -29,6 +29,10 @@
           })
           "-f html-sidenotes"
           { };
+        hakyll = self.callCabal2nix "hakyll" (builtins.fetchGit {
+          url = "https://github.com/jaspervdj/hakyll";
+          rev = "61b6e1a32548902eb6feedebf0c0625b61e47947";
+        }) {};
       });
     in {
       # nix build
@@ -44,6 +48,7 @@
             p.fonttools # Compressing fonts
             p.brotli    # Compressing fonts
             (p.pygments.overrideAttrs (old: {
+              # https://github.com/pygments/pygments/pull/2789
               version = "2.18.1b";
               src = fetchFromGitHub {
                 owner = "slotThe";
