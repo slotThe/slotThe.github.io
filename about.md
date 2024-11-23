@@ -2,17 +2,18 @@
 title: About
 ---
 
-I'm a PhD student in mathematics at the Technical University of Dresden, Germany.
+I'm a PhD student in mathematics at TU Dresden, Germany.
 In my copious free time[^1] I like to hack on [free software]—especially anything involving [Haskell] or [Emacs]—play the guitar, ride my bike around, or watch classic movies.
 I also spend way too much money on (good) coffee and tea.
 
-My work in mathematics can broadly be characterised under the term "monoidal category theory".
-In particular, I like thinking about things like
-[Hopf monads]; [graphical calculi]; [rigid], [Grothendieck–Verdier][^3], [linearly distributive], and [duoidal] categories; as well as [operads].
+Broadly, my work in mathematics lives under the umbrella of *monoidal category theory*.
+In particular, I like thinking about [Hopf monads]; [graphical calculi]; [rigid],
+[linearly distributive], [Grothendieck–Verdier][^2], and [duoidal] categories;
+as well as [operads].
 If you're interested in my publications, you can check out my name on the [arXiv].
-I've also given some talks, slides of which are available [here](./research.html).
+I've also given some talks, with a few slides available [here](https://tony-zorman.com/research.html#talks).
 
-As for the site itself: everything is statically generated—with the power of [hakyll] and [pandoc]—from markdown.[^2]
+As for the site itself: everything is statically generated—with the power of [hakyll] and [pandoc]—from markdown.
 The [full source code][site] is available,
 and a separate page detailing some design decisions is [here](./site.html).
 <label for="mn-configs" class="margin-toggle">&#8853;</label>
@@ -31,9 +32,8 @@ Most of the time I'm fastest to reply via E-Mail,
 but you can try any of the following channels:
 
 + E-Mail:
-  + <span class="email">mail@tony-zorman<b>.mailbox</b>.com</span>
-  + <span class="email">tonyzorman@mailbox<b>.mailbox</b>.org</span>
-  + <span class="email">soliditsallgood@mailbox<b>.mailbox</b>.org</span>
+  <span class="email">mail@tony-zorman<b>.mailbox</b>.com</span> or
+  {tonyzorman,soliditsallgood}@<span class="email">mailbox<b>.mailbox</b>.org</span>
 + PGP: [`4896FB6C952846C3414C2475C927DE8C7DFD57B8`](./key.txt)
 + IRC: `Solid`@[irc.libera.chat](https://libera.chat/)
 + Matrix: `slot-`@[matrix.org](https://matrix.org/)
@@ -54,7 +54,7 @@ but you can try any of the following channels:
 [graphical calculi]: https://ncatlab.org/nlab/show/string+diagram
 [hakyll]: https://jaspervdj.be/hakyll/
 [linearly distributive]: https://ncatlab.org/nlab/show/linearly+distributive+category
-[operads]: https://ncatlab.org/nlab/show/string+diagram
+[operads]: https://ncatlab.org/nlab/show/operad
 [pandoc]: https://pandoc.org/
 [rigid]: https://ncatlab.org/nlab/show/rigid+monoidal+category
 [site:atreus]: https://tony-zorman.com/posts/atreus-review.html
@@ -62,7 +62,4 @@ but you can try any of the following channels:
 
 [^1]: I wish.
 
-[^2]: Org-mode would, of course, be preferrable, but markdown is pretty
-      alright for this specific use-case.
-
-[^3]: Also known as \*-autonomous categories.
+[^2]: Also known as \*-autonomous categories.

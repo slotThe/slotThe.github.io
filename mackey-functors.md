@@ -1,6 +1,7 @@
 ---
 title: Mackey Functors Seminar
 bib: true
+no-comment: true
 ---
 
 This is the website for a seminar on *Mackey functors* held at TU Dresden,

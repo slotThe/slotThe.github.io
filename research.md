@@ -1,14 +1,14 @@
 ---
 title: Research
 ---
-[^1] My research interests can broadly be characterised under the term
-"monoidal category theory"—in particular,
-I like anything involving *dualities*,
-like [rigid] monoidal or [\*-autonomous] categories.
-Further, I enjoy studying how algebraic gadgets lift into more categorical frameworks,
+
+[^1] My research interests lie in the intersection of
+category theory, Hopf algebras, and representation theory.
+In particular, I like anything involving *dualities*,
+like [rigid] monoidal or [\*-autonomous][^3] categories.
+Amongst other things, this involves studying how algebraic gadgets lift into more categorical frameworks,
 and how much theory still works in that context.
 When no one's looking, I also like to study categories for their own sake.
-Some more keywords include [Hopf monads], [graphical calculi], [duoidal] and [linearly distributive] categories, as well as [operads].
 
 [Hopf monads]: https://ncatlab.org/nlab/show/Hopf+monad
 [\*-autonomous]: https://ncatlab.org/nlab/show/star-autonomous+category
@@ -20,7 +20,7 @@ Some more keywords include [Hopf monads], [graphical calculi], [duoidal] and [li
 
 # Papers
 
-All of my papers are readily available on the [arXiv].[^2]
+All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## Published
 
@@ -216,9 +216,9 @@ All of my papers are readily available on the [arXiv].[^2]
 
   Master's thesis; with the help of a higher-dimensional graphical
   calculus, the Hopf algebraic anti-Drinfeld centre is lifted into the
-  language of comodule monads.  An interesting equivalence relating the
+  language of comodule monads.  An result relating the
   (anti-)Drinfeld centre and (anti-)Yetter--Drinfeld modules is proven
-  in this monadically enriched setting.
+  in this monadic setting.
 
 - *From Knot Theory to Algebra*
 
@@ -241,9 +241,10 @@ All of my papers are readily available on the [arXiv].[^2]
 
 [^1]: {-} I may be found on the [arXiv], [orcid], and [zbmath].
 
-[^2]: {-} A general note: one can download the source code for every
-          paper on the arXiv.  Clicking on "Other formats" on the
-          relevant article will guide one through that.
+[^2]: {-} A general note: one can download the source code for every paper on the arXiv.
+      Clicking on "Other formats" on the relevant article will guide one through that.
+
+[^3]: Also known as Grothendieck–Verdier duality.
 
 [orcid]: https://orcid.org/0009-0009-4940-2864
 [arXiv]: https://arxiv.org/a/zorman_t_1
