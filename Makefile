@@ -1,14 +1,14 @@
 .ONESHELL:
+.PHONY: builds fonts watch clean
 
-.PHONY: build
 build:
 	nix run . rebuild
-
-.PHONY: watch
 watch:
 	nix run . rebuild
 	nix run . watch
-
-.PHONY: clean
 clean:
 	nix run . clean
+fonts:
+	make clean
+	make build
+	./scripts/opt-fonts.py
