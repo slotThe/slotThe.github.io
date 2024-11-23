@@ -41,6 +41,10 @@ For various definitions of "notable".
 
 + Straightforward [file inclusions][site:include-files] with pandoc's [fenced divs][pandoc:fenced-divs].
 
++ Fully featured fonts that are not 2mb in size—see
+  [here](https://tony-zorman.com/site.html#fonts) for some prose, as well as
+  [here](./scripts/compress-fonts.sh) and [here](./scripts/opt-fonts.py) for the relevant scripts.
+
 [KaTeX]: https://katex.org/
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
 [pandoc:fenced-divs]: https://pandoc.org/MANUAL.html#extension-fenced_divs

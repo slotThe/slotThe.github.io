@@ -43,10 +43,9 @@
         packages          = p: [ p.site ];
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
-          deno       # KaTeX rendering of maths—see scripts/math.ts
           (python3.withPackages (p: [
-            p.fonttools # Compressing fonts
             p.brotli    # Compressing fonts
+            p.fonttools # Compressing fonts
             (p.pygments.overrideAttrs (old: {
               # https://github.com/pygments/pygments/pull/2789
               version = "2.18.1b";
@@ -58,8 +57,12 @@
               };
             }))
           ]))
+          deno          # KaTeX rendering of maths—see scripts/math.ts
           zlib
         ];
+        shellHook = ''
+          export PROJECT_ROOT="$(pwd)"
+        '';
       };
     };
 }

@@ -229,8 +229,10 @@ containing almost every glyph under the sun,
 which just blows up their size a lot.
 There thankfully exist some neat tools for ripping out unwanted Unicode code points,
 only retaining a subset of them;
-I’m using <a href="https://fonttools.readthedocs.io/en/latest/subset/">pyftsubset</a>.
-Here’s the script to do this, mostly stolen from <a href="https://xeiaso.net/blog/iaso-fonts">Xe Iaso</a>:
+I’m using a combination of the <a href="https://fonttools.readthedocs.io/">fontTools</a> Python library,
+and the bundled <a href="https://fonttools.readthedocs.io/en/latest/subset/">pyftsubset</a> application.
+Here’s the bash script—mostly stolen from <a href="https://xeiaso.net/blog/iaso-fonts">Xe Iaso</a>—that turns the given <code>.ttf</code> font into <code>.woff2</code>,
+already removing some characters.
 <div class="highlight-Bash" style="padding-left: 1em;"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
 <span class="c1">#</span>
 <span class="c1"># Source: https://xeiaso.net/blog/iaso-fonts/</span>
@@ -242,19 +244,77 @@ Here’s the script to do this, mostly stolen from <a href="https://xeiaso.net/b
 <span class="c1"># ∘○⊸⟜⌾⊘◶⎉⚇⍟⎊˙˜˘¨⌜⁼´˝`+×÷⋆√⌊⌈|¬∧∨&lt;&gt;≠=≤≥≡≢⊣⊢⥊∾≍⋈↑↓↕«»⌽⍉/⍋⍒⊏⊑⊐⊒∊⍷⊔!-‿,⋄←⇐↩⟨⟩𝔽𝔾𝕎𝕏𝕊𝕗𝕘𝕨𝕩𝕤𝕣π∞¯┌─╵╎┆┊┘•·⇒│└⍎</span>
 <span class="nv">bqn_symbols</span><span class="o">=</span><span class="s2">&quot;U+2218,U+25CB,U+22B8,U+27DC,U+233E,U+2298,U+25F6,U+2389,U+2687,U+235F,U+238A,U+02D9,U+02DC,U+02D8,U+A8,U+231C,U+207C,U+B4,U+02DD,U+0060,U+002B,U+00D7,U+00F7,U+22C6,U+221A,U+230A,U+2308,U+007C,U+00AC,U+2227,U+2228,U+003C,U+003E,U+2260,U+003D,U+2264,U+2265,U+2261,U+2262,U+22A3,U+22A2,U+294A,U+223E,U+224D,U+22C8,U+2191,U+2193,U+2195,U+00AB,U+00BB,U+233D,U+2349,U+002F,U+234B,U+2352,U+228F,U+2291,U+2290,U+2292,U+220A,U+2377,U+2294,U+0021,U+002D,U+203F,U+002C,U+22C4,U+2190,U+21D0,U+21A9,U+27E8,U+27E9,U+1D53D,U+1D53E,U+1D54E,U+1D54F,U+1D54A,U+1D557,U+1D558,U+1D568,U+1D569,U+1D564,U+1D563,U+03C0,U+221E,U+AF,U+250C,U+2500,U+2575,U+254E,U+2506,U+250A,U+2518,U+2022,U+00B7,U+21D2,U+2502,U+2514,U+234E&quot;</span>
 
-<span class="c1"># Fonts that do not use fancy layout features also greatly benefit from not</span>
-<span class="c1"># using everything, but only the defaults that pyftsubset picks.</span>
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;-m&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">shift</span>
-<span class="w">    </span><span class="nv">symbols</span><span class="o">=(</span><span class="s2">&quot;--unicodes=</span><span class="si">${</span><span class="nv">base</span><span class="si">}</span><span class="s2">,</span><span class="si">${</span><span class="nv">bqn_symbols</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span>
-<span class="k">else</span>
-<span class="w">    </span><span class="nv">symbols</span><span class="o">=(</span><span class="s2">&quot;--layout-features=*&quot;</span><span class="w"> </span><span class="s2">&quot;--unicodes=</span><span class="si">${</span><span class="nv">base</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span>
-<span class="k">fi</span>
-
 pyftsubset<span class="w"> </span><span class="nv">$1</span><span class="w"> </span>--output-file<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="p">%.*</span><span class="si">}</span><span class="s2">&quot;</span>.woff2<span class="w"> </span>--flavor<span class="o">=</span>woff2<span class="w"> </span><span class="se">\</span>
-<span class="w">           </span>--no-hinting<span class="w"> </span>--desubroutinize<span class="w"> </span><span class="si">${</span><span class="nv">symbols</span><span class="p">[@]</span><span class="si">}</span>
+<span class="w">           </span>--no-hinting<span class="w"> </span>--desubroutinize<span class="w"> </span>--layout-features<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">           </span>--unicodes<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">base</span><span class="si">}</span><span class="s2">,</span><span class="si">${</span><span class="nv">bqn_symbols</span><span class="si">}</span><span class="s2">&quot;</span>
 </pre></div>
 
+<p></p>
+Using <code>fontTools</code> directly, we can even more aggressively massage this,
+and only concentrate on the characters that are actually used in the generated <span class="small-caps">html</span> pages.
+<div class="highlight-Python" style="padding-left: 1em;"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">fontTools.ttLib</span><span class="w"> </span><span class="kn">import</span> <span class="n">TTFont</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fontTools.subset</span><span class="w"> </span><span class="kn">import</span> <span class="n">Subsetter</span><span class="p">,</span> <span class="n">Options</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_used_chars</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">&quot;°&quot;</span><span class="p">)</span>
+    <span class="p">[</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fs</span>
+        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">optimise_font</span><span class="p">(</span><span class="n">in_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">out_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">(</span><span class="n">hinting</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">desubroutinize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;Alegreya&quot;</span> <span class="ow">in</span> <span class="n">in_file</span><span class="p">:</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">layout_features</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
+    <span class="n">font</span> <span class="o">=</span> <span class="n">TTFont</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="s2">&quot;woff2&quot;</span><span class="p">)</span>
+    <span class="n">subs</span> <span class="o">=</span> <span class="n">Subsetter</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">subs</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">subs</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">font</span><span class="p">)</span>
+    <span class="n">font</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+    <span class="n">font</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Size for </span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2"> changed from &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">KB &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">KB&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">PR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PROJECT_ROOT&quot;</span><span class="p">]</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">get_used_chars</span><span class="p">(</span><span class="n">PR</span> <span class="o">+</span> <span class="s2">&quot;/docs&quot;</span><span class="p">)</span>
+    <span class="n">in_path</span> <span class="o">=</span> <span class="n">PR</span> <span class="o">+</span> <span class="s2">&quot;/uncompressed_fonts/&quot;</span>
+    <span class="n">out_path</span> <span class="o">=</span> <span class="n">PR</span> <span class="o">+</span> <span class="s2">&quot;/css/fonts/&quot;</span>
+    <span class="c1"># XXX: I don't know why this two-stage process creates smaller fonts than</span>
+    <span class="c1"># either step on its own, but it does. Should probably investigate the</span>
+    <span class="c1"># pyftsubset source code at some point.</span>
+    <span class="k">for</span> <span class="n">font</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">in_path</span><span class="p">):</span>  <span class="c1"># Create woff2</span>
+        <span class="k">if</span> <span class="n">font</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.ttf&quot;</span><span class="p">):</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">PR</span> <span class="o">+</span> <span class="s2">&quot;/scripts/compress-fonts.sh&quot;</span><span class="p">,</span> <span class="n">in_path</span> <span class="o">+</span> <span class="n">font</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">font</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">in_path</span><span class="p">):</span>  <span class="c1"># Further optimise font</span>
+        <span class="k">if</span> <span class="n">font</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.woff2&quot;</span><span class="p">):</span>
+            <span class="n">optimise_font</span><span class="p">(</span><span class="n">in_path</span> <span class="o">+</span> <span class="n">font</span><span class="p">,</span> <span class="n">out_path</span> <span class="o">+</span> <span class="n">font</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+<p></p>
+This two-step process results in smaller files than each individual script on its own.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">At some point I will look into the source code for <code>pyftsubset</code>
+to see which magic switch I have to activate so that <code>compress-fonts.sh</code> is no longer needed.
+Not today, though.</div><!--
+-->
 <hr />
 <p></p>
 Getting code points in bulk,
