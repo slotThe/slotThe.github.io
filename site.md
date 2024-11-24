@@ -1,7 +1,7 @@
 ---
 title: About This Website
 date: 2024-10-03
-last-modified: 2024-11-23
+last-modified: 2024-11-24
 no-reading-time: true
 no-comment: true
 ---
@@ -124,27 +124,6 @@ to only keep the glyphs that are actually used in the generated HTML pages.
 
 ::: {.include from="scripts/opt-fonts.py"}
 :::
-
----
-
-Getting code points in bulk,
-without explicitly looking them up one by one,
-is just a matter of converting characters to their hex representations,
-which is trivial to do.
-For example, the Emacs lisp snippet
-
-``` emacs-lisp
-(mapconcat
- (-partial #'format "U+%04X")
- "∘○⊸⟜⌾⊘◶⎉⚇⍟⎊˙˜˘¨⌜⁼´˝`+×÷⋆√⌊⌈|¬∧∨<>…"
- ",")
-```
-
-results in an output along the lines of
-
-``` emacs-lisp
-"U+2218,U+25CB,U+22B8,U+27DC,U+233E…"
-```
 
 [ghub:site]: https://github.com/slotThe/slotThe.github.io
 [pandoc]: https://pandoc.org/

@@ -75,7 +75,7 @@
         Posted on 2024-10-03
       
       
-        &thinsp;·&thinsp; last modified: 2024-11-23
+        &thinsp;·&thinsp; last modified: 2024-11-24
       
       
       
@@ -313,24 +313,6 @@ to only keep the glyphs that are actually used in the generated <span class="sma
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
-</pre></div>
-
-<hr />
-<p></p>
-Getting code points in bulk,
-without explicitly looking them up one by one,
-is just a matter of converting characters to their hex representations,
-which is trivial to do.
-For example, the Emacs lisp snippet
-<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nf">mapconcat</span>
-<span class="w"> </span><span class="p">(</span><span class="nv">-partial</span><span class="w"> </span><span class="nf">#'format</span><span class="w"> </span><span class="s">&quot;U+%04X&quot;</span><span class="p">)</span>
-<span class="w"> </span><span class="s">&quot;∘○⊸⟜⌾⊘◶⎉⚇⍟⎊˙˜˘¨⌜⁼´˝`+×÷⋆√⌊⌈|¬∧∨&lt;&gt;…&quot;</span>
-<span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">)</span>
-</pre></div>
-
-<p></p>
-results in an output along the lines of
-<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="s">&quot;U+2218,U+25CB,U+22B8,U+27DC,U+233E…&quot;</span>
 </pre></div>
 
 <h2 id="references">References<a href="#references" class="floatleft sec-link">§</a></h2>
