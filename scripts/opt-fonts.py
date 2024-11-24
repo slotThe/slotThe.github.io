@@ -1,28 +1,56 @@
 #!/usr/bin/env python
 
-from fontTools.ttLib import TTFont
-from fontTools.subset import Subsetter, Options
 import os
+import re
 from pathlib import Path
-import subprocess
+
+from bs4 import BeautifulSoup
+from fontTools.subset import Options, Subsetter
+from fontTools.ttLib import TTFont
 
 
-def get_used_chars(path: str) -> str:
-    res = set("°")
-    [
-        res.update(Path(f"{p}/{f}").read_text())
+def used_glyphs(path: str) -> tuple[str, str]:
+    html = [  # Get HTML for all pages
+        BeautifulSoup(Path(f"{p}/{f}").read_text(), "html.parser")
         for (p, _, fs) in os.walk(path)
         for f in fs
         if f.endswith(".html")
     ]
-    return "".join(res)
+
+    latex_html = [p.find_all("span", class_=re.compile("katex*")) for p in html]
+    latex = set()  # Glyphs used in LaTeX
+    [latex.update(tag.get_text()) for page in latex_html for tag in page]
+
+    code_html = [page.find_all("code") for page in html] + [
+        page.find_all("div", class_=re.compile("highlight-*")) for page in html
+    ]
+    code = set()  # Glyphs used in code
+    [code.update(tag.get_text()) for page in code_html for tag in page]
+
+    # For the regular text, only keep what's strictly needed.
+    normal = set()
+    [tag.extract() for page in latex_html for tag in page]  # Mutates `hmtl`!
+    [tag.extract() for page in code_html for tag in page]  # Mutates `html`!
+    [normal.update(page.get_text()) for page in html]
+
+    # Return only the relevant glyphs for each of the fonts.
+    return (
+        "".join(code),
+        "".join(  # N\C\L ∪ N∩C ∪ N∩L
+            normal.difference(code)
+            .difference(latex)
+            .union(normal.intersection(code))
+            .union(normal.intersection(latex))
+        ),
+    )
 
 
 def optimise_font(in_file: str, out_file: str, text: str) -> None:
     options = Options(hinting=False, desubroutinize=True)
     if "Alegreya" in in_file:
-        options.layout_features = ["*"]
-    font = TTFont(in_file, lazy=True, flavor="woff2")
+        options.layout_features = ["*"]  # small-caps et al
+    font = TTFont(in_file, lazy=True)
+    font.flavor = "woff2"
     subs = Subsetter(options)
     subs.populate(text=text)
     subs.subset(font)
@@ -37,18 +65,15 @@ def optimise_font(in_file: str, out_file: str, text: str) -> None:
 
 def main() -> None:
     PR = os.environ["PROJECT_ROOT"]
-    text = get_used_chars(PR + "/docs")
-    in_path = PR + "/uncompressed_fonts/"
-    out_path = PR + "/css/fonts/"
-    # XXX: I don't know why this two-stage process creates smaller fonts than
-    # either step on its own, but it does. Should probably investigate the
-    # pyftsubset source code at some point.
-    for font in os.listdir(in_path):  # Create woff2
-        if font.endswith(".ttf"):
-            subprocess.run([PR + "/scripts/compress-fonts.sh", in_path + font])
-    for font in os.listdir(in_path):  # Further optimise font
-        if font.endswith(".woff2"):
-            optimise_font(in_path + font, out_path + font, text)
+    in_path = f"{PR}/uncompressed_fonts/"
+    code, normal = used_glyphs(f"{PR}/docs")
+    for font in os.listdir(in_path):
+        in_file = in_path + font
+        optimise_font(
+            in_file,
+            f"{PR}/css/fonts/{font.replace(".ttf", ".woff2")}",
+            code if "iosevka" in in_file else normal,
+        )
 
 
 if __name__ == "__main__":

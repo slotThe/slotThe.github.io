@@ -117,23 +117,13 @@ but even that is not enough in a lot of cases.
 Fonts are quite fully featured nowadays,
 containing almost every glyph under the sun,
 which just blows up their size a lot.
-There thankfully exist some neat tools for ripping out unwanted Unicode code points,
-only retaining a subset of them;
-I'm using a combination of the [fontTools](https://fonttools.readthedocs.io/) Python library,
-and the bundled [pyftsubset](https://fonttools.readthedocs.io/en/latest/subset/) application.
-Here's the bash script—mostly stolen from [Xe Iaso](https://xeiaso.net/blog/iaso-fonts)—that turns the given `.ttf` font into `.woff2`,
-already removing some characters.
-
-::: {.include from="scripts/compress-fonts.sh"}
-:::
-
-Using `fontTools` directly, we can even more aggressively massage this,
-and only concentrate on the characters that are actually used in the generated HTML pages.
+There thankfully exist some neat tools for ~~aggressively massaging~~ ripping out unwanted code points,
+and only retaining a subset of them.
+I'm using the [fontTools](https://fonttools.readthedocs.io/) Python library
+to only keep the glyphs that are actually used in the generated HTML pages.
 
 ::: {.include from="scripts/opt-fonts.py"}
 :::
-
-This two-step process results in smaller files than each individual script on its own.[^3]
 
 ---
 
@@ -178,7 +168,3 @@ results in an output along the lines of
 
 [^2]: Instead of proper small caps, many system fonts scale down their capital letters.
       This makes them entirely too thin, and really rather ugly looking.
-
-[^3]: At some point I will look into the source code for `pyftsubset`
-      to see which magic switch I have to activate so that `compress-fonts.sh` is no longer needed.
-      Not today, though.

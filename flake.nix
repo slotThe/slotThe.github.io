@@ -44,8 +44,11 @@
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
           (python3.withPackages (p: [
-            p.brotli    # Compressing fonts
-            p.fonttools # Compressing fonts
+            # Compressing fonts.
+            p.brotli
+            p.fonttools
+            p.beautifulsoup4
+            # Reasonable syntax highlighting for BQN.
             (p.pygments.overrideAttrs (old: {
               # https://github.com/pygments/pygments/pull/2789
               version = "2.18.1b";
