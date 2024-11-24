@@ -271,7 +271,7 @@ to only keep the glyphs that are actually used in the generated <span class="sma
     <span class="c1"># Return only the relevant glyphs for each of the fonts.</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">code</span><span class="p">),</span>
-        <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>  <span class="c1"># N\C\L ∪ N∩C ∪ N∩L</span>
+        <span class="s2">&quot;°▸▾&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>  <span class="c1"># N\C\L ∪ N∩C ∪ N∩L</span>
             <span class="n">normal</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
             <span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">latex</span><span class="p">)</span>
             <span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">normal</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
