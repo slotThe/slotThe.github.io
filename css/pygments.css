@@ -35,10 +35,12 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .gs { font-weight: bold } /* Generic.Strong */
 .gu { color: var(--fg-keyword); font-weight: bold } /* Generic.Subheading */
 .gt { color: #6D6D6D } /* Generic.Traceback */
-.kc { color: var(--fg-keyword); font-weight: bold } /* Keyword.Constant */
+                  .kc { color: var(--fg-keyword); font-weight: bold } /* Keyword.Constant */
+.highlight-Python .kc { color: var(--fg-bqn-1-mod) } /* Keyword.Constant */
                .kd { color: var(--fg-keyword); font-weight: bold } /* Keyword.Declaration */
 .highlight-bqn .kd { color: var(--fg-bqn-2-mod); font-weight: bold } /* Keyword.Declaration */
-.kn { color: var(--fg-keyword); font-weight: bold } /* Keyword.Namespace */
+                  .kn { color: var(--fg-keyword); font-weight: bold } /* Keyword.Namespace */
+.highlight-Python .kn { color: var(--fg) } /* Keyword.Reserved */
 .kp { color: var(--fg-keyword); font-weight: bold } /* Keyword.Pseudo */
 .kr { font-weight: bold } /* Keyword.Reserved */
                .kt { background-color: var(--bg-code-accent) } /* Keyword.Type */
@@ -48,7 +50,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .s { color: var(--fg-string) } /* Literal.String */
                .na { color: var(--fg-output) } /* Name.Attribute */
 .highlight-bqn .na { color: var(--fg-bqn-1-mod) } /* Name.Attribute */
-.nb { font-weight: bold } /* Name.Builtin */
+                  .nb { font-weight: bold } /* Name.Builtin */
+.highlight-Python .nb { color: var(--fg-bqn-1-mod) } /* Name.Builtin */
 .nc { color: var(--fg-nameclass); font-weight: bold } /* Name.Class */
 .no { } /* Name.Constant */
 .nd { color: #555555; font-weight: bold } /* Name.Decorator */
@@ -58,7 +61,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                       .nf { font-weight: bold   } /* Name.Function */
 .highlight-emacs-lisp .nf { font-weight: normal } /* Name.Function */
 .nl { color: #363636; font-weight: bold } /* Name.Label */
-.nn { background-color: var(--bg-code-accent) } /* Name.Namespace */
+                  .nn { background-color: var(--bg-code-accent) } /* Name.Namespace */
+.highlight-Python .nn { background-color: var(--bg) } /* Name.Namespace */
 .nt { color: var(--fg-nametag); font-weight: bold } /* Name.Tag */
                .nv {  } /* Name.Variable */
 .highlight-bqn .nv { color: var(--fg-bqn-sub) } /* Name.Variable */
@@ -74,11 +78,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .sc { color: var(--fg-string) } /* Literal.String.Char */
 .dl { color: var(--fg-string) } /* Literal.String.Delimiter */
 .sd { color: var(--fg-string);  font-style: italic } /* Literal.String.Doc */
-               .s2 { color: var(--fg-string) } /* Literal.String.Double */
-.highlight-bqn .s2 { color: var(--fg-bqn-string) } /* Literal.String.Double */
+                  .s2 { color: var(--fg-string) } /* Literal.String.Double */
+.highlight-bqn    .s2 { color: var(--fg-bqn-string) } /* Literal.String.Double */
+.highlight-Python .s2 { color: var(--fg-bqn-string) } /* Literal.String.Double */
 .se { color: var(--fg-string);  font-weight: bold } /* Literal.String.Escape */
 .sh { color: var(--fg-string) } /* Literal.String.Heredoc */
-.si { color: #9F9F9F } /* Literal.String.Interpol */
+                  .si { color: #9F9F9F } /* Literal.String.Interpol */
+.highlight-Python .si { color: var(--fg) } /* Literal.String.Interpol */
                .sx { color: var(--fg-nameclass) } /* Literal.String.Other */
 .highlight-bqn .sx { color: var(--fg-bqn-string) } /* Literal.String.Other */
 .sr { color: var(--fg-exception) } /* Literal.String.Regex */
@@ -91,5 +97,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .vc { color: var(--fg-variable) } /* Name.Variable.Class */
 .vg { color: var(--fg-variable) } /* Name.Variable.Global */
 .vi { color: var(--fg-variable) } /* Name.Variable.Instance */
-.vm { color: var(--fg-variable) } /* Name.Variable.Magic */
+                  .vm { color: var(--fg-variable) } /* Name.Variable.Magic */
+.highlight-Python .vm { color: var(--fg-bqn-1-mod) } /* Name.Variable.Magic */
 .il { color: var(--fg-comment) } /* Literal.Number.Integer.Long */
