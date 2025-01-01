@@ -12,3 +12,4 @@ fonts:
 	make clean
 	make build
 	./scripts/opt-fonts.py
+	make build
