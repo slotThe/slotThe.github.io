@@ -1,7 +1,7 @@
 ---
 title: Pygmentising Hakyll's Syntax Highlighting
 date: 2023-01-21
-last-modified: 2023-01-23
+last-modified: 2025-01-05
 tags: haskell
 ---
 
@@ -313,6 +313,44 @@ other syntax highlighter that can produce HTML.  However, for me these
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don't agree with—at least for now.
+
+# Epilogue: a pygments server
+<span style="position: relative; top: -0.8em">*Added on 2025-01-05*</span>
+
+Shelling out to `pygmentize` every time is quite expensive,
+and once the site contains its fair share of code blocks one is curious if better solutions exist.
+As [pygments](https://github.com/pygments/pygments) itself is a Python project,
+one can instead spin up the interpreter once, and then just query the API a whole lot:
+
+::: {.include from="scripts/pygmentize.py"}
+:::
+
+The script is first fed the amount of stuff we intend to send on a separate line,
+followed by the language, and finally the body of the block.
+One could faff around with bidirectional process communication at this point,
+but good old files will also do the trick just fine.
+
+``` haskell
+pygmentsHighlight :: Pandoc -> Compiler Pandoc
+pygmentsHighlight pandoc = recompilingUnsafeCompiler do
+  (hin, _, _, _) <- runInteractiveCommand "python scripts/pygmentize.py"
+  hSetBuffering hin NoBuffering
+  void $ (`walkM` pandoc) \case
+    cb@(CodeBlock (_, listToMaybe -> mbLang, _) body) -> do
+      let cod = mconcat [ T.pack ("/tmp/" <> hash [T.unpack body]), "\n"
+                        , fromMaybe "text" mbLang <> "\n"
+                        , body
+                        ]
+      hPrint hin (T.length cod)
+      T.hPutStr hin cod
+      pure cb
+    block -> pure block
+  threadDelay 1.0e6
+  (`walkM` pandoc) \case
+    CodeBlock _ body ->
+      RawBlock "html" <$> T.readFile ("/tmp/" <> hash [T.unpack body])
+    block -> pure block
+```
 
 # Backlinks
 

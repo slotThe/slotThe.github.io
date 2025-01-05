@@ -8338,10 +8338,10 @@ that I will go down that path.<a href="#fnref8" class="footnote-back" role="doc-
         Posted on 2023-01-21
       
       
-        &thinsp;·&thinsp; last modified: 2023-01-23
+        &thinsp;·&thinsp; last modified: 2025-01-05
       
       
-        &thinsp;·&thinsp; <span title="1647 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1847 words">8 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'haskell'." href="/tags/haskell.html" rel="tag">haskell</a>
@@ -8581,6 +8581,38 @@ other syntax highlighter that can produce HTML. However, for me these
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don’t agree with—at least for now.</p>
+<h2 id="epilogue-a-pygments-server">Epilogue: a pygments server</h2>
+<p><span style="position: relative; top: -0.8em"><em>Added on 2025-01-05</em></span></p>
+<p>Shelling out to <code>pygmentize</code> every time is quite expensive,
+and once the site contains its fair share of code blocks one is curious if better solutions exist.
+As <a href="https://github.com/pygments/pygments">pygments</a> itself is a Python project,
+one can instead spin up the interpreter once, and then just query the API a whole lot:</p>
+<div class="include" data-from="scripts/pygmentize.py">
+
+</div>
+<p>The script is first fed the amount of stuff we intend to send on a separate line,
+followed by the language, and finally the body of the block.
+One could faff around with bidirectional process communication at this point,
+but good old files will also do the trick just fine.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ot">pygmentsHighlight ::</span> <span class="dt">Pandoc</span> <span class="ot">-&gt;</span> <span class="dt">Compiler</span> <span class="dt">Pandoc</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pygmentsHighlight pandoc <span class="ot">=</span> recompilingUnsafeCompiler <span class="kw">do</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  (hin, _, _, _) <span class="ot">&lt;-</span> runInteractiveCommand <span class="st">&quot;python scripts/pygmentize.py&quot;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  hSetBuffering hin <span class="dt">NoBuffering</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  void <span class="op">$</span> (<span class="ot">`walkM`</span> pandoc) \<span class="kw">case</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    cb<span class="op">@</span>(<span class="dt">CodeBlock</span> (_, listToMaybe <span class="ot">-&gt;</span> mbLang, _) body) <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> cod <span class="ot">=</span> <span class="fu">mconcat</span> [ T.pack (<span class="st">&quot;/tmp/&quot;</span> <span class="op">&lt;&gt;</span> hash [T.unpack body]), <span class="st">&quot;\n&quot;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                        , fromMaybe <span class="st">&quot;text&quot;</span> mbLang <span class="op">&lt;&gt;</span> <span class="st">&quot;\n&quot;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                        , body</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                        ]</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>      hPrint hin (T.length cod)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>      T.hPutStr hin cod</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pure</span> cb</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    block <span class="ot">-&gt;</span> <span class="fu">pure</span> block</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  threadDelay <span class="fl">1.0e6</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  (<span class="ot">`walkM`</span> pandoc) \<span class="kw">case</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">CodeBlock</span> _ body <span class="ot">-&gt;</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">RawBlock</span> <span class="st">&quot;html&quot;</span> <span class="op">&lt;$&gt;</span> T.readFile (<span class="st">&quot;/tmp/&quot;</span> <span class="op">&lt;&gt;</span> hash [T.unpack body])</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    block <span class="ot">-&gt;</span> <span class="fu">pure</span> block</span></code></pre></div>
 <h2 id="backlinks">Backlinks</h2>
 <ul>
 <li>Vaibhav Sagar has written a

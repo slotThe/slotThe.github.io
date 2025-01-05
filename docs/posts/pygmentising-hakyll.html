@@ -58,6 +58,7 @@
 <li><a href="#hakyll">Hakyll</a></li>
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#epilogue-a-pygments-server">Epilogue: a pygments server</a></li>
 <li><a href="#backlinks">Backlinks</a></li>
 </ul>
           </div>
@@ -77,10 +78,10 @@
         Posted on 2023-01-21
       
       
-        &thinsp;·&thinsp; last modified: 2023-01-23
+        &thinsp;·&thinsp; last modified: 2025-01-05
       
       
-        &thinsp;·&thinsp; <span title="1644 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1888 words">8 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>
@@ -103,6 +104,7 @@
 <li><a href="#hakyll">Hakyll</a></li>
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#epilogue-a-pygments-server">Epilogue: a pygments server</a></li>
 <li><a href="#backlinks">Backlinks</a></li>
 </ul>
   </div>
@@ -400,6 +402,65 @@ other syntax highlighter that can produce <span class="small-caps">html</span>. 
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
 which I still don’t agree with—at least for now.
+<h2 id="epilogue-a-pygments-server">Epilogue: a pygments server<a href="#epilogue-a-pygments-server" class="floatleft sec-link">§</a></h2>
+<p></p>
+<span style="position: relative; top: -0.8em"><em>Added on 2025-01-05</em></span>
+<p></p>
+Shelling out to <code>pygmentize</code> every time is quite expensive,
+and once the site contains its fair share of code blocks one is curious if better solutions exist.
+As <a href="https://github.com/pygments/pygments">pygments</a> itself is a Python project,
+one can instead spin up the interpreter once, and then just query the <span class="small-caps">api</span> a whole lot:
+<div class="highlight-Python" style="padding-left: 1em;"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygments</span><span class="w"> </span><span class="kn">import</span> <span class="n">highlight</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygments.lexers</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_lexer_by_name</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygments.formatters</span><span class="w"> </span><span class="kn">import</span> <span class="n">HtmlFormatter</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">fn</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)))</span>
+        <span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="n">highlight</span><span class="p">(</span>
+                <span class="n">code</span><span class="p">,</span>
+                <span class="n">get_lexer_by_name</span><span class="p">(</span><span class="n">lang</span><span class="p">),</span>
+                <span class="n">HtmlFormatter</span><span class="p">(</span>
+                    <span class="n">cssclass</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;highlight-</span><span class="si">{</span><span class="n">lang</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cssstyles</span><span class="o">=</span><span class="s2">&quot;padding-left: 1em;&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+
+<p></p>
+The script is first fed the amount of stuff we intend to send on a separate line,
+followed by the language, and finally the body of the block.
+One could faff around with bidirectional process communication at this point,
+but good old files will also do the trick just fine.
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">pygmentsHighlight</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="kt">Pandoc</span>
+<span class="nf">pygmentsHighlight</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">recompilingUnsafeCompiler</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">  </span><span class="p">(</span><span class="n">hin</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">runInteractiveCommand</span><span class="w"> </span><span class="s">&quot;python scripts/pygmentize.py&quot;</span>
+<span class="w">  </span><span class="n">hSetBuffering</span><span class="w"> </span><span class="n">hin</span><span class="w"> </span><span class="kt">NoBuffering</span>
+<span class="w">  </span><span class="n">void</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="p">(`</span><span class="n">walkM</span><span class="p">`</span><span class="w"> </span><span class="n">pandoc</span><span class="p">)</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="n">cb</span><span class="o">@</span><span class="p">(</span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="n">listToMaybe</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">mbLang</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">      </span><span class="kr">let</span><span class="w"> </span><span class="n">cod</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">mconcat</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="p">[</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="n">body</span><span class="p">]),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="n">fromMaybe</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="w"> </span><span class="n">mbLang</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="n">body</span>
+<span class="w">                        </span><span class="p">]</span>
+<span class="w">      </span><span class="n">hPrint</span><span class="w"> </span><span class="n">hin</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">length</span><span class="w"> </span><span class="n">cod</span><span class="p">)</span>
+<span class="w">      </span><span class="kt">T</span><span class="o">.</span><span class="n">hPutStr</span><span class="w"> </span><span class="n">hin</span><span class="w"> </span><span class="n">cod</span>
+<span class="w">      </span><span class="n">pure</span><span class="w"> </span><span class="n">cb</span>
+<span class="w">    </span><span class="n">block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="n">block</span>
+<span class="w">  </span><span class="n">threadDelay</span><span class="w"> </span><span class="mf">1.0e6</span>
+<span class="w">  </span><span class="p">(`</span><span class="n">walkM</span><span class="p">`</span><span class="w"> </span><span class="n">pandoc</span><span class="p">)</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
+<span class="w">    </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="ow">-&gt;</span>
+<span class="w">      </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">readFile</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="p">[</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="n">body</span><span class="p">])</span>
+<span class="w">    </span><span class="n">block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="n">block</span>
+</pre></div>
+
 <h2 id="backlinks">Backlinks<a href="#backlinks" class="floatleft sec-link">§</a></h2>
 <ul>
 <li>Vaibhav Sagar has written a
