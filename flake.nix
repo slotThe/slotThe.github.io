@@ -51,12 +51,12 @@
             # Reasonable syntax highlighting for BQN.
             (p.pygments.overrideAttrs (old: {
               # https://github.com/pygments/pygments/pull/2789
-              version = "2.18.1b";
+              version = "2.19.a";
               src = fetchFromGitHub {
-                owner = "slotThe";
+                owner = "pygments";
                 repo = "pygments";
-                rev = "48b1625c0ce926d9f752edc20dcbe332a99ab85a";
-                hash = "sha256-c1pbOvb4mF1OIgKZkJPMMBl66B82zF8xwNyfQ+vUgNs=";
+                rev = "43bf86fb86f0a3a4bacedc65eace650947ecee51";
+                hash = "sha256-aKxjjKbASA4myEj7zpIxXofwQmpD9Du28fBKo9gmu4I=";
               };
             }))
           ]))
