@@ -7,10 +7,12 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
 {-# LANGUAGE ViewPatterns        #-}
+{-# LANGUAGE NumDecimals         #-}
 
 import Data.Text    qualified as T
 import Data.Text.IO qualified as T -- XXX: text 2.1 has Data.Text.IO.Utf8
 
+import Control.Concurrent (threadDelay)
 import Control.Monad
 import Data.Functor ((<&>))
 import Data.List (foldl')
@@ -510,6 +512,7 @@ myPandocCompiler =
         T.hPutStr hin cod
         pure cb
       block -> pure block
+    threadDelay 1.0e6
     (`walkM` pandoc) \case
       CodeBlock _ body ->
         RawBlock "html" <$> T.readFile ("/tmp/" <> hash [T.unpack body])
