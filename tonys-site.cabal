@@ -17,6 +17,7 @@ executable site
                   , text
                   , containers
                   , process
+                  , hashable
   ghc-options:    -Weverything
                   -Wno-implicit-prelude
                   -Wno-missing-import-lists

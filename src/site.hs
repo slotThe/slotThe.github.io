@@ -15,13 +15,13 @@ import Data.Text.IO qualified as T -- XXX: text 2.1 has Data.Text.IO.Utf8
 import Control.Concurrent (threadDelay)
 import Control.Monad
 import Data.Functor ((<&>))
+import Data.Hashable (hash)
 import Data.List (foldl')
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll
-import Hakyll.Core.Store (hash)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
 import System.IO (hPrint)
 import System.Process (runInteractiveCommand)
@@ -505,7 +505,7 @@ myPandocCompiler =
     hSetBuffering hin NoBuffering
     void $ (`walkM` pandoc) \case
       cb@(CodeBlock (_, listToMaybe -> mbLang, _) body) -> do
-        let cod = mconcat [ T.pack ("/tmp/" <> hash [T.unpack body]), "\n"
+        let cod = mconcat [ "/tmp/" <> tshow (hash body), "\n"
                           , fromMaybe "text" mbLang <> "\n"
                           , body ]
         hPrint hin (T.length cod)
@@ -515,7 +515,7 @@ myPandocCompiler =
     threadDelay 1.0e6
     (`walkM` pandoc) \case
       CodeBlock _ body ->
-        RawBlock "html" <$> T.readFile ("/tmp/" <> hash [T.unpack body])
+        RawBlock "html" <$> T.readFile ("/tmp/" <> show (hash body))
       block -> pure block
 
   includeFiles :: Pandoc -> Compiler Pandoc
