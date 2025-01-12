@@ -48,15 +48,13 @@
             p.brotli
             p.fonttools
             p.beautifulsoup4
-            # Reasonable syntax highlighting for BQN.
-            (p.pygments.overrideAttrs (old: {
-              # https://github.com/pygments/pygments/pull/2789
-              version = "2.19.a";
+            (p.pygments.overrideAttrs (old: { # Contains https://github.com/pygments/pygments/pull/2789
+              version = "2.19.1";
               src = fetchFromGitHub {
                 owner = "pygments";
                 repo = "pygments";
-                rev = "43bf86fb86f0a3a4bacedc65eace650947ecee51";
-                hash = "sha256-aKxjjKbASA4myEj7zpIxXofwQmpD9Du28fBKo9gmu4I=";
+                rev = "b583de4794e94b4dc4c2da03a7c29f462482293e";
+                hash = "sha256-jNxUFRaHyGb+XrXJvMqx9EX9EiXx2shU1zEDmyt1WWU=";
               };
             }))
           ]))
