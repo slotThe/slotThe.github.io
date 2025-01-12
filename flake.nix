@@ -31,7 +31,7 @@
           { };
         hakyll = self.callCabal2nix "hakyll" (builtins.fetchGit {
           url = "https://github.com/jaspervdj/hakyll";
-          rev = "61b6e1a32548902eb6feedebf0c0625b61e47947";
+          rev = "ba0301b400cfc5fd9d3e351ea13fcb75c68e571f";
         }) {};
       });
     in {
