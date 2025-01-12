@@ -3,6 +3,16 @@ title: Lax module functors, reconstruction, and Hopf algebras
 bib: true
 no-toc: true
 no-comment: true
+nocite: |
+  @kelly74
+  @hausser99:integ-theor-quasi-hopf-algeb
+  @Moerdijk2002
+  @deligne02:categ
+  @ostrik03:modul-hopf
+  @ostrik04:tensor-p
+  @Bruguieres2011
+  @saracco17:hopf
+  @halbig23:diagr-comod-monad
 ---
 
 Click on the preview image for a full-scale version.
@@ -17,21 +27,6 @@ Click on the preview image for a full-scale version.
 
 The poster is based on the article [@stroinski2024:reconstr] ([arXiv](https://arxiv.org/abs/2409.00793));
 a repository with the full source code is available [here][ghub:source-code].[^1]
-
-<!-- References; site.hs does not have 'no-cite' support right now. -->
-<span class="email">
- <b>
-   [@kelly74]
-   [@hausser99:integ-theor-quasi-hopf-algeb]
-   [@Moerdijk2002]
-   [@deligne02:categ]
-   [@ostrik03:modul-hopf]
-   [@ostrik04:tensor-p]
-   [@Bruguieres2011]
-   [@saracco17:hopf]
-   [@halbig23:diagr-comod-monad]
- </b>
-</span>
 
 [ghub:source-code]: https://github.com/slotThe/ferrara2024
 
