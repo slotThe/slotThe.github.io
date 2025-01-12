@@ -36,12 +36,7 @@ def used_glyphs(path: str) -> tuple[str, str]:
     # Return only the relevant glyphs for each of the fonts.
     return (
         "".join(code),
-        "°▸▾".join(  # N\C\L ∪ N∩C ∪ N∩L
-            normal.difference(code)
-            .difference(latex)
-            .union(normal.intersection(code))
-            .union(normal.intersection(latex))
-        ),
+        "°▸▾".join(normal),
     )
 
 
