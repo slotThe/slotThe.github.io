@@ -47,6 +47,15 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## Preprints
 
+- *[Simple algebras and exact module categories]* <span class="floatright">[@coulembier25:simpl]</span> \
+  Joint work with Kevin Coulembier and Mateusz Stroiński.
+
+  We verify a conjecture of Etingof and Ostrik,
+  stating that an algebra object in a finite tensor category is exact if and only if it is a finite direct product of simple algebras.
+  Towards that end, we introduce an analogue of the Jacobson radical of an algebra object,
+  similar to the Jacobson radical of a finite-dimensional algebra.
+  We give applications of our main results in the context of incompressible finite symmetric tensor categories.
+
 - *[Reconstruction of module categories in the infinite and non-rigid settings]* <span class="floatright">[@stroinski2024:reconstr]</span> \
   Joint work with Mateusz Stroiński.
 
@@ -229,6 +238,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
 [Pivotality, twisted centres, and the anti-double of a Hopf monad]: http://www.tac.mta.ca/tac/volumes/41/4/41-04abs.html
 [Reconstruction of module categories in the infinite and non-rigid settings]: https://arxiv.org/abs/2409.00793
+[Simple algebras and exact module categories]: https://arxiv.org/abs/2501.06629
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
