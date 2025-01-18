@@ -4,9 +4,10 @@
 build:
 	nix run . rebuild
 watch:
-	nix run . rebuild
+	make build
 	nix run . watch
 clean:
+	cabal clean
 	nix run . clean
 fonts:
 	make clean
