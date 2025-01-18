@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "git-intro": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1692200335,
+        "narHash": "sha256-HG3KIprIIQim7s6z34dvpm1c+xA/qTW5MliGGr7bCio=",
+        "ref": "refs/heads/main",
+        "rev": "e28a55899f0619a255c0c3dbc020fe113b3ea72c",
+        "revCount": 38,
+        "submodules": true,
+        "type": "git",
+        "url": "https://gitlab.mn.tu-dresden.de/s0428072/git-introduction"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://gitlab.mn.tu-dresden.de/s0428072/git-introduction"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1736420959,
@@ -18,6 +36,7 @@
     },
     "root": {
       "inputs": {
+        "git-intro": "git-intro",
         "nixpkgs": "nixpkgs"
       }
     }

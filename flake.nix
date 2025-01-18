@@ -1,7 +1,13 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    git-intro = {
+      url = "git+https://gitlab.mn.tu-dresden.de/s0428072/git-introduction?submodules=1";
+      flake = false;
+    };
+  };
 
-  outputs = { nixpkgs, ... }:
+  outputs = { nixpkgs, git-intro, ... }:
     let
       # Only care about actual Haskell source files; this improves caching
       # behaviour.
@@ -21,6 +27,7 @@
       system = "x86_64-linux";
       pkgs   = nixpkgs.legacyPackages.${system};
       hPkgs  = pkgs.haskellPackages.extend (self: super: {
+      # hPkgs  = pkgs.haskell.packages.ghc983.extend (self: super: {
         site            = self.callCabal2nix "site" (haskellSourceFilter ./.) { };
         pandoc-sidenote = self.callCabal2nixWithOptions "pandoc-sidenote"
           (builtins.fetchGit {
@@ -63,6 +70,10 @@
         ];
         shellHook = ''
           export PROJECT_ROOT="$(pwd)"
+          GI="./talks/git-introduction"
+          ln -sf ${git-intro}/README.md "$GI.md"
+          mkdir -p "$GI"
+          ln -sf ${git-intro}/transcript.md "$GI/transcript.md"
         '';
       };
     };
