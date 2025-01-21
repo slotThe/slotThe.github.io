@@ -525,7 +525,7 @@ myPandocCompiler =
                . fromMaybe (error "includeFiles: no `from` key given!")
                $ lookup "from" kvs
       content <- unsafeCompiler $ T.readFile file
-      -- Give the file it's correct code block header if it's code. Note that
+      -- Give the file its correct code block header if it's code. Note that
       -- I'm *not* using Skylighting for the actual highlighting part; see
       -- 'pygmentsHighlight'.
       pure case listToMaybe (syntaxesByFilename defaultSyntaxMap file) of
