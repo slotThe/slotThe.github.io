@@ -544,9 +544,14 @@ details {
 }
 
 /**********************************************************************
-  EMAIL OBFUSCATION
+  MISC
 */
 
-span.email b {
+span.email b {                  /* Email obfuscation */
     display: none;
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: 1px underline dotted;
 }

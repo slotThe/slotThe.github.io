@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Tony Zorman · Blog</title>
+    <link href="https://tony-zorman.com/atom-LaTeX.xml" rel="self" />
+    <link href="https://tony-zorman.com" />
+    <id>https://tony-zorman.com/atom-LaTeX.xml</id>
+    <author>
+        <name>Tony Zorman</name>
+        
+        <email>tonyzorman@mailbox.org</email>
+        
+    </author>
+    <updated>2025-01-30T00:00:00Z</updated>
+    <entry>
+    <title>Speeding up LaTeX compilation</title>
+    <link href="https://tony-zorman.com/posts/speeding-up-latex.html" />
+    <id>https://tony-zorman.com/posts/speeding-up-latex.html</id>
+    <published>2025-01-30T00:00:00Z</published>
+    <updated>2025-01-30T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2025-01-30
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1354 words">6 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>Getting reasonable compilation times out of a medium-sized LaTeX document
+that contains lots of TikZ pictures
+is not as difficult as it may seem at first—at least if you know the correct ancient incantations.</p>
+<!--more-->
+<p>I’m feverishly writing my dissertation right now,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+and since I adore
+string diagrams<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>,
+it contains quite a number of
+<abbr title="TikZ ist kein Zeichenprogramm">TikZ</abbr>
+pictures, which really takes a toll on compilation times.
+I’m not kidding:
+my current draft<!--
+-->—currently clocking in at 193 pages—<!--
+-->is not doing so well.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre class="console"><code>$ time pdflatex main
+…
+Executed in   27.66 secs    fish           external
+   usr time   27.47 secs    1.32 millis   27.47 secs
+   sys time    0.10 secs    0.11 millis    0.10 secs</code></pre>
+<p>This will only get worse as time goes on, so something has to be done.</p>
+<p>Thankfully, LaTeX has been around for long enough that other people have felt this exact pain before,
+and have even done something about it!<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+Time to benefit from that.</p>
+<h2 id="externalising-tikz-pictures">Externalising TikZ pictures</h2>
+<p>The <code>external</code> library for TikZ can be used to “externalise” pictures—that is,
+they get compiled into a separate PDF once,
+and are then just included into the main document,
+instead of having to recompile the pictures every time.
+This can save quite a bit of time.</p>
+<p>Ostensibly, <code>external</code> is quite easy to use.
+Just enable the library,
+set a directory in which to dump all of the externalisation output, and use the <code>tikzpicture</code> environment as normal:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">tikz</span>}</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\usetikzlibrary</span>{external}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\tikzexternalize</span>[prefix=figures-ext/]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>…</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  …</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>…</span></code></pre></div>
+<p>The first compile after enabling <code>external</code> will take <em>a while</em>,
+especially when the file contains a lot of pictures.
+However, subsequent ones will be much faster.
+Pictures will also be automatically regenerated when their contents change.</p>
+<p>This works fine for normal TikZ pictures,
+but we immediately hit a bump when we want to combine this with <code>tikz-cd</code>,
+a TikZ library for drawing commutative diagrams.
+In short, the problem is that TeX really wants to see the <code>\end{tikzpicture}</code> when externalising,
+but due to the usual macro expansion hell it instead sees <code>\end{tikzcd}</code>.
+Nice.</p>
+<p>One could now try to use the newer <code>memoize</code> or <code>robust-externalize</code> libraries instead,
+but they are flawed in other ways,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+so I’m trying to fully stay within the bounds of <code>external</code> here.</p>
+<p>The easiest solution seems to be to wrap the <code>tikzcd</code> environment with an outer <code>tikzpicture</code>,
+so that <code>external</code> can act on the correct environment.
+We can use the <a href="https://www.ctan.org/pkg/environ">environ</a> package for that,
+which also takes care of inlining the newly created environment.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\NewEnviron</span>{mytikzcd}[1][]{<span class="co">%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[baseline=(maintikzcdnode.base)]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\node</span> (maintikzcdnode) [inner sep=0, outer sep=0] {<span class="kw">\begin</span>{<span class="ex">tikzcd</span>}[#1]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">\BODY</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">\end</span>{<span class="ex">tikzcd</span>}};</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">\end</span>{<span class="ex">tikzpicture</span>}<span class="co">%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This <em>almost</em> works, but now—again due to macro expansion shenanigans—<code>external</code>
+isn’t wise to any changes being made inside of the TikZ picture.
+The function that eventually computes the md5 hash only gets the contents of the unexpanded <code>\BODY</code> macro,
+which will not say much more other than “here comes a graphic”.
+Let’s manually expand <code>\BODY</code>, then.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand</span>{<span class="ex">\mytikzcdcontext</span>}[2]{</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[baseline=(maintikzcdnode.base)]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\node</span> (maintikzcdnode) [inner sep=0, outer sep=0] {<span class="kw">\begin</span>{<span class="ex">tikzcd</span>}[#2]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        #1</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">\end</span>{<span class="ex">tikzcd</span>}};</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">\end</span>{<span class="ex">tikzpicture</span>}<span class="co">%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">\NewEnviron</span>{mytikzcd}[1][]{<span class="co">%</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\def\myargs</span>{#1}<span class="co">%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\edef\mydiagram</span>{<span class="co">%</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\noexpand\mytikzcdcontext</span>{<span class="fu">\expandonce\BODY</span>}{<span class="fu">\expandonce\myargs</span>}</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  }<span class="co">%</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\mydiagram</span><span class="co">%</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>One thing to watch out for is that <code>&amp;</code>’s can mean different things in LaTeX,
+depending on whether the current macro is being read or executed.
+We could muck about with catcodes at this point,
+but I found it best—and safest—to just use an <code>ampersand replacement</code> for all tikzpictures,
+like so:<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">mytikzcd</span>}[ampersand replacement=<span class="fu">\&amp;</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  {T^3} <span class="fu">\&amp;</span> {T^2} <span class="fu">\&amp;</span> {T^2} <span class="fu">\&amp;</span> T <span class="fu">\&amp;</span> T <span class="fu">\\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  {T^2} <span class="fu">\&amp;</span> T <span class="fu">\&amp;\&amp;</span> T</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;T<span class="fu">\mu</span>&quot;, Rightarrow, from=1-1, to=1-2]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;<span class="fu">\mu</span>&quot;, Rightarrow, from=1-2, to=2-2]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;{<span class="fu">\mu</span> T}&quot;', Rightarrow, from=1-1, to=2-1]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;<span class="fu">\mu</span>&quot;', Rightarrow, from=2-1, to=2-2]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[Rightarrow, no head, from=1-4, to=2-4]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;{<span class="fu">\eta</span> T}&quot;', Rightarrow, from=1-4, to=1-3]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;<span class="fu">\mu</span>&quot;', Rightarrow, from=1-3, to=2-4]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;{T <span class="fu">\eta</span>}&quot;, Rightarrow, from=1-4, to=1-5]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\arrow</span>[&quot;<span class="fu">\mu</span>&quot;, Rightarrow, from=1-5, to=2-4]</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">mytikzcd</span>}</span></code></pre></div>
+<p>One more thing:<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>
+right now, the name of the externalisation file is just given by the number of TikZ pictures before it.
+For example, given</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ss">\[</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\begin</span>{<span class="ex">mytikzcd</span>}<span class="ss">[ampersand replacement=</span><span class="sc">\&amp;</span><span class="ss">]</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ss">    one</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\end</span>{<span class="ex">mytikzcd</span>}</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ss">\]</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ss">\[</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\begin</span>{<span class="ex">mytikzcd</span>}<span class="ss">[ampersand replacement=</span><span class="sc">\&amp;</span><span class="ss">]</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ss">    two</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\end</span>{<span class="ex">mytikzcd</span>}</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ss">\]</span></span></code></pre></div>
+<p>we’d get <code>figure0.{md5,log,pdf}</code> and <code>figure1.{md5,log,pdf}</code> in the <code>figures-ext</code> directory.
+If we now switch the pictures</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ss">\[</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\begin</span>{<span class="ex">mytikzcd</span>}<span class="ss">[ampersand replacement=</span><span class="sc">\&amp;</span><span class="ss">]</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ss">    two</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\end</span>{<span class="ex">mytikzcd</span>}</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ss">\]</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ss">\[</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\begin</span>{<span class="ex">mytikzcd</span>}<span class="ss">[ampersand replacement=</span><span class="sc">\&amp;</span><span class="ss">]</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ss">    one</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="kw">\end</span>{<span class="ex">mytikzcd</span>}</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ss">\]</span></span></code></pre></div>
+<p>then both would have to be regenerated, as the hash for <code>two</code> does not match that of <code>figure0.md5</code>!
+This is obviously horrible, but can be fixed by using <code>\tikzsetnextfilename</code> in front of a picture to explicitly set its filename.
+I found it easiest to just use the hash of the figure’s body,
+since that’s already at hand.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\NewEnviron</span>{mytikzcd}[1][]{<span class="co">%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\def\myargs</span>{#1}<span class="co">%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tikzsetnextfilename</span>{<span class="fu">\pdfmdfivesum</span>{<span class="fu">\expandonce\BODY</span>}}</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\edef\mydiagram</span>{<span class="co">%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\noexpand\mytikzcdcontext</span>{<span class="fu">\expandonce\BODY</span>}{<span class="fu">\expandonce\myargs</span>}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  }<span class="co">%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\mydiagram</span><span class="co">%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This should actually work now!
+Phew.</p>
+<p>Manually nesting TikZ pictures is not particularly great,
+and yet this is the most robust technique I’ve found to get externalisation working
+everywhere I want it to.
+Even the arXiv, I might add,
+where some papers of mine otherwise compile for too long and get terminated by a hungry process killer.</p>
+<p>Here are the benchmarks:</p>
+<pre class="console"><code>$ time pdflatex -shell-escape main
+…
+________________________________________________________
+Executed in   15.68 secs    fish           external
+   usr time   15.21 secs    1.91 millis   15.20 secs
+   sys time    0.41 secs    0.96 millis    0.41 secs</code></pre>
+<p>Not bad!</p>
+<h2 id="precompiling-the-preamble">Precompiling the preamble</h2>
+<p>The rationale for precompiling parts of my (entirely too big) preamble is relatively obvious:
+LaTeX often needs several runs to get things like references right,
+which means that the preamble has to be compiled every time as well.
+However, it probably doesn’t actually change that often, so why not optimise that part out?</p>
+<p>There seems to be pretty good support for this across many different TeX distributions,
+including <code>pdflatex</code>, which is what I’m forced to use.
+We can partition our preamble into a “static” and a “dynamic” part by creating a file for the static part:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">% prec.tex</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>[10pt, a4paper, twoside]{<span class="ex">memoir</span>}</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[sidenotes, externalize=true, font=palatino, osf, math=fancy]{<span class="ex">styles/style</span>}</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\pdfoutput</span>=1</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>…</span></code></pre></div>
+<p>This can be compiled into a “format file” with</p>
+<pre class="console"><code>$ pdflatex -ini -jobname=&quot;prec&quot; &quot;&amp;pdflatex prec.tex\dump&quot;</code></pre>
+<p>Now we just need to tell our main file—<code>main.tex</code> in my case—to use <code>prec.fmt</code>.
+This is as simple as starting the file with the magic comment <code>%&amp;prec</code>,
+and advising <code>pdflatex</code> to use the format file we just compiled:</p>
+<pre class="console"><code>$ pdflatex -fmt=prec.fmt main</code></pre>
+<p>Of course, plugging <code>external</code> into this setup is not as plug-and-play as one would like.
+The dynamic—<em>not</em> the static—part of the preamble must contain a call to <code>\tikzexternal</code>,
+and we also need to pass the format file through to each <code>pdflatex</code> invocation.
+As such, my <code>main.tex</code> file now starts with<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">%&amp;prec</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\tikzset</span>{external/system call={pdflatex -fmt=prec.fmt <span class="fu">\tikzexternalcheckshellescape</span> -halt-on-error -interaction=batchmode -jobname &quot;<span class="fu">\image</span>&quot; &quot;<span class="fu">\texsource</span>&quot;}}</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\tikzexternalize</span>[prefix=figures-ext/]</span></code></pre></div>
+<p>which works seamlessly!</p>
+<p>We get another sizeable drop in compilation times:</p>
+<pre class="console"><code>$ hyperfine 'pdflatex -shell-escape -fmt=prec.fmt main'
+Benchmark 1: pdflatex -shell-escape -fmt=prec.fmt main
+  Time (mean ± σ):      7.423 s ±  0.211 s    [User: 7.156 s, System: 0.234 s]
+  Range (min … max):    6.979 s …  7.627 s    10 runs</code></pre>
+<hr />
+<p>Packaging all of this up in a Makefile, we could naively write something like</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ot">.ONESHELL:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ot">.PHONY:</span><span class="dt"> build</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="dt">COMPILE_FLAGS</span> <span class="ch">:=</span><span class="st"> -shell-escape -file-line-error -synctex=1</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="dv">build:</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>	pdflatex -ini <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -jobname=<span class="st">&quot;prec&quot;</span> <span class="st">&quot;&amp;pdflatex prec.tex\dump&quot;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -fmt=prec.fmt main</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>	bibtex main</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -fmt=prec.fmt main</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -fmt=prec.fmt main</span></code></pre></div>
+<p>and in Emacs one can simply set</p>
+<pre><code>TeX-command-extra-options: &quot;-shell-espace -fmt=prec.fmt -file-line-error -synctex=1&quot;</code></pre>
+<p>as a local variable,
+and execute <code>TeX-command-master</code> or <code>TeX-command-run-all</code>,
+depending on the situation.
+Works perfectly!</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>As you can see, I’m also feverishly procrastinating.
+Somewhere between
+<a href="https://phdcomics.com/comics/archive.php?comicid=149">this</a>,
+<a href="https://phdcomics.com/comics/archive.php?comicid=1785">this</a>,
+<a href="https://phdcomics.com/comics/archive.php?comicid=1832">and this</a>,
+I suppose.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See for example <a href="https://arxiv.org/abs/2312.13074">this paper</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} 󠀠</p>
+<pre><code>󠀠</code></pre>
+<p>You will excuse me for not doing a proper <code>hyperfine</code> benchmark,
+but I just couldn’t be asked to wait that long.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>In other words, none of this information is new, really, but I haven’t seen it amalgamated all in one place yet.
+If anything, this post will help <em>me</em> remember how and why to do certain things, and that’s more than enough.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>For example, <code>robust-externalize</code> does not support references inside of externalised pictures,
+and you have no hope to use <code>memoize</code> with something like the <a href="https://arxiv.org/">arXiv</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Otherwise, we would run into the very same problem we are trying to solve.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>{-} 󠀠</p>
+<pre><code>󠀠</code></pre>
+<p>The implementation presented here is mostly lifted from
+<a href="https://tex.stackexchange.com/questions/171931/are-the-tikz-libraries-cd-and-external-incompatible-with-one-another/362104#362104">here</a>
+and
+<a href="https://tex.stackexchange.com/questions/15595/problem-with-environment-expansion-and-the-tikz-external-library">here</a>;
+all credit goes to the brave people on the TeX.stackexchange
+who actually know what they’re doing.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><a href="https://q.uiver.app/">q.uiver</a> even has that as one of its export options!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Notice a pattern?<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>{-} 󠀠</p>
+<p>Thanks to
+<a href="https://tex.stackexchange.com/questions/16734/precompiled-preamble-with-tikz-externalize">this answer</a>
+on TeX.stackexchange for figuring all that out so I didn’t have to.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+
+</feed>
