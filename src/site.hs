@@ -20,6 +20,7 @@ import Data.List (foldl')
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
+import Data.Time.Format (defaultTimeLocale, formatTime)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
@@ -259,8 +260,27 @@ rss tags = do
 -- Contexts
 
 postCtx :: Context String
-postCtx = dateField "date" "%F" <> estimatedReadingTime <> defaultContext
+postCtx = mconcat
+  [ dateField "date" "%F" -- Creation date
+  , modTime               -- Last modification date
+  , estimatedReadingTime
+  , defaultContext
+  ]
  where
+  -- If no manual modification time is given, create one based on the last
+  -- change to the file. If this is the same as the creation date, ignore it.
+  modTime :: Context String
+  modTime = field "last-modified" \(Item ident _) -> do
+    meta <- getMetadata ident
+    case lookupString "last-modified" meta of
+      Nothing -> do
+        lastMod <- formatTime defaultTimeLocale "%F" <$> getItemModificationTime ident
+        case lookupString "date" meta of
+          Nothing      -> noResult "No creation date means no last modified date."
+          Just created -> if lastMod /= created then pure lastMod
+                         else noResult "Last modified equal to date."
+      Just t -> pure t
+
   estimatedReadingTime :: Context String
   estimatedReadingTime = field "estimated-reading-time" $ \key ->
     let ws   :: Int = length . words . stripTags . itemBody $ key
