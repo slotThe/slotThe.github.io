@@ -105,7 +105,7 @@ pandoc and Hakyll is quite straightforward, because other people have
 already done the hard work.<!--
 --><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">To put this front and centre:
 the <code>pandoc-sidenote</code> library now features a
-<a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNote<span class="small-caps">html</span></a>
+<a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNoteHTML</a>
 module, which is an implementation of what’s discussed in this post!</div><!--
 --> Depending on your use-case, however, the
 existing libraries might not entirely fit the bill; for example, by
@@ -176,7 +176,7 @@ elements are allowed inside paragraphs per the <span class="small-caps">html</sp
 I know what you’re thinking: people don’t usually let themselves be
 hampered by standards, do they?<!--
 --><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">Just ask any person who’s ever worked on a window manager what
-creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html">ICCCM</a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints">EWMH</a> :)</div><!--
+creative “interpretations” programs have of <a href="https://x.org/releases/X11R7.6/doc/xorg-docs/specs/ICCCM/icccm.html"><span class="small-caps">icccm</span></a> or <a href="https://en.wikipedia.org/wiki/Extended_Window_Manager_Hints"><span class="small-caps">ewmh</span></a> :)</div><!--
 --> Alas, the <code>pandoc-sidenote</code> package
 quite sensibly converts a given footnote into an approximation of the
 above <span class="small-caps">html</span> by using pandoc’s native <code>Span</code> data constructor. Here is a
@@ -506,7 +506,7 @@ is still useful to them. Since what I’ve done here amounts to a
 complete rewrite—and almost certainly a regression in places—I don’t
 think that this will ever replace <code>Text.​Pandoc.​SideNote</code> wholesale.
 However, the <code>pandoc-sidenote</code> library now features a
-<a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNote<span class="small-caps">html</span></a>
+<a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNoteHTML</a>
 module as an alternative.
 This keeps backwards compatibility,
 yet still allows people to make use of the alternative filter.

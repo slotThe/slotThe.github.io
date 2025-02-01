@@ -568,13 +568,13 @@ myPandocCompiler =
            $ replaceSpecial
            $ foldl' (replace T.toLower)
                     t
-                    [ "HTML", "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST"
+                    [ "CSS", "GNU", "MELPA", "ELPA", "FLOSS", "AST"
                     , "KDE", "XML", "CLI", "QMK", "GHC", "PDF", "GMM", "QGS"
                     , "PSSL", "TODO", "EDSL", "DSL", "API", "BCQT", "LOWER"
                     , "RAISE", "ADJUST", "TL;DR", "BOX", "PBT", "XDA", "GTK"
                     , "HATC", "CSL", "BY-SA", "TOC", "CT23", "README", "LSP"
                     , "PR", "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
-                    , "BQN", "AOC", "REPL", "HECS"
+                    , "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM"
                     ]
     inline -> inline
    where
@@ -588,16 +588,24 @@ myPandocCompiler =
     -- its small-caps variants, but leave things like
     -- "XMonad.Prompt.OrgMode" alone.
     replaceSpecial :: Text -> Text
-    replaceSpecial = zbmath . orcid . go "KMonad" . go "XMonad"
+    replaceSpecial
+      = zbmath . orcid
+      . go "KMonad" (firstN 2)
+      . go "XMonad" (firstN 2)
+      . go "HTML" (firstN 4)
      where
       orcid, zbmath :: Text -> Text
       orcid  s = if s == "orcid"  then sc "orc" <> "i" <> sc "d" else s
       zbmath s = if s == "zbmath" then "zb" <> sc "math"         else s
 
-      go :: Text -> Text -> Text
-      go pfx s = if pfx `T.isPrefixOf` s && T.length s < 9
-                 then sc (T.toLower (T.take 2 pfx)) <> T.drop 2 s
-                 else s
+      go :: Text -> (Text -> Text) -> Text -> Text
+      go pfx toSc s =
+        if pfx `T.isPrefixOf` s && T.length s <= (T.length pfx + 2)
+        then toSc s
+        else s
+
+      firstN :: Int -> Text -> Text
+      firstN n s = sc (T.toLower (T.take n s)) <> T.drop n s
 
   hlKaTeX :: Pandoc -> Compiler Pandoc
   hlKaTeX pandoc = recompilingUnsafeCompiler do
