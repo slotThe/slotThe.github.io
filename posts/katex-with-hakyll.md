@@ -1,7 +1,7 @@
 ---
 title: Integrating KaTeX Into Hakyll
 date: 2024-07-20
-tags: haskell
+tags: haskell, hakyll
 ---
 
 <p></p>

@@ -1,7 +1,7 @@
 ---
 title: Incorporating BibTeX into Hakyll
 date: 2023-06-20
-tags: haskell
+tags: haskell, hakyll
 ---
 
 When writing a blog post that feels academic—or pretentious—enough to invoke the need for citations,

@@ -2,7 +2,7 @@
 title: Using Sidenotes with Hakyll
 date: 2023-01-27
 last-modified: 2024-07-17
-tags: haskell
+tags: haskell, hakyll
 ---
 <p></p>
 

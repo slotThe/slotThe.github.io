@@ -2,7 +2,7 @@
 title: Pygmentising Hakyll's Syntax Highlighting
 date: 2023-01-21
 last-modified: 2025-01-05
-tags: haskell
+tags: haskell, hakyll
 ---
 
 By default, Hakyll uses pandoc to generate syntax highlighting for all
