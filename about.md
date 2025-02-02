@@ -17,7 +17,7 @@ As for the site itself: everything is statically generated—with the power of [
 The [full source code][site] is available,
 and a separate page detailing some design decisions is [here](./site.html).
 <label for="mn-configs" class="margin-toggle">&#8853;</label>
-<input type="checkbox" id="mn-configs" class="margin-toggle"/>
+<input type="checkbox" id="mn-configs" class="margin-toggle">
 <span class="marginnote-left">
   For reference: here are my
   [Emacs][cfg:emacs],

@@ -46,7 +46,7 @@ roughly looks like the following:
 ``` html
 <span class="sidenote-wrapper">
   <label for="sn-NAME" class="margin-toggle sidenote-number"> </label>
-  <input type="checkbox" id="sn-NAME" class="margin-toggle"/>
+  <input type="checkbox" id="sn-NAME" class="margin-toggle">
   <span class="sidenote">
     SIDENOTEn
   </span>
@@ -124,7 +124,7 @@ Well, what happens?
 ```{=html}
 <span class="sidenote-wrapper">
 <label for="sn-test" class="margin-toggle sidenote-number"></label>
-<input type="checkbox" id="sn-test" class="margin-toggle" />
+<input type="checkbox" id="sn-test" class="margin-toggle">
 <p><span class="sidenote">Now simulating <code>pandoc-sidenode</code>s behaviour, the following is a piece of code <em>in the sidenote:</em>
 <div class="highlight"><pre><span></span><span class="nf">a</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span> <span class="nf">
 a</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">42</span> </pre></div>
