@@ -49,7 +49,9 @@ Since this is a static site without comments or any other kind of user-generated
 it seems almost comical to still require every visitor to render the same thing,
 rather than doing it once server-side.
 
-Interfacing with KaTeX is done with the tiny [math.ts](./scripts/math.ts) script:
+Interfacing with KaTeX is done with the tiny
+[math.ts](https://github.com/slotThe/slotThe.github.io/blob/main/scripts/math.ts)
+script:
 
 ::: {.include from="scripts/math.ts"}
 :::
