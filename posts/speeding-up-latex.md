@@ -251,8 +251,10 @@ As such, my `main.tex` file now starts with[^7]
 
 ``` tex
 %&prec
-\tikzset{external/system call={pdflatex -fmt=prec.fmt \tikzexternalcheckshellescape -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"}}
-\tikzexternalize[prefix=figures-ext/]
+\tikzexternalize[
+  prefix=figures-ext/,
+  system call={pdflatex -fmt=prec.fmt \tikzexternalcheckshellescape -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"}
+]
 ```
 
 which works seamlessly!
@@ -286,44 +288,29 @@ build:
 and in Emacs one can simply set
 
 ```
-TeX-command-extra-options: "-shell-espace -fmt=prec.fmt -file-line-error -synctex=1"
+TeX-command-extra-options: "-shell-escape -fmt=prec.fmt -file-line-error -synctex=1"
 ```
 
 as a local variable,
 and execute `TeX-command-master` or `TeX-command-run-all`,
 depending on the situation.
 
-# Using draftmode
+I invoke the Makefile only very sparingly—executing `pdflatex` three times still takes quite some time,
+but even the current speedup makes it reasonably acceptable.
 
-One final thing we can do in the build script is to use `pdflatex`'s `-draftmode` option.
+# Draft and batch mode
+
+One thing we can do to make a single run of `make build`<!--
+-->—though not necessarily a single `pdflatex` invocation—<!--
+-->faster is to use the `-draftmode` option.
 This does not generate an output PDF—thereby wasting precious time, since that file gets overwritten anyways—but still writes to auxiliary files,
 in order to update positional information.
-Changing the Makefile to
 
-``` makefile
-.ONESHELL:
-COMPILE_FLAGS := -file-line-error -fmt=prec.fmt
-.PHONY: build preamble compress clean nuke
+Adding `-draftmode` to the first two invocations of `pdflatex` in the Makefile above
+results in another small speedup when
+completely rebuilding the entire file with all bibliographical information.
 
-build:
-	make preamble
-	pdflatex -shell-escape $(COMPILE_FLAGS) -draftmode main
-	bibtex main
-	pdflatex $(COMPILE_FLAGS) -draftmode main
-	pdflatex $(COMPILE_FLAGS) -synctex=1 main
-
-preamble:
-	pdflatex -ini -file-line-error -jobname="prec" "&pdflatex prec.tex\dump"
-
-clean:
-	…
-```
-
-Results in another small speedup when
-completely rebuilding the entire file with all bibliographical information
-(which I however don't do particularly often).
-
-Before:
+Before (without `-interaction=batchmode`):
 
 ``` console
 $ make clean; time make
@@ -333,7 +320,7 @@ Executed in   25.91 secs    fish           external
    sys time    0.80 secs   92.00 micros    0.80 secs
 ```
 
-After:
+After (without `-interaction=batchmode`):
 
 ``` console
 $ make clean; time make
@@ -342,6 +329,56 @@ ________________________________________________________
 Executed in   20.92 secs    fish           external
    usr time   20.38 secs  211.00 micros   20.38 secs
    sys time    0.46 secs   95.00 micros    0.46 secs
+```
+
+Finally, by default, `pdflatex` compiles its documents in interactive mode,
+to seemingly provide some kind of error recovery.
+I pretty much never want this,
+so enabling `-interaction=batchmode` seems like a no-brainer.
+It also makes `pdflatex` very quiet when it comes to output—and a bit faster still.
+With the Makefile
+
+``` makefile
+.ONESHELL:
+COMPILE_FLAGS := -file-line-error -interaction=batchmode -fmt=prec.fmt
+.PHONY: build preamble compress clean nuke
+
+build:
+	make preamble
+	pdflatex -shell-escape $(COMPILE_FLAGS) main
+	bibtex main
+	pdflatex $(COMPILE_FLAGS) -draftmode main
+	pdflatex $(COMPILE_FLAGS) -synctex=1 main
+
+preamble:
+	pdflatex -ini -file-line-error -jobname="prec" "&pdflatex prec.tex\dump"
+```
+
+I get
+
+``` console
+$ make clean; time make
+…
+______________________________________________________
+Executed in   17.59 secs    fish           external
+   usr time   17.14 secs  148.00 micros   17.14 secs
+   sys time    0.39 secs   55.00 micros    0.39 secs
+```
+
+As a bonus, this also has an effect when invoking `pdflatex` only once,
+which is my usual modus operandi when writing:
+
+``` console
+$ hyperfine 'pdflatex -interaction=batchmode -fmt=prec.fmt main'
+Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main
+  Time (mean ± σ):      5.098 s ±  0.015 s    [User: 5.015 s, System: 0.062 s]
+  Range (min … max):    5.074 s …  5.130 s    10 runs
+```
+
+In Emacs, I just adjust the file local `TeX-command-extra-options` to be
+
+```
+"-shell-escape -interaction=batchmode -fmt=prec.fmt -file-line-error -synctex=1"
 ```
 
 [^2]: For example, `robust-externalize` does not support references inside of externalised pictures,

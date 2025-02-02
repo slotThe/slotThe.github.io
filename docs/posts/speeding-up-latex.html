@@ -52,7 +52,7 @@
             <ul>
 <li><a href="#externalising-tikz-pictures">Externalising TikZ pictures</a></li>
 <li><a href="#precompiling-the-preamble">Precompiling the preamble</a></li>
-<li><a href="#using-draftmode">Using draftmode</a></li>
+<li><a href="#draft-and-batch-mode">Draft and batch mode</a></li>
 </ul>
           </div>
          
@@ -74,7 +74,7 @@
         &thinsp;·&thinsp; last modified: 2025-02-02
       
       
-        &thinsp;·&thinsp; <span title="1507 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1703 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="../tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -91,7 +91,7 @@
     <ul>
 <li><a href="#externalising-tikz-pictures">Externalising TikZ pictures</a></li>
 <li><a href="#precompiling-the-preamble">Precompiling the preamble</a></li>
-<li><a href="#using-draftmode">Using draftmode</a></li>
+<li><a href="#draft-and-batch-mode">Draft and batch mode</a></li>
 </ul>
   </div>
 
@@ -373,8 +373,10 @@ Thanks to
 on TeX.stackexchange for figuring all that out so I didn’t have to.</div><!--
 -->
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%&amp;prec</span>
-<span class="k">\tikzset</span><span class="nb">{</span>external/system call=<span class="nb">{</span>pdflatex -fmt=prec.fmt <span class="k">\tikzexternalcheckshellescape</span> -halt-on-error -interaction=batchmode -jobname &quot;<span class="k">\image</span>&quot; &quot;<span class="k">\texsource</span>&quot;<span class="nb">}}</span>
-<span class="k">\tikzexternalize</span><span class="na">[prefix=figures-ext/]</span>
+<span class="k">\tikzexternalize</span>[
+  prefix=figures-ext/,
+  system call=<span class="nb">{</span>pdflatex -fmt=prec.fmt <span class="k">\tikzexternalcheckshellescape</span> -halt-on-error -interaction=batchmode -jobname &quot;<span class="k">\image</span>&quot; &quot;<span class="k">\texsource</span>&quot;<span class="nb">}</span>
+]
 </pre></div>
 
 <p></p>
@@ -404,43 +406,29 @@ Packaging all of this up in a Makefile, we could naively write something like
 
 <p></p>
 and in Emacs one can simply set
-<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>TeX-command-extra-options: &quot;-shell-espace -fmt=prec.fmt -file-line-error -synctex=1&quot;
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>TeX-command-extra-options: &quot;-shell-escape -fmt=prec.fmt -file-line-error -synctex=1&quot;
 </pre></div>
 
 <p></p>
 as a local variable,
 and execute <code>TeX-command-master</code> or <code>TeX-command-run-all</code>,
 depending on the situation.
-<h2 id="using-draftmode">Using draftmode<a href="#using-draftmode" class="floatleft sec-link">§</a></h2>
 <p></p>
-One final thing we can do in the build script is to use <code>pdflatex</code>’s <code>-draftmode</code> option.
+I invoke the Makefile only very sparingly—executing <code>pdflatex</code> three times still takes quite some time,
+but even the current speedup makes it reasonably acceptable.
+<h2 id="draft-and-batch-mode">Draft and batch mode<a href="#draft-and-batch-mode" class="floatleft sec-link">§</a></h2>
+<p></p>
+One thing we can do to make a single run of <code>make build</code><!--
+-->—though not necessarily a single <code>pdflatex</code> invocation—<!--
+-->faster is to use the <code>-draftmode</code> option.
 This does not generate an output <span class="small-caps">pdf</span>—thereby wasting precious time, since that file gets overwritten anyways—but still writes to auxiliary files,
 in order to update positional information.
-Changing the Makefile to
-<div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nf">.ONESHELL</span><span class="o">:</span>
-<span class="nv">COMPILE_FLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-file-line-error<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt
-<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span> <span class="n">preamble</span> <span class="n">compress</span> <span class="n">clean</span> <span class="n">nuke</span>
-
-<span class="nf">build</span><span class="o">:</span>
-<span class="w">	</span>make<span class="w"> </span>preamble
-<span class="w">	</span>pdflatex<span class="w"> </span>-shell-escape<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-draftmode<span class="w"> </span>main
-<span class="w">	</span>bibtex<span class="w"> </span>main
-<span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-draftmode<span class="w"> </span>main
-<span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-synctex<span class="o">=</span><span class="m">1</span><span class="w"> </span>main
-
-<span class="nf">preamble</span><span class="o">:</span>
-<span class="w">	</span>pdflatex<span class="w"> </span>-ini<span class="w"> </span>-file-line-error<span class="w"> </span>-jobname<span class="o">=</span><span class="s2">&quot;prec&quot;</span><span class="w"> </span><span class="s2">&quot;&amp;pdflatex prec.tex\dump&quot;</span>
-
-<span class="nf">clean</span><span class="o">:</span>
-<span class="w">	</span>…
-</pre></div>
-
 <p></p>
-Results in another small speedup when
-completely rebuilding the entire file with all bibliographical information
-(which I however don’t do particularly often).
+Adding <code>-draftmode</code> to the first two invocations of <code>pdflatex</code> in the Makefile above
+results in another small speedup when
+completely rebuilding the entire file with all bibliographical information.
 <p></p>
-Before:
+Before (without <code>-interaction=batchmode</code>):
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
 <span class="go">…</span>
 <span class="go">Executed in   25.91 secs    fish           external</span>
@@ -449,13 +437,59 @@ Before:
 </pre></div>
 
 <p></p>
-After:
+After (without <code>-interaction=batchmode</code>):
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
 <span class="go">…</span>
 <span class="go">________________________________________________________</span>
 <span class="go">Executed in   20.92 secs    fish           external</span>
 <span class="go">   usr time   20.38 secs  211.00 micros   20.38 secs</span>
 <span class="go">   sys time    0.46 secs   95.00 micros    0.46 secs</span>
+</pre></div>
+
+<p></p>
+Finally, by default, <code>pdflatex</code> compiles its documents in interactive mode,
+to seemingly provide some kind of error recovery.
+I pretty much never want this,
+so enabling <code>-interaction=batchmode</code> seems like a no-brainer.
+It also makes <code>pdflatex</code> very quiet when it comes to output—and a bit faster still.
+With the Makefile
+<div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nf">.ONESHELL</span><span class="o">:</span>
+<span class="nv">COMPILE_FLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-file-line-error<span class="w"> </span>-interaction<span class="o">=</span>batchmode<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span> <span class="n">preamble</span> <span class="n">compress</span> <span class="n">clean</span> <span class="n">nuke</span>
+
+<span class="nf">build</span><span class="o">:</span>
+<span class="w">	</span>make<span class="w"> </span>preamble
+<span class="w">	</span>pdflatex<span class="w"> </span>-shell-escape<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>main
+<span class="w">	</span>bibtex<span class="w"> </span>main
+<span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-draftmode<span class="w"> </span>main
+<span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-synctex<span class="o">=</span><span class="m">1</span><span class="w"> </span>main
+
+<span class="nf">preamble</span><span class="o">:</span>
+<span class="w">	</span>pdflatex<span class="w"> </span>-ini<span class="w"> </span>-file-line-error<span class="w"> </span>-jobname<span class="o">=</span><span class="s2">&quot;prec&quot;</span><span class="w"> </span><span class="s2">&quot;&amp;pdflatex prec.tex\dump&quot;</span>
+</pre></div>
+
+<p></p>
+I get
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
+<span class="go">…</span>
+<span class="go">______________________________________________________</span>
+<span class="go">Executed in   17.59 secs    fish           external</span>
+<span class="go">   usr time   17.14 secs  148.00 micros   17.14 secs</span>
+<span class="go">   sys time    0.39 secs   55.00 micros    0.39 secs</span>
+</pre></div>
+
+<p></p>
+As a bonus, this also has an effect when invoking <code>pdflatex</code> only once,
+which is my usual modus operandi when writing:
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s1">'pdflatex -interaction=batchmode -fmt=prec.fmt main'</span>
+<span class="go">Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main</span>
+<span class="go">  Time (mean ± σ):      5.098 s ±  0.015 s    [User: 5.015 s, System: 0.062 s]</span>
+<span class="go">  Range (min … max):    5.074 s …  5.130 s    10 runs</span>
+</pre></div>
+
+<p></p>
+In Emacs, I just adjust the file local <code>TeX-command-extra-options</code> to be
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>&quot;-shell-escape -interaction=batchmode -fmt=prec.fmt -file-line-error -synctex=1&quot;
 </pre></div>
 
 </div>
