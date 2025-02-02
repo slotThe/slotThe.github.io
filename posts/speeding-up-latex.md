@@ -292,7 +292,57 @@ TeX-command-extra-options: "-shell-espace -fmt=prec.fmt -file-line-error -syncte
 as a local variable,
 and execute `TeX-command-master` or `TeX-command-run-all`,
 depending on the situation.
-Works perfectly!
+
+# Using draftmode
+
+One final thing we can do in the build script is to use `pdflatex`'s `-draftmode` option.
+This does not generate an output PDF—thereby wasting precious time, since that file gets overwritten anyways—but still writes to auxiliary files,
+in order to update positional information.
+Changing the Makefile to
+
+``` makefile
+.ONESHELL:
+COMPILE_FLAGS := -file-line-error -fmt=prec.fmt
+.PHONY: build preamble compress clean nuke
+
+build:
+	make preamble
+	pdflatex -shell-escape $(COMPILE_FLAGS) -draftmode main
+	bibtex main
+	pdflatex $(COMPILE_FLAGS) -draftmode main
+	pdflatex $(COMPILE_FLAGS) -synctex=1 main
+
+preamble:
+	pdflatex -ini -file-line-error -jobname="prec" "&pdflatex prec.tex\dump"
+
+clean:
+	…
+```
+
+Results in another small speedup when
+completely rebuilding the entire file with all bibliographical information
+(which I however don't do particularly often).
+
+Before:
+
+``` console
+$ make clean; time make
+…
+Executed in   25.91 secs    fish           external
+   usr time   25.00 secs  201.00 micros   25.00 secs
+   sys time    0.80 secs   92.00 micros    0.80 secs
+```
+
+After:
+
+``` console
+$ make clean; time make
+…
+________________________________________________________
+Executed in   20.92 secs    fish           external
+   usr time   20.38 secs  211.00 micros   20.38 secs
+   sys time    0.46 secs   95.00 micros    0.46 secs
+```
 
 [^2]: For example, `robust-externalize` does not support references inside of externalised pictures,
       and you have no hope to use `memoize` with something like the [arXiv](https://arxiv.org/).

@@ -23,8 +23,10 @@
         Posted on 2025-01-30
       
       
+        &thinsp;·&thinsp; last modified: 2025-02-02
       
-        &thinsp;·&thinsp; <span title="1354 words">6 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1520 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -246,8 +248,44 @@ Benchmark 1: pdflatex -shell-escape -fmt=prec.fmt main
 <pre><code>TeX-command-extra-options: &quot;-shell-espace -fmt=prec.fmt -file-line-error -synctex=1&quot;</code></pre>
 <p>as a local variable,
 and execute <code>TeX-command-master</code> or <code>TeX-command-run-all</code>,
-depending on the situation.
-Works perfectly!</p>
+depending on the situation.</p>
+<h2 id="using-draftmode">Using draftmode</h2>
+<p>One final thing we can do in the build script is to use <code>pdflatex</code>’s <code>-draftmode</code> option.
+This does not generate an output PDF—thereby wasting precious time, since that file gets overwritten anyways—but still writes to auxiliary files,
+in order to update positional information.
+Changing the Makefile to</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ot">.ONESHELL:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="dt">COMPILE_FLAGS</span> <span class="ch">:=</span><span class="st"> -file-line-error -fmt=prec.fmt</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ot">.PHONY:</span><span class="dt"> build preamble compress clean nuke</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="dv">build:</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>	make preamble</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>	pdflatex -shell-escape <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -draftmode main</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>	bibtex main</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -draftmode main</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -synctex=1 main</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="dv">preamble:</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>	pdflatex -ini -file-line-error -jobname=<span class="st">&quot;prec&quot;</span> <span class="st">&quot;&amp;pdflatex prec.tex\dump&quot;</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="dv">clean:</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>	…</span></code></pre></div>
+<p>Results in another small speedup when
+completely rebuilding the entire file with all bibliographical information
+(which I however don’t do particularly often).</p>
+<p>Before:</p>
+<pre class="console"><code>$ make clean; time make
+…
+Executed in   25.91 secs    fish           external
+   usr time   25.00 secs  201.00 micros   25.00 secs
+   sys time    0.80 secs   92.00 micros    0.80 secs</code></pre>
+<p>After:</p>
+<pre class="console"><code>$ make clean; time make
+…
+________________________________________________________
+Executed in   20.92 secs    fish           external
+   usr time   20.38 secs  211.00 micros   20.38 secs
+   sys time    0.46 secs   95.00 micros    0.46 secs</code></pre>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

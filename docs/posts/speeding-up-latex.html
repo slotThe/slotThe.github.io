@@ -52,6 +52,7 @@
             <ul>
 <li><a href="#externalising-tikz-pictures">Externalising TikZ pictures</a></li>
 <li><a href="#precompiling-the-preamble">Precompiling the preamble</a></li>
+<li><a href="#using-draftmode">Using draftmode</a></li>
 </ul>
           </div>
          
@@ -70,8 +71,10 @@
         Posted on 2025-01-30
       
       
+        &thinsp;·&thinsp; last modified: 2025-02-02
       
-        &thinsp;·&thinsp; <span title="1341 words">6 min read</span> &thinsp;·&nbsp;
+      
+        &thinsp;·&thinsp; <span title="1507 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="../tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -88,6 +91,7 @@
     <ul>
 <li><a href="#externalising-tikz-pictures">Externalising TikZ pictures</a></li>
 <li><a href="#precompiling-the-preamble">Precompiling the preamble</a></li>
+<li><a href="#using-draftmode">Using draftmode</a></li>
 </ul>
   </div>
 
@@ -407,7 +411,53 @@ and in Emacs one can simply set
 as a local variable,
 and execute <code>TeX-command-master</code> or <code>TeX-command-run-all</code>,
 depending on the situation.
-Works perfectly!
+<h2 id="using-draftmode">Using draftmode<a href="#using-draftmode" class="floatleft sec-link">§</a></h2>
+<p></p>
+One final thing we can do in the build script is to use <code>pdflatex</code>’s <code>-draftmode</code> option.
+This does not generate an output <span class="small-caps">pdf</span>—thereby wasting precious time, since that file gets overwritten anyways—but still writes to auxiliary files,
+in order to update positional information.
+Changing the Makefile to
+<div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nf">.ONESHELL</span><span class="o">:</span>
+<span class="nv">COMPILE_FLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-file-line-error<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span> <span class="n">preamble</span> <span class="n">compress</span> <span class="n">clean</span> <span class="n">nuke</span>
+
+<span class="nf">build</span><span class="o">:</span>
+<span class="w">	</span>make<span class="w"> </span>preamble
+<span class="w">	</span>pdflatex<span class="w"> </span>-shell-escape<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-draftmode<span class="w"> </span>main
+<span class="w">	</span>bibtex<span class="w"> </span>main
+<span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-draftmode<span class="w"> </span>main
+<span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-synctex<span class="o">=</span><span class="m">1</span><span class="w"> </span>main
+
+<span class="nf">preamble</span><span class="o">:</span>
+<span class="w">	</span>pdflatex<span class="w"> </span>-ini<span class="w"> </span>-file-line-error<span class="w"> </span>-jobname<span class="o">=</span><span class="s2">&quot;prec&quot;</span><span class="w"> </span><span class="s2">&quot;&amp;pdflatex prec.tex\dump&quot;</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+<span class="w">	</span>…
+</pre></div>
+
+<p></p>
+Results in another small speedup when
+completely rebuilding the entire file with all bibliographical information
+(which I however don’t do particularly often).
+<p></p>
+Before:
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
+<span class="go">…</span>
+<span class="go">Executed in   25.91 secs    fish           external</span>
+<span class="go">   usr time   25.00 secs  201.00 micros   25.00 secs</span>
+<span class="go">   sys time    0.80 secs   92.00 micros    0.80 secs</span>
+</pre></div>
+
+<p></p>
+After:
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
+<span class="go">…</span>
+<span class="go">________________________________________________________</span>
+<span class="go">Executed in   20.92 secs    fish           external</span>
+<span class="go">   usr time   20.38 secs  211.00 micros   20.38 secs</span>
+<span class="go">   sys time    0.46 secs   95.00 micros    0.46 secs</span>
+</pre></div>
+
 </div>
 
       <!-- Body is included in the above file -->
