@@ -310,7 +310,7 @@ Adding `-draftmode` to the first two invocations of `pdflatex` in the Makefile a
 results in another small speedup when
 completely rebuilding the entire file with all bibliographical information.
 
-Before (without `-interaction=batchmode`):
+Before:
 
 ``` console
 $ make clean; time make
@@ -320,7 +320,7 @@ Executed in   25.91 secs    fish           external
    sys time    0.80 secs   92.00 micros    0.80 secs
 ```
 
-After (without `-interaction=batchmode`):
+After:
 
 ``` console
 $ make clean; time make
@@ -334,7 +334,7 @@ Executed in   20.92 secs    fish           external
 Finally, by default, `pdflatex` compiles its documents in interactive mode,
 to seemingly provide some kind of error recovery.
 I pretty much never want this,
-so enabling `-interaction=batchmode` seems like a no-brainer.
+so enabling `-interaction=batchmode` seems like a no-brainer.[^15]
 It also makes `pdflatex` very quiet when it comes to output—and a bit faster still.
 With the Makefile
 
@@ -425,3 +425,7 @@ In Emacs, I just adjust the file local `TeX-command-extra-options` to be
       [here](https://tex.stackexchange.com/questions/15595/problem-with-environment-expansion-and-the-tikz-external-library);
       all credit goes to the brave people on the TeX.stackexchange
       who actually know what they're doing.
+
+[^15]: Yes, debugging is a lot more difficult in batch mode,
+       but just firing off a one-off `pdflatex main` is very fast,
+       so I still feel justified in enabling it by default.

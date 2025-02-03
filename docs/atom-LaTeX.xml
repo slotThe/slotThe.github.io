@@ -23,10 +23,10 @@
         Posted on 2025-01-30
       
       
-        &thinsp;·&thinsp; last modified: 2025-02-02
+        &thinsp;·&thinsp; last modified: 2025-02-03
       
       
-        &thinsp;·&thinsp; <span title="1716 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1743 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -262,13 +262,13 @@ in order to update positional information.</p>
 <p>Adding <code>-draftmode</code> to the first two invocations of <code>pdflatex</code> in the Makefile above
 results in another small speedup when
 completely rebuilding the entire file with all bibliographical information.</p>
-<p>Before (without <code>-interaction=batchmode</code>):</p>
+<p>Before:</p>
 <pre class="console"><code>$ make clean; time make
 …
 Executed in   25.91 secs    fish           external
    usr time   25.00 secs  201.00 micros   25.00 secs
    sys time    0.80 secs   92.00 micros    0.80 secs</code></pre>
-<p>After (without <code>-interaction=batchmode</code>):</p>
+<p>After:</p>
 <pre class="console"><code>$ make clean; time make
 …
 ________________________________________________________
@@ -278,7 +278,7 @@ Executed in   20.92 secs    fish           external
 <p>Finally, by default, <code>pdflatex</code> compiles its documents in interactive mode,
 to seemingly provide some kind of error recovery.
 I pretty much never want this,
-so enabling <code>-interaction=batchmode</code> seems like a no-brainer.
+so enabling <code>-interaction=batchmode</code> seems like a no-brainer.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
 It also makes <code>pdflatex</code> very quiet when it comes to output—and a bit faster still.
 With the Makefile</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ot">.ONESHELL:</span></span>
@@ -342,6 +342,9 @@ who actually know what they’re doing.<a href="#fnref7" class="footnote-back" r
 <p>Thanks to
 <a href="https://tex.stackexchange.com/questions/16734/precompiled-preamble-with-tikz-externalize">this answer</a>
 on TeX.stackexchange for figuring all that out so I didn’t have to.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Yes, debugging is a lot more difficult in batch mode,
+but just firing off a one-off <code>pdflatex main</code> is very fast,
+so I still feel justified in enabling it by default.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
