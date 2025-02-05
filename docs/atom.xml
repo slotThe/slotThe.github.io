@@ -23,10 +23,10 @@
         Posted on 2025-01-30
       
       
-        &thinsp;·&thinsp; last modified: 2025-02-03
+        &thinsp;·&thinsp; last modified: 2025-02-05
       
       
-        &thinsp;·&thinsp; <span title="1743 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1733 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -307,8 +307,6 @@ which is my usual modus operandi when writing:</p>
 Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main
   Time (mean ± σ):      5.098 s ±  0.015 s    [User: 5.015 s, System: 0.062 s]
   Range (min … max):    5.074 s …  5.130 s    10 runs</code></pre>
-<p>In Emacs, I just adjust the file local <code>TeX-command-extra-options</code> to be</p>
-<pre><code>&quot;-shell-escape -interaction=batchmode -fmt=prec.fmt -file-line-error -synctex=1&quot;</code></pre>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
@@ -343,8 +341,8 @@ who actually know what they’re doing.<a href="#fnref7" class="footnote-back" r
 <a href="https://tex.stackexchange.com/questions/16734/precompiled-preamble-with-tikz-externalize">this answer</a>
 on TeX.stackexchange for figuring all that out so I didn’t have to.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Yes, debugging is a lot more difficult in batch mode,
-but just firing off a one-off <code>pdflatex main</code> is very fast,
-so I still feel justified in enabling it by default.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+but Emacs will do all the one-off compiling while I’m writing the thesis anyways.
+Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

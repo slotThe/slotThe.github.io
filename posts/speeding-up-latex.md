@@ -375,12 +375,6 @@ Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main
   Range (min … max):    5.074 s …  5.130 s    10 runs
 ```
 
-In Emacs, I just adjust the file local `TeX-command-extra-options` to be
-
-```
-"-shell-escape -interaction=batchmode -fmt=prec.fmt -file-line-error -synctex=1"
-```
-
 [^2]: For example, `robust-externalize` does not support references inside of externalised pictures,
       and you have no hope to use `memoize` with something like the [arXiv](https://arxiv.org/).
 
@@ -427,5 +421,5 @@ In Emacs, I just adjust the file local `TeX-command-extra-options` to be
       who actually know what they're doing.
 
 [^15]: Yes, debugging is a lot more difficult in batch mode,
-       but just firing off a one-off `pdflatex main` is very fast,
-       so I still feel justified in enabling it by default.
+       but Emacs will do all the one-off compiling while I'm writing the thesis anyways.
+       Even if not, just firing off a one-off `pdflatex main` is very fast.

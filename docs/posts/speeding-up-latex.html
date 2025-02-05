@@ -71,10 +71,10 @@
         Posted on 2025-01-30
       
       
-        &thinsp;·&thinsp; last modified: 2025-02-03
+        &thinsp;·&thinsp; last modified: 2025-02-05
       
       
-        &thinsp;·&thinsp; <span title="1729 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1719 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="../tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -452,8 +452,8 @@ to seemingly provide some kind of error recovery.
 I pretty much never want this,
 so enabling <code>-interaction=batchmode</code> seems like a no-brainer.<!--
 --><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote">Yes, debugging is a lot more difficult in batch mode,
-but just firing off a one-off <code>pdflatex main</code> is very fast,
-so I still feel justified in enabling it by default.</div><!--
+but Emacs will do all the one-off compiling while I’m writing the thesis anyways.
+Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.</div><!--
 -->
 It also makes <code>pdflatex</code> very quiet when it comes to output—and a bit faster still.
 With the Makefile
@@ -489,11 +489,6 @@ which is my usual modus operandi when writing:
 <span class="go">Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main</span>
 <span class="go">  Time (mean ± σ):      5.098 s ±  0.015 s    [User: 5.015 s, System: 0.062 s]</span>
 <span class="go">  Range (min … max):    5.074 s …  5.130 s    10 runs</span>
-</pre></div>
-
-<p></p>
-In Emacs, I just adjust the file local <code>TeX-command-extra-options</code> to be
-<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>&quot;-shell-escape -interaction=batchmode -fmt=prec.fmt -file-line-error -synctex=1&quot;
 </pre></div>
 
 </div>
