@@ -1,16 +1,15 @@
 .ONESHELL:
-.PHONY: builds fonts watch clean
+.PHONY: builds watch clean
 
 build:
 	nix run . rebuild
+	./scripts/opt-fonts.py
+	nix run . rebuild
+
 watch:
-	make build
+	nix run . rebuild
 	nix run . watch
+
 clean:
 	cabal clean
 	nix run . clean
-fonts:
-	make clean
-	make build
-	./scripts/opt-fonts.py
-	make build
