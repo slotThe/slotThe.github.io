@@ -3,7 +3,7 @@
 /* Fonts taken from
 
      - https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
-     - https://github.com/slotThe/iosevka-solid
+     - https://github.com/slotThe/hopf-mono
 
 Originally, this was inspired by and used fonts from
 
@@ -12,7 +12,7 @@ Originally, this was inspired by and used fonts from
 
 :root {
     --proportional-fonts: "Alegreya", serif;
-    --monospace-fonts: "Iosevka Solid", monospace;
+    --monospace-fonts: "Hopf Mono", monospace;
     --serif-fonts: "Alegreya", serif;
 }
 
@@ -39,23 +39,23 @@ Originally, this was inspired by and used fonts from
 }
 
 @font-face {
-    font-family: 'Iosevka Solid';
+    font-family: 'Hopf Mono';
     font-weight: normal;
     font-style: normal;
-    src: url('fonts/iosevka-solid-Regular.woff2') format('woff2');
+    src: url('fonts/hopf-mono-Regular.woff2') format('woff2');
     font-display: swap;
 }
 @font-face {
-    font-family: 'Iosevka Solid';
+    font-family: 'Hopf Mono';
     font-weight: normal;
     font-style: italic;
-    src: url('fonts/iosevka-solid-Italic.woff2') format('woff2');
+    src: url('fonts/hopf-mono-Italic.woff2') format('woff2');
     font-display: swap;
 }
 @font-face {
-    font-family: 'Iosevka Solid';
+    font-family: 'Hopf Mono';
     font-weight: bold;
     font-style: normal;
-    src: url('fonts/iosevka-solid-Bold.woff2') format('woff2');
+    src: url('fonts/hopf-mono-Bold.woff2') format('woff2');
     font-display: swap;
 }

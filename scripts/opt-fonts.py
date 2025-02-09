@@ -53,8 +53,8 @@ def optimise_font(in_file: str, out_file: str, text: str) -> None:
     font.close()
     print(
         f"Size for {Path(in_file).stem} changed from "
-        f"{os.path.getsize(in_file)/1024:.1f}KB "
-        f"to {os.path.getsize(out_file)/1024:.1f}KB"
+        f"{os.path.getsize(in_file) / 1024:.1f}KB "
+        f"to {os.path.getsize(out_file) / 1024:.1f}KB"
     )
 
 
@@ -66,8 +66,8 @@ def main() -> None:
         in_file = in_path + font
         optimise_font(
             in_file,
-            f"{PR}/css/fonts/{font.replace(".ttf", ".woff2")}",
-            code if "iosevka" in in_file else normal,
+            f"{PR}/css/fonts/{font.replace('.ttf', '.woff2')}",
+            code if "hopf" in in_file else normal,
         )
 
 
