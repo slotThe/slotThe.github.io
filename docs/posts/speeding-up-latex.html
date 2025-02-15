@@ -71,10 +71,10 @@
         Posted on 2025-01-30
       
       
-        &thinsp;·&thinsp; last modified: 2025-02-05
+        &thinsp;·&thinsp; last modified: 2025-02-15
       
       
-        &thinsp;·&thinsp; <span title="1719 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1746 words">7 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="../tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -426,7 +426,10 @@ in order to update positional information.
 <p></p>
 Adding <code>-draftmode</code> to the first two invocations of <code>pdflatex</code> in the Makefile above
 results in another small speedup when
-completely rebuilding the entire file with all bibliographical information.
+completely rebuilding the entire file from scratch with all bibliographical information.<!--
+--><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote">Not that this is something I do particularly often,
+but it’s still nice to speed this part of the process up.</div><!--
+-->
 <p></p>
 Before:
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
@@ -451,25 +454,26 @@ Finally, by default, <code>pdflatex</code> compiles its documents in interactive
 to seemingly provide some kind of error recovery.
 I pretty much never want this,
 so enabling <code>-interaction=batchmode</code> seems like a no-brainer.<!--
---><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote">Yes, debugging is a lot more difficult in batch mode,
+--><label for="sn-11" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-11" class="margin-toggle" /><div class="sidenote">Yes, debugging is a lot more difficult in batch mode,
 but Emacs will do all the one-off compiling while I’m writing the thesis anyways.
 Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.</div><!--
 -->
 It also makes <code>pdflatex</code> very quiet when it comes to output—and a bit faster still.
 With the Makefile
-<div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nf">.ONESHELL</span><span class="o">:</span>
-<span class="nv">COMPILE_FLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-file-line-error<span class="w"> </span>-interaction<span class="o">=</span>batchmode<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt
-<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span> <span class="n">preamble</span> <span class="n">compress</span> <span class="n">clean</span> <span class="n">nuke</span>
+<div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nv">COMPILE_FLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-file-line-error<span class="w"> </span>-interaction<span class="o">=</span>batchmode<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">clean</span>
 
-<span class="nf">build</span><span class="o">:</span>
-<span class="w">	</span>make<span class="w"> </span>preamble
-<span class="w">	</span>pdflatex<span class="w"> </span>-shell-escape<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>main
+<span class="nf">main.pdf</span><span class="o">:</span><span class="w"> </span><span class="n">main</span>.<span class="n">tex</span> <span class="n">figures</span> <span class="n">chapters</span> <span class="n">prec</span>.<span class="n">fmt</span>
+<span class="w">	</span>pdflatex<span class="w"> </span>-shell-escape<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>main<span class="w">  </span><span class="c1"># might create figures</span>
 <span class="w">	</span>bibtex<span class="w"> </span>main
 <span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-draftmode<span class="w"> </span>main
 <span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-synctex<span class="o">=</span><span class="m">1</span><span class="w"> </span>main
 
-<span class="nf">preamble</span><span class="o">:</span>
+<span class="nf">prec.fmt</span><span class="o">:</span><span class="w"> </span><span class="n">prec</span>.<span class="n">tex</span> <span class="n">styles</span>
 <span class="w">	</span>pdflatex<span class="w"> </span>-ini<span class="w"> </span>-file-line-error<span class="w"> </span>-jobname<span class="o">=</span><span class="s2">&quot;prec&quot;</span><span class="w"> </span><span class="s2">&quot;&amp;pdflatex prec.tex\dump&quot;</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+<span class="w">	</span>…
 </pre></div>
 
 <p></p>
@@ -484,7 +488,7 @@ I get
 
 <p></p>
 As a bonus, this also has an effect when invoking <code>pdflatex</code> only once,
-which is my usual modus operandi when writing:
+which is my usual <em>modus operandi</em> when writing:
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s1">'pdflatex -interaction=batchmode -fmt=prec.fmt main'</span>
 <span class="go">Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main</span>
 <span class="go">  Time (mean ± σ):      5.098 s ±  0.015 s    [User: 5.015 s, System: 0.062 s]</span>

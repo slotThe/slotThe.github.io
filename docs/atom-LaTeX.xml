@@ -23,10 +23,10 @@
         Posted on 2025-01-30
       
       
-        &thinsp;·&thinsp; last modified: 2025-02-05
+        &thinsp;·&thinsp; last modified: 2025-02-15
       
       
-        &thinsp;·&thinsp; <span title="1733 words">7 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1761 words">8 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -261,7 +261,7 @@ This does not generate an output PDF—thereby wasting precious time, since that
 in order to update positional information.</p>
 <p>Adding <code>-draftmode</code> to the first two invocations of <code>pdflatex</code> in the Makefile above
 results in another small speedup when
-completely rebuilding the entire file with all bibliographical information.</p>
+completely rebuilding the entire file from scratch with all bibliographical information.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 <p>Before:</p>
 <pre class="console"><code>$ make clean; time make
 …
@@ -278,22 +278,23 @@ Executed in   20.92 secs    fish           external
 <p>Finally, by default, <code>pdflatex</code> compiles its documents in interactive mode,
 to seemingly provide some kind of error recovery.
 I pretty much never want this,
-so enabling <code>-interaction=batchmode</code> seems like a no-brainer.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
+so enabling <code>-interaction=batchmode</code> seems like a no-brainer.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>
 It also makes <code>pdflatex</code> very quiet when it comes to output—and a bit faster still.
 With the Makefile</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ot">.ONESHELL:</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dt">COMPILE_FLAGS</span> <span class="ch">:=</span><span class="st"> -file-line-error -interaction=batchmode -fmt=prec.fmt</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ot">.PHONY:</span><span class="dt"> build preamble compress clean nuke</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="dv">build:</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>	make preamble</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>	pdflatex -shell-escape <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> main</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>	bibtex main</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -draftmode main</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -synctex=1 main</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="dv">preamble:</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>	pdflatex -ini -file-line-error -jobname=<span class="st">&quot;prec&quot;</span> <span class="st">&quot;&amp;pdflatex prec.tex\dump&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">COMPILE_FLAGS</span> <span class="ch">:=</span><span class="st"> -file-line-error -interaction=batchmode -fmt=prec.fmt</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ot">.PHONY:</span><span class="dt"> clean</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="dv">main.pdf:</span><span class="dt"> main.tex figures chapters prec.fmt</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>	pdflatex -shell-escape <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> main  <span class="co"># might create figures</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>	bibtex main</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -draftmode main</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>	pdflatex <span class="ch">$(</span><span class="dt">COMPILE_FLAGS</span><span class="ch">)</span> -synctex=1 main</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="dv">prec.fmt:</span><span class="dt"> prec.tex styles</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>	pdflatex -ini -file-line-error -jobname=<span class="st">&quot;prec&quot;</span> <span class="st">&quot;&amp;pdflatex prec.tex\dump&quot;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="dv">clean:</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>	…</span></code></pre></div>
 <p>I get</p>
 <pre class="console"><code>$ make clean; time make
 …
@@ -302,7 +303,7 @@ Executed in   17.59 secs    fish           external
    usr time   17.14 secs  148.00 micros   17.14 secs
    sys time    0.39 secs   55.00 micros    0.39 secs</code></pre>
 <p>As a bonus, this also has an effect when invoking <code>pdflatex</code> only once,
-which is my usual modus operandi when writing:</p>
+which is my usual <em>modus operandi</em> when writing:</p>
 <pre class="console"><code>$ hyperfine 'pdflatex -interaction=batchmode -fmt=prec.fmt main'
 Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main
   Time (mean ± σ):      5.098 s ±  0.015 s    [User: 5.015 s, System: 0.062 s]
@@ -340,9 +341,11 @@ who actually know what they’re doing.<a href="#fnref7" class="footnote-back" r
 <p>Thanks to
 <a href="https://tex.stackexchange.com/questions/16734/precompiled-preamble-with-tikz-externalize">this answer</a>
 on TeX.stackexchange for figuring all that out so I didn’t have to.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>Yes, debugging is a lot more difficult in batch mode,
+<li id="fn11"><p>Not that this is something I do particularly often,
+but it’s still nice to speed this part of the process up.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Yes, debugging is a lot more difficult in batch mode,
 but Emacs will do all the one-off compiling while I’m writing the thesis anyways.
-Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>

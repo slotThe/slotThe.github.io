@@ -308,7 +308,7 @@ in order to update positional information.
 
 Adding `-draftmode` to the first two invocations of `pdflatex` in the Makefile above
 results in another small speedup when
-completely rebuilding the entire file with all bibliographical information.
+completely rebuilding the entire file from scratch with all bibliographical information.[^16]
 
 Before:
 
@@ -339,19 +339,20 @@ It also makes `pdflatex` very quiet when it comes to output—and a bit faster s
 With the Makefile
 
 ``` makefile
-.ONESHELL:
 COMPILE_FLAGS := -file-line-error -interaction=batchmode -fmt=prec.fmt
-.PHONY: build preamble compress clean nuke
+.PHONY: clean
 
-build:
-	make preamble
-	pdflatex -shell-escape $(COMPILE_FLAGS) main
+main.pdf: main.tex figures chapters prec.fmt
+	pdflatex -shell-escape $(COMPILE_FLAGS) main  # might create figures
 	bibtex main
 	pdflatex $(COMPILE_FLAGS) -draftmode main
 	pdflatex $(COMPILE_FLAGS) -synctex=1 main
 
-preamble:
+prec.fmt: prec.tex styles
 	pdflatex -ini -file-line-error -jobname="prec" "&pdflatex prec.tex\dump"
+
+clean:
+	…
 ```
 
 I get
@@ -366,7 +367,7 @@ Executed in   17.59 secs    fish           external
 ```
 
 As a bonus, this also has an effect when invoking `pdflatex` only once,
-which is my usual modus operandi when writing:
+which is my usual *modus operandi* when writing:
 
 ``` console
 $ hyperfine 'pdflatex -interaction=batchmode -fmt=prec.fmt main'
@@ -423,3 +424,6 @@ Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main
 [^15]: Yes, debugging is a lot more difficult in batch mode,
        but Emacs will do all the one-off compiling while I'm writing the thesis anyways.
        Even if not, just firing off a one-off `pdflatex main` is very fast.
+
+[^16]: Not that this is something I do particularly often,
+       but it's still nice to speed this part of the process up.
