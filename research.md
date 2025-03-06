@@ -47,6 +47,12 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## Preprints
 
+- *[Duoidal R-Matrices]* <span class="floatright">[@zorman25:duoid-r-matric]</span> \
+
+  We define an analogue of R-matrices for bialgebras in the setting of a monad that is opmonoidal over two tensor products.
+  Analogous to the classical case, such structures bijectively correspond to duoidal structures on the Eilenberg–Moore category of the monad.
+  Further, we investigate how a cocommutative version of this lifts the linearly distributive structure of a normal duoidal category.
+
 - *[Simple algebras and exact module categories]* <span class="floatright">[@coulembier25:simpl]</span> \
   Joint work with Kevin Coulembier and Mateusz Stroiński.
 
@@ -236,6 +242,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 [Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
+[Duoidal R-Matrices]: https://arxiv.org/abs/2503.03445
 [Pivotality, twisted centres, and the anti-double of a Hopf monad]: http://www.tac.mta.ca/tac/volumes/41/4/41-04abs.html
 [Reconstruction of module categories in the infinite and non-rigid settings]: https://arxiv.org/abs/2409.00793
 [Simple algebras and exact module categories]: https://arxiv.org/abs/2501.06629
