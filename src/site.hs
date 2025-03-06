@@ -20,12 +20,11 @@ import Data.List (foldl')
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
-import Data.Time.Format (defaultTimeLocale, formatTime)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
 import System.IO (hPrint)
-import System.Process (runInteractiveCommand)
+import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
 import qualified Text.Pandoc.Builder as Many (toList, singleton)
@@ -274,7 +273,11 @@ postCtx = mconcat
     meta <- getMetadata ident
     case lookupString "last-modified" meta of
       Nothing -> do
-        lastMod <- formatTime defaultTimeLocale "%F" <$> getItemModificationTime ident
+        lastMod <- unsafeCompiler $ asTxt T.strip <$>
+          readProcess "git"
+                      [ "log", "-1", "--format=%ad", "--date=format:%Y-%m-%d"
+                      , "--", toFilePath ident ]
+                      ""
         case lookupString "date" meta of
           Nothing      -> noResult "No creation date means no last modified date."
           Just created -> if lastMod /= created then pure lastMod
