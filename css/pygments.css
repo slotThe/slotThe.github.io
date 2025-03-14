@@ -13,8 +13,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                .err { border: 1px solid #898989 } /* Error */
 .highlight-bqn .err { color: var(--fg); border: none; } /* Ignore errors in BQN, since the parser is not that good */
 .k { font-weight: bold } /* Keyword */
-               .o { font-weight: bold } /* Operator */
-.highlight-bqn .o { font-weight: normal } /* Operator */
+                   .o { font-weight: bold }   /* Operator */
+.highlight-bqn     .o { font-weight: normal } /* Operator */
+.highlight-tex     .o { font-weight: normal } /* Operator */
+.highlight-console .o { font-weight: normal } /* Operator */
 .p { } /* Punctuation */
 .highlight-bqn .py { color: var(--fg-bqn-2-mod) }
 .ch { color: var(--fg-comment2); font-style: italic } /* Comment.Hashbang */
@@ -31,7 +33,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                 .gi { color: #7D7D7D } /* Generic.Inserted */
 .highlight-diff .gi { color: var(--fg-diff-added) } /* Generic.Inserted */
 .go { color: var(--fg-output) } /* Generic.Output */
-.gp { font-weight: bold } /* Generic.Prompt */
+                   .gp { font-weight: bold } /* Generic.Prompt */
+.highlight-console .gp { color: var(--fg-bqn-1-mod); font-weight: normal } /* Generic.Prompt */
 .gs { font-weight: bold } /* Generic.Strong */
 .gu { color: var(--fg-keyword); font-weight: bold } /* Generic.Subheading */
 .gt { color: #6D6D6D } /* Generic.Traceback */
@@ -45,13 +48,15 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .kr { font-weight: bold } /* Keyword.Reserved */
                .kt { background-color: var(--bg-code-accent) } /* Keyword.Type */
 .highlight-bqn .kt { color: var(--fg); background-color: var(--bg) } /* Keyword.Type */
-               .m { color: var(--fg-comment) } /* Literal.Number */
-.highlight-bqn .m { color: var(--fg-output) } /* Literal.Number */
+.m { color: var(--fg-output) } /* Literal.Number */
 .s { color: var(--fg-string) } /* Literal.String */
                .na { color: var(--fg-output) } /* Name.Attribute */
 .highlight-bqn .na { color: var(--fg-bqn-1-mod) } /* Name.Attribute */
-                  .nb { font-weight: bold } /* Name.Builtin */
-.highlight-Python .nb { color: var(--fg-bqn-1-mod) } /* Name.Builtin */
+.highlight-tex .na { color: var(--fg) } /* Name.Attribute */
+                   .nb { font-weight: bold } /* Name.Builtin */
+.highlight-Python  .nb { color: var(--fg-bqn-1-mod) } /* Name.Builtin */
+.highlight-tex     .nb { font-weight: normal } /* Name.Builtin */
+.highlight-console .nb { font-weight: normal } /* Name.Builtin */
 .nc { color: var(--fg-nameclass); font-weight: bold } /* Name.Class */
 .no { } /* Name.Constant */
 .nd { color: #555555; font-weight: bold } /* Name.Decorator */
@@ -66,6 +71,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .nt { color: var(--fg-nametag); font-weight: bold } /* Name.Tag */
                .nv {  } /* Name.Variable */
 .highlight-bqn .nv { color: var(--fg-bqn-sub) } /* Name.Variable */
+.highlight-tex .nv { font-weight: bold } /* Name.Variable */
 .ow { font-weight: bold } /* Operator.Word */
 .w { color: #bbbbbb } /* Text.Whitespace */
 .mb { color: var(--fg-comment) } /* Literal.Number.Bin */
@@ -88,8 +94,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                .sx { color: var(--fg-nameclass) } /* Literal.String.Other */
 .highlight-bqn .sx { color: var(--fg-bqn-string) } /* Literal.String.Other */
 .sr { color: var(--fg-exception) } /* Literal.String.Regex */
-               .s1 { color: #717171 } /* Literal.String.Single */
-.highlight-bqn .s1 { color: var(--fg-bqn-string) } /* Literal.String.Single */
+                   .s1 { color: #717171 } /* Literal.String.Single */
+.highlight-bqn     .s1 { color: var(--fg-bqn-string) } /* Literal.String.Single */
+.highlight-console .s1 { color: var(--fg-bqn-string) } /* Literal.String.Single */
                .ss { color: var(--fg-literal) } /* Literal.String.Symbol */
 .highlight-bqn .ss { color: var(--fg-bqn-string) } /* Literal.String.Symbol */
 .bp { color: var(--fg-exception) } /* Name.Builtin.Pseudo */
