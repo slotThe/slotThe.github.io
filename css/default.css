@@ -197,28 +197,35 @@ img.center-block-dark {
 }
 
 h1 {                    /* Reserved for title */
-    font-size: 1.5em;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 2em;
     font-variant: small-caps;
     font-variant-numeric: normal;  /* No oldstyle figures for all-caps titles */
+    font-weight: normal;
     word-spacing: 0.1em;
     letter-spacing: 0.02em;
     text-align: center;
 }
 
 h2 {                    /* First "real" header */
-    font-size: 1.25em;
+    font-size: 1em;
+    margin-top: 2.1rem;
+    margin-bottom: 1.4rem;
 }
 
 h3 {
-    font-size: 1.15em;
+    font-size: 0.9em;
+    margin-top: 2rem;
+    margin-bottom: 1.4rem;
 }
 
 h4 {
-    font-size: 1.1em;
+    font-size: 0.85em;
 }
 
 h5 {
-    font-size: 1.05em;
+    font-size: 0.8em;
     line-height: 1;
 }
 
@@ -226,16 +233,8 @@ h2, h3, h4 {
     line-height: 1.2;
 }
 
-h2, h3, h4, h5, h6 {
-    text-align: left;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--serif-fonts);
-}
-
-:is(h1, h2, h3, h4, h5, h6)[id] { /* Id means it has a link associated to it */
-    margin-left: -20px; /* Same as `margin-left' of `floatleft' */
+:is(h2, h3, h4, h5, h6)[id] { /* Id means it has a link associated to it */
+    margin-left: -15px;
 }
 
 /**********************************************************************
