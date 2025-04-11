@@ -169,3 +169,28 @@ label.margin-toggle:not(.sidenote-number) {
         cursor: pointer;
     }
 }
+
+/* A full-width figure, for ones that are too wide or big to fit on the page
+   otherwise (and shrinking them would make everything look worse.) */
+figure {                        /* Big screens */
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    max-width: none;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 1em -56% 1em 0;
+}
+@media (max-width: 1120px) {    /* Small or vertical screens */
+    figure {
+        margin-right: -40%;
+    }
+}
+@media (max-width: 960px) {     /* Phones or heavily zoomed in */
+    figure {
+        margin-right: 0;
+        max-width: 100%;
+    }
+}
