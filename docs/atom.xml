@@ -10,8 +10,439 @@
         <email>tonyzorman@mailbox.org</email>
         
     </author>
-    <updated>2025-01-30T00:00:00Z</updated>
+    <updated>2025-04-13T00:00:00Z</updated>
     <entry>
+    <title>Dissertation Typesetting Considerations</title>
+    <link href="https://tony-zorman.com/posts/phd-typesetting.html" />
+    <id>https://tony-zorman.com/posts/phd-typesetting.html</id>
+    <published>2025-04-13T00:00:00Z</published>
+    <updated>2025-04-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2025-04-13
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1898 words">8 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>I just handed in my dissertation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,
+which is more or less the culmination of the last three and a half years of my (mathematical) life.
+While the maths itself is perhaps relatively inaccessible to the general public,
+the typesetting considerations that went into the document might not be.</p>
+<!--more-->
+<p>For reference, here are a few pages of how the end product looks like:</p>
+<figure>
+<a href="../images/phd-typesetting/look1.pdf">
+<img class="pure-img" src="../images/phd-typesetting/look1.png" alt="Two pages, one features a chapter beginning.">
+</a>
+</figure>
+<figure>
+<a href="../images/phd-typesetting/look2.pdf">
+<img class="pure-img" src="../images/phd-typesetting/look2.png" alt="Two pages of the preliminaries.">
+</a>
+</figure>
+<p>While this post really is about typography,
+I will say that making LaTeX
+<a href="https://tony-zorman.com/posts/speeding-up-latex.html">acceptably fast</a>
+for these kinds of medium-sized documents really helped preserve my sanity.
+Fiddling around with preamble precompiling and externalisation is—while painful—definitely worth it.</p>
+<h2 id="the-document-class">The document class</h2>
+<p>I flip-flopped between the only two relevant contenders:
+<a href="https://ctan.org/pkg/memoir">memoir</a>
+and
+<a href="https://ctan.org/pkg/koma-script">KOMA-script</a> (which features the <code>scrbook</code> class).
+In the end, memoir won solely because I found the manual more pleasant to read,
+and thus had an easier time customising things.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+I also had the feeling that memoir laid a more heavy emphasis on typographical considerations,
+but this might be because I didn’t read the KOMA-script manual as closely.
+This choice did probably not matter all that much in the grand scheme of things,
+but I’m quite happy with memoir and would recommend it for any kind of book-length project.</p>
+<h2 id="the-page-layout">The page layout</h2>
+<p>The default <code>a4paper</code> page layout that memoir has is <em>fine</em>,
+though <code>\isopage</code>—inspired by page dimensions suggested by Robert Bringhurst—yields a nicer looking printout in my opinion.
+This is especially true with a slightly larger font size,
+which is more or less mandatory if you have to print something in as big of a format as A4.</p>
+<p><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a><img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.png" alt="ALT"></p>
+<p>Being a little bit wider, it is also good for long-ish formulas and large-ish diagrams,
+of which my thesis has more than enough.
+Together with my chosen fonts below,
+the final page layout results in a maximum of about 72 characters per line.
+This is on the higher side of what I would prefer,
+but either increasing the font size or decreasing the margins
+would impede too much on the actual content,
+so I kept it this way.</p>
+<p>Sidenotes—much more on that later—are constrained to a maximum of around 21 characters via</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\setmarginnotes</span>{17pt}{80pt}{<span class="fu">\onelineskip</span>}</span></code></pre></div>
+<p>This is quite narrow,
+much narrower than the sidenotes on this website for example,
+but still workable.
+It certainly helps me to not go overboard with them,
+which is not advisable anyways given the context of a dissertation in mathematics;
+their mere existence probably stretches my
+<a href="https://shimweasel.com/2018/08/25/novelty-budgets">novelty budget</a>
+quite a bit.</p>
+<h3 id="chapter-headings">Chapter headings</h3>
+<p>For chapter headings memoir features a <code>bringhurst</code> chapter style,
+which however doesn’t include the chapter number besides it:</p>
+<p><img class="pure-img" src="../images/phd-typesetting/no-chapter-number.png" alt="The default memoir style does not feature a chapter number."></p>
+<p>The famous book <span class="citation" data-cites="bringhurst92:el-typ">[@bringhurst92:el-typ]</span> puts a rather large number in the margin,
+which is also what I ended up going with (see the first double page in this post).
+Thankfully, this is not difficult to fix—so much so that someone on TeX.Stack​exachange has
+<a href="https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir">already done it</a>.
+The exact <code>bringhurst.sty</code> file I used is <a href="../images/phd-typesetting/bringhurst.txt">here</a>;
+to use it just replace the call to <code>\chapterstyle</code> with a call to <code>\usepackage</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">bringhurst</span>}<span class="co">% Instead of \chapterstyle{bringhurst}</span></span></code></pre></div>
+<h3 id="the-margin">The margin</h3>
+As you can probably tell from this website,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> I <em>love</em> sidenotes.
+Sadly, this is about where one hits their first bump,
+in that memoir and the
+<a href="https://ctan.org/pkg/sidenotes">sidenotes</a> package
+are incompatible.
+For example, both define a <code>\sidecaption</code> command,
+and both import <code>changepage</code>, although with different options.
+However, LaTeX’s error messages are actually comprehensible in these cases,
+so patching the sidenotes package is straightforward.
+<details>
+<summary>
+Here is the diff
+</summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">diff --git a/sidenotes.sty b/sidenotes.sty</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>index df6a772..cdb866d 100644</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">--- a/sidenotes.sty</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">+++ b/sidenotes.sty</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -7,7 +7,6 @@</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> \RequirePackage{marginnote} % Provides an offset option for the marginals instead of a float</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a> \RequirePackage{caption} % Handles the captions (in the margin)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a> \RequirePackage{xparse} % New LaTeX3 syntax to define macros and environments</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">-\RequirePackage[strict]{changepage} % Changepage package for symmetric twoside handling</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a> \ExplSyntaxOn</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a> \keys_define:nn { sidenotes }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>   {</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -88,51 +87,6 @@</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>     {\@sidenotes@placemarginal{#2}{\textsuperscript{#1}~#3}}</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">-\DeclareCaptionStyle{sidecaption}{font=footnotesize}</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="st">-\NewDocumentCommand \sidecaption {s o o m}</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="st">-{</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">-  \captionsetup{style=sidecaption}</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="st">-  \IfBooleanTF{#1}</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="st">-  { % starred</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="st">-    \IfNoValueOrEmptyTF{#2}</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="st">-    {\marginnote{\caption*{#4}}}</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="st">-    {\marginnote{\caption*{#4}}[#2]}</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">-  }</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">-  { % unstarred</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">-  \IfNoValueOrEmptyTF{#2}</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="st">-    {\def\@sidenotes@sidecaption@tof{#4}}</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="st">-    {\def\@sidenotes@sidecaption@tof{#2}}</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="st">-  \IfNoValueOrEmptyTF{#3}</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="st">-    {\marginnote{\caption[\@sidenotes@sidecaption@tof]{#4}}}</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="st">-    {\marginnote{\caption[\@sidenotes@sidecaption@tof]{#4}}[#3]}</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="st">-  }</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="st">-}</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="st">-\newsavebox{\@sidenotes@marginfigurebox}</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="st">-\DeclareCaptionStyle{marginfigure}{font=footnotesize}</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="st">-\NewDocumentEnvironment{marginfigure} { o }</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="st">-{</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="st">-  \begin{lrbox}{\@sidenotes@marginfigurebox}</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="st">-    \begin{minipage}{\marginparwidth}</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="st">-      \captionsetup{type=figure,style=marginfigure}</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="st">-}</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="st">-{</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="st">-    \end{minipage}%</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="st">-  \end{lrbox}%</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="st">-  \@sidenotes@placemarginal{#1}{\usebox{\@sidenotes@marginfigurebox}}</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="st">-}</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="st">-\newsavebox{\@sidenotes@margintablebox}</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="st">-\DeclareCaptionStyle{margintable}{font=footnotesize}</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="st">-\NewDocumentEnvironment{margintable} { o }</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="st">-{</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="st">-  \begin{lrbox}{\@sidenotes@margintablebox}</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="st">-    \begin{minipage}{\marginparwidth}</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="st">-      \captionsetup{type=table,style=margintable}</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="st">-}</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="st">-{</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="st">-    \end{minipage}</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="st">-  \end{lrbox}</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="st">-  \@sidenotes@placemarginal{#1}{\usebox{\@sidenotes@margintablebox}}</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="st">-}</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a> \AtBeginDocument{%</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a> \newlength{\@sidenotes@extrawidth}</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a> \setlength{\@sidenotes@extrawidth}{\marginparwidth}</span></code></pre></div>
+</details>
+<p>The <code>\sidenote</code> command now works as expected;
+I wrote a small wrapper that additionally sets sidenotes ragged left or right,
+depending on the parity of the page.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">sidenotes</span>}  <span class="co">% Local one.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">mparhack</span>}</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\renewcommand*</span>{<span class="ex">\marginfont</span>}{<span class="fu">\scriptsize</span>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\renewcommand</span>{<span class="ex">\note</span>}[1]{<span class="co">%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\sidenote</span>{<span class="co">%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\scriptsize</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\checkoddpage</span><span class="co">%</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\ifoddpage</span><span class="co">%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\raggedright</span><span class="co">%</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\else</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\raggedleft</span><span class="co">%</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\fi</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    {#1}<span class="co">%</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  }<span class="co">%</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<figure>
+<a href="../images/phd-typesetting/look3.pdf">
+<img class="pure-img" src="../images/phd-typesetting/look3.png" alt="Two pages with sidenotes; one set raggedright and one raggedleft.">
+</a>
+</figure>
+<p>Interestingly, I don’t actually use the <code>\sidecaption</code> implementation of either memoir or sidenotes,
+but chose to roll my own:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Mandatory argument contains the label text and the label itself;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">% the optional argument moves the label text around.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\renewcommand</span>{<span class="ex">\scaption</span>}[2][0cm]{<span class="co">%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\marginnote</span>{<span class="co">%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\vspace</span>{#1}<span class="co">%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">\caption</span>{<span class="co">%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\checkoddpage</span><span class="co">%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\ifoddpage</span><span class="co">%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">\raggedright</span><span class="co">%</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\else</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">\raggedleft</span><span class="co">%</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\fi</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      {#2}<span class="co">%</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    }<span class="co">%</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This is probably less code than what it would take to customise memoir’s <code>\sidecaption</code> to do what I want,
+and I get more control over the actual typesetting on top of it.
+The price one pays is that the usage of <code>\scaption</code> is a tad unintuitive,
+in that the <code>\label</code> of the figure has to go inside of the caption:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">figure</span>}[htbp]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\centering</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tikzfig</span>{the-figure}</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\scaption</span>[3cm]{<span class="co">%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    The caption.<span class="co">%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">\label</span>{<span class="ex">fig:the-label</span>}<span class="co">%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">figure</span>}</span></code></pre></div>
+<p>However, I think the end result looks quite nice:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p><img class="pure-img" src="../images/phd-typesetting/captions.png" alt="Sidecaptions."></p>
+<hr />
+<p>Another thing I did was pushing equation numbers into the margin.
+Instead of</p>
+<p><img class="pure-img" src="../images/phd-typesetting/equations-before.png" alt="Default LaTeX equation labels."></p>
+<p>my thesis instead displays such an equation as</p>
+<p><img class="pure-img" src="../images/phd-typesetting/equations-after.png" alt="Equation labels in the margin."></p>
+<p>which in particular means that equation numbers are sometimes on the left of the page,
+depending on where the margin is.
+This is quite nice for larger diagrams or longer formulas,
+which nevertheless still have to have an equation number.
+Figures now neither need to intrude upon the margin,
+nor be scaled quite so aggressively.</p>
+<figure>
+<a href="../images/phd-typesetting/equations-in-margin.pdf">
+<img class="pure-img" src="../images/phd-typesetting/equations-in-margin.png" alt="Double page example of equation labels in the margin.">
+</a>
+</figure>
+<p>The code for this is a bit more involved, but luckily TeX.Stackexchange has us covered yet again!</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Protrude equation numbers into the margin.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">% Sources:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">%   - https://tex.stackexchange.com/questions/258574/placing-the-equation-number-in-the-left-hand-margin</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">%   - https://www.overleaf.com/learn/latex/Page_size_and_margins</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatletter</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">\let\oldmaketag@@@\maketag@@@</span><span class="co">%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\def\oldtagform@</span>#1{<span class="fu">\oldmaketag@@@</span>{(<span class="fu">\ignorespaces</span>#1<span class="fu">\unskip\@@italiccorr</span>)}}</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">\renewcommand</span>{<span class="ex">\eqref</span>}[1]{<span class="fu">\textup</span>{<span class="fu">\oldtagform@</span>{<span class="kw">\ref</span>{<span class="ex">#1</span>}}}}</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">\newlength</span>{<span class="fu">\width@@</span>}</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">\def\maketag@@@</span>#1{<span class="fu">\hbox</span>{<span class="fu">\hskip</span>1sp<span class="fu">\m@th\llap</span>{<span class="co">%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\normalfont</span>#1<span class="co">%</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\settowidth</span>{<span class="fu">\width@@</span>}{#1}<span class="co">%</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\checkoddpage\ifoddpage\hspace</span>{-<span class="fu">\the\width@@</span>-<span class="fu">\the\marginparsep</span>}</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\else\hspace</span>{<span class="fu">\textwidth+\the\marginparsep+</span>.1cm}<span class="fu">\fi</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    }}}</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatother</span></span></code></pre></div>
+<h2 id="picking-fonts">Picking fonts</h2>
+<p>For the default calligraphic font, I settled on <code>boondoxupr</code> from the excellently documented <code>mathalfa</code> package.
+It changes the default Computer Modern alphabet</p>
+<p><img class="pure-img" src="../images/phd-typesetting/cm-script.png" alt="ALT"></p>
+<p>to</p>
+<p><img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="ALT"></p>
+<p>I also went ahead and chose a Fraktur font that is slightly less bold—<code>esstix</code>.</p>
+<p><img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="ALT"></p>
+<p>However, much more important than that is a good text font.
+For me, there are two top contenders here,
+which is <a href="https://github.com/alerque/libertinus">Libertinus</a>—<!--
+-->provided by the <a href="https://ctan.org/pkg/libertinus">libertinus</a> package—<!--
+-->on the one hand</p>
+<p><img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="ALT"></p>
+<p>and Palatino—or a clone of it, in the form of <a href="https://ctan.org/pkg/newpx">newpx</a>—on the other:</p>
+<p><img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="ALT"></p>
+<p>Libertinus has one critical flaw,
+which is that the italic <em>f</em> extends way too far to the right.
+This clashes quite significantly with <code>boondoxupr</code></p>
+<p><img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="ALT"></p>
+<p>and the issue only gets exacerbated once <a href="https://ctan.org/pkg/microtype">microtype</a> comes into play and squashes those spaces even more.
+Palatino, while not perfect, fairs much better here:</p>
+<p><img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="ALT"></p>
+<p>As I didn’t want to manually check every occurrence of <em>f</em> at the end of a word and potentially add a thin space after it,
+the choice was forced upon me.
+There are lots of knobs to turn with the <code>newpxtext</code> and <code>newpxmath</code> packages,
+the full code looks like this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[osf,scosf,theoremfont,tighter,largesc,trueslanted,p]{<span class="ex">newpxtext</span>}</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[varqu,varl,scaled=.98]{<span class="ex">zi4</span>}<span class="co">% inconsolata for mono</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\linespread</span>{1.05}<span class="co">% A bit more leading</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">textcomp</span>}</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[amsthm,upint]{<span class="ex">newpxmath</span>}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[cal=boondoxupr,frak=esstix,frakscaled=0.95]{<span class="ex">mathalfa</span>}</span></code></pre></div>
+<p>Some options should be self-explanitory<!--
+-->—like <code>tighter</code> or the <code>amsthm</code> compatibility—<!--
+-->while other might require some further explanation.</p>
+<ul>
+<li><p><code>osf</code> and <code>scosf</code> make sure to enable
+<a href="https://en.wikipedia.org/wiki/Text_figures">oldstyle figures</a>
+everywhere-is, even within small caps,
+and <code>largesc</code> slightly increases the size of small caps,
+to more accurately model the size used by Linotype’s version of Palatino
+(the default value here is really more petite caps than small caps).</p></li>
+<li><p><code>theoremfont</code> changes the default font used for the plain theorem style of amsthm,
+which I use for theorems, corollaries, and the like.
+It keeps the text itself in italics, but uses upright figures, parentheses, and punctuation symbols.
+For example, with this option, you get
+theorem statements like this</p>
+<p><img class="pure-img" src="../images/phd-typesetting/theoremfont.png" alt="ALT"></p>
+<p>instead of (notice the parentheses surrounding the numbering or the colon)</p>
+<p><img class="pure-img" src="../images/phd-typesetting/no-theoremfont.png" alt="ALT"></p></li>
+<li><p><code>p</code> uses proportional figures (numbers) instead of tabular ones.</p></li>
+</ul>
+<p>The <a href="https://ctan.ebinger.cc/tex-archive/fonts/newpx/doc/newpxdoc.pdf">newpx manual</a>
+doesn’t read quite as nicely as that of mathalfa or memoir,
+but it’s still worth a read to get a feeling for all of the different options that exist.</p>
+<hr />
+<p>In terms of
+<a href="https://ctan.org/pkg/microtype">microtype</a>
+I’m actually quite happy with the default settings.
+I merely added a little bit more
+<a href="https://en.wikipedia.org/wiki/Letter_spacing">tracking</a>
+to <span class="small-caps">small caps</span> and
+<a href="https://en.wikipedia.org/wiki/Hanging_punctuation">protrusion</a>
+to sub and superscripts:<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[tracking=true]{<span class="ex">microtype</span>}</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\SetTracking</span>{encoding=*,shape=it*}{10}</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\SetTracking</span>{encoding=*}{10}</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\SetProtrusion</span><span class="co">%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  {encoding=T1,size={7,8}}</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}</span></code></pre></div>
+<hr />
+<p>One important change has to be made to <code>biblatex</code> when using a font’s oldstyle figures:
+the references in the main text should nevertheless use
+<a href="https://en.wikipedia.org/wiki/Text_figures">lining figures</a>.
+That is, instead of</p>
+<p><img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="ALT"></p>
+<p>we rather want<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p><img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="ALT"></p>
+<p>Luckily, it’s pretty easy to change the field format:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareFieldFormat</span>{labelalpha}{<span class="fu">\liningnums</span>{#1}}</span></code></pre></div>
+<h2 id="miscellaneous-thoughts">Miscellaneous thoughts</h2>
+<p>Small macros like the following
+(inspired by <a href="https://tex.stackexchange.com/questions/422/how-do-i-repeat-a-theorem-number">this answer</a>)
+were rather large quality of life improvements:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatletter</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\newtheorem*</span>{rep@theorem}{<span class="fu">\rep@title</span>}</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\newenvironment</span>{reptheorem}[1]{<span class="co">%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\def\rep@title</span>{<span class="kw">\cref</span>{<span class="ex">#1</span>}}<span class="kw">\begin</span>{<span class="ex">rep</span><span class="er">@theorem</span>}<span class="co">%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}{<span class="co">%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">\end</span>{<span class="ex">rep</span><span class="er">@theorem</span>}<span class="co">%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatother</span></span></code></pre></div>
+<p>This creates an environment with an immediate reference to an already existing theorem, proposition, and so on,
+which you might want to use in an introduction—much more sightly than something like <em>Theorem (Theorem x.y)</em>.
+One can use it just like a regular <code>theoremstyle</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Label should exist elsewhere.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">reptheorem</span>}{cor: pivotal_from_central_anti_central}</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  Let <span class="ss">\(</span><span class="sc">\cat</span><span class="ss">{C}\)</span> be a rigid monoidal category.</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  If <span class="ss">\(</span><span class="sc">\cat</span><span class="ss">{C}\)</span> admits a central Hopf monad <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{D}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  and an anti<span class="fu">\hyp</span>{}central comodule monad <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{Q}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  then it is pivotal if and only if</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{D}(</span><span class="sc">\cat</span><span class="ss">{C}) </span><span class="sc">\cong</span><span class="ss"> </span><span class="sc">\mathfrak</span><span class="ss">{Q}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  as monads.</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">reptheorem</span>}</span></code></pre></div>
+<p>This will then be typeset like so, with a link to the actual result:</p>
+<p><img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="ALT"></p>
+<p>This taught me a bit more about how <code>amsmath</code> environments work under the hood.
+Plus, using <code>cleveref</code> saves one from having to define many different commands like <code>reptheorem</code>, <code>repcorollary</code>, and so on<!--
+-->—no going around obsessively checking whether a theorem invariably became a proposition a while ago.</p>
+<hr />
+<p>A general advice I have—and also got from an older PhD student—is to start early.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+Even just streamlining and unifying notation takes more time than ones thinks,
+especially if one also cares at least an epsilon about typography.
+What thankfully cuts down on the time needed is that LaTeX has been around for a long time,
+and most package manuals (that I’ve read) are quite high quality,
+so chances are that someone else will probably have solved your super specific problem already.
+Still, start early.</p>
+<hr />
+<p>Lastly, I will just leave the following <em>very important</em> bibLaTeX configuration here.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareDelimFormat</span>{finalnamedelim}{<span class="co">% Force Oxford comma</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\ifnumgreater</span>{<span class="fu">\value</span>{liststop}}{2}{,}{}<span class="co">%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\addspace\bibstring</span>{and}<span class="fu">\space</span>}</span></code></pre></div>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The thesis still has to go through a review process,
+so I cannot post it publicly at this time.
+Once that is done, however,
+I will update this sidenote with the relevant link
+to both the PDF and the full source code.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>It is also much more extensive. Both manuals clock in at around 600 pages,
+but the memoir manual is only about one class!
+There are also a bunch of concrete and extensive examples, which are very good to learn from.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} The different default page layouts for A4 paper, taken from the memoir manual.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Unless you’re on mobile, I suppose.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Additionally setup with the <code>caption</code> package:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">caption</span>}</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\captionsetup</span>{<span class="co">%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  style=base,<span class="co">%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  labelfont=footnotesize,<span class="co">%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  textfont=scriptsize,<span class="co">%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn6"><p>{-} Don’t forget the usual incantation to disable protrusion for the table of contents, though:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand</span>{<span class="ex">\TOC</span>}{</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\microtypesetup</span>{protrusion=false}</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tableofcontents</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\microtypesetup</span>{protrusion=true}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn7"><p>{-} Also pictured:
+<a href="https://gwern.net/red">rubrication</a>
+and starting sections with a few bits of small caps,
+which I think I picked up from Edward Tufte.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Thanks, Florian!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Speeding up LaTeX compilation</title>
     <link href="https://tony-zorman.com/posts/speeding-up-latex.html" />
     <id>https://tony-zorman.com/posts/speeding-up-latex.html</id>

@@ -1,0 +1,57 @@
+%
+% Source: https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir
+%
+\RequirePackage{xcoffins}
+\NewCoffin{\main}
+\NewCoffin{\titleline}
+\NewCoffin{\chapternumber}
+
+\makechapterstyle{Bringhurst}{%
+  % Stolen from memoir's default implementation.
+  \renewcommand*\chapterheadstart{}
+  \renewcommand*\printchaptername{}
+  \renewcommand*\chapternamenum{}
+  \renewcommand*\afterchapternum{}
+  % Numbered chapters.
+  \renewcommand*\printchapternum{%
+    \SetHorizontalCoffin\chapternumber{%
+      \textcolor{black!50}{\thechapter}%
+    }%
+    \ScaleCoffin\chapternumber{8}{8}%
+  }
+  % Unnumbered chapters.
+  \renewcommand*\printchapternonum{\SetHorizontalCoffin\chapternumber{}}
+  \renewcommand*\printchaptertitle[1]{%
+    \memRTLraggedright\normalfont\large\MakeUppercase{\textls[75]{##1}}%
+  }
+  \renewcommand*\afterchaptertitle{%
+    \vskip.5\onelineskip%
+    \SetHorizontalCoffin\titleline{\color{black!50}\rule{\linewidth}{1.5pt}}%
+    \JoinCoffins\main\titleline%
+    \JoinCoffins*\main\chapternumber(\textwidth+\marginparsep,-4\baselineskip)%
+    \TypesetCoffin\main%
+    \vskip\onelineskip%
+  }
+}
+
+\chapterstyle{Bringhurst}
+
+%%% Bringhurst header style
+%% Sections and subsections
+\setsecnumformat{\normalfont\csname the#1\endcsname\quad}
+
+%% The section style
+\newcommand{\uppercasehead}[1]{%
+  \noindent\normalfont\scshape\MakeLowercase{\textls[50]{#1}}}
+\setsecindent{0pt}
+\setsecheadstyle{\uppercasehead}
+
+%% The subsection style
+\newcommand{\itshapehead}[1]{\normalfont\itshape#1}%
+\setsubsecheadstyle{\itshapehead}
+\setsecnumdepth{subsection}
+
+%% The subsubsection style
+\setsubsubsecheadstyle{\itshapehead}
+
+\endinput
