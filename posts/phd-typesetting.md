@@ -7,7 +7,7 @@ tags: LaTeX
 I just handed in my dissertation[^1],
 which is more or less the culmination of the last three and a half years of my (mathematical) life.
 While the maths itself is perhaps relatively inaccessible to the general public,
-the typesetting considerations that went into the document might not be.
+some of the typesetting considerations that went into the document might not be.
 
 <!--more-->
 
@@ -31,7 +31,7 @@ For reference, here are a few pages of how the end product looks like:
 While this post really is about typography,
 I will say that making LaTeX
 [acceptably fast](https://tony-zorman.com/posts/speeding-up-latex.html)
-for these kinds of medium-sized documents really helped preserve my sanity.
+for these kinds of medium-sized documents really helped preserve an epsilon of sanity.
 Fiddling around with preamble precompiling and externalisation is—while painful—definitely worth it.
 
 # The document class
