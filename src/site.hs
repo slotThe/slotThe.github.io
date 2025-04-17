@@ -179,19 +179,10 @@ standalones :: Context String -> Rules ()
 standalones tagCtx = do
   -- Mackey functors seminar
   mkStandalone "mackey-functors.md" pure tagCtx Nothing
-  -- Posters
-  let posterGlob :: String -> Pattern
-        = \pth -> fromGlob ("posters/" <> pth <> "/**") .&&. complement "**.md"
-  --- CT2024
-  match (posterGlob "ct2024") do
-    route   idRoute
-    compile copyFileCompiler
-  mkStandalone "posters/ct2024/ct2024.md" pure tagCtx (Just "ct2024.html")
-  --- Ferrara 2024
-  match (posterGlob "ferrara2024") do
-    route   idRoute
-    compile copyFileCompiler
-  mkStandalone "posters/ferrara2024/ferrara2024.md" pure tagCtx (Just "ferrara2024.html")
+  -- Talks and posters
+  mkPosterTalk "talks/hopf25"
+  mkPosterTalk "posters/ct2024"
+  mkPosterTalk "posters/ferrara2024"
   -- Git introduction
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…
@@ -213,6 +204,18 @@ standalones tagCtx = do
     route idRoute
     compile $ getResourceBody >>= relativizeUrls
  where
+  mkPosterTalk :: String -> Rules ()
+  mkPosterTalk dir = do
+    match (fromGlob (dir <> "/**") .&&. complement "**.md") do
+      route   idRoute
+      compile copyFileCompiler
+    mkStandalone (fromGlob $ dir <> "/" <> file <> ".md")
+                 pure
+                 tagCtx
+                 (Just $ file <> ".html")
+   where
+    file = reverse . takeWhile (/= '/') . reverse $ dir
+
   -- Compile a standalone site.
   mkStandalone
     :: Pattern                                 -- Match the main standalone page
