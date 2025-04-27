@@ -46,7 +46,7 @@ main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
   match "css/*" do
     route   idRoute
     compile compressCssCompiler
-  match (     "favicon.png"
+  match (     "favicon.ico"
          .||. "images/**"
          .||. "talks/**.pdf"
          .||. "css/fonts/**"
