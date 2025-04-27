@@ -97,6 +97,31 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *Reconstruction for Lax Module Monads* \
+   2025-04-25, Hopf25, Brussels;
+   [slides](./talks/hopf25/slides.pdf)
+   and
+   [accompanying website](./hopf25.html).
+
+   A classical result by Moerdijk and McCrudden is that
+   Tannaka–Krein reconstruction for bialgebras may be lifted to bimonads:
+   there is a bijection between
+   bimonad structures on a given monad, and
+   monoidal structures on its Eilenberg–Moore category that are compatible with the forgetful functor.
+   This theorem may even be generalised to comodules over a bimonad.
+
+   In contrast to these kinds of reconstruction results,
+   we study reconstruction results that do not require a forgetful functor.
+   This comes at the cost of not recovering the algebraic object of interest on-the-nose,
+   but only up to Morita equivalence.
+   This talk generalises a result of Ostrik about Hopf algebras on a finite tensor categories
+   to the general case of characterising lax module monads on a nice module category over a general abelian monoidal category with enough projectives.
+   Crucially, the proof does not need any rigidity assumptions on the underlying category.
+   As an application, we give conceptual proofs of the fundamental theorem of Hopf modules,
+   and the fact that a bimonad is Hopf if and only if it is strong as a module monad over its base category.
+
+   The talk is based on joint work with Matti Stroiński [@stroinski2024:reconstr].
+
 - *2-Categorical Centre Constructions* \
   2024-11-01, Seminar "Factorisation homology", Kleinwalsertal.
 
