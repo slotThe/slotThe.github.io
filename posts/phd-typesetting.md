@@ -54,7 +54,7 @@ though `\isopage`—inspired by page dimensions suggested by Robert Bringhurst�
 This is especially true with a slightly larger font size,
 which is more or less mandatory if you have to print something in as big of a format as A4.
 
-[^6]<img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.png" alt="ALT">
+[^6]<img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.png" alt="The different page layouts that memoir offers: the default for a4paper, \medievalpage, \isopage, and \semiisopage.">
 
 Being a little bit wider, it is also good for long-ish formulas and large-ish diagrams,
 of which my thesis has more than enough.
@@ -306,15 +306,15 @@ The code for this is a bit more involved, but luckily TeX.Stackexchange has us c
 For the default calligraphic font, I settled on `boondoxupr` from the excellently documented `mathalfa` package.
 It changes the default Computer Modern alphabet
 
-<img class="pure-img" src="../images/phd-typesetting/cm-script.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/cm-script.png" alt="Computer modern (cm) calligraphic alphabet.">
 
 to
 
-<img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="boondoxupr calligraphic alphabet. Also features lower case letters.">
 
 I also went ahead and chose a Fraktur font that is slightly less bold—`esstix`.
 
-<img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="esstix fraktur alphabet. Also features lower case letters.">
 
 However, much more important than that is a good text font.
 For me, there are two top contenders here,
@@ -322,22 +322,22 @@ which is [Libertinus](https://github.com/alerque/libertinus)—<!--
 -->provided by the [libertinus](https://ctan.org/pkg/libertinus) package—<!--
 -->on the one hand
 
-<img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="Writing sample of Libertinus.">
 
 and Palatino—or a clone of it, in the form of [newpx](https://ctan.org/pkg/newpx)—on the other:
 
-<img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="Writing sample of the newpx Palatino clone.">
 
 Libertinus has one critical flaw,
 which is that the italic *f* extends way too far to the right.
 This clashes quite significantly with `boondoxupr`
 
-<img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font.">
 
 and the issue only gets exacerbated once [microtype](https://ctan.org/pkg/microtype) comes into play and squashes those spaces even more.
 Palatino, while not perfect, fairs much better here:
 
-<img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*.">
 
 As I didn't want to manually check every occurrence of *f* at the end of a word and potentially add a thin space after it,
 the choice was forced upon me.
@@ -370,11 +370,11 @@ Some options should be self-explanitory<!--
   For example, with this option, you get
   theorem statements like this
 
-  <img class="pure-img" src="../images/phd-typesetting/theoremfont.png" alt="ALT">
+  <img class="pure-img" src="../images/phd-typesetting/theoremfont.png" alt="theoremfont forces parentheses to be upright, even when the rest of the text is set in italics.">
 
   instead of (notice the parentheses surrounding the numbering or the colon)
 
-  <img class="pure-img" src="../images/phd-typesetting/no-theoremfont.png" alt="ALT">
+  <img class="pure-img" src="../images/phd-typesetting/no-theoremfont.png" alt="Not supplying the theoremfont option just sets parentheses as in the surrounding text.">
 
 - `p` uses proportional figures (numbers) instead of tabular ones.
 
@@ -410,11 +410,11 @@ the references in the main text should nevertheless use
 [lining figures](https://en.wikipedia.org/wiki/Text_figures).
 That is, instead of
 
-<img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="Citations use oldstyle figures, even though most of the citation is all upper case letters.">
 
 we rather want[^10]
 
-<img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="Citations using lining figures.">
 
 Luckily, it's pretty easy to change the field format:
 
@@ -457,7 +457,7 @@ One can use it just like a regular `theoremstyle`:
 
 This will then be typeset like so, with a link to the actual result:
 
-<img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
 
 This taught me a bit more about how `amsmath` environments work under the hood.
 Plus, using `cleveref` saves one from having to define many different commands like `reptheorem`, `repcorollary`, and so on<!--

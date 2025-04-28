@@ -74,6 +74,8 @@
         Posted on 2025-04-13
       
       
+        &thinsp;·&thinsp; last modified: 2025-04-28
+      
       
         &thinsp;·&thinsp; <span title="1902 words">8 min read</span> &thinsp;·&nbsp;
       
@@ -156,7 +158,7 @@ which is more or less mandatory if you have to print something in as big of a fo
 <p></p>
 <!--
 --><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">The different default page layouts for A4 paper, taken from the memoir manual.</div><!--
---><img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.png" alt="ALT">
+--><img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.png" alt="The different page layouts that memoir offers: the default for a4paper, \medievalpage, \isopage, and \semiisopage.">
 <p></p>
 Being a little bit wider, it is also good for long-ish formulas and large-ish diagrams,
 of which my thesis has more than enough.
@@ -403,15 +405,15 @@ The code for this is a bit more involved, but luckily TeX.Stackexchange has us c
 For the default calligraphic font, I settled on <code>boondoxupr</code> from the excellently documented <code>mathalfa</code> package.
 It changes the default Computer Modern alphabet
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/cm-script.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/cm-script.png" alt="Computer modern (cm) calligraphic alphabet.">
 <p></p>
 to
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="boondoxupr calligraphic alphabet. Also features lower case letters.">
 <p></p>
 I also went ahead and chose a Fraktur font that is slightly less bold—<code>esstix</code>.
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="esstix fraktur alphabet. Also features lower case letters.">
 <p></p>
 However, much more important than that is a good text font.
 For me, there are two top contenders here,
@@ -419,22 +421,22 @@ which is <a href="https://github.com/alerque/libertinus">Libertinus</a>—<!--
 -->provided by the <a href="https://ctan.org/pkg/libertinus">libertinus</a> package—<!--
 -->on the one hand
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="Writing sample of Libertinus.">
 <p></p>
 and Palatino—or a clone of it, in the form of <a href="https://ctan.org/pkg/newpx">newpx</a>—on the other:
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="Writing sample of the newpx Palatino clone.">
 <p></p>
 Libertinus has one critical flaw,
 which is that the italic <em>f</em> extends way too far to the right.
 This clashes quite significantly with <code>boondoxupr</code>
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font.">
 <p></p>
 and the issue only gets exacerbated once <a href="https://ctan.org/pkg/microtype">microtype</a> comes into play and squashes those spaces even more.
 Palatino, while not perfect, fairs much better here:
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*.">
 <p></p>
 As I didn’t want to manually check every occurrence of <em>f</em> at the end of a word and potentially add a thin space after it,
 the choice was forced upon me.
@@ -470,13 +472,13 @@ For example, with this option, you get
 theorem statements like this
 <p></p>
 
-<img class="pure-img" src="../images/phd-typesetting/theoremfont.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/theoremfont.png" alt="theoremfont forces parentheses to be upright, even when the rest of the text is set in italics.">
 <p></p>
 
 instead of (notice the parentheses surrounding the numbering or the colon)
 <p></p>
 
-<img class="pure-img" src="../images/phd-typesetting/no-theoremfont.png" alt="ALT"></li>
+<img class="pure-img" src="../images/phd-typesetting/no-theoremfont.png" alt="Not supplying the theoremfont option just sets parentheses as in the surrounding text."></li>
 <li><p></p>
 
 <code>p</code> uses proportional figures (numbers) instead of tabular ones.</li>
@@ -520,7 +522,7 @@ the references in the main text should nevertheless use
 <a href="https://en.wikipedia.org/wiki/Text_figures">lining figures</a>.
 That is, instead of
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="Citations use oldstyle figures, even though most of the citation is all upper case letters.">
 <p></p>
 we rather want<!--
 --><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">Also pictured:
@@ -529,7 +531,7 @@ and starting sections with a few bits of small caps,
 which I think I picked up from Edward Tufte.</div><!--
 -->
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="Citations using lining figures.">
 <p></p>
 Luckily, it’s pretty easy to change the field format:
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\DeclareFieldFormat</span><span class="nb">{</span>labelalpha<span class="nb">}{</span><span class="k">\liningnums</span><span class="nb">{</span>#1<span class="nb">}}</span>
@@ -568,7 +570,7 @@ One can use it just like a regular <code>theoremstyle</code>:
 <p></p>
 This will then be typeset like so, with a link to the actual result:
 <p></p>
-<img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="ALT">
+<img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
 <p></p>
 This taught me a bit more about how <code>amsmath</code> environments work under the hood.
 Plus, using <code>cleveref</code> saves one from having to define many different commands like <code>reptheorem</code>, <code>repcorollary</code>, and so on<!--
