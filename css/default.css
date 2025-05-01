@@ -5,10 +5,10 @@
    [2]: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
 */
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 *, *::before, *::after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 html {
@@ -17,15 +17,35 @@ html {
 
 body {
     color: var(--fg);
+    background-color: var(--bg);
+
     font-size: 21px;
     font-family: var(--proportional-fonts);
     font-variant-numeric: oldstyle-nums;
     font-display: block;
     line-height: 1.4;
+
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;            /* justification ⇒ hyphenation */
     text-rendering: optimizeLegibility;
+    margin: 0;
+
+    /* For stacking the navigation bar next to the main text. */
+    display: -webkit-flex;
+    -webkit-flex-flow: row wrap;
+    display: -ms-flexbox;
+    -ms-flex-flow: row wrap;
+}
+
+.text-space {
+    display: inline-block;
+    width: 75%;
+}
+@media (max-width: 767px) { /* Use full width on phones */
+    body > .text-space {
+        width: 100%;
+    }
 }
 
 span.small-caps {
@@ -89,12 +109,6 @@ div#border-table table tr {
 /**********************************************************************
   FURTHER FONT SETTINGS
 */
-
-.pure-g [class *="pure-u"],
-.pure-g-r [class *="pure-u"] {               /* body */
-    font-family: var(--proportional-fonts);
-    text-rendering: optimizeLegibility;
-}
 
 pre {                   /* Block code */
     text-align: left;
@@ -194,6 +208,7 @@ img.center-block-dark {
     font-size: 0.95em;
     font-style: italic;
     text-align: left;
+    margin: 1em 0;
 }
 
 h1 {                    /* Reserved for title */
@@ -235,67 +250,6 @@ h2, h3, h4 {
 
 :is(h2, h3, h4, h5, h6)[id] { /* Id means it has a link associated to it */
     margin-left: -15px;
-}
-
-/**********************************************************************
-  LEFT HAND SIDE NAVIGATION
-*/
-
-div#navigation {
-    text-align: right;
-    padding-left: 1.25em;
-    padding-right: 3em;
-    padding-top: 1.25em;
-    padding-bottom: 1em;
-    position: static;
-    float: right;
-    display: inline-block;
-}
-
-div#navigation a {
-    font-size: 19px;
-    font-weight: bold;
-    text-decoration: none;
-    text-transform: none;
-}
-
-div#navigation .menu-title {
-    font-size: 19px;
-}
-
-div#navigation span.menu-subtitle {
-    font-size: 19px;
-    font-weight: normal;
-    font-style: italic;
-}
-
-/* On slightly smaller screens, left-align the navigation. */
-@media (max-width: 1366px) {
-    div#navigation {
-        float: none;
-        padding-right: 1em;
-    }
-}
-
-/* On much smaller screens; i.e., mobile or heavily zoomed in, put the
-   navigation at the top instead.
-*/
-@media (max-width: 767px) {
-    div#navigation {
-        position: static;
-        text-align: center;
-        display: block;
-    }
-
-    div#navigation > .pure-menu.pure-menu-open > ul > li {
-        display: inline-block;
-        zoom: 1;
-        *display: inline;
-    }
-
-    div#content {
-        margin-left: 1em;
-    }
 }
 
 /**********************************************************************
@@ -526,20 +480,20 @@ summary {
 }
 
 summary:before {
-  content: '';
-  border-width: .4rem;
-  border-style: solid;
-  border-color: transparent transparent transparent var(--fg);
-  position: absolute;
-  top: 1.5rem;
-  left: 1rem;
-  transform: rotate(0);
-  transform-origin: .2rem 50%;
-  transition: .25s transform ease;
+    content: '';
+    border-width: .4rem;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--fg);
+    position: absolute;
+    top: 1.5rem;
+    left: 1rem;
+    transform: rotate(0);
+    transform-origin: .2rem 50%;
+    transition: .25s transform ease;
 }
 
 details[open] > summary:before {  /* Turn ▸ (closed) into ▾ (open) on click. */
-  transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 details {
@@ -560,4 +514,14 @@ span.email b {                  /* Email obfuscation */
 abbr[title] {
     border-bottom: none;
     text-decoration: 1px underline dotted;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.fourgrid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
 }

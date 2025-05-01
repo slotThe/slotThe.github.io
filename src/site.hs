@@ -254,7 +254,7 @@ rss tags = do
     { feedTitle       = "Tony Zorman · Blog"
     , feedDescription = "Maths, Haskell, Emacs, and whatever else comes to mind."
     , feedAuthorName  = "Tony Zorman"
-    , feedAuthorEmail = "tonyzorman@mailbox.org"
+    , feedAuthorEmail = "mail@tony-zorman.com"
     , feedRoot        = siteURL
     }
 

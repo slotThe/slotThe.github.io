@@ -24,25 +24,17 @@ My configuration can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad).
 
 <p></p>
-<div class="pure-g">
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true"
+<div class="fourgrid">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true"
        alt="GitHub stats for xmonad/xmonad">
- </div>
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true"
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true"
        alt="GitHub stats for xmonad/xmonad-extras">
- </div>
 </div>
-<div class="pure-g">
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true"
+<div class="fourgrid">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true"
        alt="GitHub stats for xmonad/xmonad-contrib">
- </div>
- <div class="pure-u-1-2">
-  <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true"
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true"
        alt="GitHub stats for xmonad/X11">
- </div>
 </div>
 
 ## KMonad

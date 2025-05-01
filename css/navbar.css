@@ -1,0 +1,106 @@
+.navbar-space { /* Space the thing takes up most of the time */
+    display: inline-block;
+    width: 25%;
+}
+
+div#navigation {
+    text-align: right;
+    padding-left: 1.25em;
+    padding-right: 3em;
+    padding-top: 1.25em;
+    padding-bottom: 1em;
+    position: static;
+    float: right;
+    display: inline-block;
+}
+
+.menu.menu-open,
+.menu.menu-horizontal li .menu-children { /* Border */
+    background: var(--bg-menu-children);
+    border: 1px solid var(--fg-menu-border);
+}
+
+/** Title **/
+
+div#navigation .menu-title {
+    font-size: 19px;
+    color: var(--fg);
+    border-bottom: 1px solid var(--fg-menu-border);
+}
+
+div#navigation span.menu-subtitle {
+    font-size: 19px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+/** Clickable parts of the menu **/
+
+div#navigation a {
+    font-size: 19px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: none;
+    border: 1px solid transparent;
+    border-left: none;
+    border-right: none;
+    color: var(--fg-menu);
+}
+
+.menu a {
+    display:block;color:inherit;
+    line-height:1.5em;
+    padding:5px 20px;
+    text-decoration:none;
+    white-space:nowrap;
+}
+
+.menu .menu-open {
+    background: var(--bg-menu-foc);
+}
+
+.menu li a:hover,
+.menu li a:focus {
+    background: var(--bg-menu-foc);
+}
+
+
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/** Smaller screens **/
+
+/* On slightly smaller screens, left-align the navigation. */
+@media (max-width: 1366px) {
+    div#navigation {
+        float: none;
+        padding-right: 1em;
+    }
+}
+
+/* On much smaller screens; i.e., mobile or heavily zoomed in, put the
+   navigation at the top instead. */
+@media (max-width: 767px) {
+    body > .navbar-space {
+        width: 100%;
+    }
+
+    div#navigation {
+        position: static;
+        text-align: center;
+        display: block;
+    }
+
+    div#navigation > .menu.menu-open > ul > li {
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+    }
+
+    div#content {
+        margin-left: 1em;
+    }
+}
