@@ -3,7 +3,7 @@ title: Higher Structures for Hopf Algebras
 no-comment: true
 ---
 
-The symposium on "Higher Structures for Hopf Algebras"
+The symposion on "Higher Structures for Hopf Algebras"
 will take place at TU Dresden, Germany, on the **19th and 20th May 2025**.
 It is organised by
 [Prof. Dr. Ulrich Krähmer](https://tu-dresden.de/mn/math/geometrie/kraehmer)
