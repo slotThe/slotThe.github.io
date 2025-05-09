@@ -116,12 +116,9 @@ div#border-table table td {
   border: 1px solid #ddd;
 }
 div#border-table table th {
-  background-color: #f2f2f2;
+  background-color: var(--table-head);
   font-weight: bold;
   font-style: normal;
-}
-div#border-table table tr:nth-child(even) {
-  background-color: #f9f9f9;
 }
 
 /**********************************************************************
