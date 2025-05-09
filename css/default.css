@@ -103,7 +103,25 @@ div#refs {
 /* For some tables we'd like visual separators. */
 div#border-table table tr {
     vertical-align: top;
-    border-top: 1px dotted black;
+    text-align: left;
+}
+div#border-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+div#border-table table th,
+div#border-table table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+div#border-table table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  font-style: normal;
+}
+div#border-table table tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
 /**********************************************************************
@@ -418,6 +436,14 @@ a:visited {
     float: right;
     font-variant: normal;
     font-size: 15px;
+}
+
+/* Links that should not be coloured. */
+a.invis:link {
+    color: var(--fg);
+}
+a.invis:visited {
+    color: var(--fg);
 }
 
 /* A little "TOP" indicator at the bottom of the page, but only if the

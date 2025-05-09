@@ -177,8 +177,9 @@ aboutMe = do
 
 standalones :: Context String -> Rules ()
 standalones tagCtx = do
-  -- Mackey functors seminar
+  -- Seminars, symposia, and the like
   mkStandalone "mackey-functors.md" pure tagCtx Nothing
+  mkStandalone "hsha.md" pure tagCtx Nothing
   -- Talks and posters
   mkPosterTalk "talks/hopf25"
   mkPosterTalk "posters/ct2024"
@@ -682,9 +683,10 @@ myPandocCompiler =
 
 redirects :: [(Identifier, String)]
 redirects =
-    [ -- We used to have the date in the title, as well as extra
+    [ ("higher-structures-for-hopf-algebras.html", "hsha.html")
+      -- We used to have the date in the title, as well as extra
       -- directories for individual posts; not anymore!
-      ("posts/phd-workflow/2022-05-01-my-phd-workflow.html", "../my-phd-workflow.html")
+    , ("posts/phd-workflow/2022-05-01-my-phd-workflow.html", "../my-phd-workflow.html")
     , ("posts/2022-05-25-calling-emacs-from-xmonad.html", "calling-emacs-from-xmonad.html")
     , ("posts/query-replace/2022-08-06-query-replace-many.html", "../query-replace-many.html")
     , ("posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html", "../xmonad-and-org-mode.html")
