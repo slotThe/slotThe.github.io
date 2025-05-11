@@ -27,9 +27,13 @@ The following schedule is **preliminary** and subject to further changes.
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
 |             | Monday 19/05                                                 | Tuesday 20/05                                                         |
 +=============+==============================================================+=======================================================================+
+| 10:00–11:00 |                                                              | <a class="invis" href="#sebastian-halbig">                            |
+|             |                                                              | <span class="small-caps">Sebastian Halbig</span>\                     |
+|             |                                                              | A non-semisimple version of the Kitaev model</a>                      |
++-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
 | 13:30–14:30 | <a class="invis" href="#tony-zorman">                        | <a class="invis" href="#niels-kowalzig">                              |
 |             | <span class="small-caps">Tony Zorman</span>\                 | <span class="small-caps">Niels Kowalzig</span>\                       |
-|             | Reconstruction for Lax Module Monads</a>                     | Brackets and products from centres in extension categories </a>       |
+|             | Reconstruction for Lax Module Monads</a>                     | Brackets and products from centres in extension categories</a>        |
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
 | 15:00–16:00 | <a class="invis" href="#gabriella-böhm">                     | <a class="invis" href="#marvin-dippell">                              |
 |             | <span class="small-caps">Gabriella Böhm</span>\              | <span class="small-caps">Marvin Dippell</span>\                       |
@@ -43,6 +47,7 @@ The following schedule is **preliminary** and subject to further changes.
 </p>
 
 # Abstracts
+[^1]
 
 ## Tony Zorman
 
@@ -96,6 +101,24 @@ After recalling some background and motivation, I will explain how the latter ca
 Finally, I will discuss how generalized Hopf module theorem by Mesablishvili and Wisbauer features both in theory and examples.
 Based on joint work with John Boiquaye and Ulrich Krähmer, [@bartulović25:duplic-hopf].
 
+## Sebastian Halbig
+
+In 1997, Alexei Kitaev proposed a foundational model for fault-tolerant quantum computation based on complex semisimple Hopf algebras.
+Its key feature is a topologically invariant code space.
+It is constructed using combinatorial data encoded by a graph embedded into a closed oriented surface, ensuring robustness against a wide range of errors.
+Beyond applications in quantum computing, the model has remarkable connections with combinatorics, the study of mapping class groups, Hopf algebra representation theory, and topological quantum field theories.
+In this talk, based on joint work with  U. Krähmer, we present a generalisation of the Kitaev model to arbitrary finite-dimensional Hopf algebras.
+
+Two challenges prevent a straightforward approach.
+First, the extended Hilbert space, a Yetter–Drinfeld module whose maximal trivial submodule is the code space, relies on an involutive antipode—a condition equivalent to the underlying Hopf algebra being semisimple.
+Second, topological invariance is proven using projectors assembled from (co)integrals.
+Since we do not have these tools at our disposal, we follow a new approach, inspired by homological considerations.
+We introduce involutive anti-Hopf bimodules, which are related to coefficients of Hopf cyclic cohomology and allow us to form appropriate, Yetter–Drinfeld valued, variants of extend Hilbert spaces.
+Instead of considering trivial submodules, the analoga of the code spaces arise as bitensor products—a combination of cotensor and tensor products.
+Our proof of their topological invariance relies on a notion of excision and uses actions of a group related to mapping class groups.
+Towards computing bitensor products, we discuss induction-restriction type identities, which are particularly useful for small quantum groups.
+Several intriguing open questions arising from our approach will be emphasised.
+
 ## Niels Kowalzig
 
 Building on Retakh's approach to Ext groups through categories of extensions, Schwede reobtained the well-known Gerstenhaber algebra structure on Ext groups over bimodules of associative algebras both from splicing extensions (leading to the cup product) and from a suitable loop in the categories of extensions (leading to the Lie bracket).
@@ -146,3 +169,7 @@ As a consequence we get new combinatorial formulas for braid and link invariants
 +--------------------------+------------------------+----------------+
 | Tony Zorman              | TU Dresden             | Germany        |
 +--------------------------+------------------------+----------------+
+
+[^1]: {-} Abstracts are arranged chronologically.
+      Pending permission from the speakers,
+      slides for talks that use them will be provided after the fact.
