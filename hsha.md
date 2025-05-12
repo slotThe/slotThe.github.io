@@ -151,7 +151,7 @@ As a consequence we get new combinatorial formulas for braid and link invariants
 +--------------------------+------------------------+----------------+
 | Julius Benner            | Charles University     | Czech Republic |
 +--------------------------+------------------------+----------------+
-| Gabriella Böhm           | EMS Publishing         | Hungary        |
+| Gabriella Böhm           | EMS Press              | Germany        |
 +--------------------------+------------------------+----------------+
 | Marvin Dippel            | University of Salerno  | Italy          |
 +--------------------------+------------------------+----------------+
