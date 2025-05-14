@@ -35,13 +35,13 @@ The following schedule is **preliminary** and subject to further changes.
 |             | <span class="small-caps">Tony Zorman</span>\                 | <span class="small-caps">Niels Kowalzig</span>\                       |
 |             | Reconstruction for Lax Module Monads</a>                     | Brackets and products from centres in extension categories</a>        |
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
-| 15:00–16:00 | <a class="invis" href="#gabriella-böhm">                     | <a class="invis" href="#marvin-dippell">                              |
-|             | <span class="small-caps">Gabriella Böhm</span>\              | <span class="small-caps">Marvin Dippell</span>\                       |
-|             | Bialgebroids: an approach via duoidal categories</a>         | Global Homotopies for Differential Hochschild Cohomologies</a>        |
+| 15:00–16:00 | <a class="invis" href="#gabriella-böhm">                     | <a class="invis" href="#nir-gadish">                                  |
+|             | <span class="small-caps">Gabriella Böhm</span>\              | <span class="small-caps">Nir Gadish</span>\                           |
+|             | Bialgebroids: an approach via duoidal categories</a>         | Letter braiding—using algebraic topology to measure words groups</a>  |
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
-| 16:30–17:30 | <a class="invis" href="#ivan-bartulović">                    | <a class="invis" href="#nir-gadish">                                  |
-|             | <span class="small-caps">Ivan Bartulović</span>\             | <span class="small-caps">Nir Gadish</span>\                           |
-|             | Duplicial functors, entwined coalgebras and Hopf modules</a> | Letter braiding—using algebraic topology to measure words groups</a>  |
+| 16:30–17:30 | <a class="invis" href="#ivan-bartulović">                    |  <a class="invis" href="#marvin-dippell">                             |
+|             | <span class="small-caps">Ivan Bartulović</span>\             |  <span class="small-caps">Marvin Dippell</span>\                      |
+|             | Duplicial functors, entwined coalgebras and Hopf modules</a> |  Global Homotopies for Differential Hochschild Cohomologies</a>       |
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
 </div>
 </p>
