@@ -16,7 +16,8 @@ streaming the talks that are taking place in person.
 
 - Talks will be streamed via our [BigBlueButton room](https://bbb.tu-dresden.de/b/ulr-ha4-xul-uoo).
 
-- Offline talks will take place at the Willersbau—the maths building of the TU Dresden—in room TBD.
+- Offline talks will take place at the Willersbau—the maths building of the TU Dresden—in room
+  [WIL/B321/H](https://navigator.tu-dresden.de/raum/219302.0630).
 
 # Schedule
 
