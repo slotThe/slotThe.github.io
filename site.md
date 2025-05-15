@@ -100,10 +100,13 @@ but the main content should still be comfortably viewable.
 # Fonts
 
 This website uses—at least if you let it—lots of [custom fonts](https://github.com/slotThe/slotThe.github.io/tree/main/css/fonts).
-The default serif font is Alegreya,
-and my own build of Iosevka stands in for anything monospaced.
-Plus, since I'm using KaTeX for [rendering maths](#katex-rendering),
-there are quite a few LaTeX fonts loaded whenever a page needs them.
+The default serif font is
+[Alegreya](https://www.huertatipografica.com/en/fonts/alegreya-ht-pro),
+and [my own build](https://github.com/slotThe/hopf-mono)
+of [Iosevka](https://typeof.net/Iosevka/)
+stands in for anything monospaced.
+Since I'm using KaTeX for [rendering maths](#katex-rendering),
+there are also quite a few LaTeX fonts loaded whenever a page needs them.
 While the site of course works with system fonts as well,
 there has been a somewhat conscious choice to deviate from them.
 Especially code should look exactly as it appears in my editor,
