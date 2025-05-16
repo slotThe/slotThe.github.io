@@ -3,12 +3,16 @@ title: About
 ---
 
 I'm a PhD student in mathematics at TU Dresden, Germany.
-In my copious free time[^1] I like to hack on [free software]—especially anything involving [Haskell] or [Emacs]—play the guitar, ride my bike around, or watch classic movies.
+In my copious free time[^1] I like to
+hack on [free software]—especially anything involving [Haskell] or [Emacs]—<!--
+-->play the guitar,
+boulder a little bit too enthusiastically for my own good,
+and watch classic movies.
 I also spend way too much money on (good) coffee and tea.
 
-Broadly, my work in mathematics lives under the umbrella of *monoidal category theory*.
+Broadly, my work in mathematics lives under the umbrella of *monoidal category theory* and *categorical reconstruction theory*.[^3]
 In particular, I like thinking about [Hopf monads]; [graphical calculi]; [rigid],
-[linearly distributive], [Grothendieck–Verdier][^2], and [duoidal] categories;
+[linearly distributive], [Grothendieck–Verdier], and [duoidal] categories;
 as well as [operads].
 If you're interested in my publications, you can check out my name on the [arXiv].
 I've also given some talks, with a few slides available [here](https://tony-zorman.com/research.html#talks).
@@ -62,4 +66,7 @@ but you can try any of the following channels:
 
 [^1]: I wish.
 
-[^2]: Also known as \*-autonomous categories.
+[^3]: Incidentally, the latter is also the name of my thesis,
+      which will be posted here once I'm able to do so.
+      You can, however, already read about the typographical aspects of it
+      [here](https://tony-zorman.com/posts/phd-typesetting.html).
