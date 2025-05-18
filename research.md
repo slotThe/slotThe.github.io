@@ -98,10 +98,8 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 # Talks
 
 - *Reconstruction for Lax Module Monads* \
-   2025-04-25, Hopf25, Brussels;
-   [slides](./talks/hopf25/slides.pdf)
-   and
-   [accompanying website](./hopf25.html).
+   2025-04-25, Hopf25, Brussels; [slides](./talks/hopf25/slides.pdf) and [accompanying website](./hopf25.html). \
+   2025-05-19, [Higher Structures for Hopf Algebras][sem:hsha], Dresden.
 
    A classical result by Moerdijk and McCrudden is that
    Tannaka–Krein reconstruction for bialgebras may be lifted to bimonads:
@@ -245,10 +243,11 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Seminars
 
+- *Higher Structures for Hopf Algebras* \
+  2025-05-19–2025-05-20, Dresden; [website here][sem:hsha]
+
 - *Mackey Functors* \
   2023-07-14–2023-07-15, Dresden; [website here][sem:mackey-functors].
-
-  A seminar on Mackey functors and its applications.
 
 # Theses
 
@@ -280,6 +279,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
 [slides:profunctor]: /talks/profunctor-optics.pdf
 [slides:visual-cat]: /talks/visual-category-theory.pdf
+[sem:hsha]: https://tony-zorman.com/hsha
 
 [^1]: {-} I may be found on the [arXiv], [orcid], and [zbmath].
 
