@@ -21,8 +21,6 @@ streaming the talks that are taking place in person.
 
 # Schedule
 
-The following schedule is **preliminary** and subject to further changes.
-
 <p>
 <div id="border-table">
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
@@ -38,7 +36,8 @@ The following schedule is **preliminary** and subject to further changes.
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
 | 15:00–16:00 | <a class="invis" href="#gabriella-böhm">                     | <a class="invis" href="#nir-gadish">                                  |
 |             | <span class="small-caps">Gabriella Böhm</span>\              | <span class="small-caps">Nir Gadish</span>\                           |
-|             | Bialgebroids: an approach via duoidal categories</a>         | Letter braiding—using algebraic topology to measure words groups</a>  |
+|             | Bialgebroids: an approach via duoidal categories</a>         | Letter braiding—using algebraic topology to measure words groups</a>\ |
+|             |                                                              | (as part of the [GMM seminar][sem:gmm])                               |
 +-------------+--------------------------------------------------------------+-----------------------------------------------------------------------+
 | 16:30–17:30 | <a class="invis" href="#ivan-bartulović">                    |  <a class="invis" href="#marvin-dippell">                             |
 |             | <span class="small-caps">Ivan Bartulović</span>\             |  <span class="small-caps">Marvin Dippell</span>\                      |
@@ -158,8 +157,6 @@ As a consequence we get new combinatorial formulas for braid and link invariants
 +--------------------------+------------------------+----------------+
 | Marvin Dippel            | University of Salerno  | Italy          |
 +--------------------------+------------------------+----------------+
-| Nir Gadish (online)      | UPenn                  | USA            |
-+--------------------------+------------------------+----------------+
 | Sebastian Halbig         | Universität Marburg    | Germany        |
 +--------------------------+------------------------+----------------+
 | Niels Kowalzig           | Tor Vergata            | Italy          |
@@ -176,3 +173,5 @@ As a consequence we get new combinatorial formulas for braid and link invariants
 [^1]: {-} Abstracts are arranged chronologically.
       Pending permission from the speakers,
       slides for talks that use them will be provided after the fact.
+
+[sem:gmm]: https://tu-dresden.de/mn/math/geometrie/veranstaltungen/Seminar_Methoden
