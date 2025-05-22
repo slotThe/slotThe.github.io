@@ -4,13 +4,10 @@ no-comment: true
 ---
 
 The symposion on "Higher Structures for Hopf Algebras"
-will take place at TU Dresden, Germany, on the **19th and 20th May 2025**.
+takes place at TU Dresden, Germany, on the **19th and 20th May 2025**.
 It is organised by
 [Prof. Dr. Ulrich Krähmer](https://tu-dresden.de/mn/math/geometrie/kraehmer)
 and his research group.
-
-We will try to make the event as hybrid as possible,
-streaming the talks that are taking place in person.
 
 # Location
 
@@ -47,7 +44,6 @@ streaming the talks that are taking place in person.
 </p>
 
 # Abstracts
-[^1]
 
 ## Tony Zorman
 
@@ -169,9 +165,5 @@ As a consequence we get new combinatorial formulas for braid and link invariants
 +--------------------------+------------------------+----------------+
 | Tony Zorman              | TU Dresden             | Germany        |
 +--------------------------+------------------------+----------------+
-
-[^1]: {-} Abstracts are arranged chronologically.
-      Pending permission from the speakers,
-      slides for talks that use them will be provided after the fact.
 
 [sem:gmm]: https://tu-dresden.de/mn/math/geometrie/veranstaltungen/Seminar_Methoden
