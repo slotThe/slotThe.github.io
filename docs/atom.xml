@@ -4485,7 +4485,7 @@ such that buffering does not deadlock your program indefinitely.<a href="#fnref4
         &thinsp;·&thinsp; last modified: 2024-05-15
       
       
-        &thinsp;·&thinsp; <span title="1016 words">5 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1044 words">5 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'anki'." href="/tags/anki.html" rel="tag">anki</a>, <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
@@ -4552,6 +4552,11 @@ As an added bonus,
 Org mode’s <a href="https://www.youtube.com/watch?v=n-AfvuV-bYo">new LaTeX preview functionality</a> is just fantastic,
 and makes crafting notes quite fun!</p>
 <h2 id="aligning-fragments-vertically">Aligning fragments vertically</h2>
+<p><em>Update from 2025-06-02</em>:
+I’ve written Anki add-on <a href="https://ankiweb.net/shared/info/1721577833">1721577833</a>
+to perfectly align images to their respective baseline.
+If you’re using this, you can ignore the rest of this section.</p>
+<hr />
 <p>One thing that MathJax does <em>very</em> well is its pixel-perfect alignment of LaTeX fragments.
 In contrast, the default alignment is really rather bad.
 It can, however, be somewhat improved by using CSS to vertically centre the image:</p>

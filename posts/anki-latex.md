@@ -66,6 +66,13 @@ and makes crafting notes quite fun!
 
 # Aligning fragments vertically
 
+*Update from 2025-06-02*:
+I've written Anki add-on [1721577833](https://ankiweb.net/shared/info/1721577833)
+to perfectly align images to their respective baseline.
+If you're using this, you can ignore the rest of this section.
+
+---
+
 One thing that MathJax does *very* well is its pixel-perfect alignment of LaTeX fragments.
 In contrast, the default alignment is really rather bad.
 It can, however, be somewhat improved by using CSS to vertically centre the image:
