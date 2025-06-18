@@ -98,7 +98,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 # Talks
 
 - *Reconstruction for Lax Module Monads* \
-   2025-04-25, Hopf25, Brussels; [slides](./talks/hopf25/slides.pdf) and [accompanying website](./hopf25.html). \
+   2025-04-25, [Hopf25], Brussels; [slides](./talks/hopf25/slides.pdf) and [accompanying website](./hopf25.html). \
    2025-05-19, [Higher Structures for Hopf Algebras][sem:hsha], Dresden.
 
    A classical result by Moerdijk and McCrudden is that
@@ -135,9 +135,9 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   López Franco [@lopez13:tensor].
 
 - *Duality in Monoidal Categories* \
-  2023-01-16, Seminar GMM, Dresden. \
-  2023-05-23, HATC23, Marburg. \
-  2023-07-26, Uppsala Algebra Seminar, Uppsala.
+  2023-01-16, Seminar [GMM], Dresden. \
+  2023-05-23, [HATC23], Marburg. \
+  2023-07-26, [Uppsala Algebra Seminar], Uppsala.
 
   Dualities are an important tool in the study of monoidal categories and their applications.
   For example, underlying the construction of Tor and Ext functors
@@ -177,7 +177,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   [@baez21:schur-funct-categ-pleth].
 
 - *Abstract Mackey Functors* \
-  2023-07-15, Mackey functors seminar, Dresden; see Section 6 of the [script][slides:mackey-functors:handout].
+  2023-07-15, [Mackey functors seminar][sem:mackey-functors], Dresden; see Section 6 of the [script][slides:mackey-functors:handout].
 
 - *Operads as Functors* \
   2022-12-15, "Operads" seminar, Bonn.
@@ -200,14 +200,14 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Based on joint work with Sebastian Halbig [@halbig24:pivot-hopf].
 
 - *Optics in functional programming—a categorical perspective* \
-   2022-01-10, Seminar GMM, Dresden; [slides][slides:profunctor].
+   2022-01-10, Seminar [GMM], Dresden; [slides][slides:profunctor].
 
   A talk about the categorical aspects of (profunctor) optics, as done
   by Riley [@riley18:categ-optic] and Clark et al [@clarke20:profun-optic-categ-updat],
   as well as connections to earlier mathematical work by Pastro and Street [@pastro08:doubl].
 
 - *Visual Category Theory* \
-  2021-07-26, Seminar GMM, Dresden.
+  2021-07-26, Seminar [GMM], Dresden.
 
   The defense of my master's thesis, concentrating on a
   higher-dimensional graphical calculus, as first introduced by
@@ -219,7 +219,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 # Posters
 
 - *Lax module functors, reconstruction, and Hopf algebras* \
-  2024-09-02, Hopf Algebras and Monoidal Categories, Ferrara; \
+  2024-09-02, [Hopf Algebras and Monoidal Categories], Ferrara; \
   [PDF](./posters/ferrara2024/poster.pdf)
   and
   [accompanying website](./ferrara2024.html);
@@ -227,7 +227,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Based on joint work with Mateusz Stroiński, [@stroinski2024:reconstr].
 
 - *Pivotality, Twisted Centres, and the Anti-Double of a Hopf Monad* \
-  2024-06-27, CT24, Santiago de Compostela;
+  2024-06-27, [CT24], Santiago de Compostela;
   [PDF](./posters/ct2024/poster.pdf)
   and
   [accompanying website](./ct2024.html);
@@ -235,7 +235,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Based on joint work with Sebastian Halbig—[@halbig24:pivot-hopf] and [@halbig23:diagr-comod-monad]—as well as Mateusz Stroiński, [@stroinski2024:reconstr].
 
 - *Duality in Monoidal Categories* \
-  2023-07-07, CT23, Louvain-la-Neuve;
+  2023-07-07, [CT23], Louvain-la-Neuve;
   in [portrait][ct23:portrait] and
   [landscape][ct23:landscape] format.
 
@@ -264,14 +264,22 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Bachelor's thesis with a focus on keis; objects arising naturally when
   trying to generalize the number of 3-colourings of a knot.
 
+[CT23]: https://sites.uclouvain.be/ct2023/
+[CT24]: https://www.usc.gal/regaca/ct2024/
 [Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
 [Duoidal R-Matrices]: https://arxiv.org/abs/2503.03445
+[GMM]: https://tu-dresden.de/mn/math/geometrie/veranstaltungen/Seminar_Methoden
+[HATC23]: https://www.uni-marburg.de/en/fb12/research-groups/algeblie/projects/hatc23
+[Hopf Algebras and Monoidal Categories]: https://sites.google.com/unife.it/ferrara2024
+[Hopf25]: https://hopfalgb.ulb.be/Hopf2025/
 [Pivotality, twisted centres, and the anti-double of a Hopf monad]: http://www.tac.mta.ca/tac/volumes/41/4/41-04abs.html
 [Reconstruction of module categories in the infinite and non-rigid settings]: https://arxiv.org/abs/2409.00793
 [Simple algebras and exact module categories]: https://arxiv.org/abs/2501.06629
+[Uppsala Algebra Seminar]: https://www2.math.uu.se/~vomaz677/seminar.html
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
+[sem:hsha]: https://tony-zorman.com/hsha
 [sem:mackey-functors]: https://tony-zorman.com/mackey-functors
 [slides:abstact-schur-functors]: /talks/abstract-schur-functors.pdf
 [slides:mackey-functors:handout]: /talks/mackey-functors.pdf
@@ -279,7 +287,6 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
 [slides:profunctor]: /talks/profunctor-optics.pdf
 [slides:visual-cat]: /talks/visual-category-theory.pdf
-[sem:hsha]: https://tony-zorman.com/hsha
 
 [^1]: {-} I may be found on the [arXiv], [orcid], and [zbmath].
 
