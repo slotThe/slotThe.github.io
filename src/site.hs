@@ -17,7 +17,7 @@ import Control.Monad
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
-import Data.List (foldl')
+import Data.List (foldl', stripPrefix)
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
@@ -55,6 +55,9 @@ main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
         )
     do route   idRoute
        compile copyFileCompiler
+  match "files/**.pdf" do
+    route   (customRoute \(toFilePath -> fp) -> fromMaybe fp (stripPrefix "files/" fp))
+    compile copyFileCompiler
 
   -- Redirects
   version "redirects" $ createRedirects redirects

@@ -251,6 +251,21 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Theses
 
+- *Categorical Reconstruction Theory*
+
+  I completed my dissertation at [TU Dresden](https://tu-dresden.de/mn/math) on the 4th of July 2025,
+  under the supervision of [Prof. Dr. Ulrich Krähmer](https://tu-dresden.de/mn/math/geometrie/kraehmer).
+  Here is everything one could possibly want to know about this:
+  + The [slides](./disputation.pdf)
+    for my thesis defence and the
+    [full source code](https://github.com/slotThe/disputation).
+  + My [dissertation](./diss-tud.pdf) as I handed it in ([source code](https://github.com/slotThe/dissertation/tree/tud)).
+    Additionally, I have made minor improvements as suggested by the referees,
+    but due to some bylaws of the TU Dresden I'm not allowed to modify the version I originally handed in.
+    The PDF of the updated version can be found [here](./dissertation.pdf).
+    The source code stays the same, one merely has to switch to the [default branch](https://github.com/slotThe/dissertation).
+    Note that the numbering is still consistent with the original version, I merely corrected some spelling errors and mathematical typos.
+
 - *Comodules for Categories*
 
   Master's thesis; with the help of a higher-dimensional graphical
