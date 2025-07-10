@@ -14,6 +14,7 @@ import Data.Text.IO qualified as T -- XXX: text 2.1 has Data.Text.IO.Utf8
 
 import Control.Concurrent (threadDelay)
 import Control.Monad
+import Data.Foldable (for_)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
 import Data.List (foldl')
@@ -181,9 +182,11 @@ standalones tagCtx = do
   mkStandalone "mackey-functors.md" pure tagCtx Nothing
   mkStandalone "hsha.md" pure tagCtx Nothing
   -- Talks and posters
-  mkPosterTalk "talks/hopf25"
-  mkPosterTalk "posters/ct2024"
-  mkPosterTalk "posters/ferrara2024"
+  ids <- getMatches (fromRegex "(talks|posters)/[^/]+/[^/]+\\.md")
+  for_ ids \ident ->  -- No backrefs in Text.Regex.TDFA :(
+    case take 3 . T.split (== '/') . T.pack . toFilePath $ ident of
+      [p, d, f] -> when (f == d <> ".md") $ mkPosterTalk (p <> "/" <> d)
+      _         -> pure ()
   -- Git introduction
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…
@@ -205,8 +208,8 @@ standalones tagCtx = do
     route idRoute
     compile $ getResourceBody >>= relativizeUrls
  where
-  mkPosterTalk :: String -> Rules ()
-  mkPosterTalk dir = do
+  mkPosterTalk :: Text -> Rules ()
+  mkPosterTalk (T.unpack -> dir) = do
     match (fromGlob (dir <> "/**") .&&. complement "**.md") do
       route   idRoute
       compile copyFileCompiler
