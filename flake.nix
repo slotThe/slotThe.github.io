@@ -27,7 +27,6 @@
       system = "x86_64-linux";
       pkgs   = nixpkgs.legacyPackages.${system};
       hPkgs  = pkgs.haskellPackages.extend (self: super: {
-      # hPkgs  = pkgs.haskell.packages.ghc983.extend (self: super: {
         site            = self.callCabal2nix "site" (haskellSourceFilter ./.) { };
         pandoc-sidenote = self.callCabal2nixWithOptions "pandoc-sidenote"
           (builtins.fetchGit {
@@ -38,7 +37,7 @@
           { };
         hakyll = self.callCabal2nix "hakyll" (builtins.fetchGit {
           url = "https://github.com/jaspervdj/hakyll";
-          rev = "ba0301b400cfc5fd9d3e351ea13fcb75c68e571f";
+          rev = "5f17ad2b289a67c54767ffa9380db26e0e164c79";
         }) {};
       });
     in {
@@ -51,17 +50,16 @@
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
           (python3.withPackages (p: [
-            # Compressing fonts.
             p.brotli
             p.fonttools
             p.beautifulsoup4
             (p.pygments.overrideAttrs (old: { # Contains https://github.com/pygments/pygments/pull/2789
-              version = "2.19.1";
+              version = "2.19.2";
               src = fetchFromGitHub {
                 owner = "pygments";
                 repo = "pygments";
-                rev = "b583de4794e94b4dc4c2da03a7c29f462482293e";
-                hash = "sha256-jNxUFRaHyGb+XrXJvMqx9EX9EiXx2shU1zEDmyt1WWU=";
+                rev = "cfca62e6e95136e48a255e8cbffb0bbe1d98456c";
+                hash = "sha256-uATxOdkjWF4oAyke68R5w9A1z1MzhZp8nT/uPERWQlA=";
               };
             }))
           ]))

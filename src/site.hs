@@ -9,8 +9,8 @@
 {-# LANGUAGE ViewPatterns        #-}
 {-# LANGUAGE NumDecimals         #-}
 
-import Data.Text    qualified as T
-import Data.Text.IO qualified as T -- XXX: text 2.1 has Data.Text.IO.Utf8
+import Data.Text         qualified as T
+import Data.Text.IO.Utf8 qualified as T
 
 import Control.Concurrent (threadDelay)
 import Control.Monad
@@ -31,9 +31,9 @@ import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
 import qualified Text.Pandoc.Builder as Many (toList, singleton)
 import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..), Pandoc)
 import Text.Pandoc.Options (Extension (..), HTMLMathMethod (..), ReaderOptions (readerExtensions), WriterOptions (..), extensionsFromList)
-import Text.Pandoc.Shared (headerShift)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
+import Text.Pandoc.Transforms (headerShift)
 import Text.Pandoc.Walk (walk, walkM)
 
 
