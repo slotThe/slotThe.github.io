@@ -483,11 +483,9 @@ Lastly, I will just leave the following *very important* bibLaTeX configuration 
   \addspace\bibstring{and}\space}
 ```
 
-[^1]: The thesis still has to go through a review process,
-      so I cannot post it publicly at this time.
-      Once that is done, however,
-      I will update this sidenote with the relevant link
-      to both the PDF and the full source code.
+[^1]: The thesis is available [here](https://tony-zorman.com/dissertation.pdf),
+      and you can also check out the [full source code](https://github.com/slotThe/dissertation).
+      For more information, also check [here](https://tony-zorman.com/research#theses).
 
 [^2]: It is also much more extensive. Both manuals clock in at around 600 pages,
       but the memoir manual is only about one class!
