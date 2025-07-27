@@ -97,7 +97,13 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *Categorical Reconstruction Theory* \
+   2025-07-04, Dresden; [slides][disputation].
+
+   My PhD thesis defence; see [here](http://localhost:8000/research.html#theses) for more information.
+
 - *Reconstruction for Lax Module Monads* \
+   2025-07-17, [CT2025], Brno; [slides](./talks/ct2025/slides.pdf) and [accompanying website](./ct2025.html). \
    2025-04-25, [Hopf25], Brussels; [slides](./talks/hopf25/slides.pdf) and [accompanying website](./hopf25.html). \
    2025-05-19, [Higher Structures for Hopf Algebras][sem:hsha], Dresden.
 
@@ -256,7 +262,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   I completed my dissertation at [TU Dresden](https://tu-dresden.de/mn/math) on the 4th of July 2025,
   under the supervision of [Prof. Dr. Ulrich Krähmer](https://tu-dresden.de/mn/math/geometrie/kraehmer).
   Here is everything one could possibly want to know about this:
-  + The [slides](./disputation.pdf)
+  + The [slides][disputation]
     for my thesis defence and the
     [full source code](https://github.com/slotThe/disputation).
   + My [dissertation](./diss-tud.pdf) as I handed it in ([source code](https://github.com/slotThe/dissertation/tree/tud)).
@@ -279,6 +285,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Bachelor's thesis with a focus on keis; objects arising naturally when
   trying to generalize the number of 3-colourings of a knot.
 
+[CT2025]: https://conference.math.muni.cz/ct2025/
 [CT23]: https://sites.uclouvain.be/ct2023/
 [CT24]: https://www.usc.gal/regaca/ct2024/
 [Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
@@ -302,6 +309,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
 [slides:profunctor]: /talks/profunctor-optics.pdf
 [slides:visual-cat]: /talks/visual-category-theory.pdf
+[disputation]: ./disputation.pdf
 
 [^1]: {-} I may be found on the [arXiv], [orcid], and [zbmath].
 
