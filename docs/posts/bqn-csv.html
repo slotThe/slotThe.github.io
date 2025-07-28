@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+      <meta name="robots" content="noai, noimageai">
+    
+
+    
+      <title>Parsing CSV in BQN · Tony Zorman</title>
+    
+
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/katex.css">
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
+  </head>
+
+  <body>
+    <div class="navbar-space">
+      <div id="navigation" class="no-print">
+        <div class="menu menu-open">
+          <a href="../" class="menu-heading menu-title">
+            Blog<br>
+            <span class="menu-subtitle">Tony Zorman</span>
+          </a>
+          <ul>
+            <li><a href="../posts.html">Posts</a></li>
+            <li><a href="../research.html">Research</a></li>
+            <li><a href="../free-software.html">Free Software</a></li>
+            <li><a href="../about.html">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- A table of contents on the left side, but only for screens
+           that are big enough -->
+       
+      <div id="contents-big">
+        <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+        <ul>
+<li><a href="#the-simplest-case">The simplest case</a></li>
+<li><a href="#adding-escaping">Adding escaping</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+      </div>
+       
+    </div>
+    <div class="text-space">
+      <div id="content">
+        <!-- We want to include the RSS/Atom feed in certain scenarios,
+             but this shouldn't mangle the above header title. -->
+         
+        <h1>Parsing CSV in BQN</h1>
+         
+
+        <article>
+    <p class="header">
+      
+        Posted on 2025-07-28
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1850 words">8 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'BQN'." href="../tags/BQN.html" rel="tag">BQN</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#the-simplest-case">The simplest case</a></li>
+<li><a href="#adding-escaping">Adding escaping</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+
+<div>
+  Let’s write a <span class="small-caps">csv</span> parser in <span class="small-caps">bqn</span>!
+<!--more-->
+<p></p>
+Working my way towards a full blown <span class="small-caps">json</span> parser,
+I thought it might be a good idea to start with something simpler<!--
+-->—<a href="https://www.ietf.org/rfc/rfc4180.txt"><span class="small-caps">rfc</span> 4180</a> sounds like a good candidate.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">For the sake of convenience, I will interpret the <span class="small-caps">rfc</span> somewhat loosely in places,
+though hopefully still implementing the gist of it.</div><!--
+-->
+Plus, there is also a great reference implementation available in
+<a href="https://github.com/mlochbaum/bqn-libs/blob/master/csv.bqn">bqn-libs</a>.
+<p></p>
+This article will assume that you are already at least a little bit familiar with <span class="small-caps">bqn</span> as a language.
+If not, I would recommend starting with the official <a href="https://mlochbaum.github.io/BQN/tutorial/index.html">tutorials</a>.
+I’ve also written about my experience <a href="https://tony-zorman.com/posts/aoc-in-bqn.html" class="local-link">using <span class="small-caps">bqn</span></a> for Advent of Code,
+which certainly contains some amount of written words that talk about the language.
+<h2 id="the-simplest-case">The simplest case<a href="#the-simplest-case" class="floatleft sec-link">§</a></h2>
+<p></p>
+We’ll start with a subset of <span class="small-caps">csv</span> in which we don’t have to think about escaping at all.
+That is, we only allow files that look like this:
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>a,b,c,d
+e,f,g,h
+</pre></div>
+
+<p></p>
+Let’s also permit lines of varying lengths;
+this doesn’t really change the implementation much, but I find it quite convenient sometimes.
+This simple case is quite straightforward to implement:
+we start with finding all occurrences of newlines and commas in the input string
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span>
+<span class="s2">&quot;a,b,c,d</span>
+<span class="s2">e,f,g,h&quot;</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">c</span><span class="p">,</span><span class="nv">n</span><span class="p">]</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="s1">','</span><span class="o">∾</span><span class="ss">@</span><span class="o">+</span><span class="m">10</span><span class="sr">)</span><span class="w"> </span><span class="o">=</span><span class="na">⌜</span><span class="w"> </span><span class="nv">inp</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span>
+<span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+<span class="w">                                </span><span class="err">┘</span>
+</pre></div>
+
+<p></p>
+and then split the string accordingly:
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">s</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">n</span><span class="o">∨</span><span class="nv">c</span><span class="w">                          </span><span class="c1"># Where to split</span>
+<span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
+<span class="w">    </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">s</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">inp</span>
+<span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="w"> </span><span class="s2">&quot;g&quot;</span><span class="w"> </span><span class="s2">&quot;h&quot;</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+Having all of the “tokens” ready,
+one just needs to split at the newlines while keeping the shorter list of all splits in mind.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="nv">n</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">s</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">inp</span>
+<span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="w"> </span><span class="s2">&quot;g&quot;</span><span class="w"> </span><span class="s2">&quot;h&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+Easy.
+<p></p>
+Now, this was probably quite fast—if not, feel free to skip to the next section.
+Let’s go through that last line more carefully, as it contains lots of important concepts for array-oriented parsing.
+<p></p>
+First, we create a depth scan according to all characters we’d like to split the string at:<!--
+--><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote"><span class="small-caps">bqn</span> doesn’t actually escape non-double-quote characters in strings,
+but I’ve chosen to write <code>\n</code> here instead of a literal newline for readability.
+<p></p>
+Also, I will use
+<a href="https://mlochbaum.github.io/BQN/doc/couple.html">couple</a>
+quite a bit to visualise the different masks in relation to the original character array going in,
+in case you were wondering what that glyph meant.</div><!--
+-->
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="o">≍</span><span class="w"> </span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'c'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'d'</span><span class="w"> </span><span class="s1">'\n'</span><span class="w"> </span><span class="s1">'e'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'f'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'g'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'h'</span>
+<span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">2</span><span class="w">   </span><span class="m">2</span><span class="w">   </span><span class="m">3</span><span class="w">   </span><span class="m">3</span><span class="w">   </span><span class="m">4</span><span class="w">   </span><span class="m">4</span><span class="w">   </span><span class="m">5</span><span class="w">    </span><span class="m">5</span><span class="w">   </span><span class="m">6</span><span class="w">   </span><span class="m">6</span><span class="w">   </span><span class="m">7</span><span class="w">   </span><span class="m">7</span><span class="w">   </span><span class="m">8</span><span class="w">   </span><span class="m">8</span>
+<span class="w">                                                              </span><span class="err">┘</span>
+</pre></div>
+
+<p></p>
+To single out all of the characters that we’d like to delete<!--
+-->—i.e., the ones we are splitting at—<!--
+-->we multiply the depth scan by <code>¬s</code>,
+set all commas and newlines to <code>0</code>,
+and then subtract one.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="o">≍</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">s</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'c'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'d'</span><span class="w"> </span><span class="s1">'\n'</span><span class="w"> </span><span class="s1">'e'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'f'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'g'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'h'</span>
+<span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">1</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">2</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">3</span><span class="w">   </span><span class="m">¯1</span><span class="w">   </span><span class="m">4</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">5</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">6</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">7</span>
+<span class="w">                                                              </span><span class="err">┘</span>
+<span class="w">    </span><span class="nv">sl</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">s</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">inp</span>
+<span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="w"> </span><span class="s2">&quot;g&quot;</span><span class="w"> </span><span class="s2">&quot;h&quot;</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+This is also why we gave the depth scan above an initial argument of <code>1</code>—otherwise, we’d get
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="o">≍</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">s</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">s</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'c'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'d'</span><span class="w"> </span><span class="s1">'\n'</span><span class="w"> </span><span class="s1">'e'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'f'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'g'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'h'</span>
+<span class="w">  </span><span class="m">¯1</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">1</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">2</span><span class="w">   </span><span class="m">¯1</span><span class="w">   </span><span class="m">3</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">4</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">5</span><span class="w">  </span><span class="m">¯1</span><span class="w">   </span><span class="m">6</span>
+<span class="w">                                                              </span><span class="err">┘</span>
+</pre></div>
+
+<p></p>
+Next on the agenda is splitting the split list <code>sl</code> itself according to line breaks.
+For that we again do a depth scan, only this time we use the newline array <code>n</code>.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">+</span><span class="na">`</span><span class="nv">n</span>
+<span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+Now we replicate the appropriate cells in this array according to <code>s</code>.
+This yields a grouping of the different splitting characters into their respective lines.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="o">≍+</span><span class="na">`</span><span class="nv">n</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'c'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'d'</span><span class="w"> </span><span class="s1">'\n'</span><span class="w"> </span><span class="s1">'e'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'f'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'g'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'h'</span>
+<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">    </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span>
+<span class="w">                                                              </span><span class="err">┘</span>
+<span class="w">    </span><span class="sr">(</span><span class="nv">s</span><span class="o">/</span><span class="nv">inp</span><span class="sr">)</span><span class="o">≍</span><span class="sr">(</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="nv">n</span><span class="sr">)</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'\n'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">','</span>
+<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">    </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span>
+<span class="w">                              </span><span class="err">┘</span>
+</pre></div>
+
+<p></p>
+Since we don’t operate on the objects directly,
+but rather on their “connections”—I think of this a bit like a graph—,
+we additionally have to add a starting cell for the first object.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="nv">n</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">sl</span>
+<span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="w"> </span><span class="s2">&quot;g&quot;</span><span class="w"> </span><span class="s2">&quot;h&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+Putting it all together, we have something like
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">CSV</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
+<span class="w">  </span><span class="p">[</span><span class="nv">c</span><span class="p">,</span><span class="nv">n</span><span class="p">]</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="s1">','</span><span class="o">∾</span><span class="ss">@</span><span class="o">+</span><span class="m">10</span><span class="sr">)</span><span class="w"> </span><span class="o">=</span><span class="na">⌜</span><span class="w"> </span><span class="ni">𝕩</span>
+<span class="w">  </span><span class="nv">s</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">n</span><span class="o">∨</span><span class="nv">c</span>
+<span class="w">  </span><span class="sr">(</span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="nv">n</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">s</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="ni">𝕩</span>
+<span class="kt">}</span>
+</pre></div>
+
+<p></p>
+which works as expected:<!--
+--><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+Since <span class="small-caps">bqn</span> doesn’t do escaping in strings,
+I make use of
+<a href="https://mlochbaum.github.io/BQN/doc/types.html#characters">character arithmetic</a>
+here, to represent the line feed by its decimal value.</div><!--
+-->
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">CSV</span><span class="w"> </span><span class="s2">&quot;aaaa,b,c,d&quot;</span><span class="o">∾</span><span class="sr">(</span><span class="ss">@</span><span class="o">+</span><span class="m">10</span><span class="sr">)</span><span class="o">∾</span><span class="s2">&quot;e,f&quot;</span>
+<span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;aaaa&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<h2 id="adding-escaping">Adding escaping<a href="#adding-escaping" class="floatleft sec-link">§</a></h2>
+<p></p>
+If a field contains commas or newlines, they need to be escaped in some way.
+The way that <span class="small-caps">csv</span> handles this is that those fields are to be enclosed in double quotes:
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>a,&quot;b,c
+d,e&quot;
+</pre></div>
+
+<p></p>
+This is a single line with two fields, one containing <code>a</code> and one containing <code>b,c,\nd,e</code>.
+Within a quoted field, a <code>"</code> can be written as <code>""</code>;
+the following example consists of a single field with value <code>"a","b"</code>
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>&quot;&quot;&quot;a&quot;&quot;,&quot;&quot;b&quot;&quot;&quot;
+</pre></div>
+
+<p></p>
+In terms of parsing,
+the first thing we need is to somehow figure out which characters are escaped.
+Thankfully, this turns out to be pretty easy—start in an unescaped setting,
+and then every time a quote is encountered, flip some “are we quoted yet?”-bit.
+In code, this can rather beautifully be expressed as a not-equal scan:<!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+As you can see, escaping is… fun.
+Every character save a double quote is verbatim in <span class="small-caps">bqn</span> strings,
+and double quotes are also escaped using two of them in succession.
+This means that to input the <span class="small-caps">csv</span> <code>"a"</code>, one would write <code>"""a"""</code>,
+and for <code>"""a"",""b"""</code> we have the wonderful
+<code>"""""""a"""",""""b"""""""</code>.</div><!--
+-->
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="s2">&quot;a,&quot;&quot;b,&quot;&quot;&quot;&quot;b'&quot;&quot;&quot;&quot;,b''&quot;&quot;,c&quot;</span><span class="w">    </span><span class="c1"># a,&quot;b,&quot;&quot;b&quot;&quot;,b''&quot;,c</span>
+<span class="s2">&quot;a,&quot;&quot;b,&quot;&quot;&quot;&quot;b'&quot;&quot;&quot;&quot;,b''&quot;&quot;,c&quot;</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">q</span><span class="p">,</span><span class="nv">c</span><span class="p">,</span><span class="nv">n</span><span class="p">]</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">∾</span><span class="s1">','</span><span class="o">∾</span><span class="ss">@</span><span class="o">+</span><span class="m">10</span><span class="sr">)</span><span class="w"> </span><span class="o">=</span><span class="na">⌜</span><span class="w"> </span><span class="nv">inp</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w">   </span><span class="c1"># quotes   q</span>
+<span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w">   </span><span class="c1"># commas   c</span>
+<span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w">   </span><span class="c1"># newlines n</span>
+<span class="w">                                      </span><span class="err">┘</span>
+<span class="w">    </span><span class="nv">e</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="nv">q</span><span class="w">                             </span><span class="c1"># escaped</span>
+<span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
+<span class="w">    </span><span class="nv">inp</span><span class="o">≍</span><span class="nv">e</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">''' '</span><span class="s2">&quot;' '&quot;</span><span class="s1">' '</span><span class="p">,</span><span class="s1">' '</span><span class="nv">b</span><span class="s1">' '''</span><span class="w"> </span><span class="s1">''' '</span><span class="err">&quot;</span><span class="s1">' '</span><span class="p">,</span><span class="s1">' '</span><span class="nv">c</span><span class="err">'</span>
+<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span>
+<span class="w">                                                                         </span><span class="err">┘</span>
+</pre></div>
+
+<p></p>
+The next step is a little non obvious—at least to me.
+Instead of having a single variable <code>s←n∨c</code> that controls where to split the text,
+we will instead have two: one for where to split, and one for which separators to drop.
+The latter is needed because we don’t actually want to keep all of the double quotes when parsing the <span class="small-caps">csv</span> into a <span class="small-caps">bqn</span> type.
+For example, the above <code>"a,""b,""""b'"""",b''"",c"</code> should parse to something like <code>⟨"a"‿"b,""b'"",b''"‿"c"⟩</code>.
+<p></p>
+For splitting, we can use the exact same logic as in the first version of the parser,
+now additionally taking into consideration the escaped flag.
+Using the definitions from above:
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="o">≍</span><span class="w"> </span><span class="nv">s</span><span class="kd">←</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">c</span><span class="o">∨</span><span class="nv">n</span><span class="w">  </span><span class="c1"># split</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">''' '</span><span class="s2">&quot;' '&quot;</span><span class="s1">' '</span><span class="p">,</span><span class="s1">' '</span><span class="nv">b</span><span class="s1">' '''</span><span class="w"> </span><span class="s1">''' '</span><span class="err">&quot;</span><span class="s1">' '</span><span class="p">,</span><span class="s1">' '</span><span class="nv">c</span><span class="err">'</span>
+<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span>
+<span class="w">                                                                         </span><span class="err">┘</span>
+</pre></div>
+
+<p></p>
+Dropping is a little bit more finicky,
+so let’s start with something slightly simpler.
+Essentially, we want to drop double quotes that are used to start an escaped field,
+and only want to keep one pair of quotes on the inside of such a field.
+The above mentioned transformation
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>&quot;a,&quot;&quot;b,&quot;&quot;&quot;&quot;b'&quot;&quot;&quot;&quot;,b''&quot;&quot;,c&quot;   -&gt;   ⟨&quot;a&quot;‿&quot;b,&quot;&quot;b'&quot;&quot;,b''&quot;‿&quot;c&quot;⟩
+</pre></div>
+
+<p></p>
+should illustrate what I mean.
+One way to achieve this is to mark all last occurrences of double quotes,
+along with all separators.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="o">≍</span><span class="w"> </span><span class="nv">d</span><span class="kd">←</span><span class="nv">s</span><span class="o">∨«</span><span class="py">⊸</span><span class="o">&lt;</span><span class="nv">q</span><span class="w"> </span><span class="c1"># what to drop</span>
+<span class="err">┌─</span>
+<span class="err">╵</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">','</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="w"> </span><span class="s1">'b'</span><span class="w"> </span><span class="s1">''' '</span><span class="s2">&quot;' '&quot;</span><span class="s1">' '</span><span class="p">,</span><span class="s1">' '</span><span class="nv">b</span><span class="s1">' '''</span><span class="w"> </span><span class="s1">''' '</span><span class="err">&quot;</span><span class="s1">' '</span><span class="p">,</span><span class="s1">' '</span><span class="nv">c</span><span class="err">'</span>
+<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span>
+<span class="w">                                                                          </span><span class="err">┘</span>
+</pre></div>
+
+<p></p>
+Cutting up the input string now works essentially like the first version,
+just that we have to take care where to insert <code>s</code> and where to insert <code>d</code> now.
+Only “real” separators should increase the depth of an expression,
+while for singling them out we have to consider all characters that are to be dropped.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">d</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span>
+<span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
+<span class="w">    </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">d</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">inp</span>
+<span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b,&quot;&quot;b'&quot;&quot;,b''&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+Likewise, when grouping the fields by line we have to be careful to only talk about unescaped newlines.
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">+</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">n</span>
+<span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
+<span class="w">    </span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">n</span>
+<span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
+<span class="w">    </span><span class="sr">(</span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">n</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">d</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">inp</span>
+<span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b,&quot;&quot;b'&quot;&quot;,b''&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+All in all, the second version of our <span class="small-caps">csv</span> function looks like this:
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">CSV</span><span class="w"> </span><span class="kd">⇐</span><span class="w"> </span><span class="kt">{</span>
+<span class="w">  </span><span class="p">[</span><span class="nv">q</span><span class="p">,</span><span class="nv">c</span><span class="p">,</span><span class="nv">n</span><span class="p">]</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">∾</span><span class="s1">','</span><span class="o">∾</span><span class="ss">@</span><span class="o">+</span><span class="m">10</span><span class="sr">)</span><span class="w"> </span><span class="o">=</span><span class="na">⌜</span><span class="w"> </span><span class="ni">𝕩</span><span class="w">        </span><span class="c1"># Quote, comma, LF</span>
+<span class="w">  </span><span class="nv">e</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="nv">q</span><span class="w">                              </span><span class="c1"># Escapes</span>
+<span class="w">  </span><span class="nv">s</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">n</span><span class="o">∨</span><span class="nv">c</span><span class="w">                         </span><span class="c1"># Where to split</span>
+<span class="w">  </span><span class="nv">d</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">s</span><span class="o">∨«</span><span class="py">⊸</span><span class="o">&lt;</span><span class="nv">q</span><span class="w">                           </span><span class="c1"># What to drop</span>
+<span class="w">  </span><span class="sr">(</span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">n</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">d</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="ni">𝕩</span><span class="w">  </span><span class="c1"># First split all, then split lines</span>
+<span class="kt">}</span>
+</pre></div>
+
+<hr />
+<p></p>
+This works in almost all cases already,
+though there is some unexpected behaviour surrounding empty fields:
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">CSV</span><span class="w"> </span><span class="s2">&quot;a,,b&quot;</span>
+<span class="err">┌─</span>
+<span class="m">·</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="p">⟨⟩</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="p">⟩</span>
+<span class="w">                 </span><span class="err">┘</span>
+<span class="w">    </span><span class="o">CSV</span><span class="w"> </span><span class="s2">&quot;a,&quot;&quot;&quot;&quot;,b&quot;</span>
+<span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+
+<p></p>
+Those two expressions should probably be equivalent.
+Since we already mark the last occurrences of each quote,
+we just have to make sure that we additionally mark those that are also escaped.
+Changing
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">  </span><span class="nv">d</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">s</span><span class="o">∨«</span><span class="py">⊸</span><span class="o">&lt;</span><span class="nv">q</span><span class="w">                           </span><span class="c1"># What to drop</span>
+</pre></div>
+
+<p></p>
+to
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">  </span><span class="nv">d</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">s</span><span class="o">∨</span><span class="nv">q</span><span class="o">∧</span><span class="nv">e</span><span class="o">∨«</span><span class="py">⊸</span><span class="o">&lt;</span><span class="nv">q</span><span class="w">                       </span><span class="c1"># What to drop</span>
+</pre></div>
+
+<p></p>
+now parses both cases correctly:
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="o">CSV</span><span class="w"> </span><span class="s2">&quot;a,,b&quot;</span><span class="sr">)</span><span class="w"> </span><span class="o">≡</span><span class="w"> </span><span class="o">CSV</span><span class="w"> </span><span class="s2">&quot;a,&quot;&quot;&quot;&quot;,b&quot;</span>
+<span class="m">1</span>
+</pre></div>
+
+<hr />
+<p></p>
+Here are some exercises for the interested reader:
+<ol type="1">
+<li><p></p>
+
+Generalise the <code>CSV</code> function to take arbitrary separators instead of just a comma.
+This can rather elegantly be achieved by making it an ambivalent function,
+with the monadic case just being <code>',' CSV 𝕩</code>.</li>
+<li><p></p>
+
+Add some failure states, like actually honouring
+<blockquote>
+<p></p>
+Each line should contain the same number of fields throughout the file.
+</blockquote>
+<p></p>
+
+from the <span class="small-caps">rfc</span>.
+This could just use
+<a href="https://mlochbaum.github.io/BQN/doc/assert.html">assert</a>
+to print an error message to the user.</li>
+<li><p></p>
+
+I’ve very efficiently ignored that <span class="small-caps">crlf</span> line endings exist, so I guess that one’s still missing?</li>
+</ol>
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
+<p></p>
+Q: Is writing (and reading) a parser in an array language unnecessarily hard?<br />
+A: Yes.
+<p></p>
+Q: Is it the most fun I’ve had programming in a long time?<br />
+A: Yes.
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+      <!-- A footer-ish thing above the actual boring footer for pretty
+           fleurons and things that should only appear on posts. -->
+      <div style="text-align:center;">
+        <img class="center-block-dark" src="../images/fleuron-dark.svg" style="max-width: 3cm" alt="End of post fleuron">
+        <img class="center-block-light" src="../images/fleuron.svg" style="max-width: 3cm" alt="End of post fleuron">
+        Have a comment? Write me an <a href="../about.html">email!</a>
+      </div>
+    
+</article>
+
+
+      </div>
+      <div id="footer">
+        <!-- Left -->
+        <a id="to-top" href="#">top</a>
+        <!-- Right -->
+        <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+        &nbsp;|&nbsp;
+        <a href="../impressum.html">Legal notice and privacy policy</a>
+      </div>
+    </div>
+  </body>
+</html>

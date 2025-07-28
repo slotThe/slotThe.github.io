@@ -409,10 +409,9 @@ tshow = T.pack . show
 
 --- Tags
 
--- | Associate every @s@ in @tagsMap@ to the list @[id]@.  In reality,
--- @s@ is a tag and @[id]@ is a list of identifiers of posts that are
--- tagged with that tag.
-mkTagAssocs :: (s -> Identifier) -> [(s, [id])] -> Compiler [Item [id]]
+-- | Associate every @s@ in @tagsMap@ to the list @[id]@; @s@ is a tag and
+-- @[idp]@ is a list of identifiers of posts that are tagged with that tag.
+mkTagAssocs :: (s -> Identifier) -> [(s, [idp])] -> Compiler [Item [idp]]
 mkTagAssocs tagsMakeId = pure . map (\(s, tgs) -> Item (tagsMakeId s) tgs)
 
 -- | Create a post list and link to the relevant feed.
@@ -608,6 +607,7 @@ myPandocCompiler =
                     , "HATC", "CSL", "BY-SA", "TOC", "CT23", "README", "LSP"
                     , "PR", "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
                     , "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM", "KOMA"
+                    , "JSON", "RFC", "CSV", "CRLF", "CR", "LF"
                     ]
     inline -> inline
    where

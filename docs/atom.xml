@@ -10,8 +10,283 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2025-04-13T00:00:00Z</updated>
+    <updated>2025-07-28T00:00:00Z</updated>
     <entry>
+    <title>Parsing CSV in BQN</title>
+    <link href="https://tony-zorman.com/posts/bqn-csv.html" />
+    <id>https://tony-zorman.com/posts/bqn-csv.html</id>
+    <published>2025-07-28T00:00:00Z</published>
+    <updated>2025-07-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2025-07-28
+      
+      
+      
+        &thinsp;·&thinsp; <span title="1857 words">8 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>Let’s write a CSV parser in BQN!</p>
+<!--more-->
+<p>Working my way towards a full blown JSON parser,
+I thought it might be a good idea to start with something simpler<!--
+-->—<a href="https://www.ietf.org/rfc/rfc4180.txt">RFC 4180</a> sounds like a good candidate.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+Plus, there is also a great reference implementation available in
+<a href="https://github.com/mlochbaum/bqn-libs/blob/master/csv.bqn">bqn-libs</a>.</p>
+<p>This article will assume that you are already at least a little bit familiar with BQN as a language.
+If not, I would recommend starting with the official <a href="https://mlochbaum.github.io/BQN/tutorial/index.html">tutorials</a>.
+I’ve also written about my experience <a href="https://tony-zorman.com/posts/aoc-in-bqn.html">using BQN</a> for Advent of Code,
+which certainly contains some amount of written words that talk about the language.</p>
+<h2 id="the-simplest-case">The simplest case</h2>
+<p>We’ll start with a subset of CSV in which we don’t have to think about escaping at all.
+That is, we only allow files that look like this:</p>
+<pre><code>a,b,c,d
+e,f,g,h</code></pre>
+<p>Let’s also permit lines of varying lengths;
+this doesn’t really change the implementation much, but I find it quite convenient sometimes.
+This simple case is quite straightforward to implement:
+we start with finding all occurrences of newlines and commas in the input string</p>
+<pre class="bqn"><code>    inp
+&quot;a,b,c,d
+e,f,g,h&quot;
+    [c,n] ← (','∾@+10) =⌜ inp
+┌─
+╵ 0 1 0 1 0 1 0 0 0 1 0 1 0 1 0
+  0 0 0 0 0 0 0 1 0 0 0 0 0 0 0
+                                ┘</code></pre>
+<p>and then split the string accordingly:</p>
+<pre class="bqn"><code>    s ← n∨c                          # Where to split
+⟨ 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 ⟩
+    (1-˜(¬s)×1+`s) ⊔ inp
+⟨ &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; ⟩</code></pre>
+<p>Having all of the “tokens” ready,
+one just needs to split at the newlines while keeping the shorter list of all splits in mind.</p>
+<pre class="bqn"><code>    (0∾s/+`n) ⊔ (1-˜(¬s)×1+`s) ⊔ inp
+⟨ ⟨ &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ⟩ ⟨ &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; ⟩ ⟩</code></pre>
+<p>Easy.</p>
+<p>Now, this was probably quite fast—if not, feel free to skip to the next section.
+Let’s go through that last line more carefully, as it contains lots of important concepts for array-oriented parsing.</p>
+<p>First, we create a depth scan according to all characters we’d like to split the string at:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<pre class="bqn"><code>    inp≍ 1+`s
+┌─
+╵ 'a' ',' 'b' ',' 'c' ',' 'd' '\n' 'e' ',' 'f' ',' 'g' ',' 'h'
+   1   2   2   3   3   4   4   5    5   6   6   7   7   8   8
+                                                              ┘</code></pre>
+<p>To single out all of the characters that we’d like to delete<!--
+-->—i.e., the ones we are splitting at—<!--
+-->we multiply the depth scan by <code>¬s</code>,
+set all commas and newlines to <code>0</code>,
+and then subtract one.</p>
+<pre class="bqn"><code>    inp≍ 1-˜(¬s)×1+`s
+┌─
+╵ 'a' ',' 'b' ',' 'c' ',' 'd' '\n' 'e' ',' 'f' ',' 'g' ',' 'h'
+   0  ¯1   1  ¯1   2  ¯1   3   ¯1   4  ¯1   5  ¯1   6  ¯1   7
+                                                              ┘
+    sl ← (1-˜(¬s)×1+`s) ⊔ inp
+⟨ &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; ⟩</code></pre>
+<p>This is also why we gave the depth scan above an initial argument of <code>1</code>—otherwise, we’d get</p>
+<pre class="bqn"><code>    inp≍ 1-˜(¬s)×+`s
+┌─
+╵ 'a' ',' 'b' ',' 'c' ',' 'd' '\n' 'e' ',' 'f' ',' 'g' ',' 'h'
+  ¯1  ¯1   0  ¯1   1  ¯1   2   ¯1   3  ¯1   4  ¯1   5  ¯1   6
+                                                              ┘</code></pre>
+<p>Next on the agenda is splitting the split list <code>sl</code> itself according to line breaks.
+For that we again do a depth scan, only this time we use the newline array <code>n</code>.</p>
+<pre class="bqn"><code>    +`n
+⟨ 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 ⟩</code></pre>
+<p>Now we replicate the appropriate cells in this array according to <code>s</code>.
+This yields a grouping of the different splitting characters into their respective lines.</p>
+<pre class="bqn"><code>    inp≍+`n
+┌─
+╵ 'a' ',' 'b' ',' 'c' ',' 'd' '\n' 'e' ',' 'f' ',' 'g' ',' 'h'
+   0   0   0   0   0   0   0    1   1   1   1   1   1   1   1
+                                                              ┘
+    (s/inp)≍(s/+`n)
+┌─
+╵ ',' ',' ',' '\n' ',' ',' ','
+   0   0   0    1   1   1   1
+                              ┘</code></pre>
+<p>Since we don’t operate on the objects directly,
+but rather on their “connections”—I think of this a bit like a graph—,
+we additionally have to add a starting cell for the first object.</p>
+<pre class="bqn"><code>    (0∾s/+`n) ⊔ sl
+⟨ ⟨ &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ⟩ ⟨ &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; ⟩ ⟩</code></pre>
+<p>Putting it all together, we have something like</p>
+<pre class="bqn"><code>CSV ← {
+  [c,n] ← (','∾@+10) =⌜ 𝕩
+  s ← n∨c
+  (0∾s/+`n) ⊔ (1-˜(¬s)×1+`s) ⊔ 𝕩
+}</code></pre>
+<p>which works as expected:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre class="bqn"><code>    CSV &quot;aaaa,b,c,d&quot;∾(@+10)∾&quot;e,f&quot;
+⟨ ⟨ &quot;aaaa&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ⟩ ⟨ &quot;e&quot; &quot;f&quot; ⟩ ⟩</code></pre>
+<h2 id="adding-escaping">Adding escaping</h2>
+<p>If a field contains commas or newlines, they need to be escaped in some way.
+The way that CSV handles this is that those fields are to be enclosed in double quotes:</p>
+<pre><code>a,&quot;b,c
+d,e&quot;</code></pre>
+<p>This is a single line with two fields, one containing <code>a</code> and one containing <code>b,c,\nd,e</code>.
+Within a quoted field, a <code>"</code> can be written as <code>""</code>;
+the following example consists of a single field with value <code>"a","b"</code></p>
+<pre><code>&quot;&quot;&quot;a&quot;&quot;,&quot;&quot;b&quot;&quot;&quot;</code></pre>
+<p>In terms of parsing,
+the first thing we need is to somehow figure out which characters are escaped.
+Thankfully, this turns out to be pretty easy—start in an unescaped setting,
+and then every time a quote is encountered, flip some “are we quoted yet?”-bit.
+In code, this can rather beautifully be expressed as a not-equal scan:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<pre class="bqn"><code>    inp ← &quot;a,&quot;&quot;b,&quot;&quot;&quot;&quot;b'&quot;&quot;&quot;&quot;,b''&quot;&quot;,c&quot;    # a,&quot;b,&quot;&quot;b&quot;&quot;,b''&quot;,c
+&quot;a,&quot;&quot;b,&quot;&quot;&quot;&quot;b'&quot;&quot;&quot;&quot;,b''&quot;&quot;,c&quot;
+    [q,c,n] ← ('&quot;'∾','∾@+10) =⌜ inp
+┌─
+╵ 0 0 1 0 0 1 1 0 0 1 1 0 0 0 0 1 0 0   # quotes   q
+  0 1 0 0 1 0 0 0 0 0 0 1 0 0 0 0 1 0   # commas   c
+  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   # newlines n
+                                      ┘
+    e ← ≠`q                             # escaped
+⟨ 0 0 1 1 1 0 1 1 1 0 1 1 1 1 1 0 0 0 ⟩
+    inp≍e
+┌─
+╵ 'a' ',' '&quot;' 'b' ',' '&quot;' '&quot;' 'b' ''' '&quot;' '&quot;' ',' 'b' ''' ''' '&quot;' ',' 'c'
+   0   0   1   1   1   0   1   1   1   0   1   1   1   1   1   0   0   0
+                                                                         ┘</code></pre>
+<p>The next step is a little non obvious—at least to me.
+Instead of having a single variable <code>s←n∨c</code> that controls where to split the text,
+we will instead have two: one for where to split, and one for which separators to drop.
+The latter is needed because we don’t actually want to keep all of the double quotes when parsing the CSV into a BQN type.
+For example, the above <code>"a,""b,""""b'"""",b''"",c"</code> should parse to something like <code>⟨"a"‿"b,""b'"",b''"‿"c"⟩</code>.</p>
+<p>For splitting, we can use the exact same logic as in the first version of the parser,
+now additionally taking into consideration the escaped flag.
+Using the definitions from above:</p>
+<pre class="bqn"><code>    inp≍ s←(¬e)∧c∨n  # split
+┌─
+╵ 'a' ',' '&quot;' 'b' ',' '&quot;' '&quot;' 'b' ''' '&quot;' '&quot;' ',' 'b' ''' ''' '&quot;' ',' 'c'
+   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0
+                                                                         ┘</code></pre>
+<p>Dropping is a little bit more finicky,
+so let’s start with something slightly simpler.
+Essentially, we want to drop double quotes that are used to start an escaped field,
+and only want to keep one pair of quotes on the inside of such a field.
+The above mentioned transformation</p>
+<pre><code>&quot;a,&quot;&quot;b,&quot;&quot;&quot;&quot;b'&quot;&quot;&quot;&quot;,b''&quot;&quot;,c&quot;   -&gt;   ⟨&quot;a&quot;‿&quot;b,&quot;&quot;b'&quot;&quot;,b''&quot;‿&quot;c&quot;⟩</code></pre>
+<p>should illustrate what I mean.
+One way to achieve this is to mark all last occurrences of double quotes,
+along with all separators.</p>
+<pre class="bqn"><code>    inp≍ d←s∨«⊸&lt;q # what to drop
+┌─
+╵ 'a' ',' '&quot;' 'b' ',' '&quot;' '&quot;' 'b' ''' '&quot;' '&quot;' ',' 'b' ''' ''' '&quot;' ',' 'c'
+   0   1   1   0   0   0   1   0   0   0   1   0   0   0   0   1   1   0
+                                                                          ┘</code></pre>
+<p>Cutting up the input string now works essentially like the first version,
+just that we have to take care where to insert <code>s</code> and where to insert <code>d</code> now.
+Only “real” separators should increase the depth of an expression,
+while for singling them out we have to consider all characters that are to be dropped.</p>
+<pre class="bqn"><code>    1-˜(¬d)×1+`s
+⟨ 0 ¯1 ¯1 1 1 1 ¯1 1 1 1 ¯1 1 1 1 1 ¯1 ¯1 2 ⟩
+    (1-˜(¬d)×1+`s) ⊔ inp
+⟨ &quot;a&quot; &quot;b,&quot;&quot;b'&quot;&quot;,b''&quot; &quot;c&quot; ⟩</code></pre>
+<p>Likewise, when grouping the fields by line we have to be careful to only talk about unescaped newlines.</p>
+<pre class="bqn"><code>    +`(¬e)∧n
+⟨ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ⟩
+    0∾s/+`(¬e)∧n
+⟨ 0 0 0 ⟩
+    (0∾s/+`(¬e)∧n) ⊔ (1-˜(¬d)×1+`s) ⊔ inp
+⟨ ⟨ &quot;a&quot; &quot;b,&quot;&quot;b'&quot;&quot;,b''&quot; &quot;c&quot; ⟩ ⟩
+</code></pre>
+<p>All in all, the second version of our CSV function looks like this:</p>
+<pre class="bqn"><code>CSV ⇐ {
+  [q,c,n] ← ('&quot;'∾','∾@+10) =⌜ 𝕩        # Quote, comma, LF
+  e ← ≠`q                              # Escapes
+  s ← (¬e)∧n∨c                         # Where to split
+  d ← s∨«⊸&lt;q                           # What to drop
+  (0∾s/+`(¬e)∧n) ⊔ (1-˜(¬d)×1+`s) ⊔ 𝕩  # First split all, then split lines
+}</code></pre>
+<hr />
+<p>This works in almost all cases already,
+though there is some unexpected behaviour surrounding empty fields:</p>
+<pre class="bqn"><code>    CSV &quot;a,,b&quot;
+┌─
+· ⟨ &quot;a&quot; ⟨⟩ &quot;b&quot; ⟩
+                 ┘
+    CSV &quot;a,&quot;&quot;&quot;&quot;,b&quot;
+⟨ ⟨ &quot;a&quot; &quot;&quot;&quot;&quot; &quot;b&quot; ⟩ ⟩</code></pre>
+<p>Those two expressions should probably be equivalent.
+Since we already mark the last occurrences of each quote,
+we just have to make sure that we additionally mark those that are also escaped.
+Changing</p>
+<pre class="bqn"><code>  d ← s∨«⊸&lt;q                           # What to drop</code></pre>
+<p>to</p>
+<pre class="bqn"><code>  d ← s∨q∧e∨«⊸&lt;q                       # What to drop</code></pre>
+<p>now parses both cases correctly:</p>
+<pre class="bqn"><code>    (CSV &quot;a,,b&quot;) ≡ CSV &quot;a,&quot;&quot;&quot;&quot;,b&quot;
+1</code></pre>
+<hr />
+<p>Here are some exercises for the interested reader:</p>
+<ol type="1">
+<li><p>Generalise the <code>CSV</code> function to take arbitrary separators instead of just a comma.
+This can rather elegantly be achieved by making it an ambivalent function,
+with the monadic case just being <code>',' CSV 𝕩</code>.</p></li>
+<li><p>Add some failure states, like actually honouring</p>
+<blockquote>
+<p>Each line should contain the same number of fields throughout the file.</p>
+</blockquote>
+<p>from the RFC.
+This could just use
+<a href="https://mlochbaum.github.io/BQN/doc/assert.html">assert</a>
+to print an error message to the user.</p></li>
+<li><p>I’ve very efficiently ignored that CRLF line endings exist, so I guess that one’s still missing?</p></li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>Q: Is writing (and reading) a parser in an array language unnecessarily hard?<br />
+A: Yes.</p>
+<p>Q: Is it the most fun I’ve had programming in a long time?<br />
+A: Yes.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>For the sake of convenience, I will interpret the RFC somewhat loosely in places,
+though hopefully still implementing the gist of it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>{-} BQN doesn’t actually escape non-double-quote characters in strings,
+but I’ve chosen to write <code>\n</code> here instead of a literal newline for readability.</p>
+<p>Also, I will use
+<a href="https://mlochbaum.github.io/BQN/doc/couple.html">couple</a>
+quite a bit to visualise the different masks in relation to the original character array going in,
+in case you were wondering what that glyph meant.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} 󠀠</p>
+<p>Since BQN doesn’t do escaping in strings,
+I make use of
+<a href="https://mlochbaum.github.io/BQN/doc/types.html#characters">character arithmetic</a>
+here, to represent the line feed by its decimal value.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} 󠀠</p>
+<p>As you can see, escaping is… fun.
+Every character save a double quote is verbatim in BQN strings,
+and double quotes are also escaped using two of them in succession.
+This means that to input the CSV <code>"a"</code>, one would write <code>"""a"""</code>,
+and for <code>"""a"",""b"""</code> we have the wonderful
+<code>"""""""a"""",""""b"""""""</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Dissertation Typesetting Considerations</title>
     <link href="https://tony-zorman.com/posts/phd-typesetting.html" />
     <id>https://tony-zorman.com/posts/phd-typesetting.html</id>

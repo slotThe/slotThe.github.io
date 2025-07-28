@@ -106,7 +106,7 @@ I’ve just released version 0.1.0 of <a href="https://github.com/slotThe/rq"><c
 --><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
 what are you talking about‽</div><!--
 -->
-a small functional language to manipulate JSON—and my excuse to learn Rust!
+a small functional language to manipulate <span class="small-caps">json</span>—and my excuse to learn Rust!
 This seems as good a time as any to talk about it,
 so let’s do that.
 <!--more-->
@@ -174,7 +174,7 @@ Name
 </pre></div>
 
 <p></p>
-The language has some <code>jq</code>-inspired syntactic sugar for working with JSON,
+The language has some <code>jq</code>-inspired syntactic sugar for working with <span class="small-caps">json</span>,
 like <code>x.1</code> desugaring to <code>get 1 x</code>, and <code>.1</code> meaning <code>λx → get 1 x</code>.
 Additionally, <code>|</code> designates covariant function composition.<!--
 --><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">As in, <code>(f | g)(x)</code> means <code>g(f(x))</code>,
@@ -249,12 +249,12 @@ Performance is “fine”;
 a bit slower than <code>jq</code>,
 though probably not enough to notice very often in practice.
 There currently is no streaming parser,
-though, so please don’t pump gigabytes of JSON through <code>rq</code> :)
+though, so please don’t pump gigabytes of <span class="small-caps">json</span> through <code>rq</code> :)
 <p></p>
 As a “real world” example,
 I ran <code>cargo metadata</code> on the
 <a href="https://github.com/rust-lang/rust-analyzer">rust-analyzer GitHub repository</a>,
-which produces ~1mb of JSON.
+which produces ~1mb of <span class="small-caps">json</span>.
 On that data, <code>jq</code> takes 144ms and <code>rq</code> needs around 186ms.
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s2">&quot;cargo metadata --format-version=1 | jq '.packages | map (.name)'&quot;</span>
 <span class="go">Benchmark 1: cargo metadata --format-version=1 | jq '.packages | map (.name)'</span>
