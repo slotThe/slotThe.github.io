@@ -107,7 +107,7 @@ main = xmonad
 If you're anything like me, this will soon become an integral part of
 your workflow and you won't want to live without it.  If not, then
 perhaps you still don't understand what all the fuss is about; in either
-case, I'd like to [hear from you](mailto:soliditsallgood@mailbox.org)!
+case, I'd like to [hear from you](mailto:mail@tony-zorman.com)!
 
 [Emacs]: https://www.gnu.org/software/emacs/
 [XMonad.Actions.Prefix]: https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html
