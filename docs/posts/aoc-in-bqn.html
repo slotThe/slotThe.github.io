@@ -213,7 +213,7 @@ More importantly, however: there is no precedence for mathematical operators!
 <span class="small-caps">bqn</span> is evaluated (strictly) from right to left,
 and most of the time this is also the direction you should read expressions in.
 <p></p>
-Assigning values to variables works with <em>define</em> (<code>←</code>):
+Assigning values to variables works with <a href="https://mlochbaum.github.io/BQN/doc/expression.html#assignment">define</a> (<code>←</code>):
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">v</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="m">2</span><span class="o">×</span><span class="m">4</span><span class="o">+</span><span class="m">6</span>
 <span class="m">20</span>
 </pre></div>
@@ -242,7 +242,7 @@ the former really are the blackboard bold variants of the respective letters.</d
 -->
 Functions are always infix, and can only be called with either one or two arguments.
 In the former case, the function takes its argument on the right and <code>𝕨</code> will be given a special value:
-<em>nothing</em> (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>)!.
+<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing">nothing</a> (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>)!.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">1</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕨</span><span class="o">+</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">2</span>
 <span class="m">3</span>
 <span class="w">    </span><span class="m">1</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕨</span><span class="o">-</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">2</span>
@@ -465,7 +465,7 @@ All names starting with that symbol are [system values]—<!--
 We will see other important system values, like <code>•HashMap</code> or <code>•Type</code>, a bit later.</div><!--
 -->
 The only other function we haven’t see so far is
-<em>first</em> <a href="https://mlochbaum.github.io/BQN/doc/pick.html"><code>⊑</code></a>,
+<a href="https://mlochbaum.github.io/BQN/doc/pick.html">first</a> <a href="https://mlochbaum.github.io/BQN/doc/pick.html"><code>⊑</code></a>,
 which gives us the first element in the list—our input is on a single long line.
 Much more interesting is the <code>'0'-˜</code> part,
 which immediately gives me a chance to talk about character–number conversions in <span class="small-caps">bqn</span>.
@@ -554,12 +554,12 @@ It helps me with reading the code, anyways.</div><!--
 </pre></div>
 
 <p></p>
-We <em>rotate</em> (<a href="https://mlochbaum.github.io/BQN/doc/reverse.html#rotate"><code>⌽</code></a>)
+We <a href="https://mlochbaum.github.io/BQN/doc/reverse.html">rotate</a> (<a href="https://mlochbaum.github.io/BQN/doc/reverse.html#rotate"><code>⌽</code></a>)
 the whole list by 1 to the right,
 and then compare it with its original (<code>inp= -1⌽inp</code>).
 This creates a <em>Boolean mask</em>: a list with the same length as <code>inp</code>, only consisting of zeros and ones.
 We can use this to pick the elements of the list corresponding to 1 with
-<em>replicate</em> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html#replicate"><code>/</code></a>).
+<a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html#replicate"><code>/</code></a>).
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="c1"># &quot;Only give me the elements of 𝕩</span>
 <span class="w">    </span><span class="c1"># that correspond to 1's in 𝕨&quot;.</span>
 <span class="w">    </span><span class="p">⟨</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">⟩</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">↕</span><span class="m">6</span>
@@ -568,7 +568,7 @@ We can use this to pick the elements of the list corresponding to 1 with
 
 <p></p>
 All that’s left is to sum up the numbers by using
-+-<em>fold</em> (<a href="https://mlochbaum.github.io/BQN/doc/fold.html#fold"><code>`</code></a>),
++-<a href="https://mlochbaum.github.io/BQN/doc/fold.html">fold</a> (<a href="https://mlochbaum.github.io/BQN/doc/fold.html#fold"><code>`</code></a>),
 which is just a right fold over the list.
 A few more notes:
 <ol type="1">
@@ -579,11 +579,11 @@ and will often be used to filter results, or serve as control flow<!--
      -->—<span class="small-caps">bqn</span> does not have a builtin if-then-else expression!</li>
 <li><p></p>
 
-<em>Swap</em> (<a href="https://mlochbaum.github.io/BQN/doc/swap.html"><code>˜</code></a>),
+<a href="https://mlochbaum.github.io/BQN/doc/swap.html">Swap</a> (<a href="https://mlochbaum.github.io/BQN/doc/swap.html"><code>˜</code></a>),
 as seen in the <a href="#a-crash-course-on-syntax">crash course on syntax</a> makes an appearance again.
 Recall that this 1-modifier simply takes a function, and returns a function with its arguments flipped,
 so <code>X f˜ Y</code> is the same as <code>Y f X</code>.
-When given only one argument, <em>swap</em> becomes <em>self</em> and duplicates its argument: <code>f˜ Y</code> is <code>Y f Y</code>.
+When given only one argument, <a href="https://mlochbaum.github.io/BQN/doc/swap.html">swap</a> becomes <a href="https://mlochbaum.github.io/BQN/doc/swap.html">self</a> and duplicates its argument: <code>f˜ Y</code> is <code>Y f Y</code>.
 The modifier mostly exists to allow the reading order to flow more naturally from right to left.
 Without it, we would have to write the above expression as <code>+´(inp=-1⌽inp)/inp</code>.<!--
 --><label for="sn-12" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-12" class="margin-toggle" /><div class="sidenote">Or, if you wanted to make it extra confusing,
@@ -621,7 +621,7 @@ This is easy enough once we have the data in a usable format;
 however, getting to that format is actually the much more interesting part of the day.
 For one, we have to learn how to split strings!
 For these kinds of partitioning tasks, <span class="small-caps">bqn</span> sports the very general
-<em>group</em> (<a href="https://mlochbaum.github.io/BQN/doc/group.html"><code>⊔</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> (<a href="https://mlochbaum.github.io/BQN/doc/group.html"><code>⊔</code></a>)
 function.
 Briefly, <code>X⊔Y</code> groups <code>Y</code> according to the indices supplied by <code>X</code>,
 while omitting elements that are associated to <code>¯1</code>.
@@ -651,7 +651,7 @@ I will use a string with a space separator for illustrative purposes, but the fu
 
 <p></p>
 Now, a
-+-<em>scan</em> (<a href="https://mlochbaum.github.io/BQN/doc/scan.html"><code>`</code></a>)
++-<a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> (<a href="https://mlochbaum.github.io/BQN/doc/scan.html"><code>`</code></a>)
 yields a running sum, indicating when we encounter a separator.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">' '</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="o">+</span><span class="na">`</span><span class="nv">ws</span><span class="kd">←</span><span class="ni">𝕨</span><span class="o">=</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span><span class="w"> </span><span class="s2">&quot;13 259 39999 4&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span>
@@ -661,7 +661,7 @@ yields a running sum, indicating when we encounter a separator.
 This looks a bit weird, but the <code>ws←𝕨=𝕩</code> is an inline assignment—we do the comparison <code>𝕨=𝕩</code>, call the result <code>ws</code>, and then scan over it.
 In this way, we can refer to <code>ws</code> again at a later point.
 It’s not the best style to write code this way, but here it kind of fits.
-If we just <em>group</em>ed the string now, we
+If we just <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a>ed the string now, we
 would get the separators “attached” to the word that follows them:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">' '</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="ni">𝕩</span><span class="o">⊔</span><span class="na">˜</span><span class="o">+</span><span class="na">`</span><span class="nv">ws</span><span class="kd">←</span><span class="ni">𝕨</span><span class="o">=</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span><span class="w"> </span><span class="s2">&quot;13 259 39999 4&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;13&quot;</span><span class="w"> </span><span class="s2">&quot; 259&quot;</span><span class="w"> </span><span class="s2">&quot; 39999&quot;</span><span class="w"> </span><span class="s2">&quot; 4&quot;</span><span class="w"> </span><span class="p">⟩</span>
@@ -671,7 +671,7 @@ would get the separators “attached” to the word that follows them:
 One thing we can do,
 since <code>ws</code> gives us the positions of the separators,
 is to
-<em>negate</em> (<a href="https://mlochbaum.github.io/BQN/doc/logic.html"><code>¬</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/logic.html">negate</a> (<a href="https://mlochbaum.github.io/BQN/doc/logic.html"><code>¬</code></a>)
 the entire vector and multiply it with what we already have.
 This would turn all separators into zeros in the output:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">' '</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="sr">(</span><span class="o">¬</span><span class="nv">ws</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">ws</span><span class="kd">←</span><span class="ni">𝕨</span><span class="o">=</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span><span class="w"> </span><span class="s2">&quot;13 259 39999 4&quot;</span>
@@ -758,20 +758,20 @@ For now, let’s look at an array as a blob with the following properties:
 <ul>
 <li><p></p>
 
-It has a <em>rank</em>, which is its number of axes.
+It has a <a href="https://mlochbaum.github.io/BQN/doc/rank.html">rank</a>, which is its number of axes.
 Pictorially, it is the number of dimensions one can walk in.
 The <em>leading axis</em> is the first one.</li>
 <li><p></p>
 
-It has a <em>shape</em>, which is the number of positions that it has along each of its axes.</li>
+It has a <a href="https://mlochbaum.github.io/BQN/doc/shape.html">shape</a>, which is the number of positions that it has along each of its axes.</li>
 <li><p></p>
 
 It has <em>elements</em>, which are the values at every position.</li>
 </ul>
 <p></p>
-One can query the <em>rank</em> of an array with monadic
+One can query the <a href="https://mlochbaum.github.io/BQN/doc/rank.html">rank</a> of an array with monadic
 <a href="https://mlochbaum.github.io/BQN/doc/shape.html"><code>=</code></a>
-and the <em>shape</em> with monadic
+and the <a href="https://mlochbaum.github.io/BQN/doc/shape.html">shape</a> with monadic
 <a href="https://mlochbaum.github.io/BQN/doc/shape.html"><code>≢</code></a>.
 <p></p>
 For example,
@@ -780,10 +780,10 @@ For example,
 </pre></div>
 
 <p></p>
-is an array of <em>rank</em> <code>1</code> with <em>shape</em> <code>⟨9⟩</code>.
+is an array of <a href="https://mlochbaum.github.io/BQN/doc/rank.html">rank</a> <code>1</code> with <a href="https://mlochbaum.github.io/BQN/doc/shape.html">shape</a> <code>⟨9⟩</code>.
 At every possible position (0–9), we find a corresponding element: <code>10</code> for 0, <code>11</code> for 1, etc.
 <p></p>
-We can use <em>reshape</em> to create a higher-dimensional array from a flat vector:
+We can use <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">reshape</a> to create a higher-dimensional array from a flat vector:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">3</span><span class="p">‿</span><span class="m">3</span><span class="o">⥊↕</span><span class="m">9</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span>
@@ -793,7 +793,7 @@ We can use <em>reshape</em> to create a higher-dimensional array from a flat vec
 </pre></div>
 
 <p></p>
-This is an array of <em>rank</em> <code>2</code> with <em>shape</em> <code>⟨3 3⟩</code>.
+This is an array of <a href="https://mlochbaum.github.io/BQN/doc/rank.html">rank</a> <code>2</code> with <a href="https://mlochbaum.github.io/BQN/doc/shape.html">shape</a> <code>⟨3 3⟩</code>.
 The element at position <code>1‿1</code> (notice how we have two indices to specify) is <code>4</code>.
 <p></p>
 Why am I blabbering on about this when everyone intuitively knows what an array is?
@@ -846,9 +846,9 @@ For example, <code>3‿3⥊↕9</code> has three major cells, <code>⟨0 1 2⟩<
 This concept is quite central to the way a lot of array primitives work,
 in that they often only apply to the first axis of the argument.
 The 1-modifier
-<em>cells</em> (<a href="https://mlochbaum.github.io/BQN/doc/rank.html"><code>˘</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/rank.html">cells</a> (<a href="https://mlochbaum.github.io/BQN/doc/rank.html"><code>˘</code></a>)
 changes a function to instead operate on the major cells of its argument.
-For example, we already saw that <em>reverse</em> reverses lists.
+For example, we already saw that <a href="https://mlochbaum.github.io/BQN/doc/reverse.html">reverse</a> reverses lists.
 If we have more dimensions, we instead reverse along the leading axis:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">m</span><span class="kd">←</span><span class="m">3</span><span class="p">‿</span><span class="m">3</span><span class="o">⥊↕</span><span class="m">9</span>
 <span class="err">┌─</span>
@@ -907,7 +907,7 @@ More explicitly, we have the following two relationships:
 Replace <code>G</code> with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> in the first of these and you essentially have the above mathematical notation.
 <p></p>
 Since this train is composed of three functions, it is called a <em>3-train</em>.
-Naturally, <em>2-trains</em> also exist; these are just 3-trains in which the function <code>F</code> is <em>nothing</em>
+Naturally, <em>2-trains</em> also exist; these are just 3-trains in which the function <code>F</code> is <a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing">nothing</a>
 (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>):
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>(GH)y  ≡  GHy   and   x(GH)y  ≡  G(xHy)
 </pre></div>
@@ -919,11 +919,11 @@ but it’s easy enough to remember that it doesn’t feel all that bothersome to
 -->
 Sort of like a set difference for arrays.
 We just need a few functions for this purpose:
-<em>negate</em> (<a href="https://mlochbaum.github.io/BQN/doc/logic.html"><code>¬</code></a>) and
-<em>member of</em> (<a href="https://mlochbaum.github.io/BQN/doc/search.html#member-of"><code>∊</code></a>),
+<a href="https://mlochbaum.github.io/BQN/doc/logic.html">negate</a> (<a href="https://mlochbaum.github.io/BQN/doc/logic.html"><code>¬</code></a>) and
+<a href="https://mlochbaum.github.io/BQN/doc/search.html">member of</a> (<a href="https://mlochbaum.github.io/BQN/doc/search.html#member-of"><code>∊</code></a>),
 which do what you would expect them to.
 <p></p>
-Additionally, we will make use of the scalar pervasion of <em>member of</em>,
+Additionally, we will make use of the scalar pervasion of <a href="https://mlochbaum.github.io/BQN/doc/search.html">member of</a>,
 where for every element in <code>𝕨</code>, we test whether it is in <code>𝕩</code>.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s2">&quot;.b#d.#zz#&quot;</span><span class="w"> </span><span class="o">∊</span><span class="w"> </span><span class="s2">&quot;.#&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
@@ -945,12 +945,12 @@ Let’s now write the function with and without trains:
 
 <p></p>
 That last example used the
-<em>atop</em> (<a href="https://mlochbaum.github.io/BQN/doc/compose.html#atop"><code>∘</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/compose.html">atop</a> (<a href="https://mlochbaum.github.io/BQN/doc/compose.html#atop"><code>∘</code></a>)
 2-modifier; one of several
 <a href="https://mlochbaum.github.io/BQN/doc/tacit.html#combinators">combinators</a>
 that <span class="small-caps">bqn</span> sports to complement this syntax.
 I will generally introduce them on a call by need basis;
-<em>atop</em> is basically a 2-train as a modifier:
+<a href="https://mlochbaum.github.io/BQN/doc/compose.html">atop</a> is basically a 2-train as a modifier:
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>F∘G𝕩  ≡  FG𝕩   and   𝕨F∘G𝕩  ≡  F(𝕨G𝕩)
 </pre></div>
 
@@ -979,13 +979,13 @@ Playing around with this was immensely helpful for me in the beginning.
 </details>
 <p></p>
 The 1-modifier
-<em>each</em> (<a href="https://mlochbaum.github.io/BQN/doc/map.html"><code>¨</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/map.html">each</a> (<a href="https://mlochbaum.github.io/BQN/doc/map.html"><code>¨</code></a>)
 does what it says on the tin—it’s comparable to <code>map</code> in many other languages.
 Parsing the input works as expected,
 in that we split each line on the tab character,
 and parse all the resulting sequences of digits as numbers.
 All that’s left to do is to assembly the table in to a rank two array.
-By means of <em>cells</em> we get the maximum and minimum for every row<!--
+By means of <a href="https://mlochbaum.github.io/BQN/doc/rank.html">cells</a> we get the maximum and minimum for every row<!--
 -->—using the <code>⌈´-⌊´</code> train, which is a great one to reason through—<!--
 -->and sum up the resulting vector to get our answer.
 <hr />
@@ -998,7 +998,7 @@ and take the result of that division.
 I didn’t think too hard about this and just decided to brute-force a solution.
 The idea is to proceed row-wise and first create a division table for each row with <code>÷⌜˜</code>.
 This uses the 1-modifier
-<em>table</em> (<a href="https://mlochbaum.github.io/BQN/doc/map.html#table"><code>⌜</code></a>),
+<a href="https://mlochbaum.github.io/BQN/doc/map.html">table</a> (<a href="https://mlochbaum.github.io/BQN/doc/map.html#table"><code>⌜</code></a>),
 which is essentially a generalised outer product in the sense of linear algebra.
 Written out explicitly, this definition is equivalent to <code>{ 𝕩÷⌜𝕩 }</code>:
 it applies the given function to every element of <code>𝕩</code> on the left and all of <code>𝕩</code> on the right
@@ -1028,18 +1028,18 @@ As such, we just need to select an integer<!--
 </pre></div>
 
 <p></p>
-As before, selection is done with <code>/</code> (<em>replicate</em>).
-We use <em>over</em>, <code>○</code>, which is one of the combinators mentioned earlier, to
-<em>deshape</em> (<a href="https://mlochbaum.github.io/BQN/doc/reshape.html#deshape"><code>⥊</code></a>)
+As before, selection is done with <code>/</code> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>).
+We use <a href="https://mlochbaum.github.io/BQN/doc/compose.html">over</a>, <code>○</code>, which is one of the combinators mentioned earlier, to
+<a href="https://mlochbaum.github.io/BQN/doc/reshape.html">deshape</a> (<a href="https://mlochbaum.github.io/BQN/doc/reshape.html#deshape"><code>⥊</code></a>)
 the array beforehand,
-as <em>replicate</em> only operates on vectors and not arrays.<!--
+as <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a> only operates on vectors and not arrays.<!--
 --><label for="sn-18" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-18" class="margin-toggle" /><div class="sidenote">Don’t want to somehow end up with an array that has holes in it!</div><!--
 -->
 Briefly, one has that <code>𝕨(𝔽○𝔾)𝕩</code> is <code>(𝔾𝕨)𝔽(𝔾𝕩)</code>.
 We then just have to pick the first element of the array,
 which we know will have exactly one match.
 All that’s left to do is to apply the function <code>Two</code> to all rows of <code>inp</code>,
-which is but a <em>cells</em> away, and sum up the result.
+which is but a <a href="https://mlochbaum.github.io/BQN/doc/rank.html">cells</a> away, and sum up the result.
 <h3 id="day-3"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day03.bqn">Day 3</a><a href="#day-3" class="floatleft sec-link">§</a></h3>
 <p></p>
 Day 3 asks us to implement an experimental memory layout: an infinite spiral grid.
@@ -1077,7 +1077,7 @@ The function that outputs all of the coordinates we’ve been to looks like this
 <p></p>
 We create the <code>R U 2L 2D…</code> pattern in two steps,
 first assembling the directions and then the associated numbers.
-Notice that if <code>𝕨</code> is larger than the length of <code>𝕩</code>, <em>reshape</em> duplicates <code>𝕩</code> until it fits:
+Notice that if <code>𝕨</code> is larger than the length of <code>𝕩</code>, <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">reshape</a> duplicates <code>𝕩</code> until it fits:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">5</span><span class="o">⥊</span><span class="p">⟨</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">⟩</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="kt">{</span><span class="sr">(</span><span class="m">2</span><span class="o">×≠</span><span class="ni">𝕩</span><span class="sr">)</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="o">↕</span><span class="m">5</span><span class="w">       </span><span class="c1"># Monadic ≠ is *length*</span>
@@ -1091,7 +1091,7 @@ The train <code>↕⋈¨↕</code> is interesting because of the middle componen
 It’s what one might call <code>zip</code> in other languages.<!--
 --><label for="sn-20" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-20" class="margin-toggle" /><div class="sidenote">Dzaima alerted me to the fact that <code>∾(↕⋈¨↕)𝕩</code> as a whole is probably better written as <code>2/↕𝕩</code>,
 using the magic of
-<em>replicate</em> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html#replicate"><code>/</code></a>).
+<a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a> (<a href="https://mlochbaum.github.io/BQN/doc/replicate.html#replicate"><code>/</code></a>).
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">2</span><span class="o">/↕</span><span class="m">6</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
@@ -1100,7 +1100,7 @@ using the magic of
 However, since I wanted to showcase <code>zip</code>,
 I will keep the slightly longer version in the main text.</div><!--
 -->
-In the last line, we first use <em>reshape</em> to replicate the vector <code>𝕩</code> exactly <code>𝕨</code> times:
+In the last line, we first use <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">reshape</a> to replicate the vector <code>𝕩</code> exactly <code>𝕨</code> times:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">3</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕨</span><span class="p">‿</span><span class="m">2</span><span class="o">⥊</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">1</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span>
@@ -1138,7 +1138,7 @@ which is useful since we are looking for a specific index:
 </pre></div>
 
 <p></p>
-All that’s left is to <em>pick</em> the right coordinate
+All that’s left is to <a href="https://mlochbaum.github.io/BQN/doc/pick.html">pick</a> the right coordinate
 (keeping in mind we skip the starting position),
 and calculate the Manhattan distance.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">´</span><span class="o">|</span><span class="w"> </span><span class="sr">(</span><span class="nv">inp</span><span class="o">-</span><span class="m">2</span><span class="sr">)</span><span class="w"> </span><span class="o">⊑</span><span class="w"> </span><span class="o">Coords</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="c1"># ⇒ 552</span>
@@ -1289,10 +1289,10 @@ sryookh unrudn zrkz jxhrdo gctlyz
 <p></p>
 Part one wants us to calculate how many passphrases do not contain duplicate words.
 <span class="small-caps">bqn</span> essentially gives us everything we need for this: we
-<em>sort</em> (<a href="https://mlochbaum.github.io/BQN/doc/order.html#sort"><code>∧</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/order.html">sort</a> (<a href="https://mlochbaum.github.io/BQN/doc/order.html#sort"><code>∧</code></a>)
 each passphrase,
 use
-<em>mark firsts</em> (<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html#mark-firsts"><code>∊</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html">mark firsts</a> (<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html#mark-firsts"><code>∊</code></a>)
 to mark the first occurrences of every element,
 and then check that the resulting vector we get is all ones:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="p">⟨</span><span class="o">Split</span><span class="p">⟩</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•Import</span><span class="w"> </span><span class="s2">&quot;../../util/bqn_util/util.bqn&quot;</span>
@@ -1307,7 +1307,7 @@ Part two slightly expands on this;
 instead of being unique, words in a passphrase now only have to be unique up to permutation.
 This means that no word may be the anagram of another word.
 Solving this only requires a small adjustment to the above solution,
-in that we now have to sort every word before using <em>mark firsts</em>:
+in that we now have to sort every word before using <a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html">mark firsts</a>:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">´</span><span class="w"> </span><span class="o">∧</span><span class="na">´</span><span class="py">∘</span><span class="o">∊</span><span class="py">∘</span><span class="sr">(</span><span class="o">∧</span><span class="na">¨</span><span class="sr">)</span><span class="py">∘</span><span class="sr">(</span><span class="s1">' '</span><span class="py">⊸</span><span class="o">Split</span><span class="sr">)</span><span class="na">¨</span><span class="w"> </span><span class="o">•FLines</span><span class="s2">&quot;../inputs/day04.txt&quot;</span><span class="w"> </span><span class="c1"># ⇒ 265</span>
 </pre></div>
 
@@ -1379,7 +1379,7 @@ so I would encourage the reader who made it this far to peruse <span class="smal
 <p></p>
 We can supply a function to <code>_Sol</code> that additionally transforms the individual words, before doing the uniqueness check.
 Then, for part one the supplied function may simply be
-<em>identity</em> (<a href="https://mlochbaum.github.io/BQN/doc/identity.html"><code>⊢</code></a>),
+<a href="https://mlochbaum.github.io/BQN/doc/identity.html">identity</a> (<a href="https://mlochbaum.github.io/BQN/doc/identity.html"><code>⊢</code></a>),
 which does what it says on the tin.
 <h3 id="day-5"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day05.bqn">Day 5</a><a href="#day-5" class="floatleft sec-link">§</a></h3>
 <p></p>
@@ -1414,10 +1414,10 @@ There are nevertheless a few interesting things about the solution:
 But we can at least pretend it does that.</div><!--
 -->
 Much more interestingly, however, we can use
-<em>under</em> (<a href="https://mlochbaum.github.io/BQN/doc/under.html"><code>⌾</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/under.html">under</a> (<a href="https://mlochbaum.github.io/BQN/doc/under.html"><code>⌾</code></a>)
 to change only a part of the input vector.
 How it works in this “structural mode”<!--
---><label for="sn-23" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-23" class="margin-toggle" /><div class="sidenote">There is also a “computational” <em>under</em>,
+--><label for="sn-23" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-23" class="margin-toggle" /><div class="sidenote">There is also a “computational” <a href="https://mlochbaum.github.io/BQN/doc/under.html">under</a>,
 in which the <span class="small-caps">bqn</span> implementation tries to find a right inverse to the given function.
 It’s a pretty interesting modifier.</div><!--
 --> is that <code>𝔽⌾𝔾 𝕩</code>
@@ -1447,7 +1447,7 @@ otherwise, we proceed as before and increase it by one.
 
 <p></p>
 This is another neat example of how to use Boolean expressions for control flow:
-depending on the result of <code>3≤i⊑inp</code>, we <em>pick</em> the correct function to apply.
+depending on the result of <code>3≤i⊑inp</code>, we <a href="https://mlochbaum.github.io/BQN/doc/pick.html">pick</a> the correct function to apply.
 <p></p>
 Wrapping this in a function that works for both days is not super interesting,
 only that we need to find a value <code>t</code> such that <code>t≤i⊑inp</code> will always be false.
@@ -1513,11 +1513,11 @@ and then press that into the length of the vector.
 
 <details>
 <summary>
-Fills and special symbols for <em>reshape</em>
+Fills and special symbols for <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">reshape</a>
 </summary>
 <p></p>
-As you may have noticed, we gave the symbol <code>↑</code> to <em>reshape</em> above.
-Ordinarily, this is the <em>take</em> (or <em>prefixes</em>) function, but here it stands in as a special symbol to alter the behaviour of <em>reshape</em>.
+As you may have noticed, we gave the symbol <code>↑</code> to <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">reshape</a> above.
+Ordinarily, this is the <a href="https://mlochbaum.github.io/BQN/doc/take.html">take</a> (or <a href="https://mlochbaum.github.io/BQN/doc/prefixes.html">prefixes</a>) function, but here it stands in as a special symbol to alter the behaviour of <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">reshape</a>.
 This, as well as various other values, is documented
 <a href="https://mlochbaum.github.io/BQN/doc/reshape.html#computed-lengths">here</a>,
 the relevant excerpt being
@@ -1532,7 +1532,7 @@ are basically certain “default” values of a given array.
 Operations on the array might make use of them if the array would otherwise end up having holes in it.
 Atomically, they are either <code>0</code> (for numbers) or <code>' '</code> (for characters),
 and higher dimensional arrays—being inductively defined in <span class="small-caps">bqn</span>—can inherit from this.
-A canonical example is <em>take</em> when the number of elements to be taken is longer than the length of the argument:
+A canonical example is <a href="https://mlochbaum.github.io/BQN/doc/take.html">take</a> when the number of elements to be taken is longer than the length of the argument:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">3</span><span class="p">‿</span><span class="m">3</span><span class="o">⥊↕</span><span class="m">9</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span>
@@ -1549,7 +1549,7 @@ A canonical example is <em>take</em> when the number of elements to be taken is 
 </pre></div>
 
 <p></p>
-This is also how things like <em>nudge</em> decide what to pad the array with.
+This is also how things like <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> decide what to pad the array with.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">1</span><span class="o">+↕</span><span class="m">9</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="o">»</span><span class="m">1</span><span class="o">+↕</span><span class="m">9</span>
@@ -1597,9 +1597,9 @@ and subtracting that from the vectors’ length:
 </pre></div>
 
 <p></p>
-Notice how we need to <em>enclose</em> <code>d</code> before using
-<em>index of</em> (<a href="https://mlochbaum.github.io/BQN/doc/search.html#index-of"><code>⊐</code></a>).
-Since <code>d</code> is a vector itself, the pervasive aspect of <em>index of</em> would otherwise ruin our day.
+Notice how we need to <a href="https://mlochbaum.github.io/BQN/doc/enclose.html">enclose</a> <code>d</code> before using
+<a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> (<a href="https://mlochbaum.github.io/BQN/doc/search.html#index-of"><code>⊐</code></a>).
+Since <code>d</code> is a vector itself, the pervasive aspect of <a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> would otherwise ruin our day.
 <h3 id="day-7"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day07.bqn">Day 7</a><a href="#day-7" class="floatleft sec-link">§</a></h3>
 <p></p>
 This day has us study a tree of programs.
@@ -1740,12 +1740,12 @@ and the correct weight the node should have is thrown as an exception.</li>
 Yes, feeling like a Python programmer, exceptions are used for control flow!
 Since we immediately want to exit the function, no questions asked,
 this seems as good a time as any to do something like that.
-The <em>assert</em> function <a href="https://mlochbaum.github.io/BQN/doc/assert.html#assert"><code>!</code></a>
+The <a href="https://mlochbaum.github.io/BQN/doc/assert.html">assert</a> function <a href="https://mlochbaum.github.io/BQN/doc/assert.html#assert"><code>!</code></a>
 throws an exception if its right argument is not <code>1</code>.
 In case it’s supplied a left argument, this is the value of the exception.
 In the call to <code>SpotOutlier</code>, we can use the
-<em>catch</em> (<a href="https://mlochbaum.github.io/BQN/doc/assert.html#catch"><code>⎊</code></a>) 2-modifier to catch the exception.
-Since <em>catch</em> doesn’t actually know anything about the error<!--
+<a href="https://mlochbaum.github.io/BQN/doc/assert.html">catch</a> (<a href="https://mlochbaum.github.io/BQN/doc/assert.html#catch"><code>⎊</code></a>) 2-modifier to catch the exception.
+Since <a href="https://mlochbaum.github.io/BQN/doc/assert.html">catch</a> doesn’t actually know anything about the error<!--
 -->—only that one occurred—<!--
 -->we need the system value <code>•CurrentError</code> to access it.
 <h3 id="day-8"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day08.bqn">Day 8</a><a href="#day-8" class="floatleft sec-link">§</a></h3>
@@ -1812,7 +1812,7 @@ Now we can replace every element with its <span class="small-caps">bqn</span> eq
 
 <p></p>
 This can be conveniently done with the
-<em>choose</em> (<a href="https://mlochbaum.github.io/BQN/doc/choose.html"><code>◶</code></a>) 2-modifier.
+<a href="https://mlochbaum.github.io/BQN/doc/choose.html">choose</a> (<a href="https://mlochbaum.github.io/BQN/doc/choose.html"><code>◶</code></a>) 2-modifier.
 Abstractly, <code>𝔽◶𝕘 𝕩</code> applies <code>𝔽</code> to <code>𝕩</code>, which should return an index.
 It then <em>picks</em> that index from the list <code>𝕘</code> (remember syntactic roles?).
 This should result in a function <code>G</code>, which is then applied to <code>𝕩</code>, yielding the final result:
@@ -1825,10 +1825,10 @@ This should result in a function <code>G</code>, which is then applied to <code>
 <p></p>
 In this specific example, for each string in <code>𝕩</code>,
 we first get its index in the <code>from</code> vector.
-If the element is not found, then <em>index of</em> returns the length of the vector—an invalid index—instead.
+If the element is not found, then <a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> returns the length of the vector—an invalid index—instead.
 Then, we apply the picked function in <code>to</code> to the element we started with.
 In almost all cases, what’s being picked from <code>to</code> is actually a string, which is interpreted as the constant function on that value, so nothing happens.
-In case the element is not found, however, we apply <em>identity</em>, in order to not lose any information.
+In case the element is not found, however, we apply <a href="https://mlochbaum.github.io/BQN/doc/identity.html">identity</a>, in order to not lose any information.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="kt">{</span><span class="o">⊑</span><span class="nv">from</span><span class="o">⊐&lt;</span><span class="ni">𝕩</span><span class="kt">}</span><span class="na">¨</span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;dec&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;683&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;if&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;qn&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;==&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="p">⟩</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="kt">{</span><span class="o">⊑</span><span class="nv">from</span><span class="o">⊐&lt;</span><span class="ni">𝕩</span><span class="kt">}</span><span class="py">◶</span><span class="nv">to</span><span class="na">¨</span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;dec&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;683&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;if&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;qn&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;==&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="p">⟩</span>
@@ -1967,7 +1967,7 @@ Simulating one round works as described above.
 
 <p></p>
 The only thing we have to keep in mind is that indexing has to be circular.
-Due to the fantastic <em>under</em> 2-modifier, this is all pretty ergonomic.
+Due to the fantastic <a href="https://mlochbaum.github.io/BQN/doc/under.html">under</a> 2-modifier, this is all pretty ergonomic.
 <hr />
 <p></p>
 Part two now wants us to implement the whole hashing algorithm.
@@ -2011,7 +2011,7 @@ As such, even though all of the numbers are 8-bit unsigned integers, we have to 
 </pre></div>
 
 <p></p>
-<em>Enlist</em>
+<a href="https://mlochbaum.github.io/BQN/doc/pair.html">Enlist</a>
 (<a href="https://mlochbaum.github.io/BQN/doc/pair.html"><code>⋈</code></a>)
 is needed here because at least one of the inputs to <code>•bit.xor</code> should have rank larger than zero
 (no, I don’t know why).
@@ -2022,10 +2022,10 @@ We can now assemble all the pieces together:
 
 <p></p>
 I think the <code>n (/⥊˜)⊸⊔ xs</code> is quite cute.
-We first <em>reshape</em> the number <code>n</code> into a vector <code>n n …</code> of length <code>n</code>,
-and then use <em>indices</em> to create a list like <code>0 0 0 … 1 1 1 … n n n …</code>,
+We first <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">reshape</a> the number <code>n</code> into a vector <code>n n …</code> of length <code>n</code>,
+and then use <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">indices</a> to create a list like <code>0 0 0 … 1 1 1 … n n n …</code>,
 with each number appearing exactly <code>n</code> times.
-Then we can use the vanilla <em>group</em> function to partition the given list into that many chunks.
+Then we can use the vanilla <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> function to partition the given list into that many chunks.
 This obviously only makes sense in this specific scenario; still, cute.
 <h2 id="days-1115">Days 11–15<a href="#days-1115" class="floatleft sec-link">§</a></h2>
 <h3 id="day-11"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day11.bqn">Day 11</a><a href="#day-11" class="floatleft sec-link">§</a></h3>
@@ -2079,16 +2079,16 @@ The Manhattan distance in this encoding is just the sum of the two coordinates.
 </pre></div>
 
 <p></p>
-We immediately translate each direction into a coordinate using a combination of <em>find</em>
+We immediately translate each direction into a coordinate using a combination of <a href="https://mlochbaum.github.io/BQN/doc/find.html">find</a>
 (<a href="https://mlochbaum.github.io/BQN/doc/find.html"><code>⍷</code></a>)
-and <em>replicate</em>,
+and <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>,
 and that’s basically it.
 <hr />
 <p></p>
 Part two is a slight variation of this idea:
 what is the furthest away we have ever been during this process?
-This just means that, instead of a <em>fold</em> over the list,
-we use a <em>scan</em> and take the maximum distance.
+This just means that, instead of a <a href="https://mlochbaum.github.io/BQN/doc/fold.html">fold</a> over the list,
+we use a <a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> and take the maximum distance.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">⌈</span><span class="na">´</span><span class="w"> </span><span class="o">+</span><span class="na">´</span><span class="py">∘</span><span class="o">|</span><span class="na">¨</span><span class="w"> </span><span class="o">+</span><span class="na">`</span><span class="nv">pts</span><span class="w"> </span><span class="c1"># ⇒ 1490</span>
 </pre></div>
 
@@ -2125,7 +2125,7 @@ Since the input graph is not that big,
 let’s just do the latter.
 Starting from <code>0</code>, maintain a list of neighbours that are known to connect to it.
 Then fold over the adjacency list and add the neighbours of every vertex we’ve already seen along the way.
-In code (monadic <code>⍷</code> is called <em>deduplicate</em> and does what it says on the tin):
+In code (monadic <code>⍷</code> is called <a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html">deduplicate</a> and does what it says on the tin):
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Group</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="c1"># 𝕩: adjacency list: ⟨ ⟨n, neighbours⟩, … ⟩</span>
 <span class="w">  </span><span class="p">⟨</span><span class="m">0</span><span class="p">⟩</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="nv">v</span><span class="p">‿</span><span class="nv">ns</span><span class="w"> </span><span class="o">𝕊</span><span class="w"> </span><span class="nv">seen</span><span class="ni">:</span><span class="w"> </span><span class="o">⊑</span><span class="nv">v</span><span class="o">∊</span><span class="nv">seen</span><span class="ni">?</span><span class="w"> </span><span class="o">⍷</span><span class="nv">seen</span><span class="o">∾</span><span class="nv">ns</span><span class="ni">;</span><span class="w"> </span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span><span class="na">´</span><span class="w"> </span><span class="ni">𝕩</span>
 <span class="kt">}</span>
@@ -2148,7 +2148,7 @@ To fix this we could… just run the algorithm until nothing changes?
 Yes, that sounds perfectly sensible.
 <p></p>
 We need a helper 1-modifier <code>Fix</code>, which performs the iteration for us.<!--
---><label for="sn-29" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-29" class="margin-toggle" /><div class="sidenote">Unlike <span class="small-caps">apl</span>, <span class="small-caps">bqn</span>’s <em>repeat</em> operator does not support this out of the box.</div><!--
+--><label for="sn-29" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-29" class="margin-toggle" /><div class="sidenote">Unlike <span class="small-caps">apl</span>, <span class="small-caps">bqn</span>’s <a href="https://mlochbaum.github.io/BQN/doc/repeat.html">repeat</a> operator does not support this out of the box.</div><!--
 -->
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="na">_Fix</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="o">𝔽</span><span class="py">∘</span><span class="o">⊢</span><span class="py">⍟</span><span class="o">≢</span><span class="py">⟜</span><span class="o">𝔽</span><span class="na">_𝕣</span><span class="py">∘</span><span class="o">⊢</span><span class="py">⍟</span><span class="o">≢</span><span class="py">⟜</span><span class="o">𝔽</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span>
 </pre></div>
@@ -2176,7 +2176,7 @@ The parse tree for this does not look so bad:
 </pre></div>
 
 <p></p>
-Thus, fully parenthesised and without <em>after</em>, it looks like
+Thus, fully parenthesised and without <a href="https://mlochbaum.github.io/BQN/doc/hook.html">after</a>, it looks like
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="kt">{</span><span class="w"> </span><span class="ni">𝕩</span><span class="sr">((</span><span class="o">𝕊</span><span class="py">∘</span><span class="o">⊢</span><span class="sr">)</span><span class="py">⍟</span><span class="o">≢</span><span class="sr">)</span><span class="o">𝔽</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span>
 </pre></div>
 
@@ -2198,7 +2198,7 @@ Fully parenthesised this is
 In particular, notice how we already understand almost all of this modifier!
 The <code>𝔽∘⊢⍟≢⟜𝔽</code> part is the same as before, only we now don’t recurse,
 but build up another level of “apply <code>𝔽</code>”.
-The rest sort of also works as before—the outer <em>after</em> has the same shape—so
+The rest sort of also works as before—the outer <a href="https://mlochbaum.github.io/BQN/doc/hook.html">after</a> has the same shape—so
 we are looking at
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="na">_D</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="o">𝔽</span><span class="py">∘</span><span class="o">⊢</span><span class="py">⍟</span><span class="o">≢</span><span class="py">⟜</span><span class="o">𝔽</span><span class="kt">}</span><span class="w"> </span><span class="c1"># Double F</span>
 <span class="na">_Fix</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕩</span><span class="sr">(((</span><span class="o">𝔽</span><span class="na">_D</span><span class="w"> </span><span class="na">_𝕣</span><span class="sr">)</span><span class="py">∘</span><span class="o">⊢</span><span class="sr">)</span><span class="py">⍟</span><span class="o">≢</span><span class="sr">)</span><span class="o">𝔽</span><span class="ni">𝕩</span><span class="kt">}</span>
@@ -2220,7 +2220,7 @@ we can swiftly change the definition of <code>Group</code> to solve part one:
 
 <p></p>
 Because we fold over the same list every time,
-we can glue it to the right side of the function using <em>after</em>.
+we can glue it to the right side of the function using <a href="https://mlochbaum.github.io/BQN/doc/hook.html">after</a>.
 <hr />
 <p></p>
 Part two tasks us with finding all of the connected components of the graph,
@@ -2359,9 +2359,9 @@ and export a function to compute the knot hash of the given argument.
 
 <p></p>
 Nothing too unusual here,
-only that exporting from a namespace works by binding with <em>export</em>
+only that exporting from a namespace works by binding with <a href="https://mlochbaum.github.io/BQN/doc/namespace.html">export</a>
 (<a href="https://mlochbaum.github.io/BQN/doc/namespace.html"><code>⇐</code></a>)
-instead of <em>define</em>.
+instead of <a href="https://mlochbaum.github.io/BQN/doc/expression.html#assignment">define</a>.
 We can now import this function as we did for ones in the utility file,<!--
 --><label for="sn-30" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-30" class="margin-toggle" /><div class="sidenote">Indeed, <code>utils.bqn</code> just looks like
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Split</span><span class="w"> </span><span class="kd">⇐</span><span class="w"> </span><span class="sr">(</span><span class="o">¬-</span><span class="na">˜</span><span class="o">⊢×</span><span class="m">·</span><span class="o">+</span><span class="na">`</span><span class="o">»</span><span class="py">⊸</span><span class="o">&gt;</span><span class="sr">)</span><span class="py">∘</span><span class="o">≠⊔⊢</span>
@@ -2412,8 +2412,8 @@ Part one just asks us how many cells are alive:
 </pre></div>
 
 <p></p>
-We need to convert the matrix into a vector first, because <em>fold</em> only works on vectors.
-Alternatively, we could have also summed up all major cells separately with <em>insert</em>
+We need to convert the matrix into a vector first, because <a href="https://mlochbaum.github.io/BQN/doc/fold.html">fold</a> only works on vectors.
+Alternatively, we could have also summed up all major cells separately with <a href="https://mlochbaum.github.io/BQN/doc/fold.html">insert</a>
 (<a href="https://mlochbaum.github.io/BQN/doc/fold.html"><code>˝</code></a>),
 and then summed up the resulting vector.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">´</span><span class="o">+</span><span class="na">˝</span><span class="nv">grid</span><span class="w"> </span><span class="c1"># ⇒ 8222</span>
@@ -2454,7 +2454,7 @@ Starting with
 
 <p></p>
 the first step is to associate a unique number with each <code>1</code> in the grid.
-One way of doing this is to <em>deshape</em> the array into a vector, and then take a +-<em>scan</em> of it.
+One way of doing this is to <a href="https://mlochbaum.github.io/BQN/doc/reshape.html">deshape</a> the array into a vector, and then take a +-<a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> of it.
 This will only increase when another <code>1</code> is encountered:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">+</span><span class="na">`</span><span class="o">⥊</span><span class="nv">m</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span>
@@ -2479,7 +2479,7 @@ all of the zeros will kill the redundant numbers in that representation.
 
 <p></p>
 Packing this up into its own function,
-a clever user of <em>under</em> takes care of all of the de- and reshaping for us.
+a clever user of <a href="https://mlochbaum.github.io/BQN/doc/under.html">under</a> takes care of all of the de- and reshaping for us.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">+</span><span class="na">`</span><span class="py">⊸</span><span class="o">×</span><span class="py">⌾</span><span class="o">⥊</span>
 </pre></div>
 
@@ -2489,8 +2489,8 @@ take the maximum of every cell with its four neighbours<!--
 -->—to get group the cell should belong to if it’s alive—<!--
 -->and then multiply by the original value of the cell, to again make sure we only care about live cells.
 Now, because <span class="small-caps">bqn</span> is an array language, we can do all of this for the whole array at the same time!
-We can use <em>nudge</em> in either direction to get the North and South neighbour (remember that first axis stuff?),
-and <em>nudge</em> <em>cells</em> to get the East and West one:
+We can use <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> in either direction to get the North and South neighbour (remember that first axis stuff?),
+and <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> <a href="https://mlochbaum.github.io/BQN/doc/rank.html">cells</a> to get the East and West one:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">m</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="m">3</span><span class="p">‿</span><span class="m">3</span><span class="o">⥊</span><span class="m">1</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span>
@@ -2516,13 +2516,13 @@ which work just about as one would expect.<!--
 because the <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic role</a> of a list is a subject,
 which can’t be applied as a function.</div><!--
 -->
-Second, we need to <em>enclose</em> <code>m</code> and make it a
+Second, we need to <a href="https://mlochbaum.github.io/BQN/doc/enclose.html">enclose</a> <code>m</code> and make it a
 <a href="https://mlochbaum.github.io/BQN/doc/enclose.html">unit array</a>,
-as otherwise <em>each</em> is trying to match up the major cells of <code>m</code> with the elements of our vector (the functions).
+as otherwise <a href="https://mlochbaum.github.io/BQN/doc/map.html">each</a> is trying to match up the major cells of <code>m</code> with the elements of our vector (the functions).
 We don’t want that, and making <code>m</code> a unit will correctly “duplicate” it to each function instead.
-Finally, <em>nudge</em> correctly inserts the fill elements for the edge cases;
+Finally, <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> correctly inserts the fill elements for the edge cases;
 our grid is only 128×128 and we are not on a torus.<!--
---><label for="sn-34" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-34" class="margin-toggle" /><div class="sidenote">In that case, using <em>rotate</em> would be more appropriate.</div><!--
+--><label for="sn-34" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-34" class="margin-toggle" /><div class="sidenote">In that case, using <a href="https://mlochbaum.github.io/BQN/doc/reverse.html">rotate</a> would be more appropriate.</div><!--
 -->
 <p></p>
 Now, we can just compare every neighbour with the original value,
@@ -2597,7 +2597,7 @@ let’s do that instead.
 </pre></div>
 
 <p></p>
-We use <em>over</em>
+We use <a href="https://mlochbaum.github.io/BQN/doc/compose.html">over</a>
 (<a href="https://mlochbaum.github.io/BQN/doc/compose.html"><code>○</code></a>)
 to apply this transformation to the two arguments,
 and then check for equality (i.e., <code>𝕨𝔽○𝔾𝕩</code> is <code>(𝔾𝕨)𝔽(𝔾𝕩)</code>).
@@ -2773,7 +2773,7 @@ we can do the following:
 The final result, <code>3 1 0 2</code> is indeed—up to circular permutation—the same as <code>0 2 3 1</code>!
 The <code>3+1</code> comprises the step size <code>3</code>, and keeps track of the fact that we need to insert the value after the index.
 Even more, the final inserted value will be the head of the vector,
-so getting the element at index <code>1</code> is what we want—no more <em>select</em>ing stuff.
+so getting the element at index <code>1</code> is what we want—no more <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a>ing stuff.
 Do note that walking to the <em>right</em> in terms of indices translates to rotating the buffer to the <em>left</em> (i.e., using positive numbers).
 We can pack this function up in a fold, yielding an alternative solution for part one:<!--
 --><label for="sn-37" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-37" class="margin-toggle" /><div class="sidenote">I suppose inserting <code>i</code> in the back of the array would be cheaper:
@@ -2793,7 +2793,7 @@ Part two now wants us to identify the value following <code>0</code>—after fif
 This is much too big to simulate in the same way as the first part.
 Instead, we can come back to the formula <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mo stretchy="false">(</mo><mi>p</mi><mo>+</mo><mi>n</mi><mspace></mspace><mspace width="0.6667em"></mspace><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>i</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">1 + (p + n \mod i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">i</span><span class="mclose">)</span></span></span></span>
 that predicts the index at which a given number is going to be inserted.
-We can use a <em>scan</em> over the vector to get that index for each insertion.
+We can use a <a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> over the vector to get that index for each insertion.
 Since the steps are increasing, the solution looks for the last time a <code>1</code> was inserted.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">⊑</span><span class="w"> </span><span class="sr">(</span><span class="o">≠-⊐</span><span class="py">⟜</span><span class="m">1</span><span class="py">∘</span><span class="o">⌽</span><span class="sr">)</span><span class="w"> </span><span class="m">0</span><span class="kt">{</span><span class="m">1</span><span class="o">+</span><span class="ni">𝕩</span><span class="o">|</span><span class="nv">n</span><span class="o">+</span><span class="ni">𝕨</span><span class="kt">}</span><span class="na">`</span><span class="m">1</span><span class="o">+↕</span><span class="m">50e6</span><span class="w"> </span><span class="c1"># ⇒ 25674054</span>
 </pre></div>
@@ -2803,7 +2803,7 @@ Since the steps are increasing, the solution looks for the last time a <code>1</
 This is the first time that we use a non-associative scan, so a few words of warning.
 </summary>
 <p></p>
-While <em>fold</em> is consuming its input array in the same direction as <span class="small-caps">bqn</span>’s evaluation model—right-to-left—<em>scan</em> is evaluating its argument left-to-right!
+While <a href="https://mlochbaum.github.io/BQN/doc/fold.html">fold</a> is consuming its input array in the same direction as <span class="small-caps">bqn</span>’s evaluation model—right-to-left—<a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> is evaluating its argument left-to-right!
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="p">⟨</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="o">-</span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="sr">(</span><span class="m">10</span><span class="o">-</span><span class="m">15</span><span class="sr">)</span><span class="o">-</span><span class="m">9</span><span class="p">⟩</span><span class="w"> </span><span class="o">≡</span><span class="w"> </span><span class="o">-</span><span class="na">`</span><span class="p">⟨</span><span class="m">10</span><span class="p">,</span><span class="m">15</span><span class="p">,</span><span class="m">9</span><span class="p">⟩</span>
 <span class="m">1</span>
 <span class="w">    </span><span class="p">⟨</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="o">-</span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="o">-</span><span class="m">15</span><span class="o">-</span><span class="m">9</span><span class="p">⟩</span><span class="w">   </span><span class="o">≡</span><span class="w"> </span><span class="o">-</span><span class="na">`</span><span class="p">⟨</span><span class="m">10</span><span class="p">,</span><span class="m">15</span><span class="p">,</span><span class="m">9</span><span class="p">⟩</span>
@@ -2864,7 +2864,7 @@ Let’s first to some parsing.
 
 <p></p>
 Note the <code>•ParseFloat⎊⊢</code>.
-We’ve used <em>catch</em> before on <a href="#day-7">day 7</a>, but for a different reason.
+We’ve used <a href="https://mlochbaum.github.io/BQN/doc/assert.html">catch</a> before on <a href="#day-7">day 7</a>, but for a different reason.
 Here, we use it as a shorthand to parse a number if possible, and return the argument as-is otherwise.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">•ParseFloat</span><span class="py">⎊</span><span class="o">⊢</span><span class="na">¨</span><span class="w"> </span><span class="s1">' '</span><span class="o">Split</span><span class="s2">&quot;set a 102&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;set&quot;</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="m">102</span><span class="w"> </span><span class="p">⟩</span>
@@ -2888,7 +2888,7 @@ The registers <code>a…p</code> are translated into indices <code>0…15</code>
 All that’s left to do is to write a change modifier.
 It takes the vector of registers, a function <code>F</code>, and an <code>x‿y</code> pair,
 and changes <code>x</code> to <code>x F y</code>.
-<em>Under</em> is quite nice for these sorts of things.
+<a href="https://mlochbaum.github.io/BQN/doc/under.html">Under</a> is quite nice for these sorts of things.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="na">_C</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="nv">regs</span><span class="w"> </span><span class="o">F</span><span class="w"> </span><span class="na">_𝕣</span><span class="w"> </span><span class="nv">x</span><span class="p">‿</span><span class="nv">y</span><span class="ni">:</span><span class="w"> </span><span class="o">F</span><span class="py">⟜</span><span class="sr">(</span><span class="nv">regs</span><span class="w"> </span><span class="o">V</span><span class="w"> </span><span class="nv">y</span><span class="sr">)</span><span class="py">⌾</span><span class="sr">((</span><span class="o">⊑</span><span class="nv">x</span><span class="o">-</span><span class="s2">&quot;a&quot;</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊑</span><span class="sr">)</span><span class="w"> </span><span class="nv">regs</span><span class="w"> </span><span class="kt">}</span><span class="w"> </span><span class="c1"># [C]hange</span>
 </pre></div>
 
@@ -2932,7 +2932,7 @@ the average is around 12 lines, and the median is 11:
 </div><!--
 -->
 However, nothing very interesting happening here;
-we use <em>assert</em> (<code>!</code>) in the same way as in <a href="#day-7">day 7</a>,
+we use <a href="https://mlochbaum.github.io/BQN/doc/assert.html">assert</a> (<code>!</code>) in the same way as in <a href="#day-7">day 7</a>,
 only that we now have a genuine condition to test.
 Recall that <code>𝕨!𝕩</code> checks whether <code>𝕩</code> is 1.
 If it is, nothing happens;
@@ -2942,7 +2942,7 @@ We use it here so that we immediately exit upon receiving<!--
 --> our first recovery signal.
 As in any other “simulate indexing into this array”–type situations,
 <code>•_while_</code> is used for iteration,
-only this time we have to wrap the whole thing inside of <em>catch</em>.
+only this time we have to wrap the whole thing inside of <a href="https://mlochbaum.github.io/BQN/doc/assert.html">catch</a>.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="kt">{</span><span class="w"> </span><span class="o">𝕊</span><span class="nv">i</span><span class="p">‿</span><span class="nv">r</span><span class="ni">:</span><span class="w"> </span><span class="o">One</span><span class="p">⟨</span><span class="nv">i</span><span class="p">,</span><span class="nv">r</span><span class="p">,</span><span class="nv">i</span><span class="o">⊑</span><span class="nv">inp</span><span class="p">⟩</span>
 <span class="kt">}</span><span class="o">•_while_</span><span class="kt">{</span>
 <span class="w">  </span><span class="o">𝕊</span><span class="nv">i</span><span class="p">‿</span><span class="m">·</span><span class="ni">:</span><span class="w"> </span><span class="sr">(</span><span class="nv">i</span><span class="o">≥</span><span class="m">0</span><span class="sr">)</span><span class="o">∧</span><span class="nv">i</span><span class="o">&lt;≠</span><span class="nv">inp</span>
@@ -3045,8 +3045,8 @@ we essentially want to rotate the matrix by 90 degrees three times,
 and add spaces afterwards.
 It is well known that every rotation is merely the product of two reflections,
 like
-<em>reverse</em> (<a href="https://mlochbaum.github.io/BQN/doc/reverse.html#reverse"><code>⌽</code></a>) and
-<em>transpose</em> (<a href="https://mlochbaum.github.io/BQN/doc/transpose.html"><code>⍉</code></a>).
+<a href="https://mlochbaum.github.io/BQN/doc/reverse.html">reverse</a> (<a href="https://mlochbaum.github.io/BQN/doc/reverse.html#reverse"><code>⌽</code></a>) and
+<a href="https://mlochbaum.github.io/BQN/doc/transpose.html">transpose</a> (<a href="https://mlochbaum.github.io/BQN/doc/transpose.html"><code>⍉</code></a>).
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">m</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="m">3</span><span class="p">‿</span><span class="m">3</span><span class="o">⥊↕</span><span class="m">9</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span>
@@ -3144,7 +3144,7 @@ Getting the path now simply involves simulating what we need to simulate.
 We just continue going into the same direction until the next cell would be a space.
 In that case, we correct and move on until we can’t move anymore.
 As said above, the start is the unique <code>|</code> connected to the top;
-the index is quickly obtained with <em>index of</em> after a <em>first cell</em>,
+the index is quickly obtained with <a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> after a <em>first cell</em>,
 to get the first major cell (row, in this case).
 <p></p>
 All that’s left to do is to get all letters from the path:
@@ -3267,7 +3267,7 @@ a number not being equal to its predecessor just means that it’s the first occ
 
 <p></p>
 The more interesting questions is how to capture that a number is not equal to its successor.
-For that, one can still use <em>mark firsts</em> and then simply <em>rotate</em> the vector by one to the left.
+For that, one can still use <a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html">mark firsts</a> and then simply <a href="https://mlochbaum.github.io/BQN/doc/reverse.html">rotate</a> the vector by one to the left.
 This will instead give you the last occurrence of every element in the vector.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="o">≢</span><span class="na">˘</span><span class="py">⟜</span><span class="o">«</span><span class="sr">)</span><span class="w"> </span><span class="p">⟨</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">7</span><span class="p">⟩</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
@@ -3451,7 +3451,7 @@ For example (line wrapped for readability):
 Now, as you can imagine by either thinking about or looking at the output,
 there are usually a lot of duplicates in this list.
 We can fix this by using
-<em>deduplicate</em> (<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html#deduplicate"><code>⍷</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html">deduplicate</a> (<a href="https://mlochbaum.github.io/BQN/doc/selfcmp.html#deduplicate"><code>⍷</code></a>)
 to only keep the first occurrence of every major cell.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">E</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="o">𝕊</span><span class="w"> </span><span class="nv">f</span><span class="p">‿</span><span class="nv">t</span><span class="ni">:</span><span class="w"> </span><span class="sr">(</span><span class="o">⍷⥊</span><span class="p">⟨</span><span class="o">⌽</span><span class="na">˘</span><span class="p">,</span><span class="o">⊢</span><span class="p">⟩</span><span class="kt">{</span><span class="o">𝕎</span><span class="ni">𝕩</span><span class="kt">}</span><span class="na">⌜</span><span class="sr">(</span><span class="o">⍉⌽</span><span class="sr">)</span><span class="py">⍟</span><span class="sr">(</span><span class="o">↕</span><span class="m">4</span><span class="sr">)</span><span class="nv">f</span><span class="sr">)</span><span class="o">⋈</span><span class="na">¨</span><span class="o">&lt;</span><span class="nv">t</span><span class="w"> </span><span class="kt">}</span>
 <span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">∾</span><span class="w"> </span><span class="o">E</span><span class="py">∘</span><span class="o">P</span><span class="na">¨</span><span class="w"> </span><span class="o">•FLines</span><span class="s2">&quot;../inputs/day21.txt&quot;</span>
@@ -3473,7 +3473,7 @@ perform one enhancement step.<!--
 </pre></div>
 
 <p></p>
-<em>Group</em> is used to partition the grid into the necessary <code>k×k</code> subarrays:
+<a href="https://mlochbaum.github.io/BQN/doc/group.html">Group</a> is used to partition the grid into the necessary <code>k×k</code> subarrays:
 <code>⌊k÷˜↕≠grid</code> creates a vector like <code>⟨0,…,0, 1,…,1 …, n,…,n⟩</code>,
 where <code>n = ((≠grid)÷k)-1</code> and each number appears exactly <code>k</code> times:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="o">⌊</span><span class="m">3</span><span class="o">÷</span><span class="na">˜</span><span class="o">↕</span><span class="m">21</span><span class="sr">)</span>
@@ -3483,7 +3483,7 @@ where <code>n = ((≠grid)÷k)-1</code> and each number appears exactly <code>k<
 </pre></div>
 
 <p></p>
-We can then use the fact that the left argument to <em>group</em> can be a nested vector,
+We can then use the fact that the left argument to <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> can be a nested vector,
 where each element corresponds to one axis of the right argument;
 see <a href="https://mlochbaum.github.io/BQN/doc/group.html#multidimensional-grouping">multidimensional grouping</a>.
 For the simple partition that we want, doubling the vector suffices.
@@ -3510,7 +3510,7 @@ in <code>{𝕊sg: 1⊑⊑ (sg≡⊑)¨⊸/substs}</code> we look for the substit
 -->—we are guaranteed by the question that we have exactly one such match—<!--
 -->and take the enhancement (<code>1⊑</code>).
 This already has the right shape in that the resulting array consists of <code>(k+1)×(k+1)</code> blocks in the right order,
-so we just need to <em>join</em> everything together.
+so we just need to <a href="https://mlochbaum.github.io/BQN/doc/join.html">join</a> everything together.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">t</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="p">⟨</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="kt">{</span><span class="m">2</span><span class="o">=≠⊑</span><span class="ni">𝕩</span><span class="kt">}</span><span class="na">¨</span><span class="py">⊸</span><span class="o">/</span><span class="nv">inp</span><span class="p">⟩</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">      </span><span class="nv">k</span><span class="p">‿</span><span class="nv">ss</span><span class="o">𝕊</span><span class="nv">g</span><span class="ni">:</span><span class="w"> </span><span class="kt">{</span><span class="o">𝕊</span><span class="nv">sg</span><span class="ni">:</span><span class="w"> </span><span class="m">1</span><span class="o">⊑⊑</span><span class="w"> </span><span class="sr">(</span><span class="nv">sg</span><span class="o">≡⊑</span><span class="sr">)</span><span class="na">¨</span><span class="py">⊸</span><span class="o">/</span><span class="nv">ss</span><span class="kt">}</span><span class="na">¨</span><span class="w"> </span><span class="sr">(</span><span class="m">2</span><span class="o">⥊&lt;⌊</span><span class="nv">k</span><span class="o">÷</span><span class="na">˜</span><span class="o">↕≠</span><span class="nv">g</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">g</span>
 <span class="w">    </span><span class="kt">}</span><span class="w"> </span><span class="p">[[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">],[</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">],[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">],[</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">]]</span>
@@ -3591,7 +3591,7 @@ up, right, down, and left are <code>¯1‿0</code>, <code>0‿1</code>, <code>1�
 For the simulation, we also need the ability to change direction.
 The idea is to get the index of <code>𝕩</code> in a list of directions,
 add <code>𝕨</code> mod 4 (to turn <code>𝕨</code> steps to the right),
-and <em>pick</em> the element at that index.
+and <a href="https://mlochbaum.github.io/BQN/doc/pick.html">pick</a> the element at that index.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Turn</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="c1"># Given direction 𝕩, turn 𝕨 steps to the right.</span>
 <span class="w">  </span><span class="nv">ts</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="p">⟨</span><span class="m">¯1</span><span class="p">‿</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">‿</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">‿</span><span class="m">¯1</span><span class="p">⟩</span>
 <span class="w">  </span><span class="sr">(</span><span class="o">⊑</span><span class="m">4</span><span class="o">|</span><span class="ni">𝕨</span><span class="o">+</span><span class="nv">ts</span><span class="o">⊐&lt;</span><span class="ni">𝕩</span><span class="sr">)</span><span class="o">⊑</span><span class="nv">ts</span>
@@ -3846,7 +3846,7 @@ Conceptually, this is sort of the same code, only with more bookkeeping.
 Instead of just the current strength, we also keep track of the depth.
 The maximum thus has to prefer the first index of that tuple to the second one.
 Thankfully, the default
-<em>sort down</em> (<a href="https://mlochbaum.github.io/BQN/doc/order.html#sort"><code>∨</code></a>)
+<a href="https://mlochbaum.github.io/BQN/doc/order.html">sort down</a> (<a href="https://mlochbaum.github.io/BQN/doc/order.html#sort"><code>∨</code></a>)
 already does this,
 which gives us our answer for part two.
 <p></p>

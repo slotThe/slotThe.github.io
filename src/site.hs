@@ -2,18 +2,20 @@
 {-# LANGUAGE BlockArguments      #-}
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE LambdaCase          #-}
+{-# LANGUAGE MultiWayIf          #-}
 {-# LANGUAGE NamedFieldPuns      #-}
+{-# LANGUAGE NumDecimals         #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
 {-# LANGUAGE ViewPatterns        #-}
-{-# LANGUAGE NumDecimals         #-}
 
 import Data.Text         qualified as T
 import Data.Text.IO.Utf8 qualified as T
 
 import Control.Concurrent (threadDelay)
 import Control.Monad
+import Control.Monad.Except (catchError)
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
@@ -27,9 +29,9 @@ import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b
 import System.IO (hPrint)
 import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
-import Text.Pandoc.Builder (simpleTable, Many, HasMeta (setMeta))
+import Text.Pandoc.Builder (Format (..), HasMeta (setMeta), Many, Pandoc (..), nullAttr, simpleTable)
 import qualified Text.Pandoc.Builder as Many (toList, singleton)
-import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..), Pandoc)
+import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..))
 import Text.Pandoc.Options (Extension (..), HTMLMathMethod (..), ReaderOptions (readerExtensions), WriterOptions (..), extensionsFromList)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
@@ -507,6 +509,7 @@ myPandocCompiler =
       <=< hlKaTeX
       -- ↑ render HMTL in various forms and ↓ do not
       <=< includeFiles
+      <=< bqnLink
       .   addSectionLinks
       .   smallCaps
       .   styleLocalLinks
@@ -683,6 +686,59 @@ myPandocCompiler =
       , ("\\cat"   , "\\mathcal")
       , ("\\kVect" , "\\mathsf{Vect}_{\\mathtt{k}}")
       ]
+
+  -- Automatically turn things like *replicate* into a link to the relevant
+  -- part of the BQN documentation.
+  bqnLink :: Pandoc -> Compiler Pandoc
+  bqnLink pandoc =
+    do Just ts <- (`getMetadataField` "tags") =<< getUnderlying
+       guard $ "BQN" `T.isInfixOf` T.pack ts
+       pure $ (`walk` pandoc) \case
+         Emph i -> lookupBqn i
+         i      -> i
+    `catchError` const (pure pandoc)
+   where
+    stringify :: [Inline] -> Text
+    stringify = T.concat . map \case
+      RawInline (Format "html") s -> s
+      Space -> " "
+      Str s -> s
+      _ -> ""
+
+    -- https://mlochbaum.github.io/BQN/doc/index.html
+    lookupBqn :: [Inline] -> Inline
+    lookupBqn is =
+      let s = stringify is
+          l = T.toLower s
+          linkTo :: Text -> Inline = \link ->
+            let u = if "https" `T.isPrefixOf` link then link
+                    else "https://mlochbaum.github.io/BQN/doc/" <> link <> ".html"
+            in Link nullAttr [Str s] (u, "")
+      in if
+      | l `elem` ["depth", "shape", "assert", "rank", "choose", "constant", "reshape", "enclose", "find", "fold", "group", "replicate", "join", "match", "pair", "pick", "prefixes", "range", "repeat", "reverse", "scan", "select", "swap", "couple", "take", "transpose", "under", "undo", "windows", "identity"] -> linkTo l
+      | l `elem` ["deduplicate", "classify", "mark firsts", "occurrence count"] -> linkTo "selfcmp"
+      | l `elem` ["member of", "index of", "progressive index of"] -> linkTo "search"
+      | l `elem` ["sort down", "sort up", "sort"] -> linkTo "order"
+      | l `elem` ["grade", "grade up", "grade down"] -> linkTo "order"
+      | l == "catch" -> linkTo "assert"
+      | l `elem` ["atop", "over"] -> linkTo "compose"
+      | l `elem` ["before", "after"] -> linkTo "hook"
+      | l == "cells" -> linkTo "rank"
+      | l == "deshape" -> linkTo "reshape"
+      | l == "insert" -> linkTo "fold"
+      | l `elem` ["each", "table"] -> linkTo "map"
+      | l == "indices" -> linkTo "replicate"
+      | l == "suffixes" -> linkTo "prefixes"
+      | l == "nothing" -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#nothing"
+      | l == "first" -> linkTo "pick"
+      | l == "rotate" -> linkTo "reverse"
+      | l == "self" -> linkTo "swap"
+      | l == "enlist" -> linkTo "pair"
+      | l `elem` ["negate", "and", "or"] -> linkTo "logic"
+      | l == "export" -> linkTo "namespace"
+      | l == "nudge" -> linkTo "shift"
+      | l == "define" -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#assignment"
+      | otherwise -> Emph is
 
 -----------------------------------------------------------------------
 -- Redirects
