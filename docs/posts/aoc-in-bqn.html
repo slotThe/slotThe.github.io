@@ -839,8 +839,8 @@ The type of the elements is not at all important in determining the arrays rank.
 </li>
 </ul>
 <p></p>
-A <em>cell</em> of an array is just a subarray of any size.
-Now, a <em>major cell</em> of an array of rank <code>n</code> is a cell of rank <code>n-1</code> that leaves out the leading axis.
+A <a href="https://mlochbaum.github.io/BQN/doc/array.html#cells">cell</a> of an array is just a subarray of any size.
+Now, a <a href="https://mlochbaum.github.io/BQN/doc/array.html#cells">major cell</a> of an array of rank <code>n</code> is a cell of rank <code>n-1</code> that leaves out the leading axis.
 For example, <code>3‿3⥊↕9</code> has three major cells, <code>⟨0 1 2⟩</code>, <code>⟨3 4 5⟩</code>, and <code>⟨6 7 8⟩</code>.
 <p></p>
 This concept is quite central to the way a lot of array primitives work,
@@ -906,7 +906,7 @@ More explicitly, we have the following two relationships:
 <p></p>
 Replace <code>G</code> with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord">⋅</span></span></span></span> in the first of these and you essentially have the above mathematical notation.
 <p></p>
-Since this train is composed of three functions, it is called a <em>3-train</em>.
+Since this train is composed of three functions, it is called a <a href="https://mlochbaum.github.io/BQN/doc/train.html">3-train</a>.
 Naturally, <em>2-trains</em> also exist; these are just 3-trains in which the function <code>F</code> is <a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing">nothing</a>
 (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>):
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>(GH)y  ≡  GHy   and   x(GH)y  ≡  G(xHy)
@@ -1775,7 +1775,7 @@ Due to the right hand side only being zero or one,
 we don’t even need to change <code>-20</code> into <code>¯20</code>,
 but can keep <code>-</code> as a function.</li>
 <li>A register is a variable holding a number.</li>
-<li>A register operation is a call to <em>modify</em> for that register.</li>
+<li>A register operation is a call to <a href="https://mlochbaum.github.io/BQN/doc/expression.html#assignment">modify</a> for that register.</li>
 <li>A comparison is a comparison.</li>
 <li>An <code>if</code> instruction is a multiplication of the condition with the “then branch”.
 Since <span class="small-caps">bqn</span> is evaluated right to left,
@@ -2619,7 +2619,7 @@ First and foremost, this means that we have to decouple the comparison aspect fr
 </pre></div>
 
 <p></p>
-The calculations are the same as in part one, only now we use <em>change</em> to build a list that we can return.
+The calculations are the same as in part one, only now we use <a href="https://mlochbaum.github.io/BQN/doc/expression.html#assignment">change</a> to build a list that we can return.
 Luckily, simply generating 40 million pairs as above and filtering for the right properties works out for us here.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">F</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="m">5e6</span><span class="o">↑</span><span class="sr">(</span><span class="m">0</span><span class="py">⊸</span><span class="o">=|</span><span class="sr">)</span><span class="o">/⊢</span>
 <span class="o">+</span><span class="na">´</span><span class="sr">(</span><span class="m">8</span><span class="w"> </span><span class="o">F</span><span class="w"> </span><span class="nv">bs</span><span class="sr">)</span><span class="o">=</span><span class="sr">(</span><span class="m">4</span><span class="w"> </span><span class="o">F</span><span class="w"> </span><span class="nv">as</span><span class="sr">)</span><span class="w"> </span><span class="c1"># ⇒ 279</span>
@@ -3144,7 +3144,7 @@ Getting the path now simply involves simulating what we need to simulate.
 We just continue going into the same direction until the next cell would be a space.
 In that case, we correct and move on until we can’t move anymore.
 As said above, the start is the unique <code>|</code> connected to the top;
-the index is quickly obtained with <a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> after a <em>first cell</em>,
+the index is quickly obtained with <a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> after a <a href="https://mlochbaum.github.io/BQN/doc/select.html">first cell</a>,
 to get the first major cell (row, in this case).
 <p></p>
 All that’s left to do is to get all letters from the path:
@@ -3349,7 +3349,7 @@ Certainly something to write before this year’s event.</div><!--
 -->
 split every individual array on <code>/</code>,
 change the dots and hashes to zeros and ones,
-and <em>merge</em> each of the vectors into a proper array.
+and <a href="https://mlochbaum.github.io/BQN/doc/couple.html">merge</a> each of the vectors into a proper array.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">P</span><span class="w"> </span><span class="s2">&quot;.../.../... =&gt; ...#/#.##/.##./#..#&quot;</span>
 <span class="err">┌─</span>
 <span class="m">·</span><span class="w"> </span><span class="err">┌─</span><span class="w">        </span><span class="err">┌─</span>

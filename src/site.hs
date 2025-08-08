@@ -738,6 +738,11 @@ myPandocCompiler =
       | l == "export" -> linkTo "namespace"
       | l == "nudge" -> linkTo "shift"
       | l == "define" -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#assignment"
+      | l `elem` ["merge", "solo"] -> linkTo "couple"
+      | l `elem` ["major cell", "cell"] -> linkTo "https://mlochbaum.github.io/BQN/doc/array.html#cells"
+      | l `elem` ["train", "2-train", "3-train", "fork"] -> linkTo "train"
+      | l `elem` ["change", "modify"] -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#assignment"
+      | l == "first cell" -> linkTo "select"
       | otherwise -> Emph is
 
 -----------------------------------------------------------------------
