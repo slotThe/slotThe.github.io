@@ -190,7 +190,7 @@ hr {                    /* That line before the footnotes */
 }
 
 /* A fleuron at the end of a post */
-img.center-block-light {
+img.fleuron-block {
     margin-right: auto;
     margin-left: auto;
     max-width: 100%;
@@ -198,20 +198,10 @@ img.center-block-light {
     padding: 1.5rem 1.5rem 1rem 1.5rem;
     display: block;
 }
-img.center-block-dark {
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 100%;
-    height: auto;
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
-    display: none;
-}
 @media (prefers-color-scheme: dark) {
-    img.center-block-light {
-        display: none;
-    }
-    img.center-block-dark {
-        display: block;
+    img.fleuron-block {
+        /* https://codepen.io/sosuke/pen/Pjoqqp */
+        filter: invert(95%) sepia(8%) saturate(114%) hue-rotate(106deg) brightness(102%) contrast(91%);
     }
 }
 
