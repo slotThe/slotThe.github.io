@@ -21,6 +21,7 @@ executable site
                   , time
                   , uri-encode
                   , bytestring
+                  , directory
   ghc-options:    -Weverything
                   -Wno-implicit-prelude
                   -Wno-missing-import-lists

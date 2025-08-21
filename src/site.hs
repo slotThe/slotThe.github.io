@@ -31,6 +31,7 @@ import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll
 import qualified Network.URI.Encode as URI (encode)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
+import System.Directory (createDirectoryIfMissing)
 import System.IO (hPrint)
 import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
@@ -754,22 +755,22 @@ myPandocCompiler =
       | otherwise -> Emph is
 
   -- Sources:
-  --   + Initial idea: https://taeer.bar-yam.me/blog/posts/hakyll-TikZ/
+  --   + Initial idea: https://taeer.bar-yam.me/blog/posts/hakyll-tikz/
   --   + Using files, because data URIs are *huge*, depending on the picture:
   --       https://www.antonia.is/hakyll-setup.html#compiling-tikz-pictures
   renderTikZ :: Pandoc -> Compiler Pandoc
   renderTikZ = walkM \case
-    b@(RawBlock "tex" txt) ->
-      if "\\begin{tikzpicture}" `T.isPrefixOf` txt
-      then makeItem (T.unpack txt)
-        >>= loadAndApplyTemplate (fromFilePath "templates/preview.tex") (bodyField "body")
-        <&> (itemBody >>> BL.pack)
-        >>= unixFilterLBS "rubber-pipe" ["--pdf"]
-        >>= unixFilterLBS "pdftocairo" ["-svg", "-", "-"]
-        <&> (BL.filter (/= '\n') >>> BL.unpack
-             >>> URI.encode >>> ("data:image/svg+xml;utf8," <>)
-             >>> \img -> Para [Image ("", ["tikzpicture"], []) [] (T.pack img, "")])
-      else pure b
+    RawBlock "tex" txt
+      | "\\begin{tikzpicture}" `T.isPrefixOf` txt -> do
+        let name  = "/images/tikz/" <> show (hash txt) <> ".svg"
+            fname = "docs" <> name
+        unsafeCompiler $ createDirectoryIfMissing True "docs/images/tikz"
+        void $ makeItem (T.unpack txt)
+          >>= loadAndApplyTemplate (fromFilePath "templates/preview.tex") (bodyField "body")
+          <&> (itemBody >>> BL.pack)
+          >>= unixFilterLBS "rubber-pipe" ["--pdf"]
+          >>= unixFilterLBS "pdftocairo" ["-svg", "-", fname]
+        pure $ Para [Image ("", ["tikzpicture"], []) [] (T.pack name, "")]
     b -> pure b
 
 -----------------------------------------------------------------------
