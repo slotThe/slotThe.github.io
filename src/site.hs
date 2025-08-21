@@ -483,7 +483,7 @@ myReader :: ReaderOptions
 myReader = defaultHakyllReaderOptions
   { readerExtensions =
       readerExtensions defaultHakyllReaderOptions
-        <> extensionsFromList [Ext_tex_math_single_backslash]
+        <> extensionsFromList [Ext_tex_math_single_backslash, Ext_raw_tex]
   }
 
 -- | A simple pandoc compiler for RSS/Atom feeds, with none of the
@@ -514,10 +514,10 @@ myPandocCompiler =
       (   pure . usingSideNotesHTML myWriter
       <=< pygmentsHighlight
       <=< hlKaTeX
+      <=< renderTikZ
       -- ↑ render HMTL in various forms and ↓ do not
       <=< includeFiles
       <=< bqnLink
-      <=< renderTikz
       .   addSectionLinks
       .   smallCaps
       .   styleLocalLinks
@@ -543,7 +543,7 @@ myPandocCompiler =
   -- Bidirectional process communication is a real pain, so just use files.
   -- They're cheap.
   pygmentsHighlight :: Pandoc -> Compiler Pandoc
-  pygmentsHighlight pandoc = recompilingUnsafeCompiler do
+  pygmentsHighlight pandoc = unsafeCompiler do
     (hin, _, _, _) <- runInteractiveCommand "python scripts/pygmentize.py"
     hSetBuffering hin NoBuffering
     void $ (`walkM` pandoc) \case
@@ -652,7 +652,7 @@ myPandocCompiler =
       firstN n s = sc (T.toLower (T.take n s)) <> T.drop n s
 
   hlKaTeX :: Pandoc -> Compiler Pandoc
-  hlKaTeX pandoc = recompilingUnsafeCompiler do
+  hlKaTeX pandoc = unsafeCompiler do
     (hin, hout, _, _) <- runInteractiveCommand "deno run scripts/math.ts"
     hSetBuffering hin  NoBuffering
     hSetBuffering hout NoBuffering
@@ -753,18 +753,23 @@ myPandocCompiler =
       | l == "first cell" -> linkTo "select"
       | otherwise -> Emph is
 
-  -- Source: https://taeer.bar-yam.me/blog/posts/hakyll-tikz/
-  renderTikz :: Pandoc -> Compiler Pandoc
-  renderTikz = walkM \case
-    CodeBlock (i, cls@("tikzpicture":_), ns) (T.unpack -> cs) ->
-      makeItem cs
-        >>= loadAndApplyTemplate (fromFilePath "templates/TikZ.tex") (bodyField "body")
+  -- Sources:
+  --   + Initial idea: https://taeer.bar-yam.me/blog/posts/hakyll-TikZ/
+  --   + Using files, because data URIs are *huge*, depending on the picture:
+  --       https://www.antonia.is/hakyll-setup.html#compiling-tikz-pictures
+  renderTikZ :: Pandoc -> Compiler Pandoc
+  renderTikZ = walkM \case
+    b@(RawBlock "tex" txt) ->
+      if "\\begin{tikzpicture}" `T.isPrefixOf` txt
+      then makeItem (T.unpack txt)
+        >>= loadAndApplyTemplate (fromFilePath "templates/preview.tex") (bodyField "body")
         <&> (itemBody >>> BL.pack)
         >>= unixFilterLBS "rubber-pipe" ["--pdf"]
         >>= unixFilterLBS "pdftocairo" ["-svg", "-", "-"]
         <&> (BL.filter (/= '\n') >>> BL.unpack
              >>> URI.encode >>> ("data:image/svg+xml;utf8," <>)
-             >>> \img -> Para [Image (i, cls, ns) [] (T.pack img, "")])
+             >>> \img -> Para [Image ("", ["tikzpicture"], []) [] (T.pack img, "")])
+      else pure b
     b -> pure b
 
 -----------------------------------------------------------------------
