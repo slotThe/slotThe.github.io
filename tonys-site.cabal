@@ -19,6 +19,8 @@ executable site
                   , process
                   , hashable
                   , time
+                  , uri-encode
+                  , bytestring
   ghc-options:    -Weverything
                   -Wno-implicit-prelude
                   -Wno-missing-import-lists

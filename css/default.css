@@ -538,3 +538,16 @@ img {
     display: grid;
     grid-template-columns: auto auto auto auto;
 }
+
+.tikzpicture {
+    height: 200px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+@media (prefers-color-scheme: dark) {
+    .tikzpicture {
+        /* https://codepen.io/sosuke/pen/Pjoqqp */
+        filter: invert(95%) sepia(8%) saturate(114%) hue-rotate(106deg) brightness(102%) contrast(91%);
+    }
+}

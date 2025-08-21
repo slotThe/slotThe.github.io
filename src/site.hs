@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Redundant <&>" #-}
 {-# LANGUAGE BangPatterns        #-}
 {-# LANGUAGE BlockArguments      #-}
 {-# LANGUAGE ImportQualifiedPost #-}
@@ -13,9 +15,11 @@
 import Data.Text         qualified as T
 import Data.Text.IO.Utf8 qualified as T
 
+import Control.Arrow ((>>>))
 import Control.Concurrent (threadDelay)
 import Control.Monad
 import Control.Monad.Except (catchError)
+import Data.ByteString.Lazy.Char8 qualified as BL
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
@@ -25,12 +29,13 @@ import Data.String (IsString)
 import Data.Text (Text)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll
+import qualified Network.URI.Encode as URI (encode)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
 import System.IO (hPrint)
 import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Builder (Format (..), HasMeta (setMeta), Many, Pandoc (..), nullAttr, simpleTable)
-import qualified Text.Pandoc.Builder as Many (toList, singleton)
+import Text.Pandoc.Builder qualified as Many (toList, singleton)
 import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..))
 import Text.Pandoc.Options (Extension (..), HTMLMathMethod (..), ReaderOptions (readerExtensions), WriterOptions (..), extensionsFromList)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
@@ -57,6 +62,8 @@ main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
         )
     do route   idRoute
        compile copyFileCompiler
+
+  -- These files are copied to a URL without any prefix beyond the site root.
   match "files/**.pdf" do
     route   (customRoute \(toFilePath -> fp) -> fromMaybe fp (stripPrefix "files/" fp))
     compile copyFileCompiler
@@ -109,7 +116,7 @@ landingPage tagCtx = match "index.html" do
       (h, t ) -> h <> "=\"sn-" <> tshow @Int (floor n) <> "\"" <> go (n + 0.5) (killSn t)
 
     killSn :: Text -> Text
-    killSn = let d = T.drop 1 . T.dropWhile (/= '\"') in d . d
+    killSn = d.d where d = T.drop 1 . T.dropWhile (/= '\"')
 
 posts :: Context String -> Rules ()
 posts tagCtx = match allPosts do
@@ -186,7 +193,7 @@ standalones tagCtx = do
   -- Seminars, symposia, and the like
   mkStandalone "mackey-functors.md" pure tagCtx Nothing
   mkStandalone "hsha.md" pure tagCtx Nothing
-  -- Talks and posters
+  -- Automatically add talks and posters
   ids <- getMatches (fromRegex "(talks|posters)/[^/]+/[^/]+\\.md")
   for_ ids \ident ->  -- No backrefs in Text.Regex.TDFA :(
     case take 3 . T.split (== '/') . T.pack . toFilePath $ ident of
@@ -510,6 +517,7 @@ myPandocCompiler =
       -- ↑ render HMTL in various forms and ↓ do not
       <=< includeFiles
       <=< bqnLink
+      <=< renderTikz
       .   addSectionLinks
       .   smallCaps
       .   styleLocalLinks
@@ -744,6 +752,20 @@ myPandocCompiler =
       | l `elem` ["change", "modify"] -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#assignment"
       | l == "first cell" -> linkTo "select"
       | otherwise -> Emph is
+
+  -- Source: https://taeer.bar-yam.me/blog/posts/hakyll-tikz/
+  renderTikz :: Pandoc -> Compiler Pandoc
+  renderTikz = walkM \case
+    CodeBlock (i, cls@("tikzpicture":_), ns) (T.unpack -> cs) ->
+      makeItem cs
+        >>= loadAndApplyTemplate (fromFilePath "templates/TikZ.tex") (bodyField "body")
+        <&> (itemBody >>> BL.pack)
+        >>= unixFilterLBS "rubber-pipe" ["--pdf"]
+        >>= unixFilterLBS "pdftocairo" ["-svg", "-", "-"]
+        <&> (BL.filter (/= '\n') >>> BL.unpack
+             >>> URI.encode >>> ("data:image/svg+xml;utf8," <>)
+             >>> \img -> Para [Image (i, cls, ns) [] (T.pack img, "")])
+    b -> pure b
 
 -----------------------------------------------------------------------
 -- Redirects

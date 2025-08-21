@@ -50,10 +50,12 @@
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
           (python3.withPackages (p: [
+            # Font compressing
             p.brotli
             p.fonttools
             p.beautifulsoup4
-            (p.pygments.overrideAttrs (old: { # Contains https://github.com/pygments/pygments/pull/2789
+            # BQN syntax highlighting; contains https://github.com/pygments/pygments/pull/2789
+            (p.pygments.overrideAttrs (old: {
               version = "2.19.2";
               src = fetchFromGitHub {
                 owner = "pygments";
@@ -65,6 +67,12 @@
           ]))
           deno          # KaTeX rendering of maths—see scripts/math.ts
           zlib
+          # Directly rendering TikZ pictures into SVGs
+          rubber
+          (texlive.combine {
+            inherit (texlive) scheme-basic amsmath preview pgf pgfplots tikz-cd;
+          })
+          poppler_utils
         ];
         shellHook = ''
           export PROJECT_ROOT="$(pwd)"

@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage[active,tightpage]{preview}
+\usepackage{amsmath}
+%%% Important for TikZit
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{backgrounds, calc, fit, scopes, intersections, pgfplots.fillbetween, arrows.meta, decorations.text, decorations.markings}
+\tikzstyle{whitedot}=[fill=white, draw, shape=circle, scale=0.4]
+\usetikzlibrary{arrows,shapes, shapes.geometric, shapes.misc}
+\pgfdeclarelayer{edgelayer}
+\pgfdeclarelayer{nodelayer}
+\pgfsetlayers{background,edgelayer,nodelayer,main}
+\tikzstyle{none}=[inner sep=0mm]
+\tikzstyle{every loop}=[]
+%%%
+\begin{document}
+\begin{preview}
+  \begin{tikzpicture}[auto]
+    $body$
+  \end{tikzpicture}
+\end{preview}
+\end{document}
