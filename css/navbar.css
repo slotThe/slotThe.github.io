@@ -7,17 +7,11 @@ div#navigation {
     text-align: right;
     padding-left: 1.25em;
     padding-right: 3em;
-    padding-top: 1.25em;
+    padding-top: 2.2em;
     padding-bottom: 1em;
     position: static;
     float: right;
     display: inline-block;
-}
-
-.menu.menu-open,
-.menu.menu-horizontal li .menu-children { /* Border */
-    background: var(--bg-menu-children);
-    border: 1px solid var(--fg-menu-border);
 }
 
 /** Title **/
@@ -28,44 +22,22 @@ div#navigation .menu-title {
     border-bottom: 1px solid var(--fg-menu-border);
 }
 
-div#navigation span.menu-subtitle {
-    font-size: 19px;
-    font-weight: normal;
-    font-style: italic;
-}
-
 /** Clickable parts of the menu **/
 
 div#navigation a {
     font-size: 19px;
     font-weight: bold;
-    text-decoration: none;
-    text-transform: none;
     border: 1px solid transparent;
     border-left: none;
     border-right: none;
     color: var(--fg-menu);
+    display: block;
+    line-height: 1.5em;
+    padding: 5px 20px;
+    white-space: nowrap;
 }
 
-.menu a {
-    display:block;color:inherit;
-    line-height:1.5em;
-    padding:5px 20px;
-    text-decoration:none;
-    white-space:nowrap;
-}
-
-.menu .menu-open {
-    background: var(--bg-menu-foc);
-}
-
-.menu li a:hover,
-.menu li a:focus {
-    background: var(--bg-menu-foc);
-}
-
-
-.menu ul {
+div#navigation ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -94,7 +66,7 @@ div#navigation a {
         display: block;
     }
 
-    div#navigation > .menu.menu-open > ul > li {
+    div#navigation > ul > li {
         display: inline-block;
         zoom: 1;
         *display: inline;
