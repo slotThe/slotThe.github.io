@@ -44,6 +44,8 @@ but you can try any of the following channels:
 + GitHub: [slotThe](https://github.com/slotThe)
 + GitLab: [slotThe](https://gitlab.com/slotThe)
 
+I do not use (any other) social media.
+
 [Emacs]: https://www.gnu.org/software/emacs/
 [Grothendieck–Verdier]: https://ncatlab.org/nlab/show/star-autonomous+category
 [Haskell]: https://www.haskell.org/
