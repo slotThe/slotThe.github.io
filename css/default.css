@@ -314,11 +314,7 @@ div#contents-big ul ul {
 /* Change the appearance of links in the TOC, so as to lower its
    intrusivity, since it is now visible most of the time. */
 div#contents-big a:link,
-div#contents     a:link {
-    font-size: 110%;         /* In relation to div#contents ul */
-    color: var(--fg);
-    text-decoration: none;
-}
+div#contents     a:link,
 div#contents-big a:visited,
 div#contents     a:visited {
     font-size: 110%;         /* In relation to div#contents ul */
@@ -327,7 +323,9 @@ div#contents     a:visited {
 }
 div#contents-big a:hover,
 div#contents     a:hover {
-    color: var(--fg-link-hover);
+    background: var(--bg);
+    text-decoration: 1px underline;
+    text-underline-offset: 0.1em;
 }
 
 /* This horrible contraption matches against the outermost headings; only
@@ -409,9 +407,13 @@ a:link {
 }
 
 a:hover {
-    color: var(--fg-link-hover);
-    text-decoration: 1px underline;
-    text-underline-offset: 0.1em;
+    background: var(--bg-code-accent);
+}
+@media (prefers-color-scheme: light) {
+    a:hover { /* Too suble in the light theme */
+        text-decoration: 1px underline;
+        text-underline-offset: 0.1em;
+    }
 }
 
 a:visited {
