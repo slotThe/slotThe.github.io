@@ -3,13 +3,17 @@ title: About
 no-toc: true
 ---
 
-I'm a PhD student in mathematics at TU Dresden, Germany.
-In my copious free time[^1] I like to
-hack on [free software]—especially anything involving [Haskell] or [Emacs]—<!--
--->play the guitar,
-boulder a little bit too enthusiastically for my own good,
-and watch classic movies.
-I also spend way too much money on (good) coffee and tea.
+I'm a
+[postdoc](https://phdcomics.com/comics/archive.php?comicid=1744)
+in mathematics at the
+[University of Hamburg](https://www.uni-hamburg.de/en/)
+in the group of
+[Christoph Schweigert](https://www.math.uni-hamburg.de/home/schweigert/).
+Previously, I was a
+[PhD student](https://phdcomics.com/comics/archive.php?comicid=1286)
+at [TU Dresden](https://tu-dresden.de/)
+under the supervision of
+[Ulrich Krähmer](https://tu-dresden.de/mn/math/geometrie/kraehmer).
 
 Broadly, my work in mathematics lives under the umbrella of *monoidal category theory* and *categorical reconstruction theory*.[^3]
 In particular, I like thinking about [Hopf monads]; [graphical calculi]; [rigid],
@@ -18,7 +22,14 @@ as well as [operads].
 If you're interested in my publications, you can check out my name on the [arXiv].
 I've also given some talks, with a few slides available [here](https://tony-zorman.com/research.html#talks).
 
-As for the site itself: everything is statically generated—with the power of [hakyll] and [pandoc]—from markdown.
+In my copious free time[^1] I like to
+hack on [free software],
+play the guitar,
+boulder a little bit too enthusiastically for my own good,
+and watch classic movies.
+I also spend way too much money on (good) coffee and tea.
+
+This website is statically generated from markdown by means of [hakyll] and [pandoc].
 The [full source code][site] is available,
 and a separate page detailing some design decisions is [here](./site.html).
 <label for="mn-configs" class="margin-toggle">&#8853;</label>
