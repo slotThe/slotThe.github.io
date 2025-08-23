@@ -29,7 +29,6 @@ import Data.String (IsString)
 import Data.Text (Text)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll
-import qualified Network.URI.Encode as URI (encode)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
 import System.Directory (createDirectoryIfMissing)
 import System.IO (hPrint)
@@ -162,7 +161,7 @@ listOfPosts tags@Tags{ tagsMakeId, tagsMap } = do
 
 aboutMe :: Rules ()
 aboutMe = do
-  match (fromList ["research.md", "free-software.md"]) do
+  match (fromList ["about.md", "research.md", "free-software.md"]) do
     route $ setExtension "html"
     compile do
       tocCtx <- getTocCtx defaultContext
@@ -180,7 +179,7 @@ aboutMe = do
         >>= loadAndApplyTemplate "templates/default.html" tocCtx
         >>= relativizeUrls
 
-  match (fromList ["about.md", "impressum.md"]) do
+  match (fromList ["impressum.md"]) do
     route   $ setExtension "html"
     compile $ myPandocCompiler
           >>= loadAndApplyTemplate

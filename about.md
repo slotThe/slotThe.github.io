@@ -1,5 +1,6 @@
 ---
 title: About
+no-toc: true
 ---
 
 I'm a PhD student in mathematics at TU Dresden, Germany.
