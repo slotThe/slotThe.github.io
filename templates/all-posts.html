@@ -1,25 +1,29 @@
-<ul>
+<table>
   $for(posts)$
-  <li style="text-align: left; font-variant-numeric: tabular-nums;">
-    $date$ – <a href="$url$">$title$</a>
-  </li>
+    <tr>
+      <td style="vertical-align: top; font-variant-numeric: tabular-nums;">$date$</td>
+      <td style="vertical-align: top;">–</td>
+      <td style="vertical-align: top;"><a href="$url$">$title$</a></td>
+    </tr>
   $endfor$
-</ul>
+</table>
 
 <h1>By tag</h1>
 <ul>
   $for(tags)$
 </ul>
-<h2>$title$
-  <div class="floatright">
-    <a href="atom-$title$.xml">feed</a>
-  </div>
-</h2>
-<ul>
-  $for(posts)$
-  <li style="text-align: left; font-variant-numeric: tabular-nums;">
-    $date$ – <a href="$url$">$title$</a>
-  </li>
-  $endfor$
-</ul>
+  <h2>$title$
+    <div class="floatright">
+      <a href="atom-$title$.xml">feed</a>
+    </div>
+  </h2>
+  <table>
+    $for(posts)$
+      <tr>
+        <td style="vertical-align: top; font-variant-numeric: tabular-nums;">$date$</td>
+        <td style="vertical-align: top;">–</td>
+        <td style="vertical-align: top;"><a href="$url$">$title$</a></td>
+      </tr>
+    $endfor$
+  </table>
 $endfor$
