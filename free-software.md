@@ -143,7 +143,7 @@ I've written too many Emacs packages—and none of them popular, at that!
   yanking within Emacs by trimming extraneous delimiters before inserting the string into the buffer.
   I've written about this package [here][post:yanking].
 
-+ [anki-whitespace][^2]
++ [anki-whitespace]
 
   A minor mode built on top of [anki-editor] that—due to a more lightweight syntax—provides better integration into Zettelkasten-like systems
   It is written in such a way that implementing ones own note syntax just consists of overwriting a few functions.
@@ -190,5 +190,3 @@ I've written too many Emacs packages—and none of them popular, at that!
 [yeganesh]: https://hackage.haskell.org/package/yeganesh
 
 [^1]: {-} Relatedly, I also maintain a [QMK configuration] for my [Atreus] keyboard.
-
-[^2]: Actual name still pending.
