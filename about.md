@@ -69,7 +69,8 @@ I do not use (any other) social media.
 
 [^1]: I wish.
 
-[^3]: Incidentally, the latter is also the name of my thesis,
-      which will be posted here once I'm able to do so.
-      You can, however, already read about the typographical aspects of it
-      [here](https://tony-zorman.com/posts/phd-typesetting.html).
+[^3]: Not-quite-so-incidentally, the latter is also the name of my dissertation,
+      which you can access [here](./dissertation.pdf).
+      I've also
+      [written about](https://tony-zorman.com/posts/phd-typesetting.html)
+      some typographical aspects of it.
