@@ -1,3 +1,5 @@
+/*** General ***/
+
 /* Apply a more natural box layout model to all elements, but allow
    components to change; c.f., [1] and [2].
    Source: https://github.com/sindresorhus/modern-normalize/pull/56
@@ -121,9 +123,7 @@ div#border-table table th {
   font-style: normal;
 }
 
-/**********************************************************************
-  FURTHER FONT SETTINGS
-*/
+/*** Further font settings ***/
 
 pre {                   /* Block code */
     text-align: left;
@@ -167,9 +167,7 @@ blockquote {            /* Block quotes */
     font-size: 1.1em !important;
 }
 
-/**********************************************************************
-  FOOTER
-*/
+/*** Footer ***/
 
 div#footer {            /* Footer with RSS feed etc. */
     border-top: solid 1px var(--fg-footer-divider);
@@ -205,9 +203,7 @@ img.fleuron-block {
     }
 }
 
-/**********************************************************************
-  HEADINGS
-*/
+/*** Headings ***/
 
 .header {               /* Header below the title */
     font-size: 0.9em;
@@ -257,8 +253,7 @@ h2, h3, h4 {
     margin-left: -15px;
 }
 
-/**********************************************************************
-  TABLE OF CONTENTS (TOC)
+/*** Table of contents (TOC)
 
 There are two table of contents:
 
@@ -273,7 +268,7 @@ two div classes: `contents' and `contents-big'.  The former is defined
 in the `default.html' template, while the latter is in `post.html' and
 `toc.html`.  *Both are always embedded in the page*, we just use some
 media queries to hide what we don't want to see.
-*/
+***/
 
 /* Settings that are the same regardless of size */
 div#contents,
@@ -397,9 +392,7 @@ div#contents {
     }
 }
 
-/**********************************************************************
-  LINKS
-*/
+/*** Links ***/
 
 a:link {
     color: var(--fg-link);
@@ -458,9 +451,7 @@ a#to-top {
     margin-left: 1px;
 }
 
-/**********************************************************************
-  SECTION LINKS
-*/
+/**** Section links ****/
 
 .floatleft {           /* Section links float to the left. */
     float: left;
@@ -483,9 +474,7 @@ a#to-top {
     background: var(--bg);
 }
 
-/**********************************************************************
-  ACCORDEON MENUS
-*/
+/*** Accordion menus ***/
 
 summary {
     padding-top: 1rem;
@@ -519,9 +508,7 @@ details {
     padding-bottom: 0.4em;
 }
 
-/**********************************************************************
-  MISC
-*/
+/*** Misc ***/
 
 span.email b {                  /* Email obfuscation */
     display: none;
