@@ -145,8 +145,8 @@ I've written too many Emacs packages—and none of them popular, at that!
 
 + [anki-whitespace]
 
-  A minor mode built on top of [anki-editor] that—due to a more lightweight syntax—provides better integration into Zettelkasten-like systems
-  It is written in such a way that implementing ones own note syntax just consists of overwriting a few functions.
+  A minor mode built on top of [anki-editor] that—due to a more lightweight syntax—provides better integration into Zettelkasten-like systems.
+  It's written in such a way that implementing ones own note syntax just consists of overwriting a few functions.
 
 # Talks
 
