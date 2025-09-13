@@ -2,40 +2,22 @@
 title: Free Software
 ---
 
-Free software is quite dear to my heart,
-and so I try to contribute as much as I can to all kinds of different projects.
-Listed below are either ones that I've stuck with for a while,
-or personal projects that are still actively maintained.
-Sometimes I give talks that aren't about maths;
-you can also find these here.
+Below is an excerpt of projects that I'm either the author of, or heavily involved with.
+For a complete list see any of the popular Git forges mentioned on the [about page](./about.html).
 
 # Contributor
 
 ## XMonad
 
 I'm a maintainer for [XMonad], a minimal X11 window manager written in Haskell.
-In particular, this encompasses the `xmonad` repository,
+In particular, this encompasses the [xmonad][xmonad:repo] repository,
 where the lean core of the program resides,
-`xmonad-contrib`—containing lots of user extensions for all kinds of different use-cases—<!--
--->as well as some auxillary packages like `X11`: Haskell bindings to Xlib.
+[xmonad-contrib][xmonad-contrib:repo]—containing lots of user extensions for all kinds of different use-cases—<!--
+-->as well as some auxiliary packages like [X11][X11:repo]: Haskell bindings to Xlib.
 
 As I strongly believe in dogfooding, I'm an avid user of course!
 My configuration can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/tree/master/xmonad).
-
-<p></p>
-<div class="fourgrid">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad&show_owner=true"
-       alt="GitHub stats for xmonad/xmonad">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-extras&show_owner=true"
-       alt="GitHub stats for xmonad/xmonad-extras">
-</div>
-<div class="fourgrid">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=xmonad-contrib&show_owner=true"
-       alt="GitHub stats for xmonad/xmonad-contrib">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=xmonad&repo=X11&show_owner=true"
-       alt="GitHub stats for xmonad/X11">
-</div>
 
 ## KMonad
 
@@ -46,11 +28,6 @@ instead of being firmware for a specific keyboard,
 it is implemented in software and thus works anywhere<!--
 -->—even on your laptop![^1]
 
-<p style="text-align:center;">
- <img class="pure-img" src="https://github-readme-stats.vercel.app/api/pin/?username=kmonad&repo=kmonad&show_owner=true"
-      alt="GitHub stats for kmonad/kmonad">
-</p>
-
 My personal keyboard configuration—[colemak-dh],
 with some extras to facilitate more convenient Haskell and LaTeX programming—can be found
 [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/kmonad/config.kbd).
@@ -58,7 +35,7 @@ with some extras to facilitate more convenient Haskell and LaTeX programming—c
 ## Xmobar
 
 Since XMonad does not have a built-in status bar,
-one has to use a third party program instead—[xmobar]![^2]
+one has to use a third party program instead—[xmobar]!
 As these programs have to work together quite closely,
 one can't help but also be a contributor to the latter if one uses the former.
 
@@ -97,8 +74,6 @@ A tiny statically typed functional language for processing JSON on the command-l
   as this nicely supports `Text` and `Attoparsec`.
 
 ## Emacs modes
-
-I've written too many Emacs packages—and none of them popular, at that!
 
 + [kbd-mode]
 
@@ -160,6 +135,7 @@ I've written too many Emacs packages—and none of them popular, at that!
 [QMK configuration]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe
 [QMK]: https://qmk.fm/
 [TagSoup]: https://hackage.haskell.org/package/tagsoup
+[X11:repo]: https://github.com/xmonad/X11
 [XMonad]: https://xmonad.org/
 [anki-editor]: https://github.com/anki-editor/anki-editor
 [anki-whitespace]: https://github.com/anki-editor/anki-whitespace
@@ -186,6 +162,8 @@ I've written too many Emacs packages—and none of them popular, at that!
 [vmensa]: https://github.com/slotThe/vmensa
 [xmobar:#656]: https://codeberg.org/xmobar/xmobar/issues/656
 [xmobar]: https://codeberg.org/xmobar/xmobar
+[xmonad-contrib:repo]: https://github.com/xmonad/xmonad-contrib
+[xmonad:repo]: https://github.com/xmonad/xmonad
 [yank-delimiters]: https://github.com/slotThe/yank-delimiters
 [yeganesh]: https://hackage.haskell.org/package/yeganesh
 
