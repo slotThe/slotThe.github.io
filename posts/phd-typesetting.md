@@ -340,7 +340,7 @@ Palatino, while not perfect, fairs much better here:
 <img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*.">
 
 As I didn't want to manually check every occurrence of *f* at the end of a word and potentially add a thin space after it,
-the choice was forced upon me.
+the choice was forced upon me.[^11]
 There are lots of knobs to turn with the `newpxtext` and `newpxmath` packages,
 the full code looks like this:
 
@@ -522,3 +522,16 @@ Lastly, I will just leave the following *very important* bibLaTeX configuration 
        [rubrication](https://gwern.net/red)
        and starting sections with a few bits of small caps,
        which I think I picked up from Edward Tufte.
+
+[^11]: *Update on 2025-09-13*: I recently found out about the `mathic` option of the `mathtools` package,
+       which applies some italics correction to the `\(…\)` inline maths environment.
+       Using that, the above comparison becomes
+
+       <img src="../images/phd-typesetting/mathic.png"
+            alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
+
+       which looks much better in both cases!
+       This means one again has the power—and pain—of choice.
+       I still think that, for this kind of technical text,
+       the look and feel of an old-style font such as Palatino just fits the general "vibe" better,
+       but your mileage may vary.

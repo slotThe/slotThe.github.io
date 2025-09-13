@@ -68,10 +68,10 @@
         Posted on 2025-04-13
       
       
-        &thinsp;·&thinsp; last modified: 2025-07-21
+        &thinsp;·&thinsp; last modified: 2025-09-13
       
       
-        &thinsp;·&thinsp; <span title="1881 words">8 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="1960 words">8 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="../tags/LaTeX.html" rel="tag">LaTeX</a>
@@ -431,7 +431,19 @@ Palatino, while not perfect, fairs much better here:
 <img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*.">
 <p></p>
 As I didn’t want to manually check every occurrence of <em>f</em> at the end of a word and potentially add a thin space after it,
-the choice was forced upon me.
+the choice was forced upon me.<!--
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote"><em>Update on 2025-09-13</em>: I recently found out about the <code>mathic</code> option of the <code>mathtools</code> package,
+which applies some italics correction to the <code>\(…\)</code> inline maths environment.
+Using that, the above comparison becomes
+<p></p>
+<img src="../images/phd-typesetting/mathic.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
+<p></p>
+which looks much better in both cases!
+This means one again has the power—and pain—of choice.
+I still think that, for this kind of technical text,
+the look and feel of an old-style font such as Palatino just fits the general “vibe” better,
+but your mileage may vary.</div><!--
+-->
 There are lots of knobs to turn with the <code>newpxtext</code> and <code>newpxmath</code> packages,
 the full code looks like this:
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="na">[osf,scosf,theoremfont,tighter,largesc,trueslanted,p]</span><span class="nb">{</span>newpxtext<span class="nb">}</span>
@@ -489,7 +501,7 @@ I merely added a little bit more
 to <span class="small-caps">small caps</span> and
 <a href="https://en.wikipedia.org/wiki/Hanging_punctuation">protrusion</a>
 to sub and superscripts:<!--
---><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">Don’t forget the usual incantation to disable protrusion for the table of contents, though:
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">Don’t forget the usual incantation to disable protrusion for the table of contents, though:
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\newcommand</span><span class="nb">{</span><span class="k">\TOC</span><span class="nb">}{</span>
   <span class="k">\microtypesetup</span><span class="nb">{</span>protrusion=false<span class="nb">}</span>
   <span class="k">\tableofcontents</span>
@@ -517,7 +529,7 @@ That is, instead of
 <img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="Citations use oldstyle figures, even though most of the citation is all upper case letters.">
 <p></p>
 we rather want<!--
---><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">Also pictured:
+--><label for="sn-7" class="margin-toggle">⊕</label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="marginnote">Also pictured:
 <a href="https://gwern.net/red">rubrication</a>
 and starting sections with a few bits of small caps,
 which I think I picked up from Edward Tufte.</div><!--
@@ -570,7 +582,7 @@ Plus, using <code>cleveref</code> saves one from having to define many different
 <hr />
 <p></p>
 A general advice I have—and also got from an older PhD student—is to start early.<!--
---><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Thanks, Florian!</div><!--
+--><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Thanks, Florian!</div><!--
 -->
 Even just streamlining and unifying notation takes more time than ones thinks,
 especially if one also cares at least an epsilon about typography.
