@@ -42,7 +42,7 @@ def used_glyphs(path: str) -> tuple[str, str]:
 
 def optimise_font(in_file: str, out_file: str, text: str) -> None:
     options = Options(hinting=False, desubroutinize=True)
-    if "Alegreya" in in_file:
+    if not "hopf" in in_file:
         options.layout_features = ["*"]  # small-caps et al
     font = TTFont(in_file, lazy=True)
     font.flavor = "woff2"
