@@ -12,6 +12,7 @@ for await (const line of createInterface({ input: process.stdin })) {
     let useDisplay = line.startsWith(DISPLAY);
     let cleanLine  = useDisplay ? line.substring(DISPLAY.length) : line;
     console.log(katex.renderToString(cleanLine, {
+      output: "html",
       displayMode: useDisplay,
       strict: "error",
       throwOnError: true,
