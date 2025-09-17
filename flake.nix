@@ -65,8 +65,10 @@
               };
             }))
           ]))
-          deno          # KaTeX rendering of maths—see scripts/math.ts
           zlib
+          # KaTeX rendering of maths, see scripts/maths.js
+          nodejs
+          nodePackages.katex
           # Directly rendering TikZ pictures into SVGs
           rubber
           (texlive.combine {

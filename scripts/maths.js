@@ -1,9 +1,12 @@
 // Source: https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774
 
-import { readLines } from "https://deno.land/std@0.224.0/io/mod.ts";
-import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.mjs";
+import { createInterface } from "node:readline"
 
-for await (const line of readLines(Deno.stdin)) {
+// I don't want to create a package.json…
+import { createRequire } from "module";
+const katex = createRequire(import.meta.url)('katex');
+
+for await (const line of createInterface({ input: process.stdin })) {
   try {
     let DISPLAY    = ":DISPLAY ";
     let useDisplay = line.startsWith(DISPLAY);

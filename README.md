@@ -26,7 +26,7 @@ For various definitions of "notable".
   the HTML. This is both faster when loading the page, and does not
   require any JavaScript on the client side.
 
-  Interfacing with KaTeX is done with [math.ts](./scripts/math.ts),
+  Interfacing with KaTeX is done with [maths.js](./scripts/maths.js),
   a tiny TS script originally from [here][pandoc:katex],
   which starts up a server that one can talk to.
   See the relevant [hlKaTeX][site:impl:hlkatex] function for more information.

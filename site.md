@@ -50,10 +50,10 @@ it seems almost comical to still require every visitor to render the same thing,
 rather than doing it once server-side.
 
 Interfacing with KaTeX is done with the tiny
-[math.ts](https://github.com/slotThe/slotThe.github.io/blob/main/scripts/math.ts)
+[maths.js](https://github.com/slotThe/slotThe.github.io/blob/main/scripts/maths.js)
 script:
 
-::: {.include from="scripts/math.ts"}
+::: {.include from="scripts/maths.js"}
 :::
 
 On the hakyll site, all that's needed to interface with this is [hlKaTeX][site:impl:hlkatex].

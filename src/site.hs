@@ -653,7 +653,7 @@ myPandocCompiler =
 
   hlKaTeX :: Pandoc -> Compiler Pandoc
   hlKaTeX pandoc = unsafeCompiler do
-    (hin, hout, _, _) <- runInteractiveCommand "deno run scripts/math.ts"
+    (hin, hout, _, _) <- runInteractiveCommand "node scripts/maths.js"
     hSetBuffering hin  NoBuffering
     hSetBuffering hout NoBuffering
 
