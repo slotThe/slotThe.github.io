@@ -4,7 +4,7 @@ bib: true
 no-toc: true
 no-comment: true
 nocite: |
-  @kelly74
+  @kelly74:doctr
   @hausser99:integ-theor-quasi-hopf-algeb
   @Moerdijk2002
   @deligne02:categ
