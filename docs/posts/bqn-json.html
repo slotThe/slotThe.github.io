@@ -301,7 +301,7 @@ giving us a flat representation in <code>nr</code>:
 
 <p></p>
 Using the “blueprint” <code>"[0[0[0]0][00]]"</code>,
-the main job of the parser will be to turn the flat representation of <code>nr</code> back into a nested list
+the main job of the parser will be to turn the flat representation of <code>nr</code> back into a nested list.
 <h3 id="parsing">Parsing<a href="#parsing" class="floatleft sec-link">§</a></h3>
 <p></p>
 The end result we want looks like this:
@@ -1052,9 +1052,9 @@ What turns out to be quite convenient for small-ish <span class="small-caps">jso
 -->—which, let’s be honest, will be the only kind of <span class="small-caps">json</span> that <code>Parse</code> ever gets to see—<!--
 -->is to use <a href="https://mlochbaum.github.io/BQN/doc/rank.html">rank</a> 2 arrays;
 an object <code>{"a": 1}</code> gets parsed into <code>2‿1⥊"a"‿1</code>.
-Further, when building the result we have to make sure to “recognise” when to pull values and sublists out of the recursively build up <code>vs</code>,
+Further, when building the result we have to make sure to “recognise” when to pull values and sublists out of the recursively built up <code>vs</code>,
 and when to use <code>ks</code> to get keys instead.
-This can be achieved by taking <code>on</code> into consideration
+This can be achieved by taking <code>on</code> into consideration:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">⌽</span><span class="sr">((</span><span class="o">≠</span><span class="nv">on</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">n</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span><span class="w">  </span><span class="c1"># How to build which sublist</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="o">⌽</span><span class="nv">on</span><span class="w">                   </span><span class="c1"># Which sublist is an object?</span>

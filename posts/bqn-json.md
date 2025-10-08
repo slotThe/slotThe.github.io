@@ -175,7 +175,7 @@ giving us a flat representation in `nr`:
 ```
 
 Using the "blueprint" `"[0[0[0]0][00]]"`,
-the main job of the parser will be to turn the flat representation of `nr` back into a nested list
+the main job of the parser will be to turn the flat representation of `nr` back into a nested list.
 
 ## Parsing
 
@@ -969,9 +969,9 @@ What turns out to be quite convenient for small-ish JSON<!--
 -->—which, let's be honest, will be the only kind of JSON that `Parse` ever gets to see—<!--
 -->is to use *rank* 2 arrays;
 an object `{"a": 1}` gets parsed into `2‿1⥊"a"‿1`.
-Further, when building the result we have to make sure to "recognise" when to pull values and sublists out of the recursively build up `vs`,
+Further, when building the result we have to make sure to "recognise" when to pull values and sublists out of the recursively built up `vs`,
 and when to use `ks` to get keys instead.
-This can be achieved by taking `on` into consideration
+This can be achieved by taking `on` into consideration:
 
 ``` bqn
     ⌽((≠on)∾˜1-˜ln/n)⊔vi  # How to build which sublist
