@@ -1105,10 +1105,8 @@ I can probably offer the same conclusion as in the
 > A: Yes.
 
 There's really something to be said about this style of writing parsers.
-I hope I'm not butchering this,
-but I believe that Marshall Lochbaum<!--
--->—the creator of BQN—<!--
--->once said that it is
+To [paraphrase](https://news.ycombinator.com/item?id=41756917)
+Marshall Lochbaum, the creator of BQN: it's
 hard to write,
 hard to read,
 hard to modify,
