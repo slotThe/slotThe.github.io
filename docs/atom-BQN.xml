@@ -24,7 +24,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="6583 words">27 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="6561 words">27 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
@@ -145,17 +145,16 @@ we obtain sufficient information to <em>group</em> the string!</p>
 <p>Now all that’s left in the tokenisation step
 is to create the string <code>"[00000]"</code> from the input.
 Since we know all other tokens,
-this can be achieved with a combination of <em>replicate</em> and <em>indices</em>,
-as well as <em>under</em> and <em>select</em>:</p>
+this can be achieved with a combination of <em>replicate</em>, <em>indices</em>, and <em>under</em>:</p>
 <pre class="bqn"><code>    ts ← ns ∨ inp∊&quot;[]&quot;                # Tokens are numbers and brackets
 ⟨ 1 1 0 0 1 0 0 1 0 1 0 0 0 1 0 0 1 ⟩
     ts/inp                            # Just the tokens of the string
 &quot;[13569]&quot;
-    /ns                               # Indices of 1's (= number beginnings)
-⟨ 1 4 7 9 13 ⟩
-    '0'¨⌾((/ns)⊸⊏)inp                 # Make them zero
+    ns/inp                            # Number beginnings
+&quot;13569&quot;
+    '0'¨⌾(ns⊸/)inp                    # Make them zero
 &quot;[02,04,0,078,010]&quot;
-    ts/'0'¨⌾((/ns)⊸⊏)inp              # Choose just the tokens
+    ts/'0'¨⌾(ns⊸/)inp                 # Choose just the tokens
 &quot;[00000]&quot;</code></pre>
 <p>That’ll do!
 We can put all of this into a function now:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
@@ -210,7 +209,7 @@ but it’s really nothing more than a breadth-first ordering of the input.
 Since <code>inp</code> is defined as <code>"[1,[2,[3,4]],5,[6,7],8]"</code>
 and so in particular only contains one-digit numbers,
 it’s perhaps more instructive to look at</p>
-<pre class="bqn"><code>    d⊏(¬','⊸=)⊸/inp
+<pre class="bqn"><code>    d⊏(','⊸≠)⊸/inp
 &quot;][1]5]8[2][67[34&quot;</code></pre>
 <p>Drawing a picture often helps:</p>
 <p>So <code>]</code> indicates that a new sublist be placed at a certain slot,
@@ -456,7 +455,7 @@ and thread it through to the respective definitions.<a href="#fn8" class="footno
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]&quot;        # Tokens
 #         ^^^^^^
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }</code></pre>
 <pre class="bqn"><code>    Tokenise &quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;
 ⟨ &quot;[0&quot;&quot;0&quot;&quot;]&quot; ⟨ 1 2 ⟩ ⟨ &quot;a&quot; &quot;b&quot; ⟩ ⟩
@@ -536,7 +535,7 @@ All in all, we have</p>
   nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]&quot;        # Tokens
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }</code></pre>
 <pre class="bqn"><code>    Tokenise &quot;[1,&quot;&quot;a,2,b&quot;&quot;]&quot;
 ⟨ &quot;[0&quot;&quot;]&quot; ⟨ 1 ⟩ ⟨ &quot;a,2,b&quot; ⟩ ⟩
@@ -570,7 +569,7 @@ and the colon as the key–value separator.</p>
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]{},:&quot;    # Tokens
 #                       ^^^^
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }</code></pre>
 <pre class="bqn"><code>    Tokenise &quot;{&quot;&quot;a&quot;&quot;: 123, &quot;&quot;bcde&quot;&quot;: [1,&quot;&quot;42&quot;&quot;,30]}&quot;
 ⟨ &quot;{&quot;&quot;:0,&quot;&quot;:[0,&quot;&quot;,0]}&quot; ⟨ 123 1 30 ⟩ ⟨ &quot;a&quot; &quot;bcde&quot; &quot;42&quot; ⟩ ⟩</code></pre>
@@ -648,7 +647,9 @@ Actually, since strings can be values as well,
 we probably want to separate those, too,
 ending up with an array of the form <code>⟨⟨"c"⟩, ⟨"a", "b"⟩, ⟨"a"⟩⟩</code>.</p>
 <p>Selecting the keys themselves is easy:
-just go to the colons, <em>nudge</em> them to consider the token before, and <em>select</em> from all strings.</p>
+just go to the colons,
+<em>nudge</em> them to consider the token before,
+and <em>replicate</em> from all strings.</p>
 <pre class="bqn"><code>    cl
 ⟨ 0 0 1 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 ⟩
     ts DP «cl
@@ -806,7 +807,7 @@ so we can just <em>pick</em> the result and <em>couple</em> it to <code>𝕩</co
   nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]{},:&quot;    # Tokens
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }
 
 Parse ← {
@@ -881,7 +882,7 @@ The input is always indented by four spaces, with the output flush to the left.
 If I refer to an unknown variable further down, it was probably defined in such a block.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>{-} 󠀠</p>
 <p>We could in fact also move <em>replicate</em>
-into the calls to <code>ns</code> and <code>𝕩</code> and then replace <em>select</em> with another <em>replicate</em>:</p>
+into the calls to <code>ns</code> and <code>𝕩</code>:</p>
 <pre class="bqn"><code>    '0'¨⌾((ts/ns)⊸/) (ts/inp)
 &quot;[0,0,0,0,0]&quot;</code></pre>
 <p>I’m not super well-versed in the ins and outs of CBQN’s performance,

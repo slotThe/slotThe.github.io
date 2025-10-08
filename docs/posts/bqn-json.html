@@ -76,7 +76,7 @@
       
       
       
-        &thinsp;·&thinsp; <span title="6562 words">27 min read</span> &thinsp;·&nbsp;
+        &thinsp;·&thinsp; <span title="6540 words">27 min read</span> &thinsp;·&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="../tags/BQN.html" rel="tag">BQN</a>
@@ -255,17 +255,16 @@ we obtain sufficient information to <a href="https://mlochbaum.github.io/BQN/doc
 Now all that’s left in the tokenisation step
 is to create the string <code>"[00000]"</code> from the input.
 Since we know all other tokens,
-this can be achieved with a combination of <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a> and <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">indices</a>,
-as well as <a href="https://mlochbaum.github.io/BQN/doc/under.html">under</a> and <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a>:
+this can be achieved with a combination of <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>, <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">indices</a>, and <a href="https://mlochbaum.github.io/BQN/doc/under.html">under</a>:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">ns</span><span class="w"> </span><span class="o">∨</span><span class="w"> </span><span class="nv">inp</span><span class="o">∊</span><span class="s2">&quot;[]&quot;</span><span class="w">                </span><span class="c1"># Tokens are numbers and brackets</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ts</span><span class="o">/</span><span class="nv">inp</span><span class="w">                            </span><span class="c1"># Just the tokens of the string</span>
 <span class="s2">&quot;[13569]&quot;</span>
-<span class="w">    </span><span class="o">/</span><span class="nv">ns</span><span class="w">                               </span><span class="c1"># Indices of 1's (= number beginnings)</span>
-<span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="p">⟩</span>
-<span class="w">    </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="o">/</span><span class="nv">ns</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊏</span><span class="sr">)</span><span class="nv">inp</span><span class="w">                 </span><span class="c1"># Make them zero</span>
+<span class="w">    </span><span class="nv">ns</span><span class="o">/</span><span class="nv">inp</span><span class="w">                            </span><span class="c1"># Number beginnings</span>
+<span class="s2">&quot;13569&quot;</span>
+<span class="w">    </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">(</span><span class="nv">ns</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="nv">inp</span><span class="w">                    </span><span class="c1"># Make them zero</span>
 <span class="s2">&quot;[02,04,0,078,010]&quot;</span>
-<span class="w">    </span><span class="nv">ts</span><span class="o">/</span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="o">/</span><span class="nv">ns</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊏</span><span class="sr">)</span><span class="nv">inp</span><span class="w">              </span><span class="c1"># Choose just the tokens</span>
+<span class="w">    </span><span class="nv">ts</span><span class="o">/</span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">(</span><span class="nv">ns</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="nv">inp</span><span class="w">                 </span><span class="c1"># Choose just the tokens</span>
 <span class="s2">&quot;[00000]&quot;</span>
 </pre></div>
 
@@ -275,7 +274,7 @@ We can put all of this into a function now:<!--
 --><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 We could in fact also move <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>
-into the calls to <code>ns</code> and <code>𝕩</code> and then replace <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a> with another <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>:
+into the calls to <code>ns</code> and <code>𝕩</code>:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="nv">ts</span><span class="o">/</span><span class="nv">ns</span><span class="sr">)</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="w"> </span><span class="sr">(</span><span class="nv">ts</span><span class="o">/</span><span class="nv">inp</span><span class="sr">)</span>
 <span class="s2">&quot;[0,0,0,0,0]&quot;</span>
 </pre></div>
@@ -373,7 +372,7 @@ but it’s really nothing more than a breadth-first ordering of the input.
 Since <code>inp</code> is defined as <code>"[1,[2,[3,4]],5,[6,7],8]"</code>
 and so in particular only contains one-digit numbers,
 it’s perhaps more instructive to look at
-<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">d</span><span class="o">⊏</span><span class="sr">(</span><span class="o">¬</span><span class="s1">','</span><span class="py">⊸</span><span class="o">=</span><span class="sr">)</span><span class="py">⊸</span><span class="o">/</span><span class="nv">inp</span>
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">d</span><span class="o">⊏</span><span class="sr">(</span><span class="s1">','</span><span class="py">⊸</span><span class="o">≠</span><span class="sr">)</span><span class="py">⊸</span><span class="o">/</span><span class="nv">inp</span>
 <span class="s2">&quot;][1]5]8[2][67[34&quot;</span>
 </pre></div>
 
@@ -688,7 +687,7 @@ That’s one of the advantages of the complete program fitting on a single scree
 
 <span class="w">  </span><span class="nv">ts</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">sb</span><span class="o">∨</span><span class="sr">(</span><span class="o">¬</span><span class="nv">ex</span><span class="sr">)</span><span class="o">∧</span><span class="nv">nb</span><span class="o">∨</span><span class="ni">𝕩</span><span class="o">∊</span><span class="s2">&quot;[]&quot;</span><span class="w">        </span><span class="c1"># Tokens</span>
 <span class="c1">#         ^^^^^^</span>
-<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="o">/</span><span class="nv">nb</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊏</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
+<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">(</span><span class="nv">nb</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
 <span class="kt">}</span>
 </pre></div>
 
@@ -785,7 +784,7 @@ All in all, we have
 <span class="w">  </span><span class="nv">nr</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•ParseFloat</span><span class="na">¨</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">n</span><span class="o">×+</span><span class="na">`</span><span class="nv">nb</span><span class="sr">)</span><span class="o">⊔</span><span class="ni">𝕩</span><span class="w"> </span><span class="c1"># Numbers to return</span>
 
 <span class="w">  </span><span class="nv">ts</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">sb</span><span class="o">∨</span><span class="sr">(</span><span class="o">¬</span><span class="nv">ex</span><span class="sr">)</span><span class="o">∧</span><span class="nv">nb</span><span class="o">∨</span><span class="ni">𝕩</span><span class="o">∊</span><span class="s2">&quot;[]&quot;</span><span class="w">        </span><span class="c1"># Tokens</span>
-<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="o">/</span><span class="nv">nb</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊏</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
+<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">(</span><span class="nv">nb</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
 <span class="kt">}</span>
 </pre></div>
 
@@ -831,7 +830,7 @@ and the colon as the key–value separator.
 
 <span class="w">  </span><span class="nv">ts</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">sb</span><span class="o">∨</span><span class="sr">(</span><span class="o">¬</span><span class="nv">ex</span><span class="sr">)</span><span class="o">∧</span><span class="nv">nb</span><span class="o">∨</span><span class="ni">𝕩</span><span class="o">∊</span><span class="s2">&quot;[]{},:&quot;</span><span class="w">    </span><span class="c1"># Tokens</span>
 <span class="c1">#                       ^^^^</span>
-<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="o">/</span><span class="nv">nb</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊏</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
+<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">(</span><span class="nv">nb</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
 <span class="kt">}</span>
 </pre></div>
 
@@ -934,7 +933,9 @@ we probably want to separate those, too,
 ending up with an array of the form <code>⟨⟨"c"⟩, ⟨"a", "b"⟩, ⟨"a"⟩⟩</code>.
 <p></p>
 Selecting the keys themselves is easy:
-just go to the colons, <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> them to consider the token before, and <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a> from all strings.
+just go to the colons,
+<a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> them to consider the token before,
+and <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a> from all strings.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">cl</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="o">«</span><span class="nv">cl</span>
@@ -1143,7 +1144,7 @@ At the risk of repeating myself, let’s look at the entire parser as well as th
 <span class="w">  </span><span class="nv">nr</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•ParseFloat</span><span class="na">¨</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">n</span><span class="o">×+</span><span class="na">`</span><span class="nv">nb</span><span class="sr">)</span><span class="o">⊔</span><span class="ni">𝕩</span><span class="w"> </span><span class="c1"># Numbers to return</span>
 
 <span class="w">  </span><span class="nv">ts</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">sb</span><span class="o">∨</span><span class="sr">(</span><span class="o">¬</span><span class="nv">ex</span><span class="sr">)</span><span class="o">∧</span><span class="nv">nb</span><span class="o">∨</span><span class="ni">𝕩</span><span class="o">∊</span><span class="s2">&quot;[]{},:&quot;</span><span class="w">    </span><span class="c1"># Tokens</span>
-<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="o">/</span><span class="nv">nb</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊏</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
+<span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="w"> </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">(</span><span class="nv">nb</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="w"> </span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">,</span><span class="w"> </span><span class="nv">sr</span><span class="p">⟩</span>
 <span class="kt">}</span>
 
 <span class="o">Parse</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>

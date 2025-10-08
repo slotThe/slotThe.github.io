@@ -139,19 +139,18 @@ we obtain sufficient information to *group* the string!
 Now all that's left in the tokenisation step
 is to create the string `"[00000]"` from the input.
 Since we know all other tokens,
-this can be achieved with a combination of *replicate* and *indices*,
-as well as *under* and *select*:
+this can be achieved with a combination of *replicate*, *indices*, and *under*:
 
 ``` bqn
     ts ← ns ∨ inp∊"[]"                # Tokens are numbers and brackets
 ⟨ 1 1 0 0 1 0 0 1 0 1 0 0 0 1 0 0 1 ⟩
     ts/inp                            # Just the tokens of the string
 "[13569]"
-    /ns                               # Indices of 1's (= number beginnings)
-⟨ 1 4 7 9 13 ⟩
-    '0'¨⌾((/ns)⊸⊏)inp                 # Make them zero
+    ns/inp                            # Number beginnings
+"13569"
+    '0'¨⌾(ns⊸/)inp                    # Make them zero
 "[02,04,0,078,010]"
-    ts/'0'¨⌾((/ns)⊸⊏)inp              # Choose just the tokens
+    ts/'0'¨⌾(ns⊸/)inp                 # Choose just the tokens
 "[00000]"
 ```
 
@@ -236,7 +235,7 @@ and so in particular only contains one-digit numbers,
 it's perhaps more instructive to look at
 
 ``` bqn
-    d⊏(¬','⊸=)⊸/inp
+    d⊏(','⊸≠)⊸/inp
 "][1]5]8[2][67[34"
 ```
 
@@ -592,7 +591,7 @@ Tokenise ← {
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊"[]"        # Tokens
 #         ^^^^^^
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }
 ```
 
@@ -697,7 +696,7 @@ Tokenise ← {
   nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊"[]"        # Tokens
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }
 ```
 
@@ -748,7 +747,7 @@ Tokenise ← {
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊"[]{},:"    # Tokens
 #                       ^^^^
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }
 ```
 
@@ -854,7 +853,9 @@ we probably want to separate those, too,
 ending up with an array of the form `⟨⟨"c"⟩, ⟨"a", "b"⟩, ⟨"a"⟩⟩`.
 
 Selecting the keys themselves is easy:
-just go to the colons, *nudge* them to consider the token before, and *select* from all strings.
+just go to the colons,
+*nudge* them to consider the token before,
+and *replicate* from all strings.
 
 ``` bqn
     cl
@@ -1061,7 +1062,7 @@ Tokenise ← {
   nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
 
   ts ← sb∨(¬ex)∧nb∨𝕩∊"[]{},:"    # Tokens
-  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+  ⟨ts/ '0'¨⌾(nb⊸/) 𝕩, nr, sr⟩
 }
 
 Parse ← {
@@ -1129,7 +1130,7 @@ but honestly this whole thing was so refreshing that I can't help but recommend 
 [^1]: {-} 󠀠
 
       We could in fact also move *replicate*
-      into the calls to `ns` and `𝕩` and then replace *select* with another *replicate*:
+      into the calls to `ns` and `𝕩`:
 
       ``` bqn
           '0'¨⌾((ts/ns)⊸/) (ts/inp)
