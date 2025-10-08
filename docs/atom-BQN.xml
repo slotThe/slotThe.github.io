@@ -10,8 +10,933 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2025-07-28T00:00:00Z</updated>
+    <updated>2025-10-08T00:00:00Z</updated>
     <entry>
+    <title>Writing a JSON parser in BQN</title>
+    <link href="https://tony-zorman.com/posts/bqn-json.html" />
+    <id>https://tony-zorman.com/posts/bqn-json.html</id>
+    <published>2025-10-08T00:00:00Z</published>
+    <updated>2025-10-08T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <p class="header">
+      
+        Posted on 2025-10-08
+      
+      
+      
+        &thinsp;·&thinsp; <span title="6583 words">27 min read</span> &thinsp;·&nbsp;
+      
+      
+        <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
+      
+    </p>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div>
+  <p>Let’s write a JSON parser in BQN!</p>
+<!--more-->
+<p>At least, for some vague definition of JSON.
+I will restrict myself to the following underspecified subset,
+so that this will not be a 20’000-word post:</p>
+<ul>
+<li>Only (positive) integers.</li>
+<li>ASCII only and only <code>\</code>-based escaping.</li>
+<li>No constants.</li>
+<li>Absolutely no input validation—we’ll try to parse the wildest things.</li>
+</ul>
+<p>Some of those are not difficult to add:
+adding negative integers is a 4-character change,
+and other number formats are not much harder.
+Constants are a fun exercise for the reader, and also useful for JSON in the wild.
+Input validation is not difficult per se,
+but seemed a bit too tedious for this blog post to me.
+I’m staying away from Unicode though,
+see <a href="https://github.com/mlochbaum/bqn-libs/blob/master/json.bqn">bqn-libs/json.bqn</a> for that.
+In general, I do not claim originality for any line of code in this post<!--
+-->—this is more or less my attempt to understand <a href="https://github.com/mlochbaum/bqn-libs/blob/master/json.bqn">bqn-libs/json.bqn</a> to a reasonable degree.</p>
+<p>This article assumes that you are already a bit familiar with BQN as a language,
+or know some amount of array programming and are willing to look up unknown symbols.
+If not, I recommend starting with the official <a href="https://mlochbaum.github.io/BQN/tutorial/index.html">tutorials</a>.
+I’ve also written about my experience of
+<a href="https://tony-zorman.com/posts/aoc-in-bqn.html">using BQN</a>
+for Advent of Code,
+a post which certainly contains some amount of written words that talk about the language.
+I’ll recall the basic tricks that one uses in array-oriented parsing,
+though if you feel like I’m going too fast perhaps it’s a good idea to peruse my post about writing a
+<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV parser</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h2 id="lists-of-numbers">Lists of numbers</h2>
+<p>We’ll start with simply trying to parse lists of integers.
+Can’t be that hard, right?
+Additionally<!--
+-->—and this is where <em>array-oriented</em> starts to come into play—<!--
+-->we want to handle as much as possible using flat arrays.
+This is both faster and way cooler.
+In particular, this will result in a parser that has essentially no branching to speak of:
+everything is just executed in order, line by line.</p>
+<p>Motivated by an Advent of Code problem,
+<a href="https://saltysylvi.github.io/blog/index.html">Sylvia</a>
+has already written a
+<a href="https://saltysylvi.github.io/blog/parsing-nested-lists-in-bqn.html">fantastic article</a>
+about this exact type of thing,
+including a comparison with two other approaches:
+recursive descent, as well as a more nested array-style parser.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+I will follow the same approach for this part of the parser;
+if you’ve already read—and understood—Sylvia’s post, feel free to skip to <a href="#adding-strings">Adding strings</a>.</p>
+<p>Assume we have a list of numbers like the following:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<pre class="bqn"><code>    inp ← &quot;[12,34,5,678,910]&quot;
+&quot;[12,34,5,678,910]&quot;</code></pre>
+<p>We’ll follow standard practise by first tokenising—lexing—the string,
+and then parsing the tokens.</p>
+<h3 id="tokenisation">Tokenisation</h3>
+<p>Brackets can stay as they are,
+each number will be replaced by a single <code>0</code>,
+and thus all commas can be removed.
+We’ll then return a two element array,
+the first entry containing the tokenised array,
+and the second one being all of the numbers.</p>
+<pre class="bqn"><code>    Tokenise inp
+⟨ &quot;[00000]&quot; ⟨ 12 34 5 678 910 ⟩ ⟩</code></pre>
+<p>The first thing we have to do is to get the start of each number,
+and save that in a variable <code>ns</code>,
+while a mask of all numbers will be called <code>n</code>.</p>
+<pre class="bqn"><code>    '0'+↕10
+&quot;0123456789&quot;
+    inp∊('0'+↕10)
+⟨ 0 1 1 0 1 1 0 1 0 1 1 1 0 1 1 1 0 ⟩
+    »⊸&lt; inp∊('0'+↕10)
+⟨ 0 1 0 0 1 0 0 1 0 1 0 0 0 1 0 0 0 ⟩
+    ns ← »⊸&lt; n←inp∊('0'+↕10)
+⟨ 0 1 0 0 1 0 0 1 0 1 0 0 0 1 0 0 0 ⟩
+    n         # For comparison
+⟨ 0 1 1 0 1 1 0 1 0 1 1 1 0 1 1 1 0 ⟩
+    inp ≍ ns  # Visualise ns by stacking inp on top of it
+┌─
+╵ '[' '1' '2' ',' '3' '4' ',' '5' ',' '6' '7' '8' ',' '9' '1' '0' ']'
+   0   1   0   0   1   0   0   1   0   1   0   0   0   1   0   0   0
+                                                                     ┘</code></pre>
+<p>While it’s not immediately obvious,
+defining <code>ns</code> is useful because we can create a depth scan of all numbers,
+where the start of each new number increases the depth by one.</p>
+<pre class="bqn"><code>    +`ns
+⟨ 0 1 1 1 2 2 2 3 3 4 4 4 4 5 5 5 5 ⟩
+    inp ≍ +`ns
+┌─
+╵ '[' '1' '2' ',' '3' '4' ',' '5' ',' '6' '7' '8' ',' '9' '1' '0' ']'
+   0   1   1   1   2   2   2   3   3   4   4   4   4   5   5   5   5
+                                                                     ┘</code></pre>
+<p>By supplementing this with <code>n</code>,
+we obtain sufficient information to <em>group</em> the string!</p>
+<pre class="bqn"><code>    n×+`ns                                    # Stencil out the numbers
+⟨ 0 1 1 0 2 2 0 3 0 4 4 4 0 5 5 5 0 ⟩
+    1-˜ n×+`ns                                # Kill irrelevant part
+⟨ ¯1 0 0 ¯1 1 1 ¯1 2 ¯1 3 3 3 ¯1 4 4 4 ¯1 ⟩
+    (1-˜ n×+`ns)⊔inp                          # Grouping
+⟨ &quot;12&quot; &quot;34&quot; &quot;5&quot; &quot;678&quot; &quot;910&quot; ⟩
+    •ParseFloat¨ (1-˜ n×+`ns)⊔inp             # Parsing
+⟨ 12 34 5 678 910 ⟩
+    (10⊸×⊸+˜´∘⌽-⟜'0')¨ (1-˜ n×+`ns)⊔inp       # Or: manual parsing
+⟨ 12 34 5 678 910 ⟩</code></pre>
+<p>Now all that’s left in the tokenisation step
+is to create the string <code>"[00000]"</code> from the input.
+Since we know all other tokens,
+this can be achieved with a combination of <em>replicate</em> and <em>indices</em>,
+as well as <em>under</em> and <em>select</em>:</p>
+<pre class="bqn"><code>    ts ← ns ∨ inp∊&quot;[]&quot;                # Tokens are numbers and brackets
+⟨ 1 1 0 0 1 0 0 1 0 1 0 0 0 1 0 0 1 ⟩
+    ts/inp                            # Just the tokens of the string
+&quot;[13569]&quot;
+    /ns                               # Indices of 1's (= number beginnings)
+⟨ 1 4 7 9 13 ⟩
+    '0'¨⌾((/ns)⊸⊏)inp                 # Make them zero
+&quot;[02,04,0,078,010]&quot;
+    ts/'0'¨⌾((/ns)⊸⊏)inp              # Choose just the tokens
+&quot;[00000]&quot;</code></pre>
+<p>That’ll do!
+We can put all of this into a function now:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<pre class="bqn"><code>Tokenise ← {
+  ns ← »⊸&lt; n←𝕩∊'0'+↕10           # Number beginnings
+  nr ← •ParseFloat¨(1-˜n×+`ns)⊔𝕩 # Numbers to return
+  ts ← ns∨𝕩∊&quot;[]&quot;                 # Tokens
+  ⟨ts/'0'¨⌾((/ns)⊸⊏)𝕩, nr⟩
+}</code></pre>
+<p>This of course also works with nested lists,
+giving us a flat representation in <code>nr</code>:</p>
+<pre class="bqn"><code>    Tokenise &quot;[1,[2,[3],4],[5,6]]&quot;
+⟨ &quot;[0[0[0]0][00]]&quot; ⟨ 1 2 3 4 5 6 ⟩ ⟩</code></pre>
+<p>Using the “blueprint” <code>"[0[0[0]0][00]]"</code>,
+the main job of the parser will be to turn the flat representation of <code>nr</code> back into a nested list</p>
+<h3 id="parsing">Parsing</h3>
+<p>The end result we want looks like this:</p>
+<pre class="bqn"><code>    Parse &quot;[1,[2,[3]],4]&quot;
+⟨ 1 ⟨ 2 ⟨ 3 ⟩ ⟩ 4 ⟩</code></pre>
+<p>For this post, let’s define a function to compactly display some text,
+so that I can use some more complicated arguments without <em>couple</em> taking up too much space.</p>
+<pre class="bqn"><code>    DP ← { 𝕨≍'0'+𝕩 }
+(function block)
+    &quot;abc&quot; DP ⟨1,2,3⟩
+┌─
+╵&quot;abc
+  123&quot;
+      ┘</code></pre>
+<p>The first thing we need to do is to get a depth ordering of the list;
+i.e., make an opening bracket increase and have a closing one decrease the depth by one.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<pre class="bqn"><code>    inp←&quot;[1,[2,[3,4]],5,[6,7],8]&quot;
+&quot;[1,[2,[3,4]],5,[6,7],8]&quot;
+    ts‿nums ← Tokenise inp # Tokens and numbers
+⟨ &quot;[0[0[00]]0[00]0]&quot; ⟨ 1 2 3 4 5 6 7 8 ⟩ ⟩
+    o ← '['=ts             # Opening brackets
+⟨ 1 0 1 0 1 0 0 0 0 0 1 0 0 0 0 0 ⟩
+    c ← ']'=ts             # Closing brackets
+⟨ 0 0 0 0 0 0 0 1 1 0 0 0 0 1 0 1 ⟩
+    ts DP +`o-c
+┌─
+╵&quot;[0[0[00]]0[00]0]
+  1122333211222110&quot;
+                   ┘</code></pre>
+<p>We can obtain a depth ordering of the list by turning <code>+`o-c</code> into a permutation with <em>grade up</em>
+and then indexing into the tokens with <em>select</em>.</p>
+<pre class="bqn"><code>    d ← ⍋+`o-c # Depth ordering
+⟨ 15 0 1 8 9 13 14 2 3 7 10 11 12 4 5 6 ⟩
+    d⊏ts
+&quot;][0]0]0[0][00[00&quot;</code></pre>
+<p>This is pretty hard to read at first (and even later),
+but it’s really nothing more than a breadth-first ordering of the input.
+Since <code>inp</code> is defined as <code>"[1,[2,[3,4]],5,[6,7],8]"</code>
+and so in particular only contains one-digit numbers,
+it’s perhaps more instructive to look at</p>
+<pre class="bqn"><code>    d⊏(¬','⊸=)⊸/inp
+&quot;][1]5]8[2][67[34&quot;</code></pre>
+<p>Drawing a picture often helps:</p>
+<p>So <code>]</code> indicates that a new sublist be placed at a certain slot,
+and <code>[</code> is the start of such a sublist.
+Filling in the tree from the string proceeds from left to right,
+and every time we encounter a <code>[</code> we look for the “oldest” <code>]</code> that still isn’t filled, and start there.</p>
+<p>We now assign each sublist the depth in this tree representation.
+This works much like the <code>+`o-c</code> trick above,
+only we don’t need to care about closing parentheses<!--
+-->—they only show up when we are going a level deeper anyways.</p>
+<pre class="bqn"><code>    '['=d⊏ts
+⟨ 0 1 0 0 0 0 0 1 0 0 1 0 0 1 0 0 ⟩
+    l ← (⍋d)⊏+`'['=d⊏ts             # Nesting
+⟨ 1 1 2 2 4 4 4 2 1 1 3 3 3 1 1 0 ⟩
+    ts DP l
+┌─
+╵&quot;[0[0[00]]0[00]0]
+  1122444211333110&quot;
+                   ┘</code></pre>
+<p>Compare this with the above tree.
+One important detail is that we index with <code>⍋d</code> and not just <code>d</code>:
+since <code>d</code> is a permutation already, we can invert it with another call to <em>grade up</em>.
+This effectively allows us to translate back from the BFS ordering of <code>d⊏ts</code>,
+into the “ordinary” ordering that we started with.</p>
+<p>This is a lot to take in;
+I would encourage you to play with these ideas for a while, until you’re comfortable with them.</p>
+<hr />
+<p>Now that we know in which order to fill the sublists,
+it’s about time that we figure out which values to use for that very filling.</p>
+<pre class="bqn"><code>    ln ← ts∊&quot;0]&quot;                 # Literals and nesting
+⟨ 0 1 0 1 0 1 1 1 1 1 0 1 1 1 1 1 ⟩
+    ts DP ln
+┌─
+╵&quot;[0[0[00]]0[00]0]
+  0101011111011111&quot;
+                   ┘
+    (ln/ts='0') + 2×ln/c
+⟨ 1 1 1 1 2 2 1 1 1 2 1 2 ⟩
+    vi ← ⍋⍋ (ln/ts='0') + 2×ln/c # Value indices
+⟨ 0 1 2 3 8 9 4 5 6 10 7 11 ⟩
+    (ln/ts) ≍ vi
+┌─
+╵ '0' '0' '0' '0' ']' ']' '0' '0' '0' ']' '0' ']'
+   0   1   2   3   8   9   4   5   6   10  7   11
+                                                  ┘
+    inp
+&quot;[1,[2,[3,4]],5,[6,7],8]&quot;</code></pre>
+<p>We separate out the literals,
+as well as the “nesting indicator” <code>]</code>,
+and then produce a list of “value indices”
+that should indicate the order in which the final output is to be filled.
+We use the
+<a href="https://mlochbaum.github.io/BQN/doc/order.html#ordinals">ordinals pattern</a>
+<code>⍋⍋</code> to turn <code>ln</code> into something we can actually use to index into <code>ts</code>.
+However, there is a problem:
+the filling of the actual literals will be from left to right,
+so the order is fine already,
+but the closing brackets are all over the place.
+For example, the second <code>]</code>, assigned to index <code>9</code>, is associated to the sublist <code>[6,7]</code> in the original input.
+Since we will construct the final list bottom-up,
+this should come after the list <code>[2,[3,4]]</code>,
+the closing bracket of which is however assigned to index <code>10</code>.</p>
+<p>To fix this, we use the nesting variable <code>l</code> defined above<!--
+-->—there, we’ve already associated a sublist to its depth in the breadth-first representation.
+Looking at <code>l</code> again, we can find the index of the sublist that a given <code>]</code> is closing by looking at the index of the element in front of it:</p>
+<pre class="bqn"><code>    ts DP l
+┌─
+╵&quot;[0[0[00]]0[00]0]
+  1122444211333110&quot;
+                   ┘
+    c/»l
+⟨ 4 2 3 1 ⟩</code></pre>
+<p>Since the list with the highest index above will be constructed first,
+we have to invert these numbers.
+Then, we just have to add these to the rest of the literals.</p>
+<pre class="bqn"><code>    c/»l
+⟨ 4 2 3 1 ⟩
+    ≠⊸- c/»l          # Deeply nested lists are constructed *first*
+⟨ 0 2 1 3 ⟩
+    (≠nums)+ ≠⊸- c/»l # Indices should not clash with literals
+⟨ 8 10 9 11 ⟩
+    (↕≠nums)∾ (≠nums)+ ≠⊸- c/»l # Add to end
+⟨ 0 1 2 3 4 5 6 7 8 10 9 11 ⟩
+    vi ↩ vi⊏(↕≠nums)∾ (≠nums)+ ≠⊸- c/»l # Fix vi by indexing this new list
+⟨ 0 1 2 3 8 10 4 5 6 9 7 11 ⟩</code></pre>
+<p>This gives us fixed indices:</p>
+<pre class="bqn"><code>    (ln/ts) ≍ vi
+┌─
+╵ '0' '0' '0' '0' ']' ']' '0' '0' '0' ']' '0' ']'
+   0   1   2   3   8   10  4   5   6   9   7   11
+                                                  ┘</code></pre>
+<p>This means we first construct <code>[3,4]</code>, then <code>[2,[3,4]]</code>, then <code>[6,7]</code>, and finally the whole list <code>[1,[2,[3,4]],5,[6,7],8]</code>.
+For this, we simply have to <em>group</em> the indices of <code>vi</code> accordingly.</p>
+<pre class="bqn"><code>    vi
+⟨ 0 1 2 3 8 10 4 5 6 9 7 11 ⟩
+    ln/l # Since vi also only contains indices for literals and nesting
+⟨ 1 2 4 4 2 1 1 3 3 1 1 0 ⟩
+    (ln/l)⊔vi
+⟨ ⟨ 11 ⟩ ⟨ 0 10 4 9 7 ⟩ ⟨ 1 8 ⟩ ⟨ 5 6 ⟩ ⟨ 2 3 ⟩ ⟩
+    1-˜ln/l # Drop final ] for the whole list
+⟨ 0 1 3 3 1 0 0 2 2 0 0 ¯1 ⟩
+    ⌽(1-˜ln/l)⊔vi # Reverse to build deeply nested lists sooner
+⟨ ⟨ 2 3 ⟩ ⟨ 5 6 ⟩ ⟨ 1 8 ⟩ ⟨ 0 10 4 9 7 ⟩ ⟩</code></pre>
+<p>Now all that is left is to build the whole list recursively.
+We start with the list of literals,
+construct the next list, and add it to the end of the list of literals.
+This way, the later indices <code>8</code>, <code>9</code>, and <code>10</code> will refer to these sublists.</p>
+<pre class="bqn"><code>    ⌽(1-˜ln/l)⊔vi
+⟨ ⟨ 2 3 ⟩ ⟨ 5 6 ⟩ ⟨ 1 8 ⟩ ⟨ 0 10 4 9 7 ⟩ ⟩
+    nums
+⟨ 1 2 3 4 5 6 7 8 ⟩
+    2‿3⊏nums
+⟨ 3 4 ⟩
+    nums ∾↩ &lt;2‿3⊏nums
+⟨ 1 2 3 4 5 6 7 8 ⟨ 3 4 ⟩ ⟩
+    nums ∾↩ &lt;5‿6⊏nums
+⟨ 1 2 3 4 5 6 7 8 ⟨ 3 4 ⟩ ⟨ 6 7 ⟩ ⟩
+    nums ∾↩ &lt;1‿8⊏nums
+┌─
+· 1 2 3 4 5 6 7 8 ⟨ 3 4 ⟩ ⟨ 6 7 ⟩ ⟨ 2 ⟨ 3 4 ⟩ ⟩
+                                                ┘
+    nums ∾↩ &lt;0‿10‿4‿9‿7⊏nums
+┌─
+· 1 2 3 4 5 6 7 8 ⟨ 3 4 ⟩ ⟨ 6 7 ⟩ ⟨ 2 ⟨ 3 4 ⟩ ⟩ ┌─
+                                                · 1 ⟨ 2 ⟨ 3 4 ⟩ ⟩ 5 ⟨ 6 7 ⟩ 8
+                                                                              ┘
+                                                                                ┘
+    ¯1⊑nums
+┌─
+· 1 ⟨ 2 ⟨ 3 4 ⟩ ⟩ 5 ⟨ 6 7 ⟩ 8
+                              ┘</code></pre>
+<p>More concisely:</p>
+<pre class="bqn"><code>    res ← nums # Mutation is evil
+⟨ 1 2 3 4 5 6 7 8 ⟩
+    {res ∾↩ &lt;𝕩⊏res ⋄@}¨ ⌽(1-˜ln/l)⊔vi
+&quot;    &quot;
+    ¯1⊑res
+┌─
+· 1 ⟨ 2 ⟨ 3 4 ⟩ ⟩ 5 ⟨ 6 7 ⟩ 8
+                              ┘</code></pre>
+<p>One tiny change has to be made to the building of the sublists:
+if our input is <code>"[]"</code>, then <code>1-˜ln/l</code> will be <code>⟨¯1⟩</code>,
+to the list as a whole will be dropped!
+We can hackily fix this by always appending the total number of closing brackets to the back of the list via <code>(+´c)∾˜</code>.
+If the list is empty, then this will accommodate for that case.
+Otherwise, the left argument to <em>group</em> will be one element longer than the right one.
+This is not a problem, however, because that’s actually a feature<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> of the function:
+in that case, the last element specified the minimum length of the result.</p>
+<pre class="bqn"><code>    0‿¯1‿1‿4 ⊔ &quot;abc&quot; # Padding
+⟨ &quot;a&quot; &quot;c&quot; ⟨⟩ ⟨⟩ ⟩</code></pre>
+<p>Putting everything together:</p>
+<pre class="bqn"><code>Parse ← {
+  ts‿nums ← Tokenise 𝕩                 # Tokens and numbers
+  o ← '['=ts                           # Opening brackets
+  c ← ']'=ts                           # Closing brackets
+  d ← ⍋+`o-c                           # Depth ordering
+  ln ← ts∊&quot;0]&quot;                         # Literals and nesting
+  l ← (⍋d)⊏+`'['=d⊏ts                  # Sublist depth
+  vi ← ⍋⍋ (ln/ts='0') + 2×ln/c         # Value indices
+  r ← nums                             # Result
+  vi ⊏↩ (↕≠nums)∾(≠nums)+ ≠⊸- c/»l     # Fix value indices
+  {r ∾↩ &lt;𝕩⊏r ⋄@}¨ ⌽((+´c)∾˜1-˜ln/l)⊔vi # Build result
+  ¯1⊑r
+}</code></pre>
+<p>Works like a charm:</p>
+<pre class="bqn"><code>    Parse &quot;[1,[2,[3,4]],5,[6,7],8]&quot;
+┌─
+· 1 ⟨ 2 ⟨ 3 4 ⟩ ⟩ 5 ⟨ 6 7 ⟩ 8
+                              ┘
+    Parse &quot;[]&quot;
+⟨⟩
+    Parse &quot;[1, [42, [[0], 2, 3]], 30]&quot;
+┌─
+· 1 ┌─                   30
+    · 42 ⟨ ⟨ 0 ⟩ 2 3 ⟩
+                       ┘
+                            ┘
+    Parse &quot;[1,2,[],[3,4,[5,6]],7,8,[9,[],10]]&quot;
+┌─
+· 1 2 ⟨⟩ ⟨ 3 4 ⟨ 5 6 ⟩ ⟩ 7 8 ⟨ 9 ⟨⟩ 10 ⟩
+                                         ┘</code></pre>
+<h2 id="adding-strings">Adding strings</h2>
+<p>I’d like to add one more literal,
+so that we get a feeling for how to do that sort of extension;
+strings sound like a good idea.</p>
+<p>First, the lexer: getting the strings and their beginnings works almost the same as in the numbers case above.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<pre class="bqn"><code>    inp ← &quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;
+&quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;
+    s ← ≠`'&quot;'=inp             # strings
+⟨ 0 0 0 1 1 0 0 0 0 1 1 0 0 ⟩</code></pre>
+<p>Before we move on, let’s slightly change the definition of <code>DP</code>:
+for syntax highlighting reasons, I’d like quotes to occupy a single character that is not the quote character itself.
+Let’s just substitute <code>'</code> for <code>"</code> in the left argument,
+which should fix this issue and hopefully still be clear enough.</p>
+<pre class="bqn"><code>    DP ← {((@+39)¨⌾((𝕨='&quot;')⊸/)𝕨) ≍ '0'+𝕩}
+(function block)
+    inp DP s
+┌─
+╵&quot;[1,'a',2,'b']
+  0001100001100&quot;
+                ┘
+    sb ← »⊸&lt; s                # string beginnings
+⟨ 0 0 0 1 0 0 0 0 0 1 0 0 0 ⟩
+    inp DP sb
+┌─
+╵&quot;[1,'a',2,'b']
+  0001000001000&quot;
+                ┘</code></pre>
+<p>Selecting the strings also works the same way;
+do a sum <em>scan</em> on the string beginnings, punch out the actual strings, and then <em>group</em>.</p>
+<pre class="bqn"><code>    1-˜s×+`sb
+⟨ ¯1 ¯1 ¯1 0 0 ¯1 ¯1 ¯1 ¯1 1 1 ¯1 ¯1 ⟩
+    +`sb
+⟨ 0 0 0 1 1 1 1 1 1 2 2 2 2 ⟩
+    1-˜s×+`sb
+⟨ ¯1 ¯1 ¯1 0 0 ¯1 ¯1 ¯1 ¯1 1 1 ¯1 ¯1 ⟩
+    (1-˜s×+`sb)⊔inp
+⟨ &quot;&quot;&quot;a&quot; &quot;&quot;&quot;b&quot; ⟩
+    1↓¨ (1-˜s×+`sb)⊔inp
+⟨ &quot;a&quot; &quot;b&quot; ⟩</code></pre>
+<p>Actually, you can be a little bit smarter here;
+instead of dropping the first element of every string,
+we can instead make sure that they are never selected by <em>group</em>
+by comparing when <code>s</code> is bigger than <code>sb</code>:
+this will only be the case if one is truly inside of a string.</p>
+<pre class="bqn"><code>    (s&gt;sb)×+`sb               # Same as (s∧¬sb)×+`sb
+⟨ 0 0 0 0 1 0 0 0 0 0 2 0 0 ⟩
+    (1-˜(s&gt;sb)×+`sb)⊔inp
+⟨ &quot;a&quot; &quot;b&quot; ⟩</code></pre>
+<p>Putting this together in our tokeniser,
+we now also need to make sure that we ignore everything that’s happening inside of a string.
+To do that, we can introduce an “exclusion” variable
+<code>ex ← s∨𝕩∊@+9‿10‿13‿32</code>
+and thread it through to the respective definitions.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<pre class="bqn"><code>Tokenise ← {
+  sb ← »⊸&lt; s←≠`'&quot;'=𝕩             # String beginnings
+  sr ← (1-˜(s&gt;sb)×+`sb)⊔𝕩        # Strings to return
+
+  ex ← s∨𝕩∊@+9‿10‿13‿32          # Exclude whitespace and strings
+  nb ← »⊸&lt; n← (¬ex)∧ 𝕩∊'0'+↕10   # Number beginnings
+#             ^^^^^^
+  nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
+
+  ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]&quot;        # Tokens
+#         ^^^^^^
+  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+}</code></pre>
+<pre class="bqn"><code>    Tokenise &quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;
+⟨ &quot;[0&quot;&quot;0&quot;&quot;]&quot; ⟨ 1 2 ⟩ ⟨ &quot;a&quot; &quot;b&quot; ⟩ ⟩
+    Tokenise &quot;[1,&quot;&quot;a,2,b&quot;&quot;]&quot;
+⟨ &quot;[0&quot;&quot;]&quot; ⟨ 1 ⟩ ⟨ &quot;a,2,b&quot; ⟩ ⟩</code></pre>
+<h3 id="parsing-1">Parsing</h3>
+<p>Adjusting the parser is actually quite easy here:
+we just have to add quotes to the allowed literals,
+make the value indices aware of them,
+and also feed them into the initial value of the result;
+no further changes necessary.</p>
+<pre class="bqn"><code>Parse ← {
+  ts‿nums‿strs ← Tokenise 𝕩                    # Tokens, numbers, and strings
+#        ^^^^^
+  o ← '['=ts                                   # Opening, closing, depth
+  c ← ']'=ts                                   # Closing brackets
+  d ← ⍋+`o-c                                   # Depth ordering
+  ln ← ts∊&quot;&quot;&quot;0]&quot;                               # Literals and nesting
+#          ^^
+  l ← (⍋d)⊏+`'['=d⊏ts                          # Sublist depth
+  vi ← ⍋⍋ (ln/ts='0') + (2×ln/ts='&quot;') + 3×ln/c # Value indices
+#                       ^^^^^^^^^^^^^
+  r ← nums∾strs                                # Result
+#         ^^^^^
+  vi ⊏↩ (↕≠r)∾(≠r)+ ≠⊸- c/»l                   # Fix value indices
+  {r ∾↩ &lt;𝕩⊏r ⋄@}¨ ⌽((+´c)∾˜1-˜ln/l)⊔vi         # Build result
+  ¯1⊑r
+}</code></pre>
+<h3 id="escaping">Escaping</h3>
+<p>To make things a little bit—though not too—interesting, let’s add some easy escaping.
+By this I exclusively mean backslash-based escaping:
+every time we encounter a backslash inside of a string,
+we treat the following character (e.g., a quote) literally.
+Thinking about semantics a bit, if we have a sequence of backslashes like <code>\\\\\</code>,
+we want to alternate between treating them as the escapist and the escapee.
+One way to do this is with a less-than <em>scan</em>:</p>
+<pre class="bqn"><code>    inp ← &quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;]&quot;
+&quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;]&quot;
+    '\'=inp
+⟨ 0 0 0 0 0 0 0 0 0 0 1 1 1 0 1 1 0 0 0 0 ⟩
+    &lt;`'\'=inp
+⟨ 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 0 0 0 0 ⟩
+    inp DP &lt;`'\'=inp
+┌─
+╵&quot;[1,'a','b_\\\'\\_c']
+  00000000001010100000&quot;
+                       ┘</code></pre>
+<p>We effectively check if the previous character of the string was escaped, but in a left-to-right fashion
+(as in, earlier choices on the left affect those on the right).
+To get the escaped values themselves, we can now simply <em>nudge</em> the string to the right.</p>
+<pre class="bqn"><code>    inp DP »&lt;`'\'=inp
+┌─
+╵&quot;[1,'a','b_\\\'\\_c']
+  00000000000101010000&quot;
+                       ┘</code></pre>
+<p>Finally, when selecting the strings, we just need to exclude the escaped quotes:</p>
+<pre class="bqn"><code>    e ← »&lt;`'\'=inp     # Escapes
+⟨ 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 0 0 0 ⟩
+    s ← ≠`(¬e)∧'&quot;'=inp # Strings are in quotes that are not escaped
+⟨ 0 0 0 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 ⟩
+    sb ← »⊸&lt; s
+⟨ 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 ⟩
+    (1-˜(s&gt;sb)×+`sb)⊔inp
+⟨ &quot;a&quot; &quot;b_\\\&quot;&quot;\\_c&quot; ⟩</code></pre>
+<p>As we are dealing with Boolean masks,
+alternatively to <code>(¬e)∧'"'=inp</code> one could also write the shorter,
+though slightly more obscure,
+<code>e&lt;'"'=inp</code>.
+All in all, we have</p>
+<pre class="bqn"><code>Tokenise ← {
+  e  ← »&lt;`'\'=𝕩                  # Escapes
+  sb ← »⊸&lt; s← ≠`(¬e)∧ '&quot;'=𝕩      # String beginnings
+  sr ← (1-˜(s&gt;sb)×+`sb)⊔𝕩        # Strings to return
+
+  ex ← s∨ 𝕩∊@+9‿10‿13‿32         # Exclude whitespace and strings
+  nb ← »⊸&lt; n← (¬ex)∧ 𝕩∊'0'+↕10   # Number beginnings
+  nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
+
+  ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]&quot;        # Tokens
+  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+}</code></pre>
+<pre class="bqn"><code>    Tokenise &quot;[1,&quot;&quot;a,2,b&quot;&quot;]&quot;
+⟨ &quot;[0&quot;&quot;]&quot; ⟨ 1 ⟩ ⟨ &quot;a,2,b&quot; ⟩ ⟩
+    Tokenise &quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;,2]&quot;
+⟨ &quot;[0&quot;&quot;&quot;&quot;0]&quot; ⟨ 1 2 ⟩ ⟨ &quot;a&quot; &quot;b_\\\&quot;&quot;\\_c&quot; ⟩ ⟩</code></pre>
+<p>The parser doesn’t need to be adjusted at all this time and just works:</p>
+<pre class="bqn"><code>    Parse &quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;,2]&quot;
+⟨ 1 &quot;a&quot; &quot;b_\\\&quot;&quot;\\_c&quot; 2 ⟩
+    Parse &quot;[1,[2,[&quot;&quot;[x,10]&quot;&quot;,4]],5,[&quot;&quot;a&quot;&quot;,7],8]&quot;
+┌─
+· 1 ⟨ 2 ⟨ &quot;[x,10]&quot; 4 ⟩ ⟩ 5 ⟨ &quot;a&quot; 7 ⟩ 8
+                                       ┘</code></pre>
+<h2 id="objects-and-their-ilk">Objects and their ilk</h2>
+<p>Onto the second big type we have to support: objects.
+They should look like</p>
+<pre><code>{&quot;a&quot;: 1, &quot;b&quot;: [&quot;c&quot;, &quot;d&quot;]}</code></pre>
+<p>and so on.</p>
+<p>This time, lexing is the easy part—we merely have to add curly braces to our list of tokens.
+Actually, to keep things visually comprehensible,
+let’s go back on what I said at the beginning
+and do the same for the comma as the array separator,
+and the colon as the key–value separator.</p>
+<pre class="bqn"><code>Tokenise ← {
+  e  ← »&lt;`'\'=𝕩                  # Escapes
+  sb ← »⊸&lt; s← ≠`(¬e)∧ '&quot;'=𝕩      # String beginnings
+  sr ← (1-˜(s&gt;sb)×+`sb)⊔𝕩        # Strings to return
+
+  ex ← s∨ 𝕩∊@+9‿10‿13‿32         # Exclude whitespace and strings
+  nb ← »⊸&lt; n← (¬ex)∧ 𝕩∊'0'+↕10   # Number beginnings
+  nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
+
+  ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]{},:&quot;    # Tokens
+#                       ^^^^
+  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+}</code></pre>
+<pre class="bqn"><code>    Tokenise &quot;{&quot;&quot;a&quot;&quot;: 123, &quot;&quot;bcde&quot;&quot;: [1,&quot;&quot;42&quot;&quot;,30]}&quot;
+⟨ &quot;{&quot;&quot;:0,&quot;&quot;:[0,&quot;&quot;,0]}&quot; ⟨ 123 1 30 ⟩ ⟨ &quot;a&quot; &quot;bcde&quot; &quot;42&quot; ⟩ ⟩</code></pre>
+<p>Looks good.</p>
+<h3 id="parsing-2">Parsing</h3>
+<p>Since the parser will change quite a bit,
+it is perhaps more instructive to build it up from scratch again.
+Up to getting the depth, things don’t really change much.</p>
+<pre class="bqn"><code>    inp ← &quot;{&quot;&quot;a&quot;&quot;: 1, &quot;&quot;b&quot;&quot;: [&quot;&quot;1&quot;&quot;,2,{&quot;&quot;a&quot;&quot;:2}]}&quot;
+&quot;{&quot;&quot;a&quot;&quot;: 1, &quot;&quot;b&quot;&quot;: [&quot;&quot;1&quot;&quot;,2,{&quot;&quot;a&quot;&quot;:2}]}&quot;
+    ts‿nums‿strs ← Tokenise inp
+⟨ &quot;{&quot;&quot;:0,&quot;&quot;:[&quot;&quot;,0,{&quot;&quot;:0}]}&quot; ⟨ 1 2 2 ⟩ ⟨ &quot;a&quot; &quot;b&quot; &quot;1&quot; &quot;a&quot; ⟩ ⟩
+    o ← ts∊&quot;{[&quot;  # Open
+⟨ 1 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 ⟩
+    c ← ts∊&quot;]}&quot;  # Close
+⟨ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 ⟩
+    cl ← ':'=ts  # Colon
+⟨ 0 0 1 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 ⟩
+    d ← ⍋+`o-c   # Depth
+⟨ 18 0 1 2 3 4 5 6 17 7 8 9 10 11 16 12 13 14 15 ⟩
+    td ← d⊏ts    # Tokens by depth
+&quot;}{&quot;&quot;:0,&quot;&quot;:][&quot;&quot;,0,}{&quot;&quot;:0&quot;</code></pre>
+<p>Since we now have two different “container” types,
+we also need to be careful about how “nesting” is defined—<!--
+-->sometimes we may only want the delimiters of one container to increase the level of nesting.
+Let’s start with getting a mask of the start of all new sublists<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>,
+which are now defined by an opening brace or bracket:</p>
+<pre class="bqn"><code>    s ← td∊&quot;[{&quot;  # Sublist starts
+⟨ 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 ⟩
+    td DP s
+┌─
+╵&quot;}{':0,':][',0,}{':0
+  0100000001000001000&quot;
+                      ┘</code></pre>
+<p>We also did the same thing in the original parser
+when we defined the sublist depth <code>l ← (⍋d)⊏+`'['=d⊏ts</code>,
+only we didn’t give <code>'['=d⊏ts</code>
+(which now morphed to <code>(d⊏ts)∊"[{"</code> due to the additional container types) a name.
+However, defining the sublist depth still works as before:</p>
+<pre class="bqn"><code>    n ← (⍋d)⊏+`s  # Nesting
+⟨ 1 1 1 1 1 1 1 2 2 2 2 2 3 3 3 3 2 1 0 ⟩
+    ts DP n
+┌─
+╵&quot;{':0,':[',0,{':0}]}
+  1111111222223333210&quot;
+                      ┘</code></pre>
+<p>Moving on, we can use the mask of sublists <code>s</code> to build a mask of sub-objects.</p>
+<pre class="bqn"><code>    s
+⟨ 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 ⟩
+    td DP s
+┌─
+╵&quot;}{':0,':][',0,}{':0
+  0100000001000001000&quot;
+                      ┘
+    of ← s/'{'=td  # Filter of sublists that are objects
+⟨ 1 0 1 ⟩</code></pre>
+<p>The <code>of</code> variable is to be read as something like “there are three sublists, the first and third of which are sub-objects”.
+This is good, but doesn’t yet take object nesting into account<!--
+-->—the second <code>1</code> in <code>of</code>,
+being nested inside of the first object,
+is actually at depth two and should be treated accordingly.
+To fix this, we proceed as before and do a sum <em>scan</em> across <code>of</code>,
+with a subsequent stencil to make sure we only select the objects.</p>
+<pre class="bqn"><code>    +`of
+⟨ 1 1 2 ⟩
+    on ← of × +`of  # Object nesting
+⟨ 1 0 2 ⟩
+    on ← +`⊸× of    # Object nesting (prettier!)
+⟨ 1 0 2 ⟩</code></pre>
+<p>Next, let’s get the keys of each object and <em>group</em> them by depth,
+as this will make subsequent processing much easier.
+That is, given an input like <code>{"a": 1, "b": [1, "c", {"a": 2}]}</code>,
+we want to end up with <code>⟨⟨"a", "b"⟩, ⟨"a"⟩⟩</code>.
+Actually, since strings can be values as well,
+we probably want to separate those, too,
+ending up with an array of the form <code>⟨⟨"c"⟩, ⟨"a", "b"⟩, ⟨"a"⟩⟩</code>.</p>
+<p>Selecting the keys themselves is easy:
+just go to the colons, <em>nudge</em> them to consider the token before, and <em>select</em> from all strings.</p>
+<pre class="bqn"><code>    cl
+⟨ 0 0 1 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 ⟩
+    ts DP «cl
+┌─
+╵&quot;{':0,':[',0,{':0}]}
+  0100010000000100000&quot;
+                      ┘
+    ('&quot;'=ts)/«cl
+⟨ 1 1 0 1 ⟩</code></pre>
+<p>A <code>0</code> stands for “this string is a value”,
+and a <code>1</code> is for “this string is a key somewhere”.
+We already have a nesting variable <code>n</code>,
+which however also increases the depth when hitting an array instead of an object.
+If we had one only for objects, we could use that as a stencil to obtain a depth ordered list when combining it with the above.</p>
+<p>There’s (at least) two things we can do:
+re-create <code>n</code> but only take into consideration objects,
+or somehow use <code>n</code>, but punch holes into it for the arrays.
+The first way is straightforward and essentially just copies the definition of <code>n</code>:</p>
+<pre class="bqn"><code>    (⍋d)⊏+`td='{'
+⟨ 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 1 1 0 ⟩
+    ts DP (⍋d)⊏+`td='{'
+┌─
+╵&quot;{':0,':[',0,{':0}]}
+  1111111111112222110&quot;
+                      ┘
+    («cl)× (⍋d)⊏+`td='{'
+⟨ 0 1 0 0 0 1 0 0 0 0 0 0 0 2 0 0 0 0 0 ⟩
+    ('&quot;'=ts)/ («cl)× (⍋d)⊏+`td='{'
+⟨ 1 1 0 2 ⟩</code></pre>
+<p>However, this seems quite inelegant to me;
+thankfully, punching holes into <code>n</code> is not as hard as it sounds.
+We already have an array <code>on</code> that tells us about the object nesting,
+with a <code>0</code> standing in for “this is the start of an array”.
+That means if we simply use <code>n</code> to <em>select</em> from <code>on</code>,
+this gives us what we want!<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<pre class="bqn"><code>    ts DP n
+┌─
+╵&quot;{':0,':[',0,{':0}]}
+  1111111222223333210&quot;
+                      ┘
+    n⊏0∾on
+⟨ 1 1 1 1 1 1 1 0 0 0 0 0 2 2 2 2 0 1 0 ⟩
+    ts DP n⊏0∾on
+┌─
+╵&quot;{':0,':[',0,{':0}]}
+  1111111000002222010&quot;
+                      ┘
+    ('&quot;'=ts) / («cl)×n⊏0∾on
+⟨ 1 1 0 2 ⟩</code></pre>
+<p>All that’s left is to <em>group</em> the given strings!</p>
+<pre class="bqn"><code>    (('&quot;'=ts)/(«cl)×n⊏0∾on) ⊔ strs         # Keys
+⟨ ⟨ &quot;1&quot; ⟩ ⟨ &quot;a&quot; &quot;b&quot; ⟩ ⟨ &quot;a&quot; ⟩ ⟩
+    (('&quot;'=ts)/(«cl)×(⍋d)⊏+`td='{') ⊔ strs  # Same result
+⟨ ⟨ &quot;1&quot; ⟩ ⟨ &quot;a&quot; &quot;b&quot; ⟩ ⟨ &quot;a&quot; ⟩ ⟩</code></pre>
+<p>There is but a small wrinkle yet to fix:
+if the object is empty, it might be that
+<code>(('"'=ts)/(«cl)×(⍋d)⊏+`td='{')</code> returns a nonsense answer,
+which would yield an error when trying to <em>group</em> the strings.
+This is much the same situation as before when we had to change <code>1-˜ln/l</code> to <code>(+´c)∾˜1-˜ln/l</code> during the construction of the final array.
+The fix here is similar, since with <code>of</code> we have an obvious quantity, the <em>length</em> of which is always the length we want to end up with,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
+even when trying to parse <code>{}</code>.</p>
+<pre class="bqn"><code>    ks ← ((1+´of)∾˜ ('&quot;'=ts)/(«cl)×n⊏0∾on)⊔strs # Keys, final definition
+⟨ ⟨ &quot;1&quot; ⟩ ⟨ &quot;a&quot; &quot;b&quot; ⟩ ⟨ &quot;a&quot; ⟩ ⟩</code></pre>
+<p>Building up our initial list of values,
+this now includes all numbers, as well as all strings that are not keys.
+Conveniently, by the above argument the latter is exactly the first element of <code>ks</code>.</p>
+<pre class="bqn"><code>    vs ← nums ∾ ⊑ks # Initial values
+⟨ 1 2 2 &quot;1&quot; ⟩</code></pre>
+<p>Building up the value indices works exactly the same as before;
+the only complication now is that a definition of <code>ln ← ts∊"""0]"</code> for literals and nesting does not work anymore, as we need to exclude the strings that are keys.
+What seems to work best is to specify what <code>ln</code> should <em>not</em> be:
+a comma, a colon, any opening parenthesis, and its token should not occur immediately before a colon.</p>
+<pre class="bqn"><code>    ln ← ¬ («⊸∨cl)∨o∨','=ts                       # Literals and nesting
+⟨ 0 0 0 1 0 0 0 0 1 0 1 0 0 0 0 1 1 1 1 ⟩
+    vi ← ⍋⍋ (ln/ts='0') + (2×ln/ts='&quot;') + 3×ln/c  # Value indices
+⟨ 0 3 1 2 4 5 6 ⟩
+    vi ⊏↩ (↕≠vs)∾(≠vs)+ ≠⊸- c/»n                  # Fix value indices
+⟨ 0 3 1 2 4 5 6 ⟩</code></pre>
+<p>Almost done—the only thing left is to build up the finished, nested, array.
+This is also the time we have to decide upon the final representation of an object.
+What turns out to be quite convenient for small-ish JSON<!--
+-->—which, let’s be honest, will be the only kind of JSON that <code>Parse</code> ever gets to see—<!--
+-->is to use <em>rank</em> 2 arrays;
+an object <code>{"a": 1}</code> gets parsed into <code>2‿1⥊"a"‿1</code>.
+Further, when building the result we have to make sure to “recognise” when to pull values and sublists out of the recursively build up <code>vs</code>,
+and when to use <code>ks</code> to get keys instead.
+This can be achieved by taking <code>on</code> into consideration</p>
+<pre class="bqn"><code>    ⌽((≠on)∾˜1-˜ln/n)⊔vi  # How to build which sublist
+⟨ ⟨ 2 ⟩ ⟨ 3 1 4 ⟩ ⟨ 0 5 ⟩ ⟩
+    ⌽on                   # Which sublist is an object?
+⟨ 2 0 1 ⟩
+    on ≍○⌽ ((≠on)∾˜1-˜ln/n)⊔vi
+┌─
+╵ 2     0         1
+  ⟨ 2 ⟩ ⟨ 3 1 4 ⟩ ⟨ 0 5 ⟩
+                         ┘</code></pre>
+<p>This means that the final shape is something like
+<code>on BUILD¨○⌽ ((≠on)∾˜1-˜ln/l)⊔vi</code>,
+where <code>BUILD</code> is a dyadic function,
+taking as its left argument a number that’s zero if we are dealing with a list or literal,
+and bigger than zero if we have an object and want to select at least one key.
+The right argument first <em>select</em>s the required sublist or value from <code>vs</code>,
+and then refines this selection by picking possible keys out of <code>ks</code>.
+Putting this into code:</p>
+<pre class="bqn"><code>    on {vs ∾↩ &lt;𝕨Sel𝕩⊏vs ⋄@}¨○⌽ ((≠on)∾˜1-˜ln/l)⊔vi # Build result</code></pre>
+<p>All that’s left to do is to write <code>Sel</code>.
+Doing nothing when <code>𝕨</code> is zero can just be achieved with a
+<a href="https://mlochbaum.github.io/BQN/doc/block.html#block-headers">header</a>.
+If <code>𝕨</code> is a number, it represents the depth of the object, and directly corresponds with the indexing of <code>ks</code>,
+so we can just <em>pick</em> the result and <em>couple</em> it to <code>𝕩</code> to make things a <em>rank</em> 2 array.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<pre class="bqn"><code>    Sel ← {0𝕊x: x; i𝕊x: (i⊑ks)≍x}  # Select
+(function block)
+    Sel ← ⊑⟜ks⊸≍⍟(0&lt;⊣)             # Point-free and without blocks
+⊑⟜⟨ ⟨ &quot;1&quot; ⟩ ⟨ &quot;a&quot; &quot;b&quot; ⟩ ⟨ &quot;a&quot; ⟩ ⟩⊸≍⍟(0&lt;⊣)
+
+# The object {&quot;a&quot;: 2} is the first non-literal that's constructed.
+    inp
+&quot;{&quot;&quot;a&quot;&quot;: 1, &quot;&quot;b&quot;&quot;: [&quot;&quot;1&quot;&quot;,2,{&quot;&quot;a&quot;&quot;:2}]}&quot;
+    ⌽((≠on)∾˜1-˜ln/n)⊔vi
+⟨ ⟨ 2 ⟩ ⟨ 3 1 4 ⟩ ⟨ 0 5 ⟩ ⟩
+    ⌽on
+⟨ 2 0 1 ⟩
+    vs
+⟨ 1 2 2 &quot;1&quot; ⟩
+    2 Sel ⟨2⟩⊏vs
+┌─
+╵ &quot;a&quot;
+   2
+      ┘</code></pre>
+<p>And that’s pretty much it—here are the last two lines, in all their glory:</p>
+<pre class="bqn"><code>    on {vs ∾↩ &lt;𝕨Sel𝕩⊏vs ⋄@}¨○⌽ ((≠on)∾˜1-˜ln/n)⊔vi  # Build result
+&quot;   &quot;
+    ¯1⊑vs                                           # Get result
+┌─
+╵ &quot;a&quot; &quot;b&quot;
+   1   ┌─
+       · &quot;1&quot; 2 ┌─
+               ╵ &quot;a&quot;
+                  2
+                     ┘
+                       ┘
+                         ┘
+    inp
+&quot;{&quot;&quot;a&quot;&quot;: 1, &quot;&quot;b&quot;&quot;: [&quot;&quot;1&quot;&quot;,2,{&quot;&quot;a&quot;&quot;:2}]}&quot;</code></pre>
+<p>It works!</p>
+<hr />
+<p>At the risk of repeating myself, let’s look at the entire parser as well as the tokeniser that we’ve built over the course of this post.</p>
+<pre class="bqn"><code>Tokenise ← {
+  e  ← »&lt;`'\'=𝕩                  # Escapes
+  sb ← »⊸&lt; s← ≠`(¬e)∧ '&quot;'=𝕩      # String beginnings
+  sr ← (1-˜(s&gt;sb)×+`sb)⊔𝕩        # Strings to return
+
+  ex ← s∨ 𝕩∊@+9‿10‿13‿32         # Exclude whitespace and strings
+  nb ← »⊸&lt; n← (¬ex)∧ 𝕩∊'0'+↕10   # Number beginnings
+  nr ← •ParseFloat¨(1-˜n×+`nb)⊔𝕩 # Numbers to return
+
+  ts ← sb∨(¬ex)∧nb∨𝕩∊&quot;[]{},:&quot;    # Tokens
+  ⟨ts/ '0'¨⌾((/nb)⊸⊏) 𝕩, nr, sr⟩
+}
+
+Parse ← {
+  ts‿nums‿strs ← Tokenise 𝕩
+  d  ← ⍋+`(o←ts∊&quot;{[&quot;)-(c←ts∊&quot;]}&quot;) # Closing, opening, depth
+  td ← d⊏ts                       # Tokens by depth
+  s  ← td∊&quot;[{&quot;                    # Sublist starts
+  n  ← (⍋d)⊏+`s                   # Nesting
+
+  of ← s/'{'=td                   # Filter of subsists that are objects
+  on ← +`⊸× of                    # Object nesting
+  cl ← ':'=ts                     # Colon
+  ks ← ((1+´of)∾˜ ('&quot;'=ts)/(«cl)×n⊏0∾on)⊔strs    # Keys
+
+  vs ← nums ∾ ⊑ks                 # Initial values
+  ln ← ¬ («⊸∨cl)∨o∨','=ts         # Literals and nesting
+  vi ← ⍋⍋ (ln/ts='0') + (2×ln/ts='&quot;') + 3×ln/c   # Value indices
+  vi ⊏↩ (↕≠vs)∾(≠vs)+ ≠⊸- c/»n                   # Fix value indices
+
+  Sel ← {(𝕨⊑ks)≍𝕩}⍟(0&lt;⊣)          # Select
+  on {vs ∾↩ &lt;𝕨Sel𝕩⊏vs ⋄@}¨○⌽ ((≠on)∾˜1-˜ln/n)⊔vi # Build result
+  ¯1⊑vs
+}</code></pre>
+<p>I don’t know about you,
+but I think it’s pretty incredible that one can write a parser for a reasonable subset<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> of JSON,
+using what are essentially only flat arrays of numbers,
+and still have it be this compact.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I can probably offer the same conclusion as in the
+<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV post</a>:</p>
+<blockquote>
+<p>Q: Is writing (and reading) a parser in an array language unnecessarily hard?<br />
+A: Yes.</p>
+<p>Q: Is it the most fun I’ve had programming in a long time?<br />
+A: Yes.</p>
+</blockquote>
+<p>There’s really something to be said about this style of writing parsers.
+I hope I’m not butchering this,
+but I believe that Marshall Lochbaum<!--
+-->—the creator of BQN—<!--
+-->once said that it is
+hard to write,
+hard to read,
+hard to modify,
+but an absolute joy to debug,
+and I would have to agree on all points.
+Especially the debugging part, though:
+since there’s essentially no branching, control flow is trivial,
+and furthermore everything is just a flat array of numbers.
+Once that one <code>0</code> that should be a <code>1</code> is identified, going back to the source just involves reading backwards, with no logic to keep track of at all.</p>
+<p>Interestingly, this feels quite different from ordinary array programming—<!--
+-->especially the quite tricky task to give lots of names<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> to lots of concepts.
+Still, I suppose this is much more readable than if one tried to make the names go away by using combinators.
+At least there are comments, right?</p>
+<p>I certainly wouldn’t write all—or even most—parsers in this style,
+but honestly this whole thing was so refreshing that I can’t help but recommend anyone to try at least getting the hang of a simplified form of one of the parsing libraries in <a href="https://github.com/mlochbaum/bqn-libs">bqn-libs</a>.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you feel like I’m going too slow, or that I got something wrong, sorry!
+As I said, this is more or less my way of learning and better understanding this style of parsing;
+I am by no means the expert here.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Although CBQN seems to have improved since then<!--
+  -->—for me, even the nested array version is faster than the recursive approach now.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>{-} 󠀠</p>
+<p>I will present many functions in a bottom-up kind of way,
+where I gradually build them up in the REPL,
+using an example input to showcase the behaviour of the individual array manipulations.
+Usually, proper definitions of <code>Tokenise</code> or <code>Parse</code> (the two functions we’re building)
+will only be given at the very end of each section.
+The input is always indented by four spaces, with the output flush to the left.
+If I refer to an unknown variable further down, it was probably defined in such a block.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} 󠀠</p>
+<p>We could in fact also move <em>replicate</em>
+into the calls to <code>ns</code> and <code>𝕩</code> and then replace <em>select</em> with another <em>replicate</em>:</p>
+<pre class="bqn"><code>    '0'¨⌾((ts/ns)⊸/) (ts/inp)
+&quot;[0,0,0,0,0]&quot;</code></pre>
+<p>I’m not super well-versed in the ins and outs of CBQN’s performance,
+but from a cursory benchmark with the <code>•_timed</code> modifier,
+it does not seem to make much of a difference.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>󠀠</p>
+<p>As you can see, an opening parenthesis is treated as being inside of the pair,
+while a closing one is outside.
+This is fine (even wanted) for this use-case;
+if you want to treat both pairs as being inside of the pair you can use
+<code>+`o-»c</code>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>A questionable API choice, for sure, but I’ll take it!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>{-} The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
+(the same way that CSV does it).
+<em>Everything</em> else is treated as a literal characters, even backslashes!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>{-} 󠀠</p>
+<p>You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
+I figured that perhaps indicating changes in this way is more readable than giving you diffs,
+if only because all context one needs is right there.
+That’s one of the advantages of the complete program fitting on a single screen!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>I will use this as shorthand for “sub-object and sub-array”.
+Not the best terminology, I suppose, but it will have to do.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>{-} 󠀠</p>
+<p>󠀠</p>
+<p>Don’t worry too much about having to use <code>0∾on</code> instead of <code>on</code> here;
+this appears because we are starting at depth zero before reading anything.
+Assuming well-formed JSON, this will appear only once at the very end.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Remember that questionable <em>group</em> API?<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>{-} 󠀠</p>
+<p>I find this process of treating values and keys separately,
+but in a way that they eventually match up at the end,
+almost magical.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>With a simple extension to the tokeniser to recognise the constants <code>true</code>, <code>false</code>, and <code>null</code>,
+this already parses the <code>cargo metadata</code> output of a few Rust crates that I’ve tried,
+which is the sort of data I would characterise as “ordinary JSON”.
+The resulting representation is probably not super easy to work with<!--
+  -->—there’s quite a lot of metadata and thus the nesting gets quite deep—<!--
+  -->but still, it works.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Short names at that, otherwise things just look too cumbersome in this style of programming.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Parsing CSV in BQN</title>
     <link href="https://tony-zorman.com/posts/bqn-csv.html" />
     <id>https://tony-zorman.com/posts/bqn-csv.html</id>

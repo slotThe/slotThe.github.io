@@ -617,8 +617,8 @@ myPandocCompiler =
                     , "RAISE", "ADJUST", "TL;DR", "BOX", "PBT", "XDA", "GTK"
                     , "HATC", "CSL", "BY-SA", "TOC", "CT23", "README", "LSP"
                     , "PR", "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
-                    , "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM", "KOMA"
-                    , "JSON", "RFC", "CSV", "CRLF", "CR", "LF"
+                    , "CBQN", "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM"
+                    , "KOMA", "JSON", "RFC", "CSV", "CRLF", "CR", "LF"
                     ]
     inline -> inline
    where
@@ -751,6 +751,7 @@ myPandocCompiler =
       | l `elem` ["train", "2-train", "3-train", "fork"] -> linkTo "train"
       | l `elem` ["change", "modify"] -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#assignment"
       | l == "first cell" -> linkTo "select"
+      | l `elem` ["length", "tally"] -> linkTo "shape"
       | otherwise -> Emph is
 
   -- Sources:
