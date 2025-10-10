@@ -1,14 +1,10 @@
 ---
-title: Writing a JSON parser in BQN
+title: Writing a JSON Parser in BQN
 date: 2025-10-08
 tags: BQN
 ---
 
-Let's write a JSON parser in BQN!
-
-<!--more-->
-
-At least, for some vague definition of JSON.
+At least, for some vague definition of JSON.<!--more-->
 I will restrict myself to the following underspecified subset,
 so that this will not be a 20'000-word post:
 

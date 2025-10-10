@@ -1,9 +1,5 @@
 ---
 title: About This Website
-date: 2024-10-03
-last-modified: 2024-11-24
-no-reading-time: true
-no-comment: true
 ---
 
 First of: this site is hosted via [GitHub Pages](https://pages.github.com/),
