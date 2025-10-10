@@ -52,16 +52,7 @@
     </div>
     <div class="text-space">
       <div id="content">
-        <!-- We want to include the RSS/Atom feed in certain scenarios,
-             but this shouldn't mangle the above header title. -->
-        $if(titleWithFeed)$
-        <h1>$titleWithFeed$</h1>
-        $else$ $if(title)$
-        <h1>$title$</h1>
-        $endif$ $endif$
-
         $body$
-
       </div>
       <div id="footer">
         <!-- Left -->

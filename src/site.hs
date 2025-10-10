@@ -167,6 +167,7 @@ aboutMe = do
     compile do
       tocCtx <- getTocCtx defaultContext
       myPandocCompiler
+        >>= loadAndApplyTemplate "templates/title.html"   tocCtx
         >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
         >>= loadAndApplyTemplate "templates/default.html" tocCtx
         >>= relativizeUrls
@@ -176,7 +177,8 @@ aboutMe = do
     compile do
       tocCtx <- getTocCtx defaultContext
       myPandocCompiler
-        >>= loadAndApplyTemplate "templates/post.html"    tocCtx
+        >>= loadAndApplyTemplate "templates/title.html"   tocCtx
+        >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
         >>= loadAndApplyTemplate "templates/default.html" tocCtx
         >>= relativizeUrls
 
@@ -460,6 +462,7 @@ mkPostList tags ctx title feedName template = do
   route idRoute
   compile $ makeItem ""
         >>= loadAndApplyTemplate template                 ctx'
+        >>= loadAndApplyTemplate "templates/title.html"   ctx'
         >>= loadAndApplyTemplate "templates/default.html" ctx'
         >>= relativizeUrls
  where
