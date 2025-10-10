@@ -102,9 +102,10 @@ but the main content should still be comfortably viewable.
 This website uses—at least if you let it—lots of [custom fonts](https://github.com/slotThe/slotThe.github.io/tree/main/css/fonts).
 The default serif font is
 [Alegreya](https://www.huertatipografica.com/en/fonts/alegreya-ht-pro),
-and [my own build](https://github.com/slotThe/hopf-mono)
+[my own build](https://github.com/slotThe/hopf-mono)
 of [Iosevka](https://typeof.net/Iosevka/)
-stands in for anything monospaced.
+stands in for anything monospaced,
+and for titles I use [Vollkorn](https://vollkorn-typeface.com/).
 Since I'm using KaTeX for [rendering maths](#katex-rendering),
 there are also quite a few LaTeX fonts loaded whenever a page needs them.
 While the site of course works with system fonts as well,
