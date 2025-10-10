@@ -187,13 +187,12 @@ hr {                    /* That line before the footnotes */
     margin: 1em 0; padding: 0;
 }
 
-/* A fleuron at the end of a post */
-img.fleuron-block {
+img.fleuron-block {     /* A fleuron at the end of a post */
     margin-right: auto;
     margin-left: auto;
-    max-width: 100%;
+    max-width: 2.5cm;
     height: auto;
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    padding: 3rem 1.5rem 2.5rem 1.5rem;
     display: block;
 }
 @media (prefers-color-scheme: dark) {
