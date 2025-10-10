@@ -27,8 +27,9 @@ import Data.List (foldl', stripPrefix)
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
+import Data.Time (defaultTimeLocale, formatTime)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
-import Hakyll
+import Hakyll hiding (dateField)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
 import System.Directory (createDirectoryIfMissing)
 import System.IO (hPrint)
@@ -279,35 +280,56 @@ rss tags = do
 
 postCtx :: Context String
 postCtx = mconcat
-  [ dateField "date" "%F" -- Creation date
-  , modTime               -- Last modification date
+  [ dateField "date"    "%d %b %Y" fixDate  -- Creation date
+  , dateField "isodate" "%F"       id       -- Creation date in YYYY-MM-DD
+  , modTime                                 -- Last modification date
   , estimatedReadingTime
   , defaultContext
   ]
  where
+  -- Like the one in Hakyll, but with ability to adjust the date string.
+  dateField :: String -> String -> (String -> String) -> Context a
+  dateField key format adj = field key \i -> do
+    time <- getItemUTC defaultTimeLocale (itemIdentifier i)
+    pure . adj $ formatTime defaultTimeLocale format time
+
   -- If no manual modification time is given, create one based on the last
   -- change to the file. If this is the same as the creation date, ignore it.
   modTime :: Context String
   modTime = field "last-modified" \(Item ident _) -> do
     meta <- getMetadata ident
-    case lookupString "last-modified" meta of
-      Nothing -> do
-        lastMod <- unsafeCompiler $ asTxt T.strip <$>
-          readProcess "git"
-                      [ "log", "-1", "--format=%ad", "--date=format:%Y-%m-%d"
-                      , "--", toFilePath ident ]
-                      ""
-        case lookupString "date" meta of
-          Nothing      -> noResult "No creation date means no last modified date."
-          Just created -> if lastMod /= created then pure lastMod
-                         else noResult "Last modified equal to date."
-      Just t -> pure t
+    lastMod <- case lookupString "last-modified" meta of
+      Just t  -> pure t
+      Nothing -> unsafeCompiler $ asTxt T.strip <$>
+        readProcess "git"
+                    [ "log", "-1", "--format=%ad", "--date=format:%F"
+                    , "--", toFilePath ident ]
+                    ""
+    case lookupString "date" meta of
+      Nothing      -> noResult "No creation date means no last modified date."
+      Just created -> if lastMod /= created then pure (fixDate lastMod)
+                     else noResult "Last modified equal to date."
 
   estimatedReadingTime :: Context String
   estimatedReadingTime = field "estimated-reading-time" $ \key ->
     let ws   :: Int = length . words . stripTags . itemBody $ key
         mins :: Int = ceiling @Double (fromIntegral ws / 250)
      in pure $ addTitle (show ws <> " words") (show mins <> " min read")
+
+  fixDate :: String -> String
+  fixDate s = case splitAll "-" s of
+    [y, fixMonth -> m, read @Int -> d] -> show d <> " " <> m <> " " <> y
+    [t] -> case words t of
+      ((show . read @Int -> d) : ds) -> unwords . (: ds) . (d <>) $
+        if | d `elem` ["1","21","31"] -> "st"
+           | d `elem` ["2", "22"]     -> "nd"
+           | d `elem` ["3", "23"]     -> "rd"
+           | otherwise           -> "th"
+      [] -> error "fixDate called with " <> s
+    _ -> error "fixDate called with " <> s
+   where
+    fixMonth :: String -> String
+    fixMonth m = case read @Int m of 1 -> "Jan"; 2 -> "Feb"; 3 -> "Mar"; 4 -> "Apr"; 5 -> "May"; 6 -> "Jun"; 7 -> "Jul"; 8 -> "Aug"; 9 -> "Sep"; 10 -> "Oct"; 11 -> "Nov"; 12 -> "Dec"; _ -> undefined
 
 -- | Augment the 'defaultContext' with a list of all tags, as well as
 -- all posts associated to a given tag.
