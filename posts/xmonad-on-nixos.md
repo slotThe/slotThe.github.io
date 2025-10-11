@@ -5,7 +5,6 @@ last-modified: 2024-10-15
 tags: emacs, nix, xmonad
 ---
 
-<p>
 I recently switched to NixOS,
 and one of the first tasks was to properly set up my window manager of choice—XMonad, of course.
 Luckily, the project provides a custom flake that makes pretty very straightforward;
@@ -13,7 +12,6 @@ if you know your way around flakes and Nix, that is.
 I don't yet, so I hit some rough spots.
 Since providing more documentation always sounds like a worthwhile goal,
 this post is just that: a diff-by-diff guide on how everything was set up on my side.
-</p>
 
 <!--more-->
 

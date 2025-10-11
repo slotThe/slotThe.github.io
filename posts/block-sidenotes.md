@@ -4,7 +4,6 @@ date: 2023-01-27
 last-modified: 2024-07-17
 tags: haskell, hakyll
 ---
-<p></p>
 
 I've become quite enamoured with sidenotes recently, and so of course
 this website now has them as well!  Thankfully, the integration with

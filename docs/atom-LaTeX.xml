@@ -18,20 +18,17 @@
     <published>2025-04-13T00:00:00Z</published>
     <updated>2025-04-13T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      13th Apr 2025–13 Sep 2025
       
-        Posted on 2025-04-13
-      
-      
-        &thinsp;·&thinsp; last modified: 2025-09-13
-      
-      
-        &thinsp;·&thinsp; <span title="1961 words">8 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1961 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Dissertation Typesetting Considerations</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -40,8 +37,7 @@
 
   
 
-<div>
-  <p>I just handed in my dissertation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,
+<p>I just handed in my dissertation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,
 which is more or less the culmination of the last three and a half years of my (mathematical) life.
 While the maths itself is perhaps relatively inaccessible to the general public,
 some of the typesetting considerations that went into the document might not be.</p>
@@ -443,7 +439,6 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
 <li id="fn9"><p>Thanks, Florian!<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -458,20 +453,17 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
     <published>2025-01-30T00:00:00Z</published>
     <updated>2025-01-30T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      30th Jan 2025–15 Feb 2025
       
-        Posted on 2025-01-30
-      
-      
-        &thinsp;·&thinsp; last modified: 2025-02-15
-      
-      
-        &thinsp;·&thinsp; <span title="1761 words">8 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1761 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'LaTeX'." href="/tags/LaTeX.html" rel="tag">LaTeX</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Speeding up LaTeX compilation</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -480,8 +472,7 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
 
   
 
-<div>
-  <p>Getting reasonable compilation times out of a medium-sized LaTeX document
+<p>Getting reasonable compilation times out of a medium-sized LaTeX document
 that contains lots of TikZ pictures
 is not as difficult as it may seem at first—at least if you know the correct ancient incantations.</p>
 <!--more-->
@@ -788,7 +779,6 @@ but Emacs will do all the one-off compiling while I’m writing the thesis anywa
 Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>

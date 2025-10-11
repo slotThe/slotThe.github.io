@@ -12,24 +12,23 @@
     </author>
     <updated>2025-10-08T00:00:00Z</updated>
     <entry>
-    <title>Writing a JSON parser in BQN</title>
+    <title>Writing a JSON Parser in BQN</title>
     <link href="https://tony-zorman.com/posts/bqn-json.html" />
     <id>https://tony-zorman.com/posts/bqn-json.html</id>
     <published>2025-10-08T00:00:00Z</published>
     <updated>2025-10-08T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      8th Oct 2025–10 Oct 2025
       
-        Posted on 2025-10-08
-      
-      
-      
-        &thinsp;·&thinsp; <span title="6551 words">27 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6544 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Writing a JSON Parser in BQN</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -38,10 +37,7 @@
 
   
 
-<div>
-  <p>Let’s write a JSON parser in BQN!</p>
-<!--more-->
-<p>At least, for some vague definition of JSON.
+<p>At least, for some vague definition of JSON.<!--more-->
 I will restrict myself to the following underspecified subset,
 so that this will not be a 20’000-word post:</p>
 <ul>
@@ -927,7 +923,6 @@ The resulting representation is probably not super easy to work with<!--
 <li id="fn14"><p>Short names at that, otherwise things just look too cumbersome in this style of programming.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -942,18 +937,17 @@ The resulting representation is probably not super easy to work with<!--
     <published>2025-07-28T00:00:00Z</published>
     <updated>2025-07-28T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      28th Jul 2025
       
-        Posted on 2025-07-28
-      
-      
-      
-        &thinsp;·&thinsp; <span title="1857 words">8 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1857 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Parsing CSV in BQN</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -962,8 +956,7 @@ The resulting representation is probably not super easy to work with<!--
 
   
 
-<div>
-  <p>Let’s write a CSV parser in BQN!</p>
+<p>Let’s write a CSV parser in BQN!</p>
 <!--more-->
 <p>Working my way towards a full blown JSON parser,
 I thought it might be a good idea to start with something simpler<!--
@@ -1202,7 +1195,6 @@ and for <code>"""a"",""b"""</code> we have the wonderful
 <code>"""""""a"""",""""b"""""""</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -1217,20 +1209,17 @@ and for <code>"""a"",""b"""</code> we have the wonderful
     <published>2024-11-08T00:00:00Z</published>
     <updated>2024-11-08T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      8th Nov 2024–13 Nov 2024
       
-        Posted on 2024-11-08
-      
-      
-        &thinsp;·&thinsp; last modified: 2024-11-13
-      
-      
-        &thinsp;·&thinsp; <span title="3094 words">13 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3094 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Integer Volutes in BQN</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1239,8 +1228,7 @@ and for <code>"""a"",""b"""</code> we have the wonderful
 
   
 
-<div>
-  <p>On <a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-3">day 3</a>
+<p>On <a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-3">day 3</a>
 of my post about doing some
 <a href="https://tony-zorman.com/posts/aoc-in-bqn.html">Advent of Code problems in BQN</a>,
 the task was to walk along some <em>integer volutes</em>:
@@ -1631,7 +1619,6 @@ I think, however, that arriving at this number yields some insights that one wou
 so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -1646,20 +1633,17 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
     <published>2024-10-27T00:00:00Z</published>
     <updated>2024-10-27T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      27th Oct 2024–28 Oct 2024
       
-        Posted on 2024-10-27
-      
-      
-        &thinsp;·&thinsp; last modified: 2024-10-28
-      
-      
-        &thinsp;·&thinsp; <span title="22378 words">90 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22378 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">BQNing Advent of Code</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1668,8 +1652,7 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
 
   
 
-<div>
-  <p>I did all of Advent of Code 2017 in BQN so you don’t have to.
+<p>I did all of Advent of Code 2017 in BQN so you don’t have to.
 Let me tell you about that in as few as 20’000 words.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <!--more-->
 <h2 id="the-setup">The setup</h2>
@@ -4644,7 +4627,6 @@ However, it also helps that doing these problems “out of season”
 is a lot more relaxed than trying to bash out both parts before work every day.<a href="#fnref46" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>

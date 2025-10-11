@@ -43,25 +43,18 @@
     </div>
     <div class="text-space">
       <div id="content">
-        <!-- We want to include the RSS/Atom feed in certain scenarios,
-             but this shouldn't mangle the above header title. -->
-         
-        <h1>Integrating Zsh's History Into Eshell</h1>
-         
-
         <article>
-    <p class="header">
+    <div class="header">
+      27th Nov 2023
       
-        Posted on 2023-11-27
-      
-      
-      
-        &thinsp;·&thinsp; <span title="415 words">2 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="415 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Integrating Zsh's History Into Eshell</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -69,8 +62,7 @@
      small for the one in the `default.html' template -->
 
 
-<div>
-  I use eshell as my main shell.
+I use eshell as my main shell.
 Still,
 a terminal emulator with zsh is kept around for longer running processes and <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpads</a>.
 One thing that’s essential for this setup to make sense is that eshell and zsh share the same history file.
@@ -168,20 +160,18 @@ and doing so at the start solves <code>esh-autosuggest</code> et al producing ga
 <span class="w">              </span><span class="p">(</span><span class="s">&quot;C-x C-c&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">slot/eshell-exit</span><span class="p">)))</span>
 </pre></div>
 
-</div>
 
       <!-- Body is included in the above file -->
     </section>
     
       <!-- A footer-ish thing above the actual boring footer for pretty
            fleurons and things that should only appear on posts. -->
-      <div style="text-align:center;">
-        <img class="fleuron-block" src="../images/fleuron.svg" style="max-width: 3cm" alt="End of post fleuron">
+      <div style="text-align: center;">
+        <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
         Have a comment? Write me an <a href="../about.html">email!</a>
       </div>
     
 </article>
-
 
       </div>
       <div id="footer">

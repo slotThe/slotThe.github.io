@@ -1,10 +1,10 @@
 ---
 title: Leveraging LaTeX in Anki
 date: 2024-05-11
+last-modified: 2025-06-02
 tags: anki, emacs, maths
 ---
 
-<p></p>
 Recently, I've been quite invested in learning maths with [Anki][anki].
 Sadly, there are relatively few good resources out there on how to
 twist Anki's LaTeX pipeline into something generally acceptable,

@@ -50,27 +50,18 @@
     </div>
     <div class="text-space">
       <div id="content">
-        <!-- We want to include the RSS/Atom feed in certain scenarios,
-             but this shouldn't mangle the above header title. -->
-         
-        <h1>Parentheses-Aware Yanking</h1>
-         
-
         <article>
-    <p class="header">
+    <div class="header">
+      3rd Jan 2024–5 Jan 2024
       
-        Posted on 2024-01-03
-      
-      
-        &thinsp;·&thinsp; last modified: 2024-01-05
-      
-      
-        &thinsp;·&thinsp; <span title="879 words">4 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="879 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Parentheses-Aware Yanking</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -85,10 +76,6 @@
 </ul>
   </div>
 
-<div>
-  <p>
-</p>
-<p></p>
 Copying, killing, and yanking<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Also known as copying, cutting, and pasting in every other context ever.</div><!--
 --> text in Emacs is quite straightforward,
@@ -262,20 +249,18 @@ and it’s not terribly difficult to assign the same key to the new function:
 <p></p>
 Killing <code>(t (1- arg)))))</code> and yanking it again yields <code>(t (1- arg))</code>,
 as desired.
-</div>
 
       <!-- Body is included in the above file -->
     </section>
     
       <!-- A footer-ish thing above the actual boring footer for pretty
            fleurons and things that should only appear on posts. -->
-      <div style="text-align:center;">
-        <img class="fleuron-block" src="../images/fleuron.svg" style="max-width: 3cm" alt="End of post fleuron">
+      <div style="text-align: center;">
+        <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
         Have a comment? Write me an <a href="../about.html">email!</a>
       </div>
     
 </article>
-
 
       </div>
       <div id="footer">

@@ -18,20 +18,17 @@
     <published>2024-05-11T00:00:00Z</published>
     <updated>2024-05-11T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      11th May 2024–2 Jun 2025
       
-        Posted on 2024-05-11
-      
-      
-        &thinsp;·&thinsp; last modified: 2025-06-02
-      
-      
-        &thinsp;·&thinsp; <span title="1044 words">5 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1044 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'anki'." href="/tags/anki.html" rel="tag">anki</a>, <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Leveraging LaTeX in Anki</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -40,9 +37,6 @@
 
   
 
-<div>
-  <p>
-</p>
 <p>Recently, I’ve been quite invested in learning maths with <a href="https://apps.ankiweb.net/index.html">Anki</a>.
 Sadly, there are relatively few good resources out there on how to
 twist Anki’s LaTeX pipeline into something generally acceptable,
@@ -215,7 +209,6 @@ Thus, if you want to completely regenerate everything, just delete the respectiv
 For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -230,20 +223,17 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
     <published>2023-06-12T00:00:00Z</published>
     <updated>2023-06-12T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      12th Jun 2023–30 Aug 2024
       
-        Posted on 2023-06-12
-      
-      
-        &thinsp;·&thinsp; last modified: 2024-08-30
-      
-      
-        &thinsp;·&thinsp; <span title="1481 words">6 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1481 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">The tensor product of S-modules is a convolution product</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -252,8 +242,7 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
 
   
 
-<div>
-  <p>Classically, (algebraic) symmetric <a href="https://ncatlab.org/nlab/show/operad">operads</a> are defined as certain graded objects,
+<p>Classically, (algebraic) symmetric <a href="https://ncatlab.org/nlab/show/operad">operads</a> are defined as certain graded objects,
 each level coming equipped with a nice action of the symmetric group,
 which are also monoids in some sense.
 While it is often noted that the grading and action correspond exactly to the data of a functor,
@@ -473,7 +462,6 @@ In both expressions,
   </span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -488,20 +476,17 @@ In both expressions,
     <published>2023-01-10T00:00:00Z</published>
     <updated>2023-01-10T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      10th Jan 2023–12 Jan 2023
       
-        Posted on 2023-01-10
-      
-      
-        &thinsp;·&thinsp; last modified: 2023-01-12
-      
-      
-        &thinsp;·&thinsp; <span title="857 words">4 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="857 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Duality in Monoidal Categories</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -510,8 +495,7 @@ In both expressions,
 
   
 
-<div>
-  <p>I have a new preprint <a href="https://arxiv.org/abs/2301.03545">on the arXiv</a>! It is joint work with
+<p>I have a new preprint <a href="https://arxiv.org/abs/2301.03545">on the arXiv</a>! It is joint work with
 Sebastian Halbig, and concerns itself with the interplay of different
 structures on monoidal categories that give rise to a notion of
 “duality”. At five pages, it is a very short paper; yet I’d still like
@@ -638,7 +622,6 @@ category <span class="math inline">([\mathcal{C}, \mathcal{C}], \circ, \mathrm{I
 exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -653,20 +636,17 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
     <published>2022-10-15T00:00:00Z</published>
     <updated>2022-10-15T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      15th Oct 2022–13 Mar 2023
       
-        Posted on 2022-10-15
-      
-      
-        &thinsp;·&thinsp; last modified: 2023-03-13
-      
-      
-        &thinsp;·&thinsp; <span title="3771 words">16 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3771 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Understanding Weighted Colimits as Tensor Products of Modules</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -675,8 +655,7 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
 
   
 
-<div>
-  <p>If you’ve been doing category theory for any amount of time, you’ll
+<p>If you’ve been doing category theory for any amount of time, you’ll
 probably have stumbled upon enriched category theory as a way of
 expressing categorical ideas internal to some context other than
 <strong>Set</strong>. Reading into it, you might have come across these foreign
@@ -1190,7 +1169,6 @@ that the nerve functor from <span class="math inline">\mathsf{Cat}</span> to <sp
 is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -1205,20 +1183,17 @@ is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">�
     <published>2022-05-01T00:00:00Z</published>
     <updated>2022-05-01T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      1st May 2022–23 May 2022
       
-        Posted on 2022-05-01
-      
-      
-        &thinsp;·&thinsp; last modified: 2022-05-23
-      
-      
-        &thinsp;·&thinsp; <span title="2284 words">10 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2284 words">10 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>, <a title="All pages tagged 'xmonad'." href="/tags/xmonad.html" rel="tag">xmonad</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">My PhD Research Workflow</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1227,8 +1202,7 @@ is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">�
 
   
 
-<div>
-  <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
+<p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
 discussion.</p>
@@ -1492,7 +1466,6 @@ On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>

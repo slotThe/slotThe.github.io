@@ -50,27 +50,18 @@
     </div>
     <div class="text-space">
       <div id="content">
-        <!-- We want to include the RSS/Atom feed in certain scenarios,
-             but this shouldn't mangle the above header title. -->
-         
-        <h1>Using XMonad with NixOS</h1>
-         
-
         <article>
-    <p class="header">
+    <div class="header">
+      13th Nov 2023–15 Oct 2024
       
-        Posted on 2023-11-13
-      
-      
-        &thinsp;·&thinsp; last modified: 2024-10-15
-      
-      
-        &thinsp;·&thinsp; <span title="1169 words">5 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1169 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'nix'." href="../tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'xmonad'." href="../tags/xmonad.html" rel="tag">xmonad</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Using XMonad with NixOS</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -85,8 +76,6 @@
 </ul>
   </div>
 
-<div>
-  <p>
 I recently switched to NixOS,
 and one of the first tasks was to properly set up my window manager of choice—XMonad, of course.
 Luckily, the project provides a custom flake that makes pretty very straightforward;
@@ -94,7 +83,6 @@ if you know your way around flakes and Nix, that is.
 I don’t yet, so I hit some rough spots.
 Since providing more documentation always sounds like a worthwhile goal,
 this post is just that: a diff-by-diff guide on how everything was set up on my side.
-</p>
 <!--more-->
 As indicated, I’ll be working with direct diffs from my configuration;
 this seems to tell the story in the most accurate way.
@@ -385,20 +373,18 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 </details>
 <p></p>
 Now <code>C-c C-c</code> works out of the box!
-</div>
 
       <!-- Body is included in the above file -->
     </section>
     
       <!-- A footer-ish thing above the actual boring footer for pretty
            fleurons and things that should only appear on posts. -->
-      <div style="text-align:center;">
-        <img class="fleuron-block" src="../images/fleuron.svg" style="max-width: 3cm" alt="End of post fleuron">
+      <div style="text-align: center;">
+        <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
         Have a comment? Write me an <a href="../about.html">email!</a>
       </div>
     
 </article>
-
 
       </div>
       <div id="footer">

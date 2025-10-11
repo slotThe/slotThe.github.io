@@ -18,20 +18,17 @@
     <published>2024-05-11T00:00:00Z</published>
     <updated>2024-05-11T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      11th May 2024–2 Jun 2025
       
-        Posted on 2024-05-11
-      
-      
-        &thinsp;·&thinsp; last modified: 2025-06-02
-      
-      
-        &thinsp;·&thinsp; <span title="1044 words">5 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1044 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'anki'." href="/tags/anki.html" rel="tag">anki</a>, <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'maths'." href="/tags/maths.html" rel="tag">maths</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Leveraging LaTeX in Anki</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -40,9 +37,6 @@
 
   
 
-<div>
-  <p>
-</p>
 <p>Recently, I’ve been quite invested in learning maths with <a href="https://apps.ankiweb.net/index.html">Anki</a>.
 Sadly, there are relatively few good resources out there on how to
 twist Anki’s LaTeX pipeline into something generally acceptable,
@@ -215,7 +209,6 @@ Thus, if you want to completely regenerate everything, just delete the respectiv
 For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>

@@ -1,10 +1,10 @@
 ---
 title: "Announcing: rq Version 0.1.0"
 date: 2024-03-23
+last-modified: 2024-05-01
 tags: rust
 ---
 
-<p></p>
 I've just released version 0.1.0 of [`rq`](https://github.com/slotThe/rq),[^12]
 a small functional language to manipulate JSON—and my excuse to learn Rust!
 This seems as good a time as any to talk about it,

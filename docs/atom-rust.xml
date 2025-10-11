@@ -18,20 +18,17 @@
     <published>2024-03-23T00:00:00Z</published>
     <updated>2024-03-23T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      23rd Mar 2024–1 May 2024
       
-        Posted on 2024-03-23
-      
-      
-        &thinsp;·&thinsp; last modified: 2024-05-01
-      
-      
-        &thinsp;·&thinsp; <span title="1251 words">6 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1251 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'rust'." href="/tags/rust.html" rel="tag">rust</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Announcing: rq Version 0.1.0</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -40,9 +37,6 @@
 
   
 
-<div>
-  <p>
-</p>
 <p>I’ve just released version 0.1.0 of <a href="https://github.com/slotThe/rq"><code>rq</code></a>,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 a small functional language to manipulate JSON—and my excuse to learn Rust!
 This seems as good a time as any to talk about it,
@@ -234,7 +228,6 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
 <li id="fn8"><p>As in, not coproducts but the other ones.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>
@@ -249,20 +242,17 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
     <published>2023-10-22T00:00:00Z</published>
     <updated>2023-10-22T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
-    <p class="header">
+    <div class="header">
+      22nd Oct 2023–27 Oct 2023
       
-        Posted on 2023-10-22
-      
-      
-        &thinsp;·&thinsp; last modified: 2023-10-27
-      
-      
-        &thinsp;·&thinsp; <span title="1148 words">5 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1148 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="/tags/emacs.html" rel="tag">emacs</a>, <a title="All pages tagged 'haskell'." href="/tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'rust'." href="/tags/rust.html" rel="tag">rust</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Fixing Lsp-Mode's Hover Signatures</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -271,8 +261,7 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
 
   
 
-<div>
-  <p>By now,
+<p>By now,
 LSP servers have become the norm for editor-agnostic language support.
 As expected, Emacs features at least two packages that implement the protocol:
 the built-in <code>eglot</code>,
@@ -480,7 +469,6 @@ does, just as an extra function.&quot;
 <p>This can, again, be bound to a key for convenient access.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-</div>
 
       <!-- Body is included in the above file -->
     </section>

@@ -1,10 +1,10 @@
 ---
 title: Integrating KaTeX Into Hakyll
 date: 2024-07-20
+last-modified: 2025-02-01
 tags: haskell, hakyll
 ---
 
-<p></p>
 Being quite into mathematics,
 I sometimes blog about it.[^2]
 There are very capable solutions for rendering LaTeX in HTML documents out there,

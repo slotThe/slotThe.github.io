@@ -43,27 +43,18 @@
     </div>
     <div class="text-space">
       <div id="content">
-        <!-- We want to include the RSS/Atom feed in certain scenarios,
-             but this shouldn't mangle the above header title. -->
-         
-        <h1>Adjusting preview.el for vertical monitors</h1>
-         
-
         <article>
-    <p class="header">
+    <div class="header">
+      5th Nov 2022–13 Feb 2023
       
-        Posted on 2022-11-05
-      
-      
-        &thinsp;·&thinsp; last modified: 2023-02-13
-      
-      
-        &thinsp;·&thinsp; <span title="451 words">2 min read</span> &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="451 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'emacs'." href="../tags/emacs.html" rel="tag">emacs</a>
       
-    </p>
+    </div>
+    <h1 class="post-title">Adjusting preview.el for vertical monitors</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -71,8 +62,7 @@
      small for the one in the `default.html' template -->
 
 
-<div>
-  Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
+Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
 <code>preview.el</code> library (whether it be in a .tex buffer, or—via
 <a href="https://github.com/karthink/org-auctex">org-auctex</a>—in Org) things get <em>really</em> messed up when one or more
 monitors are set up in portrait mode.
@@ -162,20 +152,18 @@ As an aside, this is an excellent opportunity to see the ergonomic
 benefits of the <a href="https://github.com/magnars/dash.el">dash.el</a> library. Compare the readability of the
 “fixed” implementation using <code>-let</code> to the original one above. I
 certainly know which of the two I’d rather write!
-</div>
 
       <!-- Body is included in the above file -->
     </section>
     
       <!-- A footer-ish thing above the actual boring footer for pretty
            fleurons and things that should only appear on posts. -->
-      <div style="text-align:center;">
-        <img class="fleuron-block" src="../images/fleuron.svg" style="max-width: 3cm" alt="End of post fleuron">
+      <div style="text-align: center;">
+        <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
         Have a comment? Write me an <a href="../about.html">email!</a>
       </div>
     
 </article>
-
 
       </div>
       <div id="footer">

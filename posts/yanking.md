@@ -1,10 +1,10 @@
 ---
 title: Parentheses-Aware Yanking
 date: 2024-01-03
+last-modified: 2024-01-05
 tags: emacs
 ---
 
-<p></p>
 Copying, killing, and yanking[^5] text in Emacs is quite straightforward,
 and very little is done to manipulate the contents of the  string during these operations.
 Rightfully so, of course,
