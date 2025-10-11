@@ -212,6 +212,9 @@ img.fleuron-block {     /* A fleuron at the end of a post */
     color: var(--fg-header);
     a:link    { color: var(--fg-header); }
     a:visited { color: var(--fg-header); }
+    @media (max-width: 768px) {
+        margin-top: 0; /* Navbar is on top for phones */
+    }
 }
 
 :is(h1, h2, h3, h4, h5, h6) {
