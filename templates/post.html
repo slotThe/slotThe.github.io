@@ -1,19 +1,15 @@
 <article>
-    <p class="header">
-      $if(date)$
-        Posted on $date$
-      $endif$
-      $if(last-modified)$
-        &thinsp;·&thinsp; last modified: $last-modified$
-      $endif$
+    <div class="header">
+      $if(date)$$date$$endif$$if(last-modified)$–$last-modified$$endif$
       $if(date)$$if(no-reading-time)$$else$
-        &thinsp;·&thinsp; $estimated-reading-time$ &thinsp;·&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;$estimated-reading-time$&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       $endif$$endif$
       $if(tags)$
         $tags$
       $endif$
-    </p>
+    </div>
     <h1 class="post-title">$title$</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->

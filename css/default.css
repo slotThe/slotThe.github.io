@@ -204,23 +204,38 @@ img.fleuron-block {     /* A fleuron at the end of a post */
 
 /*** Headings ***/
 
-.header {               /* Header below the title */
+.header {
     font-size: 0.9em;
-    margin-top: -0.5em;
-    padding-bottom: 0.6em;
-    text-align: center;
+    text-align: left;
+    margin-top: 3.1rem;
+    margin-bottom: 1rem;
+    color: var(--fg-header);
+    a:link    { color: var(--fg-header); }
+    a:visited { color: var(--fg-header); }
 }
 
-h1 {                    /* Reserved for title */
+:is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--title-fonts);
+}
+
+h1 {                    /* Title of a non-post */
     margin-top: 2.5rem;
     margin-bottom: 1.5rem;
     font-size: 2em;
-    font-variant: small-caps;
-    font-variant-numeric: normal;  /* No oldstyle figures for all-caps titles */
-    font-weight: normal;
-    word-spacing: 0.1em;
-    letter-spacing: 0.02em;
+    font-weight: bold;
     text-align: center;
+}
+h1.post-title {        /* Post title */
+    line-height: 1;
+    font-variant: normal;
+    text-align: left;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    font-size: 5rem;
+    @media (max-width: 1366px) {
+        font-size: 4rem;
+    }
 }
 
 h2 {                    /* First "real" header */
