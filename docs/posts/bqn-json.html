@@ -65,9 +65,9 @@
       <div id="content">
         <article>
     <div class="header">
-      8th Oct 2025–10 Oct 2025
+      8th Oct 2025–15 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6523 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6521 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="../tags/BQN.html" rel="tag">BQN</a>
@@ -528,7 +528,7 @@ More concisely:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">res</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">nums</span><span class="w"> </span><span class="c1"># Mutation is evil</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="kt">{</span><span class="nv">res</span><span class="w"> </span><span class="o">∾</span><span class="kd">↩</span><span class="w"> </span><span class="o">&lt;</span><span class="ni">𝕩</span><span class="o">⊏</span><span class="nv">res</span><span class="w"> </span><span class="p">⋄</span><span class="ss">@</span><span class="kt">}</span><span class="na">¨</span><span class="w"> </span><span class="o">⌽</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">l</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span>
-<span class="s2">&quot;    &quot;</span>
+
 <span class="w">    </span><span class="m">¯1</span><span class="o">⊑</span><span class="nv">res</span>
 <span class="err">┌─</span>
 <span class="m">·</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">8</span>
@@ -1103,7 +1103,7 @@ almost magical.</div><!--
 <p></p>
 And that’s pretty much it—here are the last two lines, in all their glory:
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">on</span><span class="w"> </span><span class="kt">{</span><span class="nv">vs</span><span class="w"> </span><span class="o">∾</span><span class="kd">↩</span><span class="w"> </span><span class="o">&lt;</span><span class="ni">𝕨</span><span class="o">Sel</span><span class="ni">𝕩</span><span class="o">⊏</span><span class="nv">vs</span><span class="w"> </span><span class="p">⋄</span><span class="ss">@</span><span class="kt">}</span><span class="na">¨</span><span class="py">○</span><span class="o">⌽</span><span class="w"> </span><span class="sr">((</span><span class="o">≠</span><span class="nv">on</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">n</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span><span class="w">  </span><span class="c1"># Build result</span>
-<span class="s2">&quot;   &quot;</span>
+
 <span class="w">    </span><span class="m">¯1</span><span class="o">⊑</span><span class="nv">vs</span><span class="w">                                           </span><span class="c1"># Get result</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span>

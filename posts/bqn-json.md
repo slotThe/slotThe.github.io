@@ -443,7 +443,7 @@ More concisely:
     res ← nums # Mutation is evil
 ⟨ 1 2 3 4 5 6 7 8 ⟩
     {res ∾↩ <𝕩⊏res ⋄@}¨ ⌽(1-˜ln/l)⊔vi
-"    "
+
     ¯1⊑res
 ┌─
 · 1 ⟨ 2 ⟨ 3 4 ⟩ ⟩ 5 ⟨ 6 7 ⟩ 8
@@ -1026,7 +1026,7 @@ And that's pretty much it—here are the last two lines, in all their glory:
 
 ``` bqn
     on {vs ∾↩ <𝕨Sel𝕩⊏vs ⋄@}¨○⌽ ((≠on)∾˜1-˜ln/n)⊔vi  # Build result
-"   "
+
     ¯1⊑vs                                           # Get result
 ┌─
 ╵ "a" "b"

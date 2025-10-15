@@ -19,9 +19,9 @@
     <updated>2025-10-08T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      8th Oct 2025–10 Oct 2025
+      8th Oct 2025–15 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6544 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6542 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged 'BQN'." href="/tags/BQN.html" rel="tag">BQN</a>
@@ -341,7 +341,7 @@ This way, the later indices <code>8</code>, <code>9</code>, and <code>10</code> 
 <pre class="bqn"><code>    res ← nums # Mutation is evil
 ⟨ 1 2 3 4 5 6 7 8 ⟩
     {res ∾↩ &lt;𝕩⊏res ⋄@}¨ ⌽(1-˜ln/l)⊔vi
-&quot;    &quot;
+
     ¯1⊑res
 ┌─
 · 1 ⟨ 2 ⟨ 3 4 ⟩ ⟩ 5 ⟨ 6 7 ⟩ 8
@@ -777,7 +777,7 @@ so we can just <em>pick</em> the result and <em>couple</em> it to <code>𝕩</co
       ┘</code></pre>
 <p>And that’s pretty much it—here are the last two lines, in all their glory:</p>
 <pre class="bqn"><code>    on {vs ∾↩ &lt;𝕨Sel𝕩⊏vs ⋄@}¨○⌽ ((≠on)∾˜1-˜ln/n)⊔vi  # Build result
-&quot;   &quot;
+
     ¯1⊑vs                                           # Get result
 ┌─
 ╵ &quot;a&quot; &quot;b&quot;
