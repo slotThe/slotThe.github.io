@@ -7,13 +7,17 @@
 $for(posts)$
   <div class="posts">
     <div style="text-align: left">
-      <b style="font-size: 1.1em; font-family: var(--serif-fonts);">$title$</b>
-      <span style="font-size: 19px">$if(tags)$ ($tags$) $endif$</span>
+      <a href=$url$>
+        <span style="font-size: 1.1em; font-family: var(--title-fonts);">
+          $title$
+        </span>
+      </a>
+      <span style="font-size: 1rem; float: right;">
+        $if(tags)$ $tags$ $endif$
+      </span>
     </div>
     <p></p>
     $teaser$
-    <p>
-      <a href=$url$>Read more</a> – $date$
-    </p>
+    <p>—$date$, $num-words$ words ($estimated-reading-time$)</p>
   </div>
 $endfor$

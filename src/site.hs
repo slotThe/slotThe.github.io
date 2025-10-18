@@ -290,6 +290,7 @@ postCtx = mconcat
   [ dateField "date"    "%d %b %Y" fixDate  -- Creation date
   , dateField "isodate" "%F"       id       -- Creation date in YYYY-MM-DD
   , modTime                                 -- Last modification date
+  , numWords
   , estimatedReadingTime
   , defaultContext
   ]
@@ -317,11 +318,20 @@ postCtx = mconcat
       Just created -> if lastMod /= created then pure (fixDate lastMod)
                      else noResult "Last modified equal to date."
 
+  numWords :: Context String
+  numWords = field "num-words" $ pure . show . calcWords
+
   estimatedReadingTime :: Context String
-  estimatedReadingTime = field "estimated-reading-time" $ \key ->
-    let ws   :: Int = length . words . stripTags . itemBody $ key
-        mins :: Int = ceiling @Double (fromIntegral ws / 250)
-     in pure $ addTitle (show ws <> " words") (show mins <> " min read")
+  estimatedReadingTime = field "estimated-reading-time" $ \key -> do
+    let ws = calcWords key
+    pure $ mconcat
+      [ "<span title=\"", (show ws <> " words"), "\">"
+      , (show (ceiling @Double (fromIntegral ws / 250)) <> " min read")
+      , "</span>"
+      ]
+
+  calcWords :: Item String -> Int
+  calcWords = length . words . stripTags . itemBody
 
   fixDate :: String -> String
   fixDate s = case splitAll "-" s of
@@ -435,9 +445,6 @@ getTocCtx ctx = do
 
 allPosts :: Pattern
 allPosts = "posts/**.md"
-
-addTitle :: String -> String -> String
-addTitle title body = "<span title=\"" <> title <> "\">" <> body <> "</span>"
 
 asTxt :: (Text -> Text) -> String -> String
 asTxt f = T.unpack . f . T.pack
