@@ -4,7 +4,7 @@ date: 2025-07-28
 tags: BQN
 ---
 
-Let's write a CSV parser in BQN!
+Let's write a CSV parser in [BQN](https://mlochbaum.github.io/BQN)!
 
 <!--more-->
 

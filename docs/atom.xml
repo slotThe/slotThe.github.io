@@ -19,9 +19,9 @@
     <updated>2025-10-08T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      8th Oct 2025–15 Oct 2025
+      8th Oct 2025–18 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6542 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6564 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -38,7 +38,7 @@
   
 
 <p>At least, for some vague definition of JSON.<!--more-->
-I will restrict myself to the following underspecified subset,
+I will restrict myself to the following underspecified subset,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 so that this will not be a 20’000-word post:</p>
 <ul>
 <li>Only (positive) integers.</li>
@@ -65,7 +65,7 @@ for Advent of Code,
 a post which certainly contains some amount of written words that talk about the language.
 I’ll recall the basic tricks that one uses in array-oriented parsing,
 though if you feel like I’m going too fast perhaps it’s a good idea to peruse my post about writing a
-<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV parser</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV parser</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <h2 id="lists-of-numbers">Lists of numbers</h2>
 <p>We’ll start with simply trying to parse lists of integers.
 Can’t be that hard, right?
@@ -81,10 +81,10 @@ has already written a
 <a href="https://saltysylvi.github.io/blog/parsing-nested-lists-in-bqn.html">fantastic article</a>
 about this exact type of thing,
 including a comparison with two other approaches:
-recursive descent, as well as a more nested array-style parser.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+recursive descent, as well as a more nested array-style parser.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
 I will follow the same approach for this part of the parser;
 if you’ve already read—and understood—Sylvia’s post, feel free to skip to <a href="#adding-strings">Adding strings</a>.</p>
-<p>Assume we have a list of numbers like the following:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Assume we have a list of numbers like the following:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <pre class="bqn"><code>    inp ← &quot;[12,34,5,678,910]&quot;
 &quot;[12,34,5,678,910]&quot;</code></pre>
 <p>We’ll follow standard practise by first tokenising—lexing—the string,
@@ -153,7 +153,7 @@ this can be achieved with a combination of <em>replicate</em>, <em>indices</em>,
     ts/'0'¨⌾(ns⊸/)inp                 # Choose just the tokens
 &quot;[00000]&quot;</code></pre>
 <p>That’ll do!
-We can put all of this into a function now:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+We can put all of this into a function now:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <pre class="bqn"><code>Tokenise ← {
   ns ← »⊸&lt; n←𝕩∊'0'+↕10           # Number beginnings
   nr ← •ParseFloat¨(1-˜n×+`ns)⊔𝕩 # Numbers to return
@@ -180,7 +180,7 @@ so that I can use some more complicated arguments without <em>couple</em> taking
   123&quot;
       ┘</code></pre>
 <p>The first thing we need to do is to get a depth ordering of the list;
-i.e., make an opening bracket increase and have a closing one decrease the depth by one.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+i.e., make an opening bracket increase and have a closing one decrease the depth by one.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <pre class="bqn"><code>    inp←&quot;[1,[2,[3,4]],5,[6,7],8]&quot;
 &quot;[1,[2,[3,4]],5,[6,7],8]&quot;
     ts‿nums ← Tokenise inp # Tokens and numbers
@@ -352,7 +352,7 @@ to the list as a whole will be dropped!
 We can hackily fix this by always appending the total number of closing brackets to the back of the list via <code>(+´c)∾˜</code>.
 If the list is empty, then this will accommodate for that case.
 Otherwise, the left argument to <em>group</em> will be one element longer than the right one.
-This is not a problem, however, because that’s actually a feature<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> of the function:
+This is not a problem, however, because that’s actually a feature<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> of the function:
 in that case, the last element specified the minimum length of the result.</p>
 <pre class="bqn"><code>    0‿¯1‿1‿4 ⊔ &quot;abc&quot; # Padding
 ⟨ &quot;a&quot; &quot;c&quot; ⟨⟩ ⟨⟩ ⟩</code></pre>
@@ -391,7 +391,7 @@ in that case, the last element specified the minimum length of the result.</p>
 <p>I’d like to add one more literal,
 so that we get a feeling for how to do that sort of extension;
 strings sound like a good idea.</p>
-<p>First, the lexer: getting the strings and their beginnings works almost the same as in the numbers case above.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>First, the lexer: getting the strings and their beginnings works almost the same as in the numbers case above.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <pre class="bqn"><code>    inp ← &quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;
 &quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;
     s ← ≠`'&quot;'=inp             # strings
@@ -439,7 +439,7 @@ this will only be the case if one is truly inside of a string.</p>
 we now also need to make sure that we ignore everything that’s happening inside of a string.
 To do that, we can introduce an “exclusion” variable
 <code>ex ← s∨𝕩∊@+9‿10‿13‿32</code>
-and thread it through to the respective definitions.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+and thread it through to the respective definitions.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
 <pre class="bqn"><code>Tokenise ← {
   sb ← »⊸&lt; s←≠`'&quot;'=𝕩             # String beginnings
   sr ← (1-˜(s&gt;sb)×+`sb)⊔𝕩        # Strings to return
@@ -591,7 +591,7 @@ Up to getting the depth, things don’t really change much.</p>
 <p>Since we now have two different “container” types,
 we also need to be careful about how “nesting” is defined—<!--
 -->sometimes we may only want the delimiters of one container to increase the level of nesting.
-Let’s start with getting a mask of the start of all new sublists<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>,
+Let’s start with getting a mask of the start of all new sublists<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>,
 which are now defined by an opening brace or bracket:</p>
 <pre class="bqn"><code>    s ← td∊&quot;[{&quot;  # Sublist starts
 ⟨ 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 ⟩
@@ -680,7 +680,7 @@ thankfully, punching holes into <code>n</code> is not as hard as it sounds.
 We already have an array <code>on</code> that tells us about the object nesting,
 with a <code>0</code> standing in for “this is the start of an array”.
 That means if we simply use <code>n</code> to <em>select</em> from <code>on</code>,
-this gives us what we want!<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+this gives us what we want!<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 <pre class="bqn"><code>    ts DP n
 ┌─
 ╵&quot;{':0,':[',0,{':0}]}
@@ -705,7 +705,7 @@ if the object is empty, it might be that
 <code>(('"'=ts)/(«cl)×(⍋d)⊏+`td='{')</code> returns a nonsense answer,
 which would yield an error when trying to <em>group</em> the strings.
 This is much the same situation as before when we had to change <code>1-˜ln/l</code> to <code>(+´c)∾˜1-˜ln/l</code> during the construction of the final array.
-The fix here is similar, since with <code>of</code> we have an obvious quantity, the <em>length</em> of which is always the length we want to end up with,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
+The fix here is similar, since with <code>of</code> we have an obvious quantity, the <em>length</em> of which is always the length we want to end up with,<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>
 even when trying to parse <code>{}</code>.</p>
 <pre class="bqn"><code>    ks ← ((1+´of)∾˜ ('&quot;'=ts)/(«cl)×n⊏0∾on)⊔strs # Keys, final definition
 ⟨ ⟨ &quot;1&quot; ⟩ ⟨ &quot;a&quot; &quot;b&quot; ⟩ ⟨ &quot;a&quot; ⟩ ⟩</code></pre>
@@ -755,7 +755,7 @@ Putting this into code:</p>
 Doing nothing when <code>𝕨</code> is zero can just be achieved with a
 <a href="https://mlochbaum.github.io/BQN/doc/block.html#block-headers">header</a>.
 If <code>𝕨</code> is a number, it represents the depth of the object, and directly corresponds with the indexing of <code>ks</code>,
-so we can just <em>pick</em> the result and <em>couple</em> it to <code>𝕩</code> to make things a <em>rank</em> 2 array.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+so we can just <em>pick</em> the result and <em>couple</em> it to <code>𝕩</code> to make things a <em>rank</em> 2 array.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
 <pre class="bqn"><code>    Sel ← {0𝕊x: x; i𝕊x: (i⊑ks)≍x}  # Select
 (function block)
     Sel ← ⊑⟜ks⊸≍⍟(0&lt;⊣)             # Point-free and without blocks
@@ -828,7 +828,7 @@ Parse ← {
   ¯1⊑vs
 }</code></pre>
 <p>I don’t know about you,
-but I think it’s pretty incredible that one can write a parser for a reasonable subset<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> of JSON,
+but I think it’s pretty incredible that one can write a parser for a reasonable subset<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> of JSON,
 using what are essentially only flat arrays of numbers,
 and still have it be this compact.</p>
 <h2 id="conclusion">Conclusion</h2>
@@ -853,7 +853,7 @@ since there’s essentially no branching, control flow is trivial,
 and furthermore everything is just a flat array of numbers.
 Once that one <code>0</code> that should be a <code>1</code> is identified, going back to the source just involves reading backwards, with no logic to keep track of at all.</p>
 <p>Interestingly, this feels quite different from ordinary array programming—<!--
--->especially the quite tricky task to give lots of names<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> to lots of concepts.
+-->especially the quite tricky task to give lots of names<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> to lots of concepts.
 Still, I suppose this is much more readable than if one tried to make the names go away by using combinators.
 At least there are comments, right?</p>
 <p>I certainly wouldn’t write all—or even most—parsers in this style,
@@ -861,28 +861,29 @@ but honestly this whole thing was so refreshing that I can’t help but recommen
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>If you feel like I’m going too slow, or that I got something wrong, sorry!
+<li id="fn1"><p>{-} In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If you feel like I’m going too slow, or that I got something wrong, sorry!
 As I said, this is more or less my way of learning and better understanding this style of parsing;
-I am by no means the expert here.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Although CBQN seems to have improved since then<!--
-  -->—for me, even the nested array version is faster than the recursive approach now.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
+I am by no means the expert here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Although CBQN seems to have improved since then<!--
+  -->—for me, even the nested array version is faster than the recursive approach now.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>{-} 󠀠</p>
 <p>I will present many functions in a bottom-up kind of way,
 where I gradually build them up in the REPL,
 using an example input to showcase the behaviour of the individual array manipulations.
 Usually, proper definitions of <code>Tokenise</code> or <code>Parse</code> (the two functions we’re building)
 will only be given at the very end of each section.
 The input is always indented by four spaces, with the output flush to the left.
-If I refer to an unknown variable further down, it was probably defined in such a block.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
+If I refer to an unknown variable further down, it was probably defined in such a block.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>{-} 󠀠</p>
 <p>We could in fact also move <em>replicate</em>
 into the calls to <code>ns</code> and <code>𝕩</code>:</p>
 <pre class="bqn"><code>    '0'¨⌾((ts/ns)⊸/) (ts/inp)
 &quot;[0,0,0,0,0]&quot;</code></pre>
 <p>I’m not super well-versed in the ins and outs of CBQN’s performance,
 but from a cursory benchmark with the <code>•_timed</code> modifier,
-it does not seem to make much of a difference.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
+it does not seem to make much of a difference.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>{-} 󠀠</p>
 <p>󠀠</p>
 <p>󠀠</p>
 <p>󠀠</p>
@@ -892,35 +893,35 @@ it does not seem to make much of a difference.<a href="#fnref4" class="footnote-
 while a closing one is outside.
 This is fine (even wanted) for this use-case;
 if you want to treat both pairs as being inside of the pair you can use
-<code>+`o-»c</code>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>A questionable API choice, for sure, but I’ll take it!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
+<code>+`o-»c</code>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>A questionable API choice, for sure, but I’ll take it!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>{-} The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
 (the same way that CSV does it).
-<em>Everything</em> else is treated as a literal characters, even backslashes!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>{-} 󠀠</p>
+<em>Everything</em> else is treated as a literal characters, even backslashes!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>{-} 󠀠</p>
 <p>You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
 I figured that perhaps indicating changes in this way is more readable than giving you diffs,
 if only because all context one needs is right there.
-That’s one of the advantages of the complete program fitting on a single screen!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>I will use this as shorthand for “sub-object and sub-array”.
-Not the best terminology, I suppose, but it will have to do.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>{-} 󠀠</p>
+That’s one of the advantages of the complete program fitting on a single screen!<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>I will use this as shorthand for “sub-object and sub-array”.
+Not the best terminology, I suppose, but it will have to do.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>{-} 󠀠</p>
 <p>󠀠</p>
 <p>Don’t worry too much about having to use <code>0∾on</code> instead of <code>on</code> here;
 this appears because we are starting at depth zero before reading anything.
-Assuming well-formed JSON, this will appear only once at the very end.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>Remember that questionable <em>group</em> API?<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>{-} 󠀠</p>
+Assuming well-formed JSON, this will appear only once at the very end.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Remember that questionable <em>group</em> API?<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>{-} 󠀠</p>
 <p>I find this process of treating values and keys separately,
 but in a way that they eventually match up at the end,
-almost magical.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>With a simple extension to the tokeniser to recognise the constants <code>true</code>, <code>false</code>, and <code>null</code>,
+almost magical.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>With a simple extension to the tokeniser to recognise the constants <code>true</code>, <code>false</code>, and <code>null</code>,
 this already parses the <code>cargo metadata</code> output of a few Rust crates that I’ve tried,
 which is the sort of data I would characterise as “ordinary JSON”.
 The resulting representation is probably not super easy to work with<!--
   -->—there’s quite a lot of metadata and thus the nesting gets quite deep—<!--
-  -->but still, it works.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14"><p>Short names at that, otherwise things just look too cumbersome in this style of programming.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+  -->but still, it works.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Short names at that, otherwise things just look too cumbersome in this style of programming.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -938,7 +939,7 @@ The resulting representation is probably not super easy to work with<!--
     <updated>2025-07-28T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      28th Jul 2025
+      28th Jul 2025–18 Oct 2025
       
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1857 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
@@ -956,7 +957,7 @@ The resulting representation is probably not super easy to work with<!--
 
   
 
-<p>Let’s write a CSV parser in BQN!</p>
+<p>Let’s write a CSV parser in <a href="https://mlochbaum.github.io/BQN">BQN</a>!</p>
 <!--more-->
 <p>Working my way towards a full blown JSON parser,
 I thought it might be a good idea to start with something simpler<!--
@@ -2427,7 +2428,7 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
 
   
 
-<p>I did all of Advent of Code 2017 in BQN so you don’t have to.
+<p>I did all of Advent of Code 2017 in <a href="https://mlochbaum.github.io/BQN">BQN</a> so you don’t have to.
 Let me tell you about that in as few as 20’000 words.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <!--more-->
 <h2 id="the-setup">The setup</h2>

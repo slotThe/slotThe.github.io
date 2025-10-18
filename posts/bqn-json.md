@@ -5,7 +5,7 @@ tags: BQN
 ---
 
 At least, for some vague definition of JSON.<!--more-->
-I will restrict myself to the following underspecified subset,
+I will restrict myself to the following underspecified subset,[^18]
 so that this will not be a 20'000-word post:
 
 + Only (positive) integers.
@@ -1210,6 +1210,8 @@ but honestly this whole thing was so refreshing that I can't help but recommend 
        almost magical.
 
 [^17]: Short names at that, otherwise things just look too cumbersome in this style of programming.
+
+[^18]: {-} In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.
 
 [bqn-libs:json]: https://github.com/mlochbaum/bqn-libs/blob/master/json.bqn
 [bqn-libs]: https://github.com/mlochbaum/bqn-libs

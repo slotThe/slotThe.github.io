@@ -6,7 +6,7 @@ tags: BQN
 toc-depth: 1
 ---
 
-I did all of Advent of Code 2017 in BQN so you don't have to.
+I did all of Advent of Code 2017 in [BQN](https://mlochbaum.github.io/BQN) so you don't have to.
 Let me tell you about that in as few as 20'000 words.[^60]
 
 <!--more-->

@@ -65,9 +65,9 @@
       <div id="content">
         <article>
     <div class="header">
-      8th Oct 2025–15 Oct 2025
+      8th Oct 2025–18 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6521 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6541 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="../tags/BQN.html" rel="tag">#BQN</a>
@@ -103,7 +103,9 @@
   </div>
 
 At least, for some vague definition of <span class="small-caps">json</span>.<!--more-->
-I will restrict myself to the following underspecified subset,
+I will restrict myself to the following underspecified subset,<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">In case anyone not familiar with <span class="small-caps">bqn</span> finds itself reading this post: <span class="small-caps">bqn</span> is an array programming language in the <span class="small-caps">apl</span>-family.</div><!--
+-->
 so that this will not be a 20’000-word post:
 <ul>
 <li>Only (positive) integers.</li>
@@ -133,7 +135,7 @@ a post which certainly contains some amount of written words that talk about the
 I’ll recall the basic tricks that one uses in array-oriented parsing,
 though if you feel like I’m going too fast perhaps it’s a good idea to peruse my post about writing a
 <a href="https://tony-zorman.com/posts/bqn-csv.html" class="local-link"><span class="small-caps">csv</span> parser</a>.<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you feel like I’m going too slow, or that I got something wrong, sorry!
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">If you feel like I’m going too slow, or that I got something wrong, sorry!
 As I said, this is more or less my way of learning and better understanding this style of parsing;
 I am by no means the expert here.</div><!--
 -->
@@ -155,14 +157,14 @@ has already written a
 about this exact type of thing,
 including a comparison with two other approaches:
 recursive descent, as well as a more nested array-style parser.<!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Although <span class="small-caps">cbqn</span> seems to have improved since then<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Although <span class="small-caps">cbqn</span> seems to have improved since then<!--
   -->—for me, even the nested array version is faster than the recursive approach now.</div><!--
 -->
 I will follow the same approach for this part of the parser;
 if you’ve already read—and understood—Sylvia’s post, feel free to skip to <a href="#adding-strings">Adding strings</a>.
 <p></p>
 Assume we have a list of numbers like the following:<!--
---><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 I will present many functions in a bottom-up kind of way,
 where I gradually build them up in the <span class="small-caps">repl</span>,
@@ -260,7 +262,7 @@ this can be achieved with a combination of <a href="https://mlochbaum.github.io/
 <p></p>
 That’ll do!
 We can put all of this into a function now:<!--
---><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-4" class="margin-toggle">⊕</label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 We could in fact also move <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>
 into the calls to <code>ns</code> and <code>𝕩</code>:
@@ -313,7 +315,7 @@ so that I can use some more complicated arguments without <a href="https://mloch
 <p></p>
 The first thing we need to do is to get a depth ordering of the list;
 i.e., make an opening bracket increase and have a closing one decrease the depth by one.<!--
---><label for="sn-4" class="margin-toggle">⊕</label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -543,7 +545,7 @@ We can hackily fix this by always appending the total number of closing brackets
 If the list is empty, then this will accommodate for that case.
 Otherwise, the left argument to <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> will be one element longer than the right one.
 This is not a problem, however, because that’s actually a feature<!--
---><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">A questionable <span class="small-caps">api</span> choice, for sure, but I’ll take it!</div><!--
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">A questionable <span class="small-caps">api</span> choice, for sure, but I’ll take it!</div><!--
 --> of the function:
 in that case, the last element specified the minimum length of the result.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">0</span><span class="p">‿</span><span class="m">¯1</span><span class="p">‿</span><span class="m">1</span><span class="p">‿</span><span class="m">4</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="s2">&quot;abc&quot;</span><span class="w"> </span><span class="c1"># Padding</span>
@@ -594,7 +596,7 @@ so that we get a feeling for how to do that sort of extension;
 strings sound like a good idea.
 <p></p>
 First, the lexer: getting the strings and their beginnings works almost the same as in the numbers case above.<!--
---><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">The double quotes <code>""</code> in the string are <span class="small-caps">bqn</span>’s way of escaping quotes
+--><label for="sn-7" class="margin-toggle">⊕</label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="marginnote">The double quotes <code>""</code> in the string are <span class="small-caps">bqn</span>’s way of escaping quotes
 (the same way that <span class="small-caps">csv</span> does it).
 <em>Everything</em> else is treated as a literal characters, even backslashes!</div><!--
 -->
@@ -658,7 +660,7 @@ we now also need to make sure that we ignore everything that’s happening insid
 To do that, we can introduce an “exclusion” variable
 <code>ex ← s∨𝕩∊@+9‿10‿13‿32</code>
 and thread it through to the respective definitions.<!--
---><label for="sn-7" class="margin-toggle">⊕</label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-8" class="margin-toggle">⊕</label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
 I figured that perhaps indicating changes in this way is more readable than giving you diffs,
@@ -855,7 +857,7 @@ Since we now have two different “container” types,
 we also need to be careful about how “nesting” is defined—<!--
 -->sometimes we may only want the delimiters of one container to increase the level of nesting.
 Let’s start with getting a mask of the start of all new sublists<!--
---><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">I will use this as shorthand for “sub-object and sub-array”.
+--><label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="sidenote">I will use this as shorthand for “sub-object and sub-array”.
 Not the best terminology, I suppose, but it will have to do.</div><!--
 -->,
 which are now defined by an opening brace or bracket:
@@ -967,7 +969,7 @@ We already have an array <code>on</code> that tells us about the object nesting,
 with a <code>0</code> standing in for “this is the start of an array”.
 That means if we simply use <code>n</code> to <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a> from <code>on</code>,
 this gives us what we want!<!--
---><label for="sn-9" class="margin-toggle">⊕</label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-10" class="margin-toggle">⊕</label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -1006,7 +1008,7 @@ if the object is empty, it might be that
 which would yield an error when trying to <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> the strings.
 This is much the same situation as before when we had to change <code>1-˜ln/l</code> to <code>(+´c)∾˜1-˜ln/l</code> during the construction of the final array.
 The fix here is similar, since with <code>of</code> we have an obvious quantity, the <a href="https://mlochbaum.github.io/BQN/doc/shape.html">length</a> of which is always the length we want to end up with,<!--
---><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle" /><div class="sidenote">Remember that questionable <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> <span class="small-caps">api</span>?</div><!--
+--><label for="sn-11" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-11" class="margin-toggle" /><div class="sidenote">Remember that questionable <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> <span class="small-caps">api</span>?</div><!--
 -->
 even when trying to parse <code>{}</code>.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ks</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">((</span><span class="m">1</span><span class="o">+</span><span class="na">´</span><span class="nv">of</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="w"> </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">ts</span><span class="sr">)</span><span class="o">/</span><span class="sr">(</span><span class="o">«</span><span class="nv">cl</span><span class="sr">)</span><span class="o">×</span><span class="nv">n</span><span class="o">⊏</span><span class="m">0</span><span class="o">∾</span><span class="nv">on</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">strs</span><span class="w"> </span><span class="c1"># Keys, final definition</span>
@@ -1073,7 +1075,7 @@ Doing nothing when <code>𝕨</code> is zero can just be achieved with a
 <a href="https://mlochbaum.github.io/BQN/doc/block.html#block-headers">header</a>.
 If <code>𝕨</code> is a number, it represents the depth of the object, and directly corresponds with the indexing of <code>ks</code>,
 so we can just <a href="https://mlochbaum.github.io/BQN/doc/pick.html">pick</a> the result and <a href="https://mlochbaum.github.io/BQN/doc/couple.html">couple</a> it to <code>𝕩</code> to make things a <a href="https://mlochbaum.github.io/BQN/doc/rank.html">rank</a> 2 array.<!--
---><label for="sn-11" class="margin-toggle">⊕</label><input type="checkbox" id="sn-11" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-12" class="margin-toggle">⊕</label><input type="checkbox" id="sn-12" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 I find this process of treating values and keys separately,
 but in a way that they eventually match up at the end,
@@ -1162,7 +1164,7 @@ At the risk of repeating myself, let’s look at the entire parser as well as th
 <p></p>
 I don’t know about you,
 but I think it’s pretty incredible that one can write a parser for a reasonable subset<!--
---><label for="sn-12" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-12" class="margin-toggle" /><div class="sidenote">With a simple extension to the tokeniser to recognise the constants <code>true</code>, <code>false</code>, and <code>null</code>,
+--><label for="sn-13" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-13" class="margin-toggle" /><div class="sidenote">With a simple extension to the tokeniser to recognise the constants <code>true</code>, <code>false</code>, and <code>null</code>,
 this already parses the <code>cargo metadata</code> output of a few Rust crates that I’ve tried,
 which is the sort of data I would characterise as “ordinary <span class="small-caps">json</span>”.
 The resulting representation is probably not super easy to work with<!--
@@ -1199,7 +1201,7 @@ Once that one <code>0</code> that should be a <code>1</code> is identified, goin
 <p></p>
 Interestingly, this feels quite different from ordinary array programming—<!--
 -->especially the quite tricky task to give lots of names<!--
---><label for="sn-13" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-13" class="margin-toggle" /><div class="sidenote">Short names at that, otherwise things just look too cumbersome in this style of programming.</div><!--
+--><label for="sn-14" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-14" class="margin-toggle" /><div class="sidenote">Short names at that, otherwise things just look too cumbersome in this style of programming.</div><!--
 --> to lots of concepts.
 Still, I suppose this is much more readable than if one tried to make the names go away by using combinators.
 At least there are comments, right?
