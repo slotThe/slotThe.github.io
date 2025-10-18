@@ -23,7 +23,7 @@ import Data.ByteString.Lazy.Char8 qualified as BL
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
-import Data.List (foldl', stripPrefix)
+import Data.List (foldl', intersperse, stripPrefix)
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
@@ -78,7 +78,12 @@ main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
 
   -- Generate tags
   tags <- buildTags "posts/**" (fromCapture "tags/**.html")
-  let tagCtx = tagsField "tags" tags <> postCtx
+  let tagCtx = tagsFieldWith getTags
+                             (simpleRenderLink . ("#" <>))
+                             (mconcat . intersperse "   ")
+                             "tags"
+                             tags
+            <> postCtx
 
   -- Build some pages!
   landingPage tagCtx
@@ -153,7 +158,7 @@ listOfPosts tags@Tags{ tagsMakeId, tagsMap } = do
     let taggedPostCtx :: Context String
           = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
     mkList taggedPostCtx
-           ("Posts tagged " <> "\"" <> tag <> "\"")
+           ("#" <> tag)
            ("../atom-" <> tag)
            "templates/post-list.html"
  where
