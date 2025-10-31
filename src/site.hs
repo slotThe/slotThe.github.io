@@ -23,14 +23,14 @@ import Data.ByteString.Lazy.Char8 qualified as BL
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
-import Data.List (foldl', intersperse, stripPrefix)
+import Data.List (intersperse, stripPrefix)
 import Data.Maybe
 import Data.String (IsString)
 import Data.Text (Text)
 import Data.Time (defaultTimeLocale, formatTime)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll hiding (dateField)
-import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- N.b: only for marking
+import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- Only for language recognition; see 'pygmentsHighlight'
 import System.Directory (createDirectoryIfMissing)
 import System.IO (hPrint)
 import System.Process (readProcess, runInteractiveCommand)
@@ -326,7 +326,7 @@ postCtx = mconcat
     let ws = calcWords key
     pure $ mconcat
       [ "<span title=\"", (show ws <> " words"), "\">"
-      , (show (ceiling @Double (fromIntegral ws / 250)) <> " min read")
+      , (show (ceiling @Double @Int (fromIntegral ws / 250)) <> " min read")
       , "</span>"
       ]
 

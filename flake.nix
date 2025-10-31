@@ -37,7 +37,7 @@
           { };
         hakyll = self.callCabal2nix "hakyll" (builtins.fetchGit {
           url = "https://github.com/jaspervdj/hakyll";
-          rev = "5f17ad2b289a67c54767ffa9380db26e0e164c79";
+          rev = "800a612923fac90017b2050ccde3e031af09091e";
         }) {};
       });
     in {
@@ -60,8 +60,8 @@
               src = fetchFromGitHub {
                 owner = "pygments";
                 repo = "pygments";
-                rev = "cfca62e6e95136e48a255e8cbffb0bbe1d98456c";
-                hash = "sha256-uATxOdkjWF4oAyke68R5w9A1z1MzhZp8nT/uPERWQlA=";
+                rev = "0328cfaf1d953b3a0c7eb0ec0efd363deb2f9d51";
+                hash = "sha256-toYPxqaOObK8S4vL58+QippZ53jWW8tKJ2xcL0bHll8=";
               };
             }))
           ]))
@@ -74,7 +74,7 @@
           (texlive.combine {
             inherit (texlive) scheme-basic amsmath preview pgf pgfplots tikz-cd;
           })
-          poppler_utils
+          poppler-utils
         ];
         shellHook = ''
           export PROJECT_ROOT="$(pwd)"
