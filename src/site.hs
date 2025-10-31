@@ -48,8 +48,17 @@ import Text.Pandoc.Walk (walk, walkM)
 siteURL :: IsString s => s
 siteURL = "https://tony-zorman.com"
 
+config :: Configuration
+config = defaultConfiguration
+  { destinationDirectory = "docs"
+  , ignoreFile = (&&) <$> ignoreFiles' <*> ignoreFile defaultConfiguration
+  }
+ where
+  ignoreFiles' :: FilePath -> Bool
+  ignoreFiles' fp = fp `elem` ["dist-newstyle", "scripts", "uncompressed_fonts"]
+
 main :: IO ()
-main = hakyllWith defaultConfiguration{ destinationDirectory = "docs" } do
+main = hakyllWith config do
   -- Housekeeping
   match "templates/*" $ compile templateBodyCompiler
   match "css/*" do
