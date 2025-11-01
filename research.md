@@ -98,9 +98,14 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 # Talks
 
 - *Categorical Reconstruction Theory* \
+   2025-10-21,
+   [Research Seminar Algebra and Mathematical Physics, Hamburg](https://www.math.uni-hamburg.de/home/runkel/ws25-fose.html);
+   [slides](https://codeberg.org/slotThe/amp25).
+
+- *Categorical Reconstruction Theory* \
    2025-07-04, Dresden; [slides][disputation].
 
-   My PhD thesis defence; see [here](http://localhost:8000/research.html#theses) for more information.
+   My PhD thesis defence; see [here](#theses) for more information.
 
 - *Reconstruction for Lax Module Monads* \
    2025-07-17, [CT2025], Brno; [slides](./talks/ct2025/slides.pdf) and [accompanying website](./ct2025.html). \
