@@ -265,7 +265,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 - *Categorical Reconstruction Theory*
 
   I completed my dissertation at [TU Dresden](https://tu-dresden.de/mn/math) on the 4th of July 2025,
-  under the supervision of [Prof. Dr. Ulrich Krähmer](https://tu-dresden.de/mn/math/geometrie/kraehmer).
+  under the supervision of [Ulrich Krähmer](https://tu-dresden.de/mn/math/geometrie/kraehmer).
   Here is everything one could possibly want to know about this:
   + The [slides][disputation]
     for my thesis defence and the
