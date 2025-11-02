@@ -19,6 +19,7 @@ import Control.Arrow ((>>>))
 import Control.Concurrent (threadDelay)
 import Control.Monad
 import Control.Monad.Except (catchError)
+import Data.Bifunctor (second)
 import Data.ByteString.Lazy.Char8 qualified as BL
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
@@ -814,9 +815,13 @@ myPandocCompiler =
   --       https://www.antonia.is/hakyll-setup.html#compiling-tikz-pictures
   renderTikZ :: Pandoc -> Compiler Pandoc
   renderTikZ = walkM \case
-    RawBlock "tex" txt
-      | "\\begin{tikzpicture}" `T.isPrefixOf` txt -> do
-        let name  = "/images/tikz/" <> show (hash txt) <> ".svg"
+    RawBlock "tex" txt'
+      | bTikZ `T.isPrefixOf` txt' -> do
+        let (alt, txt) = let p = T.drop (T.length bTikZ) txt'
+                          in if "{" `T.isPrefixOf` p
+                             then second ((bTikZ <>). (T.drop 1)) . T.span (/= '}') . T.drop 1 $ p
+                             else ("«tikzpicture»", txt')
+            name  = "/images/tikz/" <> show (hash txt) <> ".svg"
             fname = "docs" <> name
         unsafeCompiler $ createDirectoryIfMissing True "docs/images/tikz"
         void $ makeItem (T.unpack txt)
@@ -824,8 +829,10 @@ myPandocCompiler =
           <&> (itemBody >>> BL.pack)
           >>= unixFilterLBS "rubber-pipe" ["--pdf"]
           >>= unixFilterLBS "pdftocairo" ["-svg", "-", fname]
-        pure $ Para [Image ("", ["tikzpicture"], []) [] (T.pack name, "")]
+        pure $ Para [Image ("", ["tikzpicture"], [("alt", alt)]) [] (T.pack name, "")]
     b -> pure b
+   where
+    bTikZ :: Text = "\\begin{tikzpicture}"
 
 -----------------------------------------------------------------------
 -- Redirects

@@ -1,6 +1,7 @@
 ---
 title: Writing a JSON Parser in BQN
 date: 2025-10-08
+last-modified: 2025-10-18
 tags: BQN
 ---
 
@@ -237,7 +238,7 @@ it's perhaps more instructive to look at
 
 Drawing a picture often helps:
 
-\begin{tikzpicture}
+\begin{tikzpicture}{BFS representation of "][1]5]8[2][67[34" as a tree.}
   \begin{pgfonlayer}{nodelayer}
       \node [style=whitedot] (0) at (0, 5) {]};
       \node [style=whitedot] (1) at (0, 4.5) {[};
