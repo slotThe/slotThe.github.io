@@ -21,7 +21,7 @@
     <div class="header">
       8th Oct 2025–18 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6564 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6544 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -861,58 +861,46 @@ but honestly this whole thing was so refreshing that I can’t help but recommen
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>If you feel like I’m going too slow, or that I got something wrong, sorry!
 As I said, this is more or less my way of learning and better understanding this style of parsing;
 I am by no means the expert here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Although CBQN seems to have improved since then<!--
   -->—for me, even the nested array version is faster than the recursive approach now.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>I will present many functions in a bottom-up kind of way,
+<li id="fn4"><p>I will present many functions in a bottom-up kind of way,
 where I gradually build them up in the REPL,
 using an example input to showcase the behaviour of the individual array manipulations.
 Usually, proper definitions of <code>Tokenise</code> or <code>Parse</code> (the two functions we’re building)
 will only be given at the very end of each section.
 The input is always indented by four spaces, with the output flush to the left.
 If I refer to an unknown variable further down, it was probably defined in such a block.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
-<p>We could in fact also move <em>replicate</em>
+<li id="fn5"><p>We could in fact also move <em>replicate</em>
 into the calls to <code>ns</code> and <code>𝕩</code>:</p>
 <pre class="bqn"><code>    '0'¨⌾((ts/ns)⊸/) (ts/inp)
 &quot;[0,0,0,0,0]&quot;</code></pre>
 <p>I’m not super well-versed in the ins and outs of CBQN’s performance,
 but from a cursory benchmark with the <code>•_timed</code> modifier,
 it does not seem to make much of a difference.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>As you can see, an opening parenthesis is treated as being inside of the pair,
+<li id="fn6"><p>As you can see, an opening parenthesis is treated as being inside of the pair,
 while a closing one is outside.
 This is fine (even wanted) for this use-case;
 if you want to treat both pairs as being inside of the pair you can use
 <code>+`o-»c</code>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>A questionable API choice, for sure, but I’ll take it!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>{-} The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
+<li id="fn8"><p>The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
 (the same way that CSV does it).
 <em>Everything</em> else is treated as a literal characters, even backslashes!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>{-} 󠀠</p>
-<p>You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
+<li id="fn9"><p>You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
 I figured that perhaps indicating changes in this way is more readable than giving you diffs,
 if only because all context one needs is right there.
 That’s one of the advantages of the complete program fitting on a single screen!<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>I will use this as shorthand for “sub-object and sub-array”.
 Not the best terminology, I suppose, but it will have to do.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>Don’t worry too much about having to use <code>0∾on</code> instead of <code>on</code> here;
+<li id="fn11"><p>Don’t worry too much about having to use <code>0∾on</code> instead of <code>on</code> here;
 this appears because we are starting at depth zero before reading anything.
 Assuming well-formed JSON, this will appear only once at the very end.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>Remember that questionable <em>group</em> API?<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>{-} 󠀠</p>
-<p>I find this process of treating values and keys separately,
+<li id="fn13"><p>I find this process of treating values and keys separately,
 but in a way that they eventually match up at the end,
 almost magical.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn14"><p>With a simple extension to the tokeniser to recognise the constants <code>true</code>, <code>false</code>, and <code>null</code>,
@@ -941,7 +929,7 @@ The resulting representation is probably not super easy to work with<!--
     <div class="header">
       28th Jul 2025–18 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1857 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1852 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -1176,19 +1164,17 @@ A: Yes.</p>
 <ol>
 <li id="fn1"><p>For the sake of convenience, I will interpret the RFC somewhat loosely in places,
 though hopefully still implementing the gist of it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>{-} BQN doesn’t actually escape non-double-quote characters in strings,
+<li id="fn2"><p>BQN doesn’t actually escape non-double-quote characters in strings,
 but I’ve chosen to write <code>\n</code> here instead of a literal newline for readability.</p>
 <p>Also, I will use
 <a href="https://mlochbaum.github.io/BQN/doc/couple.html">couple</a>
 quite a bit to visualise the different masks in relation to the original character array going in,
 in case you were wondering what that glyph meant.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<p>Since BQN doesn’t do escaping in strings,
+<li id="fn3"><p>Since BQN doesn’t do escaping in strings,
 I make use of
 <a href="https://mlochbaum.github.io/BQN/doc/types.html#characters">character arithmetic</a>
 here, to represent the line feed by its decimal value.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>As you can see, escaping is… fun.
+<li id="fn4"><p>As you can see, escaping is… fun.
 Every character save a double quote is verbatim in BQN strings,
 and double quotes are also escaped using two of them in succession.
 This means that to input the CSV <code>"a"</code>, one would write <code>"""a"""</code>,
@@ -1213,7 +1199,7 @@ and for <code>"""a"",""b"""</code> we have the wonderful
     <div class="header">
       8th Nov 2024–13 Nov 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3094 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3093 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -1591,7 +1577,7 @@ Solving <span class="math inline">k^2 + 2k = n^2 - 1</span> for <span class="mat
 Substituting <span class="math inline">k=n-1</span>,
 we have to generate <span class="math inline">2n - 1</span> frequencies,
 the values of which indeed sum up to <span class="math inline">(n-1)^2 + 2(n-1) = n^2 - 1</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} Line breaks in the output for clarity.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Line breaks in the output for clarity.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>In fact, in APL this is the only way to do this—there is no other sorting primitive!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Note that, in particular, we are interested in left inverses of all the <code>fᵢ</code>.
 This is a bit in opposition to the facilities that BQN provides by default, like
@@ -1637,7 +1623,7 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
     <div class="header">
       27th Oct 2024–28 Oct 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22378 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22372 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -4489,7 +4475,7 @@ At that point, Sweedler notation becomes extremely concise and much easier to re
 <p>Let’s get back to that array programming thing, though.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>This is actually also true for the respective user-defined analogues,
 but let’s talk about <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">that</a> later.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>{-} The grouping of days is mostly done so the TOC doesn’t completely explode,
+<li id="fn9"><p>The grouping of days is mostly done so the TOC doesn’t completely explode,
 while retaining some sort of directional aid.
 In either case, it’s probably fastest to just <code>C-f</code> for the respective day.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>The <code>•</code> is not a separate function, but really part of the name <code>•FLines</code>.
@@ -4513,7 +4499,7 @@ such that the restriction to them yields the action we care about.
 This could, for example, be the regular action of ℝ on itself,
 but I personally don’t think that this helps much with reasoning about the original action.</p>
 <p>I swear I will stop with the maths at some point.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>{-} All whitespace here, and indeed in most places, is completely redundant.
+<li id="fn12"><p>All whitespace here, and indeed in most places, is completely redundant.
 I choose to still include it, to “logically group” certain operations.
 It helps me with reading the code, anyways.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn13"><p>Or, if you wanted to make it extra confusing,
@@ -4553,8 +4539,8 @@ as it banks on the fact that a node never contains two children
 (in which case we would have to try both branches).
 It works for my input, though, so I figured this was good enough.
 Let’s say that tree manipulations are not necessarily my favourite thing to do in an array language.<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn26"><p>{-} I’m reversing the list because we have to right fold over it later.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn27"><p>{-} For example,</p>
+<li id="fn26"><p>I’m reversing the list because we have to right fold over it later.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>For example,</p>
 <pre class="bqn"><code>    DecToHex 15
 &quot;0f&quot;
     DecToHex 32
@@ -4576,7 +4562,7 @@ lf    ⇐ @+10</code></pre>
   }&quot;&quot;
 }</code></pre>
 <a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn33"><p>{-} Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33"><p>Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn34"><p>We can’t just use <code>⟨«,»,«˘,»˘⟩¨&lt;x</code>
 because the <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic role</a> of a list is a subject,
 which can’t be applied as a function.<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -4620,7 +4606,7 @@ shouting at his PhD students because they were writing assembly.
 Obviously, this just wasted resources because it was much too high-level,
 and they should have written their programs directly in binary instead.
 A more civilised age.<a href="#fnref45" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn46"><p>{-} There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
+<li id="fn46"><p>There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
 Honestly, I’m not sure what to think of that;
 I used to really dislike these days, but this one was unexpectedly fun.
 It <em>is</em> a breath of fresh air after over 20 days of solving puzzles, I guess.

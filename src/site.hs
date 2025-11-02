@@ -532,11 +532,6 @@ myReader = defaultHakyllReaderOptions
         <> extensionsFromList [Ext_tex_math_single_backslash, Ext_raw_tex]
   }
 
--- | A simple pandoc compiler for RSS/Atom feeds, with none of the
--- fanciness that 'myPandocCompiler' has.
-pandocRssCompiler :: Compiler (Item String)
-pandocRssCompiler = pandocCompilerWorker pure
-
 pandocCompilerWorker :: (Item Pandoc -> Compiler (Item Pandoc)) -> Compiler (Item String)
 pandocCompilerWorker =
   pandocItemCompilerWithTransformM
@@ -546,6 +541,20 @@ pandocCompilerWorker =
     -- headings are shifted down for both 'myPandocCompiler', and
     -- 'pandocRssCompiler' .
     . ((fmap . fmap) (headerShift 1) .)
+
+-- | A simple pandoc compiler for RSS/Atom feeds, with none of the
+-- fanciness that 'myPandocCompiler' has.
+pandocRssCompiler :: Compiler (Item String)
+pandocRssCompiler = pandocCompilerWorker (traverse (pure . cleanFootnotes))
+ where
+  cleanFootnotes :: Pandoc -> Pandoc
+  cleanFootnotes = walk \case
+    Note bs -> Note $ flip map bs $ walk \case
+      Para [Str "\917536"]                   -> Plain []
+      Para [Str "{-}", Space, Str "\917536"] -> Plain []
+      Para (Str "{-}" : Space : x)           -> Para  x
+      b -> b
+    i -> i
 
 -- | Pandoc compiler with syntax highlighting (via @pygmentize@),
 -- sidenotes instead of footnotes (see @css/sidenotes.css@ and

@@ -21,7 +21,7 @@
     <div class="header">
       6th May 2023–17 Jun 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4147 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4133 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
@@ -451,11 +451,7 @@ plus, building something yourself is much more rewarding than buying it!</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Not pictured: I braided the cable,
+<li id="fn1"><p>Not pictured: I braided the cable,
 which makes it much more manageable.
 The default cable is <em>long</em>,
 which is not at all necessary since the keyboard is always rather close to my laptop.
@@ -474,22 +470,17 @@ for me it’s much faster to hit a capital <code>E</code>
 than having to do an awkward stretch in order to reach <code>6</code> or—even worse—<code>F6</code>.
 On the Atreus everything is close together,
 which means these kinds of big stretches are a thing of the past!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>The outer two keys would suffer from the same issue, but these are actually very easy to hit with one’s palm. I press the two keys under the middle finger with a thumb or middle finger curl, both of which feel fine for me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Thanks, Emacs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>This was very straightforward—after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
 After, that, one simply has to execute</p>
 <pre class="console"><code>$ xset r rate 230 70
 $ setxkbmap -option compose:menu</code></pre>
 <p>to get some sane key repeat and compose key settings, and that’s it!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>{-} Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>At first I was very surprised to see <code>x</code> so far up this list—at least,
+<li id="fn9"><p>Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>At first I was very surprised to see <code>x</code> so far up this list—at least,
 until I remembered that <code>M1-x</code> and <code>C-x</code> exist!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Note that <code>S+^</code> and <code>S+!</code> are tap-dances for technical reasons:
 QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

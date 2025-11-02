@@ -21,7 +21,7 @@
     <div class="header">
       13th Nov 2023–15 Oct 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1173 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1151 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="/tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
@@ -255,28 +255,7 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
+<li id="fn1"><p>Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
 If you still have this in your flake, you should probably remove it—it might lead to quirky behaviour upon evaluation!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
 I figured that out so you don’t have to.
@@ -311,7 +290,7 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
     <div class="header">
       19th Mar 2023–12 Jul 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1313 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1308 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
@@ -505,9 +484,7 @@ Channel</a> are quite glad about this as well!</p>
 <a href="https://noogle.dev/">noogle</a>,
 forges like <a href="https://github.com/">Git­Hub</a>,
 … the list goes on.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>As an aside, this is an ideal use case for <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>.
 With that module, one could define an equivalent keybinding along the lines of</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">searchKeys ::</span> [(<span class="dt">String</span>, <span class="dt">X</span> ())]</span>
@@ -518,7 +495,7 @@ With that module, one could define an equivalent keybinding along the lines of</
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  ]</span></code></pre></div>
 <p>This is especially useful when multiple search engines are involved;
 see <a href="#further-tweaks">below</a> or check out <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">my configuration</a> for a complete example.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} For the following code examples, you may need to place extra
+<li id="fn4"><p>For the following code examples, you may need to place extra
 pragmas along the lines of</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE BlockArguments #-}</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE LambdaCase     #-}</span></span>
@@ -526,7 +503,7 @@ pragmas along the lines of</p>
 <p>at the top of your XMonad configuration file.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>In this case here, that single candidate will be from the relevant
 prompt history.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} Just for completeness, an in order to improve
+<li id="fn6"><p>Just for completeness, an in order to improve
 copy-pasteability, the definition of <code>basicSubmapFromList</code> used a
 lot in this piece of code is:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>basicSubmapFromList</span>

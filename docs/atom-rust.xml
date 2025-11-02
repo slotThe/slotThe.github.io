@@ -21,7 +21,7 @@
     <div class="header">
       23rd Mar 2024–1 May 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1251 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1245 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
@@ -207,12 +207,10 @@ Having a type signature like</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
+<li id="fn1"><p>I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
 what are you talking about‽<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Though obviously it—right now—only covers a meagre subset of what <code>jq</code> can do.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>To appease… someone reading this,
+<li id="fn3"><p>To appease… someone reading this,
 lambdas can also be written in Rust-esque notation,
 and can take multiple arguments:</p>
 <pre><code>|x, y| x y  ≡  λx y → x y  ≡  \x -&gt; \y -&gt; x y</code></pre>
@@ -220,8 +218,8 @@ and can take multiple arguments:</p>
 <li id="fn4"><p>As in, <code>(f | g)(x)</code> means <code>g(f(x))</code>,
 to mirror how shells use pipes.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>After all, a dynamically typed language is just a statically typed one with a single base type.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} The paper is freely available <a href="https://arxiv.org/abs/1306.6032">on the arXiv</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} I’m quite surprised—though happy—by the type checker being this fast!
+<li id="fn6"><p>The paper is freely available <a href="https://arxiv.org/abs/1306.6032">on the arXiv</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I’m quite surprised—though happy—by the type checker being this fast!
 Likewise, I’m glad that all of the praise I’ve read about
 <a href="https://en.wikipedia.org/wiki/Normalisation_by_evaluation">normalisation by evaluation</a>
 was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -245,7 +243,7 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
     <div class="header">
       22nd Oct 2023–27 Oct 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1148 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1144 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
@@ -439,9 +437,7 @@ so here we are.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩�
 <li id="fn2"><p>And also eglot, judging from a cursory test.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Even more so because smart people have already written this for me;
 see the docstring.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>This code assumes that lsp-mode uses
+<li id="fn4"><p>This code assumes that lsp-mode uses
 <a href="https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization">plists instead of hash tables for deserialisation</a>.
 If you don’t have the <code>lsp-use-plists</code> variable set<!--
   -->—and have recompiled lsp-mode afterwards—<!--
@@ -454,7 +450,7 @@ but that never led anywhere.
 <em>Someone</em> should pick this back up, I suppose.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Lsp-mode also provides <code>lsp-avy-lens</code>,
 so this is not really an actual problem.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} For when hovering inexplicably breaks again,
+<li id="fn7"><p>For when hovering inexplicably breaks again,
 this also enables for a quick definition of “show the type signature of the thing at point”:</p>
 <pre class="emacs-lisp"><code>(defun slot/lsp-show-type-signature ()
   &quot;Show the type signature for the thing at

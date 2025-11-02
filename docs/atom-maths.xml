@@ -21,7 +21,7 @@
     <div class="header">
       11th May 2024–2 Jun 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1044 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1040 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#anki'." href="/tags/anki.html" rel="tag">#anki</a>   <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
@@ -185,7 +185,7 @@ Nice.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} I will not waste the reader’s time with an introduction of what Anki is or why spaced repetition is useful;
+<li id="fn1"><p>I will not waste the reader’s time with an introduction of what Anki is or why spaced repetition is useful;
 <a href="https://gwern.net/spaced-repetition">other</a>
 <a href="https://augmentingcognition.com/ltm.html">people</a>
 have done a much better job at that than I ever could.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -198,12 +198,12 @@ or
 <li id="fn3"><p>For the specific example of maths and cloze deletions,
 one needs to set <code>anki-editor-break-consecutive-braces-in-LaTeX</code>.
 This should probably be the default—and perhaps it will be in the future!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} As you can see, I haven’t bothered with fancy CSS to make the cards pretty. Content over form.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>As you can see, I haven’t bothered with fancy CSS to make the cards pretty. Content over form.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>One could solve this by making <code>anki-editor</code> output an extra <code>div</code> that it only wraps display maths with<!--
   -->—and I have done that in the past—but using <code>preview.sty</code> feels much cleaner to me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
+<li id="fn6"><p>For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
 In case you are not bound by these restrictions—or more adventurous than me—I would recommend you use lualatex instead.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} It should be noted that Anki—thankfully—caches previews by hashing their contents,
+<li id="fn7"><p>It should be noted that Anki—thankfully—caches previews by hashing their contents,
 and reuses the same SVG every time it encounters a LaTeX fragment with the same hash.
 Thus, if you want to completely regenerate everything, just delete the respective directory.
 For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -226,7 +226,7 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
     <div class="header">
       12th Jun 2023–30 Aug 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1481 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1479 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
@@ -435,7 +435,7 @@ one just needs to substitute the <span class="math inline">\mathtt{k}</span>-lin
 with a <a href="https://ncatlab.org/nlab/show/copower">Copower</a>.
 I have written about these things <a href="https://tony-zorman.com/posts/weighted-colimits.html#copowers">before</a>,
 just in a different context.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠
+<li id="fn3"><p>󠀠
 󠀠</p>
 <p>The big direct sum
 <span class="math inline">\bigoplus_{f \colon V \to W}</span> is shorthand for <span class="math inline">\bigoplus_{V, W} \bigoplus_{f \in \mathcal{V}(V, W)}</span>.
@@ -444,7 +444,7 @@ but we are in <span class="math inline">\mathsf{Vect}_{\mathtt{k}}</span>,
 so writing a direct sum here is appropriate.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>This may or may not be an equivalence relation,
 but we can always complete to one.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} As an aside (literally),
+<li id="fn5"><p>As an aside (literally),
 equipped with the tensor product of <span class="math inline">\mathbb{S}</span>-modules,
 it’s not so hard to define the <em>plethysm product</em> <span class="math inline">\odot</span>,
 which is actually the one that operads are monoids for:
@@ -639,7 +639,7 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
     <div class="header">
       15th Oct 2022–13 Mar 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3771 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3770 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
@@ -1160,7 +1160,7 @@ Riehl’s <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in 
 <li id="fn6"><p>By sending <span class="math inline">a</span> to <span class="math inline">\{0, 1\}</span>, <span class="math inline">b</span> to <span class="math inline">\{1\}</span>, and <span class="math inline">\varphi</span> to the
 arrow <span class="math inline">\{0, 1\} \longrightarrow \{1\}</span>, which exists because
 <span class="math inline">\{1\}</span> is the terminal set.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} These things are actually all other the place: for example,
+<li id="fn7"><p>These things are actually all other the place: for example,
 the Yoneda embedding itself is dense if the category is
 essentially small. Further, if you like higher category
 theory, you will appreciate that the simplex category being

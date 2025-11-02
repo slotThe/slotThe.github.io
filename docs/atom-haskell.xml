@@ -21,7 +21,7 @@
     <div class="header">
       20th Jul 2024–1 Feb 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1208 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1193 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
@@ -216,21 +216,7 @@ and these notes are not necessarily written/ready for public consumption.
 Oh well.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Especially because, unlike in Gwern’s case, this site is not super complex to build;
 there aren’t any other moving parts that would require me to leave Haskell.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Mind the <code>BlockArguments</code>—and the “s”.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Mind the <code>BlockArguments</code>—and the “s”.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Seemingly as always when subprocesses are involved,
 the hardest thing is to actually get all of the incantations right
 such that buffering does not deadlock your program indefinitely.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -253,7 +239,7 @@ such that buffering does not deadlock your program indefinitely.<a href="#fnref4
     <div class="header">
       22nd Oct 2023–27 Oct 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1148 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1144 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
@@ -447,9 +433,7 @@ so here we are.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩�
 <li id="fn2"><p>And also eglot, judging from a cursory test.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Even more so because smart people have already written this for me;
 see the docstring.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>This code assumes that lsp-mode uses
+<li id="fn4"><p>This code assumes that lsp-mode uses
 <a href="https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization">plists instead of hash tables for deserialisation</a>.
 If you don’t have the <code>lsp-use-plists</code> variable set<!--
   -->—and have recompiled lsp-mode afterwards—<!--
@@ -462,7 +446,7 @@ but that never led anywhere.
 <em>Someone</em> should pick this back up, I suppose.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Lsp-mode also provides <code>lsp-avy-lens</code>,
 so this is not really an actual problem.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} For when hovering inexplicably breaks again,
+<li id="fn7"><p>For when hovering inexplicably breaks again,
 this also enables for a quick definition of “show the type signature of the thing at point”:</p>
 <pre class="emacs-lisp"><code>(defun slot/lsp-show-type-signature ()
   &quot;Show the type signature for the thing at
@@ -494,7 +478,7 @@ does, just as an extra function.&quot;
     <div class="header">
       20th Jun 2023–1 Feb 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2980 words">12 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2970 words">12 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
@@ -1114,19 +1098,11 @@ suggestions for other styles would be most welcome!<a href="#fnref2" class="foot
 From changing Hakyll’s default <a href="./pygmentising-hakyll.html">syntax highlighting</a>,
 to swapping out footnotes and producing this very <a href="./block-sidenotes.html">sidenote</a>,
 almost anything one can imagine is possible.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>In the actual code,
+<li id="fn4"><p>In the actual code,
 I also check for a <code>bib</code> boolean field,
 in order to decide whether this transformation should actually be applied.
 If you are interested in that, see the relevant <a href="https://github.com/slotThe/slotThe.github.io/commit/62c6072243ee06d8df39813b7e35a6fd0ea1fe9d">commit</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>This example also nicely showcases the power of the <code>Walkable</code> type class.
+<li id="fn5"><p>This example also nicely showcases the power of the <code>Walkable</code> type class.
 Via the</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Walkable</span> <span class="dt">Block</span> <span class="dt">Pandoc</span></span></code></pre></div>
 <p>instance,
@@ -1152,7 +1128,7 @@ Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-back
     <div class="header">
       19th Mar 2023–12 Jul 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1313 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1308 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
@@ -1346,9 +1322,7 @@ Channel</a> are quite glad about this as well!</p>
 <a href="https://noogle.dev/">noogle</a>,
 forges like <a href="https://github.com/">Git­Hub</a>,
 … the list goes on.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>As an aside, this is an ideal use case for <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>.
 With that module, one could define an equivalent keybinding along the lines of</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">searchKeys ::</span> [(<span class="dt">String</span>, <span class="dt">X</span> ())]</span>
@@ -1359,7 +1333,7 @@ With that module, one could define an equivalent keybinding along the lines of</
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  ]</span></code></pre></div>
 <p>This is especially useful when multiple search engines are involved;
 see <a href="#further-tweaks">below</a> or check out <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">my configuration</a> for a complete example.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} For the following code examples, you may need to place extra
+<li id="fn4"><p>For the following code examples, you may need to place extra
 pragmas along the lines of</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE BlockArguments #-}</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE LambdaCase     #-}</span></span>
@@ -1367,7 +1341,7 @@ pragmas along the lines of</p>
 <p>at the top of your XMonad configuration file.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>In this case here, that single candidate will be from the relevant
 prompt history.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} Just for completeness, an in order to improve
+<li id="fn6"><p>Just for completeness, an in order to improve
 copy-pasteability, the definition of <code>basicSubmapFromList</code> used a
 lot in this piece of code is:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>basicSubmapFromList</span>
@@ -1397,7 +1371,7 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
     <div class="header">
       27th Jan 2023–17 Jul 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2104 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2103 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
@@ -1690,7 +1664,7 @@ yet still allows people to make use of the alternative filter.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} To put this front and centre:
+<li id="fn1"><p>To put this front and centre:
 the <code>pandoc-sidenote</code> library now features a
 <a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNoteHTML</a>
 module, which is an implementation of what’s discussed in this post!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

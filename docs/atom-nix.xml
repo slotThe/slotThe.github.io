@@ -21,7 +21,7 @@
     <div class="header">
       13th Nov 2023–15 Oct 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1173 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1151 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="/tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
@@ -255,28 +255,7 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
+<li id="fn1"><p>Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
 If you still have this in your flake, you should probably remove it—it might lead to quirky behaviour upon evaluation!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
 I figured that out so you don’t have to.

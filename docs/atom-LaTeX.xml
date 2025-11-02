@@ -21,7 +21,7 @@
     <div class="header">
       13th Apr 2025–13 Sep 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1961 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1958 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
@@ -406,7 +406,7 @@ For more information, also check <a href="https://tony-zorman.com/research#these
 <li id="fn2"><p>It is also much more extensive. Both manuals clock in at around 600 pages,
 but the memoir manual is only about one class!
 There are also a bunch of concrete and extensive examples, which are very good to learn from.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} The different default page layouts for A4 paper, taken from the memoir manual.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The different default page layouts for A4 paper, taken from the memoir manual.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Unless you’re on mobile, I suppose.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Additionally setup with the <code>caption</code> package:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">caption</span>}</span>
@@ -425,14 +425,14 @@ This means one again has the power—and pain—of choice.
 I still think that, for this kind of technical text,
 the look and feel of an old-style font such as Palatino just fits the general “vibe” better,
 but your mileage may vary.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} Don’t forget the usual incantation to disable protrusion for the table of contents, though:</p>
+<li id="fn7"><p>Don’t forget the usual incantation to disable protrusion for the table of contents, though:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand</span>{<span class="ex">\TOC</span>}{</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\microtypesetup</span>{protrusion=false}</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tableofcontents</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\microtypesetup</span>{protrusion=true}</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn8"><p>{-} Also pictured:
+<li id="fn8"><p>Also pictured:
 <a href="https://gwern.net/red">rubrication</a>
 and starting sections with a few bits of small caps,
 which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -456,7 +456,7 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
     <div class="header">
       30th Jan 2025–15 Feb 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1761 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1755 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
@@ -749,8 +749,7 @@ Somewhere between
 <a href="https://phdcomics.com/comics/archive.php?comicid=1832">and this</a>,
 I suppose.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>See for example <a href="https://arxiv.org/abs/2312.13074">this paper</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<pre><code>󠀠</code></pre>
+<li id="fn3"><pre><code>󠀠</code></pre>
 <p>You will excuse me for not doing a proper <code>hyperfine</code> benchmark,
 but I just couldn’t be asked to wait that long.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>In other words, none of this information is new, really, but I haven’t seen it amalgamated all in one place yet.
@@ -758,8 +757,7 @@ If anything, this post will help <em>me</em> remember how and why to do certain 
 <li id="fn5"><p>For example, <code>robust-externalize</code> does not support references inside of externalised pictures,
 and you have no hope to use <code>memoize</code> with something like the <a href="https://arxiv.org/">arXiv</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Otherwise, we would run into the very same problem we are trying to solve.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} 󠀠</p>
-<pre><code>󠀠</code></pre>
+<li id="fn7"><pre><code>󠀠</code></pre>
 <p>The implementation presented here is mostly lifted from
 <a href="https://tex.stackexchange.com/questions/171931/are-the-tikz-libraries-cd-and-external-incompatible-with-one-another/362104#362104">here</a>
 and
@@ -768,8 +766,7 @@ all credit goes to the brave people on the TeX.stackexchange
 who actually know what they’re doing.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p><a href="https://q.uiver.app/">q.uiver</a> even has that as one of its export options!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>Notice a pattern?<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>{-} 󠀠</p>
-<p>Thanks to
+<li id="fn10"><p>Thanks to
 <a href="https://tex.stackexchange.com/questions/16734/precompiled-preamble-with-tikz-externalize">this answer</a>
 on TeX.stackexchange for figuring all that out so I didn’t have to.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Not that this is something I do particularly often,

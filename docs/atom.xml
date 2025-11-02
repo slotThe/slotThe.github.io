@@ -21,7 +21,7 @@
     <div class="header">
       8th Oct 2025–18 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6564 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6544 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -861,58 +861,46 @@ but honestly this whole thing was so refreshing that I can’t help but recommen
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>If you feel like I’m going too slow, or that I got something wrong, sorry!
 As I said, this is more or less my way of learning and better understanding this style of parsing;
 I am by no means the expert here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Although CBQN seems to have improved since then<!--
   -->—for me, even the nested array version is faster than the recursive approach now.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>I will present many functions in a bottom-up kind of way,
+<li id="fn4"><p>I will present many functions in a bottom-up kind of way,
 where I gradually build them up in the REPL,
 using an example input to showcase the behaviour of the individual array manipulations.
 Usually, proper definitions of <code>Tokenise</code> or <code>Parse</code> (the two functions we’re building)
 will only be given at the very end of each section.
 The input is always indented by four spaces, with the output flush to the left.
 If I refer to an unknown variable further down, it was probably defined in such a block.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
-<p>We could in fact also move <em>replicate</em>
+<li id="fn5"><p>We could in fact also move <em>replicate</em>
 into the calls to <code>ns</code> and <code>𝕩</code>:</p>
 <pre class="bqn"><code>    '0'¨⌾((ts/ns)⊸/) (ts/inp)
 &quot;[0,0,0,0,0]&quot;</code></pre>
 <p>I’m not super well-versed in the ins and outs of CBQN’s performance,
 but from a cursory benchmark with the <code>•_timed</code> modifier,
 it does not seem to make much of a difference.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>As you can see, an opening parenthesis is treated as being inside of the pair,
+<li id="fn6"><p>As you can see, an opening parenthesis is treated as being inside of the pair,
 while a closing one is outside.
 This is fine (even wanted) for this use-case;
 if you want to treat both pairs as being inside of the pair you can use
 <code>+`o-»c</code>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>A questionable API choice, for sure, but I’ll take it!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>{-} The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
+<li id="fn8"><p>The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
 (the same way that CSV does it).
 <em>Everything</em> else is treated as a literal characters, even backslashes!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>{-} 󠀠</p>
-<p>You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
+<li id="fn9"><p>You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
 I figured that perhaps indicating changes in this way is more readable than giving you diffs,
 if only because all context one needs is right there.
 That’s one of the advantages of the complete program fitting on a single screen!<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>I will use this as shorthand for “sub-object and sub-array”.
 Not the best terminology, I suppose, but it will have to do.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>Don’t worry too much about having to use <code>0∾on</code> instead of <code>on</code> here;
+<li id="fn11"><p>Don’t worry too much about having to use <code>0∾on</code> instead of <code>on</code> here;
 this appears because we are starting at depth zero before reading anything.
 Assuming well-formed JSON, this will appear only once at the very end.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>Remember that questionable <em>group</em> API?<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>{-} 󠀠</p>
-<p>I find this process of treating values and keys separately,
+<li id="fn13"><p>I find this process of treating values and keys separately,
 but in a way that they eventually match up at the end,
 almost magical.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn14"><p>With a simple extension to the tokeniser to recognise the constants <code>true</code>, <code>false</code>, and <code>null</code>,
@@ -941,7 +929,7 @@ The resulting representation is probably not super easy to work with<!--
     <div class="header">
       28th Jul 2025–18 Oct 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1857 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1852 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -1176,19 +1164,17 @@ A: Yes.</p>
 <ol>
 <li id="fn1"><p>For the sake of convenience, I will interpret the RFC somewhat loosely in places,
 though hopefully still implementing the gist of it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>{-} BQN doesn’t actually escape non-double-quote characters in strings,
+<li id="fn2"><p>BQN doesn’t actually escape non-double-quote characters in strings,
 but I’ve chosen to write <code>\n</code> here instead of a literal newline for readability.</p>
 <p>Also, I will use
 <a href="https://mlochbaum.github.io/BQN/doc/couple.html">couple</a>
 quite a bit to visualise the different masks in relation to the original character array going in,
 in case you were wondering what that glyph meant.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<p>Since BQN doesn’t do escaping in strings,
+<li id="fn3"><p>Since BQN doesn’t do escaping in strings,
 I make use of
 <a href="https://mlochbaum.github.io/BQN/doc/types.html#characters">character arithmetic</a>
 here, to represent the line feed by its decimal value.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>As you can see, escaping is… fun.
+<li id="fn4"><p>As you can see, escaping is… fun.
 Every character save a double quote is verbatim in BQN strings,
 and double quotes are also escaped using two of them in succession.
 This means that to input the CSV <code>"a"</code>, one would write <code>"""a"""</code>,
@@ -1213,7 +1199,7 @@ and for <code>"""a"",""b"""</code> we have the wonderful
     <div class="header">
       13th Apr 2025–13 Sep 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1961 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1958 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
@@ -1598,7 +1584,7 @@ For more information, also check <a href="https://tony-zorman.com/research#these
 <li id="fn2"><p>It is also much more extensive. Both manuals clock in at around 600 pages,
 but the memoir manual is only about one class!
 There are also a bunch of concrete and extensive examples, which are very good to learn from.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} The different default page layouts for A4 paper, taken from the memoir manual.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The different default page layouts for A4 paper, taken from the memoir manual.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Unless you’re on mobile, I suppose.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>Additionally setup with the <code>caption</code> package:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">caption</span>}</span>
@@ -1617,14 +1603,14 @@ This means one again has the power—and pain—of choice.
 I still think that, for this kind of technical text,
 the look and feel of an old-style font such as Palatino just fits the general “vibe” better,
 but your mileage may vary.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} Don’t forget the usual incantation to disable protrusion for the table of contents, though:</p>
+<li id="fn7"><p>Don’t forget the usual incantation to disable protrusion for the table of contents, though:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand</span>{<span class="ex">\TOC</span>}{</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\microtypesetup</span>{protrusion=false}</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tableofcontents</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\microtypesetup</span>{protrusion=true}</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn8"><p>{-} Also pictured:
+<li id="fn8"><p>Also pictured:
 <a href="https://gwern.net/red">rubrication</a>
 and starting sections with a few bits of small caps,
 which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1648,7 +1634,7 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
     <div class="header">
       30th Jan 2025–15 Feb 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1761 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1755 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
@@ -1941,8 +1927,7 @@ Somewhere between
 <a href="https://phdcomics.com/comics/archive.php?comicid=1832">and this</a>,
 I suppose.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>See for example <a href="https://arxiv.org/abs/2312.13074">this paper</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<pre><code>󠀠</code></pre>
+<li id="fn3"><pre><code>󠀠</code></pre>
 <p>You will excuse me for not doing a proper <code>hyperfine</code> benchmark,
 but I just couldn’t be asked to wait that long.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>In other words, none of this information is new, really, but I haven’t seen it amalgamated all in one place yet.
@@ -1950,8 +1935,7 @@ If anything, this post will help <em>me</em> remember how and why to do certain 
 <li id="fn5"><p>For example, <code>robust-externalize</code> does not support references inside of externalised pictures,
 and you have no hope to use <code>memoize</code> with something like the <a href="https://arxiv.org/">arXiv</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Otherwise, we would run into the very same problem we are trying to solve.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} 󠀠</p>
-<pre><code>󠀠</code></pre>
+<li id="fn7"><pre><code>󠀠</code></pre>
 <p>The implementation presented here is mostly lifted from
 <a href="https://tex.stackexchange.com/questions/171931/are-the-tikz-libraries-cd-and-external-incompatible-with-one-another/362104#362104">here</a>
 and
@@ -1960,8 +1944,7 @@ all credit goes to the brave people on the TeX.stackexchange
 who actually know what they’re doing.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p><a href="https://q.uiver.app/">q.uiver</a> even has that as one of its export options!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>Notice a pattern?<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>{-} 󠀠</p>
-<p>Thanks to
+<li id="fn10"><p>Thanks to
 <a href="https://tex.stackexchange.com/questions/16734/precompiled-preamble-with-tikz-externalize">this answer</a>
 on TeX.stackexchange for figuring all that out so I didn’t have to.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Not that this is something I do particularly often,
@@ -1988,7 +1971,7 @@ Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<
     <div class="header">
       8th Nov 2024–13 Nov 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3094 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3093 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -2366,7 +2349,7 @@ Solving <span class="math inline">k^2 + 2k = n^2 - 1</span> for <span class="mat
 Substituting <span class="math inline">k=n-1</span>,
 we have to generate <span class="math inline">2n - 1</span> frequencies,
 the values of which indeed sum up to <span class="math inline">(n-1)^2 + 2(n-1) = n^2 - 1</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} Line breaks in the output for clarity.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Line breaks in the output for clarity.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>In fact, in APL this is the only way to do this—there is no other sorting primitive!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Note that, in particular, we are interested in left inverses of all the <code>fᵢ</code>.
 This is a bit in opposition to the facilities that BQN provides by default, like
@@ -2412,7 +2395,7 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
     <div class="header">
       27th Oct 2024–28 Oct 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22378 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22372 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
@@ -5264,7 +5247,7 @@ At that point, Sweedler notation becomes extremely concise and much easier to re
 <p>Let’s get back to that array programming thing, though.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>This is actually also true for the respective user-defined analogues,
 but let’s talk about <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">that</a> later.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>{-} The grouping of days is mostly done so the TOC doesn’t completely explode,
+<li id="fn9"><p>The grouping of days is mostly done so the TOC doesn’t completely explode,
 while retaining some sort of directional aid.
 In either case, it’s probably fastest to just <code>C-f</code> for the respective day.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>The <code>•</code> is not a separate function, but really part of the name <code>•FLines</code>.
@@ -5288,7 +5271,7 @@ such that the restriction to them yields the action we care about.
 This could, for example, be the regular action of ℝ on itself,
 but I personally don’t think that this helps much with reasoning about the original action.</p>
 <p>I swear I will stop with the maths at some point.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>{-} All whitespace here, and indeed in most places, is completely redundant.
+<li id="fn12"><p>All whitespace here, and indeed in most places, is completely redundant.
 I choose to still include it, to “logically group” certain operations.
 It helps me with reading the code, anyways.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn13"><p>Or, if you wanted to make it extra confusing,
@@ -5328,8 +5311,8 @@ as it banks on the fact that a node never contains two children
 (in which case we would have to try both branches).
 It works for my input, though, so I figured this was good enough.
 Let’s say that tree manipulations are not necessarily my favourite thing to do in an array language.<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn26"><p>{-} I’m reversing the list because we have to right fold over it later.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn27"><p>{-} For example,</p>
+<li id="fn26"><p>I’m reversing the list because we have to right fold over it later.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>For example,</p>
 <pre class="bqn"><code>    DecToHex 15
 &quot;0f&quot;
     DecToHex 32
@@ -5351,7 +5334,7 @@ lf    ⇐ @+10</code></pre>
   }&quot;&quot;
 }</code></pre>
 <a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn33"><p>{-} Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33"><p>Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn34"><p>We can’t just use <code>⟨«,»,«˘,»˘⟩¨&lt;x</code>
 because the <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic role</a> of a list is a subject,
 which can’t be applied as a function.<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -5395,7 +5378,7 @@ shouting at his PhD students because they were writing assembly.
 Obviously, this just wasted resources because it was much too high-level,
 and they should have written their programs directly in binary instead.
 A more civilised age.<a href="#fnref45" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn46"><p>{-} There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
+<li id="fn46"><p>There always seems to be at least one day each year where inspecting one’s input is the expected way to solve the problem.
 Honestly, I’m not sure what to think of that;
 I used to really dislike these days, but this one was unexpectedly fun.
 It <em>is</em> a breath of fresh air after over 20 days of solving puzzles, I guess.
@@ -5420,7 +5403,7 @@ is a lot more relaxed than trying to bash out both parts before work every day.<
     <div class="header">
       20th Jul 2024–1 Feb 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1208 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1193 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
@@ -5615,21 +5598,7 @@ and these notes are not necessarily written/ready for public consumption.
 Oh well.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Especially because, unlike in Gwern’s case, this site is not super complex to build;
 there aren’t any other moving parts that would require me to leave Haskell.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Mind the <code>BlockArguments</code>—and the “s”.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Mind the <code>BlockArguments</code>—and the “s”.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Seemingly as always when subprocesses are involved,
 the hardest thing is to actually get all of the incantations right
 such that buffering does not deadlock your program indefinitely.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -5652,7 +5621,7 @@ such that buffering does not deadlock your program indefinitely.<a href="#fnref4
     <div class="header">
       11th May 2024–2 Jun 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1044 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1040 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#anki'." href="/tags/anki.html" rel="tag">#anki</a>   <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
@@ -5816,7 +5785,7 @@ Nice.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} I will not waste the reader’s time with an introduction of what Anki is or why spaced repetition is useful;
+<li id="fn1"><p>I will not waste the reader’s time with an introduction of what Anki is or why spaced repetition is useful;
 <a href="https://gwern.net/spaced-repetition">other</a>
 <a href="https://augmentingcognition.com/ltm.html">people</a>
 have done a much better job at that than I ever could.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -5829,12 +5798,12 @@ or
 <li id="fn3"><p>For the specific example of maths and cloze deletions,
 one needs to set <code>anki-editor-break-consecutive-braces-in-LaTeX</code>.
 This should probably be the default—and perhaps it will be in the future!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} As you can see, I haven’t bothered with fancy CSS to make the cards pretty. Content over form.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>As you can see, I haven’t bothered with fancy CSS to make the cards pretty. Content over form.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>One could solve this by making <code>anki-editor</code> output an extra <code>div</code> that it only wraps display maths with<!--
   -->—and I have done that in the past—but using <code>preview.sty</code> feels much cleaner to me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
+<li id="fn6"><p>For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
 In case you are not bound by these restrictions—or more adventurous than me—I would recommend you use lualatex instead.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} It should be noted that Anki—thankfully—caches previews by hashing their contents,
+<li id="fn7"><p>It should be noted that Anki—thankfully—caches previews by hashing their contents,
 and reuses the same SVG every time it encounters a LaTeX fragment with the same hash.
 Thus, if you want to completely regenerate everything, just delete the respective directory.
 For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -5857,7 +5826,7 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
     <div class="header">
       23rd Mar 2024–1 May 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1251 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1245 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
@@ -6043,12 +6012,10 @@ Having a type signature like</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
+<li id="fn1"><p>I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
 what are you talking about‽<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Though obviously it—right now—only covers a meagre subset of what <code>jq</code> can do.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>To appease… someone reading this,
+<li id="fn3"><p>To appease… someone reading this,
 lambdas can also be written in Rust-esque notation,
 and can take multiple arguments:</p>
 <pre><code>|x, y| x y  ≡  λx y → x y  ≡  \x -&gt; \y -&gt; x y</code></pre>
@@ -6056,8 +6023,8 @@ and can take multiple arguments:</p>
 <li id="fn4"><p>As in, <code>(f | g)(x)</code> means <code>g(f(x))</code>,
 to mirror how shells use pipes.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>After all, a dynamically typed language is just a statically typed one with a single base type.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} The paper is freely available <a href="https://arxiv.org/abs/1306.6032">on the arXiv</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} I’m quite surprised—though happy—by the type checker being this fast!
+<li id="fn6"><p>The paper is freely available <a href="https://arxiv.org/abs/1306.6032">on the arXiv</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I’m quite surprised—though happy—by the type checker being this fast!
 Likewise, I’m glad that all of the praise I’ve read about
 <a href="https://en.wikipedia.org/wiki/Normalisation_by_evaluation">normalisation by evaluation</a>
 was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -6081,7 +6048,7 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
     <div class="header">
       2nd Mar 2024–15 Aug 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1018 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1012 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
@@ -6263,17 +6230,14 @@ Click
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} 󠀠</p>
-<p>In daily usage, I have this bound to <code>C-u C-w</code>,
+<li id="fn1"><p>In daily usage, I have this bound to <code>C-u C-w</code>,
 where <code>C-w</code> itself is bound to what’s essentially <code>backward-kill-word</code>;
 see <a href="https://gitlab.com/slotThe/dotfiles/-/blob/5929dc10bcbdf0d3531bd6f9940f54f8294a27a3/emacs/lisp/hopf-keybindings.el#L131">here</a>
 for the full function.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>This is a “String for filling to insert at front of new line, or nil for none.”<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>This is helpfully provided by the <code>comment-start</code> variable.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>Notice that the <code>if</code> in the code is really a <code>when</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
-<p>It is in moments like these that I’m extremely glad about<!--
+<li id="fn4"><p>Notice that the <code>if</code> in the code is really a <code>when</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>It is in moments like these that I’m extremely glad about<!--
   -->—albeit a bit scared of—<!--
   -->Emacs’s infinite customisability.
 If something doesn’t work to your liking,
@@ -6301,7 +6265,7 @@ on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft Gi
     <div class="header">
       3rd Jan 2024–5 Jan 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="885 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="881 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
@@ -6462,10 +6426,7 @@ Plus, what <code>paredit-kill</code> kills might be more than the current line.<
 not just ones where I happen to use paredit
 (or <a href="https://github.com/AmaiKinono/puni">puni</a>).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>By “delimiter” I mean parentheses, square brackets, and curly braces.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>This code now also lives <a href="https://github.com/slotThe/yank-delimiters">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This code now also lives <a href="https://github.com/slotThe/yank-delimiters">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -6607,7 +6568,7 @@ and doing so at the start solves <code>esh-autosuggest</code> et al producing ga
     <div class="header">
       13th Nov 2023–15 Oct 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1173 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1151 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="/tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
@@ -6841,28 +6802,7 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
+<li id="fn1"><p>Note that <code>xmonad-contrib.modernise.${system}</code> was only temporarily needed until nixpkgs caught up with some upstream changes in XMonad.
 If you still have this in your flake, you should probably remove it—it might lead to quirky behaviour upon evaluation!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note the presence of the <code>enableConfiguredRecompile</code> flag—this is necessary for <code>M-q</code> recompilation to work out of the box!
 I figured that out so you don’t have to.
@@ -6897,7 +6837,7 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
     <div class="header">
       22nd Oct 2023–27 Oct 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1148 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1144 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
@@ -7091,9 +7031,7 @@ so here we are.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩�
 <li id="fn2"><p>And also eglot, judging from a cursory test.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Even more so because smart people have already written this for me;
 see the docstring.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>This code assumes that lsp-mode uses
+<li id="fn4"><p>This code assumes that lsp-mode uses
 <a href="https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization">plists instead of hash tables for deserialisation</a>.
 If you don’t have the <code>lsp-use-plists</code> variable set<!--
   -->—and have recompiled lsp-mode afterwards—<!--
@@ -7106,7 +7044,7 @@ but that never led anywhere.
 <em>Someone</em> should pick this back up, I suppose.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Lsp-mode also provides <code>lsp-avy-lens</code>,
 so this is not really an actual problem.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} For when hovering inexplicably breaks again,
+<li id="fn7"><p>For when hovering inexplicably breaks again,
 this also enables for a quick definition of “show the type signature of the thing at point”:</p>
 <pre class="emacs-lisp"><code>(defun slot/lsp-show-type-signature ()
   &quot;Show the type signature for the thing at
@@ -7138,7 +7076,7 @@ does, just as an extra function.&quot;
     <div class="header">
       10th Sep 2023–15 Oct 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1622 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1615 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
@@ -7338,7 +7276,7 @@ all this entails is to amend the respective line in <code>TeX-fold-math-spec-lis
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} If you don’t have AUCTeX installed for some reason<!--
+<li id="fn1"><p>If you don’t have AUCTeX installed for some reason<!--
   -->—why are you reading this?—<!--
   -->then trying out the following snippet might also get the message across:</p>
 <pre class="emacs-lisp"><code>(add-hook
@@ -7348,7 +7286,7 @@ all this entails is to amend the respective line in <code>TeX-fold-math-spec-lis
                '((&quot;lambda&quot; . ?λ)))
    (prettify-symbols-mode)))</code></pre>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn2"><p>{-} The citation itself is from the documentation of <code>compose-region</code>,
+<li id="fn2"><p>The citation itself is from the documentation of <code>compose-region</code>,
 as that is what the <code>CHARACTER</code> argument of <code>prettify-symbols-alist</code> can be.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>For the interested reader:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand*</span>{<span class="ex">\defeq</span>}{<span class="co">%</span></span>
@@ -7357,7 +7295,7 @@ as that is what the <code>CHARACTER</code> argument of <code>prettify-symbols-al
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">\hbox</span>{<span class="fu">\scriptsize</span>.}<span class="fu">\hbox</span>{<span class="fu">\scriptsize</span>.}}}<span class="co">%</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  =}</span></code></pre></div>
 <p>I think that this looks better than <code>amsmath</code>’s <code>\coloneq</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} <strong>Disclaimer</strong>:
+<li id="fn4"><p><strong>Disclaimer</strong>:
 Pretty much all of the code in this section was written by
 <a href="https://git.tecosaur.net/">tecosaur</a>,
 from whose
@@ -7393,7 +7331,7 @@ just a small excerpt of the default <code>tex--prettify-symbols-alist</code>:</p
 (&quot;\\mathcal{Y}&quot; . ?𝒴)
 (&quot;\\mathcal{Z}&quot; . ?𝒵)</code></pre>
 <a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn6"><p>{-} The <code>TeX-fold-macro-spec-list</code> can be used for any macro outside of math-mode.
+<li id="fn6"><p>The <code>TeX-fold-macro-spec-list</code> can be used for any macro outside of math-mode.
 One application is to define
 prettier versions of <code>\[sub]section</code> commands,
 or even <code>\item</code>:</p>
@@ -7410,9 +7348,7 @@ or even <code>\item</code>:</p>
 is a tad more complicated,
 as some codepoints are not where you expect them to be,
 so some sort of lookup table has to be consulted as well.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>Ideally, one would make use of the new <code>setopt</code> macro here,
+<li id="fn8"><p>Ideally, one would make use of the new <code>setopt</code> macro here,
 but the fact that <code>TeX-fold-math-spec-list</code> accepts functions in this way was only documented in
 <a href="https://git.savannah.gnu.org/cgit/auctex.git/commit/?id=3c03ee089a2b74d0d5a0285f983a9eba82dc04a5">3c03ee08</a>,
 which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -7440,7 +7376,7 @@ which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-ba
     <div class="header">
       26th Aug 2023–29 Aug 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1770 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1750 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
@@ -7731,28 +7667,23 @@ such that only one keybinding is needed:</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} The term “S-expression” is not super accurate,
+<li id="fn1"><p>The term “S-expression” is not super accurate,
 and should be substituted with something like “semantic unit” instead,
 as I’m also talking about things that aren’t necessarily S-expressions as Emacs knows them.
 I mainly chose the term for brevity, and because it’s hopefully more familiar—and thus less scary—to the reader.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>{-} As is common,
+<li id="fn2"><p>As is common,
 I will use <code>|</code>
 to indicate the position of the point.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>I wish I hadn’t.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p><code>q-char</code> is the char that the user input,
+<li id="fn4"><p><code>q-char</code> is the char that the user input,
 but quoted as a regular expression via <code>regexp-quote</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
-<p>As you’ve probably already guessed,
+<li id="fn5"><p>As you’ve probably already guessed,
 the <code>^</code>’s are supposed to signal the marked region.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>As in</p>
 <pre class="emacs-lisp"><code>'|( &quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot; )
 ; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
 <a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn7"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p><code>search-forward-char</code> is the second argument of <code>change-inner*</code>;
+<li id="fn7"><p><code>search-forward-char</code> is the second argument of <code>change-inner*</code>;
 if the function was called with that,
 we have already recursed once, so stop.
 <code>char</code> is the character that the user actually input.
@@ -7772,16 +7703,7 @@ of course,
 is that I just wanted my code to work <em>right now</em>,
 instead of having to wait for upstream to fix something.
 At some point this should definitely be fixed in puni, though.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Using a recursive local function also incidentally fixes <a href="https://github.com/magnars/change-inner.el/issues/9">#9</a>.
+<li id="fn11"><p>Using a recursive local function also incidentally fixes <a href="https://github.com/magnars/change-inner.el/issues/9">#9</a>.
 Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p><code>M-o</code> will never be something other than <code>other-window</code>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
@@ -7928,7 +7850,7 @@ However, this is not important for what follows, so I simply omitted it.</p>
     <div class="header">
       20th Jun 2023–1 Feb 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2980 words">12 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2970 words">12 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
@@ -8548,19 +8470,11 @@ suggestions for other styles would be most welcome!<a href="#fnref2" class="foot
 From changing Hakyll’s default <a href="./pygmentising-hakyll.html">syntax highlighting</a>,
 to swapping out footnotes and producing this very <a href="./block-sidenotes.html">sidenote</a>,
 almost anything one can imagine is possible.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>In the actual code,
+<li id="fn4"><p>In the actual code,
 I also check for a <code>bib</code> boolean field,
 in order to decide whether this transformation should actually be applied.
 If you are interested in that, see the relevant <a href="https://github.com/slotThe/slotThe.github.io/commit/62c6072243ee06d8df39813b7e35a6fd0ea1fe9d">commit</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>This example also nicely showcases the power of the <code>Walkable</code> type class.
+<li id="fn5"><p>This example also nicely showcases the power of the <code>Walkable</code> type class.
 Via the</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Walkable</span> <span class="dt">Block</span> <span class="dt">Pandoc</span></span></code></pre></div>
 <p>instance,
@@ -8586,7 +8500,7 @@ Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-back
     <div class="header">
       12th Jun 2023–30 Aug 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1481 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1479 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
@@ -8795,7 +8709,7 @@ one just needs to substitute the <span class="math inline">\mathtt{k}</span>-lin
 with a <a href="https://ncatlab.org/nlab/show/copower">Copower</a>.
 I have written about these things <a href="https://tony-zorman.com/posts/weighted-colimits.html#copowers">before</a>,
 just in a different context.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>{-} 󠀠
+<li id="fn3"><p>󠀠
 󠀠</p>
 <p>The big direct sum
 <span class="math inline">\bigoplus_{f \colon V \to W}</span> is shorthand for <span class="math inline">\bigoplus_{V, W} \bigoplus_{f \in \mathcal{V}(V, W)}</span>.
@@ -8804,7 +8718,7 @@ but we are in <span class="math inline">\mathsf{Vect}_{\mathtt{k}}</span>,
 so writing a direct sum here is appropriate.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>This may or may not be an equivalence relation,
 but we can always complete to one.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>{-} As an aside (literally),
+<li id="fn5"><p>As an aside (literally),
 equipped with the tensor product of <span class="math inline">\mathbb{S}</span>-modules,
 it’s not so hard to define the <em>plethysm product</em> <span class="math inline">\odot</span>,
 which is actually the one that operads are monoids for:
@@ -8920,7 +8834,7 @@ sudo make install</code></pre>
     <div class="header">
       6th May 2023–17 Jun 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4147 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4133 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
@@ -9350,11 +9264,7 @@ plus, building something yourself is much more rewarding than buying it!</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>Not pictured: I braided the cable,
+<li id="fn1"><p>Not pictured: I braided the cable,
 which makes it much more manageable.
 The default cable is <em>long</em>,
 which is not at all necessary since the keyboard is always rather close to my laptop.
@@ -9373,22 +9283,17 @@ for me it’s much faster to hit a capital <code>E</code>
 than having to do an awkward stretch in order to reach <code>6</code> or—even worse—<code>F6</code>.
 On the Atreus everything is close together,
 which means these kinds of big stretches are a thing of the past!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>The outer two keys would suffer from the same issue, but these are actually very easy to hit with one’s palm. I press the two keys under the middle finger with a thumb or middle finger curl, both of which feel fine for me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Thanks, Emacs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>This was very straightforward—after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
 After, that, one simply has to execute</p>
 <pre class="console"><code>$ xset r rate 230 70
 $ setxkbmap -option compose:menu</code></pre>
 <p>to get some sane key repeat and compose key settings, and that’s it!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>{-} Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>󠀠</p>
-<p>At first I was very surprised to see <code>x</code> so far up this list—at least,
+<li id="fn9"><p>Keeping in line with X11 conventions, <code>M4</code> denotes the Super key, and <code>M1</code> is for Alt.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>At first I was very surprised to see <code>x</code> so far up this list—at least,
 until I remembered that <code>M1-x</code> and <code>C-x</code> exist!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Note that <code>S+^</code> and <code>S+!</code> are tap-dances for technical reasons:
 QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -9414,7 +9319,7 @@ QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a 
     <div class="header">
       19th Mar 2023–12 Jul 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1313 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1308 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
@@ -9608,9 +9513,7 @@ Channel</a> are quite glad about this as well!</p>
 <a href="https://noogle.dev/">noogle</a>,
 forges like <a href="https://github.com/">Git­Hub</a>,
 … the list goes on.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>{-} 󠀠</p>
-<p>󠀠</p>
-<p>This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This uses <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-EZConfig.html">XMonad.Util.EZConfig</a> syntax.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>As an aside, this is an ideal use case for <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>.
 With that module, one could define an equivalent keybinding along the lines of</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">searchKeys ::</span> [(<span class="dt">String</span>, <span class="dt">X</span> ())]</span>
@@ -9621,7 +9524,7 @@ With that module, one could define an equivalent keybinding along the lines of</
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  ]</span></code></pre></div>
 <p>This is especially useful when multiple search engines are involved;
 see <a href="#further-tweaks">below</a> or check out <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">my configuration</a> for a complete example.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>{-} For the following code examples, you may need to place extra
+<li id="fn4"><p>For the following code examples, you may need to place extra
 pragmas along the lines of</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE BlockArguments #-}</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE LambdaCase     #-}</span></span>
@@ -9629,7 +9532,7 @@ pragmas along the lines of</p>
 <p>at the top of your XMonad configuration file.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>In this case here, that single candidate will be from the relevant
 prompt history.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} Just for completeness, an in order to improve
+<li id="fn6"><p>Just for completeness, an in order to improve
 copy-pasteability, the definition of <code>basicSubmapFromList</code> used a
 lot in this piece of code is:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>basicSubmapFromList</span>
@@ -9659,7 +9562,7 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
     <div class="header">
       19th Feb 2023–3 Jun 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="965 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="964 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
@@ -9819,7 +9722,7 @@ accordingly. For example, it may be useful to set</p>
 <p>and so on.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>This behaviour may be changed by customising the
 <code>latex-change-env-labels</code> variable.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>{-} If you look closely at the video, you can see that, while the
+<li id="fn6"><p>If you look closely at the video, you can see that, while the
 label changes, the “Lemma” before the reference does not. This
 would require more sophisticated regular expressions, but—reading
 <code>latex​-​change-env-labels</code> and making some assumptions—it certainly
@@ -9843,7 +9746,7 @@ seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink"
     <div class="header">
       27th Jan 2023–17 Jul 2024
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2104 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2103 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
@@ -10136,7 +10039,7 @@ yet still allows people to make use of the alternative filter.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>{-} To put this front and centre:
+<li id="fn1"><p>To put this front and centre:
 the <code>pandoc-sidenote</code> library now features a
 <a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNoteHTML</a>
 module, which is an implementation of what’s discussed in this post!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -11643,7 +11546,7 @@ but I’m certainly not going to change my habits if I can instead change my edi
     <div class="header">
       15th Oct 2022–13 Mar 2023
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3771 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3770 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
@@ -12164,7 +12067,7 @@ Riehl’s <a href="https://math.jhu.edu/~eriehl/context.pdf">Category Theory in 
 <li id="fn6"><p>By sending <span class="math inline">a</span> to <span class="math inline">\{0, 1\}</span>, <span class="math inline">b</span> to <span class="math inline">\{1\}</span>, and <span class="math inline">\varphi</span> to the
 arrow <span class="math inline">\{0, 1\} \longrightarrow \{1\}</span>, which exists because
 <span class="math inline">\{1\}</span> is the terminal set.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>{-} These things are actually all other the place: for example,
+<li id="fn7"><p>These things are actually all other the place: for example,
 the Yoneda embedding itself is dense if the category is
 essentially small. Further, if you like higher category
 theory, you will appreciate that the simplex category being
