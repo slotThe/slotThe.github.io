@@ -12,9 +12,10 @@ from fontTools.ttLib import TTFont
 code_font = "hopf"
 text_font = "Alegreya"
 title_font = "Vollkorn"
+latex_font = "KaTeX"
 
 
-def used_glyphs(path: str) -> tuple[str, str, str]:
+def used_glyphs(path: str) -> tuple[str, str, str, str]:
     html = [  # Get HTML for all pages
         BeautifulSoup(Path(f"{p}/{f}").read_text(), "html.parser")
         for (p, _, fs) in os.walk(path)
@@ -46,16 +47,14 @@ def used_glyphs(path: str) -> tuple[str, str, str]:
     [normal.update(page.get_text()) for page in html]
 
     # Return only the relevant glyphs for each of the fonts.
-    return (
-        "".join(code),
-        "".join(title),
-        "°▸▾".join(normal),
-    )
+    return "".join(code), "".join(title), "°▸▾".join(normal), "".join(latex)
 
 
 def optimise_font(in_file: str, out_file: str, text: str) -> None:
+    before_size = os.path.getsize(in_file)  # might be that in_file = out_file
+
     options = Options(hinting=False, desubroutinize=True)
-    if text_font in in_file:
+    if text_font in in_file or latex_font in in_file:
         options.layout_features = ["*"]  # small-caps et al
     font = TTFont(in_file, lazy=True)
     font.flavor = "woff2"
@@ -64,9 +63,10 @@ def optimise_font(in_file: str, out_file: str, text: str) -> None:
     subs.subset(font)
     font.save(out_file)
     font.close()
+
     print(
         f"Size for {Path(in_file).stem} changed from "
-        f"{os.path.getsize(in_file) / 1024:.1f}KB "
+        f"{before_size / 1024:.1f}KB "
         f"to {os.path.getsize(out_file) / 1024:.1f}KB"
     )
 
@@ -74,7 +74,7 @@ def optimise_font(in_file: str, out_file: str, text: str) -> None:
 def main() -> None:
     PR = os.environ["PROJECT_ROOT"]
     in_path = f"{PR}/uncompressed_fonts/"
-    code, title, normal = used_glyphs(f"{PR}/docs")
+    code, title, normal, latex = used_glyphs(f"{PR}/docs")
 
     for font in os.listdir(in_path):
         in_file = in_path + font
@@ -85,6 +85,8 @@ def main() -> None:
             if code_font in in_file
             else title
             if title_font in in_file
+            else latex
+            if latex_font in in_file
             else normal,
         )
 
