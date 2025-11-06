@@ -97,9 +97,16 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *Category Theory and All That* \
+   2025-11-06,
+   [ZMP Seminar](https://www.zmp.uni-hamburg.de/events/seminar.html),
+   Hamburg;
+   [slides](https://codeberg.org/slotThe/zmp25).
+
 - *Categorical Reconstruction Theory* \
    2025-10-21,
-   [Research Seminar Algebra and Mathematical Physics, Hamburg](https://www.math.uni-hamburg.de/home/runkel/ws25-fose.html);
+   [AMP Seminar](https://www.math.uni-hamburg.de/home/runkel/ws25-fose.html),
+   Hamburg;
    [slides](https://codeberg.org/slotThe/amp25).
 
 - *Categorical Reconstruction Theory* \
