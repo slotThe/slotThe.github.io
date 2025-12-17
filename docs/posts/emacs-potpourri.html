@@ -66,6 +66,7 @@
 </ul></li>
 <li><a href="#parentheses-aware-yanking">Parentheses-aware yanking</a></li>
 <li><a href="#make-join-line-handle-comments-sanely">Make <code>join-line</code> handle comments sanely</a></li>
+<li><a href="#converting-markdown-to-element-flavoured-html">Converting markdown to Element-flavoured HTML</a></li>
 </ul>
       </div>
        
@@ -74,9 +75,9 @@
       <div id="content">
         <article>
     <div class="header">
-      22nd Oct 2022–2 Mar 2024
+      22nd Oct 2022–17 Dec 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3258 words">14 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3627 words">15 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="../tags/emacs.html" rel="tag">#emacs</a>
@@ -117,6 +118,7 @@
 </ul></li>
 <li><a href="#parentheses-aware-yanking">Parentheses-aware yanking</a></li>
 <li><a href="#make-join-line-handle-comments-sanely">Make <code>join-line</code> handle comments sanely</a></li>
+<li><a href="#converting-markdown-to-element-flavoured-html">Converting markdown to Element-flavoured HTML</a></li>
 </ul>
   </div>
 
@@ -711,6 +713,88 @@ However,
 with a bit of <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey-patching</a>,
 one can get a result that approximated a sane solution!
 <a href="https://tony-zorman.com/posts/join-lines-comments.html" class="local-link">Here is the corresponding post for this</a>.
+<h2 id="converting-markdown-to-element-flavoured-html">Converting markdown to Element-flavoured <span class="small-caps">html</span><a href="#converting-markdown-to-element-flavoured-html" class="floatleft sec-link">§</a></h2>
+<p></p>
+As sad as it makes me, lots of online communities don’t have a dedicated IRC channel anymore, preferring to use the likes of <a href="https://matrix.org/">Matrix</a><!--
+--><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Or, even worse, Discord.
+But this just means I will not participate in that particular community,
+so there’s nothing more to be said on that front.</div><!--
+--> instead.
+Seemingly, the only client that’s actually usable is the very heavy, electron laden, <a href="https://element.io/en">Element</a>.
+It mostly works <em>fine</em> for quick messages,
+but some things are just so manual as to make using them essentially impossible.
+<p></p>
+For example, there is a spoiler function,
+which creates messages that are obscured until you click on them <spoiler>a bit like this</spoiler>.
+You can send a spoiler by simply prepending your message with <code>\spoiler</code>.
+<p></p>
+<img class="pure-img" src="../images/emacs-potpourri/spoiler.gif" alt="Inserting a /spoiler in Element.">
+<p></p>
+However, what if I wanted to not spoil the entire message, but only a part of it?
+Oh, it’s just
+<div class="highlight-html" style="padding-left: 1em;"><pre><span></span>/html This is a <span class="p">&lt;</span><span class="nt">span</span> <span class="na">data-mx-spoiler</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>cool<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> message
+</pre></div>
+
+<p></p>
+…easy, right?
+<p></p>
+I don’t know why extending the flavour of markdown that they’re using was not on the cards, but I’m certainly not going to write raw <span class="small-caps">html</span> for basic functionality.
+Thankfully, I’m using Emacs—and pandoc exists—so I don’t have to.
+Below is a simple function that looks for spoilers with the syntax <code>||…||</code> (which I’ve seen a few such systems use),
+inserts the correct <code>span</code> by hand, and just chugs the result into pandoc.
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/matrix--convert-text</span><span class="w"> </span><span class="p">(</span><span class="nv">str</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">concat</span>
+<span class="w">   </span><span class="s">&quot;/html &quot;</span>
+<span class="w">   </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">     </span><span class="p">(</span><span class="nf">insert</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">replace-regexp-in-string</span><span class="w">       </span><span class="c1">; manually replace spoilers</span>
+<span class="w">       </span><span class="s">&quot;||[^|\n]+||&quot;</span>
+<span class="w">       </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">match</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;&lt;span data-mx-spoiler=\&quot;\&quot;&gt;%s&lt;/span&gt;&quot;</span>
+<span class="w">                 </span><span class="p">(</span><span class="nv">--reduce-from</span>
+<span class="w">                  </span><span class="p">(</span><span class="nv">replace-regexp-in-string</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">cdr</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span><span class="w"> </span><span class="nv">acc</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="no">t</span><span class="p">)</span>
+<span class="w">                  </span><span class="p">(</span><span class="nv">s-chop-left</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="nv">s-chop-right</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nv">match</span><span class="p">))</span>
+<span class="w">                  </span><span class="o">'</span><span class="p">((</span><span class="s">&quot;&amp;&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;&amp;amp;&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;&lt;&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;&amp;lt;&quot;</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">(</span><span class="s">&quot;&gt;&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;&amp;gt;&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;&amp;quot;&quot;</span><span class="p">)))))</span>
+<span class="w">       </span><span class="nv">str</span><span class="p">))</span>
+<span class="w">     </span><span class="p">(</span><span class="nv">if-let</span><span class="w"> </span><span class="p">((</span><span class="nv">exit-succ</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">zerop</span><span class="w">                 </span><span class="c1">; let pandoc do the rest</span>
+<span class="w">                </span><span class="p">(</span><span class="nf">call-process-region</span>
+<span class="w">                 </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;pandoc&quot;</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="no">nil</span>
+<span class="w">                 </span><span class="s">&quot;--from=markdown&quot;</span><span class="w"> </span><span class="s">&quot;--to=html&quot;</span><span class="w"> </span><span class="s">&quot;--wrap=none&quot;</span><span class="p">))))</span>
+<span class="w">         </span><span class="p">(</span><span class="nf">buffer-string</span><span class="p">)</span>
+<span class="w">       </span><span class="p">(</span><span class="ne">user-error</span><span class="w"> </span><span class="s">&quot;Pandoc conversion failed with exit code %d: %s&quot;</span>
+<span class="w">                   </span><span class="nv">exit-code</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-string</span><span class="p">))))))</span>
+</pre></div>
+
+<p></p>
+In combination with <a href="https://gitlab.com/slotThe/emacs-anywhere">emacs-anywhere</a>,
+I can just bind the conversion and subsequent loading of the message into the clipboard to a key.<!--
+--><label for="sn-8" class="margin-toggle">⊕</label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+󠀠
+<p></p>
+<a href="https://tony-zorman.com/posts/use-package-vc.html" class="local-link">:vc</a> goes brrrrr</div><!--
+-->
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">use-package</span><span class="w"> </span><span class="nv">emacs-anywhere</span>
+<span class="w">  </span><span class="nb">:vc</span><span class="w"> </span><span class="p">(</span><span class="nb">:url</span><span class="w"> </span><span class="s">&quot;https://gitlab.com/slotThe/emacs-anywhere&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">:preface</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/matrix-convert-buffer</span><span class="w"> </span><span class="p">()</span>
+<span class="w">    </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">text</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-substring-no-properties</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))))</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">replace-region-contents</span>
+<span class="w">       </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">)</span>
+<span class="w">       </span><span class="p">(</span><span class="nv">s-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">slot/matrix--convert-text</span><span class="w"> </span><span class="nv">text</span><span class="p">)))))</span>
+<span class="w">  </span><span class="nb">:bind</span><span class="w"> </span><span class="p">(</span><span class="nb">:map</span><span class="w"> </span><span class="nv">emacs-anywhere-mode-map</span>
+<span class="w">              </span><span class="p">(</span><span class="s">&quot;C-c C-e&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">                             </span><span class="p">(</span><span class="nv">slot/matrix-convert-buffer</span><span class="p">)</span>
+<span class="w">                             </span><span class="p">(</span><span class="nv">emacs-anywhere--done</span><span class="p">)))))</span>
+</pre></div>
+
+<p></p>
+The results ends up being much more ergonomic:
+<p></p>
+<img class="pure-img" src="../images/emacs-potpourri/spoiler2.gif" alt="Easier spoiler entry with the new system.">
 
       <!-- Body is included in the above file -->
     </section>

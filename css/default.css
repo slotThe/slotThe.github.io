@@ -558,3 +558,13 @@ img {
         filter: invert(95%) sepia(8%) saturate(114%) hue-rotate(106deg) brightness(102%) contrast(91%);
     }
 }
+
+spoiler {                       /* Spoiler tags */
+    background-color: var(--border-inline-code);
+    color: transparent;
+    user-select: none;
+}
+spoiler:hover {
+    background-color: inherit;
+    color: inherit;
+}

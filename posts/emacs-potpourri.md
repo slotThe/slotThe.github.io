@@ -1,7 +1,6 @@
 ---
 title: A Potpourri of Emacs Tweaks
 date: 2022-10-22
-last-modified: 2024-03-02
 tags: emacs
 ---
 
@@ -590,6 +589,82 @@ with a bit of [monkey-patching],
 one can get a result that approximated a sane solution!
 [Here is the corresponding post for this](https://tony-zorman.com/posts/join-lines-comments.html).
 
+# Converting markdown to Element-flavoured HTML
+
+As sad as it makes me, lots of online communities don't have a dedicated IRC channel anymore, preferring to use the likes of [Matrix](https://matrix.org/)[^8] instead.
+Seemingly, the only client that's actually usable is the very heavy, electron laden, [Element](https://element.io/en).
+It mostly works *fine* for quick messages,
+but some things are just so manual as to make using them essentially impossible.
+
+For example, there is a spoiler function,
+which creates messages that are obscured until you click on them <spoiler>a bit like this</spoiler>.
+You can send a spoiler by simply prepending your message with `\spoiler`.
+
+<img class="pure-img" src="../images/emacs-potpourri/spoiler.gif" alt="Inserting a /spoiler in Element.">
+
+However, what if I wanted to not spoil the entire message, but only a part of it?
+Oh, it's just
+
+``` html
+/html This is a <span data-mx-spoiler="">cool</span> message
+```
+
+…easy, right?
+
+I don't know why extending the flavour of markdown that they're using was not on the cards, but I'm certainly not going to write raw HTML for basic functionality.
+Thankfully, I'm using Emacs—and pandoc exists—so I don't have to.
+Below is a simple function that looks for spoilers with the syntax `||…||` (which I've seen a few such systems use),
+inserts the correct `span` by hand, and just chugs the result into pandoc.
+
+``` emacs-lisp
+(defun slot/matrix--convert-text (str)
+  (concat
+   "/html "
+   (with-temp-buffer
+     (insert
+      (replace-regexp-in-string       ; manually replace spoilers
+       "||[^|\n]+||"
+       (lambda (match)
+         (format "<span data-mx-spoiler=\"\">%s</span>"
+                 (--reduce-from
+                  (replace-regexp-in-string (car it) (cdr it) acc t t)
+                  (s-chop-left 2 (s-chop-right 2 match))
+                  '(("&" . "&amp;") ("<" . "&lt;")
+                    (">" . "&gt;") ("\"" . "&quot;")))))
+       str))
+     (if-let ((exit-succ
+               (zerop                 ; let pandoc do the rest
+                (call-process-region
+                 (point-min) (point-max) "pandoc" t t nil
+                 "--from=markdown" "--to=html" "--wrap=none"))))
+         (buffer-string)
+       (user-error "Pandoc conversion failed with exit code %d: %s"
+                   exit-code (buffer-string))))))
+```
+
+In combination with [emacs-anywhere](https://gitlab.com/slotThe/emacs-anywhere),
+I can just bind the conversion and subsequent loading of the message into the clipboard to a key.[^9]
+
+``` emacs-lisp
+(use-package emacs-anywhere
+  :vc (:url "https://gitlab.com/slotThe/emacs-anywhere")
+  :preface
+  (defun slot/matrix-convert-buffer ()
+    (interactive)
+    (let ((text (buffer-substring-no-properties (point-min) (point-max))))
+      (replace-region-contents
+       (point-min) (point-max)
+       (s-trim (slot/matrix--convert-text text)))))
+  :bind (:map emacs-anywhere-mode-map
+              ("C-c C-e" . (lambda () (interactive)
+                             (slot/matrix-convert-buffer)
+                             (emacs-anywhere--done)))))
+```
+
+The results ends up being much more ergonomic:
+
+<img class="pure-img" src="../images/emacs-potpourri/spoiler2.gif" alt="Easier spoiler entry with the new system.">
+
 [XMonad]: https://xmonad.org
 [cfg:emacs:erc]: https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/lisp/erc-config.el
 [cfg:emacs:inhibit]: https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51
@@ -666,3 +741,13 @@ one can get a result that approximated a sane solution!
       I know about [eshell-z](https://github.com/xuchunyang/eshell-z),
       but since I'm using zoxide within zsh anyways
       it seems prudent to not depend on an additional package here.
+
+[^8]: Or, even worse, Discord.
+      But this just means I will not participate in that particular community,
+      so there's nothing more to be said on that front.
+
+[^9]: {-} 󠀠
+
+      󠀠
+
+      [:vc](https://tony-zorman.com/posts/use-package-vc.html) goes brrrrr

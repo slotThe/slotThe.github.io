@@ -2713,9 +2713,9 @@ certainly know which of the two I’d rather write!</p>
     <updated>2022-10-22T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      22nd Oct 2022–2 Mar 2024
+      22nd Oct 2022–17 Dec 2025
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3265 words">14 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3634 words">15 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
@@ -3179,6 +3179,63 @@ and is thus quite useless for a majority of cases</p>
 with a bit of <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey-patching</a>,
 one can get a result that approximated a sane solution!
 <a href="https://tony-zorman.com/posts/join-lines-comments.html">Here is the corresponding post for this</a>.</p>
+<h2 id="converting-markdown-to-element-flavoured-html">Converting markdown to Element-flavoured HTML</h2>
+<p>As sad as it makes me, lots of online communities don’t have a dedicated IRC channel anymore, preferring to use the likes of <a href="https://matrix.org/">Matrix</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> instead.
+Seemingly, the only client that’s actually usable is the very heavy, electron laden, <a href="https://element.io/en">Element</a>.
+It mostly works <em>fine</em> for quick messages,
+but some things are just so manual as to make using them essentially impossible.</p>
+<p>For example, there is a spoiler function,
+which creates messages that are obscured until you click on them <spoiler>a bit like this</spoiler>.
+You can send a spoiler by simply prepending your message with <code>\spoiler</code>.</p>
+<p><img class="pure-img" src="../images/emacs-potpourri/spoiler.gif" alt="Inserting a /spoiler in Element."></p>
+<p>However, what if I wanted to not spoil the entire message, but only a part of it?
+Oh, it’s just</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>/html This is a <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> data-mx-spoiler</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="dt">&gt;</span>cool<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> message</span></code></pre></div>
+<p>…easy, right?</p>
+<p>I don’t know why extending the flavour of markdown that they’re using was not on the cards, but I’m certainly not going to write raw HTML for basic functionality.
+Thankfully, I’m using Emacs—and pandoc exists—so I don’t have to.
+Below is a simple function that looks for spoilers with the syntax <code>||…||</code> (which I’ve seen a few such systems use),
+inserts the correct <code>span</code> by hand, and just chugs the result into pandoc.</p>
+<pre class="emacs-lisp"><code>(defun slot/matrix--convert-text (str)
+  (concat
+   &quot;/html &quot;
+   (with-temp-buffer
+     (insert
+      (replace-regexp-in-string       ; manually replace spoilers
+       &quot;||[^|\n]+||&quot;
+       (lambda (match)
+         (format &quot;&lt;span data-mx-spoiler=\&quot;\&quot;&gt;%s&lt;/span&gt;&quot;
+                 (--reduce-from
+                  (replace-regexp-in-string (car it) (cdr it) acc t t)
+                  (s-chop-left 2 (s-chop-right 2 match))
+                  '((&quot;&amp;&quot; . &quot;&amp;amp;&quot;) (&quot;&lt;&quot; . &quot;&amp;lt;&quot;)
+                    (&quot;&gt;&quot; . &quot;&amp;gt;&quot;) (&quot;\&quot;&quot; . &quot;&amp;quot;&quot;)))))
+       str))
+     (if-let ((exit-succ
+               (zerop                 ; let pandoc do the rest
+                (call-process-region
+                 (point-min) (point-max) &quot;pandoc&quot; t t nil
+                 &quot;--from=markdown&quot; &quot;--to=html&quot; &quot;--wrap=none&quot;))))
+         (buffer-string)
+       (user-error &quot;Pandoc conversion failed with exit code %d: %s&quot;
+                   exit-code (buffer-string))))))</code></pre>
+<p>In combination with <a href="https://gitlab.com/slotThe/emacs-anywhere">emacs-anywhere</a>,
+I can just bind the conversion and subsequent loading of the message into the clipboard to a key.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<pre class="emacs-lisp"><code>(use-package emacs-anywhere
+  :vc (:url &quot;https://gitlab.com/slotThe/emacs-anywhere&quot;)
+  :preface
+  (defun slot/matrix-convert-buffer ()
+    (interactive)
+    (let ((text (buffer-substring-no-properties (point-min) (point-max))))
+      (replace-region-contents
+       (point-min) (point-max)
+       (s-trim (slot/matrix--convert-text text)))))
+  :bind (:map emacs-anywhere-mode-map
+              (&quot;C-c C-e&quot; . (lambda () (interactive)
+                             (slot/matrix-convert-buffer)
+                             (emacs-anywhere--done)))))</code></pre>
+<p>The results ends up being much more ergonomic:</p>
+<p><img class="pure-img" src="../images/emacs-potpourri/spoiler2.gif" alt="Easier spoiler entry with the new system."></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
@@ -3228,6 +3285,10 @@ but since I’m using zoxide within zsh anyways
 it seems prudent to not depend on an additional package here.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>Of course, the <em>real problem</em> is my lack of discipline,
 but I’m certainly not going to change my habits if I can instead change my editor around me!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Or, even worse, Discord.
+But this just means I will not participate in that particular community,
+so there’s nothing more to be said on that front.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p><a href="https://tony-zorman.com/posts/use-package-vc.html">:vc</a> goes brrrrr<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
