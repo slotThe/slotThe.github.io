@@ -52,11 +52,11 @@ siteURL = "https://tony-zorman.com"
 config :: Configuration
 config = defaultConfiguration
   { destinationDirectory = "docs"
-  , ignoreFile = (&&) <$> ignoreFiles' <*> ignoreFile defaultConfiguration
+  , ignoreFile = (||) <$> ignoreFile defaultConfiguration <*> ignoreFile'
   }
  where
-  ignoreFiles' :: FilePath -> Bool
-  ignoreFiles' fp = fp `elem` ["dist-newstyle", "scripts", "uncompressed_fonts"]
+  ignoreFile' :: FilePath -> Bool
+  ignoreFile' fp = fp `elem` ["dist-newstyle", "scripts", "uncompressed_fonts"]
 
 main :: IO ()
 main = hakyllWith config do
