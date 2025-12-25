@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+      <meta name="robots" content="noai, noimageai">
+    
+
+    
+      <title>Fixing Eglot's Hover Signatures · Tony Zorman</title>
+    
+
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/katex.css">
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
+  </head>
+
+  <body>
+    <div class="navbar-space">
+      <div id="navigation">
+        <a href="../" class="menu-title">
+          Tony's blog
+        </a>
+        <ul>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../free-software.html">Free Software</a></li>
+          <li><a href="../about.html">About</a></li>
+        </ul>
+      </div>
+      <!-- A table of contents on the left side, but only for screens
+           that are big enough -->
+      
+      
+    </div>
+    <div class="text-space">
+      <div id="content">
+        <article>
+    <div class="header">
+      25th Dec 2025
+      
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1161 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      
+      
+        <a title="All pages tagged '#emacs'." href="../tags/emacs.html" rel="tag">#emacs</a>
+      
+    </div>
+    <h1 class="post-title">Fixing Eglot's Hover Signatures</h1>
+    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+
+In an
+<a href="./fixing-lsp-mode.html" class="local-link">earlier post</a>
+I talked about making the hover signatures for
+<a href="https://emacs-lsp.github.io/lsp-mode/">lsp-mode</a>
+a little bit more useful.
+Out of the completely irrational desire to use more built-in packages,
+I’ve recently switched to
+<abbr title="[E]macs Poly[glot]"><a href="https://www.gnu.org/software/emacs/manual/html_node/eglot/index.html">eglot</a></abbr>
+as my <span class="small-caps">lsp</span> client of choice,
+which however has the same inclination for showing hover information I don’t care about by default.
+<!--more-->
+<p></p>
+I won’t assume that you have read the lsp-mode post,
+so let’s quickly remind ourselves of the general problem:
+<blockquote>
+<p></p>
+L<span class="small-caps">sp</span> clients have the option of showing useful things on hover.
+In most languages, there is an obvious candidate for this: the type signature of the thing at point.
+Sadly—for some languages—the implementation of the feature is… not great.
+</blockquote>
+<p></p>
+This still holds true two years later,<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">See, among others probably,
+<a href="https://github.com/emacs-lsp/lsp-haskell/issues/151">emacs-lsp/lsp-haskell#151</a>,
+<a href="https://github.com/emacs-lsp/lsp-haskell/pull/187">emacs-lsp/lsp-haskell#187</a>,
+<a href="https://github.com/emacs-lsp/lsp-mode/issues/4362">emacs-lsp/lsp-mode#4362</a>,
+<a href="https://github.com/haskell/haskell-language-server/issues/4724">haskell/haskell-language-server#4724</a>, and
+<a href="https://github.com/emacs-lsp/lsp-mode/pull/1740">emacs-lsp/lsp-mode#1740</a>.</div><!--
+-->
+but this is as good of an excuse as any to become a bit more familiar with the eglot codebase.
+Plus, customising Emacs is just <em>so much fun</em>.
+<hr />
+<p></p>
+Different language servers behave a bit differently here,
+but the default for all of them is pretty “meh”.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">To be clear, I don’t think these are shortcomings of the individual language servers,
+it’s just that there’s a mismatch with the integration into Emacs’s <span class="small-caps">lsp</span> client landscape.
+Breaking long things into several lines is quite normal, after all.</div><!--
+-->
+<ul>
+<li><p></p>
+
+<code>rust-analyzer</code> shows where the thing comes from
+<p></p>
+
+<picture>
+<source srcset="../images/eglot-hover/rust-analyzer1.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/rust-analyzer1-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/rust-analyzer1.png" alt="Hovering over a method shows crate::module::Type">
+</picture>
+<p></p>
+
+I will draw your attention to the second line in the minibuffer;
+the first is just additional context,<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">I do like eglot’s default behaviour of showing that we’re inside of a function call and
+which argument is currently being filled in!</div><!--
+-->
+and the third are available code actions.
+What eglot shows me is that <code>apply_ctx</code> is a method of the <code>Type</code> type,
+sitting in <code>./type/context.rs</code>,
+with <code>./</code> being the root of the crate.</li>
+<li><p></p>
+
+<code>clangd</code> shows the vague type
+<p></p>
+
+<picture>
+<source srcset="../images/eglot-hover/clangd1.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/clangd1-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/clangd1.png" alt="Hovering over fgetc just shows 'function fgetc'">
+</picture></li>
+<li><p></p>
+
+<code>(based)pyright</code> shows something completely useless
+<p></p>
+
+<picture>
+<source srcset="../images/eglot-hover/pyright1.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/pyright1-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/pyright1.png" alt="Hovering over the function 'go' shows '(function) def go(' (because the type signature gets split into multiple lines, see below)">
+</picture></li>
+<li><p></p>
+
+<code>ocaml-lsp</code> sort of shows what I want to see
+<p></p>
+
+<picture>
+<source srcset="../images/eglot-hover/ocaml-lsp1.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/ocaml-lsp1-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/ocaml-lsp1.png" alt="Hovering over a function with a short type shows the full type signature on one line">
+</picture>
+<p></p>
+
+…but only for short type signatures
+<p></p>
+
+<picture>
+<source srcset="../images/eglot-hover/ocaml-lsp2.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/ocaml-lsp2-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/ocaml-lsp2.png" alt="Hovering over a function with a long type signature just shows the first line again">
+</picture></li>
+<li><p></p>
+
+Same issue with <code>haskell-language-server</code>
+<p></p>
+
+<picture>
+<source srcset="../images/eglot-hover/hls1.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/hls1-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/hls1.png" alt="Hovering over a function with a short type shows the full type signature on one line">
+</picture>
+<p></p>
+
+<picture>
+<source srcset="../images/eglot-hover/hls2.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/hls2-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/hls2.png" alt="Hovering over a function with a long type signature just shows the first line">
+</picture></li>
+</ul>
+<hr />
+<p></p>
+What I’d like to achieve instead is a type signature—if I want to know where the thing comes from I can just <code>M-.</code> it.
+<p></p>
+<picture>
+<source srcset="../images/eglot-hover/rust-analyzer2.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/rust-analyzer2-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/rust-analyzer2.png" alt="Hovering over a method shows the full type signature of the method">
+</picture>
+<hr />
+<p></p>
+<picture>
+<source srcset="../images/eglot-hover/clangd2.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/clangd2-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/clangd2.png" alt="Hovering over 'fgetc' shows its actual signature 'extern int fgetc(FILE *__stream)'">
+</picture>
+<hr />
+<p></p>
+<picture>
+<source srcset="../images/eglot-hover/pyright2.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/pyright2-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/pyright2.png" alt="Hovering over a function shows the complete type signature with proper formatting">
+</picture>
+<hr />
+<p></p>
+<picture>
+<source srcset="../images/eglot-hover/ocaml-lsp3.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/ocaml-lsp3-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/ocaml-lsp3.png" alt="Hovering over a function shows the full type signature, even for long signatures">
+</picture>
+<hr />
+<p></p>
+<picture>
+<source srcset="../images/eglot-hover/hls3.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/hls3-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/hls3.png" alt="Hovering over a function shows the full type signature, even for long signatures">
+</picture>
+<hr />
+<p></p>
+In case anyone finds this useful,
+I’ve packaged the source code of this article as <a href="https://codeberg.org/slotThe/eglot-hover">eglot-hover</a>.
+It may need some adjustments depending on the language server implementation,
+but at least for the ones shown above it should work as-is.
+<p></p>
+Onto the fun part.
+<p></p>
+The good<!--
+-->—or bad, depending on your inclination—<!--
+-->thing about lsp-mode is that it’s almost unnecessarily configurable just by user options.
+This includes hover signatures:
+<code>lsp-clients-extract-signature-on-hover</code> is just a <code>cl-defmethod</code>,
+which one can trivially override depending on the name of the currently active language server (one of its arguments).
+<p></p>
+Eglot doesn’t actually do any displaying itself,
+but instead delegates to the built-in <abbr title="Emacs Lisp Documentation, except now it's fully generic">ElDoc</abbr>.
+Scrolling through eglot’s code, we can find integration functions like this:
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">eglot-hover-eldoc-function</span><span class="w"> </span><span class="p">(</span><span class="nv">cb</span><span class="w"> </span><span class="kp">&amp;rest</span><span class="w"> </span><span class="nv">_ignored</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;A member of </span><span class="ss">`eldoc-documentation-functions'</span><span class="s">, for hover.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot-server-capable</span><span class="w"> </span><span class="nb">:hoverProvider</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">buf</span><span class="w"> </span><span class="p">(</span><span class="nf">current-buffer</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">eglot--async-request</span>
+<span class="w">       </span><span class="p">(</span><span class="nv">eglot--current-server-or-lose</span><span class="p">)</span>
+<span class="w">       </span><span class="nb">:textDocument/hover</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot--TextDocumentPositionParams</span><span class="p">)</span>
+<span class="w">       </span><span class="nb">:success-fn</span>
+<span class="w">       </span><span class="p">(</span><span class="nv">eglot--lambda</span><span class="w"> </span><span class="p">((</span><span class="nv">Hover</span><span class="p">)</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nv">range</span><span class="p">)</span>
+<span class="w">        </span><span class="p">(</span><span class="nv">eglot--when-buffer-window</span><span class="w"> </span><span class="nv">buf</span>
+<span class="w">          </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">info</span><span class="w"> </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">seq-empty-p</span><span class="w"> </span><span class="nv">contents</span><span class="p">)</span>
+<span class="w">                         </span><span class="p">(</span><span class="nv">eglot--hover-info</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nv">range</span><span class="p">)))</span>
+<span class="w">                 </span><span class="p">(</span><span class="nv">pos</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="p">(</span><span class="nf">string-match</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="nv">info</span><span class="p">))))</span>
+<span class="w">            </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">pos</span><span class="w"> </span><span class="p">(</span><span class="nf">get-text-property</span><span class="w"> </span><span class="nv">pos</span><span class="w"> </span><span class="ss">'invisible</span><span class="w"> </span><span class="nv">info</span><span class="p">))</span>
+<span class="w">              </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">pos</span><span class="w"> </span><span class="p">(</span><span class="nf">string-match</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="p">(</span><span class="nf">1+</span><span class="w"> </span><span class="nv">pos</span><span class="p">))))</span>
+<span class="w">            </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">cb</span><span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="nb">:echo</span><span class="w"> </span><span class="nv">pos</span><span class="p">))))</span>
+<span class="w">       </span><span class="nb">:hint</span><span class="w"> </span><span class="nb">:textDocument/hover</span><span class="p">))</span>
+<span class="w">    </span><span class="no">t</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+How exactly to handle the callback <code>cb</code> is documented in <code>eldoc-documentation-functions</code>,
+but that’s actually not super important for this application.
+We don’t want to add anything to eglot’s already generated hover signature,
+but completely replace it in certain contexts,
+which essentially boils down to redefining <code>pos</code>.
+A priori, this is a buffer position up until which the docstring will be shown;
+as you can see above, the default implementation is to just show the first “real” line.
+While <code>pos</code> is named as if it should always be a number,
+it gets passed into the callback as a value for the <code>:echo</code> key.
+Quoting the <code>eldoc-documentation-functions</code> documentation:
+<blockquote>
+<p></p>
+<code>:echo</code>, controlling how eldoc-display-in-echo-area should
+present this documentation item in the echo area, to save
+space. If VALUE is a string, echo it instead of DOCSTRING. If
+a number, only echo DOCSTRING up to that character position.
+If skip, don’t echo DOCSTRING at all.
+</blockquote>
+<p></p>
+The value can be a string, in which case that string is displayed verbatim.
+Hence, the only thing we need to do is to <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey patch</a> <code>eglot-hover-eldoc-function</code>,
+match on the name of the current major mode,
+and extract the “correct” signature ourselves if needed.
+<p></p>
+Suppose we are given the magic functions
+<code>eglot-hover--get</code> to extract the signature out of the response that the <span class="small-caps">lsp</span> server sends,
+as well as <code>eglot-hover--hl-string</code> to highlight the resulting string.
+Then, matching just on <a href="https://github.com/emacs-rustic/rustic">rustic-mode</a>,
+the final change is rather small:
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">eglot-hover-eldoc-function</span><span class="w"> </span><span class="p">(</span><span class="nv">cb</span><span class="w"> </span><span class="kp">&amp;rest</span><span class="w"> </span><span class="nv">_ignored</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot-server-capable</span><span class="w"> </span><span class="nb">:hoverProvider</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">buf</span><span class="w"> </span><span class="p">(</span><span class="nf">current-buffer</span><span class="p">)))</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">eglot--async-request</span>
+<span class="w">       </span><span class="p">(</span><span class="nv">eglot--current-server-or-lose</span><span class="p">)</span>
+<span class="w">       </span><span class="nb">:textDocument/hover</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot--TextDocumentPositionParams</span><span class="p">)</span>
+<span class="w">       </span><span class="nb">:success-fn</span>
+<span class="w">       </span><span class="p">(</span><span class="nv">eglot--lambda</span><span class="w"> </span><span class="p">((</span><span class="nv">Hover</span><span class="p">)</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nv">range</span><span class="p">)</span>
+<span class="w">         </span><span class="p">(</span><span class="nv">eglot--when-buffer-window</span><span class="w"> </span><span class="nv">buf</span>
+<span class="w">           </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">info</span><span class="w"> </span><span class="p">(</span><span class="nb">unless</span><span class="w"> </span><span class="p">(</span><span class="nv">seq-empty-p</span><span class="w"> </span><span class="nv">contents</span><span class="p">)</span>
+<span class="w">                          </span><span class="p">(</span><span class="nv">eglot--hover-info</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="nv">range</span><span class="p">)))</span>
+<span class="w">                  </span><span class="p">(</span><span class="nv">echo</span>
+<span class="w">                   </span><span class="c1">; ∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨</span>
+<span class="w">                   </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="nf">eq</span><span class="w"> </span><span class="nv">major-mode</span><span class="w"> </span><span class="ss">'rustic-mode</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">stringp</span><span class="w"> </span><span class="nv">info</span><span class="p">))</span>
+<span class="w">                       </span><span class="p">(</span><span class="nv">eglot-hover--hl-string</span>
+<span class="w">                        </span><span class="p">(</span><span class="nv">eglot-hover--get</span><span class="w"> </span><span class="s">&quot;rust&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">substring-no-properties</span><span class="w"> </span><span class="nv">info</span><span class="p">))</span>
+<span class="w">                        </span><span class="nv">major-mode</span><span class="p">)</span>
+<span class="w">                   </span><span class="c1">; ∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧∧</span>
+<span class="w">                     </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">pos</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="p">(</span><span class="nf">string-match</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="nv">info</span><span class="p">))))</span>
+<span class="w">                       </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">pos</span><span class="w"> </span><span class="p">(</span><span class="nf">get-text-property</span><span class="w"> </span><span class="nv">pos</span><span class="w"> </span><span class="ss">'invisible</span><span class="w"> </span><span class="nv">info</span><span class="p">))</span>
+<span class="w">                         </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">pos</span><span class="w"> </span><span class="p">(</span><span class="nf">string-match</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="p">(</span><span class="nf">1+</span><span class="w"> </span><span class="nv">pos</span><span class="p">))))</span>
+<span class="w">                       </span><span class="nv">pos</span><span class="p">))))</span>
+<span class="w">             </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">cb</span><span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="nb">:echo</span><span class="w"> </span><span class="nv">echo</span><span class="p">))))</span>
+<span class="w">       </span><span class="nb">:hint</span><span class="w"> </span><span class="nb">:textDocument/hover</span><span class="p">))</span>
+<span class="w">    </span><span class="no">t</span><span class="p">))</span>
+</pre></div>
+
+<p></p>
+Since we’re not returning a buffer position, we have a lot more freedom to highlight the string as we want.
+For example, in <code>haskell-mode</code> I prettify some symbols (<code>forall</code> becomes <code>∀</code>, <code>\</code> becomes <code>λ</code>, and so on),
+and these would otherwise get lost when just the buffer position is sent to ElDoc.
+<p></p>
+The actual implementation of <code>eglot-hover--hl-string</code> and <code>eglot-hover--get</code> is relatively straightforward,
+and just involves some markdown mangling.
+It originally started with some Rust-specific code given in
+<a href="https://github.com/emacs-lsp/lsp-mode/pull/1740">emacs-lsp/lsp-mode#1740</a>,
+and was then generalised to fit other <span class="small-caps">lsp</span> servers.
+You can try throwing servers not listed above at it as well,
+but since the implementation is relatively brittle it’ll probably need some adjustments.<!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">Needs at least <code>cl-lib.el</code>, <code>dash.el</code>, and <code>s.el</code> to work.</div><!--
+-->
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">eglot-hover--hl-string</span><span class="w"> </span><span class="p">(</span><span class="nv">str</span><span class="w"> </span><span class="nv">mode</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Syntax highlight STR according to MODE.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">delay-mode-hooks</span><span class="w"> </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">mode</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">-each</span><span class="w"> </span><span class="nf">#'funcall</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">--remove</span><span class="w"> </span><span class="p">(</span><span class="nv">-contains?</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="no">nil</span>
+<span class="w">                              </span><span class="nv">rustic-setup-lsp</span>
+<span class="w">                              </span><span class="nv">eglot--managed-mode</span>
+<span class="w">                              </span><span class="nv">eldoc-mode</span>
+<span class="w">                              </span><span class="nv">flymake-mode-off</span><span class="p">)</span>
+<span class="w">                            </span><span class="nv">it</span><span class="p">)</span>
+<span class="w">                </span><span class="p">(</span><span class="nv">--mapcat</span><span class="w"> </span><span class="p">(</span><span class="nb">ignore-errors</span><span class="w"> </span><span class="p">(</span><span class="nf">symbol-value</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">                          </span><span class="nv">delayed-mode-hooks</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">font-lock-ensure</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">buffer-string</span><span class="p">)))</span>
+</pre></div>
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">eglot-hover--get</span><span class="w"> </span><span class="p">(</span><span class="nv">lang</span><span class="w"> </span><span class="nv">str</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Get LANGs hover information in STR.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">cl-flet</span><span class="w"> </span><span class="p">((</span><span class="nv">join</span><span class="w"> </span><span class="p">(</span><span class="nv">sep</span><span class="w"> </span><span class="nv">strings</span><span class="p">)</span>
+<span class="w">              </span><span class="c1">;; This shields against Python shenanigans like</span>
+<span class="w">              </span><span class="c1">;;</span>
+<span class="w">              </span><span class="c1">;; def f(</span>
+<span class="w">              </span><span class="c1">;;   a,</span>
+<span class="w">              </span><span class="c1">;;   b</span>
+<span class="w">              </span><span class="c1">;; )</span>
+<span class="w">              </span><span class="p">(</span><span class="nv">--reduce</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">acc</span>
+<span class="w">                                </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">s-suffix?</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="nv">acc</span><span class="p">)</span>
+<span class="w">                                        </span><span class="p">(</span><span class="nv">s-prefix?</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">                                    </span><span class="nv">it</span>
+<span class="w">                                  </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="nv">sep</span><span class="w"> </span><span class="nv">it</span><span class="p">)))</span>
+<span class="w">                        </span><span class="nv">strings</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">start</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;```&quot;</span><span class="w"> </span><span class="nv">lang</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">groups</span><span class="w"> </span><span class="p">(</span><span class="nv">--filter</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="nv">s-equals?</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">it</span><span class="p">))</span>
+<span class="w">                                 </span><span class="p">(</span><span class="nv">s-equals?</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="p">(</span><span class="nv">cadr</span><span class="w"> </span><span class="nv">it</span><span class="p">)))</span>
+<span class="w">                             </span><span class="p">(</span><span class="nv">-partition-by</span><span class="w"> </span><span class="nf">#'</span><span class="nv">s-blank?</span>
+<span class="w">                                            </span><span class="p">(</span><span class="nv">s-lines</span><span class="w"> </span><span class="p">(</span><span class="nv">s-trim</span><span class="w"> </span><span class="nv">str</span><span class="p">)))))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">name-at-point</span><span class="w"> </span><span class="p">(</span><span class="nf">symbol-name</span><span class="w"> </span><span class="p">(</span><span class="nv">symbol-at-point</span><span class="p">)))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">type-sig-group</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span>
+<span class="w">                            </span><span class="p">(</span><span class="nv">--filter</span><span class="w"> </span><span class="p">(</span><span class="nv">--any?</span><span class="w"> </span><span class="p">(</span><span class="nv">s-contains?</span><span class="w"> </span><span class="nv">name-at-point</span><span class="w"> </span><span class="nv">it</span><span class="p">)</span>
+<span class="w">                                              </span><span class="nv">it</span><span class="p">)</span>
+<span class="w">                                      </span><span class="nv">groups</span><span class="p">))))</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">-&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="nv">type-sig-group</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="nv">groups</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">--drop-while</span><span class="w"> </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="p">(</span><span class="nv">s-prefix?</span><span class="w"> </span><span class="nv">start</span><span class="w"> </span><span class="nv">it</span><span class="p">)))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-drop</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">                    </span><span class="c1">; ``` LANG</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-drop-last</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">               </span><span class="c1">; ```</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">-map</span><span class="w"> </span><span class="nf">#'</span><span class="nv">s-trim</span><span class="p">)</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">--filter</span><span class="w"> </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="p">(</span><span class="nv">s-matches?</span><span class="w"> </span><span class="nv">comment-start-skip</span><span class="w"> </span><span class="nv">it</span><span class="p">)))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">join</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">)</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">s-chop-suffixes</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="w"> </span><span class="s">&quot;```&quot;</span><span class="w"> </span><span class="s">&quot;``` ---&quot;</span><span class="p">))))))</span>
+</pre></div>
+
+<p></p>
+That’s pretty much it—you can now enjoy having useful hover information!
+<hr />
+<p></p>
+In case you want to
+<a href="https://tony-zorman.com/posts/fixing-lsp-mode.html#bonus-adding-type-signatures" class="local-link">manually add type signatures</a>
+then this is similarly straightforward,
+provided one knows the correct incantations:
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">+haskell-type-sig-at-point</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">s</span><span class="w"> </span><span class="p">(</span><span class="nv">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot--request</span>
+<span class="w">                </span><span class="p">(</span><span class="nv">eglot--current-server-or-lose</span><span class="p">)</span>
+<span class="w">                </span><span class="nb">:textDocument/hover</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot--TextDocumentPositionParams</span><span class="p">))</span>
+<span class="w">               </span><span class="p">(</span><span class="nf">plist-get</span><span class="w"> </span><span class="nb">:contents</span><span class="p">)</span>
+<span class="w">               </span><span class="p">(</span><span class="nf">plist-get</span><span class="w"> </span><span class="nb">:value</span><span class="p">)</span>
+<span class="w">               </span><span class="p">((</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">s</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot-hover--get</span><span class="w"> </span><span class="s">&quot;haskell&quot;</span><span class="w"> </span><span class="nv">s</span><span class="p">)))</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">eglot-hover--hl-string</span><span class="w"> </span><span class="ss">'haskell-mode</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">back-to-indentation</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">s</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">haskell-indentation-newline-and-indent</span><span class="p">)))</span>
+</pre></div>
+
+<p></p>
+<picture>
+<source srcset="../images/eglot-hover/type-sig.gif" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/type-sig-dark.gif" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/type-sig.gif" alt="Hovering over a function and executing '+haskell-type-sig-at-point' makes a type signature appear">
+</picture>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+      <!-- A footer-ish thing above the actual boring footer for pretty
+           fleurons and things that should only appear on posts. -->
+      <div style="text-align: center;">
+        <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
+        Have a comment? Write me an <a href="../about.html">email!</a>
+      </div>
+    
+</article>
+
+      </div>
+      <div id="footer">
+        <!-- Left -->
+        <a id="to-top" href="#">top</a>
+        <!-- Right -->
+        <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+        &nbsp;|&nbsp;
+        <a href="../impressum.html">Legal notice and privacy policy</a>
+        <!-- Newline -->
+        <p style="margin-top:0;">Everything on this website—<a style="color:var(--fg-footer-pipe)" href="https://en.wikipedia.org/wiki/Dash#Em_dash">em dash</a> and all—was created by a human</p>
+      </div>
+    </div>
+  </body>
+</html>
