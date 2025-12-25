@@ -65,6 +65,7 @@
               };
             }))
           ]))
+          optipng
           zlib
           # KaTeX rendering of maths, see scripts/maths.js
           nodejs
