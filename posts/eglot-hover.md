@@ -6,7 +6,7 @@ no-toc: true
 ---
 
 In an
-[earlier post](./fixing-lsp-mode.html)
+[earlier post](https://tony-zorman.com/posts/fixing-lsp-mode.html)
 I talked about making the hover signatures for
 [lsp-mode](https://emacs-lsp.github.io/lsp-mode/)
 a little bit more useful.
