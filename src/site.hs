@@ -318,11 +318,15 @@ postCtx = mconcat
     meta <- getMetadata ident
     lastMod <- case lookupString "last-modified" meta of
       Just t  -> pure t
-      Nothing -> unsafeCompiler $ asTxt T.strip <$>
-        readProcess "git"
-                    [ "log", "-1", "--format=%ad", "--date=format:%F"
-                    , "--", toFilePath ident ]
-                    ""
+      Nothing -> do
+        git <- unsafeCompiler $ asTxt T.strip <$>
+                readProcess "git"
+                             [ "log", "-1", "--format=%ad", "--date=format:%F"
+                             , "--", toFilePath ident ]
+                             ""
+        case git of
+          ""  -> formatTime defaultTimeLocale "%F" <$> getItemModificationTime ident
+          str -> pure str
     case lookupString "date" meta of
       Nothing      -> noResult "No creation date means no last modified date."
       Just created -> if lastMod /= created then pure (fixDate lastMod)
