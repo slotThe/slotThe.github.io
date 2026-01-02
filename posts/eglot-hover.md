@@ -1,6 +1,7 @@
 ---
 title: Fixing Eglot's Hover Signatures
 date: 2025-12-25
+last-modified: 2025-12-25
 tags: emacs
 no-toc: true
 ---

@@ -314,7 +314,7 @@ postCtx = mconcat
   -- If no manual modification time is given, create one based on the last
   -- change to the file. If this is the same as the creation date, ignore it.
   modTime :: Context String
-  modTime = field "last-modified" \(Item ident _) -> do
+  modTime = field "last-mod" \(Item ident _) -> do
     meta <- getMetadata ident
     lastMod <- case lookupString "last-modified" meta of
       Just t  -> pure t
