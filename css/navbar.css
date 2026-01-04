@@ -12,48 +12,39 @@ div#navigation {
     position: static;
     float: right;
     display: inline-block;
-}
 
-/** Title **/
+    .menu-title {
+        font-size: 19px;
+        color: var(--fg);
+        border-bottom: 1px solid var(--fg-menu-border);
+    }
 
-div#navigation .menu-title {
-    font-size: 19px;
-    color: var(--fg);
-    border-bottom: 1px solid var(--fg-menu-border);
-}
+    ul { /* Individual bullet points */
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
 
-/** Clickable parts of the menu **/
+    a { /* Clickable parts */
+        font-size: 19px;
+        font-weight: bold;
+        border: 1px solid transparent;
+        border-left: none;
+        border-right: none;
+        color: var(--fg-menu);
+        display: block;
+        line-height: 1.5em;
+        padding: 5px 20px;
+        white-space: nowrap;
+        &:hover {
+            background: var(--bg);
+            text-decoration: 1px underline;
+            text-underline-offset: 0.1em;
+        }
+    }
 
-div#navigation a {
-    font-size: 19px;
-    font-weight: bold;
-    border: 1px solid transparent;
-    border-left: none;
-    border-right: none;
-    color: var(--fg-menu);
-    display: block;
-    line-height: 1.5em;
-    padding: 5px 20px;
-    white-space: nowrap;
-}
-
-div#navigation a:hover {
-    background: var(--bg);
-    text-decoration: 1px underline;
-    text-underline-offset: 0.1em;
-}
-
-div#navigation ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-/** Smaller screens **/
-
-/* On slightly smaller screens, left-align the navigation. */
-@media (max-width: 1366px) {
-    div#navigation {
+    /* On medium screens, left-align the navigation. */
+    @media (width <= 1366px) {
         float: none;
         padding-right: 1em;
     }
@@ -61,7 +52,7 @@ div#navigation ul {
 
 /* On much smaller screens; i.e., mobile or heavily zoomed in, put the
    navigation at the top instead. */
-@media (max-width: 767px) {
+@media (width <= 767px) {
     body > .navbar-space {
         width: 100%;
     }

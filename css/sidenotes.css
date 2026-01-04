@@ -23,11 +23,7 @@ body {
     vertical-align: baseline;
     position: relative;
     text-align: left;
-}
-@media (max-width: 1120px) {
-    .sidenote,
-    .marginnote,
-    .marginnote-left {
+    @media (width <= 1120px) {
         margin-right: -40%;
         width: 33%;
     }
@@ -40,12 +36,10 @@ body {
     width: 25%;
     position: relative;
     text-align: right;
-}
-/* The first condition is for the case of a left-aligned layout (on a
-   smaller screen), and the second condition for a more centered layout
-   on a larger screen.  It's a bit awkward, sadly :/ */
-@media (max-width: 1349px) or ((min-width: 1367px) and (max-width: 1620px)) {
-    .marginnote-left {
+    /* The first condition is for the case of a left-aligned layout (on a smaller
+       screen), and the second condition for a more centered layout on a
+       larger screen. It's a bit awkward, sadly :/ */
+    @media (width <= 1349px) or ((width >= 1367px) and (width <= 1620px)) {
         margin-left: -33%;
         width: 30%;
     }
@@ -80,7 +74,7 @@ div .sidenote pre {
     top: -0.5rem;
 }
 
-/* Properly position siednote number and adjust position of sidenote
+/* Properly position sidenote number and adjust position of sidenote
    paragraphs:
     https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-670695382
 */
@@ -94,17 +88,13 @@ div .sidenote pre {
 
 .sidenote p {
     margin: 1em 0;
+    &:first-child {
+        margin-top: 0;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
-
-.sidenote p:first-child {
-    margin-top: 0;
-}
-
-.sidenote p:last-child {
-    margin-bottom: 0;
-}
-
-/* */
 
 input.margin-toggle {
     display: none;
@@ -134,7 +124,7 @@ label.margin-toggle:not(.sidenote-number) {
     height: 100%;
 }
 
-@media (max-width: 960px) {
+@media (width <= 960px) {
     label.margin-toggle:not(.sidenote-number) {
         display: inline;
     }
@@ -172,7 +162,7 @@ label.margin-toggle:not(.sidenote-number) {
 
 /* A full-width figure, for ones that are too wide or big to fit on the page
    otherwise (and shrinking them would make everything look worse.) */
-figure {                        /* Big screens */
+figure {                          /* Big screens */
     padding: 0;
     border: 0;
     font-size: 100%;
@@ -182,14 +172,10 @@ figure {                        /* Big screens */
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
     margin: 1em -56% 1em 0;
-}
-@media (max-width: 1120px) {    /* Small or vertical screens */
-    figure {
+    @media (width <= 1120px) {    /* Small or vertical screens */
         margin-right: -40%;
     }
-}
-@media (max-width: 960px) {     /* Phones or heavily zoomed in */
-    figure {
+    @media (width <= 960px) {     /* Phones or heavily zoomed in */
         margin-right: 0;
         max-width: 100%;
     }

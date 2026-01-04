@@ -8,13 +8,10 @@
 */
 html {
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 *, *::before, *::after {
     box-sizing: inherit;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 body {
@@ -38,20 +35,34 @@ body {
     -webkit-flex-flow: row wrap;
     display: -ms-flexbox;
     -ms-flex-flow: row wrap;
+
+    @media (width >= 1367px) { /* On bigger screens, move the body text closer towards the centre */
+        width: 82%;
+        padding-right: 18%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    @media (width <= 1366px) {  /* Adjust size for smaller screens */
+        width: 87%;
+        padding-right: 13%;
+        max-width: 960px;
+        margin-right: 3em;
+        font-size: 19px;
+    }
+    @media (width <= 960px) {  /* Ease up on this again for *very* small screens */
+        width: 100%;
+        padding-right: 0%;
+        margin-right: 0;
+        text-align: left;  /* Raggedright on phones */
+    }
 }
 
 .text-space {
     display: inline-block;
     width: 75%;
-}
-@media (max-width: 767px) { /* Use full width on phones */
-    body > .text-space {
+    @media (width <= 767px) { /* Use full width on phones */
         width: 100%;
     }
-}
-
-span.small-caps {
-    font-variant: small-caps;
 }
 
 div#content {           /* body width */
@@ -60,67 +71,34 @@ div#content {           /* body width */
     max-width: 35em;
 }
 
-@media (min-width: 1367px) { /* On bigger screens, move the body text closer towards the centre */
-    body {
-        width: 82%;
-        padding-right: 18%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-@media (max-width: 1366px) {  /* Adjust size for smaller screens */
-    body {
-        width: 87%;
-        padding-right: 13%;
-        max-width: 960px;
-        margin-right: 3em;
-        font-size: 19px;
-    }
-}
-@media (max-width: 960px) {  /* Ease up on this again for *very* small screens */
-    body {
-        width: 100%;
-        padding-right: 0%;
-        margin-right: 0;
-        text-align: left;  /* Raggedright on phones */
-    }
-}
 
 /* Don't split up a citation over multiple lines. */
-div.csl-left-margin {
-    display: inline;
-}
-div.csl-right-inline {
-    display: inline;
-}
-/* Align citations to the top. */
-div#refs td {
-    vertical-align: top;
-}
+div.csl-left-margin  { display: inline; }
+div.csl-right-inline { display: inline; }
 /* No justification for references, as otherwise it's rivers galore. */
 div#refs {
     text-align: left;
+    td { vertical-align: top; } /* Align citations to the top. */
 }
 
 /* For some tables we'd like visual separators. */
-div#border-table table tr {
-    vertical-align: top;
-    text-align: left;
-}
 div#border-table table {
   border-collapse: collapse;
   width: 100%;
-}
-div#border-table table th,
-div#border-table table td {
-  padding: 8px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-div#border-table table th {
-  background-color: var(--table-head);
-  font-weight: bold;
-  font-style: normal;
+  tr {
+      vertical-align: top;
+      text-align: left;
+  }
+  th, td {
+      padding: 8px;
+      text-align: left;
+      border: 1px solid #ddd;
+  }
+  th {
+      background-color: var(--table-head);
+      font-weight: bold;
+      font-style: normal;
+  }
 }
 
 /*** Further font settings ***/
@@ -194,9 +172,7 @@ img.fleuron-block {     /* A fleuron at the end of a post */
     height: auto;
     padding: 3rem 1.5rem 2.5rem 1.5rem;
     display: block;
-}
-@media (prefers-color-scheme: dark) {
-    img.fleuron-block {
+    @media (prefers-color-scheme: dark) {
         /* https://codepen.io/sosuke/pen/Pjoqqp */
         filter: invert(95%) sepia(8%) saturate(114%) hue-rotate(106deg) brightness(102%) contrast(91%);
     }
@@ -212,7 +188,7 @@ img.fleuron-block {     /* A fleuron at the end of a post */
     color: var(--fg-header);
     a:link    { color: var(--fg-header); }
     a:visited { color: var(--fg-header); }
-    @media (max-width: 768px) {
+    @media (width <= 768px) {
         margin-top: 0; /* Navbar is on top for phones */
     }
 }
@@ -227,17 +203,17 @@ h1 {                    /* Title of a non-post */
     font-size: 2em;
     font-weight: bold;
     text-align: center;
-}
-h1.post-title {        /* Post title */
-    line-height: 1;
-    font-variant: normal;
-    text-align: left;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-    font-weight: bold;
-    font-size: 5rem;
-    @media (max-width: 1366px) {
-        font-size: 4rem;
+    &.post-title {        /* Post title */
+        line-height: 1;
+        font-variant: normal;
+        text-align: left;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+        font-size: 5rem;
+        @media (width <= 1366px) {
+            font-size: 4rem;
+        }
     }
 }
 
@@ -299,74 +275,47 @@ div#contents-big {
     min-width: 25%;
     min-width: 180px;
     text-align: left;
-}
-div#contents     ul,
-div#contents-big ul {
-    font-size: 85%;      /* In relation to div#contents */
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    padding-left: 0;
-    line-height: 1.2;
-    list-style-type: none;
-    margin-left: 0;
-}
-div#contents li + li,
-div#contents-big li + li {
-    margin-top: 0.5em;
+    ul {
+        font-size: 85%;      /* In relation to div#contents */
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        padding-left: 0;
+        line-height: 1.2;
+        list-style-type: none;
+        margin-left: 0;
+    }
+    ul ul {
+        padding-left: 1.5em;
+    }
+    li + li {
+        margin-top: 0.5em;
+    }
+
+    /* Change the appearance of links in the TOC, so as to lower its
+       intrusivity, since it is now visible most of the time. */
+    a:link, a:visited {
+        font-size: 110%;         /* In relation to & ul */
+        color: var(--fg);
+        text-decoration: none;
+    }
+    a:hover {
+        background: var(--bg);
+        text-decoration: 1px underline;
+        text-underline-offset: 0.1em;
+    }
+
+    /* This horrible contraption matches against the outermost headings;
+       only these should be small-capsed. */
+    & > ul > li > a:link, & > ul > li > a:visited {
+        font-size: 100%;         /* In relation to & ul */
+        word-spacing: 0.06em;
+        letter-spacing: 0.02em;
+        font-variant: small-caps;
+    }
 }
 .mini-header {
     font-weight: bold;
     margin-bottom: 0.5em;
-}
-div#contents ul ul,
-div#contents-big ul ul {
-    padding-left: 1.5em;
-}
-
-/* Change the appearance of links in the TOC, so as to lower its
-   intrusivity, since it is now visible most of the time. */
-div#contents-big a:link,
-div#contents     a:link,
-div#contents-big a:visited,
-div#contents     a:visited {
-    font-size: 110%;         /* In relation to div#contents ul */
-    color: var(--fg);
-    text-decoration: none;
-}
-div#contents-big a:hover,
-div#contents     a:hover {
-    background: var(--bg);
-    text-decoration: 1px underline;
-    text-underline-offset: 0.1em;
-}
-
-/* This horrible contraption matches against the outermost headings; only
-   these should be small-capsed. */
-div#contents-big > ul > li > a:link,
-div#contents     > ul > li > a:link {
-    font-size: 100%;         /* In relation to div#contents ul */
-    word-spacing: 0.06em;
-    letter-spacing: 0.02em;
-    font-variant: small-caps;
-}
-div#contents-big > ul > li > a:visited,
-div#contents     > ul > li > a:visited {
-    font-size: 100%;         /* In relation to div#contents ul */
-    word-spacing: 0.06em;
-    letter-spacing: 0.02em;
-    font-variant: small-caps;
-}
-
-a:link    > code, /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
-a:visited > code {
-    font-variant: normal;
-}
-
-/* The "↑" link in the TOC */
-a#up-arrow {
-    float: right;
-    font-size: 0.9em;
-    margin-right: 0.5em;
 }
 
 /* Bigger screens */
@@ -377,10 +326,12 @@ div#contents-big {
     position: sticky;
     top: 0;
     left: 100%;
-}
-@media (max-width: 1366px) {  /* Adjust padding for smaller screens */
-    div#contents-big {
+    @media (width <= 1366px) {  /* Adjust padding for medium screens */
         padding-left: 1.25em;
+    }
+    @media (width <= 768px) {
+        visibility: hidden; /* Hide on smaller screens */
+        position: fixed;
     }
 }
 
@@ -393,56 +344,54 @@ div#contents {
     margin-bottom: 0.75em;
     float: right;
     position: static;
+    @media (width >= 769px) { /* Hide on bigger screens */
+        visibility: hidden;
+        position: fixed;
+    }
 }
 
-/* Toggling between the two TOCs */
-@media (min-width: 769px) {
-    div#contents {
-        position: fixed;         /* Don't collide with anything */
-        visibility: hidden;
-    }
-}
-@media (max-width: 768px) {
-    div#contents-big {
-        position: fixed;         /* Don't collide with anything */
-        visibility: hidden;
-    }
+/* The "↑" link in the TOC */
+a#up-arrow {
+    float: right;
+    font-size: 0.9em;
+    margin-right: 0.5em;
 }
 
 /*** Links ***/
 
-a:link {
-    color: var(--fg-link);
-    text-decoration: none;
-}
-
-a:hover {
-    background: var(--bg-code-accent);
-}
-@media (prefers-color-scheme: light) {
-    a:hover { /* Too suble in the light theme */
-        text-decoration: 1px underline;
-        text-underline-offset: 0.1em;
+a {
+    &:link {
+        color: var(--fg-link);
+        text-decoration: none;
+        & > code { /* iosevka has no proper small caps support: github.com/be5invis/Iosevka/issues/140 */
+            font-variant: normal;
+        }
     }
-}
+    &:hover {
+        background: var(--bg-code-accent);
+        @media (prefers-color-scheme: light) {
+            text-decoration: 1px underline;
+            text-underline-offset: 0.1em;
+        }
+    }
+    &:visited {
+        color: var(--fg-link);
+        text-decoration: none;
+    }
 
-a:visited {
-    color: var(--fg-link);
-    text-decoration: none;
+    /* Links that should not be coloured. */
+    &.invis {
+        &:link, &:visited {
+            color: var(--fg);
+            background: var(--bg);
+        }
+    }
 }
 
 .floatright {           /* Feed links float to the right. */
     float: right;
     font-variant: normal;
     font-size: 15px;
-}
-
-/* Links that should not be coloured. */
-a.invis:link {
-    color: var(--fg);
-}
-a.invis:visited {
-    color: var(--fg);
 }
 
 /* A little "TOP" indicator at the bottom of the page, but only if the
@@ -454,9 +403,7 @@ a#to-top {
     position: static;
     font-size: 16px;
     margin-top: -2px;
-}
-@media (min-width: 769px) {
-    a#to-top {
+    @media (width >= 769px) {
         position: fixed;
         visibility: hidden;
     }
@@ -499,23 +446,18 @@ summary {
     padding-left: 2.2rem;
     position: relative;
     cursor: pointer;
-}
-
-summary:before {
-    content: '';
-    border-width: .4rem;
-    border-style: solid;
-    border-color: transparent transparent transparent var(--fg);
-    position: absolute;
-    top: 1.5rem;
-    left: 1rem;
-    transform: rotate(0);
-    transform-origin: .2rem 50%;
-    transition: .25s transform ease;
-}
-
-details[open] > summary:before {  /* Turn ▸ (closed) into ▾ (open) on click. */
-    transform: rotate(90deg);
+    &:before {
+        content: '';
+        border-width: .4rem;
+        border-style: solid;
+        border-color: transparent transparent transparent var(--fg);
+        position: absolute;
+        top: 1.5rem;
+        left: 1rem;
+        transform: rotate(0);
+        transform-origin: .2rem 50%;
+        transition: .25s transform ease;
+    }
 }
 
 details {
@@ -523,6 +465,9 @@ details {
     margin: 20px 0;
     padding-left: 20px;
     padding-bottom: 0.4em;
+    &[open] > summary:before {  /* Turn ▸ (closed) into ▾ (open) on click. */
+        transform: rotate(90deg);
+    }
 }
 
 /*** Misc ***/
@@ -551,9 +496,7 @@ img {
     display: block;
     margin-right: auto;
     margin-left: auto;
-}
-@media (prefers-color-scheme: dark) {
-    .tikzpicture {
+    @media (prefers-color-scheme: dark) {
         /* https://codepen.io/sosuke/pen/Pjoqqp */
         filter: invert(95%) sepia(8%) saturate(114%) hue-rotate(106deg) brightness(102%) contrast(91%);
     }
@@ -563,8 +506,12 @@ spoiler {                       /* Spoiler tags */
     background-color: var(--border-inline-code);
     color: transparent;
     user-select: none;
+    &:hover {
+        background-color: inherit;
+        color: inherit;
+    }
 }
-spoiler:hover {
-    background-color: inherit;
-    color: inherit;
+
+span.small-caps {
+    font-variant: small-caps;
 }
