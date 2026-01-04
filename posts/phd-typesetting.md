@@ -4,7 +4,7 @@ date: 2025-04-13
 tags: LaTeX
 ---
 
-I just handed in my dissertation[^1],
+I just handed in my dissertation,[^1]
 which is more or less the culmination of the last three and a half years of my (mathematical) life.
 While the maths itself is perhaps relatively inaccessible to the general public,
 some of the typesetting considerations that went into the document might not be.
@@ -483,9 +483,15 @@ Lastly, I will just leave the following *very important* bibLaTeX configuration 
   \addspace\bibstring{and}\space}
 ```
 
-[^1]: The thesis is available [here](https://tony-zorman.com/dissertation.pdf),
+[^1]: {-} The thesis is available [here](https://tony-zorman.com/dissertation.pdf),
       and you can also check out the [full source code](https://github.com/slotThe/dissertation).
       For more information, also check [here](https://tony-zorman.com/research#theses).
+
+      This post is also available as an
+      [article](https://tug.org/TUGboat/tb46-3/tb144zorman-thesis.html)
+      in [TUGboat 46:3](https://tug.org/TUGboat/tb46-3/).
+      I've made the [source code](https://codeberg.org/slotThe/tb144)
+      for the LaTeX version available as well.
 
 [^2]: It is also much more extensive. Both manuals clock in at around 600 pages,
       but the memoir manual is only about one class!
