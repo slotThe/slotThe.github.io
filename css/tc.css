@@ -1,0 +1,52 @@
+/* A two-column layout, for annotating code */
+
+body {
+    margin-left: 0;
+    width: 100%;
+    padding-right: 0;
+    margin-right: 0;
+    @media (width <= 1366px) {
+        max-width: 960px;
+        font-size: 19px;
+    }
+    @media (width <= 960px) { text-align: left; } /* Raggedright on phones */
+}
+.navbar-space {
+    width: 15%;
+    @media (width <= 1366px) { width: 20%; }
+}
+.text-space {
+    width: 85%;
+    @media (width <= 1366px) { width: 80%; }
+
+}
+div#content { max-width: 85%; }
+div#title-underline { min-width: 100%; }
+div#footer { min-width: 80%; }
+div#contents-big {
+    @media (width <= 1366px) { padding-right: 1.25em; }
+}
+
+.fullwidth { max-width: 60%; }  /* For longer sections of prose */
+
+.tc-row {                       /* Written text next to code */
+    display: grid;
+    grid-template-columns: .9fr 1fr;
+    align-items: stretch;
+    margin-left: auto;
+    margin-right: auto;
+    column-gap: 2rem;
+    @media (width <= 768px) {
+        grid-template-columns: 1fr;
+        gap: 0.0rem;
+        margin-bottom: 1rem;
+        & > p {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.tc-code {                      /* Code next to written text */
+    overflow: auto;
+    margin-top: .3em;
+}

@@ -571,10 +571,11 @@ myPandocCompiler :: Compiler (Item String)
 myPandocCompiler =
   pandocCompilerWorker $
     traverse
-      (   pure . usingSideNotesHTML myWriter
+      (   boolTwoCol (usingSideNotesHTML myWriter) id -- no sidenotes in two column layout
       <=< pygmentsHighlight
       <=< hlKaTeX
       <=< renderTikZ
+      <=< boolTwoCol id twoCol
       -- ↑ render HMTL in various forms and ↓ do not
       <=< includeFiles
       <=< bqnLink
@@ -837,6 +838,31 @@ myPandocCompiler =
     b -> pure b
    where
     bTikZ :: Text = "\\begin{tikzpicture}"
+
+  -- @boolTwoCol f t p@ applies @t@ to @p@ if the @two-column@ metadata field
+  -- is true, otherwise it applies @f@ to @p@.
+  boolTwoCol :: (Pandoc -> Pandoc) -> (Pandoc -> Pandoc) -> Pandoc -> Compiler Pandoc
+  boolTwoCol f t p = do
+    tc <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "two-column"))
+    pure $ if tc then t p else f p
+
+  -- Two-column layout for a post: text on the left, and code on the right.
+  -- Inspired by: https://tangled.org/oppi.li/aoc
+  twoCol :: Pandoc -> Pandoc
+  twoCol (Pandoc meta blocks) = Pandoc meta (go blocks)
+   where
+    go :: [Block] -> [Block]
+    go [] = []
+    go (b:bs)
+      | isWrappable b =
+          let (cbs, rst) = span (\case CodeBlock{} -> True; _ -> False) bs
+           in Div ("", ["tc-row"], []) [b, Div ("", ["tc-code"], []) cbs] : go rst
+      | otherwise = b : go bs
+
+    isWrappable :: Block -> Bool
+    isWrappable Para{}       = True
+    isWrappable BulletList{} = True
+    isWrappable _            = False
 
 -----------------------------------------------------------------------
 -- Redirects
