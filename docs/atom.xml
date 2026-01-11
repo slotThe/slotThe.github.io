@@ -10,8 +10,300 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2025-12-25T00:00:00Z</updated>
+    <updated>2026-01-11T00:00:00Z</updated>
     <entry>
+    <title>The J Incunabulum</title>
+    <link href="https://tony-zorman.com/posts/j-incunabulum.html" />
+    <id>https://tony-zorman.com/posts/j-incunabulum.html</id>
+    <published>2026-01-11T00:00:00Z</published>
+    <updated>2026-01-11T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <div class="header">
+      11th Jan 2026
+      
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1902 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      
+      
+        <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="/tags/j.html" rel="tag">#j</a>
+      
+    </div>
+    <h1 class="post-title">The J Incunabulum</h1>
+    <div id="title-underline"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <!-- A table of contents inline in the text, in case the screen is too
+     small for the one in the `default.html' template -->
+
+  
+
+<div class="fullwidth">
+<p>Ever wanted to find out what
+<a href="https://code.jsoftware.com/wiki/Essays/Incunabulum">that one page</a>
+of totally cryptic C is all about?</p>
+</div>
+<!--more-->
+<div class="fullwidth">
+<p>While I’m waiting for <em>current disastrous weather event</em> to clear up, why not do something fun,
+like trying to understand an interpreter for a line-noise language that someone wrote in a different kind of line-noise language almost 40 years ago?</p>
+<p>If you’re out of the loop:
+the <a href="https://code.jsoftware.com/wiki/Essays/Incunabulum">J Incunabulum</a>
+is a one-page interpreter for the <a href="https://www.jsoftware.com/">J</a> programming language,
+written in ~1989 by <a href="https://en.wikipedia.org/wiki/Arthur_Whitney_(computer_scientist)">Arthur Whitney</a>,
+of <a href="https://en.wikipedia.org/wiki/K_(programming_language)">k</a>
+and <a href="https://en.wikipedia.org/wiki/Q_(programming_language_from_Kx_Systems)">q</a> fame.</p>
+<p>Note that this post is a bit of an experiment, in various ways.
+The most visually striking might be that I’m trying out a semi-experimental two-column layout for displaying code on the right,
+and some hopefully enlightening commentary on the left.
+This is probably completely broken if you view this post in an RSS viewer, or on a phone,
+with the best-case being that you just experience this as a normal, linear, post.
+Sorry about that.
+If you notice any CSS irregularities because you’re using a vertical monitor with a 1504×2256 resolution or something,
+please <a href="https://tony-zorman.com/about.html">let me know</a>.</p>
+</div>
+<hr />
+<div class="fullwidth">
+<p>So, the goal for today is to understand an interpreter for a tiny array-style programming language.
+Note that all of the names and explanations I’ll come up with are probably slightly incorrect.
+I don’t know how Arthur Whitney thinks, nor am I sure that the names all fit.
+Plus, I don’t actually know C, so it may well be true that I messed up some of the casts,
+and the original program actually worked slightly differently.
+Consult at your own risk.</p>
+<p>Further, this is not the minimal number of changes to get this to
+compile on a modern machine—for example, I switched to ANSI C function
+definitions—, but it helped me better understand what’s going on.
+Here’s the minimal set of changes to <a href="https://code.jsoftware.com/wiki/Essays/Incunabulum">the original</a> I’ve found to work:</p>
+<details>
+<summary>
+Diff
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -1,11 +1,11 @@</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">-typedef char C;typedef long I;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">+typedef char C;typedef long long I;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> typedef struct a{I t,r,d[3],p[2];}*A;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> #define P printf</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> #define R return</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> #define V1(f) A f(w)A w;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> #define V2(f) A f(a,w)A a,w;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> #define DO(n,x) {I i=0,_n=(n);for(;i&lt;_n;++i){x;}}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">-I *ma(n){R(I*)malloc(n*4);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="va">+I *ma(n){R(I*)malloc(n*8);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> tr(r,d)I *d;{I z=1;DO(r,z=z*d[i]);R z;}</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a> A ga(t,r,d)I *d;{A z=(A)ma(5+tr(r,d));z-&gt;t=t,z-&gt;r=r,mv(z-&gt;d,d,r);</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  R z;}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="dt">@@ -34,8 +34,8 @@</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a> A ex(e)I *e;{I a=*e;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  if(qp(a)){if(e[1]=='=')R st[a-'a']=ex(e+2);a= st[ a-'a'];}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  R qv(a)?(*vm[a])(ex(e+1)):e[1]?(*vd[e[1]])(a,ex(e+2)):(A)a;}</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">-noun(c){A z;if(c&lt;'0'||c&gt;'9')R 0;z=ga(0,0,0);*z-&gt;p=c-'0';R z;}</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">-verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="va">+I noun(c){A z;if(c&lt;'0'||c&gt;'9')R 0;z=ga(0,0,0);*z-&gt;p=c-'0';R z;}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="va">+I verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> I *wd(s)C *s;{I a,n=strlen(s),*e=ma(n+1);C c;</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  DO(n,e[i]=(a=noun(c=s[i]))?a:(a=verb(c))?a:c);e[n]=0;R e;}</span></code></pre></div>
+</details>
+<p>Anyways, let’s crack on.</p>
+</div>
+<hr />
+<h2 id="the-array-type">The array type</h2>
+<p>We first include some libraries, which were apparently implicit in the original thing.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span></code></pre></div>
+<p>The next three definitions are just utility functions:
+<code>P</code> and <code>R</code> are to make the code even terser,
+and <code>DO</code> is a neat way to compactify loops.
+For example, given some <code>int a=0</code>, then <code>DO(n,a+=i)</code> is the same as <code>for(int i=0, i&lt;n, ++i) a+=i;</code>.
+Notice how the argument <code>x</code> has access to the loop variable <code>i</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define P printf</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define R </span><span class="cf">return</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DO</span><span class="op">(</span><span class="pp">n</span><span class="op">,</span><span class="pp">x</span><span class="op">)</span><span class="pp"> </span><span class="op">{</span><span class="pp">I _n</span><span class="op">=(</span><span class="pp">n</span><span class="op">),</span><span class="pp">i</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="cf">for</span><span class="op">(;</span><span class="pp">i</span><span class="op">&lt;</span><span class="pp">_n</span><span class="op">;++</span><span class="pp">i</span><span class="op">){</span><span class="pp">x</span><span class="op">;}}</span></span></code></pre></div>
+<p>Next, some typedefs. <code>C</code> for <code>char</code>, <code>V</code> for <code>void</code> (added by me), and <code>long long</code> for <code>I</code>.
+The last definition is particularly important,
+as <code>I</code> will serve as an opaque type for some of the program:
+it could either hold a character, an actual number (in which case it’s seen as an index into an array of function pointers),
+or a pointer to an array (this includes numbers as <a href="https://aplwiki.com/wiki/Rank">rank</a> 0 arrays).
+The original program was written on a 32-bit machine, so one had <code>typedef long I;</code>,
+but on modern systems we need 64-bit integers for this.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">char</span> C<span class="op">;</span> <span class="kw">typedef</span> <span class="dt">void</span> V<span class="op">;</span> <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> I<span class="op">;</span></span></code></pre></div>
+<p>Defining functions works with <code>V1</code> for <a href="https://aplwiki.com/wiki/Monadic_function">monadic</a> <a href="https://aplwiki.com/wiki/Function">verbs</a> (functions) and <code>V2</code> for <a href="https://aplwiki.com/wiki/Dyadic_function">dyadic</a> ones.
+Functions defined this way take “implicit” arguments <code>a</code> and <code>w</code>
+(or just <code>w</code> in the monadic case).
+I guess this is based on APL’s α and ω arguments.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define V1</span><span class="op">(</span><span class="pp">f</span><span class="op">)</span><span class="pp"> A f</span><span class="op">(</span><span class="pp">A w</span><span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define V2</span><span class="op">(</span><span class="pp">f</span><span class="op">)</span><span class="pp"> A f</span><span class="op">(</span><span class="pp">A a</span><span class="op">,</span><span class="pp"> A w</span><span class="op">)</span></span></code></pre></div>
+<p>This is the main attraction—the array struct <code>a</code>,
+with pointer type <code>A</code>.
+It contains the following fields:</p>
+<ul>
+<li><code>t</code>, the type: this is 0 if the array is unboxed, and 1 if it is <a href="https://aplwiki.com/wiki/Box">boxed</a>.</li>
+<li><code>r</code>, the <a href="https://aplwiki.com/wiki/Rank">rank</a>: a number from 0 to 2, indicating the rank of the array
+(whether it’s a <a href="https://aplwiki.com/wiki/Scalar">scalar</a>, a <a href="https://aplwiki.com/wiki/Vector">vector</a>, or a <a href="https://aplwiki.com/wiki/Matrix">matrix</a>).</li>
+<li><code>d</code>, for dimension(?): the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array; i.e., the number of elements in each dimension.</li>
+<li><code>p</code>, for pointer(?): a pointer to the rest of the data.
+It’s a <a href="https://en.wikipedia.org/wiki/Flexible_array_member">flexible array member</a>,
+but I’m honestly not sure why it’s not just declared as <code>p[]</code>.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> a<span class="op">{</span>I t<span class="op">,</span>r<span class="op">,</span>d<span class="op">[</span><span class="dv">3</span><span class="op">],</span>p<span class="op">[</span><span class="dv">2</span><span class="op">];}*</span>A<span class="op">;</span></span></code></pre></div>
+<p>Now we can define small helpers:
+<code>ma</code> allocates an integer array of size <code>n</code> and returns it,
+<code>mv</code> moves data from one array to another,
+and <code>tr</code> returns the number of elements of an array, given its rank and its dimension vector.
+I’d imagine <code>tr</code> stands for “total rank” or something similar.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>I<span class="op">*</span>ma<span class="op">(</span>I n<span class="op">){</span>R<span class="op">(</span>I<span class="op">*)</span>malloc<span class="op">(</span>n<span class="op">*</span><span class="kw">sizeof</span><span class="op">(</span>I<span class="op">));}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>V mv<span class="op">(</span>I<span class="op">*</span>d<span class="op">,</span>I<span class="op">*</span>s<span class="op">,</span>I n<span class="op">){</span>DO<span class="op">(</span>n<span class="op">,</span>d<span class="op">[</span>i<span class="op">]=</span>s<span class="op">[</span>i<span class="op">]);}</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>I tr<span class="op">(</span>I r<span class="op">,</span>I<span class="op">*</span>d<span class="op">){</span>I z<span class="op">=</span><span class="dv">1</span><span class="op">;</span>DO<span class="op">(</span>r<span class="op">,</span>z<span class="op">=</span>z<span class="op">*</span>d<span class="op">[</span>i<span class="op">]);</span>R z<span class="op">;}</span></span></code></pre></div>
+<p>The next function is one of the main attractions.
+I’d imagine <code>ga</code> stands for “general allocator” or something in that vein,
+and it does exactly what it says on the tin:
+it creates a new array <code>z</code>,
+allocates the total number of elements needed (<code>tr(r,d)</code>),
+plus five spots for <code>t</code>, <code>r</code>, and <code>d</code> itself,
+and then copies everything over.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>A ga<span class="op">(</span>I t<span class="op">,</span>I r<span class="op">,</span>I<span class="op">*</span>d<span class="op">){</span>A z<span class="op">={</span><span class="dv">0</span><span class="op">};</span>z<span class="op">=(</span>A<span class="op">)</span>ma<span class="op">(</span><span class="dv">5</span><span class="op">+</span>tr<span class="op">(</span>r<span class="op">,</span>d<span class="op">));</span>z<span class="op">-&gt;</span>t<span class="op">=</span>t<span class="op">,</span>z<span class="op">-&gt;</span>r<span class="op">=</span>r<span class="op">,</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>d<span class="op">,</span>d<span class="op">,</span>r<span class="op">);</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> R z<span class="op">;}</span></span></code></pre></div>
+<h2 id="verbs">Verbs</h2>
+<p>Now, we get to defining some verbs.
+The easiest to understand is surely the not-implemented <code>find</code>!
+But <code>id</code> is a close second.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>find<span class="op">){}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>id<span class="op">){</span>R w<span class="op">;}</span> <span class="co">/* expands to A id(A w){return w;} */</span></span></code></pre></div>
+<p>The <a href="https://aplwiki.com/wiki/Index_Generator">iota</a> verb <code>~n</code> enumerates the integers from <code>0</code> to <code>n-1</code>,
+<code>sha</code> returns the <a href="https://aplwiki.com/wiki/Shape">shape</a> of the array,
+and <code>size</code> returns the length of the first dimension.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>iota<span class="op">){</span>I n<span class="op">=*</span>w<span class="op">-&gt;</span>p<span class="op">;</span>A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,&amp;</span>n<span class="op">);</span>DO<span class="op">(</span>n<span class="op">,</span>z<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]=</span>i<span class="op">);</span>R z<span class="op">;}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>sha<span class="op">){</span>A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,&amp;</span>w<span class="op">-&gt;</span>r<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>w<span class="op">-&gt;</span>d<span class="op">,</span>w<span class="op">-&gt;</span>r<span class="op">);</span>R z<span class="op">;}</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>size<span class="op">){</span>A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">);*</span>z<span class="op">-&gt;</span>p<span class="op">=</span>w<span class="op">-&gt;</span>r<span class="op">?*</span>w<span class="op">-&gt;</span>d<span class="op">:</span><span class="dv">1</span><span class="op">;</span>R z<span class="op">;}</span></span></code></pre></div>
+<p>Addition is implemented as one would expect:
+allocate a result array with the same shape as the input,
+and add corresponding elements.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>plus<span class="op">){</span>I r<span class="op">=</span>w<span class="op">-&gt;</span>r<span class="op">,*</span>d<span class="op">=</span>w<span class="op">-&gt;</span>d<span class="op">,</span>n<span class="op">=</span>tr<span class="op">(</span>r<span class="op">,</span>d<span class="op">);</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a> A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span>r<span class="op">,</span>d<span class="op">);</span>DO<span class="op">(</span>n<span class="op">,</span>z<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]=</span>a<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]+</span>w<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]);</span>R z<span class="op">;}</span></span></code></pre></div>
+<p><a href="https://aplwiki.com/wiki/Catenate">Cat</a> joins two arrays into a single vector,
+and <a href="https://aplwiki.com/wiki/Enclose">box</a> wraps an array in a scalar box.
+This is, I think, the first instance of abusing <code>I</code> as an opaque type:
+notice the cast <code>*z-&gt;p=(I)w</code> to turn the entire given array into the first element of <code>z-&gt;p</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>box<span class="op">){</span>A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">);*</span>z<span class="op">-&gt;</span>p<span class="op">=(</span>I<span class="op">)</span>w<span class="op">;</span>R z<span class="op">;}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>cat<span class="op">){</span>I an<span class="op">=</span>tr<span class="op">(</span>a<span class="op">-&gt;</span>r<span class="op">,</span>a<span class="op">-&gt;</span>d<span class="op">),</span>wn<span class="op">=</span>tr<span class="op">(</span>w<span class="op">-&gt;</span>r<span class="op">,</span>w<span class="op">-&gt;</span>d<span class="op">),</span>n<span class="op">=</span>an<span class="op">+</span>wn<span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a> A z<span class="op">=</span>ga<span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">,</span><span class="dv">1</span><span class="op">,&amp;</span>n<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>a<span class="op">-&gt;</span>p<span class="op">,</span>an<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">+</span>an<span class="op">,</span>w<span class="op">-&gt;</span>p<span class="op">,</span>wn<span class="op">);</span>R z<span class="op">;}</span></span></code></pre></div>
+<p><a href="https://aplwiki.com/wiki/From">From</a> implements selection.
+Given an index <code>a</code> (or an array, in which case only the first value is used) and an array <code>w</code>,
+it returns the sub-array at that index.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>from<span class="op">){</span>I r<span class="op">=</span>w<span class="op">-&gt;</span>r<span class="op">-</span><span class="dv">1</span><span class="op">,*</span>d<span class="op">=</span>w<span class="op">-&gt;</span>d<span class="op">+</span><span class="dv">1</span><span class="op">,</span>n<span class="op">=</span>tr<span class="op">(</span>r<span class="op">,</span>d<span class="op">);</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a> A z<span class="op">=</span>ga<span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">,</span>r<span class="op">,</span>d<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>w<span class="op">-&gt;</span>p<span class="op">+(</span>n<span class="op">**</span>a<span class="op">-&gt;</span>p<span class="op">),</span>n<span class="op">);</span>R z<span class="op">;}</span></span></code></pre></div>
+<p><a href="https://aplwiki.com/wiki/Reshape">Reshape</a> changes the shape of an array.
+The left argument specifies the new shape.
+The incredibly cursed last line copies elements cyclically if needed.
+We first fill all of <code>w</code> into <code>z</code>,
+and then walk two pointers, one ahead of the other by <code>wn</code>, forward <code>n-wn</code> steps,
+filling up elements as we go, so later iterations can already access the ones resulting from earlier memmoves.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>rsh<span class="op">){</span>I r<span class="op">=</span>a<span class="op">-&gt;</span>r<span class="op">?*</span>a<span class="op">-&gt;</span>d<span class="op">:</span><span class="dv">1</span><span class="op">,</span>n<span class="op">=</span>tr<span class="op">(</span>r<span class="op">,</span>a<span class="op">-&gt;</span>p<span class="op">),</span>wn<span class="op">=</span>tr<span class="op">(</span>w<span class="op">-&gt;</span>r<span class="op">,</span>w<span class="op">-&gt;</span>d<span class="op">);</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> A z<span class="op">=</span>ga<span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">,</span>r<span class="op">,</span>a<span class="op">-&gt;</span>p<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>w<span class="op">-&gt;</span>p<span class="op">,</span>wn<span class="op">=</span>n<span class="op">&gt;</span>wn<span class="op">?</span>wn<span class="op">:</span>n<span class="op">);</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span><span class="op">(</span>n<span class="op">-=</span>wn<span class="op">)</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">+</span>wn<span class="op">,</span>z<span class="op">-&gt;</span>p<span class="op">,</span>n<span class="op">);</span>R z<span class="op">;}</span></span></code></pre></div>
+<hr />
+<h2 id="the-repl">The REPL</h2>
+<p>The main part of the program is a small REPL:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span>C s<span class="op">[</span><span class="dv">99</span><span class="op">];</span><span class="cf">while</span><span class="op">(</span>fgets<span class="op">(</span>s<span class="op">,</span><span class="dv">99</span><span class="op">,</span>stdin<span class="op">)){</span>pr<span class="op">(</span>ex<span class="op">(</span>wd<span class="op">(</span>s<span class="op">,</span>strlen<span class="op">(</span>s<span class="op">)-</span><span class="dv">1</span><span class="op">)));}}</span></span></code></pre></div>
+<p>It reads a line, calls <code>wd</code> (word) to parse it,
+then executes it with <code>ex</code>,
+and finally pretty-prints it with <code>pr</code>.</p>
+<h3 id="parsing">Parsing</h3>
+<p>Let’s first define the verb table <code>vt</code>,
+giving names to the functions defined above.
+There are arrays of function pointers for monadic (<code>vm</code>) and dyadic (<code>vd</code>) verbs;
+for example, <code>6#1,2</code> is reshape, <code>&lt;a</code> is box, and so on.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>C vt<span class="op">[]=</span><span class="st">&quot;+{~&lt;#,&quot;</span><span class="op">;</span> <span class="co">/* +    {    ~    &lt;   #   ,    */</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>A<span class="op">(*</span>vd<span class="op">[])(</span>A<span class="op">,</span>A<span class="op">)</span>  <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span>plus<span class="op">,</span>from<span class="op">,</span>find<span class="op">,</span><span class="dv">0</span>  <span class="op">,</span>rsh<span class="op">,</span>cat<span class="op">},</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a> <span class="op">(*</span>vm<span class="op">[])(</span>A<span class="op">)</span>    <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span>id  <span class="op">,</span>size<span class="op">,</span>iota<span class="op">,</span>box<span class="op">,</span>sha<span class="op">,</span><span class="dv">0</span>  <span class="op">};</span></span></code></pre></div>
+<p>For parsing we need two small utility functions that check whether the given character is a <a href="https://aplwiki.com/wiki/Array_(syntax)">noun</a> or a <a href="https://aplwiki.com/wiki/Function">verb</a>.
+Here, a noun is merely a number between 0 and 9,
+which is then immediately transformed into a rank 0 array, cast to an integer, and returned.
+In case of a verb, return the index of it in the <code>vt</code> array incremented by one.
+Both functions return a plain 0 if nothing matches—note that this is different from inputting a 0, which would be transformed into an array.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>I noun<span class="op">(</span>C c<span class="op">){</span>A z<span class="op">;</span><span class="cf">if</span><span class="op">(</span>c<span class="op">&lt;</span><span class="ch">'0'</span><span class="op">||</span>c<span class="op">&gt;</span><span class="ch">'9'</span><span class="op">)</span>R <span class="dv">0</span><span class="op">;</span>z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">);*</span>z<span class="op">-&gt;</span>p<span class="op">=</span>c<span class="op">-</span><span class="ch">'0'</span><span class="op">;</span>R<span class="op">(</span>I<span class="op">)</span>z<span class="op">;}</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>I verb<span class="op">(</span>C c<span class="op">){</span>I i<span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="cf">for</span><span class="op">(;</span>vt<span class="op">[</span>i<span class="op">];)</span><span class="cf">if</span><span class="op">(</span>vt<span class="op">[</span>i<span class="op">++]==</span>c<span class="op">)</span>R i<span class="op">;</span>R <span class="dv">0</span><span class="op">;}</span></span></code></pre></div>
+<p>Parsing is done character by character,
+exactly as one would expect: allocate an integer array <code>e</code>,
+check if each character is a noun or a verb,
+and store the result back into <code>e</code>.
+If it is neither, just store the character’s value.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>I<span class="op">*</span>wd<span class="op">(</span>C<span class="op">*</span>s<span class="op">,</span>I n<span class="op">){</span>I a<span class="op">,*</span>e<span class="op">=</span>ma<span class="op">(</span>n<span class="op">+</span><span class="dv">1</span><span class="op">);</span>C c<span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  DO<span class="op">(</span>n<span class="op">,</span>e<span class="op">[</span>i<span class="op">]=(</span>a<span class="op">=</span>noun<span class="op">(</span>c<span class="op">=</span>s<span class="op">[</span>i<span class="op">]))?</span>a<span class="op">:(</span>a<span class="op">=</span>verb<span class="op">(</span>c<span class="op">))?</span>a<span class="op">:</span>c<span class="op">);</span>e<span class="op">[</span>n<span class="op">]=</span><span class="dv">0</span><span class="op">;</span>R e<span class="op">;}</span></span></code></pre></div>
+<h3 id="execution">Execution</h3>
+<p>Onto execution.
+There’s enough memory for 26 variables, which are stored in the <code>st</code> array.
+Execution—like parsing—is done character by character.
+There are two queries that will be important here:
+with <code>qp</code> one can ask whether the character is a letter,
+and <code>qv</code> checks if it’s a verb (all of the symbols <code>+{~&lt;#,</code> have an ASCII value less than <code>a</code>).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>A st<span class="op">[</span><span class="dv">26</span><span class="op">];</span> I qp<span class="op">(</span>I a<span class="op">){</span>R a<span class="op">&gt;=</span><span class="ch">'a'</span><span class="op">&amp;&amp;</span>a<span class="op">&lt;=</span><span class="ch">'z'</span><span class="op">;}</span> I qv<span class="op">(</span>I a<span class="op">){</span>R a<span class="op">&lt;</span><span class="ch">'a'</span><span class="op">;}</span></span></code></pre></div>
+<p>Execution itself is done right-to-left,
+using a recursive descent approach.
+If the currently scrutinised character is a letter,
+and is followed by an equals sign, then we execute whatever is to the right of that equals sign,
+store the information in <code>st</code>, and return.
+Otherwise, whatever value happens to be in <code>st</code> for that letter is cast to an integer and stored in <code>a</code>.
+After that <code>a</code> either points to a character in the input,
+is an actual integer (in which case it’s an index into the <code>vm</code> or <code>vd</code> arrays),
+or is a pointer to an array.
+Next, we check if <code>a</code> is a verb;
+if it is, then it must be a monadic one,
+so we call the corresponding function pointer with the result of first evaluating its argument.
+If <code>a</code> is not a verb, we check if there is anything to its right.
+If yes, this thing to its right must be a dyadic function,
+so we call that dyadic function with its left argument <code>a</code>—which is already evaluated, and we now know must be an array—, and with the array its right argument evaluates to.
+If none of those conditions match, <code>a</code> must be a lone array that is already fully evaluated, so return that.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>A ex<span class="op">(</span>I<span class="op">*</span>e<span class="op">){</span>I a<span class="op">=*</span>e<span class="op">;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>qp<span class="op">(</span>a<span class="op">)){</span><span class="cf">if</span><span class="op">(</span>e<span class="op">[</span><span class="dv">1</span><span class="op">]==</span><span class="ch">'='</span><span class="op">)</span>R st<span class="op">[</span>a<span class="op">-</span><span class="ch">'a'</span><span class="op">]=</span>ex<span class="op">(</span>e<span class="op">+</span><span class="dv">2</span><span class="op">);</span> a<span class="op">=(</span>I<span class="op">)</span>st<span class="op">[</span>a<span class="op">-</span><span class="ch">'a'</span><span class="op">];}</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  R qv<span class="op">(</span>a<span class="op">)?(*</span>vm<span class="op">[</span>a<span class="op">])(</span>ex<span class="op">(</span>e<span class="op">+</span><span class="dv">1</span><span class="op">)):</span>e<span class="op">[</span><span class="dv">1</span><span class="op">]?(*</span>vd<span class="op">[</span>e<span class="op">[</span><span class="dv">1</span><span class="op">]])((</span>A<span class="op">)</span>a<span class="op">,</span>ex<span class="op">(</span>e<span class="op">+</span><span class="dv">2</span><span class="op">)):(</span>A<span class="op">)</span>a<span class="op">;}</span></span></code></pre></div>
+<h3 id="pretty-printing">Pretty printing</h3>
+<p><code>pi</code> prints an integer, and <code>nl</code> prints a newline.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>V pi<span class="op">(</span>I i<span class="op">){</span>P<span class="op">(</span><span class="st">&quot;</span><span class="sc">%lld</span><span class="st"> &quot;</span><span class="op">,</span>i<span class="op">);}</span> V nl<span class="op">(){</span>P<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);}</span></span></code></pre></div>
+<p>The main pretty-printing function is <code>pr</code>.
+The first line prints the shape vector of the given array.
+The second line checks whether the array is boxed;
+if it’s not, then it just prints the array as a flat list—hence the shape information in the first line, I suppose.
+If it is a boxed array, we indicate that with <code>&lt;</code>, and recurse.
+Here we dangerously reinterpret the integer that’s stored in each <code>w-&gt;p[i]</code> as a pointer to an array.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>V pr<span class="op">(</span>A w<span class="op">){</span>I r<span class="op">=</span>w<span class="op">-&gt;</span>r<span class="op">,*</span>d<span class="op">=</span>w<span class="op">-&gt;</span>d<span class="op">,</span>n<span class="op">=</span>tr<span class="op">(</span>r<span class="op">,</span>d<span class="op">);</span>DO<span class="op">(</span>r<span class="op">,</span>pi<span class="op">(</span>d<span class="op">[</span>i<span class="op">]));</span>nl<span class="op">();</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">)</span>DO<span class="op">(</span>n<span class="op">,</span>P<span class="op">(</span><span class="st">&quot;&lt; &quot;</span><span class="op">);</span>pr<span class="op">((</span>A<span class="op">)</span>w<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]))</span><span class="cf">else</span> DO<span class="op">(</span>n<span class="op">,</span>pi<span class="op">(</span>w<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]));</span>nl<span class="op">();}</span></span></code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>Obviously, this code is <em>super</em> brittle, and the code basically segfaults if you look at it wrong.
+When holding it just right, however, it does sort of work,
+and then it feels a bit magical—here are the core ideas of an array programming language in barely 40 lines of C.
+Plus, it made me feel a bit like a computer science archaeologist.
+An afternoon well spent, I’d say!</p>
+<pre><code>    1,2,8,7
+4
+1 2 8 7
+    a=~7
+7
+0 1 2 3 4 5 6
+    a+a
+7
+0 2 4 6 8 10 12
+    b=2,3
+2
+2 3
+    c=b#a
+2 3
+0 1 2 3 4 5
+    a=&lt;1,2,3,4
+
+&lt; 4
+1 2 3 4
+
+    b=a,1
+2
+94660986832144 1</code></pre>
+
+      <!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Fixing Eglot's Hover Signatures</title>
     <link href="https://tony-zorman.com/posts/eglot-hover.html" />
     <id>https://tony-zorman.com/posts/eglot-hover.html</id>
@@ -28,7 +320,7 @@
       
     </div>
     <h1 class="post-title">Fixing Eglot's Hover Signatures</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -347,7 +639,7 @@ which argument is currently being filled in!<a href="#fnref3" class="footnote-ba
       
     </div>
     <h1 class="post-title">Writing a JSON Parser in BQN</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1255,7 +1547,7 @@ The resulting representation is probably not super easy to work with<!--
       
     </div>
     <h1 class="post-title">Parsing CSV in BQN</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1525,7 +1817,7 @@ and for <code>"""a"",""b"""</code> we have the wonderful
       
     </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -1965,7 +2257,7 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
       
     </div>
     <h1 class="post-title">Speeding up LaTeX compilation</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -2302,7 +2594,7 @@ Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<
       
     </div>
     <h1 class="post-title">Integer Volutes in BQN</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -2726,7 +3018,7 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
       
     </div>
     <h1 class="post-title">BQNing Advent of Code</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -5734,7 +6026,7 @@ is a lot more relaxed than trying to bash out both parts before work every day.<
       
     </div>
     <h1 class="post-title">Integrating KaTeX Into Hakyll</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -5952,7 +6244,7 @@ such that buffering does not deadlock your program indefinitely.<a href="#fnref4
       
     </div>
     <h1 class="post-title">Leveraging LaTeX in Anki</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -6157,7 +6449,7 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
       
     </div>
     <h1 class="post-title">Announcing: rq Version 0.1.0</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -6379,7 +6671,7 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
       
     </div>
     <h1 class="post-title">Smartly join comments with join-line</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -6596,7 +6888,7 @@ on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft Gi
       
     </div>
     <h1 class="post-title">Parentheses-Aware Yanking</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -6777,7 +7069,7 @@ not just ones where I happen to use paredit
       
     </div>
     <h1 class="post-title">Integrating Zsh's History Into Eshell</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -6899,7 +7191,7 @@ and doing so at the start solves <code>esh-autosuggest</code> et al producing ga
       
     </div>
     <h1 class="post-title">Using XMonad with NixOS</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -7168,7 +7460,7 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
       
     </div>
     <h1 class="post-title">Fixing Lsp-Mode's Hover Signatures</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -7407,7 +7699,7 @@ does, just as an extra function.&quot;
       
     </div>
     <h1 class="post-title">Prettifying LaTeX Buffers</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -7707,7 +7999,7 @@ which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-ba
       
     </div>
     <h1 class="post-title">Change the Insides of an S-Expression in Emacs</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -8056,7 +8348,7 @@ Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p>
       
     </div>
     <h1 class="post-title">Notmuch: Warn on Empty Subjects</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -8181,7 +8473,7 @@ However, this is not important for what follows, so I simply omitted it.</p>
       
     </div>
     <h1 class="post-title">Incorporating BibTeX into Hakyll</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -8831,7 +9123,7 @@ Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-back
       
     </div>
     <h1 class="post-title">The tensor product of S-modules is a convolution product</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -9084,7 +9376,7 @@ In both expressions,
       
     </div>
     <h1 class="post-title">Use-package now has a :vc keyword</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -9165,7 +9457,7 @@ sudo make install</code></pre>
       
     </div>
     <h1 class="post-title">Keyboardio Atreus Review</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -9650,7 +9942,7 @@ QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a 
       
     </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.Search</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -9893,7 +10185,7 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
       
     </div>
     <h1 class="post-title">Announcing: latex-change-env Version 0.3</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -10077,7 +10369,7 @@ seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink"
       
     </div>
     <h1 class="post-title">Using Sidenotes with Hakyll</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -10454,7 +10746,7 @@ that I will go down that path.<a href="#fnref8" class="footnote-back" role="doc-
       
     </div>
     <h1 class="post-title">Pygmentising Hakyll's Syntax Highlighting</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -10763,7 +11055,7 @@ them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎
       
     </div>
     <h1 class="post-title">Immediately Refile Notes with X.P.OrgMode</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -10889,7 +11181,7 @@ welcome!</p>
       
     </div>
     <h1 class="post-title">Duality in Monoidal Categories</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -11049,7 +11341,7 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
       
     </div>
     <h1 class="post-title">Announcing: vc-use-package</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -11119,7 +11411,7 @@ If not, then don’t worry: <code>vc-use-package</code> will not go anywhere for
       
     </div>
     <h1 class="post-title">Exploring package-vc-install</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -11241,7 +11533,7 @@ there—this is quite enough. After all, for anything more there’s always
       
     </div>
     <h1 class="post-title">Adjusting preview.el for vertical monitors</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -11345,7 +11637,7 @@ certainly know which of the two I’d rather write!</p>
       
     </div>
     <h1 class="post-title">A Potpourri of Emacs Tweaks</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -11938,7 +12230,7 @@ so there’s nothing more to be said on that front.<a href="#fnref8" class="foot
       
     </div>
     <h1 class="post-title">Understanding Weighted Colimits as Tensor Products of Modules</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -12485,7 +12777,7 @@ is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">�
       
     </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.TopicSpace</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -12691,7 +12983,7 @@ win in my book!</p>
       
     </div>
     <h1 class="post-title">Rapidly Capture Ideas with XMonad and Emacs</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -12807,7 +13099,7 @@ case, I’d like to <a href="mailto:mail@tony-zorman.com">hear from you</a>!</p>
       
     </div>
     <h1 class="post-title">Multiple Replacements with query-replace</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -12970,7 +13262,7 @@ out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></
       
     </div>
     <h1 class="post-title">Calling Emacs from XMonad</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
@@ -13233,7 +13525,7 @@ maintain a slightly modified and POSIX shell compatible version
       
     </div>
     <h1 class="post-title">My PhD Research Workflow</h1>
-    <div style="max-width: 50rem; border-top: solid 1px var(--fg-header); padding-bottom: 2rem;"></div>
+    <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
