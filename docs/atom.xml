@@ -21,10 +21,10 @@
     <div class="header">
       11th Jan 2026
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1902 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1992 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
-        <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="/tags/j.html" rel="tag">#j</a>
+        <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="/tags/j.html" rel="tag">#j</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
       
     </div>
     <h1 class="post-title">The J Incunabulum</h1>
@@ -126,7 +126,8 @@ or a pointer to an array (this includes numbers as <a href="https://aplwiki.com/
 The original program was written on a 32-bit machine, so one had <code>typedef long I;</code>,
 but on modern systems we need 64-bit integers for this.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">char</span> C<span class="op">;</span> <span class="kw">typedef</span> <span class="dt">void</span> V<span class="op">;</span> <span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> I<span class="op">;</span></span></code></pre></div>
-<p>Defining functions works with <code>V1</code> for <a href="https://aplwiki.com/wiki/Monadic_function">monadic</a> <a href="https://aplwiki.com/wiki/Function">verbs</a> (functions) and <code>V2</code> for <a href="https://aplwiki.com/wiki/Dyadic_function">dyadic</a> ones.
+<p>Defining functions works with <code>V1</code> for <a href="https://aplwiki.com/wiki/Monadic_function">monadic</a> <a href="https://aplwiki.com/wiki/Function">verbs</a> (functions in J parlance)
+and <code>V2</code> for <a href="https://aplwiki.com/wiki/Dyadic_function">dyadic</a> ones.
 Functions defined this way take “implicit” arguments <code>a</code> and <code>w</code>
 (or just <code>w</code> in the monadic case).
 I guess this is based on APL’s α and ω arguments.</p>
@@ -139,8 +140,8 @@ It contains the following fields:</p>
 <li><code>t</code>, the type: this is 0 if the array is unboxed, and 1 if it is <a href="https://aplwiki.com/wiki/Box">boxed</a>.</li>
 <li><code>r</code>, the <a href="https://aplwiki.com/wiki/Rank">rank</a>: a number from 0 to 2, indicating the rank of the array
 (whether it’s a <a href="https://aplwiki.com/wiki/Scalar">scalar</a>, a <a href="https://aplwiki.com/wiki/Vector">vector</a>, or a <a href="https://aplwiki.com/wiki/Matrix">matrix</a>).</li>
-<li><code>d</code>, for dimension(?): the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array; i.e., the number of elements in each dimension.</li>
-<li><code>p</code>, for pointer(?): a pointer to the rest of the data.
+<li><code>d</code>, the dimension(?): the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array; i.e., the number of elements in each dimension.</li>
+<li><code>p</code>, the pointer(payload?): a pointer to the rest of the data.
 It’s a <a href="https://en.wikipedia.org/wiki/Flexible_array_member">flexible array member</a>,
 but I’m honestly not sure why it’s not just declared as <code>p[]</code>.</li>
 </ul>
@@ -163,13 +164,13 @@ and then copies everything over.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>A ga<span class="op">(</span>I t<span class="op">,</span>I r<span class="op">,</span>I<span class="op">*</span>d<span class="op">){</span>A z<span class="op">={</span><span class="dv">0</span><span class="op">};</span>z<span class="op">=(</span>A<span class="op">)</span>ma<span class="op">(</span><span class="dv">5</span><span class="op">+</span>tr<span class="op">(</span>r<span class="op">,</span>d<span class="op">));</span>z<span class="op">-&gt;</span>t<span class="op">=</span>t<span class="op">,</span>z<span class="op">-&gt;</span>r<span class="op">=</span>r<span class="op">,</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>d<span class="op">,</span>d<span class="op">,</span>r<span class="op">);</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> R z<span class="op">;}</span></span></code></pre></div>
 <h2 id="verbs">Verbs</h2>
-<p>Now, we get to defining some verbs.
+<p>Now, we get to defining some <a href="https://aplwiki.com/wiki/Function">verbs</a>.
 The easiest to understand is surely the not-implemented <code>find</code>!
 But <code>id</code> is a close second.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>find<span class="op">){}</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>id<span class="op">){</span>R w<span class="op">;}</span> <span class="co">/* expands to A id(A w){return w;} */</span></span></code></pre></div>
-<p>The <a href="https://aplwiki.com/wiki/Index_Generator">iota</a> verb <code>~n</code> enumerates the integers from <code>0</code> to <code>n-1</code>,
-<code>sha</code> returns the <a href="https://aplwiki.com/wiki/Shape">shape</a> of the array,
+<p>The <a href="https://aplwiki.com/wiki/Index_Generator">iota</a> verb enumerates the integers from <code>0</code> to one minus its argument (it returns an empty array if given <code>0</code>),
+<code>sha</code> returns the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array,
 and <code>size</code> returns the length of the first dimension.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>iota<span class="op">){</span>I n<span class="op">=*</span>w<span class="op">-&gt;</span>p<span class="op">;</span>A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,&amp;</span>n<span class="op">);</span>DO<span class="op">(</span>n<span class="op">,</span>z<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]=</span>i<span class="op">);</span>R z<span class="op">;}</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>sha<span class="op">){</span>A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,&amp;</span>w<span class="op">-&gt;</span>r<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>w<span class="op">-&gt;</span>d<span class="op">,</span>w<span class="op">-&gt;</span>r<span class="op">);</span>R z<span class="op">;}</span></span>
@@ -182,7 +183,8 @@ and add corresponding elements.</p>
 <p><a href="https://aplwiki.com/wiki/Catenate">Cat</a> joins two arrays into a single vector,
 and <a href="https://aplwiki.com/wiki/Enclose">box</a> wraps an array in a scalar box.
 This is, I think, the first instance of abusing <code>I</code> as an opaque type:
-notice the cast <code>*z-&gt;p=(I)w</code> to turn the entire given array into the first element of <code>z-&gt;p</code>.</p>
+notice the cast <code>*z-&gt;p=(I)w</code> to turn the entire given array into the first element of <code>z-&gt;p</code>
+(which is an integer array).</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>V1<span class="op">(</span>box<span class="op">){</span>A z<span class="op">=</span>ga<span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">);*</span>z<span class="op">-&gt;</span>p<span class="op">=(</span>I<span class="op">)</span>w<span class="op">;</span>R z<span class="op">;}</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>cat<span class="op">){</span>I an<span class="op">=</span>tr<span class="op">(</span>a<span class="op">-&gt;</span>r<span class="op">,</span>a<span class="op">-&gt;</span>d<span class="op">),</span>wn<span class="op">=</span>tr<span class="op">(</span>w<span class="op">-&gt;</span>r<span class="op">,</span>w<span class="op">-&gt;</span>d<span class="op">),</span>n<span class="op">=</span>an<span class="op">+</span>wn<span class="op">;</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a> A z<span class="op">=</span>ga<span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">,</span><span class="dv">1</span><span class="op">,&amp;</span>n<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>a<span class="op">-&gt;</span>p<span class="op">,</span>an<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">+</span>an<span class="op">,</span>w<span class="op">-&gt;</span>p<span class="op">,</span>wn<span class="op">);</span>R z<span class="op">;}</span></span></code></pre></div>
@@ -193,20 +195,20 @@ it returns the sub-array at that index.</p>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a> A z<span class="op">=</span>ga<span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">,</span>r<span class="op">,</span>d<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>w<span class="op">-&gt;</span>p<span class="op">+(</span>n<span class="op">**</span>a<span class="op">-&gt;</span>p<span class="op">),</span>n<span class="op">);</span>R z<span class="op">;}</span></span></code></pre></div>
 <p><a href="https://aplwiki.com/wiki/Reshape">Reshape</a> changes the shape of an array.
 The left argument specifies the new shape.
-The incredibly cursed last line copies elements cyclically if needed.
+The, in my opinion, incredibly cursed last line copies elements cyclically if needed.
 We first fill all of <code>w</code> into <code>z</code>,
 and then walk two pointers, one ahead of the other by <code>wn</code>, forward <code>n-wn</code> steps,
-filling up elements as we go, so later iterations can already access the ones resulting from earlier memmoves.</p>
+filling up elements as we go.
+Later iterations can already access the ones resulting from earlier memmoves.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>V2<span class="op">(</span>rsh<span class="op">){</span>I r<span class="op">=</span>a<span class="op">-&gt;</span>r<span class="op">?*</span>a<span class="op">-&gt;</span>d<span class="op">:</span><span class="dv">1</span><span class="op">,</span>n<span class="op">=</span>tr<span class="op">(</span>r<span class="op">,</span>a<span class="op">-&gt;</span>p<span class="op">),</span>wn<span class="op">=</span>tr<span class="op">(</span>w<span class="op">-&gt;</span>r<span class="op">,</span>w<span class="op">-&gt;</span>d<span class="op">);</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> A z<span class="op">=</span>ga<span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">,</span>r<span class="op">,</span>a<span class="op">-&gt;</span>p<span class="op">);</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">,</span>w<span class="op">-&gt;</span>p<span class="op">,</span>wn<span class="op">=</span>n<span class="op">&gt;</span>wn<span class="op">?</span>wn<span class="op">:</span>n<span class="op">);</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span><span class="op">(</span>n<span class="op">-=</span>wn<span class="op">)</span>mv<span class="op">(</span>z<span class="op">-&gt;</span>p<span class="op">+</span>wn<span class="op">,</span>z<span class="op">-&gt;</span>p<span class="op">,</span>n<span class="op">);</span>R z<span class="op">;}</span></span></code></pre></div>
-<hr />
 <h2 id="the-repl">The REPL</h2>
-<p>The main part of the program is a small REPL:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span>C s<span class="op">[</span><span class="dv">99</span><span class="op">];</span><span class="cf">while</span><span class="op">(</span>fgets<span class="op">(</span>s<span class="op">,</span><span class="dv">99</span><span class="op">,</span>stdin<span class="op">)){</span>pr<span class="op">(</span>ex<span class="op">(</span>wd<span class="op">(</span>s<span class="op">,</span>strlen<span class="op">(</span>s<span class="op">)-</span><span class="dv">1</span><span class="op">)));}}</span></span></code></pre></div>
-<p>It reads a line, calls <code>wd</code> (word) to parse it,
+<p>The main part of the program is a small REPL.
+It reads a line, calls <code>wd</code> (word) to parse it,
 then executes it with <code>ex</code>,
 and finally pretty-prints it with <code>pr</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span>C s<span class="op">[</span><span class="dv">99</span><span class="op">];</span><span class="cf">while</span><span class="op">(</span>fgets<span class="op">(</span>s<span class="op">,</span><span class="dv">99</span><span class="op">,</span>stdin<span class="op">)){</span>pr<span class="op">(</span>ex<span class="op">(</span>wd<span class="op">(</span>s<span class="op">,</span>strlen<span class="op">(</span>s<span class="op">)-</span><span class="dv">1</span><span class="op">)));}}</span></span></code></pre></div>
 <h3 id="parsing">Parsing</h3>
 <p>Let’s first define the verb table <code>vt</code>,
 giving names to the functions defined above.
@@ -215,23 +217,27 @@ for example, <code>6#1,2</code> is reshape, <code>&lt;a</code> is box, and so on
 <div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>C vt<span class="op">[]=</span><span class="st">&quot;+{~&lt;#,&quot;</span><span class="op">;</span> <span class="co">/* +    {    ~    &lt;   #   ,    */</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>A<span class="op">(*</span>vd<span class="op">[])(</span>A<span class="op">,</span>A<span class="op">)</span>  <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span>plus<span class="op">,</span>from<span class="op">,</span>find<span class="op">,</span><span class="dv">0</span>  <span class="op">,</span>rsh<span class="op">,</span>cat<span class="op">},</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a> <span class="op">(*</span>vm<span class="op">[])(</span>A<span class="op">)</span>    <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span>id  <span class="op">,</span>size<span class="op">,</span>iota<span class="op">,</span>box<span class="op">,</span>sha<span class="op">,</span><span class="dv">0</span>  <span class="op">};</span></span></code></pre></div>
-<p>For parsing we need two small utility functions that check whether the given character is a <a href="https://aplwiki.com/wiki/Array_(syntax)">noun</a> or a <a href="https://aplwiki.com/wiki/Function">verb</a>.
-Here, a noun is merely a number between 0 and 9,
+<p>For parsing we need two small utility functions that check whether the given character is a <a href="https://aplwiki.com/wiki/Array_(syntax)">noun</a> or a verb.
+Here, a noun is a number between 0 and 9,
 which is then immediately transformed into a rank 0 array, cast to an integer, and returned.
 In case of a verb, return the index of it in the <code>vt</code> array incremented by one.
-Both functions return a plain 0 if nothing matches—note that this is different from inputting a 0, which would be transformed into an array.</p>
+The plus one is due to both functions returning a plain 0 if nothing matches,
+so both <code>vd</code> and <code>vm</code> have that as an “error state”.
+Note that this is different from inputting a literal 0, which would be transformed into an array.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>I noun<span class="op">(</span>C c<span class="op">){</span>A z<span class="op">;</span><span class="cf">if</span><span class="op">(</span>c<span class="op">&lt;</span><span class="ch">'0'</span><span class="op">||</span>c<span class="op">&gt;</span><span class="ch">'9'</span><span class="op">)</span>R <span class="dv">0</span><span class="op">;</span>z<span class="op">=</span>ga<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">);*</span>z<span class="op">-&gt;</span>p<span class="op">=</span>c<span class="op">-</span><span class="ch">'0'</span><span class="op">;</span>R<span class="op">(</span>I<span class="op">)</span>z<span class="op">;}</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>I verb<span class="op">(</span>C c<span class="op">){</span>I i<span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="cf">for</span><span class="op">(;</span>vt<span class="op">[</span>i<span class="op">];)</span><span class="cf">if</span><span class="op">(</span>vt<span class="op">[</span>i<span class="op">++]==</span>c<span class="op">)</span>R i<span class="op">;</span>R <span class="dv">0</span><span class="op">;}</span></span></code></pre></div>
 <p>Parsing is done character by character,
 exactly as one would expect: allocate an integer array <code>e</code>,
 check if each character is a noun or a verb,
 and store the result back into <code>e</code>.
-If it is neither, just store the character’s value.</p>
+If it is neither, just store the character’s value.
+The <code>x = cond1 ? y : cond2 ? z : w</code>-type ternary operator chaining is a classic for Whitney-style programs.
+Make of that what you will.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>I<span class="op">*</span>wd<span class="op">(</span>C<span class="op">*</span>s<span class="op">,</span>I n<span class="op">){</span>I a<span class="op">,*</span>e<span class="op">=</span>ma<span class="op">(</span>n<span class="op">+</span><span class="dv">1</span><span class="op">);</span>C c<span class="op">;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  DO<span class="op">(</span>n<span class="op">,</span>e<span class="op">[</span>i<span class="op">]=(</span>a<span class="op">=</span>noun<span class="op">(</span>c<span class="op">=</span>s<span class="op">[</span>i<span class="op">]))?</span>a<span class="op">:(</span>a<span class="op">=</span>verb<span class="op">(</span>c<span class="op">))?</span>a<span class="op">:</span>c<span class="op">);</span>e<span class="op">[</span>n<span class="op">]=</span><span class="dv">0</span><span class="op">;</span>R e<span class="op">;}</span></span></code></pre></div>
 <h3 id="execution">Execution</h3>
 <p>Onto execution.
-There’s enough memory for 26 variables, which are stored in the <code>st</code> array.
+There’s enough memory for 26 variables, <code>a</code> to <code>z</code>, which are stored in the <code>st</code> array.
 Execution—like parsing—is done character by character.
 There are two queries that will be important here:
 with <code>qp</code> one can ask whether the character is a letter,
@@ -243,7 +249,7 @@ If the currently scrutinised character is a letter,
 and is followed by an equals sign, then we execute whatever is to the right of that equals sign,
 store the information in <code>st</code>, and return.
 Otherwise, whatever value happens to be in <code>st</code> for that letter is cast to an integer and stored in <code>a</code>.
-After that <code>a</code> either points to a character in the input,
+Now <code>a</code> either points to a character in the input,
 is an actual integer (in which case it’s an index into the <code>vm</code> or <code>vd</code> arrays),
 or is a pointer to an array.
 Next, we check if <code>a</code> is a verb;
@@ -266,14 +272,18 @@ if it’s not, then it just prints the array as a flat list—hence the shape in
 If it is a boxed array, we indicate that with <code>&lt;</code>, and recurse.
 Here we dangerously reinterpret the integer that’s stored in each <code>w-&gt;p[i]</code> as a pointer to an array.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>V pr<span class="op">(</span>A w<span class="op">){</span>I r<span class="op">=</span>w<span class="op">-&gt;</span>r<span class="op">,*</span>d<span class="op">=</span>w<span class="op">-&gt;</span>d<span class="op">,</span>n<span class="op">=</span>tr<span class="op">(</span>r<span class="op">,</span>d<span class="op">);</span>DO<span class="op">(</span>r<span class="op">,</span>pi<span class="op">(</span>d<span class="op">[</span>i<span class="op">]));</span>nl<span class="op">();</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span><span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">)</span>DO<span class="op">(</span>n<span class="op">,</span>P<span class="op">(</span><span class="st">&quot;&lt; &quot;</span><span class="op">);</span>pr<span class="op">((</span>A<span class="op">)</span>w<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]))</span><span class="cf">else</span> DO<span class="op">(</span>n<span class="op">,</span>pi<span class="op">(</span>w<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]));</span>nl<span class="op">();}</span></span></code></pre></div>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span><span class="op">(</span>w<span class="op">-&gt;</span>t<span class="op">)</span>DO<span class="op">(</span>n<span class="op">,</span>P<span class="op">(</span><span class="st">&quot;&lt; &quot;</span><span class="op">);</span>pr<span class="op">((</span>A<span class="op">)</span>w<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]))</span><span class="cf">else</span> DO<span class="op">(</span>n<span class="op">,</span>pi<span class="op">(</span>w<span class="op">-&gt;</span>p<span class="op">[</span>i<span class="op">]));</span>nl<span class="op">();}</span></span></code></pre></div>
 <h2 id="conclusion">Conclusion</h2>
-<p>Obviously, this code is <em>super</em> brittle, and the code basically segfaults if you look at it wrong.
+<p>Obviously, this code is <em>super</em> brittle and basically segfaults if you look at it wrong.
 When holding it just right, however, it does sort of work,
 and then it feels a bit magical—here are the core ideas of an array programming language in barely 40 lines of C.
 Plus, it made me feel a bit like a computer science archaeologist.
-An afternoon well spent, I’d say!</p>
-<pre><code>    1,2,8,7
+An afternoon well spent, I’d say!
+If you’re interested in playing with this yourself,
+I’ve pushed everything in this post to a
+<a href="https://codeberg.org/slotThe/J-Incunabulum">Codeberg repository</a>.</p>
+<pre><code>$ gcc -std=c89 j.c &amp;&amp; ./a.out
+    1,2,8,7
 4
 1 2 8 7
     a=~7
@@ -635,7 +645,7 @@ which argument is currently being filled in!<a href="#fnref3" class="footnote-ba
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6544 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
+        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
       
     </div>
     <h1 class="post-title">Writing a JSON Parser in BQN</h1>
@@ -1543,7 +1553,7 @@ The resulting representation is probably not super easy to work with<!--
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1852 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
+        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
       
     </div>
     <h1 class="post-title">Parsing CSV in BQN</h1>
@@ -2590,7 +2600,7 @@ Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3093 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
+        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
       
     </div>
     <h1 class="post-title">Integer Volutes in BQN</h1>
@@ -3014,7 +3024,7 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22372 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
+        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
       
     </div>
     <h1 class="post-title">BQNing Advent of Code</h1>

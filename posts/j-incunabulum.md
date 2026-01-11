@@ -2,7 +2,7 @@
 title: "The J Incunabulum"
 date: 2026-01-11
 two-column: true
-tags: c, j
+tags: c, j, array-lang
 ---
 
 <div class="fullwidth">

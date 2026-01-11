@@ -2,7 +2,7 @@
 title: Writing a JSON Parser in BQN
 date: 2025-10-08
 last-modified: 2025-10-18
-tags: BQN
+tags: BQN, array-lang
 ---
 
 At least, for some vague definition of JSON.<!--more-->

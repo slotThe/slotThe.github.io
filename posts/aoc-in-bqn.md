@@ -2,7 +2,7 @@
 title: BQNing Advent of Code
 date: 2024-10-27
 last-modified: 2024-10-28
-tags: BQN
+tags: BQN, array-lang
 toc-depth: 1
 ---
 

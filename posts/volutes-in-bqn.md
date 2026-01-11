@@ -2,7 +2,7 @@
 title: Integer Volutes in BQN
 date: 2024-11-08
 last-modified: 2024-11-13
-tags: BQN
+tags: BQN, array-lang
 ---
 
 On [day 3](https://tony-zorman.com/posts/aoc-in-bqn.html#day-3)

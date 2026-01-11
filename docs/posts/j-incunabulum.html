@@ -63,10 +63,10 @@
     <div class="header">
       11th Jan 2026
       
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1902 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1992 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
       
       
-        <a title="All pages tagged '#c'." href="../tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="../tags/j.html" rel="tag">#j</a>
+        <a title="All pages tagged '#c'." href="../tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="../tags/j.html" rel="tag">#j</a>   <a title="All pages tagged '#array-lang'." href="../tags/array-lang.html" rel="tag">#array-lang</a>
       
     </div>
     <h1 class="post-title">The J Incunabulum</h1>
@@ -202,7 +202,8 @@ but on modern systems we need 64-bit integers for this.</p>
 </div>
 </div>
 <div class="tc-row">
-<p>Defining functions works with <code>V1</code> for <a href="https://aplwiki.com/wiki/Monadic_function">monadic</a> <a href="https://aplwiki.com/wiki/Function">verbs</a> (functions) and <code>V2</code> for <a href="https://aplwiki.com/wiki/Dyadic_function">dyadic</a> ones.
+<p>Defining functions works with <code>V1</code> for <a href="https://aplwiki.com/wiki/Monadic_function">monadic</a> <a href="https://aplwiki.com/wiki/Function">verbs</a> (functions in J parlance)
+and <code>V2</code> for <a href="https://aplwiki.com/wiki/Dyadic_function">dyadic</a> ones.
 Functions defined this way take “implicit” arguments <code>a</code> and <code>w</code>
 (or just <code>w</code> in the monadic case).
 I guess this is based on <span class="small-caps">apl</span>’s α and ω arguments.</p>
@@ -226,8 +227,8 @@ It contains the following fields:</p>
 <li><code>t</code>, the type: this is 0 if the array is unboxed, and 1 if it is <a href="https://aplwiki.com/wiki/Box">boxed</a>.</li>
 <li><code>r</code>, the <a href="https://aplwiki.com/wiki/Rank">rank</a>: a number from 0 to 2, indicating the rank of the array
 (whether it’s a <a href="https://aplwiki.com/wiki/Scalar">scalar</a>, a <a href="https://aplwiki.com/wiki/Vector">vector</a>, or a <a href="https://aplwiki.com/wiki/Matrix">matrix</a>).</li>
-<li><code>d</code>, for dimension(?): the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array; i.e., the number of elements in each dimension.</li>
-<li><code>p</code>, for pointer(?): a pointer to the rest of the data.
+<li><code>d</code>, the dimension(?): the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array; i.e., the number of elements in each dimension.</li>
+<li><code>p</code>, the pointer(payload?): a pointer to the rest of the data.
 It’s a <a href="https://en.wikipedia.org/wiki/Flexible_array_member">flexible array member</a>,
 but I’m honestly not sure why it’s not just declared as <code>p[]</code>.</li>
 </ul>
@@ -268,7 +269,7 @@ and then copies everything over.</p>
 </div>
 <h2 id="verbs">Verbs<a href="#verbs" class="floatleft sec-link">§</a></h2>
 <div class="tc-row">
-<p>Now, we get to defining some verbs.
+<p>Now, we get to defining some <a href="https://aplwiki.com/wiki/Function">verbs</a>.
 The easiest to understand is surely the not-implemented <code>find</code>!
 But <code>id</code> is a close second.</p>
 <div class="tc-code">
@@ -279,8 +280,8 @@ But <code>id</code> is a close second.</p>
 </div>
 </div>
 <div class="tc-row">
-<p>The <a href="https://aplwiki.com/wiki/Index_Generator">iota</a> verb <code>~n</code> enumerates the integers from <code>0</code> to <code>n-1</code>,
-<code>sha</code> returns the <a href="https://aplwiki.com/wiki/Shape">shape</a> of the array,
+<p>The <a href="https://aplwiki.com/wiki/Index_Generator">iota</a> verb enumerates the integers from <code>0</code> to one minus its argument (it returns an empty array if given <code>0</code>),
+<code>sha</code> returns the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array,
 and <code>size</code> returns the length of the first dimension.</p>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V1</span><span class="p">(</span><span class="n">iota</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="o">=*</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">;</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">&amp;</span><span class="n">n</span><span class="p">);</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">i</span><span class="p">);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
@@ -305,7 +306,8 @@ and add corresponding elements.</p>
 <p><a href="https://aplwiki.com/wiki/Catenate">Cat</a> joins two arrays into a single vector,
 and <a href="https://aplwiki.com/wiki/Enclose">box</a> wraps an array in a scalar box.
 This is, I think, the first instance of abusing <code>I</code> as an opaque type:
-notice the cast <code>*z-&gt;p=(I)w</code> to turn the entire given array into the first element of <code>z-&gt;p</code>.</p>
+notice the cast <code>*z-&gt;p=(I)w</code> to turn the entire given array into the first element of <code>z-&gt;p</code>
+(which is an integer array).</p>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V1</span><span class="p">(</span><span class="n">box</span><span class="p">){</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="o">*</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">w</span><span class="p">;</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 <span class="n">V2</span><span class="p">(</span><span class="n">cat</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">an</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">),</span><span class="n">wn</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">),</span><span class="n">n</span><span class="o">=</span><span class="n">an</span><span class="o">+</span><span class="n">wn</span><span class="p">;</span>
@@ -328,10 +330,11 @@ it returns the sub-array at that index.</p>
 <div class="tc-row">
 <p><a href="https://aplwiki.com/wiki/Reshape">Reshape</a> changes the shape of an array.
 The left argument specifies the new shape.
-The incredibly cursed last line copies elements cyclically if needed.
+The, in my opinion, incredibly cursed last line copies elements cyclically if needed.
 We first fill all of <code>w</code> into <code>z</code>,
 and then walk two pointers, one ahead of the other by <code>wn</code>, forward <code>n-wn</code> steps,
-filling up elements as we go, so later iterations can already access the ones resulting from earlier memmoves.</p>
+filling up elements as we go.
+Later iterations can already access the ones resulting from earlier memmoves.</p>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V2</span><span class="p">(</span><span class="n">rsh</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">r</span><span class="o">?*</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">d</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">),</span><span class="n">wn</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">);</span>
 <span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">);</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">wn</span><span class="o">=</span><span class="n">n</span><span class="o">&gt;</span><span class="n">wn</span><span class="o">?</span><span class="n">wn</span><span class="o">:</span><span class="n">n</span><span class="p">);</span>
@@ -340,21 +343,15 @@ filling up elements as we go, so later iterations can already access the ones re
 
 </div>
 </div>
-<hr />
 <h2 id="the-repl">The <span class="small-caps">repl</span><a href="#the-repl" class="floatleft sec-link">§</a></h2>
 <div class="tc-row">
-<p>The main part of the program is a small <span class="small-caps">repl</span>:</p>
-<div class="tc-code">
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span><span class="n">C</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="mi">99</span><span class="p">];</span><span class="k">while</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">99</span><span class="p">,</span><span class="n">stdin</span><span class="p">)){</span><span class="n">pr</span><span class="p">(</span><span class="n">ex</span><span class="p">(</span><span class="n">wd</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="mi">-1</span><span class="p">)));}}</span>
-</pre></div>
-
-</div>
-</div>
-<div class="tc-row">
-<p>It reads a line, calls <code>wd</code> (word) to parse it,
+<p>The main part of the program is a small <span class="small-caps">repl</span>.
+It reads a line, calls <code>wd</code> (word) to parse it,
 then executes it with <code>ex</code>,
 and finally pretty-prints it with <code>pr</code>.</p>
 <div class="tc-code">
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span><span class="n">C</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="mi">99</span><span class="p">];</span><span class="k">while</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">99</span><span class="p">,</span><span class="n">stdin</span><span class="p">)){</span><span class="n">pr</span><span class="p">(</span><span class="n">ex</span><span class="p">(</span><span class="n">wd</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="mi">-1</span><span class="p">)));}}</span>
+</pre></div>
 
 </div>
 </div>
@@ -373,11 +370,13 @@ for example, <code>6#1,2</code> is reshape, <code>&lt;a</code> is box, and so on
 </div>
 </div>
 <div class="tc-row">
-<p>For parsing we need two small utility functions that check whether the given character is a <a href="https://aplwiki.com/wiki/Array_(syntax)">noun</a> or a <a href="https://aplwiki.com/wiki/Function">verb</a>.
-Here, a noun is merely a number between 0 and 9,
+<p>For parsing we need two small utility functions that check whether the given character is a <a href="https://aplwiki.com/wiki/Array_(syntax)">noun</a> or a verb.
+Here, a noun is a number between 0 and 9,
 which is then immediately transformed into a rank 0 array, cast to an integer, and returned.
 In case of a verb, return the index of it in the <code>vt</code> array incremented by one.
-Both functions return a plain 0 if nothing matches—note that this is different from inputting a 0, which would be transformed into an array.</p>
+The plus one is due to both functions returning a plain 0 if nothing matches,
+so both <code>vd</code> and <code>vm</code> have that as an “error state”.
+Note that this is different from inputting a literal 0, which would be transformed into an array.</p>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">I</span><span class="w"> </span><span class="nf">noun</span><span class="p">(</span><span class="n">C</span><span class="w"> </span><span class="n">c</span><span class="p">){</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">&lt;</span><span class="sc">'0'</span><span class="o">||</span><span class="n">c</span><span class="o">&gt;</span><span class="sc">'9'</span><span class="p">)</span><span class="n">R</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="o">*</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">=</span><span class="n">c</span><span class="o">-</span><span class="sc">'0'</span><span class="p">;</span><span class="n">R</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">z</span><span class="p">;}</span>
 <span class="n">I</span><span class="w"> </span><span class="nf">verb</span><span class="p">(</span><span class="n">C</span><span class="w"> </span><span class="n">c</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="k">for</span><span class="p">(;</span><span class="n">vt</span><span class="p">[</span><span class="n">i</span><span class="p">];)</span><span class="k">if</span><span class="p">(</span><span class="n">vt</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="o">==</span><span class="n">c</span><span class="p">)</span><span class="n">R</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="n">R</span><span class="w"> </span><span class="mi">0</span><span class="p">;}</span>
@@ -390,7 +389,9 @@ Both functions return a plain 0 if nothing matches—note that this is different
 exactly as one would expect: allocate an integer array <code>e</code>,
 check if each character is a noun or a verb,
 and store the result back into <code>e</code>.
-If it is neither, just store the character’s value.</p>
+If it is neither, just store the character’s value.
+The <code>x = cond1 ? y : cond2 ? z : w</code>-type ternary operator chaining is a classic for Whitney-style programs.
+Make of that what you will.</p>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">I</span><span class="o">*</span><span class="nf">wd</span><span class="p">(</span><span class="n">C</span><span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">ma</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span><span class="n">C</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
 <span class="w">  </span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">noun</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">?</span><span class="n">a</span><span class="o">:</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">verb</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="o">?</span><span class="n">a</span><span class="o">:</span><span class="n">c</span><span class="p">);</span><span class="n">e</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">R</span><span class="w"> </span><span class="n">e</span><span class="p">;}</span>
@@ -401,7 +402,7 @@ If it is neither, just store the character’s value.</p>
 <h3 id="execution">Execution<a href="#execution" class="floatleft sec-link">§</a></h3>
 <div class="tc-row">
 <p>Onto execution.
-There’s enough memory for 26 variables, which are stored in the <code>st</code> array.
+There’s enough memory for 26 variables, <code>a</code> to <code>z</code>, which are stored in the <code>st</code> array.
 Execution—like parsing—is done character by character.
 There are two queries that will be important here:
 with <code>qp</code> one can ask whether the character is a letter,
@@ -419,7 +420,7 @@ If the currently scrutinised character is a letter,
 and is followed by an equals sign, then we execute whatever is to the right of that equals sign,
 store the information in <code>st</code>, and return.
 Otherwise, whatever value happens to be in <code>st</code> for that letter is cast to an integer and stored in <code>a</code>.
-After that <code>a</code> either points to a character in the input,
+Now <code>a</code> either points to a character in the input,
 is an actual integer (in which case it’s an index into the <code>vm</code> or <code>vd</code> arrays),
 or is a pointer to an array.
 Next, we check if <code>a</code> is a verb;
@@ -455,20 +456,24 @@ If it is a boxed array, we indicate that with <code>&lt;</code>, and recurse.
 Here we dangerously reinterpret the integer that’s stored in each <code>w-&gt;p[i]</code> as a pointer to an array.</p>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V</span><span class="w"> </span><span class="nf">pr</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="n">w</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="o">*</span><span class="n">d</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">);</span><span class="n">DO</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">pi</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span><span class="n">nl</span><span class="p">();</span>
-<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">t</span><span class="p">)</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">P</span><span class="p">(</span><span class="s">&quot;&lt; &quot;</span><span class="p">);</span><span class="n">pr</span><span class="p">((</span><span class="n">A</span><span class="p">)</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="k">else</span><span class="w"> </span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">pi</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span><span class="n">nl</span><span class="p">();}</span>
+<span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">t</span><span class="p">)</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">P</span><span class="p">(</span><span class="s">&quot;&lt; &quot;</span><span class="p">);</span><span class="n">pr</span><span class="p">((</span><span class="n">A</span><span class="p">)</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="k">else</span><span class="w"> </span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">pi</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span><span class="n">nl</span><span class="p">();}</span>
 </pre></div>
 
 </div>
 </div>
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <div class="tc-row">
-<p>Obviously, this code is <em>super</em> brittle, and the code basically segfaults if you look at it wrong.
+<p>Obviously, this code is <em>super</em> brittle and basically segfaults if you look at it wrong.
 When holding it just right, however, it does sort of work,
 and then it feels a bit magical—here are the core ideas of an array programming language in barely 40 lines of C.
 Plus, it made me feel a bit like a computer science archaeologist.
-An afternoon well spent, I’d say!</p>
+An afternoon well spent, I’d say!
+If you’re interested in playing with this yourself,
+I’ve pushed everything in this post to a
+<a href="https://codeberg.org/slotThe/J-Incunabulum">Codeberg repository</a>.</p>
 <div class="tc-code">
-<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>    1,2,8,7
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>$ gcc -std=c89 j.c &amp;&amp; ./a.out
+    1,2,8,7
 4
 1 2 8 7
     a=~7

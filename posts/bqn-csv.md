@@ -1,7 +1,8 @@
 ---
 title: Parsing CSV in BQN
 date: 2025-07-28
-tags: BQN
+last-modified: 2025-10-18
+tags: BQN, array-lang
 ---
 
 Let's write a CSV parser in [BQN](https://mlochbaum.github.io/BQN)!
