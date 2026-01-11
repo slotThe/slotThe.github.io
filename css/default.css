@@ -216,6 +216,11 @@ h1 {                    /* Title of a non-post */
         }
     }
 }
+div#title-underline {
+    max-width: 50rem;
+    border-top: solid 1px var(--fg-header);
+    padding-bottom: 2rem;
+}
 
 h2 {                    /* First "real" header */
     font-size: 1em;
