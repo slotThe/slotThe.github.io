@@ -45,6 +45,14 @@ For various definitions of "notable".
   [here](https://tony-zorman.com/site.html#fonts) for some prose,
   as well as [here](./scripts/opt-fonts.py) for the relevant script.
 
++ Server-side [TikZ rendering][site:impl:tikz]: `\begin{tikzpicture}`
+  blocks are locally compiled to SVGs, then embedded as images. Supports
+  custom alt-text via `\begin{tikzpicture}{alt text here}`.
+
++ An experimental [two-column layout][site:impl:twocol] for posts with
+  the `two-column: true` metadata field. Text on the left, code on the
+  right. See [The J Incunabulum][site:j] for a showcase.
+
 [KaTeX]: https://katex.org/
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
 [pandoc:fenced-divs]: https://pandoc.org/MANUAL.html#extension-fenced_divs
@@ -54,7 +62,10 @@ For various definitions of "notable".
 [site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
 [site:impl:hlkatex]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L530
 [site:impl:smallcaps]: https://github.com/slotThe/slotThe.github.io/blob/c0b2407ec6b7d71cde186d76d16f46e1e66cfc10/src/site.hs#L293
+[site:impl:tikz]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L821
+[site:impl:twocol]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L851
 [site:include-files]: https://github.com/slotThe/slotThe.github.io/blob/e0c723fbff7ebd21551752c2039a7cf4aef7643f/src/site.hs#L511-L525
+[site:j]: https://tony-zorman.com/posts/j-incunabulum.html
 [site:pygmentise]: https://tony-zorman.com/posts/pygmentising-hakyll.html
 [site:sidenotes]: https://tony-zorman.com/posts/block-sidenotes.html
 
