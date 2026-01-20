@@ -108,7 +108,7 @@ landingPage tagCtx = match "index.html" do
   route idRoute
   compile do
     allposts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
-    let teaserCtx = teaserField "teaser" "post-teaser" <> tagCtx
+    let teaserCtx = cleanTeaser "teaser" "post-teaser" <> tagCtx
         indexCtx  = listField "posts" teaserCtx (pure allposts) <> bodyField "body"
     getResourceBody
       >>= applyAsTemplate                               indexCtx
@@ -133,6 +133,23 @@ landingPage tagCtx = match "index.html" do
 
     killSn :: Text -> Text
     killSn = d.d where d = T.drop 1 . T.dropWhile (/= '\"')
+
+  -- Like Hakyll's 'teaserField', but apply some additional cleaning.
+  cleanTeaser :: String -> Snapshot -> Context String
+  cleanTeaser key snapshot = field key \item -> do
+    body <- itemBody <$> loadSnapshot (itemIdentifier item) snapshot
+    case needlePrefix "<!--more-->" body of
+      Nothing -> fail $ "Hakyll.Web.Template.Context: no teaser defined for " <> show (itemIdentifier item)
+      Just t  -> pure $ asTxt clean t
+   where
+    clean :: Text -> Text
+    clean (T.strip -> s)
+      | "<div" `T.isPrefixOf` s = clean $ delTag 6 s
+      | "<p>"  `T.isPrefixOf` s = clean $ delTag 4 s
+      | otherwise               = s
+
+    delTag :: Int -> Text -> Text
+    delTag n = T.dropEnd n . T.drop 1 . T.dropWhile (/= '>')
 
 posts :: Context String -> Rules ()
 posts tagCtx = match allPosts do
