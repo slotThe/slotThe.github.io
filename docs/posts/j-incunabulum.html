@@ -243,7 +243,7 @@ but I’m honestly not sure why it’s not just declared as <code>p[]</code>.</l
 <code>ma</code> allocates an integer array of size <code>n</code> and returns it,
 <code>mv</code> moves data from one array to another,
 and <code>tr</code> returns the number of elements of an array, given its rank and its dimension vector.
-I’d imagine <code>tr</code> stands for “total rank” or something similar.</p>
+Perhaps <code>tr</code> stands for “total rank” or something similar.</p>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">I</span><span class="o">*</span><span class="nf">ma</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="n">R</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">I</span><span class="p">));}</span>
 <span class="n">V</span><span class="w"> </span><span class="nf">mv</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">d</span><span class="p">,</span><span class="n">I</span><span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]);}</span>
@@ -254,7 +254,7 @@ I’d imagine <code>tr</code> stands for “total rank” or something similar.<
 </div>
 <div class="tc-row">
 <p>The next function is one of the main attractions.
-I’d imagine <code>ga</code> stands for “general allocator” or something in that vein,
+I’d imagine <code>ga</code> stands for “general allocator”/“generate array” or something in that vein,
 and it does exactly what it says on the tin:
 it creates a new array <code>z</code>,
 allocates the total number of elements needed (<code>tr(r,d)</code>),

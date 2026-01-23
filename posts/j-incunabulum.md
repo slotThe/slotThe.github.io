@@ -1,6 +1,7 @@
 ---
 title: "The J Incunabulum"
 date: 2026-01-11
+last-modified: 2026-01-11
 two-column: true
 tags: c, j, array-lang
 ---
@@ -147,7 +148,7 @@ Now we can define small helpers:
 `ma` allocates an integer array of size `n` and returns it,
 `mv` moves data from one array to another,
 and `tr` returns the number of elements of an array, given its rank and its dimension vector.
-I'd imagine `tr` stands for "total rank" or something similar.
+Perhaps `tr` stands for "total rank" or something similar.
 
 ``` c
 I*ma(I n){R(I*)malloc(n*sizeof(I));}
@@ -156,7 +157,7 @@ I tr(I r,I*d){I z=1;DO(r,z=z*d[i]);R z;}
 ```
 
 The next function is one of the main attractions.
-I'd imagine `ga` stands for "general allocator" or something in that vein,
+I'd imagine `ga` stands for "general allocator"/"generate array" or something in that vein,
 and it does exactly what it says on the tin:
 it creates a new array `z`,
 allocates the total number of elements needed (`tr(r,d)`),

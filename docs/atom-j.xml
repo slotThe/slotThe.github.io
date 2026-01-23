@@ -150,12 +150,12 @@ but I’m honestly not sure why it’s not just declared as <code>p[]</code>.</l
 <code>ma</code> allocates an integer array of size <code>n</code> and returns it,
 <code>mv</code> moves data from one array to another,
 and <code>tr</code> returns the number of elements of an array, given its rank and its dimension vector.
-I’d imagine <code>tr</code> stands for “total rank” or something similar.</p>
+Perhaps <code>tr</code> stands for “total rank” or something similar.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>I<span class="op">*</span>ma<span class="op">(</span>I n<span class="op">){</span>R<span class="op">(</span>I<span class="op">*)</span>malloc<span class="op">(</span>n<span class="op">*</span><span class="kw">sizeof</span><span class="op">(</span>I<span class="op">));}</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>V mv<span class="op">(</span>I<span class="op">*</span>d<span class="op">,</span>I<span class="op">*</span>s<span class="op">,</span>I n<span class="op">){</span>DO<span class="op">(</span>n<span class="op">,</span>d<span class="op">[</span>i<span class="op">]=</span>s<span class="op">[</span>i<span class="op">]);}</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>I tr<span class="op">(</span>I r<span class="op">,</span>I<span class="op">*</span>d<span class="op">){</span>I z<span class="op">=</span><span class="dv">1</span><span class="op">;</span>DO<span class="op">(</span>r<span class="op">,</span>z<span class="op">=</span>z<span class="op">*</span>d<span class="op">[</span>i<span class="op">]);</span>R z<span class="op">;}</span></span></code></pre></div>
 <p>The next function is one of the main attractions.
-I’d imagine <code>ga</code> stands for “general allocator” or something in that vein,
+I’d imagine <code>ga</code> stands for “general allocator”/“generate array” or something in that vein,
 and it does exactly what it says on the tin:
 it creates a new array <code>z</code>,
 allocates the total number of elements needed (<code>tr(r,d)</code>),
