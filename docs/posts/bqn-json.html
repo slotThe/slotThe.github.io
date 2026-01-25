@@ -179,7 +179,6 @@ If I refer to an unknown variable further down, it was probably defined in such 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="s2">&quot;[12,34,5,678,910]&quot;</span>
 <span class="s2">&quot;[12,34,5,678,910]&quot;</span>
 </pre></div>
-
 <p></p>
 We’ll follow standard practise by first tokenising—lexing—the string,
 and then parsing the tokens.
@@ -191,14 +190,15 @@ and thus all commas can be removed.
 We’ll then return a two element array,
 the first entry containing the tokenised array,
 and the second one being all of the numbers.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">Tokenise</span><span class="w"> </span><span class="nv">inp</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;[00000]&quot;</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">12</span><span class="w"> </span><span class="m">34</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">678</span><span class="w"> </span><span class="m">910</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 The first thing we have to do is to get the start of each number,
 and save that in a variable <code>ns</code>,
 while a mask of all numbers will be called <code>n</code>.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">'0'</span><span class="o">+↕</span><span class="m">10</span>
 <span class="s2">&quot;0123456789&quot;</span>
 <span class="w">    </span><span class="nv">inp</span><span class="o">∊</span><span class="sr">(</span><span class="s1">'0'</span><span class="o">+↕</span><span class="m">10</span><span class="sr">)</span>
@@ -215,11 +215,11 @@ while a mask of all numbers will be called <code>n</code>.
 <span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span>
 <span class="w">                                                                     </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 While it’s not immediately obvious,
 defining <code>ns</code> is useful because we can create a depth scan of all numbers,
 where the start of each new number increases the depth by one.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">+</span><span class="na">`</span><span class="nv">ns</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="o">≍</span><span class="w"> </span><span class="o">+</span><span class="na">`</span><span class="nv">ns</span>
@@ -228,10 +228,10 @@ where the start of each new number increases the depth by one.
 <span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">2</span><span class="w">   </span><span class="m">2</span><span class="w">   </span><span class="m">2</span><span class="w">   </span><span class="m">3</span><span class="w">   </span><span class="m">3</span><span class="w">   </span><span class="m">4</span><span class="w">   </span><span class="m">4</span><span class="w">   </span><span class="m">4</span><span class="w">   </span><span class="m">4</span><span class="w">   </span><span class="m">5</span><span class="w">   </span><span class="m">5</span><span class="w">   </span><span class="m">5</span><span class="w">   </span><span class="m">5</span>
 <span class="w">                                                                     </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 By supplementing this with <code>n</code>,
 we obtain sufficient information to <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> the string!
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">n</span><span class="o">×+</span><span class="na">`</span><span class="nv">ns</span><span class="w">                                    </span><span class="c1"># Stencil out the numbers</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="w"> </span><span class="nv">n</span><span class="o">×+</span><span class="na">`</span><span class="nv">ns</span><span class="w">                                </span><span class="c1"># Kill irrelevant part</span>
@@ -243,12 +243,12 @@ we obtain sufficient information to <a href="https://mlochbaum.github.io/BQN/doc
 <span class="w">    </span><span class="sr">(</span><span class="m">10</span><span class="py">⊸</span><span class="o">×</span><span class="py">⊸</span><span class="o">+</span><span class="na">˜´</span><span class="py">∘</span><span class="o">⌽-</span><span class="py">⟜</span><span class="s1">'0'</span><span class="sr">)</span><span class="na">¨</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="w"> </span><span class="nv">n</span><span class="o">×+</span><span class="na">`</span><span class="nv">ns</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">inp</span><span class="w">       </span><span class="c1"># Or: manual parsing</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">12</span><span class="w"> </span><span class="m">34</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">678</span><span class="w"> </span><span class="m">910</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Now all that’s left in the tokenisation step
 is to create the string <code>"[00000]"</code> from the input.
 Since we know all other tokens,
 this can be achieved with a combination of <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>, <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">indices</a>, and <a href="https://mlochbaum.github.io/BQN/doc/under.html">under</a>:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">ns</span><span class="w"> </span><span class="o">∨</span><span class="w"> </span><span class="nv">inp</span><span class="o">∊</span><span class="s2">&quot;[]&quot;</span><span class="w">                </span><span class="c1"># Tokens are numbers and brackets</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ts</span><span class="o">/</span><span class="nv">inp</span><span class="w">                            </span><span class="c1"># Just the tokens of the string</span>
@@ -260,7 +260,6 @@ this can be achieved with a combination of <a href="https://mlochbaum.github.io/
 <span class="w">    </span><span class="nv">ts</span><span class="o">/</span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">(</span><span class="nv">ns</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="nv">inp</span><span class="w">                 </span><span class="c1"># Choose just the tokens</span>
 <span class="s2">&quot;[00000]&quot;</span>
 </pre></div>
-
 <p></p>
 That’ll do!
 We can put all of this into a function now:<!--
@@ -268,15 +267,16 @@ We can put all of this into a function now:<!--
 <p></p>
 We could in fact also move <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a>
 into the calls to <code>ns</code> and <code>𝕩</code>:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="nv">ts</span><span class="o">/</span><span class="nv">ns</span><span class="sr">)</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="w"> </span><span class="sr">(</span><span class="nv">ts</span><span class="o">/</span><span class="nv">inp</span><span class="sr">)</span>
 <span class="s2">&quot;[0,0,0,0,0]&quot;</span>
 </pre></div>
-
 <p></p>
 I’m not super well-versed in the ins and outs of <span class="small-caps">cbqn</span>’s performance,
 but from a cursory benchmark with the <code>•_timed</code> modifier,
 it does not seem to make much of a difference.</div><!--
 -->
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Tokenise</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="nv">ns</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">»</span><span class="py">⊸</span><span class="o">&lt;</span><span class="w"> </span><span class="nv">n</span><span class="kd">←</span><span class="ni">𝕩</span><span class="o">∊</span><span class="s1">'0'</span><span class="o">+↕</span><span class="m">10</span><span class="w">           </span><span class="c1"># Number beginnings</span>
 <span class="w">  </span><span class="nv">nr</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•ParseFloat</span><span class="na">¨</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">n</span><span class="o">×+</span><span class="na">`</span><span class="nv">ns</span><span class="sr">)</span><span class="o">⊔</span><span class="ni">𝕩</span><span class="w"> </span><span class="c1"># Numbers to return</span>
@@ -284,27 +284,27 @@ it does not seem to make much of a difference.</div><!--
 <span class="w">  </span><span class="p">⟨</span><span class="nv">ts</span><span class="o">/</span><span class="s1">'0'</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="o">/</span><span class="nv">ns</span><span class="sr">)</span><span class="py">⊸</span><span class="o">⊏</span><span class="sr">)</span><span class="ni">𝕩</span><span class="p">,</span><span class="w"> </span><span class="nv">nr</span><span class="p">⟩</span>
 <span class="kt">}</span>
 </pre></div>
-
 <p></p>
 This of course also works with nested lists,
 giving us a flat representation in <code>nr</code>:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">Tokenise</span><span class="w"> </span><span class="s2">&quot;[1,[2,[3],4],[5,6]]&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;[0[0[0]0][00]]&quot;</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Using the “blueprint” <code>"[0[0[0]0][00]]"</code>,
 the main job of the parser will be to turn the flat representation of <code>nr</code> back into a nested list.
 <h3 id="parsing">Parsing<a href="#parsing" class="floatleft sec-link">§</a></h3>
 <p></p>
 The end result we want looks like this:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">Parse</span><span class="w"> </span><span class="s2">&quot;[1,[2,[3]],4]&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 For this post, let’s define a function to compactly display some text,
 so that I can use some more complicated arguments without <a href="https://mlochbaum.github.io/BQN/doc/couple.html">couple</a> taking up too much space.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">DP</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="ni">𝕨</span><span class="o">≍</span><span class="s1">'0'</span><span class="o">+</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span>
 <span class="sr">(</span><span class="nv">function</span><span class="w"> </span><span class="nv">block</span><span class="sr">)</span>
 <span class="w">    </span><span class="s2">&quot;abc&quot;</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="p">⟨</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">⟩</span>
@@ -313,7 +313,6 @@ so that I can use some more complicated arguments without <a href="https://mloch
 <span class="s2">  123&quot;</span>
 <span class="w">      </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 The first thing we need to do is to get a depth ordering of the list;
 i.e., make an opening bracket increase and have a closing one decrease the depth by one.<!--
@@ -335,6 +334,7 @@ This is fine (even wanted) for this use-case;
 if you want to treat both pairs as being inside of the pair you can use
 <code>+`o-»c</code>.</div><!--
 -->
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="kd">←</span><span class="s2">&quot;[1,[2,[3,4]],5,[6,7],8]&quot;</span>
 <span class="s2">&quot;[1,[2,[3,4]],5,[6,7],8]&quot;</span>
 <span class="w">    </span><span class="nv">ts</span><span class="p">‿</span><span class="nv">nums</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">Tokenise</span><span class="w"> </span><span class="nv">inp</span><span class="w"> </span><span class="c1"># Tokens and numbers</span>
@@ -349,26 +349,25 @@ if you want to treat both pairs as being inside of the pair you can use
 <span class="s2">  1122333211222110&quot;</span>
 <span class="w">                   </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 We can obtain a depth ordering of the list by turning <code>+`o-c</code> into a permutation with <a href="https://mlochbaum.github.io/BQN/doc/order.html">grade up</a>
 and then indexing into the tokens with <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a>.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">d</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⍋+</span><span class="na">`</span><span class="nv">o</span><span class="o">-</span><span class="nv">c</span><span class="w"> </span><span class="c1"># Depth ordering</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="m">12</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">d</span><span class="o">⊏</span><span class="nv">ts</span>
 <span class="s2">&quot;][0]0]0[0][00[00&quot;</span>
 </pre></div>
-
 <p></p>
 This is pretty hard to read at first (and even later),
 but it’s really nothing more than a breadth-first ordering of the input.
 Since <code>inp</code> is defined as <code>"[1,[2,[3,4]],5,[6,7],8]"</code>
 and so in particular only contains one-digit numbers,
 it’s perhaps more instructive to look at
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">d</span><span class="o">⊏</span><span class="sr">(</span><span class="s1">','</span><span class="py">⊸</span><span class="o">≠</span><span class="sr">)</span><span class="py">⊸</span><span class="o">/</span><span class="nv">inp</span>
 <span class="s2">&quot;][1]5]8[2][67[34&quot;</span>
 </pre></div>
-
 <p></p>
 Drawing a picture often helps:
 <p></p>
@@ -383,6 +382,7 @@ We now assign each sublist the depth in this tree representation.
 This works much like the <code>+`o-c</code> trick above,
 only we don’t need to care about closing parentheses<!--
 -->—they only show up when we are going a level deeper anyways.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">'['</span><span class="o">=</span><span class="nv">d</span><span class="o">⊏</span><span class="nv">ts</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">l</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="o">⍋</span><span class="nv">d</span><span class="sr">)</span><span class="o">⊏+</span><span class="na">`</span><span class="s1">'['</span><span class="o">=</span><span class="nv">d</span><span class="o">⊏</span><span class="nv">ts</span><span class="w">             </span><span class="c1"># Nesting</span>
@@ -393,7 +393,6 @@ only we don’t need to care about closing parentheses<!--
 <span class="s2">  1122444211333110&quot;</span>
 <span class="w">                   </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 Compare this with the above tree.
 One important detail is that we index with <code>⍋d</code> and not just <code>d</code>:
@@ -407,6 +406,7 @@ I would encourage you to play with these ideas for a while, until you’re comfo
 <p></p>
 Now that we know in which order to fill the sublists,
 it’s about time that we figure out which values to use for that very filling.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ln</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">ts</span><span class="o">∊</span><span class="s2">&quot;0]&quot;</span><span class="w">                 </span><span class="c1"># Literals and nesting</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">ln</span>
@@ -426,7 +426,6 @@ it’s about time that we figure out which values to use for that very filling.
 <span class="w">    </span><span class="nv">inp</span>
 <span class="s2">&quot;[1,[2,[3,4]],5,[6,7],8]&quot;</span>
 </pre></div>
-
 <p></p>
 We separate out the literals,
 as well as the “nesting indicator” <code>]</code>,
@@ -447,6 +446,7 @@ the closing bracket of which is however assigned to index <code>10</code>.
 To fix this, we use the nesting variable <code>l</code> defined above<!--
 -->—there, we’ve already associated a sublist to its depth in the breadth-first representation.
 Looking at <code>l</code> again, we can find the index of the sublist that a given <code>]</code> is closing by looking at the index of the element in front of it:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">l</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="s2">&quot;[0[0[00]]0[00]0]</span>
@@ -455,11 +455,11 @@ Looking at <code>l</code> again, we can find the index of the sublist that a giv
 <span class="w">    </span><span class="nv">c</span><span class="o">/»</span><span class="nv">l</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Since the list with the highest index above will be constructed first,
 we have to invert these numbers.
 Then, we just have to add these to the rest of the literals.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">c</span><span class="o">/»</span><span class="nv">l</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="o">≠</span><span class="py">⊸</span><span class="o">-</span><span class="w"> </span><span class="nv">c</span><span class="o">/»</span><span class="nv">l</span><span class="w">          </span><span class="c1"># Deeply nested lists are constructed *first*</span>
@@ -471,19 +471,19 @@ Then, we just have to add these to the rest of the literals.
 <span class="w">    </span><span class="nv">vi</span><span class="w"> </span><span class="kd">↩</span><span class="w"> </span><span class="nv">vi</span><span class="o">⊏</span><span class="sr">(</span><span class="o">↕≠</span><span class="nv">nums</span><span class="sr">)</span><span class="o">∾</span><span class="w"> </span><span class="sr">(</span><span class="o">≠</span><span class="nv">nums</span><span class="sr">)</span><span class="o">+</span><span class="w"> </span><span class="o">≠</span><span class="py">⊸</span><span class="o">-</span><span class="w"> </span><span class="nv">c</span><span class="o">/»</span><span class="nv">l</span><span class="w"> </span><span class="c1"># Fix vi by indexing this new list</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 This gives us fixed indices:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="nv">ln</span><span class="o">/</span><span class="nv">ts</span><span class="sr">)</span><span class="w"> </span><span class="o">≍</span><span class="w"> </span><span class="nv">vi</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">']'</span><span class="w"> </span><span class="s1">']'</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">']'</span><span class="w"> </span><span class="s1">'0'</span><span class="w"> </span><span class="s1">']'</span>
 <span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">2</span><span class="w">   </span><span class="m">3</span><span class="w">   </span><span class="m">8</span><span class="w">   </span><span class="m">10</span><span class="w">  </span><span class="m">4</span><span class="w">   </span><span class="m">5</span><span class="w">   </span><span class="m">6</span><span class="w">   </span><span class="m">9</span><span class="w">   </span><span class="m">7</span><span class="w">   </span><span class="m">11</span>
 <span class="w">                                                  </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 This means we first construct <code>[3,4]</code>, then <code>[2,[3,4]]</code>, then <code>[6,7]</code>, and finally the whole list <code>[1,[2,[3,4]],5,[6,7],8]</code>.
 For this, we simply have to <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> the indices of <code>vi</code> accordingly.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">vi</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">11</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ln</span><span class="o">/</span><span class="nv">l</span><span class="w"> </span><span class="c1"># Since vi also only contains indices for literals and nesting</span>
@@ -495,12 +495,12 @@ For this, we simply have to <a href="https://mlochbaum.github.io/BQN/doc/group.h
 <span class="w">    </span><span class="o">⌽</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">l</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span><span class="w"> </span><span class="c1"># Reverse to build deeply nested lists sooner</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Now all that is left is to build the whole list recursively.
 We start with the list of literals,
 construct the next list, and add it to the end of the list of literals.
 This way, the later indices <code>8</code>, <code>9</code>, and <code>10</code> will refer to these sublists.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">⌽</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">l</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">nums</span>
@@ -526,9 +526,9 @@ This way, the later indices <code>8</code>, <code>9</code>, and <code>10</code> 
 <span class="m">·</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">8</span>
 <span class="w">                              </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 More concisely:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">res</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">nums</span><span class="w"> </span><span class="c1"># Mutation is evil</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="kt">{</span><span class="nv">res</span><span class="w"> </span><span class="o">∾</span><span class="kd">↩</span><span class="w"> </span><span class="o">&lt;</span><span class="ni">𝕩</span><span class="o">⊏</span><span class="nv">res</span><span class="w"> </span><span class="p">⋄</span><span class="ss">@</span><span class="kt">}</span><span class="na">¨</span><span class="w"> </span><span class="o">⌽</span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">l</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span>
@@ -538,7 +538,6 @@ More concisely:
 <span class="m">·</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">8</span>
 <span class="w">                              </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 One tiny change has to be made to the building of the sublists:
 if our input is <code>"[]"</code>, then <code>1-˜ln/l</code> will be <code>⟨¯1⟩</code>,
@@ -550,12 +549,13 @@ This is not a problem, however, because that’s actually a feature<!--
 --><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">A questionable <span class="small-caps">api</span> choice, for sure, but I’ll take it!</div><!--
 --> of the function:
 in that case, the last element specified the minimum length of the result.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">0</span><span class="p">‿</span><span class="m">¯1</span><span class="p">‿</span><span class="m">1</span><span class="p">‿</span><span class="m">4</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="s2">&quot;abc&quot;</span><span class="w"> </span><span class="c1"># Padding</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="p">⟨⟩</span><span class="w"> </span><span class="p">⟨⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Putting everything together:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Parse</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="nv">ts</span><span class="p">‿</span><span class="nv">nums</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">Tokenise</span><span class="w"> </span><span class="ni">𝕩</span><span class="w">                 </span><span class="c1"># Tokens and numbers</span>
 <span class="w">  </span><span class="nv">o</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="s1">'['</span><span class="o">=</span><span class="nv">ts</span><span class="w">                           </span><span class="c1"># Opening brackets</span>
@@ -570,9 +570,9 @@ Putting everything together:
 <span class="w">  </span><span class="m">¯1</span><span class="o">⊑</span><span class="nv">r</span>
 <span class="kt">}</span>
 </pre></div>
-
 <p></p>
 Works like a charm:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">Parse</span><span class="w"> </span><span class="s2">&quot;[1,[2,[3,4]],5,[6,7],8]&quot;</span>
 <span class="err">┌─</span>
 <span class="m">·</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">8</span>
@@ -590,7 +590,6 @@ Works like a charm:
 <span class="m">·</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟨⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="p">⟨⟩</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">                                         </span><span class="err">┘</span>
 </pre></div>
-
 <h2 id="adding-strings">Adding strings<a href="#adding-strings" class="floatleft sec-link">§</a></h2>
 <p></p>
 I’d like to add one more literal,
@@ -602,17 +601,18 @@ First, the lexer: getting the strings and their beginnings works almost the same
 (the same way that <span class="small-caps">csv</span> does it).
 <em>Everything</em> else is treated as a literal characters, even backslashes!</div><!--
 -->
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="s2">&quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;</span>
 <span class="s2">&quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;</span>
 <span class="w">    </span><span class="nv">s</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">inp</span><span class="w">             </span><span class="c1"># strings</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Before we move on, let’s slightly change the definition of <code>DP</code>:
 for syntax highlighting reasons, I’d like quotes to occupy a single character that is not the quote character itself.
 Let’s just substitute <code>'</code> for <code>"</code> in the left argument,
 which should fix this issue and hopefully still be clear enough.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">DP</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="sr">((</span><span class="ss">@</span><span class="o">+</span><span class="m">39</span><span class="sr">)</span><span class="na">¨</span><span class="py">⌾</span><span class="sr">((</span><span class="ni">𝕨</span><span class="o">=</span><span class="s1">'&quot;'</span><span class="sr">)</span><span class="py">⊸</span><span class="o">/</span><span class="sr">)</span><span class="ni">𝕨</span><span class="sr">)</span><span class="w"> </span><span class="o">≍</span><span class="w"> </span><span class="s1">'0'</span><span class="o">+</span><span class="ni">𝕩</span><span class="kt">}</span>
 <span class="sr">(</span><span class="nv">function</span><span class="w"> </span><span class="nv">block</span><span class="sr">)</span>
 <span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">s</span>
@@ -628,10 +628,10 @@ which should fix this issue and hopefully still be clear enough.
 <span class="s2">  0001000001000&quot;</span>
 <span class="w">                </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 Selecting the strings also works the same way;
 do a sum <a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> on the string beginnings, punch out the actual strings, and then <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a>.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">s</span><span class="o">×+</span><span class="na">`</span><span class="nv">sb</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="m">¯1</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="o">+</span><span class="na">`</span><span class="nv">sb</span>
@@ -643,19 +643,18 @@ do a sum <a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> on the
 <span class="w">    </span><span class="m">1</span><span class="o">↓</span><span class="na">¨</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">s</span><span class="o">×+</span><span class="na">`</span><span class="nv">sb</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">inp</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Actually, you can be a little bit smarter here;
 instead of dropping the first element of every string,
 we can instead make sure that they are never selected by <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a>
 by comparing when <code>s</code> is bigger than <code>sb</code>:
 this will only be the case if one is truly inside of a string.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="nv">s</span><span class="o">&gt;</span><span class="nv">sb</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">sb</span><span class="w">               </span><span class="c1"># Same as (s∧¬sb)×+`sb</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="nv">s</span><span class="o">&gt;</span><span class="nv">sb</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">sb</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">inp</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Putting this together in our tokeniser,
 we now also need to make sure that we ignore everything that’s happening inside of a string.
@@ -669,6 +668,7 @@ I figured that perhaps indicating changes in this way is more readable than givi
 if only because all context one needs is right there.
 That’s one of the advantages of the complete program fitting on a single screen!</div><!--
 -->
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Tokenise</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="nv">sb</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">»</span><span class="py">⊸</span><span class="o">&lt;</span><span class="w"> </span><span class="nv">s</span><span class="kd">←</span><span class="o">≠</span><span class="na">`</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="ni">𝕩</span><span class="w">             </span><span class="c1"># String beginnings</span>
 <span class="w">  </span><span class="nv">sr</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="nv">s</span><span class="o">&gt;</span><span class="nv">sb</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">sb</span><span class="sr">)</span><span class="o">⊔</span><span class="ni">𝕩</span><span class="w">        </span><span class="c1"># Strings to return</span>
@@ -689,7 +689,6 @@ That’s one of the advantages of the complete program fitting on a single scree
 <span class="w">    </span><span class="o">Tokenise</span><span class="w"> </span><span class="s2">&quot;[1,&quot;&quot;a,2,b&quot;&quot;]&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;[0&quot;&quot;]&quot;</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a,2,b&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <h3 id="parsing-1">Parsing<a href="#parsing-1" class="floatleft sec-link">§</a></h3>
 <p></p>
 Adjusting the parser is actually quite easy here:
@@ -697,6 +696,7 @@ we just have to add quotes to the allowed literals,
 make the value indices aware of them,
 and also feed them into the initial value of the result;
 no further changes necessary.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Parse</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="nv">ts</span><span class="p">‿</span><span class="nv">nums</span><span class="p">‿</span><span class="nv">strs</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">Tokenise</span><span class="w"> </span><span class="ni">𝕩</span><span class="w">                    </span><span class="c1"># Tokens, numbers, and strings</span>
 <span class="c1">#        ^^^^^</span>
@@ -715,7 +715,6 @@ no further changes necessary.
 <span class="w">  </span><span class="m">¯1</span><span class="o">⊑</span><span class="nv">r</span>
 <span class="kt">}</span>
 </pre></div>
-
 <h3 id="escaping">Escaping<a href="#escaping" class="floatleft sec-link">§</a></h3>
 <p></p>
 To make things a little bit—though not too—interesting, let’s add some easy escaping.
@@ -725,6 +724,7 @@ we treat the following character (e.g., a quote) literally.
 Thinking about semantics a bit, if we have a sequence of backslashes like <code>\\\\\</code>,
 we want to alternate between treating them as the escapist and the escapee.
 One way to do this is with a less-than <a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a>:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="s2">&quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;]&quot;</span>
 <span class="s2">&quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;]&quot;</span>
 <span class="w">    </span><span class="s1">'\'</span><span class="o">=</span><span class="nv">inp</span>
@@ -737,20 +737,20 @@ One way to do this is with a less-than <a href="https://mlochbaum.github.io/BQN/
 <span class="s2">  00000000001010100000&quot;</span>
 <span class="w">                       </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 We effectively check if the previous character of the string was escaped, but in a left-to-right fashion
 (as in, earlier choices on the left affect those on the right).
 To get the escaped values themselves, we can now simply <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> the string to the right.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="o">»&lt;</span><span class="na">`</span><span class="s1">'\'</span><span class="o">=</span><span class="nv">inp</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="s2">&quot;[1,'a','b_\\\'\\_c']</span>
 <span class="s2">  00000000000101010000&quot;</span>
 <span class="w">                       </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 Finally, when selecting the strings, we just need to exclude the escaped quotes:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">e</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">»&lt;</span><span class="na">`</span><span class="s1">'\'</span><span class="o">=</span><span class="nv">inp</span><span class="w">     </span><span class="c1"># Escapes</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">s</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">inp</span><span class="w"> </span><span class="c1"># Strings are in quotes that are not escaped</span>
@@ -760,13 +760,13 @@ Finally, when selecting the strings, we just need to exclude the escaped quotes:
 <span class="w">    </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="nv">s</span><span class="o">&gt;</span><span class="nv">sb</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">sb</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">inp</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b_\\\&quot;&quot;\\_c&quot;</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 As we are dealing with Boolean masks,
 alternatively to <code>(¬e)∧'"'=inp</code> one could also write the shorter,
 though slightly more obscure,
 <code>e&lt;'"'=inp</code>.
 All in all, we have
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Tokenise</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="nv">e</span><span class="w">  </span><span class="kd">←</span><span class="w"> </span><span class="o">»&lt;</span><span class="na">`</span><span class="s1">'\'</span><span class="o">=</span><span class="ni">𝕩</span><span class="w">                  </span><span class="c1"># Escapes</span>
 <span class="w">  </span><span class="nv">sb</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">»</span><span class="py">⊸</span><span class="o">&lt;</span><span class="w"> </span><span class="nv">s</span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="o">=</span><span class="ni">𝕩</span><span class="w">      </span><span class="c1"># String beginnings</span>
@@ -786,9 +786,9 @@ All in all, we have
 <span class="w">    </span><span class="o">Tokenise</span><span class="w"> </span><span class="s2">&quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;,2]&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;[0&quot;&quot;&quot;&quot;0]&quot;</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b_\\\&quot;&quot;\\_c&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 The parser doesn’t need to be adjusted at all this time and just works:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">Parse</span><span class="w"> </span><span class="s2">&quot;[1,&quot;&quot;a&quot;&quot;,&quot;&quot;b_\\\&quot;&quot;\\_c&quot;&quot;,2]&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b_\\\&quot;&quot;\\_c&quot;</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="o">Parse</span><span class="w"> </span><span class="s2">&quot;[1,[2,[&quot;&quot;[x,10]&quot;&quot;,4]],5,[&quot;&quot;a&quot;&quot;,7],8]&quot;</span>
@@ -796,14 +796,13 @@ The parser doesn’t need to be adjusted at all this time and just works:
 <span class="m">·</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;[x,10]&quot;</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="m">8</span>
 <span class="w">                                       </span><span class="err">┘</span>
 </pre></div>
-
 <h2 id="objects-and-their-ilk">Objects and their ilk<a href="#objects-and-their-ilk" class="floatleft sec-link">§</a></h2>
 <p></p>
 Onto the second big type we have to support: objects.
 They should look like
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>{&quot;a&quot;: 1, &quot;b&quot;: [&quot;c&quot;, &quot;d&quot;]}
 </pre></div>
-
 <p></p>
 and so on.
 <p></p>
@@ -812,6 +811,7 @@ Actually, to keep things visually comprehensible,
 let’s go back on what I said at the beginning
 and do the same for the comma as the array separator,
 and the colon as the key–value separator.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Tokenise</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="nv">e</span><span class="w">  </span><span class="kd">←</span><span class="w"> </span><span class="o">»&lt;</span><span class="na">`</span><span class="s1">'\'</span><span class="o">=</span><span class="ni">𝕩</span><span class="w">                  </span><span class="c1"># Escapes</span>
 <span class="w">  </span><span class="nv">sb</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">»</span><span class="py">⊸</span><span class="o">&lt;</span><span class="w"> </span><span class="nv">s</span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="o">=</span><span class="ni">𝕩</span><span class="w">      </span><span class="c1"># String beginnings</span>
@@ -830,7 +830,6 @@ and the colon as the key–value separator.
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">Tokenise</span><span class="w"> </span><span class="s2">&quot;{&quot;&quot;a&quot;&quot;: 123, &quot;&quot;bcde&quot;&quot;: [1,&quot;&quot;42&quot;&quot;,30]}&quot;</span>
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;{&quot;&quot;:0,&quot;&quot;:[0,&quot;&quot;,0]}&quot;</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">123</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;bcde&quot;</span><span class="w"> </span><span class="s2">&quot;42&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Looks good.
 <h3 id="parsing-2">Parsing<a href="#parsing-2" class="floatleft sec-link">§</a></h3>
@@ -838,6 +837,7 @@ Looks good.
 Since the parser will change quite a bit,
 it is perhaps more instructive to build it up from scratch again.
 Up to getting the depth, things don’t really change much.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="s2">&quot;{&quot;&quot;a&quot;&quot;: 1, &quot;&quot;b&quot;&quot;: [&quot;&quot;1&quot;&quot;,2,{&quot;&quot;a&quot;&quot;:2}]}&quot;</span>
 <span class="s2">&quot;{&quot;&quot;a&quot;&quot;: 1, &quot;&quot;b&quot;&quot;: [&quot;&quot;1&quot;&quot;,2,{&quot;&quot;a&quot;&quot;:2}]}&quot;</span>
 <span class="w">    </span><span class="nv">ts</span><span class="p">‿</span><span class="nv">nums</span><span class="p">‿</span><span class="nv">strs</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">Tokenise</span><span class="w"> </span><span class="nv">inp</span>
@@ -853,7 +853,6 @@ Up to getting the depth, things don’t really change much.
 <span class="w">    </span><span class="nv">td</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">d</span><span class="o">⊏</span><span class="nv">ts</span><span class="w">    </span><span class="c1"># Tokens by depth</span>
 <span class="s2">&quot;}{&quot;&quot;:0,&quot;&quot;:][&quot;&quot;,0,}{&quot;&quot;:0&quot;</span>
 </pre></div>
-
 <p></p>
 Since we now have two different “container” types,
 we also need to be careful about how “nesting” is defined—<!--
@@ -863,6 +862,7 @@ Let’s start with getting a mask of the start of all new sublists<!--
 Not the best terminology, I suppose, but it will have to do.</div><!--
 -->,
 which are now defined by an opening brace or bracket:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">s</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">td</span><span class="o">∊</span><span class="s2">&quot;[{&quot;</span><span class="w">  </span><span class="c1"># Sublist starts</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">td</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">s</span>
@@ -871,13 +871,13 @@ which are now defined by an opening brace or bracket:
 <span class="s2">  0100000001000001000&quot;</span>
 <span class="w">                      </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 We also did the same thing in the original parser
 when we defined the sublist depth <code>l ← (⍋d)⊏+`'['=d⊏ts</code>,
 only we didn’t give <code>'['=d⊏ts</code>
 (which now morphed to <code>(d⊏ts)∊"[{"</code> due to the additional container types) a name.
 However, defining the sublist depth still works as before:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">n</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="o">⍋</span><span class="nv">d</span><span class="sr">)</span><span class="o">⊏+</span><span class="na">`</span><span class="nv">s</span><span class="w">  </span><span class="c1"># Nesting</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">n</span>
@@ -886,9 +886,9 @@ However, defining the sublist depth still works as before:
 <span class="s2">  1111111222223333210&quot;</span>
 <span class="w">                      </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 Moving on, we can use the mask of sublists <code>s</code> to build a mask of sub-objects.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">s</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">td</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">s</span>
@@ -899,7 +899,6 @@ Moving on, we can use the mask of sublists <code>s</code> to build a mask of sub
 <span class="w">    </span><span class="nv">of</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">s</span><span class="o">/</span><span class="s1">'{'</span><span class="o">=</span><span class="nv">td</span><span class="w">  </span><span class="c1"># Filter of sublists that are objects</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 The <code>of</code> variable is to be read as something like “there are three sublists, the first and third of which are sub-objects”.
 This is good, but doesn’t yet take object nesting into account<!--
@@ -908,6 +907,7 @@ being nested inside of the first object,
 is actually at depth two and should be treated accordingly.
 To fix this, we proceed as before and do a sum <a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> across <code>of</code>,
 with a subsequent stencil to make sure we only select the objects.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">+</span><span class="na">`</span><span class="nv">of</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">on</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="o">×</span><span class="w"> </span><span class="o">+</span><span class="na">`</span><span class="nv">of</span><span class="w">  </span><span class="c1"># Object nesting</span>
@@ -915,7 +915,6 @@ with a subsequent stencil to make sure we only select the objects.
 <span class="w">    </span><span class="nv">on</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">+</span><span class="na">`</span><span class="py">⊸</span><span class="o">×</span><span class="w"> </span><span class="nv">of</span><span class="w">    </span><span class="c1"># Object nesting (prettier!)</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Next, let’s get the keys of each object and <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> them by depth,
 as this will make subsequent processing much easier.
@@ -929,6 +928,7 @@ Selecting the keys themselves is easy:
 just go to the colons,
 <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> them to consider the token before,
 and <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a> from all strings.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">cl</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="o">«</span><span class="nv">cl</span>
@@ -939,7 +939,6 @@ and <a href="https://mlochbaum.github.io/BQN/doc/replicate.html">replicate</a> f
 <span class="w">    </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">ts</span><span class="sr">)</span><span class="o">/«</span><span class="nv">cl</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 A <code>0</code> stands for “this string is a value”,
 and a <code>1</code> is for “this string is a key somewhere”.
@@ -951,6 +950,7 @@ There’s (at least) two things we can do:
 re-create <code>n</code> but only take into consideration objects,
 or somehow use <code>n</code>, but punch holes into it for the arrays.
 The first way is straightforward and essentially just copies the definition of <code>n</code>:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="o">⍋</span><span class="nv">d</span><span class="sr">)</span><span class="o">⊏+</span><span class="na">`</span><span class="nv">td</span><span class="o">=</span><span class="s1">'{'</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="sr">(</span><span class="o">⍋</span><span class="nv">d</span><span class="sr">)</span><span class="o">⊏+</span><span class="na">`</span><span class="nv">td</span><span class="o">=</span><span class="s1">'{'</span>
@@ -963,7 +963,6 @@ The first way is straightforward and essentially just copies the definition of <
 <span class="w">    </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">ts</span><span class="sr">)</span><span class="o">/</span><span class="w"> </span><span class="sr">(</span><span class="o">«</span><span class="nv">cl</span><span class="sr">)</span><span class="o">×</span><span class="w"> </span><span class="sr">(</span><span class="o">⍋</span><span class="nv">d</span><span class="sr">)</span><span class="o">⊏+</span><span class="na">`</span><span class="nv">td</span><span class="o">=</span><span class="s1">'{'</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 However, this seems quite inelegant to me;
 thankfully, punching holes into <code>n</code> is not as hard as it sounds.
@@ -979,6 +978,7 @@ Don’t worry too much about having to use <code>0∾on</code> instead of <code>
 this appears because we are starting at depth zero before reading anything.
 Assuming well-formed <span class="small-caps">json</span>, this will appear only once at the very end.</div><!--
 -->
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">n</span>
 <span class="err">┌─</span>
 <span class="err">╵</span><span class="s2">&quot;{':0,':[',0,{':0}]}</span>
@@ -994,15 +994,14 @@ Assuming well-formed <span class="small-caps">json</span>, this will appear only
 <span class="w">    </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">ts</span><span class="sr">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="sr">(</span><span class="o">«</span><span class="nv">cl</span><span class="sr">)</span><span class="o">×</span><span class="nv">n</span><span class="o">⊏</span><span class="m">0</span><span class="o">∾</span><span class="nv">on</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 All that’s left is to <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> the given strings!
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">((</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">ts</span><span class="sr">)</span><span class="o">/</span><span class="sr">(</span><span class="o">«</span><span class="nv">cl</span><span class="sr">)</span><span class="o">×</span><span class="nv">n</span><span class="o">⊏</span><span class="m">0</span><span class="o">∾</span><span class="nv">on</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">strs</span><span class="w">         </span><span class="c1"># Keys</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="sr">((</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">ts</span><span class="sr">)</span><span class="o">/</span><span class="sr">(</span><span class="o">«</span><span class="nv">cl</span><span class="sr">)</span><span class="o">×</span><span class="sr">(</span><span class="o">⍋</span><span class="nv">d</span><span class="sr">)</span><span class="o">⊏+</span><span class="na">`</span><span class="nv">td</span><span class="o">=</span><span class="s1">'{'</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">strs</span><span class="w">  </span><span class="c1"># Same result</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 There is but a small wrinkle yet to fix:
 if the object is empty, it might be that
@@ -1013,23 +1012,24 @@ The fix here is similar, since with <code>of</code> we have an obvious quantity,
 --><label for="sn-11" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-11" class="margin-toggle" /><div class="sidenote">Remember that questionable <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> <span class="small-caps">api</span>?</div><!--
 -->
 even when trying to parse <code>{}</code>.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ks</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">((</span><span class="m">1</span><span class="o">+</span><span class="na">´</span><span class="nv">of</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="w"> </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">=</span><span class="nv">ts</span><span class="sr">)</span><span class="o">/</span><span class="sr">(</span><span class="o">«</span><span class="nv">cl</span><span class="sr">)</span><span class="o">×</span><span class="nv">n</span><span class="o">⊏</span><span class="m">0</span><span class="o">∾</span><span class="nv">on</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">strs</span><span class="w"> </span><span class="c1"># Keys, final definition</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Building up our initial list of values,
 this now includes all numbers, as well as all strings that are not keys.
 Conveniently, by the above argument the latter is exactly the first element of <code>ks</code>.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">vs</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">nums</span><span class="w"> </span><span class="o">∾</span><span class="w"> </span><span class="o">⊑</span><span class="nv">ks</span><span class="w"> </span><span class="c1"># Initial values</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Building up the value indices works exactly the same as before;
 the only complication now is that a definition of <code>ln ← ts∊"""0]"</code> for literals and nesting does not work anymore, as we need to exclude the strings that are keys.
 What seems to work best is to specify what <code>ln</code> should <em>not</em> be:
 a comma, a colon, any opening parenthesis, and its token should not occur immediately before a colon.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ln</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">¬</span><span class="w"> </span><span class="sr">(</span><span class="o">«</span><span class="py">⊸</span><span class="o">∨</span><span class="nv">cl</span><span class="sr">)</span><span class="o">∨</span><span class="nv">o</span><span class="o">∨</span><span class="s1">','</span><span class="o">=</span><span class="nv">ts</span><span class="w">                       </span><span class="c1"># Literals and nesting</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="nv">vi</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⍋⍋</span><span class="w"> </span><span class="sr">(</span><span class="nv">ln</span><span class="o">/</span><span class="nv">ts</span><span class="o">=</span><span class="s1">'0'</span><span class="sr">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="sr">(</span><span class="m">2</span><span class="o">×</span><span class="nv">ln</span><span class="o">/</span><span class="nv">ts</span><span class="o">=</span><span class="s1">'&quot;'</span><span class="sr">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">3</span><span class="o">×</span><span class="nv">ln</span><span class="o">/</span><span class="nv">c</span><span class="w">  </span><span class="c1"># Value indices</span>
@@ -1037,7 +1037,6 @@ a comma, a colon, any opening parenthesis, and its token should not occur immedi
 <span class="w">    </span><span class="nv">vi</span><span class="w"> </span><span class="o">⊏</span><span class="kd">↩</span><span class="w"> </span><span class="sr">(</span><span class="o">↕≠</span><span class="nv">vs</span><span class="sr">)</span><span class="o">∾</span><span class="sr">(</span><span class="o">≠</span><span class="nv">vs</span><span class="sr">)</span><span class="o">+</span><span class="w"> </span><span class="o">≠</span><span class="py">⊸</span><span class="o">-</span><span class="w"> </span><span class="nv">c</span><span class="o">/»</span><span class="nv">n</span><span class="w">                  </span><span class="c1"># Fix value indices</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
-
 <p></p>
 Almost done—the only thing left is to build up the finished, nested, array.
 This is also the time we have to decide upon the final representation of an object.
@@ -1048,6 +1047,7 @@ an object <code>{"a": 1}</code> gets parsed into <code>2‿1⥊"a"‿1</code>.
 Further, when building the result we have to make sure to “recognise” when to pull values and sublists out of the recursively built up <code>vs</code>,
 and when to use <code>ks</code> to get keys instead.
 This can be achieved by taking <code>on</code> into consideration:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">⌽</span><span class="sr">((</span><span class="o">≠</span><span class="nv">on</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">n</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span><span class="w">  </span><span class="c1"># How to build which sublist</span>
 <span class="p">⟨</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">    </span><span class="o">⌽</span><span class="nv">on</span><span class="w">                   </span><span class="c1"># Which sublist is an object?</span>
@@ -1058,7 +1058,6 @@ This can be achieved by taking <code>on</code> into consideration:
 <span class="w">  </span><span class="p">⟨</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span><span class="w"> </span><span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="p">⟩</span>
 <span class="w">                         </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 This means that the final shape is something like
 <code>on BUILD¨○⌽ ((≠on)∾˜1-˜ln/l)⊔vi</code>,
@@ -1068,9 +1067,9 @@ and bigger than zero if we have an object and want to select at least one key.
 The right argument first <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a>s the required sublist or value from <code>vs</code>,
 and then refines this selection by picking possible keys out of <code>ks</code>.
 Putting this into code:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">on</span><span class="w"> </span><span class="kt">{</span><span class="nv">vs</span><span class="w"> </span><span class="o">∾</span><span class="kd">↩</span><span class="w"> </span><span class="o">&lt;</span><span class="ni">𝕨</span><span class="o">Sel</span><span class="ni">𝕩</span><span class="o">⊏</span><span class="nv">vs</span><span class="w"> </span><span class="p">⋄</span><span class="ss">@</span><span class="kt">}</span><span class="na">¨</span><span class="py">○</span><span class="o">⌽</span><span class="w"> </span><span class="sr">((</span><span class="o">≠</span><span class="nv">on</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">l</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span><span class="w"> </span><span class="c1"># Build result</span>
 </pre></div>
-
 <p></p>
 All that’s left to do is to write <code>Sel</code>.
 Doing nothing when <code>𝕨</code> is zero can just be achieved with a
@@ -1083,6 +1082,7 @@ I find this process of treating values and keys separately,
 but in a way that they eventually match up at the end,
 almost magical.</div><!--
 -->
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">Sel</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="m">0</span><span class="o">𝕊</span><span class="nv">x</span><span class="ni">:</span><span class="w"> </span><span class="nv">x</span><span class="ni">;</span><span class="w"> </span><span class="nv">i</span><span class="o">𝕊</span><span class="nv">x</span><span class="ni">:</span><span class="w"> </span><span class="sr">(</span><span class="nv">i</span><span class="o">⊑</span><span class="nv">ks</span><span class="sr">)</span><span class="o">≍</span><span class="nv">x</span><span class="kt">}</span><span class="w">  </span><span class="c1"># Select</span>
 <span class="sr">(</span><span class="nv">function</span><span class="w"> </span><span class="nv">block</span><span class="sr">)</span>
 <span class="w">    </span><span class="o">Sel</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">⊑</span><span class="py">⟜</span><span class="nv">ks</span><span class="py">⊸</span><span class="o">≍</span><span class="py">⍟</span><span class="sr">(</span><span class="m">0</span><span class="o">&lt;⊣</span><span class="sr">)</span><span class="w">             </span><span class="c1"># Point-free and without blocks</span>
@@ -1103,9 +1103,9 @@ almost magical.</div><!--
 <span class="w">   </span><span class="m">2</span>
 <span class="w">      </span><span class="err">┘</span>
 </pre></div>
-
 <p></p>
 And that’s pretty much it—here are the last two lines, in all their glory:
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">on</span><span class="w"> </span><span class="kt">{</span><span class="nv">vs</span><span class="w"> </span><span class="o">∾</span><span class="kd">↩</span><span class="w"> </span><span class="o">&lt;</span><span class="ni">𝕨</span><span class="o">Sel</span><span class="ni">𝕩</span><span class="o">⊏</span><span class="nv">vs</span><span class="w"> </span><span class="p">⋄</span><span class="ss">@</span><span class="kt">}</span><span class="na">¨</span><span class="py">○</span><span class="o">⌽</span><span class="w"> </span><span class="sr">((</span><span class="o">≠</span><span class="nv">on</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">n</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span><span class="w">  </span><span class="c1"># Build result</span>
 
 <span class="w">    </span><span class="m">¯1</span><span class="o">⊑</span><span class="nv">vs</span><span class="w">                                           </span><span class="c1"># Get result</span>
@@ -1121,12 +1121,12 @@ And that’s pretty much it—here are the last two lines, in all their glory:
 <span class="w">    </span><span class="nv">inp</span>
 <span class="s2">&quot;{&quot;&quot;a&quot;&quot;: 1, &quot;&quot;b&quot;&quot;: [&quot;&quot;1&quot;&quot;,2,{&quot;&quot;a&quot;&quot;:2}]}&quot;</span>
 </pre></div>
-
 <p></p>
 It works!
 <hr />
 <p></p>
 At the risk of repeating myself, let’s look at the entire parser as well as the tokeniser that we’ve built over the course of this post.
+
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Tokenise</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
 <span class="w">  </span><span class="nv">e</span><span class="w">  </span><span class="kd">←</span><span class="w"> </span><span class="o">»&lt;</span><span class="na">`</span><span class="s1">'\'</span><span class="o">=</span><span class="ni">𝕩</span><span class="w">                  </span><span class="c1"># Escapes</span>
 <span class="w">  </span><span class="nv">sb</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">»</span><span class="py">⊸</span><span class="o">&lt;</span><span class="w"> </span><span class="nv">s</span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="w"> </span><span class="s1">'&quot;'</span><span class="o">=</span><span class="ni">𝕩</span><span class="w">      </span><span class="c1"># String beginnings</span>
@@ -1162,7 +1162,6 @@ At the risk of repeating myself, let’s look at the entire parser as well as th
 <span class="w">  </span><span class="m">¯1</span><span class="o">⊑</span><span class="nv">vs</span>
 <span class="kt">}</span>
 </pre></div>
-
 <p></p>
 I don’t know about you,
 but I think it’s pretty incredible that one can write a parser for a reasonable subset<!--

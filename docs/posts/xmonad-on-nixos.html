@@ -193,7 +193,6 @@ If you still have this in your flake, you should probably remove it—it might l
 <span class="w"> </span>      };
 <span class="w"> </span>    };
 </pre></div>
-
 </details>
 <p></p>
 After having added the input, making use of the flake is quite easy.<!--
@@ -209,6 +208,7 @@ lest you will be greeted by a black screen upon login.</div><!--
 <summary>
 Enabling the flake
 </summary>
+
 <div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/nix/configuration.nix b/nix/configuration.nix</span>
 <span class="gh">index 4700e14..50b1519 100644</span>
 <span class="gd">--- a/nix/configuration.nix</span>
@@ -231,7 +231,6 @@ Enabling the flake
 
 <span class="w"> </span>  fonts.packages = with pkgs; [
 </pre></div>
-
 </details>
 <p></p>
 And that’s really it!
@@ -251,6 +250,7 @@ In Emacs’s <code>haskell-mode</code>,
 executing <code>haskell-interactive-bring</code> (bound to <code>C-c C-c</code> by default)
 brings up a <code>ghci</code> session.<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">More precisely, I have <code>C-c C-c</code> bound to
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/haskell-load-and-bring</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Sane behaviour when loading the current file into ghci.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
@@ -258,7 +258,6 @@ brings up a <code>ghci</code> session.<!--
 <span class="w">  </span><span class="p">(</span><span class="nv">haskell-process-load-file</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">haskell-interactive-bring</span><span class="p">))</span>
 </pre></div>
-
 <p></p>
 but this is only a small quality of life wrapper.</div><!--
 -->
@@ -274,6 +273,7 @@ In this way, the resulting Emacs instance comes equipped with the <code>$XMONAD_
 <summary>
 Moving Emacs
 </summary>
+
 <div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/nix/modules/emacs.nix b/nix/modules/emacs.nix</span>
 <span class="gh">index 794f636..fad9cd0 100644</span>
 <span class="gd">--- a/nix/modules/emacs.nix</span>
@@ -348,7 +348,6 @@ Moving Emacs
 <span class="w"> </span>xmobarPP :: ScreenId -&gt; X PP
 <span class="w"> </span>xmobarPP sid = pure . filterOutWsPP [scratchpadWorkspaceTag] $ def
 </pre></div>
-
 </details>
 <p></p>
 All that’s left now is to set some local variable,
@@ -357,6 +356,7 @@ making Emacs aware that it should use another <span class="small-caps">ghc</span
 <summary>
 Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 </summary>
+
 <div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
 <span class="gh">index 933a274..185ed2e 100644</span>
 <span class="gd">--- a/xmonad/xmonad.hs</span>
@@ -371,7 +371,6 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 <span class="gi">+--- eval: (setopt haskell-process-path-ghci (concat (or (getenv &quot;XMONAD_GHC&quot;) &quot;ghc&quot;) &quot;i&quot;))</span>
 <span class="gi">+--- End:</span>
 </pre></div>
-
 </details>
 <p></p>
 Now <code>C-c C-c</code> works out of the box!

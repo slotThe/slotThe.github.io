@@ -162,7 +162,6 @@ so I kept it this way.
 Sidenotes—much more on that later—are constrained to a maximum of around 21 characters via
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\setmarginnotes</span><span class="nb">{</span>17pt<span class="nb">}{</span>80pt<span class="nb">}{</span><span class="k">\onelineskip</span><span class="nb">}</span>
 </pre></div>
-
 <p></p>
 This is quite narrow,
 much narrower than the sidenotes on this website for example,
@@ -185,9 +184,9 @@ Thankfully, this is not difficult to fix—so much so that someone on TeX.Stack�
 <a href="https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir">already done it</a>.
 The exact <code>bringhurst.sty</code> file I used is <a href="../images/phd-typesetting/bringhurst.txt" class="local-link">here</a>;
 to use it just replace the call to <code>\chapterstyle</code> with a call to <code>\usepackage</code>:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="nb">{</span>bringhurst<span class="nb">}</span><span class="c">% Instead of \chapterstyle{bringhurst}</span>
 </pre></div>
-
 <h3 id="the-margin">The margin<a href="#the-margin" class="floatleft sec-link">§</a></h3>
 As you can probably tell from this website,<!--
 --><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">Unless you’re on mobile, I suppose.</div><!--
@@ -204,6 +203,7 @@ so patching the sidenotes package is straightforward.
 <summary>
 Here is the diff
 </summary>
+
 <div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gh">diff --git a/sidenotes.sty b/sidenotes.sty</span>
 <span class="gh">index df6a772..cdb866d 100644</span>
 <span class="gd">--- a/sidenotes.sty</span>
@@ -269,12 +269,12 @@ Here is the diff
 <span class="w"> </span>\newlength{\@sidenotes@extrawidth}
 <span class="w"> </span>\setlength{\@sidenotes@extrawidth}{\marginparwidth}
 </pre></div>
-
 </details>
 <p></p>
 The <code>\sidenote</code> command now works as expected;
 I wrote a small wrapper that additionally sets sidenotes ragged left or right,
 depending on the parity of the page.
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="nb">{</span>sidenotes<span class="nb">}</span>  <span class="c">% Local one.</span>
 <span class="k">\usepackage</span><span class="nb">{</span>mparhack<span class="nb">}</span>
 <span class="k">\renewcommand*</span><span class="nb">{</span><span class="k">\marginfont</span><span class="nb">}{</span><span class="k">\scriptsize</span><span class="nb">}</span>
@@ -291,7 +291,6 @@ depending on the parity of the page.
   <span class="nb">}</span><span class="c">%</span>
 <span class="nb">}</span>
 </pre></div>
-
 <figure>
 <a href="../images/phd-typesetting/look3.pdf">
 <img class="pure-img" src="../images/phd-typesetting/look3.png" alt="Two pages with sidenotes; one set raggedright and one raggedleft.">
@@ -300,6 +299,7 @@ depending on the parity of the page.
 <p></p>
 Interestingly, I don’t actually use the <code>\sidecaption</code> implementation of either memoir or sidenotes,
 but chose to roll my own:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">% Mandatory argument contains the label text and the label itself;</span>
 <span class="c">% the optional argument moves the label text around.</span>
 <span class="k">\renewcommand</span><span class="nb">{</span><span class="k">\scaption</span><span class="nb">}</span>[2][0cm]<span class="nb">{</span><span class="c">%</span>
@@ -317,12 +317,12 @@ but chose to roll my own:
   <span class="nb">}</span>
 <span class="nb">}</span>
 </pre></div>
-
 <p></p>
 This is probably less code than what it would take to customise memoir’s <code>\sidecaption</code> to do what I want,
 and I get more control over the actual typesetting on top of it.
 The price one pays is that the usage of <code>\scaption</code> is a tad unintuitive,
 in that the <code>\label</code> of the figure has to go inside of the caption:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\begin</span><span class="nb">{</span>figure<span class="nb">}</span>[htbp]
   <span class="k">\centering</span>
   <span class="k">\tikzfig</span><span class="nb">{</span>the-figure<span class="nb">}</span>
@@ -332,18 +332,17 @@ in that the <code>\label</code> of the figure has to go inside of the caption:
   <span class="nb">}</span>
 <span class="k">\end</span><span class="nb">{</span>figure<span class="nb">}</span>
 </pre></div>
-
 <p></p>
 However, I think the end result looks quite nice:<!--
 --><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">Additionally setup with the <code>caption</code> package:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="nb">{</span>caption<span class="nb">}</span>
 <span class="k">\captionsetup</span><span class="nb">{</span><span class="c">%</span>
   style=base,<span class="c">%</span>
   labelfont=footnotesize,<span class="c">%</span>
   textfont=scriptsize,<span class="c">%</span>
 <span class="nb">}</span>
-</pre></div>
-</div><!--
+</pre></div></div><!--
 -->
 <p></p>
 <img class="pure-img" src="../images/phd-typesetting/captions.png" alt="Sidecaptions.">
@@ -371,6 +370,7 @@ nor be scaled quite so aggressively.
 </figure>
 <p></p>
 The code for this is a bit more involved, but luckily TeX.Stackexchange has us covered yet again!
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">% Protrude equation numbers into the margin.</span>
 <span class="c">%</span>
 <span class="c">% Sources:</span>
@@ -389,7 +389,6 @@ The code for this is a bit more involved, but luckily TeX.Stackexchange has us c
     <span class="nb">}}}</span>
 <span class="k">\makeatother</span>
 </pre></div>
-
 <h2 id="picking-fonts">Picking fonts<a href="#picking-fonts" class="floatleft sec-link">§</a></h2>
 <p></p>
 For the default calligraphic font, I settled on <code>boondoxupr</code> from the excellently documented <code>mathalfa</code> package.
@@ -444,6 +443,7 @@ but your mileage may vary.</div><!--
 -->
 There are lots of knobs to turn with the <code>newpxtext</code> and <code>newpxmath</code> packages,
 the full code looks like this:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="na">[osf,scosf,theoremfont,tighter,largesc,trueslanted,p]</span><span class="nb">{</span>newpxtext<span class="nb">}</span>
 <span class="k">\usepackage</span><span class="na">[varqu,varl,scaled=.98]</span><span class="nb">{</span>zi4<span class="nb">}</span><span class="c">% inconsolata for mono</span>
 <span class="k">\linespread</span><span class="nb">{</span>1.05<span class="nb">}</span><span class="c">% A bit more leading</span>
@@ -451,7 +451,6 @@ the full code looks like this:
 <span class="k">\usepackage</span><span class="na">[amsthm,upint]</span><span class="nb">{</span>newpxmath<span class="nb">}</span>
 <span class="k">\usepackage</span><span class="na">[cal=boondoxupr,frak=esstix,frakscaled=0.95]</span><span class="nb">{</span>mathalfa<span class="nb">}</span>
 </pre></div>
-
 <p></p>
 Some options should be self-explanitory<!--
 -->—like <code>tighter</code> or the <code>amsthm</code> compatibility—<!--
@@ -500,14 +499,15 @@ to <span class="small-caps">small caps</span> and
 <a href="https://en.wikipedia.org/wiki/Hanging_punctuation">protrusion</a>
 to sub and superscripts:<!--
 --><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">Don’t forget the usual incantation to disable protrusion for the table of contents, though:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\newcommand</span><span class="nb">{</span><span class="k">\TOC</span><span class="nb">}{</span>
   <span class="k">\microtypesetup</span><span class="nb">{</span>protrusion=false<span class="nb">}</span>
   <span class="k">\tableofcontents</span>
   <span class="k">\microtypesetup</span><span class="nb">{</span>protrusion=true<span class="nb">}</span>
 <span class="nb">}</span>
-</pre></div>
-</div><!--
+</pre></div></div><!--
 -->
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="na">[tracking=true]</span><span class="nb">{</span>microtype<span class="nb">}</span>
 <span class="k">\SetTracking</span><span class="nb">{</span>encoding=*,shape=it*<span class="nb">}{</span>10<span class="nb">}</span>
 <span class="k">\SetTracking</span><span class="nb">{</span>encoding=*<span class="nb">}{</span>10<span class="nb">}</span>
@@ -516,7 +516,6 @@ to sub and superscripts:<!--
   <span class="nb">{</span>1=<span class="nb">{</span> ,750<span class="nb">}</span>,2=<span class="nb">{</span> ,500<span class="nb">}</span>,3=<span class="nb">{</span> ,500<span class="nb">}</span>,4=<span class="nb">{</span> ,500<span class="nb">}</span>,5=<span class="nb">{</span> ,500<span class="nb">}</span>,
     6=<span class="nb">{</span> ,500<span class="nb">}</span>,7=<span class="nb">{</span> ,600<span class="nb">}</span>,8=<span class="nb">{</span> ,500<span class="nb">}</span>,9=<span class="nb">{</span> ,500<span class="nb">}</span>,0=<span class="nb">{</span> ,500<span class="nb">}}</span>
 </pre></div>
-
 <hr />
 <p></p>
 One important change has to be made to <code>biblatex</code> when using a font’s oldstyle figures:
@@ -536,14 +535,15 @@ which I think I picked up from Edward Tufte.</div><!--
 <img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="Citations using lining figures.">
 <p></p>
 Luckily, it’s pretty easy to change the field format:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\DeclareFieldFormat</span><span class="nb">{</span>labelalpha<span class="nb">}{</span><span class="k">\liningnums</span><span class="nb">{</span>#1<span class="nb">}}</span>
 </pre></div>
-
 <h2 id="miscellaneous-thoughts">Miscellaneous thoughts<a href="#miscellaneous-thoughts" class="floatleft sec-link">§</a></h2>
 <p></p>
 Small macros like the following
 (inspired by <a href="https://tex.stackexchange.com/questions/422/how-do-i-repeat-a-theorem-number">this answer</a>)
 were rather large quality of life improvements:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\makeatletter</span>
 <span class="k">\newtheorem*</span><span class="nb">{</span>rep@theorem<span class="nb">}{</span><span class="k">\rep@title</span><span class="nb">}</span>
 <span class="k">\newenvironment</span><span class="nb">{</span>reptheorem<span class="nb">}</span>[1]<span class="nb">{</span><span class="c">%</span>
@@ -553,11 +553,11 @@ were rather large quality of life improvements:
 <span class="nb">}</span>
 <span class="k">\makeatother</span>
 </pre></div>
-
 <p></p>
 This creates an environment with an immediate reference to an already existing theorem, proposition, and so on,
 which you might want to use in an introduction—much more sightly than something like <em>Theorem (Theorem x.y)</em>.
 One can use it just like a regular <code>theoremstyle</code>:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">% Label should exist elsewhere.</span>
 <span class="k">\begin</span><span class="nb">{</span>reptheorem<span class="nb">}{</span>cor: pivotal<span class="nb">_</span>from<span class="nb">_</span>central<span class="nb">_</span>anti<span class="nb">_</span>central<span class="nb">}</span>
   Let <span class="s">\(</span><span class="nv">\cat</span><span class="nb">{C}</span><span class="s">\)</span> be a rigid monoidal category.
@@ -568,7 +568,6 @@ One can use it just like a regular <code>theoremstyle</code>:
   as monads.
 <span class="k">\end</span><span class="nb">{</span>reptheorem<span class="nb">}</span>
 </pre></div>
-
 <p></p>
 This will then be typeset like so, with a link to the actual result:
 <p></p>
@@ -591,11 +590,11 @@ Still, start early.
 <hr />
 <p></p>
 Lastly, I will just leave the following <em>very important</em> bibLaTeX configuration here.
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\DeclareDelimFormat</span><span class="nb">{</span>finalnamedelim<span class="nb">}{</span><span class="c">% Force Oxford comma</span>
   <span class="k">\ifnumgreater</span><span class="nb">{</span><span class="k">\value</span><span class="nb">{</span>liststop<span class="nb">}}{</span>2<span class="nb">}{</span>,<span class="nb">}{}</span><span class="c">%</span>
   <span class="k">\addspace\bibstring</span><span class="nb">{</span>and<span class="nb">}</span><span class="k">\space</span><span class="nb">}</span>
 </pre></div>
-
 <h2 id="references">References<a href="#references" class="floatleft sec-link">§</a></h2>
 <div id="refs" class="references csl-bib-body" role="list">
 <table>

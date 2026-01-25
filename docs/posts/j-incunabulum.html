@@ -157,7 +157,6 @@ Diff
 <span class="w"> </span>I *wd(s)C *s;{I a,n=strlen(s),*e=ma(n+1);C c;
 <span class="w"> </span> DO(n,e[i]=(a=noun(c=s[i]))?a:(a=verb(c))?a:c);e[n]=0;R e;}
 </pre></div>
-
 </details>
 <p>Anyways, let’s crack on.</p>
 </div>
@@ -166,11 +165,11 @@ Diff
 <div class="tc-row">
 <p>We first include some libraries, which were apparently implicit in the original thing.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -180,11 +179,11 @@ and <code>DO</code> is a neat way to compactify loops.
 For example, given some <code>int a=0</code>, then <code>DO(n,a+=i)</code> is the same as <code>for(int i=0, i&lt;n, ++i) a+=i;</code>.
 Notice how the argument <code>x</code> has access to the loop variable <code>i</code>.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define P printf</span>
 <span class="cp">#define R return</span>
 <span class="cp">#define DO(n,x) {I _n=(n),i=0;for(;i&lt;_n;++i){x;}}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -196,9 +195,9 @@ or a pointer to an array (this includes numbers as <a href="https://aplwiki.com/
 The original program was written on a 32-bit machine, so one had <code>typedef long I;</code>,
 but on modern systems we need 64-bit integers for this.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">C</span><span class="p">;</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">V</span><span class="p">;</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">I</span><span class="p">;</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -208,10 +207,10 @@ Functions defined this way take “implicit” arguments <code>a</code> and <cod
 (or just <code>w</code> in the monadic case).
 I guess this is based on <span class="small-caps">apl</span>’s α and ω arguments.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define V1(f) A f(A w)</span>
 <span class="cp">#define V2(f) A f(A a, A w)</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -233,9 +232,9 @@ It’s a <a href="https://en.wikipedia.org/wiki/Flexible_array_member">flexible 
 but I’m honestly not sure why it’s not just declared as <code>p[]</code>.</li>
 </ul>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">a</span><span class="p">{</span><span class="n">I</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">];}</span><span class="o">*</span><span class="n">A</span><span class="p">;</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -245,11 +244,11 @@ but I’m honestly not sure why it’s not just declared as <code>p[]</code>.</l
 and <code>tr</code> returns the number of elements of an array, given its rank and its dimension vector.
 Perhaps <code>tr</code> stands for “total rank” or something similar.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">I</span><span class="o">*</span><span class="nf">ma</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="n">R</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">I</span><span class="p">));}</span>
 <span class="n">V</span><span class="w"> </span><span class="nf">mv</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">d</span><span class="p">,</span><span class="n">I</span><span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]);}</span>
 <span class="n">I</span><span class="w"> </span><span class="nf">tr</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="n">I</span><span class="o">*</span><span class="n">d</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">DO</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="o">*</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -261,10 +260,10 @@ allocates the total number of elements needed (<code>tr(r,d)</code>),
 plus five spots for <code>t</code>, <code>r</code>, and <code>d</code> itself,
 and then copies everything over.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="nf">ga</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="n">I</span><span class="o">*</span><span class="n">d</span><span class="p">){</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span><span class="n">z</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="n">ma</span><span class="p">(</span><span class="mi">5</span><span class="o">+</span><span class="n">tr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">));</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">);</span>
 <span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <h2 id="verbs">Verbs<a href="#verbs" class="floatleft sec-link">§</a></h2>
@@ -273,10 +272,10 @@ and then copies everything over.</p>
 The easiest to understand is surely the not-implemented <code>find</code>!
 But <code>id</code> is a close second.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V2</span><span class="p">(</span><span class="n">find</span><span class="p">){}</span>
 <span class="n">V1</span><span class="p">(</span><span class="n">id</span><span class="p">){</span><span class="n">R</span><span class="w"> </span><span class="n">w</span><span class="p">;}</span><span class="w"> </span><span class="cm">/* expands to A id(A w){return w;} */</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -284,11 +283,11 @@ But <code>id</code> is a close second.</p>
 <code>sha</code> returns the <a href="https://aplwiki.com/wiki/Shape">shape</a> vector of the array,
 and <code>size</code> returns the length of the first dimension.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V1</span><span class="p">(</span><span class="n">iota</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="o">=*</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">;</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">&amp;</span><span class="n">n</span><span class="p">);</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">i</span><span class="p">);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 <span class="n">V1</span><span class="p">(</span><span class="n">sha</span><span class="p">){</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">);</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 <span class="n">V1</span><span class="p">(</span><span class="n">size</span><span class="p">){</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="o">*</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="o">?*</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="o">:</span><span class="mi">1</span><span class="p">;</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -296,10 +295,10 @@ and <code>size</code> returns the length of the first dimension.</p>
 allocate a result array with the same shape as the input,
 and add corresponding elements.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V2</span><span class="p">(</span><span class="n">plus</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="o">*</span><span class="n">d</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
 <span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">);</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -309,11 +308,11 @@ This is, I think, the first instance of abusing <code>I</code> as an opaque type
 notice the cast <code>*z-&gt;p=(I)w</code> to turn the entire given array into the first element of <code>z-&gt;p</code>
 (which is an integer array).</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V1</span><span class="p">(</span><span class="n">box</span><span class="p">){</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="o">*</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">w</span><span class="p">;</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 <span class="n">V2</span><span class="p">(</span><span class="n">cat</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">an</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">),</span><span class="n">wn</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">),</span><span class="n">n</span><span class="o">=</span><span class="n">an</span><span class="o">+</span><span class="n">wn</span><span class="p">;</span>
 <span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">t</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">&amp;</span><span class="n">n</span><span class="p">);</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">an</span><span class="p">);</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">+</span><span class="n">an</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">wn</span><span class="p">);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -321,10 +320,10 @@ notice the cast <code>*z-&gt;p=(I)w</code> to turn the entire given array into t
 Given an index <code>a</code> (or an array, in which case only the first value is used) and an array <code>w</code>,
 it returns the sub-array at that index.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V2</span><span class="p">(</span><span class="n">from</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="mi">-1</span><span class="p">,</span><span class="o">*</span><span class="n">d</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
 <span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">);</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">+</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">),</span><span class="n">n</span><span class="p">);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -336,11 +335,11 @@ and then walk two pointers, one ahead of the other by <code>wn</code>, forward <
 filling up elements as we go.
 Later iterations can already access the ones resulting from earlier memmoves.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V2</span><span class="p">(</span><span class="n">rsh</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">r</span><span class="o">?*</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">d</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">),</span><span class="n">wn</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">);</span>
 <span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">);</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">wn</span><span class="o">=</span><span class="n">n</span><span class="o">&gt;</span><span class="n">wn</span><span class="o">?</span><span class="n">wn</span><span class="o">:</span><span class="n">n</span><span class="p">);</span>
 <span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">-=</span><span class="n">wn</span><span class="p">)</span><span class="n">mv</span><span class="p">(</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">+</span><span class="n">wn</span><span class="p">,</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span><span class="n">n</span><span class="p">);</span><span class="n">R</span><span class="w"> </span><span class="n">z</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <h2 id="the-repl">The <span class="small-caps">repl</span><a href="#the-repl" class="floatleft sec-link">§</a></h2>
@@ -350,9 +349,9 @@ It reads a line, calls <code>wd</code> (word) to parse it,
 then executes it with <code>ex</code>,
 and finally pretty-prints it with <code>pr</code>.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span><span class="n">C</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="mi">99</span><span class="p">];</span><span class="k">while</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">99</span><span class="p">,</span><span class="n">stdin</span><span class="p">)){</span><span class="n">pr</span><span class="p">(</span><span class="n">ex</span><span class="p">(</span><span class="n">wd</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="mi">-1</span><span class="p">)));}}</span>
 </pre></div>
-
 </div>
 </div>
 <h3 id="parsing">Parsing<a href="#parsing" class="floatleft sec-link">§</a></h3>
@@ -362,11 +361,11 @@ giving names to the functions defined above.
 There are arrays of function pointers for monadic (<code>vm</code>) and dyadic (<code>vd</code>) verbs;
 for example, <code>6#1,2</code> is reshape, <code>&lt;a</code> is box, and so on.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">C</span><span class="w"> </span><span class="n">vt</span><span class="p">[]</span><span class="o">=</span><span class="s">&quot;+{~&lt;#,&quot;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* +    {    ~    &lt;   #   ,    */</span>
 <span class="n">A</span><span class="p">(</span><span class="o">*</span><span class="n">vd</span><span class="p">[])(</span><span class="n">A</span><span class="p">,</span><span class="n">A</span><span class="p">)</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="n">plus</span><span class="p">,</span><span class="n">from</span><span class="p">,</span><span class="n">find</span><span class="p">,</span><span class="mi">0</span><span class="w">  </span><span class="p">,</span><span class="n">rsh</span><span class="p">,</span><span class="n">cat</span><span class="p">},</span>
 <span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">vm</span><span class="p">[])(</span><span class="n">A</span><span class="p">)</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="n">id</span><span class="w">  </span><span class="p">,</span><span class="n">size</span><span class="p">,</span><span class="n">iota</span><span class="p">,</span><span class="n">box</span><span class="p">,</span><span class="n">sha</span><span class="p">,</span><span class="mi">0</span><span class="w">  </span><span class="p">};</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -378,10 +377,10 @@ The plus one is due to both functions returning a plain 0 if nothing matches,
 so both <code>vd</code> and <code>vm</code> have that as an “error state”.
 Note that this is different from inputting a literal 0, which would be transformed into an array.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">I</span><span class="w"> </span><span class="nf">noun</span><span class="p">(</span><span class="n">C</span><span class="w"> </span><span class="n">c</span><span class="p">){</span><span class="n">A</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">&lt;</span><span class="sc">'0'</span><span class="o">||</span><span class="n">c</span><span class="o">&gt;</span><span class="sc">'9'</span><span class="p">)</span><span class="n">R</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="n">z</span><span class="o">=</span><span class="n">ga</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="o">*</span><span class="n">z</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">=</span><span class="n">c</span><span class="o">-</span><span class="sc">'0'</span><span class="p">;</span><span class="n">R</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">z</span><span class="p">;}</span>
 <span class="n">I</span><span class="w"> </span><span class="nf">verb</span><span class="p">(</span><span class="n">C</span><span class="w"> </span><span class="n">c</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="k">for</span><span class="p">(;</span><span class="n">vt</span><span class="p">[</span><span class="n">i</span><span class="p">];)</span><span class="k">if</span><span class="p">(</span><span class="n">vt</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="o">==</span><span class="n">c</span><span class="p">)</span><span class="n">R</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="n">R</span><span class="w"> </span><span class="mi">0</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -393,10 +392,10 @@ If it is neither, just store the character’s value.
 The <code>x = cond1 ? y : cond2 ? z : w</code>-type ternary operator chaining is a classic for Whitney-style programs.
 Make of that what you will.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">I</span><span class="o">*</span><span class="nf">wd</span><span class="p">(</span><span class="n">C</span><span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="n">I</span><span class="w"> </span><span class="n">n</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">ma</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span><span class="n">C</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
 <span class="w">  </span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">noun</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">?</span><span class="n">a</span><span class="o">:</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">verb</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="o">?</span><span class="n">a</span><span class="o">:</span><span class="n">c</span><span class="p">);</span><span class="n">e</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">R</span><span class="w"> </span><span class="n">e</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <h3 id="execution">Execution<a href="#execution" class="floatleft sec-link">§</a></h3>
@@ -408,9 +407,9 @@ There are two queries that will be important here:
 with <code>qp</code> one can ask whether the character is a letter,
 and <code>qv</code> checks if it’s a verb (all of the symbols <code>+{~&lt;#,</code> have an ASCII value less than <code>a</code>).</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="n">st</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="nf">qp</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">a</span><span class="p">){</span><span class="n">R</span><span class="w"> </span><span class="n">a</span><span class="o">&gt;=</span><span class="sc">'a'</span><span class="o">&amp;&amp;</span><span class="n">a</span><span class="o">&lt;=</span><span class="sc">'z'</span><span class="p">;}</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="nf">qv</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">a</span><span class="p">){</span><span class="n">R</span><span class="w"> </span><span class="n">a</span><span class="o">&lt;</span><span class="sc">'a'</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -431,20 +430,20 @@ If yes, this thing to its right must be a dyadic function,
 so we call that dyadic function with its left argument <code>a</code>—which is already evaluated, and we now know must be an array—, and with the array its right argument evaluates to.
 If none of those conditions match, <code>a</code> must be a lone array that is already fully evaluated, so return that.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="nf">ex</span><span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">e</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">a</span><span class="o">=*</span><span class="n">e</span><span class="p">;</span>
 <span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">qp</span><span class="p">(</span><span class="n">a</span><span class="p">)){</span><span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="sc">'='</span><span class="p">)</span><span class="n">R</span><span class="w"> </span><span class="n">st</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="sc">'a'</span><span class="p">]</span><span class="o">=</span><span class="n">ex</span><span class="p">(</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">st</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="sc">'a'</span><span class="p">];}</span>
 <span class="w">  </span><span class="n">R</span><span class="w"> </span><span class="n">qv</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">?</span><span class="p">(</span><span class="o">*</span><span class="n">vm</span><span class="p">[</span><span class="n">a</span><span class="p">])(</span><span class="n">ex</span><span class="p">(</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">:</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">?</span><span class="p">(</span><span class="o">*</span><span class="n">vd</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]])((</span><span class="n">A</span><span class="p">)</span><span class="n">a</span><span class="p">,</span><span class="n">ex</span><span class="p">(</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">))</span><span class="o">:</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="n">a</span><span class="p">;}</span>
 </pre></div>
-
 </div>
 </div>
 <h3 id="pretty-printing">Pretty printing<a href="#pretty-printing" class="floatleft sec-link">§</a></h3>
 <div class="tc-row">
 <p><code>pi</code> prints an integer, and <code>nl</code> prints a newline.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V</span><span class="w"> </span><span class="nf">pi</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">i</span><span class="p">){</span><span class="n">P</span><span class="p">(</span><span class="s">&quot;%lld &quot;</span><span class="p">,</span><span class="n">i</span><span class="p">);}</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="nf">nl</span><span class="p">(){</span><span class="n">P</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);}</span>
 </pre></div>
-
 </div>
 </div>
 <div class="tc-row">
@@ -455,10 +454,10 @@ if it’s not, then it just prints the array as a flat list—hence the shape in
 If it is a boxed array, we indicate that with <code>&lt;</code>, and recurse.
 Here we dangerously reinterpret the integer that’s stored in each <code>w-&gt;p[i]</code> as a pointer to an array.</p>
 <div class="tc-code">
+
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">V</span><span class="w"> </span><span class="nf">pr</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="n">w</span><span class="p">){</span><span class="n">I</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">r</span><span class="p">,</span><span class="o">*</span><span class="n">d</span><span class="o">=</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">tr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">);</span><span class="n">DO</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">pi</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span><span class="n">nl</span><span class="p">();</span>
 <span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">t</span><span class="p">)</span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">P</span><span class="p">(</span><span class="s">&quot;&lt; &quot;</span><span class="p">);</span><span class="n">pr</span><span class="p">((</span><span class="n">A</span><span class="p">)</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="k">else</span><span class="w"> </span><span class="n">DO</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">pi</span><span class="p">(</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span><span class="n">nl</span><span class="p">();}</span>
 </pre></div>
-
 </div>
 </div>
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
@@ -472,6 +471,7 @@ If you’re interested in playing with this yourself,
 I’ve pushed everything in this post to a
 <a href="https://codeberg.org/slotThe/J-Incunabulum">Codeberg repository</a>.</p>
 <div class="tc-code">
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>$ gcc -std=c89 j.c &amp;&amp; ./a.out
     1,2,8,7
 4
@@ -497,7 +497,6 @@ I’ve pushed everything in this post to a
 2
 94660986832144 1
 </pre></div>
-
 </div>
 </div>
 

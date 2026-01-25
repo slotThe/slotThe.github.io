@@ -258,7 +258,6 @@ Scrolling through eglot’s code, we can find integration functions like this:
 <span class="w">       </span><span class="nb">:hint</span><span class="w"> </span><span class="nb">:textDocument/hover</span><span class="p">))</span>
 <span class="w">    </span><span class="no">t</span><span class="p">))</span>
 </pre></div>
-
 <p></p>
 How exactly to handle the callback <code>cb</code> is documented in <code>eldoc-documentation-functions</code>,
 but that’s actually not super important for this application.
@@ -289,6 +288,7 @@ Suppose we are given the magic functions
 as well as <code>eglot-hover--hl-string</code> to highlight the resulting string.
 Then, matching just on <a href="https://github.com/emacs-rustic/rustic">rustic-mode</a>,
 the final change is rather small:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">eglot-hover-eldoc-function</span><span class="w"> </span><span class="p">(</span><span class="nv">cb</span><span class="w"> </span><span class="kp">&amp;rest</span><span class="w"> </span><span class="nv">_ignored</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot-server-capable</span><span class="w"> </span><span class="nb">:hoverProvider</span><span class="p">)</span>
 <span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">buf</span><span class="w"> </span><span class="p">(</span><span class="nf">current-buffer</span><span class="p">)))</span>
@@ -315,7 +315,6 @@ the final change is rather small:
 <span class="w">       </span><span class="nb">:hint</span><span class="w"> </span><span class="nb">:textDocument/hover</span><span class="p">))</span>
 <span class="w">    </span><span class="no">t</span><span class="p">))</span>
 </pre></div>
-
 <p></p>
 Since we’re not returning a buffer position, we have a lot more freedom to highlight the string as we want.
 For example, in <code>haskell-mode</code> I prettify some symbols (<code>forall</code> becomes <code>∀</code>, <code>\</code> becomes <code>λ</code>, and so on),
@@ -330,6 +329,7 @@ You can try throwing servers not listed above at it as well,
 but since the implementation is relatively brittle it’ll probably need some adjustments.<!--
 --><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">Needs at least <code>cl-lib.el</code>, <code>dash.el</code>, and <code>s.el</code> to work.</div><!--
 -->
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">eglot-hover--hl-string</span><span class="w"> </span><span class="p">(</span><span class="nv">str</span><span class="w"> </span><span class="nv">mode</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Syntax highlight STR according to MODE.&quot;</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
@@ -382,7 +382,6 @@ but since the implementation is relatively brittle it’ll probably need some ad
 <span class="w">           </span><span class="p">(</span><span class="nv">join</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">)</span>
 <span class="w">           </span><span class="p">(</span><span class="nv">s-chop-suffixes</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="w"> </span><span class="s">&quot;```&quot;</span><span class="w"> </span><span class="s">&quot;``` ---&quot;</span><span class="p">))))))</span>
 </pre></div>
-
 <p></p>
 That’s pretty much it—you can now enjoy having useful hover information!
 <hr />
@@ -391,6 +390,7 @@ In case you want to
 <a href="https://tony-zorman.com/posts/fixing-lsp-mode.html#bonus-adding-type-signatures" class="local-link">manually add type signatures</a>
 then this is similarly straightforward,
 provided one knows the correct incantations:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">+haskell-type-sig-at-point</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">s</span><span class="w"> </span><span class="p">(</span><span class="nv">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="nv">eglot--request</span>
@@ -404,7 +404,6 @@ provided one knows the correct incantations:
 <span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">s</span><span class="p">)</span>
 <span class="w">    </span><span class="p">(</span><span class="nv">haskell-indentation-newline-and-indent</span><span class="p">)))</span>
 </pre></div>
-
 <p></p>
 <picture>
 <source srcset="../images/eglot-hover/type-sig.gif" media="(prefers-color-scheme: light)">

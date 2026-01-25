@@ -176,7 +176,6 @@ It can, however, be somewhat improved by using <span class="small-caps">css</spa
 <span class="w">  </span><span class="k">vertical-align</span><span class="p">:</span><span class="w"> </span><span class="kc">middle</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-
 <p></p>
 It looks like this:<!--
 --><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">As you can see, I haven’t bothered with fancy <span class="small-caps">css</span> to make the cards pretty. Content over form.</div><!--
@@ -208,6 +207,7 @@ even if the rest of the text is left-aligned.<!--
 <p></p>
 To use <code>preview.sty</code> in this way,
 one simply has to include it Anki’s LaTeX preamble—<code>C-S-n</code> and then “Options”—and wrap the whole document (i.e., the formula being rendered) with the <code>preview</code> environment:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%%% Header</span>
 <span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
 <span class="k">\usepackage</span><span class="na">[active,tightpage]</span><span class="nb">{</span>preview<span class="nb">}</span>
@@ -221,7 +221,6 @@ one simply has to include it Anki’s LaTeX preamble—<code>C-S-n</code> and th
 <span class="k">\end</span><span class="nb">{</span>preview<span class="nb">}</span>
 <span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
 </pre></div>
-
 <p></p>
 For this to work smoothly, I also highly recommend to enable <span class="small-caps">svg</span> support,
 and to tweak Anki’s LaTeX compilation pipeline.
@@ -230,6 +229,7 @@ My <code>svgCommands</code> settings look like this:<!--
 --><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
 In case you are not bound by these restrictions—or more adventurous than me—I would recommend you use lualatex instead.</div><!--
 -->
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span> &quot;svgCommands&quot;: [
       [
           &quot;latex&quot;,
@@ -250,15 +250,14 @@ In case you are not bound by these restrictions—or more adventurous than me—
       ]
   ]
 </pre></div>
-
 <p></p>
 The generated LaTeX might be too small,
 though fixing this just involves a small <span class="small-caps">css</span> modification to the <code>latex</code> class:
+
 <div class="highlight-css" style="padding-left: 1em;"><pre><span></span><span class="p">.</span><span class="nc">latex</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">zoom</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="kt">%</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-
 <p></p>
 If you want to dig deeper into how Anki generates maths, I recommend looking at
 <a href="https://github.com/ankitects/anki/blob/c29125939db1dbb9ef48d42f425eb70abaee53ad/pylib/anki/latex.py">latex.py</a>,
@@ -275,6 +274,7 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.</div
 <p></p>
 My complete preamble is not much larger than what I have shown above;
 it merely also includes my <a href="https://github.com/slotThe/latex-styles">personal style file</a>.
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%%% Header</span>
 <span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
 <span class="k">\usepackage</span><span class="na">[type=org,math=fancy]</span><span class="nb">{</span><span class="s">$</span><span class="nb">HOME</span><span class="o">/</span><span class="nb">.tex</span><span class="o">/</span><span class="nb">styles</span><span class="o">/</span><span class="nb">style}</span>
@@ -290,7 +290,6 @@ it merely also includes my <a href="https://github.com/slotThe/latex-styles">per
 <span class="k">\end</span><span class="nb">{</span>preview<span class="nb">}</span>
 <span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
 </pre></div>
-
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
 With these relatively straightforward tweaks,

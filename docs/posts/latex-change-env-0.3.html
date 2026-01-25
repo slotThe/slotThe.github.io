@@ -121,7 +121,6 @@ along the lines of
 <span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-math-display</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="s">&quot;\\[&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;\\]&quot;</span><span class="p">))</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-math-inline</span><span class="w">  </span><span class="o">'</span><span class="p">(</span><span class="s">&quot;$&quot;</span><span class="w">   </span><span class="o">.</span><span class="w"> </span><span class="s">&quot;$&quot;</span><span class="p">)))</span>
 </pre></div>
-
 <p></p>
 Pressing the keybinding for <code>latex-change-env</code> will pop up a selection
 in the minibuffer; by default, one can delete the current
@@ -150,20 +149,20 @@ Antolín Camarena’s <a href="https://github.com/oantolin/math-delimiters">math
 comfortable workflow with maths environments out of the box.<!--
 --><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">As such, be sure that you configure <code>math-delim​it​ers-{inline,display}</code>
 accordingly. For example, it may be useful to set
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">math-delimiters-display</span>
 <span class="w">        </span><span class="nv">latex-change-env-math-display</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 and so on.</div><!--
 --> For
 example, one could define a simple maths-based toggle
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/insert-toggle-math</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-cycle</span>
 <span class="w">   </span><span class="o">'</span><span class="p">(</span><span class="nv">display-math</span><span class="w"> </span><span class="nv">equation*</span><span class="w"> </span><span class="nv">align*</span><span class="w"> </span><span class="nv">equation</span><span class="w"> </span><span class="nv">align</span><span class="p">)))</span>
 </pre></div>
-
 <p></p>
 and then bind that to <code>$</code> in <code>latex-mode</code>. This works because
 <code>math-delimiters-insert</code> is called when one is not in any environment.
@@ -191,12 +190,12 @@ Cycling between inline and display maths, as well as several maths environments.
 <p></p>
 Of course, cycling also works for non-maths environments, as well as
 macros; below, I bound the following to a key:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">my/cycle-macros</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">latex-change-env-cycle</span>
 <span class="w">   </span><span class="o">'</span><span class="p">(</span><span class="nv">textbf</span><span class="w"> </span><span class="nv">emph</span><span class="w"> </span><span class="nv">textsc</span><span class="w"> </span><span class="nv">textit</span><span class="w"> </span><span class="nv">texttt</span><span class="p">)))</span>
 </pre></div>
-
 <p>
 <video width="100%" controls>
 <source src="../images/latex-change-env/cycling-macros.webm" type="video/webm">

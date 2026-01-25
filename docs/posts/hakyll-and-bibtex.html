@@ -202,7 +202,6 @@ the incantation one needs to write is quite simple:
 <span class="w">         </span>--csl<span class="o">=</span>bib/style.csl<span class="w"> </span>--bibliography<span class="o">=</span>bib/bibliography.bib<span class="w"> </span><span class="se">\</span>
 <span class="w">         </span>FILE.md
 </pre></div>
-
 <p></p>
 Integrating this into a basic Hakyll setup is not much more complicated,
 as some kind soul has given us
@@ -212,6 +211,7 @@ as some kind soul has given us
 In fact, <a href="https://jaspervdj.be/">Jasper Van der Jeugt</a> himself created a <a href="https://github.com/jaspervdj/hakyll-citeproc-example">tutorial</a> for this.
 Slightly abbreviated, it goes a bit like the following.
 First, we compile the <span class="small-caps">csl</span> and BibTeX files in our main function:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">main</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">hakyll</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="c1">-- …</span>
@@ -219,10 +219,10 @@ First, we compile the <span class="small-caps">csl</span> and BibTeX files in ou
 <span class="w">  </span><span class="n">match</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">compile</span><span class="w"> </span><span class="n">biblioCompiler</span>
 <span class="w">  </span><span class="c1">-- …</span>
 </pre></div>
-
 <p></p>
 Next, we create a compiler
 with the help of the <code>readPandocBiblio</code> function:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
@@ -231,31 +231,30 @@ with the help of the <code>readPandocBiblio</code> function:
 <span class="w">    </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">readPandocBiblio</span><span class="w"> </span><span class="n">defaultHakyllReaderOptions</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span>
 <span class="w">    </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">writePandoc</span>
 </pre></div>
-
 <p></p>
 Since this kind of setup is so common,
 it is already packaged up in <code>pandoc​Biblio​Compiler</code>:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocBiblioCompiler</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">pandocBiblioCompiler</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span>
 </pre></div>
-
 <p></p>
 With all these pieces in place,
 this compiler can now be used in place of the default <code>pandocCompiler</code>;
 for example, instead of
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="w">  </span><span class="c1">-- somewhere in main</span>
 <span class="w">  </span><span class="n">compile</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">pandocCompiler</span>
 <span class="w">        </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">loadAndApplyTemplate</span><span class="w"> </span><span class="s">&quot;default.html&quot;</span><span class="w"> </span><span class="n">defaultContext</span>
 </pre></div>
-
 <p></p>
 one would write
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="w">  </span><span class="c1">-- somewhere in main</span>
 <span class="w">  </span><span class="n">compile</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">myPandocBiblioCompiler</span>
 <span class="w">        </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">loadAndApplyTemplate</span><span class="w"> </span><span class="s">&quot;default.html&quot;</span><span class="w"> </span><span class="n">defaultContext</span>
 </pre></div>
-
 <p></p>
 And that’s all there is to it!
 Citations should now work out of the box using the <code>[@citation-name]</code> syntax.
@@ -302,9 +301,9 @@ to swapping out footnotes and producing this very <a href="./block-sidenotes.htm
 almost anything one can imagine is possible.</div><!--
 -->
 This internal representation is encapsulated in the <code>Pandoc</code> type
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="kt">Meta</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 </pre></div>
-
 <p></p>
 which represents a full document plus some metadata.
 The <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Block">Block</a> and <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html#t:Inline">Inline</a> types then
@@ -316,20 +315,20 @@ with which it becomes trivial to promote an <code>Inline -&gt; Inline</code> fun
 to a full <code>Pandoc -&gt; Pandoc</code> transformation.
 <p></p>
 Luckily, <code>Hakyll.​Web.​Pandoc.​Biblio</code> exposes a function for this kind of use-case:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">processPandocBiblio</span>
 <span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">CSL</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Biblio</span><span class="w">               </span><span class="c1">-- Formatting boiler plate</span>
 <span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span><span class="w"> </span><span class="c1">-- The actual transformation</span>
 </pre></div>
-
 <p></p>
 A basic filter materialises:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
 <span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
 <span class="w">  </span><span class="n">bib</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/bibliography.bib&quot;</span>
 <span class="w">  </span><span class="n">processPandocBiblio</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span><span class="w"> </span><span class="n">pandoc</span>
 </pre></div>
-
 <p></p>
 Notice that the type of this function transforms an <code>Item Pandoc</code>!
 An <a href="https://hackage.haskell.org/package/hakyll/docs/Hakyll-Core-Item.html#t:Item">Item</a> is a type internal to Hakyll,
@@ -342,6 +341,7 @@ accepting only a <code>Pandoc -&gt; Compiler Pandoc</code> argument.
 This means that some care is needed to get everything to type check.
 <p></p>
 To start, my personal pandoc compiler looks a little bit like this:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
@@ -349,13 +349,13 @@ To start, my personal pandoc compiler looks a little bit like this:
 <span class="w">    </span><span class="n">myWriter</span>
 <span class="w">    </span><span class="n">myTransformations</span><span class="w">   </span><span class="c1">-- Pandoc -&gt; Compiler Pandoc</span>
 </pre></div>
-
 <p></p>
 The easiest way I found to incorporate a <code>process​Pandoc​Biblio</code>-like transformation into this was to
 write a function that’s like <code>pandoc​Compiler​With​TransformM</code>,
 but accepts a wider input range.
 Looking at its definition
 already gives some idea as to what needs to be done:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">pandocCompilerWithTransformM</span>
 <span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ReaderOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">WriterOptions</span>
 <span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
@@ -373,7 +373,6 @@ already gives some idea as to what needs to be done:
 
 <span class="c1">-- readPandocWith :: ReaderOptions -&gt; Item String -&gt; Compiler (Item Pandoc)</span>
 </pre></div>
-
 <p></p>
 So <code>pandoc​Compiler​With​TransformM</code> is defined in terms of <code>render​Pandoc​With​TransformM</code>,
 which in turn has quite a simple implementation.
@@ -381,6 +380,7 @@ Notice in particular the <code>traverse f =&lt;&lt; readPandocWith ropt i</code>
 <code>readPandocWith</code> returns a <code>Compiler (Item Pandoc)</code>,
 so the <code>traverse</code> above exactly transform our <code>f</code> into a function that works at the <code>Item</code> level.
 Omitting this yields the desired functions:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myRenderPandocWithTransformM</span>
 <span class="w">  </span><span class="ow">::</span><span class="w"> </span><span class="kt">ReaderOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">WriterOptions</span>
 <span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">))</span><span class="w">  </span><span class="c1">-- this changed!</span>
@@ -396,10 +396,10 @@ Omitting this yields the desired functions:
 <span class="nf">myPandocCompilerWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">getResourceBody</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="n">myRenderPandocWithTransformM</span><span class="w"> </span><span class="n">ropt</span><span class="w"> </span><span class="n">wopt</span><span class="w"> </span><span class="n">f</span>
 </pre></div>
-
 <p></p>
 We can now easily incorporate the <code>processBib</code> function defined above into our existing framework,
 adding a <code>traverse</code> where the old code was:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">myPandocCompilerWithTransformM</span>
@@ -409,7 +409,6 @@ adding a <code>traverse</code> where the old code was:
 <span class="w">     </span><span class="o">&lt;=&lt;</span><span class="w"> </span><span class="n">processBib</span><span class="w">                  </span><span class="c1">-- composed with the new stuff</span>
 <span class="w">    </span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 And that’s it!
 Citations can now be added using the <code>[@citation-name]</code> syntax mentioned above,
@@ -436,6 +435,7 @@ This means that in addition to the <code>processBib</code> function,
 we need to change the code in one other place.
 <p></p>
 The generation looks a little bit like this:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">getTocCtx</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
 <span class="nf">getTocCtx</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">writerOpts</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">mkTocWriter</span>
@@ -447,12 +447,12 @@ The generation looks a little bit like this:
 <span class="w">                 </span><span class="p">,</span><span class="w"> </span><span class="n">constField</span><span class="w"> </span><span class="s">&quot;toc&quot;</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">doStuffWithTheToc</span><span class="w"> </span><span class="n">toc</span>
 <span class="w">                 </span><span class="p">]</span>
 </pre></div>
-
 <p></p>
 When the <span class="small-caps">toc</span> is saved in the <code>toc</code> variable,
 it’s already rendered into a string,
 which means that it’s time for some good old string manipulations.
 The (simplified) <span class="small-caps">html</span> for a typical table of contents looks like this:
+
 <div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Contents<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
@@ -466,10 +466,10 @@ The (simplified) <span class="small-caps">html</span> for a typical table of con
   <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
-
 <p></p>
 The last <code>&lt;/ul&gt;</code> block seems to be an appropriate target to attack.
 The function to add a <code>References</code> heading in its place is swiftly written:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">addBibHeading</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span>
 <span class="nf">addBibHeading</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">mconcat</span><span class="w"> </span><span class="o">$</span>
 <span class="w">  </span><span class="p">[</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">dropEnd</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">before</span>
@@ -479,7 +479,6 @@ The function to add a <code>References</code> heading in its place is swiftly wr
 <span class="w"> </span><span class="kr">where</span>
 <span class="w">  </span><span class="p">(</span><span class="n">before</span><span class="p">,</span><span class="w"> </span><span class="n">after</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">breakOnEnd</span><span class="w"> </span><span class="s">&quot;&lt;/ul&gt;&quot;</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 This can now be incorporated into <code>getTocCtx</code> in a straightforward manner:<!--
 --><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
@@ -491,6 +490,7 @@ I also check for a <code>bib</code> boolean field,
 in order to decide whether this transformation should actually be applied.
 If you are interested in that, see the relevant <a href="https://github.com/slotThe/slotThe.github.io/commit/62c6072243ee06d8df39813b7e35a6fd0ea1fe9d">commit</a>.</div><!--
 -->
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">getTocCtx</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Context</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
 <span class="nf">getTocCtx</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">writerOpts</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">mkTocWriter</span>
@@ -503,13 +503,12 @@ If you are interested in that, see the relevant <a href="https://github.com/slot
 <span class="w">                                   </span><span class="c1">-- ^^^^^^^^^^^^^</span>
 <span class="w">                 </span><span class="p">]</span>
 </pre></div>
-
 <p></p>
 All we need to do now is to actually create that header.
 Again inspecting the <span class="small-caps">html</span>, one can spy a line along the lines of
+
 <div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;refs&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;references csl-bib-body&quot;</span> <span class="na">role</span><span class="o">=</span><span class="s">&quot;doc-bibliography&quot;</span><span class="p">&gt;</span>
 </pre></div>
-
 <p></p>
 when the references start.
 Inserting a heading above that sounds like a plan.
@@ -529,15 +528,16 @@ this time inside our <code>processBib</code> function:<!--
 <p></p>
 This example also nicely showcases the power of the <code>Walkable</code> type class.
 Via the
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kt">Walkable</span><span class="w"> </span><span class="kt">Block</span><span class="w"> </span><span class="kt">Pandoc</span>
 </pre></div>
-
 <p></p>
 instance,
 I seamlessly walk over all <code>Block</code>s in the <span class="small-caps">ast</span>
 and pick out the ones I’d like to change.
 Pretty neat if you ask me.</div><!--
 -->
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
 <span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
@@ -552,7 +552,6 @@ Pretty neat if you ask me.</div><!--
 <span class="w">      </span><span class="p">[</span><span class="kt">Header</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;references&quot;</span><span class="p">,</span><span class="w"> </span><span class="kt">[]</span><span class="p">,</span><span class="w"> </span><span class="kt">[]</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="kt">Str</span><span class="w"> </span><span class="s">&quot;References&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">d</span><span class="p">]</span>
 <span class="w">    </span><span class="n">block</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">block</span><span class="p">]</span>
 </pre></div>
-
 <p></p>
 The citations now look like this:
 <div class="highlight">
@@ -586,6 +585,7 @@ B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax cent
 What immediately irks me in the above output is
 that a single citation is broken up into two lines.
 Thankfully, this is easily fixed by a tiny bit of <span class="small-caps">css</span>.
+
 <div class="highlight-css" style="padding-left: 1em;"><pre><span></span><span class="c">/* Don't split up a citation over multiple lines. */</span>
 <span class="nt">div</span><span class="p">.</span><span class="nc">csl-left-margin</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline</span><span class="p">;</span>
@@ -594,7 +594,6 @@ Thankfully, this is easily fixed by a tiny bit of <span class="small-caps">css</
 <span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">inline</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-
 <p></p>
 Much better:
 <div class="highlight">
@@ -634,6 +633,7 @@ Pandoc does accept a <code>link-citations</code> option that controls this behav
 which works fine for my purposes.
 Setting this can be done directly
 by modifying the <a href="https://hackage.haskell.org/package/pandoc-types-1.23/docs/Text-Pandoc-Definition.html#t:Meta">Meta</a> field of the <code>Pandoc</code> type:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
 <span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">csl</span><span class="w"> </span><span class="ow">&lt;-</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="s">&quot;bib/style.csl&quot;</span>
@@ -646,7 +646,6 @@ by modifying the <a href="https://hackage.haskell.org/package/pandoc-types-1.23/
 <span class="w">         </span><span class="n">pandoc</span>
 <span class="w">  </span><span class="n">fmap</span><span class="w"> </span><span class="n">insertRefHeading</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">processPandocBiblio</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span><span class="w"> </span><span class="n">pandoc</span>
 </pre></div>
-
 <p></p>
 One could also introduce a Hakyll metadata field
 if this is to be done conditionally,
@@ -691,13 +690,14 @@ look—aligning labels and not letting the citation information run under its la
 a bit awkward.
 As so many times before, pandoc filters come to the rescue here.
 There is a <code>Table</code> constructor of the <code>Block</code> type which we will use:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kt">Table</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Attr</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Caption</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">ColSpec</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">TableHead</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">TableBody</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">TableFoot</span>
 <span class="w">      </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Block</span>
 </pre></div>
-
 <p></p>
 This may look kind of scary,
 but for our simple use-case there is the aptly named <code>simpleTable</code> function:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">simpleTable</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Blocks</span><span class="p">]</span><span class="w">   </span><span class="c1">-- ^ Headers</span>
 <span class="w">            </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[[</span><span class="kt">Blocks</span><span class="p">]]</span><span class="w"> </span><span class="c1">-- ^ Rows</span>
 <span class="w">            </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Blocks</span>
@@ -706,7 +706,6 @@ but for our simple use-case there is the aptly named <code>simpleTable</code> fu
 <span class="kr">type</span><span class="w"> </span><span class="kt">Blocks</span><span class="w">    </span><span class="ow">=</span><span class="w"> </span><span class="kt">Many</span><span class="w"> </span><span class="kt">Block</span>
 <span class="kr">newtype</span><span class="w"> </span><span class="kt">Many</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Many</span><span class="w"> </span><span class="p">(</span><span class="kt">Seq</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 Basically, any particular cell is composed of a number of <code>Blocks</code>,
 a single row is a bunch (list) of those,
@@ -715,6 +714,7 @@ Equipped with this knowledge,
 we can just search for an instance of a citation,
 which will be two <code>Div</code>s inside of one <code>Para</code> inside of one <code>Div</code>,
 and replace accordingly:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="c1">-- | Align all citations in a table.</span>
 <span class="nf">tableiseBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Pandoc</span>
 <span class="nf">tableiseBib</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">walk</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
@@ -730,7 +730,6 @@ and replace accordingly:
 <span class="w">      </span><span class="p">[</span><span class="kt">Div</span><span class="w"> </span><span class="n">attr</span><span class="w"> </span><span class="p">[</span><span class="kt">Plain</span><span class="w"> </span><span class="p">[</span><span class="n">s1</span><span class="p">]],</span><span class="w"> </span><span class="kt">Plain</span><span class="w"> </span><span class="p">[</span><span class="kt">Space</span><span class="p">],</span><span class="w"> </span><span class="kt">Plain</span><span class="w"> </span><span class="p">[</span><span class="n">s2</span><span class="p">]]</span>
 <span class="w">    </span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="ne">error</span><span class="w"> </span><span class="s">&quot;citToRow: unexpected citation format.&quot;</span>
 </pre></div>
-
 <p></p>
 Just signaling an <code>error</code> here
 in case of an unexpected format
@@ -743,24 +742,24 @@ instead of trying to desperately produce something based off garbage input.
 The <code>tableiseBib</code> function can
 be incorporated into <code>processBib</code>
 in a straightforward fashion:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">processBib</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="p">)</span>
 <span class="nf">processBib</span><span class="w"> </span><span class="n">pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="c1">-- …</span>
 <span class="w">  </span><span class="n">fmap</span><span class="w"> </span><span class="p">(</span><span class="n">tableiseBib</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">insertRefHeading</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">processPandocBiblio</span><span class="w"> </span><span class="n">csl</span><span class="w"> </span><span class="n">bib</span><span class="w"> </span><span class="n">p</span>
 </pre></div>
-
 <p></p>
 All that’s left is to nicely align everything:
 the right side of the table will,
 in general,
 span multiple lines—in stark contrast to the label.
 This is again just a few lines of <span class="small-caps">css</span>:
+
 <div class="highlight-css" style="padding-left: 1em;"><pre><span></span><span class="c">/* Align citations to the top. */</span>
 <span class="nt">div</span><span class="p">#</span><span class="nn">refs</span><span class="w"> </span><span class="nt">td</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">vertical-align</span><span class="p">:</span><span class="w"> </span><span class="kc">top</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-
 <p></p>
 We get the expected result already showcased in the introduction.
 For completeness, here it is again:

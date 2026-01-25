@@ -112,10 +112,10 @@ If you’re interested:
 <span class="w">     </span><span class="nb">return</span><span class="w"> </span><span class="no">t</span>
 <span class="w">     </span><span class="nv">finally</span><span class="w"> </span><span class="nb">return</span><span class="w"> </span><span class="no">nil</span><span class="p">)))</span>
 </pre></div>
-
 <p></p>
 Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.</div><!--
 --> version goes as follows:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">notmuch-mua-attachment-check</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Signal an error an attachement is expected but missing.</span>
 
@@ -141,7 +141,6 @@ Alternatively, check the source code of <code>notmuch-mua-attachment-check</code
 <span class="w">    </span><span class="c1">;; ...signal an error.</span>
 <span class="w">    </span><span class="p">(</span><span class="ne">error</span><span class="w"> </span><span class="s">&quot;Missing attachment&quot;</span><span class="p">)))</span>
 </pre></div>
-
 <p></p>
 There is nothing fancy happening here,
 so it’s not terribly difficult to adapt it to other settings.
@@ -152,6 +151,7 @@ Instead of trying to change my habits—which is hard!—it sounds much easier t
 <p></p>
 The strategy is exactly the same as for <code>notmuch-mua-attachment-check</code>;
 check for a certain regular expression, whitespace, and say something if it matches the current subject:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">notmuch-mua-subject-check</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="p">(</span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="k">save-excursion</span>
 <span class="w">        </span><span class="p">(</span><span class="nv">message-goto-subject</span><span class="p">)</span>
@@ -160,12 +160,11 @@ check for a certain regular expression, whitespace, and say something if it matc
 <span class="w">      </span><span class="p">(</span><span class="nv">y-or-n-p</span><span class="w"> </span><span class="s">&quot;No subject given – still send?&quot;</span><span class="p">)</span>
 <span class="w">      </span><span class="p">(</span><span class="ne">error</span><span class="w"> </span><span class="s">&quot;No subject&quot;</span><span class="p">)))</span>
 </pre></div>
-
 <p></p>
 All one has to do is to execute this before sending a mail:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">add-hook</span><span class="w"> </span><span class="ss">'notmuch-mua-send-hook</span><span class="w"> </span><span class="nf">#'</span><span class="nv">notmuch-mua-attachment-check</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 and we’re good to go.
 

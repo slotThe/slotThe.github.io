@@ -171,7 +171,6 @@ Slightly adjusted to support inline and display maths, it looks like this:
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-
 <p></p>
 Having this in place,
 all that’s left is to crawl through Pandoc’s <span class="small-caps">ast</span>,
@@ -211,6 +210,7 @@ have a <code>Math</code> constructor which we can match on.<!--
 <p></p>
 Mind the <code>BlockArguments</code>—and the “s”.</div><!--
 -->
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w">    </span><span class="n">qualified</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="kt">T</span>
 <span class="kr">import</span><span class="w"> </span><span class="nn">Data.Text.IO</span><span class="w"> </span><span class="n">qualified</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="kt">T</span>
 <span class="kr">import</span><span class="w"> </span><span class="nn">GHC.IO.Handle</span><span class="w"> </span><span class="p">(</span><span class="kt">BufferMode</span><span class="w"> </span><span class="p">(</span><span class="kt">NoBuffering</span><span class="p">),</span><span class="w"> </span><span class="kt">Handle</span><span class="p">,</span><span class="w"> </span><span class="nf">hSetBuffering</span><span class="p">)</span>
@@ -263,7 +263,6 @@ Mind the <code>BlockArguments</code>—and the “s”.</div><!--
 <span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">kVect&quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\\</span><span class="s">mathsf{Vect}_{</span><span class="se">\\</span><span class="s">mathtt{k}}&quot;</span><span class="p">)</span>
 <span class="w">    </span><span class="p">]</span>
 </pre></div>
-
 <p></p>
 The <code>(T.unwords . T.lines . T.strip -&gt; text)</code>
 <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/view_patterns.html">view pattern</a>
@@ -283,6 +282,7 @@ such that buffering does not deadlock your program indefinitely.</div><!--
 The <code>hlKaTeX</code> function,
 having a <code>Pandoc -&gt; Compiler Pandoc</code> signature,
 can be given to <a href="https://hackage.haskell.org/package/hakyll/docs/Hakyll-Web-Pandoc.html#v:pandocCompilerWithTransformM">pandocCompilerWithTransformM</a> like any other function:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
@@ -290,7 +290,6 @@ can be given to <a href="https://hackage.haskell.org/package/hakyll/docs/Hakyll-
 <span class="w">    </span><span class="n">defaultHakyllWriterOptions</span>
 <span class="w">    </span><span class="n">hlKaTeX</span>
 </pre></div>
-
 <p></p>
 And that’s pretty much it!
 <h3 id="adding-css">Adding <span class="small-caps">css</span><a href="#adding-css" class="floatleft sec-link">§</a></h3>

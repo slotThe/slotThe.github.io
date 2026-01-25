@@ -109,18 +109,17 @@ This is a bit annoying, though thankfully it’s not difficult to fix!
 <span class="w">          </span><span class="p">(</span><span class="nf">replace-match</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="no">t</span><span class="p">))</span>
 <span class="w">      </span><span class="p">(</span><span class="nv">fixup-whitespace</span><span class="p">))))</span>
 </pre></div>
-
 <p></p>
 Adjusting this to my idiosyncratic preferences is quite straightforward:
 just set <code>fill-prefix</code> to the current comment syntax<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">This is helpfully provided by the <code>comment-start</code> variable.</div><!--
 -->, and let the function do the rest.
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">advice-add</span><span class="w"> </span><span class="ss">'delete-indentation</span><span class="w"> </span><span class="nb">:around</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">old-fun</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">beg</span><span class="w"> </span><span class="nv">end</span><span class="p">)</span>
 <span class="w">    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">fill-prefix</span><span class="w"> </span><span class="nv">comment-start</span><span class="p">))</span>
 <span class="w">      </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">old-fun</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">beg</span><span class="w"> </span><span class="nv">end</span><span class="p">))))</span>
 </pre></div>
-
 <p></p>
 Pretty neat, huh?
 Sadly, this does not quite work yet!
@@ -137,16 +136,16 @@ Ostensibly all we have to do is to change<!--
 <p></p>
 Notice that the <code>if</code> in the code is really a <code>when</code>.</div><!--
 -->
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">prefix</span><span class="w"> </span><span class="p">(</span><span class="nf">looking-at</span><span class="w"> </span><span class="nv">prefix</span><span class="p">))</span>
 <span class="w">  </span><span class="err">…</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 to
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">prefix</span><span class="w"> </span><span class="p">(</span><span class="nf">looking-at</span><span class="w"> </span><span class="nv">prefix</span><span class="p">))</span>
 <span class="w">  </span><span class="err">…</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 While we’re at it,
 we might as well remove the advice and hard-code the <code>fill-prefix</code> into the function.
@@ -166,6 +165,7 @@ In case you don’t want to copy the whole function,
 you can find a small package for it
 on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft GitHub</a>.</div><!--
 -->
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">delete-indentation</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="nv">beg</span><span class="w"> </span><span class="nv">end</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Join this line to previous and fix up whitespace at join.</span>
 <span class="s">If there is a fill prefix, delete it from the beginning of this</span>
@@ -222,13 +222,13 @@ on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft Gi
 <span class="w">            </span><span class="p">(</span><span class="nf">replace-match</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="no">t</span><span class="p">)))</span>
 <span class="w">        </span><span class="p">(</span><span class="nv">fixup-whitespace</span><span class="p">)))))</span>
 </pre></div>
-
 <p></p>
 If you’re interested in a diff with the original function, you can find that below.
 <details>
 <summary>
 Click
 </summary>
+
 <div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gu">@@ -6,7 +6,10 @@</span>
 <span class="w"> </span>When BEG and END are non-nil, join all lines in the region they
 <span class="w"> </span>define.  Interactively, BEG and END are, respectively, the start
@@ -278,7 +278,6 @@ Click
 <span class="gi">+            (replace-match &quot;&quot; t t)))</span>
 <span class="gi">+        (fixup-whitespace)))</span>
 </pre></div>
-
 </details>
 
       <!-- Body is included in the above file -->

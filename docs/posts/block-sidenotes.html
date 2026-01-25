@@ -127,13 +127,13 @@ provides an appropriate pandoc filter. After extracting the relevant
 <span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="n">usingSidenotes</span><span class="w">    </span><span class="c1">-- sidenotes</span>
 <span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="n">addSectionLinks</span><span class="w">   </span><span class="c1">-- link on hover</span>
 <span class="w">    </span><span class="p">)</span>
-</pre></div>
-</div><!--
+</pre></div></div><!--
 --> things just
 worked!
 <p></p>
 There is but one problem with this setup: paragraphs. A sidenote
 roughly looks like the following:
+
 <div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote-wrapper&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;sn-NAME&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;margin-toggle sidenote-number&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;sn-NAME&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;margin-toggle&quot;</span><span class="p">&gt;</span>
@@ -142,7 +142,6 @@ roughly looks like the following:
   <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </pre></div>
-
 <p></p>
 As Chris MacKay—a Tufte <span class="small-caps">css</span> contributor—helpfully explains in an
 <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-234316022">issue</a>, spans officially don’t play nice with
@@ -162,6 +161,7 @@ creative “interpretations” programs have of <a href="https://x.org/releases/
 quite sensibly converts a given footnote into an approximation of the
 above <span class="small-caps">html</span> by using pandoc’s native <code>Span</code> data constructor. Here is a
 (heavily) simplified version of the relevant function.
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">filterInline</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
 <span class="nf">filterInline</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">case</span>
 <span class="w">  </span><span class="c1">-- A @Note@ signifies a footnote.</span>
@@ -175,17 +175,17 @@ above <span class="small-caps">html</span> by using pandoc’s native <code>Span
 <span class="w">             </span><span class="p">]</span>
 <span class="w">  </span><span class="n">inline</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">inline</span>
 </pre></div>
-
 <p></p>
 Now, pandoc very much does <em>not</em> want you to put any kind of block
 inside of its <code>Span</code>s—that’s why its type is
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kt">Span</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Attr</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
 </pre></div>
-
 <p></p>
 Notice the absence of a <code>[Block]</code> argument. This is why
 <code>coerceToInline</code> exists, which tries to convert as many blocks as it can
 to inline elements.
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">coerceToInline</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span>
 <span class="nf">coerceToInline</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">concatMap</span><span class="w"> </span><span class="n">deBlock</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">walk</span><span class="w"> </span><span class="n">deNote</span>
 <span class="w"> </span><span class="kr">where</span>
@@ -206,7 +206,6 @@ to inline elements.
 <span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="p">(</span><span class="kt">Note</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Str</span><span class="w"> </span><span class="s">&quot;&quot;</span>
 <span class="w">  </span><span class="n">deNote</span><span class="w"> </span><span class="n">x</span><span class="w">        </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span>
 </pre></div>
-
 <p></p>
 The <code>coerceToInline</code> function behaves sensibly with respect to the
 simplest kinds of blocks, but already mentions that the <code>RawBlock → RawInline</code> transformation may have some caveats. For example,
@@ -296,12 +295,12 @@ For rendering <span class="small-caps">html</span>, pandoc has a
 <a href="https://hackage.haskell.org/package/pandoc-3.0.1/docs/Text-Pandoc-Writers.html#v:writeHtml5String">writeHtml5String</a> function, which is
 conveniently wrapped by Hakyll in
 <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:writePandocWith">writePandocWith</a>:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="c1">-- | Write a document (as HTML) using pandoc, with the supplied options</span>
 <span class="nf">writePandocWith</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">WriterOptions</span><span class="w">  </span><span class="c1">-- ^ Writer options for pandoc</span>
 <span class="w">                </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w">    </span><span class="c1">-- ^ Document to write</span>
 <span class="w">                </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="w">    </span><span class="c1">-- ^ Resulting HTML</span>
 </pre></div>
-
 <p></p>
 Importantly, rendering takes some <code>WriterOptions</code>; since we don’t want
 to mess around with changing pure <span class="small-caps">html</span> afterwards, this is quite
@@ -312,6 +311,7 @@ in the last post: look through the Haddocks to find the types that we
 want, <a href="https://aphyr.com/posts/342-typing-the-technical-interview">seize some meaningless functions from the void, and imbue them
 with meaning</a>. The relevant bits
 from pandoc’s internal types are the following.
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kr">data</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="kt">Meta</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 
 <span class="kr">data</span><span class="w"> </span><span class="kt">Block</span>
@@ -325,11 +325,11 @@ from pandoc’s internal types are the following.
 <span class="w">    </span><span class="c1">-- …</span>
 <span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="kt">Note</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w">         </span><span class="c1">-- ^ Footnote or endnote</span>
 </pre></div>
-
 <p></p>
 While this document is <em>not</em> a literate Haskell file, the following is
 still here for convenience, in case you are left wondering where some of
 the functions come from.
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="cm">{-# LANGUAGE BangPatterns             #-}</span>
 <span class="cm">{-# LANGUAGE LambdaCase               #-}</span>
 <span class="cm">{-# LANGUAGE OverloadedStrings        #-}</span>
@@ -345,7 +345,6 @@ the functions come from.
 <span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Shared</span><span class="w"> </span><span class="p">(</span><span class="nf">tshow</span><span class="p">)</span>
 <span class="kr">import</span><span class="w"> </span><span class="nn">Text.Pandoc.Walk</span><span class="w"> </span><span class="p">(</span><span class="nf">walkM</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 Rendering the actual sidenote isn’t very complicated, and amounts to
 picking out the <code>Note</code> constructor, rendering it, and putting everything
@@ -354,6 +353,7 @@ back together.<!--
 which keeps track of the sidenote number, as well as the supplied
 <code>WriterOption</code>s; nothing fancy.</div><!--
 -->
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w">            </span><span class="c1">-- ^ Inlines from a single @Note@</span>
 <span class="w">               </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 <span class="nf">renderSidenote</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="kt">[]</span>
@@ -373,7 +373,6 @@ which keeps track of the sidenote number, as well as the supplied
 <span class="w">                             </span><span class="n">writePandocWith</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">mempty</span><span class="w"> </span><span class="n">blocks</span><span class="p">))</span>
 <span class="w">                             </span><span class="c1">-- … all the closing html stuff</span>
 </pre></div>
-
 <p></p>
 Finding notes is a bit more finicky, since they could potentially occur
 in a lot of places. Right now, for obvious reasons, I’ve settled on
@@ -382,6 +381,7 @@ we need to be a bit careful about inserting newlines for paragraphs (and
 when to omit this). This is because <code>Note</code>s are actually inline
 elements, and so we are replacing a single <code>Block</code> by a list of
 <code>Block</code>s, which incurs some additional formatting.
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">mkSidenote</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Sidenote</span><span class="w"> </span><span class="p">[</span><span class="kt">Block</span><span class="p">]</span>
 <span class="nf">mkSidenote</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">foldM</span><span class="w"> </span><span class="p">(</span><span class="nf">\</span><span class="n">acc</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">acc</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="kt">[]</span>
 <span class="w"> </span><span class="kr">where</span>
@@ -395,10 +395,10 @@ elements, and so we are replacing a single <code>Block</code> by a list of
 <span class="w">    </span><span class="kt">BulletList</span><span class="w">        </span><span class="n">bs</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="kt">:[]</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">BulletList</span><span class="w">        </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">traverse</span><span class="w"> </span><span class="n">mkSidenote</span><span class="w"> </span><span class="n">bs</span>
 <span class="w">    </span><span class="n">block</span><span class="w">                </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="p">[</span><span class="n">block</span><span class="p">]</span>
 </pre></div>
-
 <p></p>
 Putting everything together, we apply this transformation to every block
 in a document:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">usingSidenotes</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">WriterOptions</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Pandoc</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Pandoc</span>
 <span class="nf">usingSidenotes</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="p">(</span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">meta</span><span class="w"> </span><span class="n">blocks</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="kt">Pandoc</span><span class="w"> </span><span class="n">meta</span><span class="w"> </span><span class="p">(</span><span class="n">walkBlocks</span><span class="w"> </span><span class="p">(</span><span class="kt">SNS</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">blocks</span><span class="p">)</span>
@@ -409,7 +409,6 @@ in a document:
 <span class="w">    </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="n">bs</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">b'</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">walkBlocks</span><span class="w"> </span><span class="n">s'</span><span class="w"> </span><span class="n">bs</span>
 <span class="w">     </span><span class="kr">where</span><span class="w"> </span><span class="p">(</span><span class="n">b'</span><span class="p">,</span><span class="w"> </span><span class="n">s'</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">runState</span><span class="w"> </span><span class="p">(</span><span class="n">walkM</span><span class="w"> </span><span class="n">mkSidenote</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">])</span><span class="w"> </span><span class="n">sns</span>
 </pre></div>
-
 <p></p>
 This can now be used much like the <code>usingSidenotes</code> function from
 <code>pandoc-sidenote</code>, only that it needs to know your <code>WriterOption</code>s.
@@ -418,6 +417,7 @@ do to pandoc’s <span class="small-caps">ast</span>, since <code>usingSidenotes
 footnote, which is not what you want in case you—like me—do other
 creative transformations, such as separately generating <span class="small-caps">html</span> for
 <code>CodeBlock</code>s. In my configuration, I now have
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 <span class="nf">myPandocCompiler</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">pandocCompilerWithTransformM</span>
@@ -425,7 +425,6 @@ creative transformations, such as separately generating <span class="small-caps"
 <span class="w">    </span><span class="n">myWriter</span>
 <span class="w">    </span><span class="p">(</span><span class="n">pure</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">usingSidenotes</span><span class="w"> </span><span class="n">myWriter</span><span class="w"> </span><span class="o">&lt;=&lt;</span><span class="w"> </span><span class="n">pygmentsHighlight</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">addSectionLinks</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 Tufte <span class="small-caps">css</span> needs to be changed minimally to support this extended
 functionality, but thankfully Said Achmiz has already documented what
@@ -454,18 +453,18 @@ elements instead of <code>div</code>s in their sidenote, but this does not seem 
 be the case.<!--
 --><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">At least not to my current knowledge.</div><!--
 --> Instead of writing
+
 <div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote&quot;</span><span class="p">&gt;</span>
   «sidenote»
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </pre></div>
-
 <p></p>
 one may well use
+
 <div class="highlight-html" style="padding-left: 1em;"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;sidenote&quot;</span><span class="p">&gt;</span>
   «sidenote»
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
-
 <p></p>
 instead—since we render directly to <span class="small-caps">html</span> now, that door opened for us.
 This means no more standard violations!

@@ -165,7 +165,6 @@ specified thusly:
 <span class="w">                        </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">setFrameName</span><span class="w"> </span><span class="s">&quot;elfeed&quot;</span>
 <span class="w">                        </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="p">(</span><span class="n">elispFun</span><span class="w"> </span><span class="s">&quot;elfeed&quot;</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 Here, <code>inHome</code> is a little helper function that takes a topic name and
 an action, and creates a new topic with <code>$HOME</code> as its associated
@@ -185,6 +184,7 @@ For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghc
 of mine—so why not automate this? Using what X.U.Run gives us, we can
 quickly throw together a function that executes the given instruction
 inside of a terminal:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="c1">-- import XMonad.Actions.TopicSpace (currentTopicDir)</span>
 <span class="c1">-- 'topicConfig' is my personal topic configuration.</span>
 
@@ -193,9 +193,9 @@ inside of a terminal:
 <span class="nf">executeInTopic</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="p">(</span><span class="n">termInDir</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span><span class="p">)</span>
 <span class="w">                      </span><span class="o">&gt;-&gt;</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="n">p</span>
 </pre></div>
-
 <p></p>
 Similar functions can be created for spawning the terminal and editor:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="c1">-- Whatever you're looking for, it's probably in X.A.TopicSpace</span>
 <span class="c1">-- or X.U.Run.</span>
 
@@ -207,7 +207,6 @@ Similar functions can be created for spawning the terminal and editor:
 <span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnEditorInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEditor</span><span class="w"> </span><span class="o">&gt;-$</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span>
 </pre></div>
-
 <p></p>
 Check the documentation of <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">XMonad.Util.Run</a> to see how <code>inEditor</code> and
 <code>termInDir</code> are defined and may be customised.
@@ -222,36 +221,36 @@ a general <code>X</code> action, we can really do anything we want in there. In
 addition to spawning programs, all of my Haskell projects should default
 to the <code>Hacking</code><!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">In case you are interested:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">hacking</span>
 <span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">renamed</span><span class="w"> </span><span class="p">[</span><span class="kt">Replace</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">]</span>
 <span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">limitWindows</span><span class="w"> </span><span class="mi">3</span>
 <span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">magnify</span><span class="w"> </span><span class="mf">1.3</span><span class="w"> </span><span class="p">(</span><span class="kt">NoMaster</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="kt">True</span>
 <span class="w">  </span><span class="o">$</span><span class="w"> </span><span class="kt">ResizableTall</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mi">13</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">25</span><span class="p">)</span><span class="w"> </span><span class="kt">[]</span>
 </pre></div>
-
 <p></p>
 As the rest of my dotfiles, it’s available
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.</div><!--
 --> layout:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;ghcid&quot;</span>
 </pre></div>
-
 <p></p>
 And Voilà, we can now attach this action to all the topics that we want!
 <p></p>
 Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
 actions. If you’re more comfortable with <code>do</code> notation, you can also
 write the above as
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnHaskell</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">do</span>
 <span class="w">  </span><span class="n">sendMessage</span><span class="w"> </span><span class="p">(</span><span class="kt">JumpToLayout</span><span class="w"> </span><span class="s">&quot;Hacking&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="n">spawnEditorInTopic</span>
 <span class="w">  </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;ghcid&quot;</span>
 </pre></div>
-
 <p></p>
 Furthermore, since the associated directory for a topic can easily be
 made <code>$HOME</code> by default (as we’ve seen, <code>X.A.TopicSpace</code> even exports
@@ -263,6 +262,7 @@ complicated example. My main shell environment is <code>eshell</code> and gettin
 sane behaviour there presents one with a few more obstacles than
 <code>spawnTermInTopic</code> did. It also uses <code>inProgram</code> instead of <code>inEditor</code>,
 allowing access to a different instance of the Emacs server.
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="c1">-- | Spawn an eshell frame in the current topic directory.</span>
 <span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnEshellInTopic</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">currentTopicDir</span><span class="w"> </span><span class="n">topicConfig</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="nf">\</span><span class="n">dir</span><span class="w"> </span><span class="ow">-&gt;</span>
@@ -273,7 +273,6 @@ allowing access to a different instance of the Emacs server.
 <span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;eshell-send-input&quot;</span>
 <span class="w">                        </span><span class="p">])</span>
 </pre></div>
-
 <p></p>
 All in all, we have something that looks a little bit like this:
 <p></p>
@@ -285,13 +284,13 @@ to be extremely handy—you can probably guess what it’s used for. Its
 associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
 an Emacs frame in the topic directory, builds the website, and opens a
 browser window pointing to the local copy:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">spawnWebsite</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">switchToLayout</span><span class="w"> </span><span class="s">&quot;Tall&quot;</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawnEditorInTopic</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">executeInTopic</span><span class="w"> </span><span class="s">&quot;hakyll-build.sh --hold&quot;</span>
 <span class="w">            </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">spawn</span><span class="w"> </span><span class="s">&quot;browser-new-window.sh localhost:8000&quot;</span>
 </pre></div>
-
 <p></p>
 The whole thing looks like this:
 <p></p>

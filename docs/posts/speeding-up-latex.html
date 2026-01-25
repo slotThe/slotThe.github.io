@@ -107,18 +107,17 @@ my current draft<!--
 --><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>󠀠
 </pre></div>
-
 <p></p>
 You will excuse me for not doing a proper <code>hyperfine</code> benchmark,
 but I just couldn’t be asked to wait that long.</div><!--
 -->
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span><span class="nb">time</span><span class="w"> </span>pdflatex<span class="w"> </span>main
 <span class="go">…</span>
 <span class="go">Executed in   27.66 secs    fish           external</span>
 <span class="go">   usr time   27.47 secs    1.32 millis   27.47 secs</span>
 <span class="go">   sys time    0.10 secs    0.11 millis    0.10 secs</span>
 </pre></div>
-
 <p></p>
 This will only get worse as time goes on, so something has to be done.
 <p></p>
@@ -139,6 +138,7 @@ This can save quite a bit of time.
 Ostensibly, <code>external</code> is quite easy to use.
 Just enable the library,
 set a directory in which to dump all of the externalisation output, and use the <code>tikzpicture</code> environment as normal:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="nb">{</span>tikz<span class="nb">}</span>
 <span class="k">\usetikzlibrary</span><span class="nb">{</span>external<span class="nb">}</span>
 <span class="k">\tikzexternalize</span><span class="na">[prefix=figures-ext/]</span>
@@ -151,7 +151,6 @@ set a directory in which to dump all of the externalisation output, and use the 
 
 …
 </pre></div>
-
 <p></p>
 The first compile after enabling <code>external</code> will take <em>a while</em>,
 especially when the file contains a lot of pictures.
@@ -178,6 +177,7 @@ We can use the <a href="https://www.ctan.org/pkg/environ">environ</a> package fo
 which also takes care of inlining the newly created environment.<!--
 --><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Otherwise, we would run into the very same problem we are trying to solve.</div><!--
 -->
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\NewEnviron</span><span class="nb">{</span>mytikzcd<span class="nb">}</span>[1][]<span class="nb">{</span><span class="c">%</span>
   <span class="k">\begin</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>[baseline=(maintikzcdnode.base)]
     <span class="k">\node</span> (maintikzcdnode) [inner sep=0, outer sep=0] <span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>tikzcd<span class="nb">}</span>[#1]
@@ -186,7 +186,6 @@ which also takes care of inlining the newly created environment.<!--
   <span class="k">\end</span><span class="nb">{</span>tikzpicture<span class="nb">}</span><span class="c">%</span>
 <span class="nb">}</span>
 </pre></div>
-
 <p></p>
 This <em>almost</em> works, but now—again due to macro expansion shenanigans—<code>external</code>
 isn’t wise to any changes being made inside of the TikZ picture.
@@ -194,9 +193,9 @@ The function that eventually computes the md5 hash only gets the contents of the
 which will not say much more other than “here comes a graphic”.
 Let’s manually expand <code>\BODY</code>, then.<!--
 --><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">󠀠
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>󠀠
 </pre></div>
-
 <p></p>
 The implementation presented here is mostly lifted from
 <a href="https://tex.stackexchange.com/questions/171931/are-the-tikz-libraries-cd-and-external-incompatible-with-one-another/362104#362104">here</a>
@@ -205,6 +204,7 @@ and
 all credit goes to the brave people on the TeX.stackexchange
 who actually know what they’re doing.</div><!--
 -->
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\newcommand</span><span class="nb">{</span><span class="k">\mytikzcdcontext</span><span class="nb">}</span>[2]<span class="nb">{</span>
   <span class="k">\begin</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>[baseline=(maintikzcdnode.base)]
     <span class="k">\node</span> (maintikzcdnode) [inner sep=0, outer sep=0] <span class="nb">{</span><span class="k">\begin</span><span class="nb">{</span>tikzcd<span class="nb">}</span>[#2]
@@ -221,7 +221,6 @@ who actually know what they’re doing.</div><!--
   <span class="k">\mydiagram</span><span class="c">%</span>
 <span class="nb">}</span>
 </pre></div>
-
 <p></p>
 One thing to watch out for is that <code>&amp;</code>’s can mean different things in LaTeX,
 depending on whether the current macro is being read or executed.
@@ -230,6 +229,7 @@ but I found it best—and safest—to just use an <code>ampersand replacement</c
 like so:<!--
 --><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote"><a href="https://q.uiver.app/">q.uiver</a> even has that as one of its export options!</div><!--
 -->
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\begin</span><span class="nb">{</span>mytikzcd<span class="nb">}</span>[ampersand replacement=<span class="k">\&amp;</span>]
   <span class="nb">{</span>T<span class="nb">^</span>3<span class="nb">}</span> <span class="k">\&amp;</span> <span class="nb">{</span>T<span class="nb">^</span>2<span class="nb">}</span> <span class="k">\&amp;</span> <span class="nb">{</span>T<span class="nb">^</span>2<span class="nb">}</span> <span class="k">\&amp;</span> T <span class="k">\&amp;</span> T <span class="k">\\</span>
   <span class="nb">{</span>T<span class="nb">^</span>2<span class="nb">}</span> <span class="k">\&amp;</span> T <span class="k">\&amp;\&amp;</span> T
@@ -244,13 +244,13 @@ like so:<!--
   <span class="k">\arrow</span><span class="na">[&quot;\mu&quot;, Rightarrow, from=1-5, to=2-4]</span>
 <span class="k">\end</span><span class="nb">{</span>mytikzcd<span class="nb">}</span>
 </pre></div>
-
 <p></p>
 One more thing:<!--
 --><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Notice a pattern?</div><!--
 -->
 right now, the name of the externalisation file is just given by the number of TikZ pictures before it.
 For example, given
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="sb">\[</span>
 <span class="nb">  </span><span class="nv">\begin</span><span class="nb">{mytikzcd}</span><span class="o">[</span><span class="nb">ampersand replacement</span><span class="o">=</span><span class="nv">\&amp;</span><span class="o">]</span>
 <span class="nb">    one</span>
@@ -263,10 +263,10 @@ For example, given
 <span class="nb">  </span><span class="nv">\end</span><span class="nb">{mytikzcd}</span>
 <span class="s">\]</span>
 </pre></div>
-
 <p></p>
 we’d get <code>figure0.{md5,log,pdf}</code> and <code>figure1.{md5,log,pdf}</code> in the <code>figures-ext</code> directory.
 If we now switch the pictures
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="sb">\[</span>
 <span class="nb">  </span><span class="nv">\begin</span><span class="nb">{mytikzcd}</span><span class="o">[</span><span class="nb">ampersand replacement</span><span class="o">=</span><span class="nv">\&amp;</span><span class="o">]</span>
 <span class="nb">    two</span>
@@ -279,12 +279,12 @@ If we now switch the pictures
 <span class="nb">  </span><span class="nv">\end</span><span class="nb">{mytikzcd}</span>
 <span class="s">\]</span>
 </pre></div>
-
 <p></p>
 then both would have to be regenerated, as the hash for <code>two</code> does not match that of <code>figure0.md5</code>!
 This is obviously horrible, but can be fixed by using <code>\tikzsetnextfilename</code> in front of a picture to explicitly set its filename.
 I found it easiest to just use the hash of the figure’s body,
 since that’s already at hand.
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\NewEnviron</span><span class="nb">{</span>mytikzcd<span class="nb">}</span>[1][]<span class="nb">{</span><span class="c">%</span>
   <span class="k">\def\myargs</span><span class="nb">{</span>#1<span class="nb">}</span><span class="c">%</span>
   <span class="k">\tikzsetnextfilename</span><span class="nb">{</span><span class="k">\pdfmdfivesum</span><span class="nb">{</span><span class="k">\expandonce\BODY</span><span class="nb">}}</span>
@@ -294,7 +294,6 @@ since that’s already at hand.
   <span class="k">\mydiagram</span><span class="c">%</span>
 <span class="nb">}</span>
 </pre></div>
-
 <p></p>
 This should actually work now!
 Phew.
@@ -306,6 +305,7 @@ Even the arXiv, I might add,
 where some papers of mine otherwise compile for too long and get terminated by a hungry process killer.
 <p></p>
 Here are the benchmarks:
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span><span class="nb">time</span><span class="w"> </span>pdflatex<span class="w"> </span>-shell-escape<span class="w"> </span>main
 <span class="go">…</span>
 <span class="go">________________________________________________________</span>
@@ -313,7 +313,6 @@ Here are the benchmarks:
 <span class="go">   usr time   15.21 secs    1.91 millis   15.20 secs</span>
 <span class="go">   sys time    0.41 secs    0.96 millis    0.41 secs</span>
 </pre></div>
-
 <p></p>
 Not bad!
 <h2 id="precompiling-the-preamble">Precompiling the preamble<a href="#precompiling-the-preamble" class="floatleft sec-link">§</a></h2>
@@ -326,25 +325,25 @@ However, it probably doesn’t actually change that often, so why not optimise t
 There seems to be pretty good support for this across many different TeX distributions,
 including <code>pdflatex</code>, which is what I’m forced to use.
 We can partition our preamble into a “static” and a “dynamic” part by creating a file for the static part:
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">% prec.tex</span>
 <span class="k">\documentclass</span><span class="na">[10pt, a4paper, twoside]</span><span class="nb">{</span>memoir<span class="nb">}</span>
 <span class="k">\usepackage</span><span class="na">[sidenotes, externalize=true, font=palatino, osf, math=fancy]</span><span class="nb">{</span>styles/style<span class="nb">}</span>
 <span class="k">\pdfoutput</span>=1
 …
 </pre></div>
-
 <p></p>
 This can be compiled into a “format file” with
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>pdflatex<span class="w"> </span>-ini<span class="w"> </span>-jobname<span class="o">=</span><span class="s2">&quot;prec&quot;</span><span class="w"> </span><span class="s2">&quot;&amp;pdflatex prec.tex\dump&quot;</span>
 </pre></div>
-
 <p></p>
 Now we just need to tell our main file—<code>main.tex</code> in my case—to use <code>prec.fmt</code>.
 This is as simple as starting the file with the magic comment <code>%&amp;prec</code>,
 and advising <code>pdflatex</code> to use the format file we just compiled:
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>pdflatex<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt<span class="w"> </span>main
 </pre></div>
-
 <p></p>
 Of course, plugging <code>external</code> into this setup is not as plug-and-play as one would like.
 The dynamic—<em>not</em> the static—part of the preamble must contain a call to <code>\tikzexternal</code>,
@@ -356,26 +355,27 @@ Thanks to
 <a href="https://tex.stackexchange.com/questions/16734/precompiled-preamble-with-tikz-externalize">this answer</a>
 on TeX.stackexchange for figuring all that out so I didn’t have to.</div><!--
 -->
+
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%&amp;prec</span>
 <span class="k">\tikzexternalize</span>[
   prefix=figures-ext/,
   system call=<span class="nb">{</span>pdflatex -fmt=prec.fmt <span class="k">\tikzexternalcheckshellescape</span> -halt-on-error -interaction=batchmode -jobname &quot;<span class="k">\image</span>&quot; &quot;<span class="k">\texsource</span>&quot;<span class="nb">}</span>
 ]
 </pre></div>
-
 <p></p>
 which works seamlessly!
 <p></p>
 We get another sizeable drop in compilation times:
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s1">'pdflatex -shell-escape -fmt=prec.fmt main'</span>
 <span class="go">Benchmark 1: pdflatex -shell-escape -fmt=prec.fmt main</span>
 <span class="go">  Time (mean ± σ):      7.423 s ±  0.211 s    [User: 7.156 s, System: 0.234 s]</span>
 <span class="go">  Range (min … max):    6.979 s …  7.627 s    10 runs</span>
 </pre></div>
-
 <hr />
 <p></p>
 Packaging all of this up in a Makefile, we could naively write something like
+
 <div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nf">.ONESHELL</span><span class="o">:</span>
 <span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
 
@@ -387,12 +387,11 @@ Packaging all of this up in a Makefile, we could naively write something like
 <span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-fmt<span class="o">=</span>prec.fmt<span class="w"> </span>main
 <span class="w">	</span>pdflatex<span class="w"> </span><span class="k">$(</span>COMPILE_FLAGS<span class="k">)</span><span class="w"> </span>-fmt<span class="o">=</span>prec.fmt<span class="w"> </span>main
 </pre></div>
-
 <p></p>
 and in Emacs one can simply set
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>TeX-command-extra-options: &quot;-shell-escape -fmt=prec.fmt -file-line-error -synctex=1&quot;
 </pre></div>
-
 <p></p>
 as a local variable,
 and execute <code>TeX-command-master</code> or <code>TeX-command-run-all</code>,
@@ -416,15 +415,16 @@ but it’s still nice to speed this part of the process up.</div><!--
 -->
 <p></p>
 Before:
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
 <span class="go">…</span>
 <span class="go">Executed in   25.91 secs    fish           external</span>
 <span class="go">   usr time   25.00 secs  201.00 micros   25.00 secs</span>
 <span class="go">   sys time    0.80 secs   92.00 micros    0.80 secs</span>
 </pre></div>
-
 <p></p>
 After:
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
 <span class="go">…</span>
 <span class="go">________________________________________________________</span>
@@ -432,7 +432,6 @@ After:
 <span class="go">   usr time   20.38 secs  211.00 micros   20.38 secs</span>
 <span class="go">   sys time    0.46 secs   95.00 micros    0.46 secs</span>
 </pre></div>
-
 <p></p>
 Finally, by default, <code>pdflatex</code> compiles its documents in interactive mode,
 to seemingly provide some kind of error recovery.
@@ -444,6 +443,7 @@ Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<
 -->
 It also makes <code>pdflatex</code> very quiet when it comes to output—and a bit faster still.
 With the Makefile
+
 <div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nv">COMPILE_FLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-file-line-error<span class="w"> </span>-interaction<span class="o">=</span>batchmode<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt
 <span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">clean</span>
 
@@ -459,9 +459,9 @@ With the Makefile
 <span class="nf">clean</span><span class="o">:</span>
 <span class="w">	</span>…
 </pre></div>
-
 <p></p>
 I get
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>make<span class="w"> </span>clean<span class="p">;</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span>make
 <span class="go">…</span>
 <span class="go">______________________________________________________</span>
@@ -469,16 +469,15 @@ I get
 <span class="go">   usr time   17.14 secs  148.00 micros   17.14 secs</span>
 <span class="go">   sys time    0.39 secs   55.00 micros    0.39 secs</span>
 </pre></div>
-
 <p></p>
 As a bonus, this also has an effect when invoking <code>pdflatex</code> only once,
 which is my usual <em>modus operandi</em> when writing:
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s1">'pdflatex -interaction=batchmode -fmt=prec.fmt main'</span>
 <span class="go">Benchmark 1: pdflatex -interaction=batchmode -fmt=prec.fmt main</span>
 <span class="go">  Time (mean ± σ):      5.098 s ±  0.015 s    [User: 5.015 s, System: 0.062 s]</span>
 <span class="go">  Range (min … max):    5.074 s …  5.130 s    10 runs</span>
 </pre></div>
-
 
       <!-- Body is included in the above file -->
     </section>

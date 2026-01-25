@@ -325,31 +325,31 @@ one can instead spin up the interpreter once, and then just query the API a whol
 ::: {.include from="scripts/pygmentize.py"}
 :::
 
-The script is first fed the amount of stuff we intend to send on a separate line,
-followed by the language, and finally the body of the block.
-One could faff around with bidirectional process communication at this point,
-but good old files will also do the trick just fine.
+To integrate this with the Haskell side of things,
+one just has to faff around with a bit of bidirectional process communication.
 
 ``` haskell
 pygmentsHighlight :: Pandoc -> Compiler Pandoc
-pygmentsHighlight pandoc = recompilingUnsafeCompiler do
-  (hin, _, _, _) <- runInteractiveCommand "python scripts/pygmentize.py"
-  hSetBuffering hin NoBuffering
-  void $ (`walkM` pandoc) \case
-    cb@(CodeBlock (_, listToMaybe -> mbLang, _) body) -> do
-      let cod = mconcat [ T.pack ("/tmp/" <> hash [T.unpack body]), "\n"
-                        , fromMaybe "text" mbLang <> "\n"
-                        , body
-                        ]
-      hPrint hin (T.length cod)
-      T.hPutStr hin cod
-      pure cb
-    block -> pure block
-  threadDelay 1.0e6
+pygmentsHighlight pandoc = unsafeCompiler do
+  (hin, hout, _, _) <- runInteractiveCommand "python scripts/pygmentize.py"
+  hSetBuffering hin  NoBuffering
+  hSetBuffering hout NoBuffering
   (`walkM` pandoc) \case
-    CodeBlock _ body ->
-      RawBlock "html" <$> T.readFile ("/tmp/" <> hash [T.unpack body])
+    CodeBlock (_, listToMaybe -> mbLang, _) body -> do
+      let lang = fromMaybe "text" mbLang
+      T.hPutStr hin $ T.intercalate "\n" [lang, tshow (T.length body), body]
+      RawBlock "html" <$> getResponse hout
     block -> pure block
+ where
+  getResponse :: Handle -> IO Text
+  getResponse h = go []
+   where
+    go :: [Text] -> IO Text
+    go !acc = do
+      ln <- T.hGetLine h
+      if "</div>" `T.isSuffixOf` ln
+        then pure $ T.intercalate "\n" (reverse (ln : acc))
+        else go (ln : acc)
 ```
 
 # Backlinks

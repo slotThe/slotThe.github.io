@@ -6,18 +6,10 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 
 while True:
-    fn, lang, code = (
-        sys.stdin.read(int(sys.stdin.readline().rstrip("\n")))
-        .rstrip("\n")
-        .split(sep="\n", maxsplit=2)
+    lang = sys.stdin.readline().rstrip("\n")
+    html = highlight(
+        sys.stdin.read(int(sys.stdin.readline().rstrip("\n"))),
+        get_lexer_by_name(lang),
+        HtmlFormatter(cssclass=f"highlight-{lang}", cssstyles="padding-left: 1em;"),
     )
-    with open(fn, "w") as f:
-        f.write(
-            highlight(
-                code,
-                get_lexer_by_name(lang),
-                HtmlFormatter(
-                    cssclass=f"highlight-{lang}", cssstyles="padding-left: 1em;"
-                ),
-            )
-        )
+    print(html, flush=True)

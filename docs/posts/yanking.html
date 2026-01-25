@@ -97,7 +97,6 @@ Say you have the following s-expression:
 <span class="w">   </span><span class="p">((</span><span class="nf">eq</span><span class="w"> </span><span class="nv">arg</span><span class="w"> </span><span class="ss">'-</span><span class="p">)</span><span class="w"> </span><span class="mi">-2</span><span class="p">)</span>
 <span class="w">   </span><span class="p">(</span><span class="no">t</span><span class="w"> </span><span class="p">(</span><span class="nf">1-</span><span class="w"> </span><span class="nv">arg</span><span class="p">)))))</span>
 </pre></div>
-
 <p></p>
 Now, for whatever reason,
 you might want to copy the <code>(t (1- arg))</code> on the last line.
@@ -119,9 +118,9 @@ package,
 which makes many commands act on the current line if no region is selected.
 With that, copying the last line of the above expression just involves navigating to it and pressing <code>M-w</code>.
 Alas, when yanking the line into the buffer again, we are greeted with
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="no">t</span><span class="w"> </span><span class="p">(</span><span class="nf">1-</span><span class="w"> </span><span class="nv">arg</span><span class="p">)))))</span>
 </pre></div>
-
 <p></p>
 Lots of unbalanced parentheses!
 This is especially troublesome when one uses
@@ -153,6 +152,7 @@ we just need to make sure to take care of a few special cases<!--
 <p></p>
 This code now also lives <a href="https://github.com/slotThe/yank-delimiters">here</a>.</div><!--
 -->
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-delimiters</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Return delimiter count in current buffer.</span>
 <span class="s">Returns a list, each element being of the form (OPEN CLOSE AMNT),</span>
@@ -179,11 +179,11 @@ This code now also lives <a href="https://github.com/slotThe/yank-delimiters">he
 <span class="w">      </span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="w"> </span><span class="o">,.</span><span class="nv">square</span><span class="p">)</span>
 <span class="w">      </span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="w"> </span><span class="s">&quot;}&quot;</span><span class="w"> </span><span class="o">,.</span><span class="nv">curly</span><span class="p">))))</span>
 </pre></div>
-
 <p></p>
 Having <code>slot/get-delimiters</code>, which does most of the actual work,
 all that’s left to get this running is to actually trim the string before yanking it.
 No tricks needed here.
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/trim-delimiter</span><span class="w"> </span><span class="p">(</span><span class="nv">open</span><span class="w"> </span><span class="nv">close</span><span class="w"> </span><span class="nv">n</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Trim delimiter in current buffer.</span>
 <span class="s">OPEN and CLOSE are the respective opening and closing delimiters.</span>
@@ -239,15 +239,14 @@ No tricks needed here.
 <span class="w">    </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">this-command</span><span class="w"> </span><span class="ss">'yank</span><span class="p">))</span>
 <span class="w">  </span><span class="no">nil</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 Instead of defining <code>slot/yank</code>,
 one might also just override <code>yank</code> with the new definition.
 That, however, seems a bit uncouth,
 and it’s not terribly difficult to assign the same key to the new function:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">bind-key</span><span class="w"> </span><span class="s">&quot;C-y&quot;</span><span class="w"> </span><span class="nf">#'</span><span class="nv">slot/yank</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 Killing <code>(t (1- arg)))))</code> and yanking it again yields <code>(t (1- arg))</code>,
 as desired.

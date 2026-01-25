@@ -145,19 +145,18 @@ with a universal argument:
 <span class="w"> </span><span class="kr">where</span>
 <span class="w">  </span><span class="n">orgSettings</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;TODO&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~/todos.org&quot;</span><span class="p">)</span>
 </pre></div>
-
 <p></p>
 I’ve found <code>M-u</code> to be quite convenient for <span class="small-caps">xm</span>onad’s universal argument
 key, mirroring the <code>C-u</code> convention from Emacs. In either case, simply
 add the <code>usePrefix​Argument</code> combinator somewhere to your <code>main</code> function
 and give it your preferred keybinding. For example:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">main</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">IO</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">main</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">xmonad</span>
 <span class="w">     </span><span class="o">.</span><span class="w"> </span><span class="n">usePrefixArgument</span><span class="w"> </span><span class="s">&quot;M-u&quot;</span>
 <span class="w">     </span><span class="o">$</span><span class="w"> </span><span class="n">def</span><span class="p">{</span><span class="w"> </span><span class="n">modMask</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">mod4Mask</span><span class="w">  </span><span class="c1">-- use &lt;Super&gt; as mod</span>
 <span class="w">          </span><span class="p">}</span>
 </pre></div>
-
 <p></p>
 If you’re anything like me, this will soon become an integral part of
 your workflow and you won’t want to live without it. If not, then

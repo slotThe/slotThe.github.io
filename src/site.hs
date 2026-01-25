@@ -16,7 +16,6 @@ import Data.Text         qualified as T
 import Data.Text.IO.Utf8 qualified as T
 
 import Control.Arrow ((>>>))
-import Control.Concurrent (threadDelay)
 import Control.Monad
 import Control.Monad.Except (catchError)
 import Data.Bifunctor (second)
@@ -33,7 +32,6 @@ import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll hiding (dateField)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- Only for language recognition; see 'pygmentsHighlight'
 import System.Directory (createDirectoryIfMissing)
-import System.IO (hPrint)
 import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
 import Text.Pandoc.Builder (Format (..), HasMeta (setMeta), Many, Pandoc (..), nullAttr, simpleTable)
@@ -618,26 +616,27 @@ myPandocCompiler =
        in Header n attr (inlines <> [link])
     block -> block
 
-  -- Bidirectional process communication is a real pain, so just use files.
-  -- They're cheap.
   pygmentsHighlight :: Pandoc -> Compiler Pandoc
   pygmentsHighlight pandoc = unsafeCompiler do
-    (hin, _, _, _) <- runInteractiveCommand "python scripts/pygmentize.py"
-    hSetBuffering hin NoBuffering
-    void $ (`walkM` pandoc) \case
-      cb@(CodeBlock (_, listToMaybe -> mbLang, _) body) -> do
-        let cod = mconcat [ "/tmp/" <> tshow (hash body), "\n"
-                          , fromMaybe "text" mbLang <> "\n"
-                          , body ]
-        hPrint hin (T.length cod)
-        T.hPutStr hin cod
-        pure cb
-      block -> pure block
-    threadDelay 1.0e6
+    (hin, hout, _, _) <- runInteractiveCommand "python scripts/pygmentize.py"
+    hSetBuffering hin  NoBuffering
+    hSetBuffering hout NoBuffering
     (`walkM` pandoc) \case
-      CodeBlock _ body ->
-        RawBlock "html" <$> T.readFile ("/tmp/" <> show (hash body))
+      CodeBlock (_, listToMaybe -> mbLang, _) body -> do
+        let lang = fromMaybe "text" mbLang
+        T.hPutStr hin $ T.intercalate "\n" [lang, tshow (T.length body), body]
+        RawBlock "html" <$> getResponse hout
       block -> pure block
+   where
+    getResponse :: Handle -> IO Text
+    getResponse h = go []
+     where
+      go :: [Text] -> IO Text
+      go !acc = do
+        ln <- T.hGetLine h
+        if "</div>" `T.isSuffixOf` ln
+          then pure $ T.intercalate "\n" (reverse (ln : acc))
+          else go (ln : acc)
 
   includeFiles :: Pandoc -> Compiler Pandoc
   includeFiles = walkM \case

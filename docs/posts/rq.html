@@ -114,7 +114,6 @@ printing out the name of <code>rq</code>s direct and transitive dependencies.
 <span class="go">unicode-width, version_check, winapi, winapi-i686-pc-windows-gnu,</span>
 <span class="go">winapi-x86_64-pc-windows-gnu, yansi, zerocopy, zerocopy-derive]</span>
 </pre></div>
-
 <p></p>
 I will try to give a coarse overview of the language,
 adding some design considerations,
@@ -133,10 +132,11 @@ which can be accessed by executing <code>rq</code> with a <code>repl</code> argu
 To appease… someone reading this,
 lambdas can also be written in Rust-esque notation,
 and can take multiple arguments:
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>|x, y| x y  ≡  λx y → x y  ≡  \x -&gt; \y -&gt; x y
-</pre></div>
-</div><!--
+</pre></div></div><!--
 -->
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>$ rq repl
 λ&gt;
 
@@ -158,7 +158,6 @@ and can take multiple arguments:
 λ&gt; get &quot;name&quot; { name: &quot;Name&quot; }
 Name
 </pre></div>
-
 <p></p>
 The language has some <code>jq</code>-inspired syntactic sugar for working with <span class="small-caps">json</span>,
 like <code>x.1</code> desugaring to <code>get 1 x</code>, and <code>.1</code> meaning <code>λx → get 1 x</code>.
@@ -166,11 +165,11 @@ Additionally, <code>|</code> designates covariant function composition.<!--
 --><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">As in, <code>(f | g)(x)</code> means <code>g(f(x))</code>,
 to mirror how shells use pipes.</div><!--
 -->
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>λ&gt; (filter (get &quot;age&quot; | (&gt;= 42)) | map (\x -&gt; { x.name: x.age })) \
      [{&quot;name&quot;: &quot;John Doe&quot;, &quot;age&quot;: 43, &quot;phone&quot;: &quot;+44 1234567&quot;},{&quot;name&quot;:&quot;Alice&quot;},{&quot;name&quot;:&quot;Bob&quot;, &quot;age&quot;:42}]
 [{John Doe: 43}, {Bob: 42}]
 </pre></div>
-
 <h3 id="type-system">Type system<a href="#type-system" class="floatleft sec-link">§</a></h3>
 <p></p>
 I like statically typed languages,
@@ -190,6 +189,7 @@ enabling our statically typed language to come across as quite dynamic indeed.<!
 -->
 <p></p>
 In the <span class="small-caps">repl</span>, types can be queried with <code>:t</code>.
+
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>λ&gt; :t const
 ∀a. ∀b. a → b → a
 
@@ -211,7 +211,6 @@ JSON
 λ&gt; :t &quot;a&quot; :: Num
 JSON is not a subtype of Num
 </pre></div>
-
 <p></p>
 Implementation wise, one needs something that supports both polymorphism and subtyping.
 Sadly, this rules out any Hindley–Milner-inspired type system (at least to my knowledge).
@@ -242,6 +241,7 @@ I ran <code>cargo metadata</code> on the
 <a href="https://github.com/rust-lang/rust-analyzer">rust-analyzer GitHub repository</a>,
 which produces ~1mb of <span class="small-caps">json</span>.
 On that data, <code>jq</code> takes 144ms and <code>rq</code> needs around 186ms.
+
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span><span class="s2">&quot;cargo metadata --format-version=1 | jq '.packages | map (.name)'&quot;</span>
 <span class="go">Benchmark 1: cargo metadata --format-version=1 | jq '.packages | map (.name)'</span>
 <span class="go">  Time (mean ± σ):     144.0 ms ±   3.6 ms    [User: 112.3 ms, System: 36.2 ms]</span>
@@ -252,7 +252,6 @@ On that data, <code>jq</code> takes 144ms and <code>rq</code> needs around 186ms
 <span class="go">  Time (mean ± σ):     185.7 ms ±   4.0 ms    [User: 139.2 ms, System: 46.6 ms]</span>
 <span class="go">  Range (min … max):   178.6 ms … 194.8 ms    16 runs</span>
 </pre></div>
-
 <p></p>
 <!--
 --><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">I’m quite surprised—though happy—by the type checker being this fast!
@@ -291,21 +290,21 @@ instead of
 <a href="https://github.com/slotThe/rq/blob/4ff7bb1e35dbbde201a069f5e2c588059c79149b/src/eval.rs#L148">hard coding</a>
 them into the evaluator itself.
 This would essentially involve a change in the expression type from
+
 <div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// …</span>
 <span class="w">  </span><span class="n">Builtin</span><span class="p">(</span><span class="n">Builtin</span><span class="p">),</span><span class="w"> </span><span class="c1">// Builtin is a big enum of names</span>
 <span class="p">}</span>
 </pre></div>
-
 <p></p>
 
 to something along the lines of
+
 <div class="highlight-rust" style="padding-left: 1em;"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="nc">Expr</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// …</span>
 <span class="w">  </span><span class="n">Builtin</span><span class="p">(</span><span class="k">dyn</span><span class="w"> </span><span class="nb">Fn</span><span class="p">(</span><span class="n">Expr</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Expr</span><span class="p">),</span>
 <span class="p">}</span>
 </pre></div>
-
 <p></p>
 
 I reckon hard coding the builtin functions into the evaluator might be a net speed gain,
@@ -320,15 +319,15 @@ I’m not totally sure how union types<!--
 --> would fit into the current algorithm,
 but this is definitely something I’d like to implement.
 Having a type signature like
+
 <div class="highlight-agda" style="padding-left: 1em;"><pre><span></span><span class="nf">get</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">(</span>Num<span class="w"> </span><span class="ow">|</span><span class="w"> </span>Str<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="o">(</span>Arr<span class="w"> </span><span class="ow">|</span><span class="w"> </span>Obj<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>JSON
 </pre></div>
-
 <p></p>
 
 or even
+
 <div class="highlight-agda" style="padding-left: 1em;"><pre><span></span><span class="nf">get</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">(</span>Num<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Arr<span class="w"> </span><span class="ow">→</span><span class="w"> </span>JSON<span class="o">)</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span><span class="o">(</span>Str<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Obj<span class="w"> </span><span class="ow">→</span><span class="w"> </span>JSON<span class="o">)</span>
 </pre></div>
-
 <p></p>
 
 would please me.</li>

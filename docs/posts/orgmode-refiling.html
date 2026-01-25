@@ -119,7 +119,6 @@ functions:
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="n">orgPromptRefile</span><span class="w">   </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w">           </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="w">    </span><span class="n">orgPromptRefileTo</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">XPConfig</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 </pre></div>
-
 <p></p>
 The former takes the same arguments as <a href="https://hackage.haskell.org/package/xmonad-contrib-0.17.1/docs/XMonad-Prompt-OrgMode.html#v:orgPrompt">orgPrompt</a> (which see), and is
 for popping up another prompt that asks for a heading. The latter
@@ -142,6 +141,7 @@ precisely, the <span class="small-caps">edsl</span> that <a href="https://hackag
 <a href="../posts/2022-05-25-calling-emacs-from-xmonad.html" class="local-link">written about</a>—shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:
+
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="nf">refile</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">FilePath</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">X</span><span class="w"> </span><span class="nb">()</span>
 <span class="nf">refile</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">asString</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">fp</span><span class="p">)</span><span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span><span class="n">proc</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="n">inEmacs</span>
@@ -157,10 +157,10 @@ share it:
 <span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;save-buffer&quot;</span>
 <span class="w">                </span><span class="p">])</span>
 </pre></div>
-
 <p></p>
 This—as you probably guessed already—just executes the following elisp
 snippet in Emacs’s batch mode:
+
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="k">progn</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">find-file</span><span class="w"> </span><span class="err">«</span><span class="nv">fp</span><span class="err">»</span><span class="p">)</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">end-of-buffer</span><span class="p">)</span>
@@ -170,7 +170,6 @@ snippet in Emacs’s batch mode:
 <span class="w">                      </span><span class="p">(</span><span class="nv">org-find-exact-headline-in-buffer</span><span class="w"> </span><span class="err">«</span><span class="nv">parent</span><span class="err">»</span><span class="p">))))</span>
 <span class="w">  </span><span class="p">(</span><span class="nv">save-buffer</span><span class="p">))</span>
 </pre></div>
-
 <p></p>
 I know this seems insane, but letting Emacs do this work is actually
 much less brittle than the alternative. The Org maintainers certainly
