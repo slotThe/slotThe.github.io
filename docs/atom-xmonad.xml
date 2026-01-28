@@ -20,23 +20,15 @@
     <summary type="html"><![CDATA[<article>
     <div class="header">
       13th Nov 2023–15 Oct 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1151 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="/tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Using XMonad with NixOS</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I recently switched to NixOS,
 and one of the first tasks was to properly set up my window manager of choice—XMonad, of course.
 Luckily, the project provides a custom flake that makes pretty very straightforward;
@@ -273,8 +265,7 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
 <p>but this is only a small quality of life wrapper.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -289,23 +280,15 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
     <summary type="html"><![CDATA[<article>
     <div class="header">
       19th Mar 2023–12 Jul 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1308 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.Search</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I’d like to highlight another XMonad module that has become quite
 essential to me: <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Search.html">XMonad.Actions.Search</a>. Its premise is simple: you
 enter some text into the XMonad prompt, and it queries a search engine
@@ -516,8 +499,7 @@ lot in this piece of code is:</p>
 submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -532,23 +514,15 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
     <summary type="html"><![CDATA[<article>
     <div class="header">
       14th Jan 2023–13 Feb 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="668 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Immediately Refile Notes with X.P.OrgMode</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an XMonad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
@@ -642,8 +616,7 @@ welcome!</p>
 <li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -658,23 +631,15 @@ welcome!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th Sep 2022–17 Feb 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1309 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.TopicSpace</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
@@ -848,8 +813,7 @@ win in my book!</p>
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -864,23 +828,15 @@ win in my book!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Aug 2022–7 Mar 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="656 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Rapidly Capture Ideas with XMonad and Emacs</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>As I’ve said before, basically my entire digital life happens in either
+      <p>As I’ve said before, basically my entire digital life happens in either
 <a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.</p>
@@ -964,8 +920,7 @@ case, I’d like to <a href="mailto:mail@tony-zorman.com">hear from you</a>!</p>
 <li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -980,23 +935,15 @@ case, I’d like to <a href="mailto:mail@tony-zorman.com">hear from you</a>!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       25th May 2022–7 Mar 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1742 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Calling Emacs from XMonad</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
@@ -1227,8 +1174,7 @@ maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -1243,23 +1189,15 @@ maintain a slightly modified and POSIX shell compatible version
     <summary type="html"><![CDATA[<article>
     <div class="header">
       1st May 2022–23 May 2022
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2284 words">10 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">My PhD Research Workflow</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
@@ -1524,8 +1462,7 @@ On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>

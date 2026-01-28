@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    $if(noindex)$
+    $if(noindex)-$
       <meta name="robots" content="noindex, noai, noimageai">
-    $else$
+    $else-$
       <meta name="robots" content="noai, noimageai">
-    $endif$
+    $endif-$
 
-    $if(title)$
+    $if(title)-$
       <title>$title$ · Tony Zorman</title>
-    $else$
+    $else-$
       <title>Tony Zorman</title>
-    $endif$
+    $endif-$
 
     <!-- Default appearance -->
     <link rel="stylesheet" type="text/css" href="/css/navbar.css">
@@ -24,19 +24,17 @@
     <link rel="stylesheet" type="text/css" href="/css/pygments.css">
     <link rel="stylesheet" type="text/css" href="/css/katex.css">
     <!-- Margin and sidenotes -->
-    $if(two-column)$
+    $if(two-column)-$
       <link rel="stylesheet" type="text/css" href="/css/tc.css">
-    $else$
+    $else-$
       <link rel="stylesheet" type="text/css" href="/css/sidenotes.css">
-    $endif$
+    $-endif$
   </head>
 
   <body>
     <div class="navbar-space">
       <div id="navigation">
-        <a href="/" class="menu-title">
-          Tony's blog
-        </a>
+        <a href="/" class="menu-title">Tony's blog</a>
         <ul>
           <li><a href="/posts.html">Posts</a></li>
           <li><a href="/research.html">Research</a></li>
@@ -44,19 +42,18 @@
           <li><a href="/about.html">About</a></li>
         </ul>
       </div>
-      <!-- A table of contents on the left side, but only for screens
-           that are big enough -->
-      $if(no-toc)$
-      $else$ $if(toc)$
+      <!-- A table of contents on the left side, but only for screens that are big enough -->
+      $-if(no-toc)-$
+      $else-$ $if(toc)$
       <div id="contents-big">
         <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
         $toc$
       </div>
-      $endif$ $endif$
+      $-endif$ $-endif$
     </div>
     <div class="text-space">
       <div id="content">
-        $body$
+        $body-$
       </div>
       <div id="footer">
         <!-- Left -->

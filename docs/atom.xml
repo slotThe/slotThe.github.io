@@ -20,23 +20,15 @@
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th Jan 2026
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1992 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="/tags/j.html" rel="tag">#j</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">The J Incunabulum</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <div class="fullwidth">
 <p>Ever wanted to find out what
 <a href="https://code.jsoftware.com/wiki/Essays/Incunabulum">that one page</a>
@@ -306,8 +298,7 @@ I’ve pushed everything in this post to a
     b=a,1
 2
 94660986832144 1</code></pre>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -322,23 +313,15 @@ I’ve pushed everything in this post to a
     <summary type="html"><![CDATA[<article>
     <div class="header">
       25th Dec 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1165 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Fixing Eglot's Hover Signatures</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>In an
+      <p>In an
 <a href="https://tony-zorman.com/posts/fixing-lsp-mode.html">earlier post</a>
 I talked about making the hover signatures for
 <a href="https://emacs-lsp.github.io/lsp-mode/">lsp-mode</a>
@@ -625,8 +608,7 @@ which argument is currently being filled in!<a href="#fnref3" class="footnote-ba
 <li id="fn4"><p>Needs at least <code>cl-lib.el</code>, <code>dash.el</code>, and <code>s.el</code> to work.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -641,23 +623,15 @@ which argument is currently being filled in!<a href="#fnref3" class="footnote-ba
     <summary type="html"><![CDATA[<article>
     <div class="header">
       8th Oct 2025–18 Oct 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6544 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Writing a JSON Parser in BQN</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>At least, for some vague definition of JSON.<!--more-->
 I will restrict myself to the following underspecified subset,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 so that this will not be a 20’000-word post:</p>
@@ -1533,8 +1507,7 @@ The resulting representation is probably not super easy to work with<!--
 <li id="fn15"><p>Short names at that, otherwise things just look too cumbersome in this style of programming.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -1549,23 +1522,15 @@ The resulting representation is probably not super easy to work with<!--
     <summary type="html"><![CDATA[<article>
     <div class="header">
       28th Jul 2025–18 Oct 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1852 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Parsing CSV in BQN</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>Let’s write a CSV parser in <a href="https://mlochbaum.github.io/BQN">BQN</a>!</p>
 <!--more-->
 <p>Working my way towards a full blown JSON parser,
@@ -1803,8 +1768,7 @@ and for <code>"""a"",""b"""</code> we have the wonderful
 <code>"""""""a"""",""""b"""""""</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -1819,23 +1783,15 @@ and for <code>"""a"",""b"""</code> we have the wonderful
     <summary type="html"><![CDATA[<article>
     <div class="header">
       13th Apr 2025–4 Jan 2026
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1981 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I just handed in my dissertation,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 which is more or less the culmination of the last three and a half years of my (mathematical) life.
 While the maths itself is perhaps relatively inaccessible to the general public,
@@ -2243,8 +2199,7 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
 <li id="fn9"><p>Thanks, Florian!<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -2259,23 +2214,15 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
     <summary type="html"><![CDATA[<article>
     <div class="header">
       30th Jan 2025–15 Feb 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1755 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Speeding up LaTeX compilation</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>Getting reasonable compilation times out of a medium-sized LaTeX document
 that contains lots of TikZ pictures
 is not as difficult as it may seem at first—at least if you know the correct ancient incantations.</p>
@@ -2580,8 +2527,7 @@ but Emacs will do all the one-off compiling while I’m writing the thesis anywa
 Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -2596,23 +2542,15 @@ Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<
     <summary type="html"><![CDATA[<article>
     <div class="header">
       8th Nov 2024–13 Nov 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3093 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Integer Volutes in BQN</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>On <a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-3">day 3</a>
 of my post about doing some
 <a href="https://tony-zorman.com/posts/aoc-in-bqn.html">Advent of Code problems in BQN</a>,
@@ -3004,8 +2942,7 @@ I think, however, that arriving at this number yields some insights that one wou
 so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -3020,23 +2957,15 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Oct 2024–28 Oct 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22372 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">BQNing Advent of Code</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I did all of Advent of Code 2017 in <a href="https://mlochbaum.github.io/BQN">BQN</a> so you don’t have to.
 Let me tell you about that in as few as 20’000 words.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <!--more-->
@@ -6012,8 +5941,7 @@ However, it also helps that doing these problems “out of season”
 is a lot more relaxed than trying to bash out both parts before work every day.<a href="#fnref46" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -6028,23 +5956,15 @@ is a lot more relaxed than trying to bash out both parts before work every day.<
     <summary type="html"><![CDATA[<article>
     <div class="header">
       20th Jul 2024–1 Feb 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1193 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Integrating KaTeX Into Hakyll</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>Being quite into mathematics,
 I sometimes blog about it.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 There are very capable solutions for rendering LaTeX in HTML documents out there,
@@ -6230,8 +6150,7 @@ the hardest thing is to actually get all of the incantations right
 such that buffering does not deadlock your program indefinitely.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -6246,23 +6165,15 @@ such that buffering does not deadlock your program indefinitely.<a href="#fnref4
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th May 2024–2 Jun 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1040 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#anki'." href="/tags/anki.html" rel="tag">#anki</a>   <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Leveraging LaTeX in Anki</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>Recently, I’ve been quite invested in learning maths with <a href="https://apps.ankiweb.net/index.html">Anki</a>.
 Sadly, there are relatively few good resources out there on how to
 twist Anki’s LaTeX pipeline into something generally acceptable,
@@ -6435,8 +6346,7 @@ Thus, if you want to completely regenerate everything, just delete the respectiv
 For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -6451,23 +6361,15 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
     <summary type="html"><![CDATA[<article>
     <div class="header">
       23rd Mar 2024–1 May 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1245 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Announcing: rq Version 0.1.0</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I’ve just released version 0.1.0 of <a href="https://github.com/slotThe/rq"><code>rq</code></a>,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 a small functional language to manipulate JSON—and my excuse to learn Rust!
 This seems as good a time as any to talk about it,
@@ -6657,8 +6559,7 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
 <li id="fn8"><p>As in, not coproducts but the other ones.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -6673,23 +6574,15 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
     <summary type="html"><![CDATA[<article>
     <div class="header">
       2nd Mar 2024–15 Aug 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1012 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Smartly join comments with join-line</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>Emacs’s <code>join-line</code> function,
+      <p>Emacs’s <code>join-line</code> function,
 upon execution,
 joins the current line onto the previous one,
 deleting any extraneous whitespace.
@@ -6874,8 +6767,7 @@ you can find a small package for it
 on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft GitHub</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -6890,23 +6782,15 @@ on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft Gi
     <summary type="html"><![CDATA[<article>
     <div class="header">
       3rd Jan 2024–5 Jan 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="881 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Parentheses-Aware Yanking</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>Copying, killing, and yanking<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> text in Emacs is quite straightforward,
 and very little is done to manipulate the contents of the string during these operations.
 Rightfully so, of course,
@@ -7055,8 +6939,7 @@ not just ones where I happen to use paredit
 <li id="fn5"><p>This code now also lives <a href="https://github.com/slotThe/yank-delimiters">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -7071,23 +6954,15 @@ not just ones where I happen to use paredit
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Nov 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="416 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Integrating Zsh's History Into Eshell</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>I use eshell as my main shell.
+      <p>I use eshell as my main shell.
 Still,
 a terminal emulator with zsh is kept around for longer running processes and <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-NamedScratchpad.html">scratchpads</a>.
 One thing that’s essential for this setup to make sense is that eshell and zsh share the same history file.
@@ -7177,8 +7052,7 @@ and to unmetafy the history when eshell starts.<a href="#fn1" class="footnote-re
 and doing so at the start solves <code>esh-autosuggest</code> et al producing garbage suggestions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -7193,23 +7067,15 @@ and doing so at the start solves <code>esh-autosuggest</code> et al producing ga
     <summary type="html"><![CDATA[<article>
     <div class="header">
       13th Nov 2023–15 Oct 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1151 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="/tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Using XMonad with NixOS</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I recently switched to NixOS,
 and one of the first tasks was to properly set up my window manager of choice—XMonad, of course.
 Luckily, the project provides a custom flake that makes pretty very straightforward;
@@ -7446,8 +7312,7 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
 <p>but this is only a small quality of life wrapper.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -7462,23 +7327,15 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
     <summary type="html"><![CDATA[<article>
     <div class="header">
       22nd Oct 2023–27 Oct 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1144 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Fixing Lsp-Mode's Hover Signatures</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>By now,
 LSP servers have become the norm for editor-agnostic language support.
 As expected, Emacs features at least two packages that implement the protocol:
@@ -7685,8 +7542,7 @@ does, just as an extra function.&quot;
 <p>This can, again, be bound to a key for convenient access.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -7701,23 +7557,15 @@ does, just as an extra function.&quot;
     <summary type="html"><![CDATA[<article>
     <div class="header">
       10th Sep 2023–15 Oct 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1615 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Prettifying LaTeX Buffers</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>A friend recently confided in me that,
 after years of using Emacs,
 he was only now getting into using <code>prettify-symbols-mode</code> for editing LaTeX buffers!
@@ -7985,8 +7833,7 @@ which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-ba
 <a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -8001,23 +7848,15 @@ which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-ba
     <summary type="html"><![CDATA[<article>
     <div class="header">
       26th Aug 2023–29 Aug 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1750 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Change the Insides of an S-Expression in Emacs</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>I have to make a confession:
 I have an <a href="https://github.com/emacs-evil/evil">evil</a> past—literally.
 Having switched to vanilla Emacs keybindings a while ago,
@@ -8334,8 +8173,7 @@ Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p>
 <li id="fn12"><p><code>M-o</code> will never be something other than <code>other-window</code>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -8350,23 +8188,15 @@ Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       30th Jul 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="523 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Notmuch: Warn on Empty Subjects</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>Emacs’s <code>notmuch</code> package has this fantastic concept of an <em>attachment check</em>:
+      <p>Emacs’s <code>notmuch</code> package has this fantastic concept of an <em>attachment check</em>:
 adding <code>notmuch-mua-attachment-check</code> to <code>notmuch-mua-send-hook</code> will,
 before sending the message,
 check whether the regular expression in <code>notmuch-mua-attachment-regexp</code> matches.
@@ -8459,8 +8289,7 @@ However, this is not important for what follows, so I simply omitted it.</p>
 <p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -8475,23 +8304,15 @@ However, this is not important for what follows, so I simply omitted it.</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       20th Jun 2023–1 Feb 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2970 words">12 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Incorporating BibTeX into Hakyll</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>When writing a blog post that feels academic—or pretentious—enough to invoke the need for citations,
 having them automatically generated feels like a mandatory requirement.
 I can only shudder to imagine the alternatives.</p>
@@ -9109,8 +8930,7 @@ and pick out the ones I’d like to change.
 Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -9125,23 +8945,15 @@ Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-back
     <summary type="html"><![CDATA[<article>
     <div class="header">
       12th Jun 2023–30 Aug 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1479 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">The tensor product of S-modules is a convolution product</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>Classically, (algebraic) symmetric <a href="https://ncatlab.org/nlab/show/operad">operads</a> are defined as certain graded objects,
 each level coming equipped with a nice action of the symmetric group,
 which are also monoids in some sense.
@@ -9362,8 +9174,7 @@ In both expressions,
   </span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -9378,23 +9189,15 @@ In both expressions,
     <summary type="html"><![CDATA[<article>
     <div class="header">
       18th May 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="232 words">1 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Use-package now has a :vc keyword</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>Just a quick heads-up: <code>use-package</code>,
+      <p>Just a quick heads-up: <code>use-package</code>,
 which was merged into Emacs in <a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=4a1e9d61b57c36255752437a2668e037e79fe870">November last year</a>,
 now has a <code>:vc</code> keyword!</p>
 <!--more-->
@@ -9443,8 +9246,7 @@ sudo make install</code></pre>
 <p>away!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -9459,23 +9261,15 @@ sudo make install</code></pre>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       6th May 2023–17 Jun 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4133 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Keyboardio Atreus Review</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>And now for something completely different—hardware.
 Even worse: consumerism!
 I bought an <a href="https://shop.keyboard.io/products/keyboardio-atreus">Atreus</a> keyboard from Keyboardio about three weeks ago,
@@ -9928,8 +9722,7 @@ QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a 
 <li id="fn14"><p>I will try to keep this post updated with newer versions.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -9944,23 +9737,15 @@ QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a 
     <summary type="html"><![CDATA[<article>
     <div class="header">
       19th Mar 2023–12 Jul 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1308 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.Search</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I’d like to highlight another XMonad module that has become quite
 essential to me: <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Search.html">XMonad.Actions.Search</a>. Its premise is simple: you
 enter some text into the XMonad prompt, and it queries a search engine
@@ -10171,8 +9956,7 @@ lot in this piece of code is:</p>
 submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -10187,23 +9971,15 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
     <summary type="html"><![CDATA[<article>
     <div class="header">
       19th Feb 2023–3 Jun 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="964 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Announcing: latex-change-env Version 0.3</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I’ve just released version 0.3 of <code>latex-change-env</code>, featuring some
 major improvements with regard to inline maths and macro handling; this
 seems as good a time as any to talk about the package in full. I
@@ -10355,8 +10131,7 @@ would require more sophisticated regular expressions, but—reading
 seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -10371,23 +10146,15 @@ seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink"
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Jan 2023–17 Jul 2024
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2103 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Using Sidenotes with Hakyll</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I’ve become quite enamoured with sidenotes recently, and so of course
 this website now has them as well! Thankfully, the integration with
 pandoc and Hakyll is quite straightforward, because other people have
@@ -10732,8 +10499,7 @@ pandoc’s HTML5 writer is quite hard-coded into Hakyll, I don’t think
 that I will go down that path.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -10748,23 +10514,15 @@ that I will go down that path.<a href="#fnref8" class="footnote-back" role="doc-
     <summary type="html"><![CDATA[<article>
     <div class="header">
       21st Jan 2023–5 Jan 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1834 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Pygmentising Hakyll's Syntax Highlighting</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
 examples the HTML this produces is unsatisfactory. Thankfully, the two
@@ -11041,8 +10799,7 @@ the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX pac
 them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -11057,23 +10814,15 @@ them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎
     <summary type="html"><![CDATA[<article>
     <div class="header">
       14th Jan 2023–13 Feb 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="668 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Immediately Refile Notes with X.P.OrgMode</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>In a <a href="/posts/orgmode-prompt/2022-08-27-xmonad-and-org-mode.html">previous post</a> I talked about
 <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.Prompt.OrgMode</a>, an XMonad module to rapidly capture thoughts
 and ideas into an Org file. The functionality that the module provides
@@ -11167,8 +10916,7 @@ welcome!</p>
 <li id="fn1"><p>A headline, possibly with an attached body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -11183,23 +10931,15 @@ welcome!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       10th Jan 2023–12 Jan 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="857 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Duality in Monoidal Categories</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>I have a new preprint <a href="https://arxiv.org/abs/2301.03545">on the arXiv</a>! It is joint work with
 Sebastian Halbig, and concerns itself with the interplay of different
 structures on monoidal categories that give rise to a notion of
@@ -11327,8 +11067,7 @@ category <span class="math inline">([\mathcal{C}, \mathcal{C}], \circ, \mathrm{I
 exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -11343,23 +11082,15 @@ exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩�
     <summary type="html"><![CDATA[<article>
     <div class="header">
       22nd Dec 2022–18 May 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="286 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Announcing: vc-use-package</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
+      <p>I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
 is a first attempt at integrating the new (as of Emacs 29)
 <code>package-vc.el</code> with the now built-in use-package. I’ve already talked
 about how these two interact in my <a href="https://tony-zorman.com/posts/package-vc-install.html">last post</a>—you can
@@ -11397,8 +11128,7 @@ but actually <a href="https://tony-zorman.com/posts/use-package-vc.html">built i
 By virtue of being a part of it now,
 the integration with <code>use-package</code> is a lot tighter—try it out if you’re using <code>HEAD</code> anyways!
 If not, then don’t worry: <code>vc-use-package</code> will not go anywhere for the forseeable future.</p>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -11413,23 +11143,15 @@ If not, then don’t worry: <code>vc-use-package</code> will not go anywhere for
     <summary type="html"><![CDATA[<article>
     <div class="header">
       30th Nov 2022–18 May 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="621 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Exploring package-vc-install</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>The Emacs 29 release branch was just cut—and it’s chock full of new
 features! In this post, I want to talk about the new
 <code>package-vc-install</code> function, which allows one to install packages
@@ -11519,8 +11241,7 @@ can give them right now, even with the added convenience of
 <code>package-vc.el</code>. However, for me—and probably at least a few people out
 there—this is quite enough. After all, for anything more there’s always
 <a href="https://nixos.org/">nix</a> :)</p>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -11535,23 +11256,15 @@ there—this is quite enough. After all, for anything more there’s always
     <summary type="html"><![CDATA[<article>
     <div class="header">
       5th Nov 2022–13 Feb 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="451 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Adjusting preview.el for vertical monitors</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
+      <p>Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
 <code>preview.el</code> library (whether it be in a .tex buffer, or—via
 <a href="https://github.com/karthink/org-auctex">org-auctex</a>—in Org) things get <em>really</em> messed up when one or more
 monitors are set up in portrait mode.</p>
@@ -11623,8 +11336,7 @@ probably be fixed; I will report it as an Emacs bug.</p>
 benefits of the <a href="https://github.com/magnars/dash.el">dash.el</a> library. Compare the readability of the
 “fixed” implementation using <code>-let</code> to the original one above. I
 certainly know which of the two I’d rather write!</p>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -11639,23 +11351,15 @@ certainly know which of the two I’d rather write!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       22nd Oct 2022–17 Dec 2025
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3634 words">15 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">A Potpourri of Emacs Tweaks</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>Emacs is the “extensible text editor”, and it wouldn’t be fun if one
 didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs">README</a> for my Emacs configuration, I
@@ -12216,8 +11920,7 @@ so there’s nothing more to be said on that front.<a href="#fnref8" class="foot
 <li id="fn9"><p><a href="https://tony-zorman.com/posts/use-package-vc.html">:vc</a> goes brrrrr<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -12232,23 +11935,15 @@ so there’s nothing more to be said on that front.<a href="#fnref8" class="foot
     <summary type="html"><![CDATA[<article>
     <div class="header">
       15th Oct 2022–13 Mar 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3770 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Understanding Weighted Colimits as Tensor Products of Modules</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>If you’ve been doing category theory for any amount of time, you’ll
 probably have stumbled upon enriched category theory as a way of
 expressing categorical ideas internal to some context other than
@@ -12763,8 +12458,7 @@ that the nerve functor from <span class="math inline">\mathsf{Cat}</span> to <sp
 is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -12779,23 +12473,15 @@ is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">�
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th Sep 2022–17 Feb 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1309 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.TopicSpace</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
 However, it seems relatively unknown among the general XMonad community.
 I fear this is due to the fact that the module is quite old and formerly
@@ -12969,8 +12655,7 @@ win in my book!</p>
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/xmonad/.config/xmonad/src/xmonad.hs#L341">here</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -12985,23 +12670,15 @@ win in my book!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Aug 2022–7 Mar 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="656 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Rapidly Capture Ideas with XMonad and Emacs</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-
-<p>As I’ve said before, basically my entire digital life happens in either
+      <p>As I’ve said before, basically my entire digital life happens in either
 <a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/">XMonad</a>. Thus, a lot of time spent on my setup either goes
 towards working on the two configurations separately, or—as we’ll do
 today—bringing them ever closed together.</p>
@@ -13085,8 +12762,7 @@ case, I’d like to <a href="mailto:mail@tony-zorman.com">hear from you</a>!</p>
 <li id="fn2"><p>Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -13101,23 +12777,15 @@ case, I’d like to <a href="mailto:mail@tony-zorman.com">hear from you</a>!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       6th Aug 2022–7 Mar 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1022 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Multiple Replacements with query-replace</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
 But this is Emacs, after all, which means that I can write that <code>query-replace-many</code> function I’ve always wanted, and even share it with others!
@@ -13248,8 +12916,7 @@ query that has already been entered in one way or another, we bail
 out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -13264,23 +12931,15 @@ out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></
     <summary type="html"><![CDATA[<article>
     <div class="header">
       25th May 2022–7 Mar 2023
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1742 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">Calling Emacs from XMonad</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>In the post about my <a href="/posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations">research workflow</a>, I briefly mentioned having to
 call Emacs—or other external programs—from within XMonad. I figured
 that this was perhaps something that could be of use to more people than
@@ -13511,8 +13170,7 @@ maintain a slightly modified and POSIX shell compatible version
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/scripts/.scripts/magit.sh">here</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>
@@ -13527,23 +13185,15 @@ maintain a slightly modified and POSIX shell compatible version
     <summary type="html"><![CDATA[<article>
     <div class="header">
       1st May 2022–23 May 2022
-      
         &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2284 words">10 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-      
-      
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
-      
-    </div>
+      </div>
     <h1 class="post-title">My PhD Research Workflow</h1>
     <div id="title-underline"></div>
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <!-- A table of contents inline in the text, in case the screen is too
-     small for the one in the `default.html' template -->
-
-  
-
+      
 <p>After reading <a href="https://castel.dev/post/research-workflow/">Gilles Castel</a>’s excellent blog post about his research
 workflow, I decided that it was as good a time as any to write about
 mine—deeming it novel enough to hopefully contribute something to the
@@ -13808,8 +13458,7 @@ On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-      <!-- Body is included in the above file -->
+<!-- Body is included in the above file -->
     </section>
     
 </article>

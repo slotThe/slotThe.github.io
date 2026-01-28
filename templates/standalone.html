@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    $if(noindex)$
+    $if(noindex)-$
       <meta name="robots" content="noindex">
-    $endif$
-
+    $endif-$
     <title>$title$</title>
-
     <!-- Default appearance -->
     <link rel="stylesheet" type="text/css" href="/css/navbar.css">
     <link rel="stylesheet" type="text/css" href="/css/colours.css" />
@@ -24,23 +22,23 @@
 
   <body>
     <div class="navbar-space">
-      $if(no-toc)$
-      $else$ $if(toc)$
+      $-if(no-toc)-$
+      $else-$ $if(toc)$
       <div id="contents-big">
         <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
         $toc$
       </div>
-      $endif$ $endif$
+      $-endif$ $-endif$
     </div>
     <div class="text-space">
       <div id="content">
-        $if(titleWithFeed)$
+        $if(titleWithFeed)-$
         <h1>$titleWithFeed$</h1>
-        $else$ $if(title)$
+        $else$ $if(title)-$
         <h1>$title$</h1>
-        $endif$ $endif$
+        $endif$ $endif-$
 
-        $body$
+        $body-$
 
       </div>
       <div id="footer">
