@@ -71,7 +71,7 @@ I’ve just released version 0.1.0 of <a href="https://github.com/slotThe/rq"><c
 --><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">I would <em>never</em> have made a release solely to have an excuse to write about <code>rq</code>;
 what are you talking about‽</div><!--
 -->
-a small functional language to manipulate <span class="small-caps">json</span>—and my excuse to learn Rust!
+a small functional language to manipulate <span class="nowrap"><span class="small-caps">json</span>—</span>and my excuse to learn Rust!
 This seems as good a time as any to talk about it,
 so let’s do that.
 <!--more-->
@@ -79,7 +79,7 @@ so let’s do that.
 <p></p>
 As the name suggests,
 <code>rq</code> is heavily inspired by the venerable <code>jq</code>,<!--
---><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Though obviously it—right now—only covers a meagre subset of what <code>jq</code> can do.</div><!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Though obviously <span class="nowrap">it—</span>right <span class="nowrap">now—</span>only covers a meagre subset of what <code>jq</code> can do.</div><!--
 -->
 and looks quite similar in action:
 <p></p>
@@ -101,7 +101,7 @@ without repeating too much of what is already in the projects
 I would advise you to consult that if you’re interested in a more comprehensive description of <code>rq</code>.
 <h2 id="the-language">The language<a href="#the-language" class="floatleft sec-link">§</a></h2>
 <p></p>
-The tl;dr is that <code>rq</code>—as advertised—is a small functional language with the usual idioms.
+The tl;dr is that <code>rq</code><span class="nowrap">—</span>as <span class="nowrap">advertised—</span>is a small functional language with the usual idioms.
 There is a small <span class="small-caps">repl</span> to try out the language,
 which can be accessed by executing <code>rq</code> with a <code>repl</code> argument.<!--
 --><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
@@ -154,7 +154,7 @@ to mirror how shells use pipes.</div><!--
 I like statically typed languages,
 so why not make <code>rq</code> one as well?
 For a program whose sole purpose is to receive a one-line expression,
-this might seem overkill—and it is!
+this might seem <span class="nowrap">overkill—</span>and it is!
 <p></p>
 Currently, the type system is a bit rudimentary and only features the most essential pieces:
 universally quantified type variables,
@@ -233,7 +233,7 @@ On that data, <code>jq</code> takes 144ms and <code>rq</code> needs around 186ms
 </pre></div>
 <p></p>
 <!--
---><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">I’m quite surprised—though happy—by the type checker being this fast!
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">I’m quite <span class="nowrap">surprised—</span>though <span class="nowrap">happy—</span>by the type checker being this fast!
 Likewise, I’m glad that all of the praise I’ve read about
 <a href="https://en.wikipedia.org/wiki/Normalisation_by_evaluation">normalisation by evaluation</a>
 was justified.</div><!--

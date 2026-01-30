@@ -47,7 +47,7 @@
 adding <code>notmuch-mua-attachment-check</code> to <code>notmuch-mua-send-hook</code> will,
 before sending the message,
 check whether the regular expression in <code>notmuch-mua-attachment-regexp</code> matches.
-If yes—and no attachment has been added—it will alert the user,
+If <span class="nowrap">yes—</span>and no attachment has been <span class="nowrap">added—</span>it will alert the user,
 asking whether one really wants to send that email;
 otherwise, everything goes through smoothly.
 Due to some personal idiosyncrasies,
@@ -125,8 +125,8 @@ There is nothing fancy happening here,
 so it’s not terribly difficult to adapt it to other settings.
 As I said in the beginning,
 I need it to check for subjects,
-due to the bad habit of only adding a subject once the email is already written—only sometimes I forget.
-Instead of trying to change my habits—which is hard!—it sounds much easier to modify Emacs to suit my needs.
+due to the bad habit of only adding a subject once the email is already <span class="nowrap">written—</span>only sometimes I forget.
+Instead of trying to change my <span class="nowrap">habits—</span>which is <span class="nowrap">hard!—</span>it sounds much easier to modify Emacs to suit my needs.
 <p></p>
 The strategy is exactly the same as for <code>notmuch-mua-attachment-check</code>;
 check for a certain regular expression, whitespace, and say something if it matches the current subject:

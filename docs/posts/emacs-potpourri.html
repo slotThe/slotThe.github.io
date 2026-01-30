@@ -115,7 +115,7 @@ day in places like the “Weekly Tips, Tricks, &c.” thread on Reddit. In
 the spirit of hosting my content somewhere that I actually control,
 I chose to showcase these again here, hoping that other people may also
 find some of this stuff useful.<!--
---><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">I am aware of the futility of this—Reddit is almost certainly
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">I am aware of the futility of <span class="nowrap">this—</span>Reddit is almost certainly
 going to be around longer than my personal site will. And yet,
 this feels “more correct” in some way.</div><!--
 -->
@@ -137,16 +137,16 @@ it displays. If this option is t, no such resizing is done.
 </blockquote>
 <p></p>
 I always wondered why startup time skyrocketed whenever I changed the
-default font to something else—surely opening a font and using it can’t
+default font to something <span class="nowrap">else—</span>surely opening a font and using it can’t
 be that expensive! What I didn’t realise was that what I set was
 slightly larger than Emacs’s default font, which I reckon was some kind
 of monospace fallback on my system. Setting
 <code>frame-inhibit-implied-resize</code> to <code>t</code> will thusly prevent Emacs from
-trying to—futilely, since I use <a href="https://xmonad.org"><span class="small-caps">xm</span>onad</a>—resize its frame in order to
+trying <span class="nowrap">to—</span>futilely, since I use <a href="https://xmonad.org"><span class="small-caps">xm</span>onad</a><span class="nowrap">—</span>resize its frame in order to
 “preserve the number of columns or lines it displays”. The upshot is
 that this cuts my startup time from just over 1 second to about 0.8
 seconds. This may not seem like much, but it’s literally <a href="https://gitlab.com/slotThe/dotfiles/-/blob/460060b7b5e164e6b892397e264b0da470ed74c9/emacs/.config/emacs/early-init.el#L51">setting a
-single variable</a> in my <code>early-init.el</code>—pretty good
+single variable</a> in my <code>early-init.el</code><span class="nowrap">—</span>pretty good
 value for money.
 <h2 id="pixel-scroll-precision-mode"><code>pixel-scroll-precision-mode</code><a href="#pixel-scroll-precision-mode" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -158,7 +158,7 @@ LaTeX entry in Org works quite well, commutative diagrams are a pain
 more often than not. In fact, It’s much easier to draw them with a tool
 like <a href="https://q.uiver.app/">quiver</a>, make a screenshot, and then include the resulting picture
 in the file. However, now we have the problem that Emacs treats
-pictures as very large single characters—the result is a scrolling
+pictures as very large single <span class="nowrap">characters—</span>the result is a scrolling
 experience that’s very far from optimal. This is <em>exactly</em> where
 <code>pixel-scroll-precision-mode</code> comes in and saves the day, but see the
 difference for yourself:
@@ -236,7 +236,7 @@ enables faster entry of one-character math symbols:
 </pre></div>
 <p></p>
 Bound to <code>&lt;SPC&gt;</code> (and also things like <code>.</code> and <code>-</code>), it enables one to
-write <code>"foo T&lt;SPC&gt;"</code> and have Emacs insert <code>"foo $T$ "</code> instead—very
+write <code>"foo T&lt;SPC&gt;"</code> and have Emacs insert <code>"foo $T$ "</code> <span class="nowrap">instead—</span>very
 convenient, and much faster even than having a snippet to insert dollars
 based on some condition.
 <p></p>
@@ -273,7 +273,7 @@ my research workflow.
 <h3 id="prettify-latex-buffers">Prettify LaTeX buffers<a href="#prettify-latex-buffers" class="floatleft sec-link">§</a></h3>
 <p></p>
 This story is interesting enough that I’ve written a whole <a href="./pretty-latex.html" class="local-link">post</a> about it<!--
--->—go check it out!
+--><span class="nowrap">—</span>go check it out!
 Long story short, one can transform a buffers like this
 <p></p>
 <img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math">
@@ -331,7 +331,7 @@ Having configured quite a few regular expressions for when I get
 highlighted, things can get quite overwhelming at times. For example,
 when ERC starts up it prints <code>/users</code> in every channel buffer. Of
 course, I’m a user in a channel that I’m in, so Emacs happily starts
-beeping and throwing around urgency hints—not a good experience. This
+beeping and throwing around urgency <span class="nowrap">hints—</span>not a good experience. This
 also clutters the <code>ERC Keywords</code> buffer (which is built-in and akin to
 WeeChat’s <code>highmon.pl</code>).
 <p></p>
@@ -374,7 +374,7 @@ If it works, it works, right?
 Next to being a user, I also spend way too much time working on <span class="small-caps">xm</span>onad.
 As such, I often help people coming into our IRC or posting on the
 subreddit with their problems. More often than not one needs to link to
-the same resources over and over again—why not write something so that I
+the same resources over and over <span class="nowrap">again—</span>why not write something so that I
 don’t have to dig up these links again and again?
 <p></p>
 I currently have a set-up where I can link to every <span class="small-caps">xm</span>onad module, all
@@ -489,7 +489,7 @@ The following would, for example, bind <code>mc/mark-next-like-this-word</code> 
 <span class="w">    </span><span class="s">&quot;</span><span class="ss">`repeat-mode'</span><span class="s"> keymap to repeat </span><span class="ss">`multiple-cursors'</span><span class="s"> bindings.&quot;</span><span class="p">)</span>
 </pre></div>
 <p></p>
-This may be too implicit for many people, but for me it’s just right—and
+This may be too implicit for many people, but for me it’s just <span class="nowrap">right—</span>and
 that’s sort of the point of all of this, right?
 <h2 id="warn-on-empty-subjects">Warn on empty subjects<a href="#warn-on-empty-subjects" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -497,7 +497,7 @@ Emacs’s <code>notmuch</code> package has this fantastic concept of an <em>atta
 adding <code>notmuch-mua-attachment-check</code> to <code>notmuch-mua-send-hook</code> will,
 before sending the message,
 check whether the regular expression in <code>notmuch-mua-attachment-regexp</code> matches.
-If yes—and no attachment has been added—it will alert the user,
+If <span class="nowrap">yes—</span>and no attachment has been <span class="nowrap">added—</span>it will alert the user,
 asking whether one really wants to send that email;
 otherwise, everything goes through smoothly.
 Due to some personal idiosyncrasies,
@@ -575,8 +575,8 @@ There is nothing fancy happening here,
 so it’s not terribly difficult to adapt it to other settings.
 As I said in the beginning,
 I need it to check for subjects,
-due to the bad habit of only adding a subject once the email is already written—only sometimes I forget.
-Instead of trying to change my habits—which is hard!—it sounds much easier to modify Emacs to suit my needs.
+due to the bad habit of only adding a subject once the email is already <span class="nowrap">written—</span>only sometimes I forget.
+Instead of trying to change my <span class="nowrap">habits—</span>which is <span class="nowrap">hard!—</span>it sounds much easier to modify Emacs to suit my needs.
 <p></p>
 The strategy is exactly the same as for <code>notmuch-mua-attachment-check</code>;
 check for a certain regular expression, whitespace, and say something if it matches the current subject:
@@ -610,7 +610,7 @@ However, with a bit of hacking around this turns out to be quite fixable:
 <h2 id="eshell">Eshell<a href="#eshell" class="floatleft sec-link">§</a></h2>
 <h3 id="integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell<a href="#integrating-zshs-history-into-eshell" class="floatleft sec-link">§</a></h3>
 <p></p>
-If you use zsh and eshell together, you—like me—will soon be annoyed at the fact that the two programs use separate history files.
+If you use zsh and eshell together, <span class="nowrap">you—</span>like <span class="nowrap">me—</span>will soon be annoyed at the fact that the two programs use separate history files.
 However, unification is not as easy as <code>(setq eshell-history-file-name "~/.config/zsh/zsh_history")</code>,
 since zsh stores its history file in a metafied format.<!--
 --><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">For whatever reason, when any character from the <code>0x80</code>–<code>0x9F</code> range is encountered
@@ -632,7 +632,7 @@ but since I’m using zoxide within zsh anyways
 it seems prudent to not depend on an additional package here.</div><!--
 -->
 Basically, it keeps a history of your most visited directories<!--
--->—ranked by <a href="https://github.com/ajeetdsouza/zoxide/wiki/Algorithm">frecency</a>—<!--
+--><span class="nowrap">—</span>ranked by <a href="https://github.com/ajeetdsouza/zoxide/wiki/Algorithm">frecency</a><span class="nowrap">—</span><!--
 -->and jumps to the best match.
 Think of it as a more general version of <code>cd</code> that learns from your habits.
 <p></p>
@@ -674,7 +674,7 @@ it will be returned exactly as-is:
 </pre></div>
 <p></p>
 While this is expected behaviour, it gravely messes with awesome tools like paredit.
-As I’m in the habit—using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>—of lazily copying with with <code>M-w</code> all the time,
+As I’m in the <span class="nowrap">habit—</span>using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a><span class="nowrap">—</span>of lazily copying with with <code>M-w</code> all the time,
 this posits a problem.<!--
 --><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Of course, the <em>real problem</em> is my lack of discipline,
 but I’m certainly not going to change my habits if I can instead change my editor around me!</div><!--
@@ -719,7 +719,7 @@ Oh, it’s just
 …easy, right?
 <p></p>
 I don’t know why extending the flavour of markdown that they’re using was not on the cards, but I’m certainly not going to write raw <span class="small-caps">html</span> for basic functionality.
-Thankfully, I’m using Emacs—and pandoc exists—so I don’t have to.
+Thankfully, I’m using <span class="nowrap">Emacs—</span>and pandoc <span class="nowrap">exists—</span>so I don’t have to.
 Below is a simple function that looks for spoilers with the syntax <code>||…||</code> (which I’ve seen a few such systems use),
 inserts the correct <code>span</code> by hand, and just chugs the result into pandoc.
 

@@ -76,11 +76,11 @@ however, this page gives me the chance to expand on some of the ideas,
 should they not have gotten their own blog post already.
 <h2 id="sidenotes">Sidenotes<a href="#sidenotes" class="floatleft sec-link">§</a></h2>
 <p></p>
-Sidenotes—as opposed to footnotes—are implemented using
+<span class="nowrap">Sidenotes—</span>as opposed to <span class="nowrap">footnotes—</span>are implemented using
 (a somewhat customised) <a href="https://github.com/edwardtufte/tufte-css">Tufte <span class="small-caps">css</span></a>,
 as well as <a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">SideNotesHTML.hs</a> from the <code>pandoc-sidenote</code> library.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Here is an example!
-By the way, you might notice some links having a little <code>°</code> after them—these are links to this domain.
+By the way, you might notice some links having a little <code>°</code> after <span class="nowrap">them—</span>these are links to this domain.
 I’m honestly still not sure this is useful in any way, but I quite like the eye candy.</div><!--
 -->
 While this uses absolutely no JavaScript,
@@ -148,7 +148,7 @@ in the space between the table of contents (or sidebar) and the main content.
 <p></p>
 Citations are handled by BibTeX;
 I’m used to it from writing LaTeX, and it sports some neat pandoc integration.
-There is a “References” section—not mentioned in the <span class="small-caps">toc</span>—at the end of the document,
+There is a “References” <span class="nowrap">section—</span>not mentioned in the <span class="nowrap"><span class="small-caps">toc</span>—</span>at the end of the document,
 where all citations the page may have mentioned reside and are properly aligned in a table.
 Clicking on any of
 <span class="citation" data-cites="category-theory-in-context_riehl">[<a href="#ref-category-theory-in-context_riehl" role="doc-biblioref">Rieh17</a>]</span>,
@@ -156,7 +156,7 @@ Clicking on any of
 <span class="citation" data-cites="Etingof2015">[<a href="#ref-Etingof2015" role="doc-biblioref">EGNO15</a>]</span>
 should jump you to it.
 <p></p>
-Under the hood, pandoc—by means of <a href="https://github.com/jgm/citeproc">citeproc</a>—uses some convoluted <span class="small-caps">xml</span> format to describe how citations ought to look.
+Under the hood, <span class="nowrap">pandoc—</span>by means of <a href="https://github.com/jgm/citeproc">citeproc</a><span class="nowrap">—</span>uses some convoluted <span class="small-caps">xml</span> format to describe how citations ought to look.
 Not finding anything that I’m completely happy with, the site is currently using a
 <a href="https://github.com/slotThe/slotThe.github.io/blob/main/bib/style.csl">hacked-on version</a>
 of an
@@ -172,7 +172,7 @@ Some eye candy like small-caps, as well as features such as sidenotes are obviou
 but the main content should still be comfortably viewable.
 <h2 id="fonts">Fonts<a href="#fonts" class="floatleft sec-link">§</a></h2>
 <p></p>
-This website uses—at least if you let it—lots of <a href="https://github.com/slotThe/slotThe.github.io/tree/main/css/fonts">custom fonts</a>.
+This website <span class="nowrap">uses—</span>at least if you let <span class="nowrap">it—</span>lots of <a href="https://github.com/slotThe/slotThe.github.io/tree/main/css/fonts">custom fonts</a>.
 The default serif font is
 <a href="https://www.huertatipografica.com/en/fonts/alegreya-ht-pro">Alegreya</a>,
 <a href="https://github.com/slotThe/hopf-mono">my own build</a>
@@ -185,7 +185,7 @@ While the site of course works with system fonts as well,
 there has been a somewhat conscious choice to deviate from them.
 Especially code should look exactly as it appears in my editor,
 which is especially relevant when it comes to alignment<!--
--->—Unicode characters may indeed have different apparent widths!
+--><span class="nowrap">—</span>Unicode characters may indeed have different apparent widths!
 Further, lots of system fonts do not support some typographical features,
 such as small caps,
 that I think give this site a certain “flair”.<!--

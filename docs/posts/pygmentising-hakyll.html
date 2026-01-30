@@ -77,7 +77,7 @@ By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
 examples the <span class="small-caps">html</span> this produces is unsatisfactory. Thankfully, the two
 programs are almost infinitely customisable, and changing pretty much
-any setting doesn’t usually involve a lot of work—this is no exception.
+any setting doesn’t usually involve a lot of <span class="nowrap">work—</span>this is no exception.
 Using <code>pygmentize</code> as an example, I will show you how you can swap out
 pandoc’s native syntax highlighting with pretty much any third party
 tool that can output <span class="small-caps">html</span>.
@@ -123,7 +123,7 @@ related to it being a built in operator! As one can imagine, this only
 gets worse as snippets get more complicated.
 <p></p>
 These kinds of issues, combined with the fact that certain
-languages—like Emacs Lisp—don’t have any syntax definitions at all,
+<span class="nowrap">languages—</span>like Emacs <span class="nowrap">Lisp—</span>don’t have any syntax definitions at all,
 annoyed me enough to look for an alternative way to highlight code on
 this website.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">All of this work for a mostly greyscale theme!</div><!--
@@ -137,7 +137,7 @@ Having never used <code>pygmentize</code> as a command line utility,<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">So far, the only interaction I had with the program was through
 the excellent <a href="https://ctan.org/pkg/minted?lang=en">minted</a> LaTeX package.</div><!--
 --> I expected
-this to take some work—possibly involving Python <em>shudder</em>—but all of
+this to take some <span class="nowrap">work—</span>possibly involving Python <em>shudder</em><span class="nowrap">—</span>but all of
 the necessary pieces are already present in the <span class="small-caps">cli</span>. First up, the <code>-f</code>
 option specifies the formatter to use, which will decide the shape of
 the output.
@@ -241,7 +241,7 @@ Importantly, the language (if any) is the first argument of the
 A strategy begins to form: look for all occurences of a <code>CodeBlock</code> in
 the <code>Pandoc</code> type, and replace it with a <code>RawBlock "html"</code> such that it
 isn’t touched anymore. Doing so will not pose very many
-challenges—pandoc has really great capabilities for
+<span class="nowrap">challenges—</span>pandoc has really great capabilities for
 <a href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html">walking</a> its <span class="small-caps">ast</span> in order to facilitate exactly these
 kinds of changes. Unsurprisingly, the <code>Walkable</code> class resides over all
 things walkable; an abbreviated definition looks like this:
@@ -298,7 +298,7 @@ since we want to use it from Hakyll I’ve already inserted a call to
 Further, the above code checks whether the block has an explicit
 language attached to it and, if not, leaves it alone; this was suggested
 by <a href="https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/">LSLeary</a> on Reddit. If you want to have a single <code>div</code> class for
-every code block—say, for some custom <span class="small-caps">css</span>—then you can replace
+every code <span class="nowrap">block—</span>say, for some custom <span class="nowrap"><span class="small-caps">css</span>—</span>then you can replace
 
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="w">  </span><span class="kt">CodeBlock</span><span class="w"> </span><span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">lang</span><span class="p">)</span><span class="w"> </span><span class="kt">:</span><span class="w"> </span><span class="kr">_</span><span class="p">,</span><span class="w"> </span><span class="kr">_</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">body</span><span class="p">)</span><span class="w"> </span><span class="ow">-&gt;</span>
 <span class="w">    </span><span class="kt">RawBlock</span><span class="w"> </span><span class="s">&quot;html&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span><span class="w"> </span><span class="o">&lt;$&gt;</span><span class="w"> </span><span class="n">unsafeCompiler</span><span class="w"> </span><span class="p">(</span><span class="n">callPygs</span><span class="w"> </span><span class="n">lang</span><span class="w"> </span><span class="n">body</span><span class="p">)</span>
@@ -357,13 +357,13 @@ For a full working example, see <a href="https://github.com/slotThe/slotThe.gith
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
 That’s it! To my eyes, syntax highlighting looks much better now, and
-on the way I—and perhaps you as well—even learned a little bit about how
+on the way <span class="nowrap">I—</span>and perhaps you as <span class="nowrap">well—</span>even learned a little bit about how
 pandoc internally represents its documents. Time well spent. As I said
 in the beginning, in principle one could swap out <code>pygmentize</code> for any
 other syntax highlighter that can produce <span class="small-caps">html</span>. However, for me these
 results are good enough that I will probably not try out every tool
 under the sun, chasing that ever present epsilon of highlighting cases
-which I still don’t agree with—at least for now.
+which I still don’t agree <span class="nowrap">with—</span>at least for now.
 <h2 id="epilogue-a-pygments-server">Epilogue: a pygments server<a href="#epilogue-a-pygments-server" class="floatleft sec-link">§</a></h2>
 <p></p>
 <span style="position: relative; top: -0.8em"><em>Added on 2025-01-05</em></span>

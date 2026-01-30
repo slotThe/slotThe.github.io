@@ -81,9 +81,9 @@ Let me tell you about that in as few as 20’000 words.<!--
 Advent of Code is a yearly puzzle-coding-challenge-thing,
 in which one has to solve two riddles every day from the 1st until the 25th of December,
 with the second part of each puzzle being unknown until one solves the first one.
-I’ve found it to be a great way to learn the basics of a language—how it “feels”.
+I’ve found it to be a great way to learn the basics of a <span class="nowrap">language—</span>how it “feels”.
 <p></p>
-The puzzles are accompanied by an endearing—and at times pretty funny—story.
+The puzzles are accompanied by an <span class="nowrap">endearing—</span>and at times pretty <span class="nowrap">funny—</span>story.
 I will, however, leave out most of it for this post,
 as I feel like it would distract too much from the point I’m trying to make.
 <h3 id="conventions-throughout-the-article">Conventions throughout the article<a href="#conventions-throughout-the-article" class="floatleft sec-link">§</a></h3>
@@ -113,9 +113,9 @@ Someone new to Advent of Code, but familiar with <span class="small-caps">bqn</s
 The other way around?
 New to both?
 Familiar with both?
-The answer—as is so often the case—is that I don’t know.
+The <span class="nowrap">answer—</span>as is so often the <span class="nowrap">case—</span>is that I don’t know.
 Realistically, I’m actually talking to my present and future self here<!--
--->—writing about things is a great way to solidify understanding—<!--
+--><span class="nowrap">—</span>writing about things is a great way to solidify <span class="nowrap">understanding—</span><!--
 -->so the article will be structured accordingly:
 I will talk about <span class="small-caps">bqn</span>’s core concepts and language features,
 but put the more dreary parts of that exposition in collapsible boxes,
@@ -133,11 +133,11 @@ As mentioned, the tangents in which I talk about language features are more for 
 Still, perhaps they are useful in case someone who does not know <span class="small-caps">bqn</span> has somehow found their way here,
 and didn’t run away after seeing the Unicode characters.
 As such, the focus of this post should be on how I<!--
--->—as a total newcomer to this kind of thing—<!--
+--><span class="nowrap">—</span>as a total newcomer to this kind of <span class="nowrap">thing—</span><!--
 -->approach solving problems in such an unusual language;
 what works and what doesn’t, that kind of thing.
 In short, I want to impart the <em>vibe</em> of the language to the reader<!--
--->—and that <span class="small-caps">aoc</span> is actually a lot of fun!<!--
+--><span class="nowrap">—</span>and that <span class="small-caps">aoc</span> is actually a lot of fun!<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">This sentence is also true for the axiom of choice;
 jokes on you, constructivists!</div><!--
 -->
@@ -147,7 +147,7 @@ I want to explicitly thank the super welcoming
 <a href="https://mlochbaum.github.io/BQN/community/index.html">community</a>
 that this language has!
 Next to fantastic sites such as <a href="https://mlochbaum.github.io/bqncrate/"><span class="small-caps">bqn</span>crate</a><!--
--->—a great way to pick up on idiomatic ways to write certain things—<!--
+--><span class="nowrap">—</span>a great way to pick up on idiomatic ways to write certain <span class="nowrap">things—</span><!--
 -->there is a
 <a href="https://app.element.io/#/room/%23bqn:matrix.org">#bqn:matrix.org</a>
 matrix room, which is part of the larger
@@ -232,7 +232,7 @@ and ones taking two arguments <em>dyadic</em>.
 When in doubt, just substitute “unary” and “binary” in your head.
 One thing that might seem very confusing at the start is that
 many functions are actually overloaded depending on whether they are called monadically or dyadically<!--
--->—often with seemingly unrelated (or only barely so) functions!
+--><span class="nowrap">—</span>often with seemingly unrelated (or only barely so) functions!
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="c1"># Dyadic ×; N.b. we use the upper minus ¯ here because ¯2 is its own</span>
 <span class="w">    </span><span class="c1"># number literal. We could also use the function -, but then (because</span>
@@ -267,7 +267,7 @@ so that it’s easier to talk to other people about a given piece of code.
 </pre></div>
 <p></p>
 In particular, the above examples showcase how <span class="small-caps">bqn</span> displays <em>vectors</em> (or <em>lists</em>) and <em>arrays</em>.
-Definitionally, vectors are “rank 1 arrays”—we will talk about what exactly this means when we talk about major cells.<!--
+Definitionally, vectors are “rank 1 arrays”<span class="nowrap">—</span>we will talk about what exactly this means when we talk about major cells.<!--
 --><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Perhaps it is unwise to postpone actually talking about arrays in an array language,
 but I feel like if this gets even longer I will lose the one reader who gets this far.</div><!--
 -->
@@ -321,7 +321,7 @@ and</li>
 </ul>
 <p></p>
 Needless to say, these all look <em>vastly</em> different,
-each—in my opinion—enabling a certain mode of thought better than the others.
+<span class="nowrap">each—</span>in my <span class="nowrap">opinion—</span>enabling a certain mode of thought better than the others.
 For example, I happen to like the string diagrammatic version the best,
 and try to use it as often as possible.
 However, try doing that when you have to juggle 10+ strings!
@@ -330,7 +330,7 @@ At that point, Sweedler notation becomes extremely concise and much easier to re
 Let’s get back to that array programming thing, though.</div><!--
 -->
 I believe <span class="small-caps">bqn</span>’s creator once called the syntax “scribbles on a whiteboard”, and honestly that’s my feeling about it too<!--
--->—with the slight addendum that blackboards are obviously vastly superior to whiteboards.
+--><span class="nowrap">—</span>with the slight addendum that blackboards are obviously vastly superior to whiteboards.
 <p></p>
 One more piece of syntax that we have to discuss before diving into day 1: modifiers.
 These are <em>things</em> that take either one or two functions, and spit out a new, modified, one.
@@ -427,13 +427,13 @@ that we first have to convert to a long string of numbers:
 <p></p>
 Reading the input line-by-line and converting it to a vector works via the builtin <code>•FLines</code> function.<!--
 --><label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="sidenote">The <code>•</code> is not a separate function, but really part of the name <code>•FLines</code>.
-All names starting with that symbol are [system values]—<!--
+All names starting with that symbol are [system <span class="nowrap">values]—</span><!--
    -->things provided by the <span class="small-caps">bqn</span> interpreter that are not the builtin primitives.
 We will see other important system values, like <code>•HashMap</code> or <code>•Type</code>, a bit later.</div><!--
 -->
 The only other function we haven’t see so far is
 <a href="https://mlochbaum.github.io/BQN/doc/pick.html">first</a> <a href="https://mlochbaum.github.io/BQN/doc/pick.html"><code>⊑</code></a>,
-which gives us the first element in the list—our input is on a single long line.
+which gives us the first element in the <span class="nowrap">list—</span>our input is on a single long line.
 Much more interesting is the <code>'0'-˜</code> part,
 which immediately gives me a chance to talk about character–number conversions in <span class="small-caps">bqn</span>.
 <details>
@@ -496,7 +496,7 @@ which is a good guide on what kinds of operations we have access to:
 <p></p>
 Since the numbers from 0 to 9 are ordered sequentially in UTF-8,
 this in particular gives a neat way to transform a vector of characters<!--
--->—also known as a string—<!--
+--><span class="nowrap">—</span>also known as a <span class="nowrap">string—</span><!--
 -->into a vector of digits:
 simply subtract <code>'0'</code> from them!
 
@@ -543,7 +543,7 @@ A few more notes:
 
 Boolean masks are an important concept to internalise,
 and will often be used to filter results, or serve as control flow<!--
--->—<span class="small-caps">bqn</span> does not have a builtin if-then-else expression!</li>
+--><span class="nowrap">—</span><span class="small-caps">bqn</span> does not have a builtin if-then-else expression!</li>
 <li><p></p>
 
 <a href="https://mlochbaum.github.io/BQN/doc/swap.html">Swap</a> (<a href="https://mlochbaum.github.io/BQN/doc/swap.html"><code>˜</code></a>),
@@ -625,7 +625,7 @@ yields a running sum, indicating when we encounter a separator.
 <span class="p">⟨</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
 <p></p>
-This looks a bit weird, but the <code>ws←𝕨=𝕩</code> is an inline assignment—we do the comparison <code>𝕨=𝕩</code>, call the result <code>ws</code>, and then scan over it.
+This looks a bit weird, but the <code>ws←𝕨=𝕩</code> is an inline <span class="nowrap">assignment—</span>we do the comparison <code>𝕨=𝕩</code>, call the result <code>ws</code>, and then scan over it.
 In this way, we can refer to <code>ws</code> again at a later point.
 It’s not the best style to write code this way, but here it kind of fits.
 If we just <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a>ed the string now, we
@@ -648,7 +648,7 @@ This would turn all separators into zeros in the output:
 <p></p>
 Now we can’t differentiate between the separators and our first word!
 However, there is an easy fix for this;
-we just take the original <code>ws</code>, which—remember—contains the positions of the separators,
+we just take the original <code>ws</code>, <span class="nowrap">which—</span><span class="nowrap">remember—</span>contains the positions of the separators,
 and subtract it from the result that we have:
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">' '</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="nv">ws</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">ws</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">ws</span><span class="kd">←</span><span class="ni">𝕨</span><span class="o">=</span><span class="ni">𝕩</span><span class="w"> </span><span class="kt">}</span><span class="w"> </span><span class="s2">&quot;13 259 39999 4&quot;</span>
@@ -673,7 +673,7 @@ We can bind that to a function <code>Split</code> and be on our way!<!--
 </pre></div>
 <p></p>
 which is subtly different in its behaviour.
-I leave it as an exercise for the reader—or my future self—to figure out how exactly this version differs to the one I just explained,
+I leave it as an exercise for the <span class="nowrap">reader—</span>or my future <span class="nowrap">self—</span>to figure out how exactly this version differs to the one I just explained,
 and what problem it fixes.</div><!--
 -->
 </details>
@@ -702,7 +702,7 @@ or make use of the “affine” part of affine characters:
 Because both <code>Split</code> and <code>tab←@+9</code> will be needed quite a few times this year,
 let’s put it into a small utility file.
 We can use <span class="small-caps">bqn</span>’s system function <code>•Import</code> to import a namespace<!--
--->—which I don’t want to get into right now, but it works as one would expect—<!--
+--><span class="nowrap">—</span>which I don’t want to get into right now, but it works as one would <span class="nowrap">expect—</span><!--
 -->from somewhere.
 Parsing the input and solving part one is straightforward:
 
@@ -947,13 +947,13 @@ Playing around with this was immensely helpful for me in the beginning.
 <p></p>
 The 1-modifier
 <a href="https://mlochbaum.github.io/BQN/doc/map.html">each</a> (<a href="https://mlochbaum.github.io/BQN/doc/map.html"><code>¨</code></a>)
-does what it says on the tin—it’s comparable to <code>map</code> in many other languages.
+does what it says on the <span class="nowrap">tin—</span>it’s comparable to <code>map</code> in many other languages.
 Parsing the input works as expected,
 in that we split each line on the tab character,
 and parse all the resulting sequences of digits as numbers.
 All that’s left to do is to assembly the table in to a rank two array.
 By means of <a href="https://mlochbaum.github.io/BQN/doc/rank.html">cells</a> we get the maximum and minimum for every row<!--
--->—using the <code>⌈´-⌊´</code> train, which is a great one to reason through—<!--
+--><span class="nowrap">—</span>using the <code>⌈´-⌊´</code> train, which is a great one to reason <span class="nowrap">through—</span><!--
 -->and sum up the resulting vector to get our answer.
 <hr />
 <p></p>
@@ -985,7 +985,7 @@ this ends up giving us the division table we want:
 As the problem explicitly says,
 there will be exactly one pair of <em>different</em> numbers where one evenly divides the other.
 As such, we just need to select an integer<!--
--->—e.g., some number that’s equal to its floor—<!--
+--><span class="nowrap">—</span>e.g., some number that’s equal to its <span class="nowrap">floor—</span><!--
 -->that is not one:
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Two</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span>
@@ -1142,9 +1142,9 @@ see whether they appear in the grid already,
 sum the values of those that do,
 and associate the point with that value in the grid.
 <p></p>
-In this case, “grid” actually means hash map—yup, we have those.
+In this case, “grid” actually means hash <span class="nowrap">map—</span>yup, we have those.
 <span class="small-caps">bqn</span> exposes a simple interface under the <code>•HashMap</code> system value.
-The function names—<code>Has</code>, <code>Get</code>, <code>Set</code>, and so on—are relatively self-explanatory.
+The function <span class="nowrap">names—</span><code>Has</code>, <code>Get</code>, <code>Set</code>, and so <span class="nowrap">on—</span>are relatively self-explanatory.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">N</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="nv">x</span><span class="p">‿</span><span class="nv">y</span><span class="ni">:</span><span class="w"> </span><span class="o">⥊</span><span class="sr">(</span><span class="nv">x</span><span class="o">+</span><span class="p">⟨</span><span class="m">¯1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">⟩</span><span class="sr">)</span><span class="o">⋈</span><span class="na">⌜</span><span class="sr">(</span><span class="nv">y</span><span class="o">+</span><span class="p">⟨</span><span class="m">¯1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">⟩</span><span class="sr">)</span><span class="w"> </span><span class="kt">}</span>
 </pre></div>
@@ -1180,7 +1180,7 @@ We can also give the function a name:
 <span class="m">1597</span>
 </pre></div>
 <p></p>
-This example already highlights a few more features—and shortcomings—of blocks.
+This example already highlights a few more <span class="nowrap">features—</span>and <span class="nowrap">shortcomings—</span>of blocks.
 First, a block can contain multiple bodies, separated by <code>;</code>, as well as multiple headers associated to them.
 When such a block is called,
 its headers are checked for compatibility with the arguments,
@@ -1297,7 +1297,7 @@ but <span class="small-caps">bqn</span> has a pretty cute system in order to ach
 namely, <a href="https://mlochbaum.github.io/BQN/doc/expression.html#syntactic-role">syntactic roles</a>.
 Think of it sort of like a language enforced version of
 <a href="https://en.wikipedia.org/wiki/Hungarian_notation">Hungarian notation</a><!--
--->—trust me, it’s not as horrendous as it sounds!
+--><span class="nowrap">—</span>trust me, it’s not as horrendous as it sounds!
 <p></p>
 First, here’s a fun one:
 the following variants all refer to <em>the same</em> identifier: <code>foo</code>, <code>fOo</code>, <code>FOO</code>, <code>___f_o____o</code>, <code>_foo_</code>.
@@ -1326,7 +1326,7 @@ works in <span class="small-caps">bqn</span>:
 <span class="w">          </span><span class="err">┘</span>
 </pre></div>
 <p></p>
-The function <code>{𝕎𝕩}</code> a priori takes two subjects—as all functions do—but then just turns around and treats the left one as a function.
+The function <code>{𝕎𝕩}</code> a priori takes two <span class="nowrap">subjects—</span>as all functions <span class="nowrap">do—</span>but then just turns around and treats the left one as a function.
 Since we give it a list of functions, this works and we can apply it to the right arguments.
 It’s important that we supplied a list here, btw; <code>×˜ {𝕎𝕩} 4</code> would not work, since <code>×˜</code> has a function role.
 In that case, we need to work with variables:
@@ -1377,7 +1377,7 @@ There is no real algorithm to speak of here, so we can just verbatim do what the
 <p></p>
 There are nevertheless a few interesting things about the solution:
 <code>inp F↩︎</code> <em>modifies</em> <code>inp</code> with the result of calling <code>F inp</code>.<!--
---><label for="sn-22" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-22" class="margin-toggle" /><div class="sidenote">I mean, not really—arrays in <span class="small-caps">bqn</span> are immutable.
+--><label for="sn-22" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-22" class="margin-toggle" /><div class="sidenote">I mean, not <span class="nowrap">really—</span>arrays in <span class="small-caps">bqn</span> are immutable.
 But we can at least pretend it does that.</div><!--
 -->
 Much more interestingly, however, we can use
@@ -1398,7 +1398,7 @@ The <code>•_while_</code> 2-modifier is used for iteration:
 <code>𝔽•_while_𝔾 𝕩</code> checks <code>𝔾v</code>, where <code>v</code> is initially <code>𝕩</code>, to see if it should keep iterating;
 if yes, it essentially does <code>v 𝔽↩︎</code> and goes back to <code>𝔾v</code> (where <code>v</code> is now updated!).
 I have to say that I would much rather think in terms of recursive functions,
-but—alas—the standard implementation of <span class="small-caps">bqn</span>, <code>cbqn</code>, does not support tail call optimisation.
+<span class="nowrap">but—</span><span class="nowrap">alas—</span>the standard implementation of <span class="small-caps">bqn</span>, <code>cbqn</code>, does not support tail call optimisation.
 <hr />
 <p></p>
 With that done, we have part two waiting for us.
@@ -1419,7 +1419,7 @@ depending on the result of <code>3≤i⊑inp</code>, we <a href="https://mlochba
 Wrapping this in a function that works for both days is not super interesting,
 only that we need to find a value <code>t</code> such that <code>t≤i⊑inp</code> will always be false.
 <span class="small-caps">bqn</span> has the aptly named <code>∞</code> for that,
-which is an infinity according to IEEE 754—<span class="small-caps">bqn</span> really only deals with <code>f64</code>’s.
+which is an infinity according to IEEE <span class="nowrap">754—</span><span class="small-caps">bqn</span> really only deals with <code>f64</code>’s.
 While we’re at it, we can add the instruction set as an additional argument to <code>Sim</code>,
 so that we don’t have to mutate the input directly.
 
@@ -1445,7 +1445,7 @@ For example, the first few redistributions with the above start look like this:
 <p></p>
 Notice in particular that the redistribution starts by “emptying” the bank with the highest value,
 so <code>⟨0, 2, 7, 0⟩</code> is first transformed into <code>⟨0, 2, 0, 0⟩</code>, then into <code>⟨0, 2, 0, 1⟩</code>, then into <code>⟨1, 2, 0, 1⟩</code>, and so on.
-At some point, we will—so the problem says—reach a configuration that we were already in before,
+At some point, we <span class="nowrap">will—</span>so the problem <span class="nowrap">says—</span>reach a configuration that we were already in before,
 and part one asks us to find the number of cycles before that happens.
 <p></p>
 Parsing is the easy part, as the input just comprises a bunch of numbers on the first line:
@@ -1498,7 +1498,7 @@ the relevant excerpt being
 are basically certain “default” values of a given array.
 Operations on the array might make use of them if the array would otherwise end up having holes in it.
 Atomically, they are either <code>0</code> (for numbers) or <code>' '</code> (for characters),
-and higher dimensional arrays—being inductively defined in <span class="small-caps">bqn</span>—can inherit from this.
+and higher dimensional <span class="nowrap">arrays—</span>being inductively defined in <span class="nowrap"><span class="small-caps">bqn</span>—</span>can inherit from this.
 A canonical example is <a href="https://mlochbaum.github.io/BQN/doc/take.html">take</a> when the number of elements to be taken is longer than the length of the argument:
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">3</span><span class="p">‿</span><span class="m">3</span><span class="o">⥊↕</span><span class="m">9</span>
@@ -1660,7 +1660,7 @@ for the root, <code>tknk</code>, we would get the following sums of children:
 </ul>
 <p></p>
 The problem tells us that, actually, only one program has the wrong weight.
-Above, that’d be <code>ugml</code>, which would have to change from weight <code>68</code> to <code>60</code>—the answer.
+Above, that’d be <code>ugml</code>, which would have to change from weight <code>68</code> to <code>60</code><span class="nowrap">—</span>the answer.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="nv">h</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="p">⟨⟩</span><span class="o">•HashMap</span><span class="p">⟨⟩</span><span class="w"> </span><span class="p">⋄</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="nv">n</span><span class="p">‿</span><span class="nv">w</span><span class="p">‿</span><span class="nv">ch</span><span class="ni">:</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="nv">h</span><span class="p">.</span><span class="o">Set</span><span class="w"> </span><span class="nv">w</span><span class="p">‿</span><span class="nv">ch</span><span class="w"> </span><span class="kt">}</span><span class="na">¨</span><span class="nv">inp</span><span class="w"> </span><span class="c1"># name -&gt; weight, children</span>
 <span class="o">M</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">=</span><span class="na">´</span><span class="m">2</span><span class="o">↑⊑</span><span class="na">¨</span><span class="w"> </span><span class="c1"># Do the first two elements have matching cumulative weights?</span>
@@ -1713,7 +1713,7 @@ In case it’s supplied a left argument, this is the value of the exception.
 In the call to <code>SpotOutlier</code>, we can use the
 <a href="https://mlochbaum.github.io/BQN/doc/assert.html">catch</a> (<a href="https://mlochbaum.github.io/BQN/doc/assert.html#catch"><code>⎊</code></a>) 2-modifier to catch the exception.
 Since <a href="https://mlochbaum.github.io/BQN/doc/assert.html">catch</a> doesn’t actually know anything about the error<!--
--->—only that one occurred—<!--
+--><span class="nowrap">—</span>only that one <span class="nowrap">occurred—</span><!--
 -->we need the system value <code>•CurrentError</code> to access it.
 <h3 id="day-8"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day08.bqn">Day 8</a><a href="#day-8" class="floatleft sec-link">§</a></h3>
 <p></p>
@@ -1761,7 +1761,7 @@ Pretty neat, huh?
 The plan is clear: transform every line into its equivalent <span class="small-caps">bqn</span> code,
 and evaluate everything with <code>•BQN</code>.
 We have previously seen this function on <a href="#day-7">day 7</a>,
-where it’s essentially used as a shorthand for <code>•ParseFloat</code>—now we really want it to execute some code!
+where it’s essentially used as a shorthand for <code>•ParseFloat</code><span class="nowrap">—</span>now we really want it to execute some code!
 Let’s first split every instruction into a list of its constituent words.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="p">⟨</span><span class="o">Split</span><span class="p">⟩</span><span class="kd">←</span><span class="o">•Import</span><span class="s2">&quot;../../util/bqn_util/util.bqn&quot;</span>
@@ -1792,7 +1792,7 @@ This should result in a function <code>G</code>, which is then applied to <code>
 <p></p>
 In this specific example, for each string in <code>𝕩</code>,
 we first get its index in the <code>from</code> vector.
-If the element is not found, then <a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> returns the length of the vector—an invalid index—instead.
+If the element is not found, then <a href="https://mlochbaum.github.io/BQN/doc/search.html">index of</a> returns the length of the <span class="nowrap">vector—</span>an invalid <span class="nowrap">index—</span>instead.
 Then, we apply the picked function in <code>to</code> to the element we started with.
 In almost all cases, what’s being picked from <code>to</code> is actually a string, which is interpreted as the constant function on that value, so nothing happens.
 In case the element is not found, however, we apply <a href="https://mlochbaum.github.io/BQN/doc/identity.html">identity</a>, in order to not lose any information.
@@ -1819,7 +1819,7 @@ That means lots of tasty string manipulation.
 <hr />
 <p></p>
 Part two instead asks us for the largest value that is ever held in any register during the execution of the program.
-This introduces some notational, if not conceptual, difficulties—but nothing we can’t manage!
+This introduces some notational, if not conceptual, <span class="nowrap">difficulties—</span>but nothing we can’t manage!
 Simply introduce an additional register that contains this information,
 and update it after every “normal” instruction.
 
@@ -1855,7 +1855,7 @@ and <code>{{},{}}</code> gets a score of <code>1+2+2</code>.
 <p></p>
 My solution here is actually quite crude and not all that interesting.
 My first idea was to use regular expressions to clean up the stream<!--
--->—seems like a good fit—<!--
+--><span class="nowrap">—</span>seems like a good <span class="nowrap">fit—</span><!--
 -->but, alas, <code>cbqn</code> does not support any sort of regexp, as far as I can tell.
 Oh well.
 Doing it in a single pass would be nice, though,
@@ -1946,7 +1946,7 @@ Here’s essentially what we have to do:
 <li>convert each of the resulting 16 bytes into their hex representation.</li>
 </ul>
 <p></p>
-Regarding the first point: we now treat every character—including the commas—of the input string as a separate input number.
+Regarding the first point: we now treat every <span class="nowrap">character—</span>including the <span class="nowrap">commas—</span>of the input string as a separate input number.
 So given <code>1,2,3</code> as an input, we would first transform it to <code>49 44 50 44 51</code> before continuing.
 Additionally, we have to append the magic numbers <code>17 31 73 47 23</code> to the input.
 This neatly showcases one of the many uses for affine characters:<!--
@@ -1958,7 +1958,7 @@ This neatly showcases one of the many uses for affine characters:<!--
 <p></p>
 Since <span class="small-caps">bqn</span> does not have any format strings,
 one has to implement base conversions from scratch.
-Here is one from decimal to hexadecimal, specialised to one byte—always two characters, padded with <code>0</code> if need be:<!--
+Here is one from decimal to hexadecimal, specialised to one <span class="nowrap">byte—</span>always two characters, padded with <code>0</code> if need be:<!--
 --><label for="sn-26" class="margin-toggle">⊕</label><input type="checkbox" id="sn-26" class="margin-toggle" /><div class="marginnote">For example,
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="o">DecToHex</span><span class="w"> </span><span class="m">15</span>
@@ -2010,11 +2010,11 @@ sw +--+ se
 </pre></div>
 <p></p>
 Part one asks us to follow our input<!--
--->—which is a string of instructions where to walk, like <code>ne,sw,ne,s,…</code>—<!--
+--><span class="nowrap">—</span>which is a string of instructions where to walk, like <code>ne,sw,ne,s,…</code><span class="nowrap">—</span><!--
 -->and then calculate a Manhattan-type distance from from the origin to the stopping point.
 <p></p>
 The difficult part here would be to find a comprehensible coordinate system to represent hexagonal grids.
-Thankfully—or sadly?—I remember doing the exact same thing in a previous year.
+<span class="nowrap">Thankfully—</span>or <span class="nowrap">sadly?—</span>I remember doing the exact same thing in a previous year.
 I wanted to use
 <a href="https://en.wikipedia.org/wiki/Hexagonal_Efficient_Coordinate_System"><span class="small-caps">hecs</span></a>
 just for the name, but since all we really do is to calculate neighbours,
@@ -2165,7 +2165,7 @@ Fully parenthesised this is
 In particular, notice how we already understand almost all of this modifier!
 The <code>𝔽∘⊢⍟≢⟜𝔽</code> part is the same as before, only we now don’t recurse,
 but build up another level of “apply <code>𝔽</code>”.
-The rest sort of also works as before—the outer <a href="https://mlochbaum.github.io/BQN/doc/hook.html">after</a> has the same shape—so
+The rest sort of also works as <span class="nowrap">before—</span>the outer <a href="https://mlochbaum.github.io/BQN/doc/hook.html">after</a> has the same <span class="nowrap">shape—</span>so
 we are looking at
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="na">_D</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="o">𝔽</span><span class="py">∘</span><span class="o">⊢</span><span class="py">⍟</span><span class="o">≢</span><span class="py">⟜</span><span class="o">𝔽</span><span class="kt">}</span><span class="w"> </span><span class="c1"># Double F</span>
@@ -2213,7 +2213,7 @@ The result of <code>Group</code> applied to <code>𝕩</code>
 is a single connected component,
 so we want to throw out all of these nodes.
 After that, just increment the counter and move on.
-The whole thing stops when the list is empty—easy!
+The whole thing stops when the list is <span class="nowrap">empty—</span>easy!
 <h3 id="day-13"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day13.bqn">Day 13</a><a href="#day-13" class="floatleft sec-link">§</a></h3>
 <p></p>
 We need to make our way across a firewall without being detected by packet scanners.
@@ -2238,7 +2238,7 @@ one can visualise the firewall like this:
 In each layer, there is a scanner starting at the top.
 Every tick, it moves one layer down, bouncing off the bottom and coming up again.
 We start in an imagined layer <code>¯1</code> at the very top.
-Part one asks us to calculate how often we are <em>caught</em>—that is, overlap with a scanner.
+Part one asks us to calculate how often we are <em>caught</em><span class="nowrap">—</span>that is, overlap with a scanner.
 Let’s quickly go through the first few steps of the simulation for the above input:
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>Initial state:
@@ -2299,7 +2299,7 @@ create strings <code>"abc-0"</code> through <code>"abc-127"</code>.
 For each of them, run the knot hash function from <a href="#day-10">day 10</a>,
 convert every single hex
 <a href="https://en.wikipedia.org/wiki/Nibble">nibble</a>
-to its 4-digit binary representation—e.g., for <code>"0f"</code> we would get <code>"00001111"</code>—<!--
+to its 4-digit binary <span class="nowrap">representation—</span>e.g., for <code>"0f"</code> we would get <code>"00001111"</code><span class="nowrap">—</span><!--
 -->and merge things together into a big 128×128 matrix.
 The finished grid might look a little bit like this:
 
@@ -2369,7 +2369,7 @@ Not too many new things here.
 -->
 and the <code>•Fmt</code> function just pretty-prints the given value to a string.
 This is, however, the first time that we see an ambivalent function definition<!--
--->—one that can be called both monadically and dyadically.
+--><span class="nowrap">—</span>one that can be called both monadically and dyadically.
 The monadic case is used in lieu of an internal worker function,
 like what Haskell people often call <code>go</code>.
 This could have also been achieved with a construct like <code>{…}⟜⟨⟩¨…</code>, but I feel like that wouldn’t read as nicely.
@@ -2389,7 +2389,7 @@ and then summed up the resulting vector.
 <hr />
 <p></p>
 Part two is more interesting, and is probably among the top three parts for me in terms of fun.
-Instead of simply counting the number of alive cells, we now need to find the number of distinct <em>regions</em>—<!--
+Instead of simply counting the number of alive cells, we now need to find the number of distinct <em>regions</em><span class="nowrap">—</span><!--
 -->live cells adjacent to each other in any of the four cardinal directions.
 For example, the grid shown above would have the following regions<!--
 --><label for="sn-32" class="margin-toggle">⊕</label><input type="checkbox" id="sn-32" class="margin-toggle" /><div class="marginnote">Region <code>8</code> just extends beyond the bounds of the part of the grid that we see and loops back around.</div><!--
@@ -2453,7 +2453,7 @@ a clever user of <a href="https://mlochbaum.github.io/BQN/doc/under.html">under<
 <p></p>
 Now, the idea is to proceed in the following way:
 take the maximum of every cell with its four neighbours<!--
--->—to get group the cell should belong to if it’s alive—<!--
+--><span class="nowrap">—</span>to get group the cell should belong to if it’s <span class="nowrap">alive—</span><!--
 -->and then multiply by the original value of the cell, to again make sure we only care about live cells.
 Now, because <span class="small-caps">bqn</span> is an array language, we can do all of this for the whole array at the same time!
 We can use <a href="https://mlochbaum.github.io/BQN/doc/shift.html">nudge</a> in either direction to get the North and South neighbour (remember that first axis stuff?),
@@ -2521,7 +2521,7 @@ But we have a <code>_Fix</code> for that, don’t we?
 <p></p>
 To get the number of regions,
 we just have to pull everything together<!--
--->—and remember to subtract one, for <code>0</code>’s region.
+--><span class="nowrap">—</span>and remember to subtract one, for <code>0</code>’s region.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="kt">{</span><span class="w"> </span><span class="o">𝕊</span><span class="nv">g</span><span class="ni">:</span>
 <span class="w">  </span><span class="nv">g</span><span class="w"> </span><span class="sr">(</span><span class="o">+</span><span class="na">`</span><span class="py">⊸</span><span class="o">×</span><span class="py">⌾</span><span class="o">⥊</span><span class="sr">)</span><span class="kd">↩</span>
@@ -2596,7 +2596,7 @@ Luckily, simply generating 40 million pairs as above and filtering for the right
 <h3 id="day-16"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day16.bqn">Day 16</a><a href="#day-16" class="floatleft sec-link">§</a></h3>
 <p></p>
 This day involves analysing the dance of a few programs.
-Part one is about mutating a small vector—characters <code>'a'</code> through <code>'p'</code>—according to the puzzle input,
+Part one is about mutating a small <span class="nowrap">vector—</span>characters <code>'a'</code> through <code>'p'</code><span class="nowrap">—</span>according to the puzzle input,
 which is a single line that looks a bit like this:
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>s11,x10/2,pl/d,…
@@ -2663,7 +2663,7 @@ Instead, let’s try to find a loop.
 </pre></div>
 <p></p>
 I used a hash map here since I figured the loop was still going to be substantial
-(it wasn’t—oh well).
+(it <span class="nowrap">wasn’t—</span>oh well).
 The test function supplied to while <code>•_while_</code> (ab)uses the fact that,
 while <code>⊢</code> only ever returns <code>𝕩</code>,
 it actually evaluates both of its arguments.
@@ -2677,13 +2677,13 @@ and then whatever we have left over.<!--
 but I don’t know if this is universal across all inputs.</div><!--
 -->
 The little <code>@</code>’s after the function calls to <code>h.Count</code> and <code>h.Keys</code>
-(but not to <code>h.Set</code>, as we need to associate some kind of value to the keys—that value just happens to be the null character)
+(but not to <code>h.Set</code>, as we need to associate some kind of value to the <span class="nowrap">keys—</span>that value just happens to be the null character)
 function as dummy arguments.
 To return something,
 the upper case (function) variants need to be called,
 but the argument is actually ignored.
 This is a bit ugly, but sort of how <span class="small-caps">bqn</span>’s “object system”<!--
--->—which really rather seems like an accident of having a module system and syntactic roles—<!--
+--><span class="nowrap">—</span>which really rather seems like an accident of having a module system and syntactic <span class="nowrap">roles—</span><!--
 -->works.
 <h3 id="day-17"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day17.bqn">Day 17</a><a href="#day-17" class="floatleft sec-link">§</a></h3>
 <p></p>
@@ -2708,7 +2708,7 @@ Part one asks us for the value after 2017 in the final buffer.
 <p></p>
 With a puzzle input of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> and a position <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> in step <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>,
 the stepping forward process is just <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">i</span><span class="mclose">)</span></span></span></span><!--
--->—the list is exactly of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> in that step—<!--
+--><span class="nowrap">—</span>the list is exactly of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> in that <span class="nowrap">step—</span><!--
 -->and inserting after the element means adding one.
 As such, a straightforward solution for part one looks like this:
 
@@ -2737,10 +2737,10 @@ we can do the following:
 <span class="p">⟨</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
 <p></p>
-The final result, <code>3 1 0 2</code> is indeed—up to circular permutation—the same as <code>0 2 3 1</code>!
+The final result, <code>3 1 0 2</code> is <span class="nowrap">indeed—</span>up to circular <span class="nowrap">permutation—</span>the same as <code>0 2 3 1</code>!
 The <code>3+1</code> comprises the step size <code>3</code>, and keeps track of the fact that we need to insert the value after the index.
 Even more, the final inserted value will be the head of the vector,
-so getting the element at index <code>1</code> is what we want—no more <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a>ing stuff.
+so getting the element at index <code>1</code> is what we <span class="nowrap">want—</span>no more <a href="https://mlochbaum.github.io/BQN/doc/select.html">select</a>ing stuff.
 Do note that walking to the <em>right</em> in terms of indices translates to rotating the buffer to the <em>left</em> (i.e., using positive numbers).
 We can pack this function up in a fold, yielding an alternative solution for part one:<!--
 --><label for="sn-37" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-37" class="margin-toggle" /><div class="sidenote">I suppose inserting <code>i</code> in the back of the array would be cheaper:
@@ -2756,7 +2756,7 @@ we need a different solution for part two either way.</div><!--
 </pre></div>
 <hr />
 <p></p>
-Part two now wants us to identify the value following <code>0</code>—after fifty million iterations!
+Part two now wants us to identify the value following <code>0</code><span class="nowrap">—</span>after fifty million iterations!
 This is much too big to simulate in the same way as the first part.
 Instead, we can come back to the formula <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">i</span><span class="mclose">)</span></span></span></span>
 that predicts the index at which a given number is going to be inserted.
@@ -2770,7 +2770,7 @@ Since the steps are increasing, the solution looks for the last time a <code>1</
 This is the first time that we use a non-associative scan, so a few words of warning.
 </summary>
 <p></p>
-While <a href="https://mlochbaum.github.io/BQN/doc/fold.html">fold</a> is consuming its input array in the same direction as <span class="small-caps">bqn</span>’s evaluation model—right-to-left—<a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> is evaluating its argument left-to-right!
+While <a href="https://mlochbaum.github.io/BQN/doc/fold.html">fold</a> is consuming its input array in the same direction as <span class="small-caps">bqn</span>’s evaluation <span class="nowrap">model—</span><span class="nowrap">right-to-left—</span><a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> is evaluating its argument left-to-right!
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="p">⟨</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="o">-</span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="sr">(</span><span class="m">10</span><span class="o">-</span><span class="m">15</span><span class="sr">)</span><span class="o">-</span><span class="m">9</span><span class="p">⟩</span><span class="w"> </span><span class="o">≡</span><span class="w"> </span><span class="o">-</span><span class="na">`</span><span class="p">⟨</span><span class="m">10</span><span class="p">,</span><span class="m">15</span><span class="p">,</span><span class="m">9</span><span class="p">⟩</span>
 <span class="m">1</span>
@@ -2838,7 +2838,7 @@ Here, we use it as a shorthand to parse a number if possible, and return the arg
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;set&quot;</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="m">102</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
 <p></p>
-Simulating an instruction is easy—if verbose—for the most part;
+Simulating an instruction is <span class="nowrap">easy—</span>if <span class="nowrap">verbose—</span>for the most part;
 the only slight challenge is that we have instructions along the lines of <code>mul a 2</code>, as well as <code>mul a a</code>;
 in the latter case, we first need to get the current value out of register <code>a</code> before execution.
 An easy way to do this is to match on the
@@ -2921,7 +2921,7 @@ only this time we have to wrap the whole thing inside of <a href="https://mlochb
 Part two informs us that we actually completely misunderstood the instructions.
 In reality, the assembly is about simulating a concurrent system comprising of program <code>0</code> and program <code>1</code>.
 The simulations run completely separately,
-save for the “send” and “receive”—instead of “sound” and “recover”—instructions they use to communicate:
+save for the “send” and “receive”<span class="nowrap">—</span>instead of “sound” and “recover”<span class="nowrap">—</span>instructions they use to communicate:
 <blockquote>
 <ul>
 <li>snd X sends the value of X to the other program. These values wait in a queue until that program is ready to receive them. Each program has its own message queue, so a program can never receive a message it sent.</li>
@@ -2931,13 +2931,13 @@ save for the “send” and “receive”—instead of “sound” and “recove
 <p></p>
 Further, program <code>1</code> starts with a <code>1</code> in its last register.
 Our task is to simulate both programs until they deadlock<!--
--->—both are stuck on <code>rcv</code> calls but both send queues are empty—<!--
+--><span class="nowrap">—</span>both are stuck on <code>rcv</code> calls but both send queues are <span class="nowrap">empty—</span><!--
 -->and count the number of times program <code>1</code> pushed something to program <code>0</code>’s queue.
 <p></p>
 Are you ready to simulate concurrency in an array language?
 I wasn’t.
 Anyways, my idea was to run both programs in lockstep, with two lists of additional state that we have to keep track of.
-This is only important for <code>snd</code> and <code>rcv</code>—the other instructions don’t have to change.
+This is only important for <code>snd</code> and <code>rcv</code><span class="nowrap">—</span>the other instructions don’t have to change.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">Two</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="kt">{</span><span class="w"> </span><span class="c1"># my queue, other queue, index, registers, instruction</span>
 <span class="w">  </span><span class="c1"># Push to other queue.</span>
@@ -3093,7 +3093,7 @@ In particular, we never want to turn around.
 <span class="kt">}</span>
 </pre></div>
 <p></p>
-Notice how the result of <code>ND</code> is still a list—when it’s empty,
+Notice how the result of <code>ND</code> is still a <span class="nowrap">list—</span>when it’s empty,
 we know that we have reached the end.
 Getting the path now simply involves simulating what we need to simulate.
 
@@ -3120,7 +3120,7 @@ All that’s left to do is to get all letters from the path:
 </pre></div>
 <hr />
 <p></p>
-Part two is short and sweet—probably a breather from yesterday—and asks us for the length of the path.
+Part two is short and <span class="nowrap">sweet—</span>probably a breather from <span class="nowrap">yesterday—</span>and asks us for the length of the path.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">≠</span><span class="nv">path</span><span class="w"> </span><span class="c1"># ⇒ 17264</span>
 </pre></div>
@@ -3158,7 +3158,7 @@ and then parse the whole thing as a list.
 <p></p>
 Now, “in the long term” is a bit of a flexible formulation,
 but what the question essentially wants us to recognise is that a higher acceleration always wins<!--
--->—doesn’t matter how fast the other particle started.
+--><span class="nowrap">—</span>doesn’t matter how fast the other particle started.
 In particular, if we want to find out which particle will stay closest to the origin,
 we need to find the one that has the smallest acceleration.
 I will discuss two ways of doing this, each slightly flawed in its own way.
@@ -3185,7 +3185,7 @@ Get the absolute value of each position after 1000 steps,
 and then compute the minimum as before.
 <hr />
 <p></p>
-Part two wants us to take care of “colliding” particles—those whose positions match up at any point in time.
+Part two wants us to take care of “colliding” <span class="nowrap">particles—</span>those whose positions match up at any point in time.
 Since I’m not going to solve quadratic equations, let’s also just simulate this one “long enough”.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">≠</span><span class="kt">{</span><span class="sr">(</span><span class="o">∊∧</span><span class="m">1</span><span class="o">⌽∊</span><span class="sr">)</span><span class="py">∘</span><span class="sr">(</span><span class="o">⊑</span><span class="na">¨</span><span class="sr">)</span><span class="py">⊸</span><span class="o">/</span><span class="w"> </span><span class="o">∨U</span><span class="na">¨</span><span class="ni">𝕩</span><span class="kt">}</span><span class="py">⍟</span><span class="m">1000</span><span class="w"> </span><span class="nv">inp</span><span class="w"> </span><span class="c1"># ⇒ 574</span>
@@ -3199,7 +3199,7 @@ and kick out all particles that are equal to any adjacent ones.
 The <code>∊∧1⌽∊</code> part is probably reasonably obfuscated, so let’s go through it.
 </summary>
 <p></p>
-First, one could write that piece of code in a slightly different—perhaps more understandable—way:<!--
+First, one could write that piece of code in a slightly <span class="nowrap">different—</span>perhaps more <span class="nowrap">understandable—</span>way:<!--
 --><label for="sn-40" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-40" class="margin-toggle" /><div class="sidenote">This is modulo some shenanigans when <code>0</code> is the first element of the list,
 but let’s completely ignore that case for the purposes of this exposition.
 Indeed, since we are dealing with a vector of three numbers and the fill element is still <code>0</code>,
@@ -3474,7 +3474,7 @@ For the simple partition that we want, doubling the vector suffices.
 <p></p>
 The rest of the code is kind of straightforward;
 in <code>{𝕊sg: 1⊑⊑ (sg≡⊑)¨⊸/substs}</code> we look for the substitution that fits the current subset of the grid<!--
--->—we are guaranteed by the question that we have exactly one such match—<!--
+--><span class="nowrap">—</span>we are guaranteed by the question that we have exactly one such <span class="nowrap">match—</span><!--
 -->and take the enhancement (<code>1⊑</code>).
 This already has the right shape in that the resulting array consists of <code>(k+1)×(k+1)</code> blocks in the right order,
 so we just need to <a href="https://mlochbaum.github.io/BQN/doc/join.html">join</a> everything together.
@@ -3585,7 +3585,7 @@ We again don’t keep track of additional clean cells by supplying a default arg
 <hr />
 <p></p>
 Part two wants us to simulate the same thing, but instead of two we now have four states to keep track of:
-clean, weakened, infected, and flagged—in that order.
+clean, weakened, infected, and <span class="nowrap">flagged—</span>in that order.
 We also have to simulate everything for 10’000’000 instead of only 10’000 steps,
 and the rules are a bit different:
 <blockquote>
@@ -3626,7 +3626,7 @@ Other than that, though, it’s the same function as before.
 <h3 id="day-23"><a href="https://github.com/slotThe/advent/blob/master/aoc2017/bqn/day23.bqn">Day 23</a><a href="#day-23" class="floatleft sec-link">§</a></h3>
 <p></p>
 Today we have to help an experimental coprocessor to not halt and catch fire.
-This again boils down to simulating some small assembly language—or so one would think.
+This again boils down to simulating some small assembly <span class="nowrap">language—</span>or so one would think.
 The instruction set is similar to that of <a href="#day-18">day 18</a>:
 <blockquote>
 <ul>
@@ -3650,7 +3650,7 @@ Oh yeah.
 <p></p>
 So what’s that all about?
 Well, originally the code looked very different<!--
--->—almost an exact copy-paste of what we did for day 18—<!--
+--><span class="nowrap">—</span>almost an exact copy-paste of what we did for day <span class="nowrap">18—</span><!--
 -->but part two reveals what the task actually wants us to do.
 <blockquote>
 <p></p>
@@ -3885,7 +3885,7 @@ This means that one should be able to use an array of shape <code>⟨6, 2⟩</co
 where every element would be a vector of length <code>3</code>, indicating the new state, tape cell, and direction.
 Alternatively, I suppose, an array of shape <code>⟨6, 2, 3⟩</code> also works
 (and <a href="https://saltysylvi.github.io/blog/flat1.html">would be flat</a>).
-I haven’t explored this further, but it would probably be fun to implement—I will leave it as an exercise for the eager reader.
+I haven’t explored this further, but it would probably be fun to <span class="nowrap">implement—</span>I will leave it as an exercise for the eager reader.
 <hr />
 <p></p>
 As every year, part two is a freebie if one has completed all of the puzzles up until now,

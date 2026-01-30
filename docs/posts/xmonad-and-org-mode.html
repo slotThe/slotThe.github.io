@@ -45,14 +45,14 @@
            too small for the one in the `default.html' template -->
       As I’ve said before, basically my entire digital life happens in either
 <a href="https://www.gnu.org/software/emacs/">Emacs</a> or <a href="https://xmonad.org/"><span class="small-caps">xm</span>onad</a>. Thus, a lot of time spent on my setup either goes
-towards working on the two configurations separately, or—as we’ll do
-today—bringing them ever closed together.
+towards working on the two configurations separately, <span class="nowrap">or—</span>as we’ll do
+<span class="nowrap">today—</span>bringing them ever closed together.
 <p></p>
 Specifically, I want to showcase a new<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Version 0.17.0 onwards.</div><!--
 --> <span class="small-caps">xm</span>onad module:
-<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.​Prompt.​Org­Mode</a>. Building on top of <span class="small-caps">xm</span>onad’s prompt—which works
-much like <a href="https://tools.suckless.org/dmenu/">dmenu</a>—it is designed to rapidly capture thoughts and ideas
+<a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Prompt-OrgMode.html">XMonad.​Prompt.​Org­Mode</a>. Building on top of <span class="small-caps">xm</span>onad’s <span class="nowrap">prompt—</span>which works
+much like <a href="https://tools.suckless.org/dmenu/">dmenu</a><span class="nowrap">—</span>it is designed to rapidly capture thoughts and ideas
 whenever inspiration strikes and, importantly, to do so without
 disrupting one’s current workflow. The module recently got support for
 Org <a href="https://orgmode.org/manual/Priorities.html">priorities</a>, so I figured this was as good an excuse as
@@ -69,16 +69,16 @@ custom elisp code one has to run; all of it is taken care of by the
 module itself.
 <p></p>
 The upshot of all of this is a tool to quickly and unobtrusively jot
-down an idea—quiet the monkey mind—and then get back to work straight
+down an <span class="nowrap">idea—</span>quiet the monkey <span class="nowrap">mind—</span>and then get back to work straight
 away. For me, having something like this is very important, lest I get
 distracted by some thought about another project and spend the next hour
 or so working on that instead of doing what I was actually supposed to
-do. Having the idea written down in a known place—perhaps even with an
-automatic reminder in my <a href="https://orgmode.org/manual/Agenda-Views.html">agenda</a>—helps me get rid of that creeping
+do. Having the idea written down in a known <span class="nowrap">place—</span>perhaps even with an
+automatic reminder in my <a href="https://orgmode.org/manual/Agenda-Views.html">agenda</a><span class="nowrap">—</span>helps me get rid of that creeping
 anxiety that I’m forgetting things left and right.
 <h3 id="functionality">Functionality<a href="#functionality" class="floatleft sec-link">§</a></h3>
 <p></p>
-The following showcases the core functionality of the module—taking
+The following showcases the core functionality of the <span class="nowrap">module—</span>taking
 notes!
 <p></p>
 <img class="pure-img" src="../images/orgmode-prompt/simple-task.gif" alt="capturing a single task">
@@ -104,13 +104,13 @@ selection to the body of the note.
 <p></p>
 <img class="pure-img" src="../images/orgmode-prompt/selection-tasks.png" alt="visual representation of the above paragraph, showing various states of notes">
 <p></p>
-Of course, you can use all of this together as well—directly link to
+Of course, you can use all of this together as <span class="nowrap">well—</span>directly link to
 that one paper or blog post you wanted to read, or that one YouTube
 video you want to watch on the weekend!
 <h3 id="sample-configuration">Sample configuration<a href="#sample-configuration" class="floatleft sec-link">§</a></h3>
 <p></p>
-To round things off—and quickly showcase another cool (and new!)
-module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a>—here is a sample keybinding that takes
+To round things <span class="nowrap">off—</span>and quickly showcase another cool (and new!)
+module, <a href="https://xmonad.github.io/xmonad-docs/xmonad-contrib/XMonad-Actions-Prefix.html">XMonad.Actions.Prefix</a><span class="nowrap">—</span>here is a sample keybinding that takes
 “normal” <code>TODO</code> notes on <code>M-o c</code><!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Note that for this post, <code>M</code> means <code>&lt;Super_L&gt;</code> and not <code>&lt;Alt_L&gt;</code>.</div><!--
 --> and uses the selection when called

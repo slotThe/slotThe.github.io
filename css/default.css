@@ -477,9 +477,9 @@ details {
 
 /*** Misc ***/
 
-span.email b {                  /* Email obfuscation */
-    display: none;
-}
+span.email b { display: none; } /* Email obfuscation */
+span.small-caps { font-variant: small-caps; }
+span.nowrap { white-space: nowrap; }
 
 abbr[title] {
     border-bottom: none;
@@ -515,8 +515,4 @@ spoiler {                       /* Spoiler tags */
         background-color: inherit;
         color: inherit;
     }
-}
-
-span.small-caps {
-    font-variant: small-caps;
 }

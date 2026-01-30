@@ -69,7 +69,7 @@
 <li><a href="#conclusion">Conclusion</a></li>
 </ul>
   </div>
-One of my favourite—and most used—modules is <code>XMonad.​Actions.​TopicSpace</code>.
+One of my <span class="nowrap">favourite—</span>and most <span class="nowrap">used—</span>modules is <code>XMonad.​Actions.​TopicSpace</code>.
 However, it seems relatively unknown among the general <span class="small-caps">xm</span>onad community.
 I fear this is due to the fact that the module is quite old and formerly
 had a rather high barrier to entry. Despite having been given shiny
@@ -87,7 +87,7 @@ an introduction to the module in the post about my <a href="./my-phd-workflow.ht
 <blockquote>
 <p></p>
 <span class="small-caps">xm</span>onad has a module called TopicSpace, which upgrades the X11
-workspace—virtual desktop—concept to so-called topics. These are
+<span class="nowrap">workspace—</span>virtual <span class="nowrap">desktop—</span>concept to so-called topics. These are
 workspaces with a “theme” associated to them; for example, I have a
 topic for every project that I’m currently working on. This results
 in a clean separation of concerns. Plus, I always know where my
@@ -95,8 +95,8 @@ windows are!
 <p></p>
 Every topic has a directory and a “startup hook”, firing when the
 topic is switched to and empty, associated to it. While most
-convenient for programming related tasks—e.g., spawn <code>ghcid</code> in the
-relevant directory or automatically build and open this website—it’s
+convenient for programming related <span class="nowrap">tasks—</span>e.g., spawn <code>ghcid</code> in the
+relevant directory or automatically build and open this <span class="nowrap">website—</span>it’s
 also quite convenient for mathematical projects.
 <p></p>
 I have set up special keybindings to bring up an Emacs session in the
@@ -108,7 +108,7 @@ a result, it’s rather fast to go from thinking about a certain problem
 to working on it.
 </blockquote>
 <p></p>
-At a glance, this probably does not sound very impressive—so one can
+At a glance, this probably does not sound very <span class="nowrap">impressive—</span>so one can
 have a directory and some function associated to a workspace (hereafter
 also called “topic”), big deal. However, we will see that with a bit of
 creativity this can be used to great effect.
@@ -132,7 +132,7 @@ the day, but I find that such a separation of concerns greatly reduces
 mental load regarding what’s currently happening on my computer.
 Definitely worth it.
 <p></p>
-In terms of code, this—as well as the following examples—heavily use the
+In terms of code, <span class="nowrap">this—</span>as well as the following <span class="nowrap">examples—</span>heavily use the
 <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html#g:EDSL">new interface</a> to XMonad.Util.Run, which allows one to
 spawn processes in a declarative and compositional way; I’ve <a href="./calling-emacs-from-xmonad.html" class="local-link">written
 about this</a> in another post. For example, my RSS topic is
@@ -160,7 +160,7 @@ very little friction before starting to work on whatever I wanted to
 work on.
 <p></p>
 For example, I want to open Emacs and <a href="https://github.com/ndmitchell/ghcid">ghcid</a> in every Haskell project
-of mine—so why not automate this? Using what X.U.Run gives us, we can
+of <span class="nowrap">mine—</span>so why not automate this? Using what X.U.Run gives us, we can
 quickly throw together a function that executes the given instruction
 inside of a terminal:
 
@@ -220,7 +220,7 @@ As the rest of my dotfiles, it’s available
 <p></p>
 And Voilà, we can now attach this action to all the topics that we want!
 <p></p>
-Note that the <code>*&gt;</code> operator is—in this case—just the sequencing of
+Note that the <code>*&gt;</code> operator <span class="nowrap">is—</span>in this <span class="nowrap">case—</span>just the sequencing of
 actions. If you’re more comfortable with <code>do</code> notation, you can also
 write the above as
 
@@ -259,7 +259,7 @@ All in all, we have something that looks a little bit like this:
 <h3 id="testing-this-website">Testing this website<a href="#testing-this-website" class="floatleft sec-link">§</a></h3>
 <p></p>
 Much in the same vein as my Haskell topics, I find the <code>website</code> topic
-to be extremely handy—you can probably guess what it’s used for. Its
+to be extremely <span class="nowrap">handy—</span>you can probably guess what it’s used for. Its
 associated function <code>spawnWebsite</code> switches to the “Tall” layout, spawns
 an Emacs frame in the topic directory, builds the website, and opens a
 browser window pointing to the local copy:
@@ -279,7 +279,7 @@ The whole thing looks like this:
 Hopefully these examples have convinced you to give <code>X.A.TopicSpace</code> a spin;
 perhaps you’ve even gotten some ideas of your own you’d like to try out.
 Although conceptually very simple, the module can be used in a variety
-of ways to automate boring tasks just that tiny bit more—definitely a
+of ways to automate boring tasks just that tiny bit <span class="nowrap">more—</span>definitely a
 win in my book!
 <!-- Body is included in the above file -->
     </section>

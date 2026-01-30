@@ -68,7 +68,7 @@
 I’d like to highlight another <span class="small-caps">xm</span>onad module that has become quite
 essential to me: <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Search.html">XMonad.Actions.Search</a>. Its premise is simple: you
 enter some text into the <span class="small-caps">xm</span>onad prompt, and it queries a search engine
-of your choice with this input—straightforward, and yet very effective.
+of your choice with this <span class="nowrap">input—</span>straightforward, and yet very effective.
 <!--more-->
 <p></p>
 In fact, this sounds so simple that one might immediately ask: what’s
@@ -89,13 +89,13 @@ forges like <a href="https://github.com/">Git­Hub</a>,
 … the list goes on.</div><!--
 -->, searching efficiently
 becomes increasingly important. Plus, the lower barrier to entry means
-that looking something up—always a good idea, with all of humanities
-collected knowledge at one’s fingertips—may well become instinctive,
+that looking something <span class="nowrap">up—</span>always a good idea, with all of humanities
+collected knowledge at one’s <span class="nowrap">fingertips—</span>may well become instinctive,
 instead of feeling like a chore.
 <h2 id="functionality">Functionality<a href="#functionality" class="floatleft sec-link">§</a></h2>
 <p></p>
 The basic workflow suggested by the module simply consists of picking a
-search engine, and binding it to a key via <code>promptSearch</code>—that’s it.
+search engine, and binding it to a key via <code>promptSearch</code><span class="nowrap">—</span>that’s it.
 Additionally, there is also <code>selectSearch</code> to look up the current
 (primary) selection. For example, suppose we had bound<!--
 --><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote">󠀠
@@ -157,7 +157,7 @@ define
 </pre></div>
 <p></p>
 This means that even if the module does not have a search engine you
-want, it’s trivial to define it yourself—and don’t forget to upstream it
+want, it’s trivial to define it <span class="nowrap">yourself—</span>and don’t forget to upstream it
 afterwards!
 <p></p>
 There also is the <code>searchEngineF</code> function, which instead of just a
@@ -204,7 +204,7 @@ several different forges:
 <span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">otherwise</span><span class="w">         </span><span class="ow">-&gt;</span><span class="w"> </span><span class="s">&quot;&quot;</span>
 </pre></div>
 <p></p>
-It works as expected—so much so that I can enable the prompt’s
+It works as <span class="nowrap">expected—</span>so much so that I can enable the prompt’s
 auto-complete feature, which automatically completes a query if there is
 only a single candidate left.<!--
 --><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">In this case here, that single candidate will be from the relevant
@@ -220,7 +220,7 @@ prompt history.</div><!--
 As I said, the module is pretty flexible with how exactly one can use
 it, and so here are a few more personal tweaks that I figure might also
 be of interest to others. First, my setup is integrated with
-<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a>—I use the prefix argument to decide whether I
+<a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Actions-Prefix.html">XMonad.​Actions.​Prefix</a><span class="nowrap">—</span>I use the prefix argument to decide whether I
 want “normal” searches, or ones using the primary selection.
 
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="c1">-- | Search commands; integration with X.A.Prefix.</span>
@@ -301,7 +301,7 @@ submap from a list of <code>(key, action)</code> pairs.</div><!--
 For my full configuration, see <a href="https://gitlab.com/slotThe/dotfiles/-/blob/c31bc324a8cc3df5449d9ca7a50aabfcd87a7ad8/xmonad/.config/xmonad/src/xmonad.hs#L720">here</a>.
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
-As always, even the simplest topic—that of a search—leaves a lot more
+As always, even the simplest <span class="nowrap">topic—</span>that of a <span class="nowrap">search—</span>leaves a lot more
 room for personalisation than one would initially think. Also as
 always, <span class="small-caps">xm</span>onad delivers on the “there is already a module for that”
 front.

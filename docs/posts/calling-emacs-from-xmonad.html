@@ -70,19 +70,19 @@
 </ul>
   </div>
 In the post about my <a href="../posts/phd-workflow/2022-05-01-my-phd-workflow.html#citations" class="local-link">research workflow</a>, I briefly mentioned having to
-call Emacs—or other external programs—from within <span class="small-caps">xm</span>onad. I figured
+call <span class="nowrap">Emacs—</span>or other external <span class="nowrap">programs—</span>from within <span class="small-caps">xm</span>onad. I figured
 that this was perhaps something that could be of use to more people than
 just me. After a little bit of deliberation and coming up with a
 generic enough <span class="small-caps">api</span>, I decided to turn it into an <span class="small-caps">xm</span>onad module!
 <p></p>
 These changes now live as part of the <a href="https://github.com/xmonad/xmonad-contrib">xmonad-contrib</a> repository and
-are—from version 0.17.1 onwards—available for everyone to try out.<!--
+<span class="nowrap">are—</span>from version 0.17.1 <span class="nowrap">onwards—</span>available for everyone to try out.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Alternatively, one could use the git versions of <code>xmonad</code> and
 <code>xmonad-contrib</code>; refer to
 <a href="https://xmonad.org/INSTALL.html">INSTALL</a> for more information.</div><!--
 -->
-I’d like to use this opportunity to both showcase the module—how and why
-one would use it—and talk a little bit about its only redeeming
+I’d like to use this opportunity to both showcase the <span class="nowrap">module—</span>how and why
+one would use <span class="nowrap">it—</span>and talk a little bit about its only redeeming
 implementation detail.
 <!--more-->
 <h2 id="main-use-cases">Main use cases<a href="#main-use-cases" class="floatleft sec-link">§</a></h2>
@@ -204,7 +204,7 @@ When executed, this translates to something like
                 (arXiv-citation &quot;&lt;url-in-the-primary-selection&gt;&quot;))'
 </pre></div>
 <p></p>
-I certainly know which one I’d rather type—especially with <span class="small-caps">elpa</span>
+I certainly know which one I’d rather <span class="nowrap">type—</span>especially with <span class="small-caps">elpa</span>
 directory names changing quite frequently! On that note,
 <a href="https://github.com/slotthe/arxiv-citation">arxiv-citation</a> is on <span class="small-caps">melpa</span> now; yay!
 <h3 id="other-programs">Other programs<a href="#other-programs" class="floatleft sec-link">§</a></h3>
@@ -243,7 +243,7 @@ awkward with the current set of functions and combinators do not
 hesitate to open a pull request or an issue!
 <h2 id="implementation-considerations">Implementation considerations<a href="#implementation-considerations" class="floatleft sec-link">§</a></h2>
 <p></p>
-The implementation is actually very straightforward—no really, check out
+The implementation is actually very <span class="nowrap">straightforward—</span>no really, check out
 the
 <a href="https://github.com/xmonad/xmonad-contrib/blob/master/XMonad/Util/Run.hs#L303">source</a>
 if you don’t believe me!
@@ -305,7 +305,7 @@ completely untouched (and unevaluated!). All in all, this means that
 </pre></div>
 <p></p>
 we will have to walk over <code>"string1"</code> three times! What we actually
-want is a right-associative ordering—exactly what function compositions
+want is a right-associative <span class="nowrap">ordering—</span>exactly what function compositions
 gives us. Spelled out,
 
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span><span class="w"> </span><span class="o">$</span><span class="w"> </span><span class="s">&quot;&quot;</span>
@@ -314,15 +314,15 @@ gives us. Spelled out,
 </pre></div>
 <p></p>
 which yields the desired behaviour. In fact, this is so canonical that
-instead of using <code>(.)</code>, we could have also—perhaps a bit
-confusingly—used <code>(&lt;&gt;)</code> directly:
+instead of using <code>(.)</code>, we could have <span class="nowrap">also—</span>perhaps a bit
+<span class="nowrap">confusingly—</span>used <code>(&lt;&gt;)</code> directly:
 
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="n">string1</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string2</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string3</span><span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="n">string4</span>
 <span class="w">  </span><span class="err">≡</span><span class="w"> </span><span class="n">string1</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string2</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string3</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">string4</span>
 </pre></div>
 <p></p>
-This is the fact that the <em>endomorphisms</em> for any type <code>a</code>—the functions
-<code>a -&gt; a</code>—form a <em>monoid</em>. That is to say that they come equipped with
+This is the fact that the <em>endomorphisms</em> for any type <code>a</code><span class="nowrap">—</span>the functions
+<code>a -&gt; a</code><span class="nowrap">—</span>form a <em>monoid</em>. That is to say that they come equipped with
 an associative an unital operation: function composition. In Haskell,
 <code>(&lt;&gt;)</code> is, in some sense,
 <a href="https://www.haskell.org/tutorial/classes.html">overloaded</a> so that it
@@ -340,7 +340,7 @@ amenable to the threading idea.
 <p></p>
 I haven’t benchmarked this, so it’s not entirely clear to me whether
 performance is actually relevant in this situation<!--
---><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">I suspect that the answer is “probably not”—that didn’t stop me,
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">I suspect that the answer is “probably not”<span class="nowrap">—</span>that didn’t stop me,
 however!</div><!--
 -->, but using
 difference lists just feels right here, and so I did.

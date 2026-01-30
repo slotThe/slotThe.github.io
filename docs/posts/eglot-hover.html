@@ -61,7 +61,7 @@ so let’s quickly remind ourselves of the general problem:
 <p></p>
 L<span class="small-caps">sp</span> clients have the option of showing useful things on hover.
 In most languages, there is an obvious candidate for this: the type signature of the thing at point.
-Sadly—for some languages—the implementation of the feature is… not great.
+<span class="nowrap">Sadly—</span>for some <span class="nowrap">languages—</span>the implementation of the feature is… not great.
 </blockquote>
 <p></p>
 This still holds true two years later,<!--
@@ -164,7 +164,7 @@ Same issue with <code>haskell-language-server</code>
 </ul>
 <hr />
 <p></p>
-What I’d like to achieve instead is a type signature—if I want to know where the thing comes from I can just <code>M-.</code> it.
+What I’d like to achieve instead is a type <span class="nowrap">signature—</span>if I want to know where the thing comes from I can just <code>M-.</code> it.
 <p></p>
 <picture>
 <source srcset="../images/eglot-hover/rust-analyzer2.png" media="(prefers-color-scheme: light)">
@@ -209,7 +209,7 @@ but at least for the ones shown above it should work as-is.
 Onto the fun part.
 <p></p>
 The good<!--
--->—or bad, depending on your inclination—<!--
+--><span class="nowrap">—</span>or bad, depending on your <span class="nowrap">inclination—</span><!--
 -->thing about lsp-mode is that it’s almost unnecessarily configurable just by user options.
 This includes hover signatures:
 <code>lsp-clients-extract-signature-on-hover</code> is just a <code>cl-defmethod</code>,
@@ -362,7 +362,7 @@ but since the implementation is relatively brittle it’ll probably need some ad
 <span class="w">           </span><span class="p">(</span><span class="nv">s-chop-suffixes</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="w"> </span><span class="s">&quot;```&quot;</span><span class="w"> </span><span class="s">&quot;``` ---&quot;</span><span class="p">))))))</span>
 </pre></div>
 <p></p>
-That’s pretty much it—you can now enjoy having useful hover information!
+That’s pretty much <span class="nowrap">it—</span>you can now enjoy having useful hover information!
 <hr />
 <p></p>
 In case you want to

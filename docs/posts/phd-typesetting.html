@@ -101,7 +101,7 @@ While this post really is about typography,
 I will say that making LaTeX
 <a href="https://tony-zorman.com/posts/speeding-up-latex.html" class="local-link">acceptably fast</a>
 for these kinds of medium-sized documents really helped preserve an epsilon of sanity.
-Fiddling around with preamble precompiling and externalisation is—while painful—definitely worth it.
+Fiddling around with preamble precompiling and externalisation <span class="nowrap">is—</span>while <span class="nowrap">painful—</span>definitely worth it.
 <h2 id="the-document-class">The document class<a href="#the-document-class" class="floatleft sec-link">§</a></h2>
 <p></p>
 I flip-flopped between the only two relevant contenders:
@@ -121,7 +121,7 @@ but I’m quite happy with memoir and would recommend it for any kind of book-le
 <h2 id="the-page-layout">The page layout<a href="#the-page-layout" class="floatleft sec-link">§</a></h2>
 <p></p>
 The default <code>a4paper</code> page layout that memoir has is <em>fine</em>,
-though <code>\isopage</code>—inspired by page dimensions suggested by Robert Bringhurst—yields a nicer looking printout in my opinion.
+though <code>\isopage</code><span class="nowrap">—</span>inspired by page dimensions suggested by Robert <span class="nowrap">Bringhurst—</span>yields a nicer looking printout in my opinion.
 This is especially true with a slightly larger font size,
 which is more or less mandatory if you have to print something in as big of a format as A4.
 <p></p>
@@ -138,7 +138,7 @@ but either increasing the font size or decreasing the margins
 would impede too much on the actual content,
 so I kept it this way.
 <p></p>
-Sidenotes—much more on that later—are constrained to a maximum of around 21 characters via
+<span class="nowrap">Sidenotes—</span>much more on that <span class="nowrap">later—</span>are constrained to a maximum of around 21 characters via
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\setmarginnotes</span><span class="nb">{</span>17pt<span class="nb">}{</span>80pt<span class="nb">}{</span><span class="k">\onelineskip</span><span class="nb">}</span>
 </pre></div>
 <p></p>
@@ -159,7 +159,7 @@ which however doesn’t include the chapter number besides it:
 <p></p>
 The famous book <span class="citation" data-cites="bringhurst92:el-typ">[<a href="#ref-bringhurst92:el-typ" role="doc-biblioref">Brin92</a>]</span> puts a rather large number in the margin,
 which is also what I ended up going with (see the first double page in this post).
-Thankfully, this is not difficult to fix—so much so that someone on TeX.Stack​exachange has
+Thankfully, this is not difficult to <span class="nowrap">fix—</span>so much so that someone on TeX.Stack​exachange has
 <a href="https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir">already done it</a>.
 The exact <code>bringhurst.sty</code> file I used is <a href="../images/phd-typesetting/bringhurst.txt" class="local-link">here</a>;
 to use it just replace the call to <code>\chapterstyle</code> with a call to <code>\usepackage</code>:
@@ -379,19 +379,19 @@ to
 <p></p>
 <img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="boondoxupr calligraphic alphabet. Also features lower case letters.">
 <p></p>
-I also went ahead and chose a Fraktur font that is slightly less bold—<code>esstix</code>.
+I also went ahead and chose a Fraktur font that is slightly less <span class="nowrap">bold—</span><code>esstix</code>.
 <p></p>
 <img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="esstix fraktur alphabet. Also features lower case letters.">
 <p></p>
 However, much more important than that is a good text font.
 For me, there are two top contenders here,
-which is <a href="https://github.com/alerque/libertinus">Libertinus</a>—<!--
--->provided by the <a href="https://ctan.org/pkg/libertinus">libertinus</a> package—<!--
+which is <a href="https://github.com/alerque/libertinus">Libertinus</a><span class="nowrap">—</span><!--
+-->provided by the <a href="https://ctan.org/pkg/libertinus">libertinus</a> <span class="nowrap">package—</span><!--
 -->on the one hand
 <p></p>
 <img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="Writing sample of Libertinus.">
 <p></p>
-and Palatino—or a clone of it, in the form of <a href="https://ctan.org/pkg/newpx">newpx</a>—on the other:
+and <span class="nowrap">Palatino—</span>or a clone of it, in the form of <a href="https://ctan.org/pkg/newpx">newpx</a><span class="nowrap">—</span>on the other:
 <p></p>
 <img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="Writing sample of the newpx Palatino clone.">
 <p></p>
@@ -415,7 +415,7 @@ Using that, the above comparison becomes
 <img src="../images/phd-typesetting/mathic.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
 <p></p>
 which looks much better in both cases!
-This means one again has the power—and pain—of choice.
+This means one again has the <span class="nowrap">power—</span>and <span class="nowrap">pain—</span>of choice.
 I still think that, for this kind of technical text,
 the look and feel of an old-style font such as Palatino just fits the general “vibe” better,
 but your mileage may vary.</div><!--
@@ -432,7 +432,7 @@ the full code looks like this:
 </pre></div>
 <p></p>
 Some options should be self-explanitory<!--
--->—like <code>tighter</code> or the <code>amsthm</code> compatibility—<!--
+--><span class="nowrap">—</span>like <code>tighter</code> or the <code>amsthm</code> <span class="nowrap">compatibility—</span><!--
 -->while other might require some further explanation.
 <ul>
 <li><p></p>
@@ -534,7 +534,7 @@ were rather large quality of life improvements:
 </pre></div>
 <p></p>
 This creates an environment with an immediate reference to an already existing theorem, proposition, and so on,
-which you might want to use in an introduction—much more sightly than something like <em>Theorem (Theorem x.y)</em>.
+which you might want to use in an <span class="nowrap">introduction—</span>much more sightly than something like <em>Theorem (Theorem x.y)</em>.
 One can use it just like a regular <code>theoremstyle</code>:
 
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">% Label should exist elsewhere.</span>
@@ -554,10 +554,10 @@ This will then be typeset like so, with a link to the actual result:
 <p></p>
 This taught me a bit more about how <code>amsmath</code> environments work under the hood.
 Plus, using <code>cleveref</code> saves one from having to define many different commands like <code>reptheorem</code>, <code>repcorollary</code>, and so on<!--
--->—no going around obsessively checking whether a theorem invariably became a proposition a while ago.
+--><span class="nowrap">—</span>no going around obsessively checking whether a theorem invariably became a proposition a while ago.
 <hr />
 <p></p>
-A general advice I have—and also got from an older PhD student—is to start early.<!--
+A general advice I <span class="nowrap">have—</span>and also got from an older PhD <span class="nowrap">student—</span>is to start early.<!--
 --><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Thanks, Florian!</div><!--
 -->
 Even just streamlining and unifying notation takes more time than ones thinks,

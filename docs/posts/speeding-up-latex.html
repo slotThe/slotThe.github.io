@@ -61,7 +61,7 @@
   </div>
 Getting reasonable compilation times out of a medium-sized LaTeX document
 that contains lots of TikZ pictures
-is not as difficult as it may seem at first—at least if you know the correct ancient incantations.
+is not as difficult as it may seem at <span class="nowrap">first—</span>at least if you know the correct ancient incantations.
 <!--more-->
 <p></p>
 I’m feverishly writing my dissertation right now,<!--
@@ -81,7 +81,7 @@ it contains quite a number of
 pictures, which really takes a toll on compilation times.
 I’m not kidding:
 my current draft<!--
--->—currently clocking in at 193 pages—<!--
+--><span class="nowrap">—</span>currently clocking in at 193 <span class="nowrap">pages—</span><!--
 -->is not doing so well.<!--
 --><label for="sn-2" class="margin-toggle">⊕</label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="marginnote">󠀠
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>󠀠
@@ -108,7 +108,7 @@ If anything, this post will help <em>me</em> remember how and why to do certain 
 Time to benefit from that.
 <h2 id="externalising-tikz-pictures">Externalising TikZ pictures<a href="#externalising-tikz-pictures" class="floatleft sec-link">§</a></h2>
 <p></p>
-The <code>external</code> library for TikZ can be used to “externalise” pictures—that is,
+The <code>external</code> library for TikZ can be used to “externalise” <span class="nowrap">pictures—</span>that is,
 they get compiled into a separate <span class="small-caps">pdf</span> once,
 and are then just included into the main document,
 instead of having to recompile the pictures every time.
@@ -166,7 +166,7 @@ which also takes care of inlining the newly created environment.<!--
 <span class="nb">}</span>
 </pre></div>
 <p></p>
-This <em>almost</em> works, but now—again due to macro expansion shenanigans—<code>external</code>
+This <em>almost</em> works, but <span class="nowrap">now—</span>again due to macro expansion <span class="nowrap">shenanigans—</span><code>external</code>
 isn’t wise to any changes being made inside of the TikZ picture.
 The function that eventually computes the md5 hash only gets the contents of the unexpanded <code>\BODY</code> macro,
 which will not say much more other than “here comes a graphic”.
@@ -204,7 +204,7 @@ who actually know what they’re doing.</div><!--
 One thing to watch out for is that <code>&amp;</code>’s can mean different things in LaTeX,
 depending on whether the current macro is being read or executed.
 We could muck about with catcodes at this point,
-but I found it best—and safest—to just use an <code>ampersand replacement</code> for all tikzpictures,
+but I found it <span class="nowrap">best—</span>and <span class="nowrap">safest—</span>to just use an <code>ampersand replacement</code> for all tikzpictures,
 like so:<!--
 --><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote"><a href="https://q.uiver.app/">q.uiver</a> even has that as one of its export options!</div><!--
 -->
@@ -317,7 +317,7 @@ This can be compiled into a “format file” with
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>pdflatex<span class="w"> </span>-ini<span class="w"> </span>-jobname<span class="o">=</span><span class="s2">&quot;prec&quot;</span><span class="w"> </span><span class="s2">&quot;&amp;pdflatex prec.tex\dump&quot;</span>
 </pre></div>
 <p></p>
-Now we just need to tell our main file—<code>main.tex</code> in my case—to use <code>prec.fmt</code>.
+Now we just need to tell our main <span class="nowrap">file—</span><code>main.tex</code> in my <span class="nowrap">case—</span>to use <code>prec.fmt</code>.
 This is as simple as starting the file with the magic comment <code>%&amp;prec</code>,
 and advising <code>pdflatex</code> to use the format file we just compiled:
 
@@ -325,7 +325,7 @@ and advising <code>pdflatex</code> to use the format file we just compiled:
 </pre></div>
 <p></p>
 Of course, plugging <code>external</code> into this setup is not as plug-and-play as one would like.
-The dynamic—<em>not</em> the static—part of the preamble must contain a call to <code>\tikzexternal</code>,
+The <span class="nowrap">dynamic—</span><em>not</em> the <span class="nowrap">static—</span>part of the preamble must contain a call to <code>\tikzexternal</code>,
 and we also need to pass the format file through to each <code>pdflatex</code> invocation.
 As such, my <code>main.tex</code> file now starts with<!--
 --><label for="sn-9" class="margin-toggle">⊕</label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="marginnote">󠀠
@@ -376,14 +376,14 @@ as a local variable,
 and execute <code>TeX-command-master</code> or <code>TeX-command-run-all</code>,
 depending on the situation.
 <p></p>
-I invoke the Makefile only very sparingly—executing <code>pdflatex</code> three times still takes quite some time,
+I invoke the Makefile only very <span class="nowrap">sparingly—</span>executing <code>pdflatex</code> three times still takes quite some time,
 but even the current speedup makes it reasonably acceptable.
 <h2 id="draft-and-batch-mode">Draft and batch mode<a href="#draft-and-batch-mode" class="floatleft sec-link">§</a></h2>
 <p></p>
 One thing we can do to make a single run of <code>make build</code><!--
--->—though not necessarily a single <code>pdflatex</code> invocation—<!--
+--><span class="nowrap">—</span>though not necessarily a single <code>pdflatex</code> <span class="nowrap">invocation—</span><!--
 -->faster is to use the <code>-draftmode</code> option.
-This does not generate an output <span class="small-caps">pdf</span>—thereby wasting precious time, since that file gets overwritten anyways—but still writes to auxiliary files,
+This does not generate an output <span class="nowrap"><span class="small-caps">pdf</span>—</span>thereby wasting precious time, since that file gets overwritten <span class="nowrap">anyways—</span>but still writes to auxiliary files,
 in order to update positional information.
 <p></p>
 Adding <code>-draftmode</code> to the first two invocations of <code>pdflatex</code> in the Makefile above
@@ -420,7 +420,7 @@ so enabling <code>-interaction=batchmode</code> seems like a no-brainer.<!--
 but Emacs will do all the one-off compiling while I’m writing the thesis anyways.
 Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.</div><!--
 -->
-It also makes <code>pdflatex</code> very quiet when it comes to output—and a bit faster still.
+It also makes <code>pdflatex</code> very quiet when it comes to <span class="nowrap">output—</span>and a bit faster still.
 With the Makefile
 
 <div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nv">COMPILE_FLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-file-line-error<span class="w"> </span>-interaction<span class="o">=</span>batchmode<span class="w"> </span>-fmt<span class="o">=</span>prec.fmt

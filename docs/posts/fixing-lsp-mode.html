@@ -71,7 +71,7 @@ I will focus on the latter in this post.
 L<span class="small-caps">sp</span> clients have the option of showing useful things on hover.
 In most languages, there is an obvious candidate for this:
 the type signature of the thing at point.
-Sadly—for some languages—the implementation of the feature is… not great.
+<span class="nowrap">Sadly—</span>for some <span class="nowrap">languages—</span>the implementation of the feature is… not great.
 Buggy even, one might say.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">I have reported this as a bug <a href="https://github.com/emacs-lsp/lsp-haskell/issues/151">here</a>,
 but that issue seems to have stalled,
@@ -116,7 +116,7 @@ Defined at »PATH«
 </pre></div>
 <p></p>
 The type signature is so long that the server breaks it into several lines.
-Lsp-mode uses <code>lsp-clients-extract-signature-on-hover</code> to extract a signature on hover—by default, it looks like this:
+Lsp-mode uses <code>lsp-clients-extract-signature-on-hover</code> to extract a signature on <span class="nowrap">hover—</span>by default, it looks like this:
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">cl-defgeneric</span><span class="w"> </span><span class="nv">lsp-clients-extract-signature-on-hover</span><span class="w"> </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="nv">_server-id</span><span class="p">)</span>
 <span class="w">  </span><span class="s">&quot;Extract a representative line from CONTENTS, to show in the echo area.&quot;</span>
@@ -201,7 +201,7 @@ All in all, we have<!--
 This code assumes that lsp-mode uses
 <a href="https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization">plists instead of hash tables for deserialisation</a>.
 If you don’t have the <code>lsp-use-plists</code> variable set<!--
-  -->—and have recompiled lsp-mode afterwards—<!--
+  --><span class="nowrap">—</span>and have recompiled lsp-mode <span class="nowrap">afterwards—</span><!--
   -->then just replace <code>(plist-get contents :value)</code> with <code>(gethash "value" contents)</code>.</div><!--
 -->
 
@@ -268,7 +268,7 @@ However, this ostensibly requires me to use the mouse,<!--
 --><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Lsp-mode also provides <code>lsp-avy-lens</code>,
 so this is not really an actual problem.</div><!--
 -->
-and—more importantly—the above <span class="small-caps">gif</span> also shows that local functions do not have such a code lens attached to them.
+<span class="nowrap">and—</span>more <span class="nowrap">importantly—</span>the above <span class="small-caps">gif</span> also shows that local functions do not have such a code lens attached to them.
 I quite like type signatures for local definitions,
 so that’s a bit of a shame.
 <p></p>

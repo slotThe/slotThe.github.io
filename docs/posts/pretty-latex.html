@@ -70,7 +70,7 @@ after years of using Emacs,
 he was only now getting into using <code>prettify-symbols-mode</code> for editing LaTeX buffers!
 After overwhelming him with more customisations related to this,
 I realised that the topic<!--
--->—while seemingly easy on the surface—<!--
+--><span class="nowrap">—</span>while seemingly easy on the <span class="nowrap">surface—</span><!--
 -->actually has a lot more depth to it than one would first imagine.
 <!--more-->
 <h2 id="prettify-symbols-mode"><code>prettify-symbols-mode</code><a href="#prettify-symbols-mode" class="floatleft sec-link">§</a></h2>
@@ -81,7 +81,7 @@ The default <code>prettify-symbols-alist</code> that e.g. AUCTeX provides alrea
 For the uninitiated,
 it would display a buffer like this<!--
 --><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">If you don’t have AUCTeX installed for some reason<!--
-  -->—why are you reading this?—<!--
+  --><span class="nowrap">—</span>why are you reading <span class="nowrap">this?—</span><!--
   -->then trying out the following snippet might also get the message across:
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">add-hook</span>
 <span class="w"> </span><span class="ss">'emacs-lisp-mode-hook</span>
@@ -104,7 +104,7 @@ because of course that exists.
 However, the above already has some problems:
 <code>\otimes</code> is quite small,
 and thus barely discernible from <code>\bullet</code>,
-and of course user-defined macros—like <code>\defeq</code> or <code>\cat</code>—don’t get picked up on at all.
+and of course user-defined <span class="nowrap">macros—</span>like <code>\defeq</code> or <code>\cat</code><span class="nowrap">—</span>don’t get picked up on at all.
 We can refine the displayed symbols by adding our own definitions to
 the (buffer-local) <code>prettify-symbols-alist</code> variable:
 
@@ -124,7 +124,7 @@ Executing that hook makes the above situation even prettier.
 <h3 id="going-further">Going further<a href="#going-further" class="floatleft sec-link">§</a></h3>
 <p></p>
 Naturally<!--
--->—this being Emacs—<!--
+--><span class="nowrap">—</span>this being <span class="nowrap">Emacs—</span><!--
 -->substituting one symbol for another is not all that <code>prettify-symbols-mode</code> has to offer.
 Digging into the documentation of <code>prettify-symbols-alist</code>,
 the second entry of the cons pair can be<!--
@@ -173,7 +173,7 @@ taken from the documentation of <code>reference-point-alist</code>:
 </pre></div>
 <p></p>
 A gluing instruction either comprises a cons pair of two locations<!--
--->—e.g., <code>(cr . cl)</code> to glue position 9 of the left glyph to position 11 of the right—<!--
+--><span class="nowrap">—</span>e.g., <code>(cr . cl)</code> to glue position 9 of the left glyph to position 11 of the <span class="nowrap">right—</span><!--
 -->or a list with some additional <code>x</code> and <code>y</code> offsets,
 like <code>'(cr cl 0 10)</code>.
 <p></p>
@@ -192,7 +192,7 @@ which is a better-looking version of the definitional equality symbol <code>:=</
 I think that this looks better than <code>amsmath</code>’s <code>\coloneq</code>.</div><!--
 -->
 Sadly, the appropriate Unicode symbol <code>≔</code> does not look particularly nice in my font<!--
--->—simply fusing <code>:</code> and <code>=</code> together works quite well, however!
+--><span class="nowrap">—</span>simply fusing <code>:</code> and <code>=</code> together works quite well, however!
 Defining
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="o">'</span><span class="p">(</span><span class="s">&quot;\\coloneqq&quot;</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?:</span><span class="w"> </span><span class="p">(</span><span class="nv">cr</span><span class="w"> </span><span class="nv">cl</span><span class="w"> </span><span class="mi">-20</span><span class="w"> </span><span class="mi">-8</span><span class="p">)</span><span class="w"> </span><span class="sc">?=</span><span class="p">))</span>
@@ -217,7 +217,7 @@ Pretty much all of the code in this section was written by
 <a href="https://git.tecosaur.net/">tecosaur</a>,
 from whose
 <a href="https://tecosaur.github.io/emacs-config/config.html#editor-visuals">configuration</a><!--
-  -->—which I encourage you to check out—<!--
+  --><span class="nowrap">—</span>which I encourage you to check <span class="nowrap">out—</span><!--
   -->I first learned about the fact that one can use AUCTeX’s code folding in this way.</div><!--
 -->
 <p></p>
@@ -393,8 +393,8 @@ all this entails is to amend the respective line in <code>TeX-fold-math-spec-lis
 </pre></div>
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
-Using everything in this article together—see
-<a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el">here</a>—<!--
+Using everything in this article <span class="nowrap">together—</span>see
+<a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el">here</a><span class="nowrap">—</span><!--
 -->one can transform a boring old LaTeX buffer
 <p></p>
 <img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math">

@@ -71,14 +71,14 @@
 --><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">The term “S-expression” is not super accurate,
 and should be substituted with something like “semantic unit” instead,
 as I’m also talking about things that aren’t necessarily S-expressions as Emacs knows them.
-I mainly chose the term for brevity, and because it’s hopefully more familiar—and thus less scary—to the reader.</div><!--
+I mainly chose the term for brevity, and because it’s hopefully more <span class="nowrap">familiar—</span>and thus less <span class="nowrap">scary—</span>to the reader.</div><!--
 -->I have to make a confession:
-I have an <a href="https://github.com/emacs-evil/evil">evil</a> past—literally.
+I have an <a href="https://github.com/emacs-evil/evil">evil</a> <span class="nowrap">past—</span>literally.
 Having switched to vanilla Emacs keybindings a while ago,
 one thing that I genuinely miss from <em>that time</em> are the <code>ci(</code> and <code>ca(</code> motions,
 killing everything in or around the closest encompassing <code>()</code>-environment.
 Luckily, the <a href="https://github.com/magnars/change-inner.el">change-inner</a> package provides exactly these commands for Emacs proper.
-Unluckily, there are some issues regarding whitespace handling—let’s try to fix that.
+Unluckily, there are some issues regarding whitespace <span class="nowrap">handling—</span>let’s try to fix that.
 <!--more-->
 <h2 id="how-it-all-started">How it all started<a href="#how-it-all-started" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -166,7 +166,7 @@ in order to see where the problem <em>actually</em> lies.
 <h2 id="inside-change-inner">Inside change-inner<a href="#inside-change-inner" class="floatleft sec-link">§</a></h2>
 <p></p>
 Taking a closer look at <code>change-inner*</code><!--
--->—the internal function doing the actual work—<!--
+--><span class="nowrap">—</span>the internal function doing the actual <span class="nowrap">work—</span><!--
 -->reveals the following.
 After some initial book keeping,
 the area surrounding the point is expanded,
@@ -265,7 +265,7 @@ it searches for the correct delimiter via
 </pre></div>
 <p></p>
 and<!--
--->—due to the way that <code>search-forward</code> works by default—<!--
+--><span class="nowrap">—</span>due to the way that <code>search-forward</code> works by <span class="nowrap">default—</span><!--
 -->we end up with the point directly after the opening delimiter
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="o">'</span><span class="p">(</span><span class="nv">|</span><span class="w"> </span><span class="s">&quot;one&quot;</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="w"> </span><span class="s">&quot;three&quot;</span><span class="w"> </span><span class="s">&quot;four&quot;</span><span class="w"> </span><span class="p">)</span>
@@ -279,7 +279,7 @@ When in a situation like
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="o">'</span><span class="p">(</span><span class="nv">1|</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="s">&quot;this is a string&quot;</span><span class="p">)</span>
 </pre></div>
 <p></p>
-One might want to change the string—indeed,
+One might want to change the <span class="nowrap">string—</span>indeed,
 <code>M-x change-inner "</code> correctly jumps to the string:
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="o">'</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="s">&quot;|&quot;</span><span class="p">)</span>
@@ -300,7 +300,7 @@ Briefly, puni is a structured editing package,
 like <a href="https://paredit.org/">paredit</a> or <a href="https://github.com/Fuco1/smartparens">smartparens</a>,
 but it works for a broader range of languages than the former,
 while comprising of a much smaller code-base<!--
--->—and even fewer language-specific bits—<!--
+--><span class="nowrap">—</span>and even fewer language-specific <span class="nowrap">bits—</span><!--
 -->than the latter.<!--
 --><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Puni achieves this by relying on Emacs’s built-in functions.</div><!--
 -->
@@ -368,7 +368,7 @@ by going forwards and backwards a few times:
 <p></p>
 Now, when we are in a situation like <code>(|   "furble")</code>,
 an invocation of <code>puni-strict-forward-sexp</code> will leave us at <code>(   "furble"|)</code>,
-but executing <code>puni-strict-backward-sexp</code> after that will result in <code>(   |"furble")</code>—not where we started.
+but executing <code>puni-strict-backward-sexp</code> after that will result in <code>(   |"furble")</code><span class="nowrap">—</span>not where we started.
 As such, puni will (incorrectly) conclude that we were not at the start of the expression.
 <p></p>
 One could try to cram some whitespace handling into this,
@@ -380,7 +380,7 @@ instead of having to wait for upstream to fix something.
 At some point this should definitely be fixed in puni, though.</div><!--
 -->
 In fact, <code>puni-expand-region</code> is written in such a way
-that it tries out different expansion strategies until one succeeds—why not just quiet the error?
+that it tries out different expansion strategies until one <span class="nowrap">succeeds—</span>why not just quiet the error?
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">advice-add</span><span class="w"> </span><span class="ss">'puni-bounds-of-sexp-at-point</span><span class="w"> </span><span class="nb">:around</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">fun</span><span class="p">)</span>

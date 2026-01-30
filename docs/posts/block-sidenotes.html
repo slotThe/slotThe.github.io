@@ -81,7 +81,7 @@ page!<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">For example, this is one.</div><!--
 --> More specifically they are footnotes placed inside of the
 margins, in order to avoid having to click or scroll, breaking the flow
-of reading—a flick of the eyes is enough. This is very convenient,
+of <span class="nowrap">reading—</span>a flick of the eyes is enough. This is very convenient,
 especially for longer entries with lots of asides that don’t necessarily
 fit the flow of the article. However, because websites are dynamic in
 size, a fallback option should be provided in case the margins are too
@@ -122,7 +122,7 @@ roughly looks like the following:
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </pre></div>
 <p></p>
-As Chris MacKay—a Tufte <span class="small-caps">css</span> contributor—helpfully explains in an
+As Chris <span class="nowrap">MacKay—</span>a Tufte <span class="small-caps">css</span> <span class="nowrap">contributor—</span>helpfully explains in an
 <a href="https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-234316022">issue</a>, spans officially don’t play nice with
 paragraphs:
 <blockquote>
@@ -156,7 +156,7 @@ above <span class="small-caps">html</span> by using pandoc’s native <code>Span
 </pre></div>
 <p></p>
 Now, pandoc very much does <em>not</em> want you to put any kind of block
-inside of its <code>Span</code>s—that’s why its type is
+inside of its <code>Span</code><span class="nowrap">s—</span>that’s why its type is
 
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kt">Span</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Attr</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="kt">Inline</span><span class="p">]</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Inline</span>
 </pre></div>
@@ -393,7 +393,7 @@ This can now be used much like the <code>usingSidenotes</code> function from
 <code>pandoc-sidenote</code>, only that it needs to know your <code>WriterOption</code>s.
 More importantly, it should be the last of the transformations that you
 do to pandoc’s <span class="small-caps">ast</span>, since <code>usingSidenotes</code> completely renders the
-footnote, which is not what you want in case you—like me—do other
+footnote, which is not what you want in case <span class="nowrap">you—</span>like <span class="nowrap">me—</span>do other
 creative transformations, such as separately generating <span class="small-caps">html</span> for
 <code>CodeBlock</code>s. In my configuration, I now have
 
@@ -445,7 +445,7 @@ one may well use
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
 <p></p>
-instead—since we render directly to <span class="small-caps">html</span> now, that door opened for us.
+<span class="nowrap">instead—</span>since we render directly to <span class="small-caps">html</span> now, that door opened for us.
 This means no more standard violations!
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -454,7 +454,7 @@ It does work, but pre-rendering everything and not using pandoc’s built in con
 <p></p>
 However, this solution seems to be quite comfortable from a Hakyll
 perspective,<!--
---><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Jake Zimmerman—the author of <code>pandoc-sidenote</code>—also
+--><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Jake <span class="nowrap">Zimmerman—</span>the author of <code>pandoc-sidenote</code><span class="nowrap">—</span>also
 <a href="https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-269744553">thought about this issue</a>,
 and concluded that perhaps a custom pandoc <code>Writer</code> would be the
 most elegant solution to this problem. However, since using
@@ -462,7 +462,7 @@ pandoc’s <span class="small-caps">html</span>5 writer is quite hard-coded into
 that I will go down that path.</div><!--
 --> and people have told me that the functionality provided
 is still useful to them. Since what I’ve done here amounts to a
-complete rewrite—and almost certainly a regression in places—I don’t
+complete <span class="nowrap">rewrite—</span>and almost certainly a regression in <span class="nowrap">places—</span>I don’t
 think that this will ever replace <code>Text.​Pandoc.​SideNote</code> wholesale.
 However, the <code>pandoc-sidenote</code> library now features a
 <a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">Text.​Pandoc.​SideNoteHTML</a>

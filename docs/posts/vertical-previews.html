@@ -44,8 +44,8 @@
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
       Here’s a fun one: when previewing LaTeX fragments via AUCTeX’s
-<code>preview.el</code> library (whether it be in a .tex buffer, or—via
-<a href="https://github.com/karthink/org-auctex">org-auctex</a>—in Org) things get <em>really</em> messed up when one or more
+<code>preview.el</code> library (whether it be in a .tex buffer, <span class="nowrap">or—</span>via
+<a href="https://github.com/karthink/org-auctex">org-auctex</a><span class="nowrap">—</span>in Org) things get <em>really</em> messed up when one or more
 monitors are set up in portrait mode.
 <!--more-->
 <p></p>
@@ -61,7 +61,7 @@ monitor, you could instead get the charming
 <img class="pure-img" src="../images/vertical-preview/one-vertical.png" alt="preview with one vertical monitor, horribly squished horizontally">
 </p>
 <p></p>
-Imagine a whole page of this—things get pretty funky. Being a boring
+Imagine a whole page of <span class="nowrap">this—</span>things get pretty funky. Being a boring
 person, I would rather prefer the much more ordinary looking
 <p style="text-align:center;">
 <img class="pure-img" src="../images/vertical-preview/normal.png" alt="normal preview, prefectly legible">
@@ -107,7 +107,7 @@ While the same monitor in “vertical-mode” returns
 </pre></div>
 <p></p>
 Crucially, the physical width and height of the monitor don’t change,
-but the <em>geometry</em>—the pixel width and height—does; you can <code>C-h f display-monitor-attributes-list RET</code> for more information. This means
+but the <em>geometry</em><span class="nowrap">—</span>the pixel width and <span class="nowrap">height—</span>does; you can <code>C-h f display-monitor-attributes-list RET</code> for more information. This means
 that in portrait mode, we actually compare the pixel <em>width</em> of the
 monitor with its physical <em>height</em>, as well as its pixel height with its
 width. Naturally, and depending on the specific setup, this produces
@@ -124,8 +124,8 @@ overriding the built-in <code>preview-get-dpi</code> function with
 <span class="w">            </span><span class="p">(</span><span class="nf">/</span><span class="w"> </span><span class="p">(</span><span class="nf">*</span><span class="w"> </span><span class="mf">25.4</span><span class="w"> </span><span class="p">(</span><span class="nf">min</span><span class="w"> </span><span class="nv">pw</span><span class="w"> </span><span class="nv">ph</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nf">min</span><span class="w"> </span><span class="nv">mw</span><span class="w"> </span><span class="nv">mh</span><span class="p">)))))</span>
 </pre></div>
 <p></p>
-produces the correct behaviour! This implicit assumption—that monitors
-are generally wider than they are tall—of <code>preview-get-dpi</code> should
+produces the correct behaviour! This implicit <span class="nowrap">assumption—</span>that monitors
+are generally wider than they are <span class="nowrap">tall—</span>of <code>preview-get-dpi</code> should
 probably be fixed; I will report it as an Emacs bug.
 <p></p>
 As an aside, this is an excellent opportunity to see the ergonomic

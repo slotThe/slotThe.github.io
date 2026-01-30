@@ -597,6 +597,7 @@ myPandocCompiler =
       .   addSectionLinks
       .   smallCaps
       .   styleLocalLinks
+      .   strongEmdash
       )
     <=< processBib
  where
@@ -879,6 +880,19 @@ myPandocCompiler =
     isWrappable Para{}       = True
     isWrappable BulletList{} = True
     isWrappable _            = False
+
+  -- Add nowrap to "str—": no line-break immediately before the em dash.
+  -- https://sink.krj.st/fl.tr/file/src/Text/Pandoc/Fltr/DashFilter.hs
+  strongEmdash :: Pandoc -> Pandoc
+  strongEmdash = walk $ concatMap \case
+    Str str -> appendNoWrap (T.splitOn "\8212" str)
+    i       -> [i]
+   where
+    appendNoWrap :: [Text] -> [Inline]
+    appendNoWrap = \case
+      (x : y : xs) -> Span ("", ["nowrap"], []) [Str (x <> "\8212")] : appendNoWrap (y : xs)
+      [x]          -> [Str x]
+      []           -> []
 
 -----------------------------------------------------------------------
 -- Redirects

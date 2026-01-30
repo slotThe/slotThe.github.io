@@ -50,7 +50,7 @@ One thing that’s essential for this setup to make sense is that eshell and zsh
 Sadly,
 this doesn’t work out of the box:
 zsh stores its history in a metafied format<!--
--->—nothing that’s not fixable on the Emacs side, of course!
+--><span class="nowrap">—</span>nothing that’s not fixable on the Emacs side, of course!
 <!--more-->
 <p></p>
 <a href="https://www.zsh.org/mla/users/2011/msg00154.html">This email</a> explains the problem quite well.
@@ -67,7 +67,7 @@ The upshot is that,
 when setting <code>eshell-history-file-name</code> to e.g. <code>"~/.config/zsh/zsh_history"</code>,
 Emacs either won’t know how to properly encode the file upon exiting eshell,
 or one will get suggestions<!--
--->—using a package like <a href="https://github.com/dieggsy/esh-autosuggest">esh-autosuggest</a>—<!--
+--><span class="nowrap">—</span>using a package like <a href="https://github.com/dieggsy/esh-autosuggest">esh-autosuggest</a><span class="nowrap">—</span><!--
 -->containing garbage like <code>\304§</code> instead of <code>ć</code>.
 <p></p>
 The linked discussion helpfully contains a small C program to unmetafy the history:

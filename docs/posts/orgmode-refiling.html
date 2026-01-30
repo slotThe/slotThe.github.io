@@ -85,7 +85,7 @@ related tasks live. Quite convenient!
 <p></p>
 So far, X.P.OrgMode just dumped the created note at the end of the
 specified file, leaving you to pick up the pieces. This aligns with my
-personal workflow—while I extensively use refiling, I only do so at the
+personal <span class="nowrap">workflow—</span>while I extensively use refiling, I only do so at the
 end of the day after reviewing all tasks that have accumulated.
 However, it is conceivable that someone might want to refile certain
 tasks straight away when it’s pretty clear that (i) they’ll be kept, and
@@ -116,8 +116,8 @@ to <code>auto-revert-mode</code>.
 <h3 id="some-gory-details">Some gory details<a href="#some-gory-details" class="floatleft sec-link">§</a></h3>
 <p></p>
 All of the refiling is actually directly done by Emacs itself! More
-precisely, the <span class="small-caps">edsl</span> that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> defines—which I’ve also
-<a href="../posts/2022-05-25-calling-emacs-from-xmonad.html" class="local-link">written about</a>—shells out to Emacs. This
+precisely, the <span class="small-caps">edsl</span> that <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Util-Run.html">XMonad.Util.Run</a> <span class="nowrap">defines—</span>which I’ve also
+<a href="../posts/2022-05-25-calling-emacs-from-xmonad.html" class="local-link">written about</a><span class="nowrap">—</span>shells out to Emacs. This
 might intuitively <em>feel</em> horrible, but that’s just another reason to
 share it:
 
@@ -137,7 +137,7 @@ share it:
 <span class="w">                </span><span class="p">])</span>
 </pre></div>
 <p></p>
-This—as you probably guessed already—just executes the following elisp
+<span class="nowrap">This—</span>as you probably guessed <span class="nowrap">already—</span>just executes the following elisp
 snippet in Emacs’s batch mode:
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="k">progn</span>
@@ -152,7 +152,7 @@ snippet in Emacs’s batch mode:
 <p></p>
 I know this seems insane, but letting Emacs do this work is actually
 much less brittle than the alternative. The Org maintainers certainly
-know best what refiling <em>means</em>, and thus also what it entails—if all of
+know best what refiling <em>means</em>, and thus also what it <span class="nowrap">entails—</span>if all of
 this logic is already written, why not take advantage of it? Plus, I
 now don’t have to keep track of subtle changes in newer versions of Org.
 <h2 id="closing-thoughts">Closing thoughts<a href="#closing-thoughts" class="floatleft sec-link">§</a></h2>
@@ -165,8 +165,8 @@ scripts” to great effect!
 One other idea I’ve had is to integrate this into the language that
 plain old <code>orgPrompt</code> accepts. It could be prefixed by something like
 “<code>ref:</code>”, followed by a unique substring with which to identity a
-heading. This would have the disadvantage that—without the second
-prompt—one would not get any suggestions for headings. However, if you
+heading. This would have the disadvantage <span class="nowrap">that—</span>without the second
+<span class="nowrap">prompt—</span>one would not get any suggestions for headings. However, if you
 want to refile something you probably know where you want to put it;
 plus, it would not involve a possibly distracting second prompt.
 Actually, this sounds like a good first pull request: contributions

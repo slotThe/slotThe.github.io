@@ -104,7 +104,7 @@ Alas, when yanking the line into the buffer again, we are greeted with
 Lots of unbalanced parentheses!
 This is especially troublesome when one uses
 <a href="https://github.com/Malabarba/aggressive-indent-mode">aggressive-indent-mode</a><!--
--->—as I do—since then you run the chance of your buffer shifting around you.
+--><span class="nowrap">—</span>as I <span class="nowrap">do—</span>since then you run the chance of your buffer shifting around you.
 <p></p>
 All of this would be fixed with a version of <code>yank</code> that correctly trims off these extraneous parentheses
 before yanking the killed text into the buffer.
@@ -121,7 +121,7 @@ open delimiters<!--
 --> there are in the current buffer.
 The implementation is straightforward,
 we just need to make sure to take care of a few special cases<!--
--->—and I almost certainly missed one—<!--
+--><span class="nowrap">—</span>and I almost certainly missed <span class="nowrap">one—</span><!--
 -->like delimiters appearing inside of strings or comments.<!--
 --><label for="sn-4" class="margin-toggle">⊕</label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>

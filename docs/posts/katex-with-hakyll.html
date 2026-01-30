@@ -92,7 +92,7 @@ and actually just a waste of resources.
 As a result, I’ve been using MathJax
 to insert LaTeX fragments into the <span class="small-caps">html</span> after it’s compiled from Markdown.
 This setup<!--
--->—stolen essentially verbatim from <a href="https://github.com/gwern/gwern.net/blob/c3d90bf1d6248d5e80dc030304c72b3f4a234455/build/sync.sh#L421">Gwern</a>—<!--
+--><span class="nowrap">—</span>stolen essentially verbatim from <a href="https://github.com/gwern/gwern.net/blob/c3d90bf1d6248d5e80dc030304c72b3f4a234455/build/sync.sh#L421">Gwern</a><span class="nowrap">—</span><!--
 -->uses the now deprecated <a href="https://github.com/pkra/mathjax-node-page">mathjax-node-page</a>
 to crawl through the already rendered <span class="small-caps">html</span> pages, and, upon recognising a math fragment,
 replaces that text with the rendered formula.
@@ -105,12 +105,12 @@ and requires a separate <code>build.sh</code> file to be created has always felt
 there aren’t any other moving parts that would require me to leave Haskell.</div><!--
 -->
 Plus, Hakyll is already capable of using <span class="small-caps">ghc</span>’s parallel runtime<!--
--->—why outsource a part of that to an external tool?
+--><span class="nowrap">—</span>why outsource a part of that to an external tool?
 At some point, the annoyance I felt at this became stronger than the inertia my old setup had, so here we are.
 <h2 id="a-brighter-future-with-katex">A brighter future with KaTeX<a href="#a-brighter-future-with-katex" class="floatleft sec-link">§</a></h2>
 <p></p>
 Naturally, when you change something you <em>really</em> want to change something<!--
--->—at least I do—<!--
+--><span class="nowrap">—</span>at least I <span class="nowrap">do—</span><!--
 -->so instead of using MathJax v3’s native support for these kinds of things,
 why not try something new?
 An often cited alternative to MathJax is <a href="https://katex.org/">KaTeX</a>,
@@ -128,7 +128,7 @@ Thankfully, integrating KaTeX into Pandoc itself seems to be a well-trodden path
 so other people have already done this for me.
 For example,
 <a href="https://github.com/jgm/pandoc/issues/6651">pandoc#6651</a>
-has a tiny script—essentially just calling <code>katex.​render​To​String</code>—that
+has a tiny <span class="nowrap">script—</span>essentially just calling <code>katex.​render​To​String</code><span class="nowrap">—</span>that
 is fed maths on stdin,
 and then produces <span class="small-caps">html</span> on stdout.
 Slightly adjusted to support inline and display maths, it looks like this:
@@ -187,7 +187,7 @@ have a <code>Math</code> constructor which we can match on.<!--
 <p></p>
 󠀠
 <p></p>
-Mind the <code>BlockArguments</code>—and the “s”.</div><!--
+Mind the <code>BlockArguments</code><span class="nowrap">—</span>and the “s”.</div><!--
 -->
 
 <div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="kr">import</span><span class="w"> </span><span class="nn">Data.Text</span><span class="w">    </span><span class="n">qualified</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="kt">T</span>
@@ -246,7 +246,7 @@ Mind the <code>BlockArguments</code>—and the “s”.</div><!--
 The <code>(T.unwords . T.lines . T.strip -&gt; text)</code>
 <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/view_patterns.html">view pattern</a>
 is because KaTeX <em>really</em> does not seem to like it when there is a line break<!--
--->—even a semantically irrelevant one—<!--
+--><span class="nowrap">—</span>even a semantically irrelevant <span class="nowrap">one—</span><!--
 -->in a formula.
 Perhaps this is a setting I’ve overlooked.
 Other than that the code should be reasonably self-explanatory;
@@ -283,7 +283,7 @@ such that the website does not blow up in size with this switch.
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
 The whole affair was much easier than I<!--
--->—not knowing any JavaScript—<!--
+--><span class="nowrap">—</span>not knowing any <span class="nowrap">JavaScript—</span><!--
 -->expected it to be, and actually turned out to be quite fun.
 Of course, nothing at all has changed on the user-side of things,
 which is to say that the new KaTeX fragments look pretty much exactly the same as the old MathJax maths.

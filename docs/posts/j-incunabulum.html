@@ -105,8 +105,8 @@ Plus, I don’t actually know C, so it may well be true that I messed up some of
 and the original program actually worked slightly differently.
 Consult at your own risk.</p>
 <p>Further, this is not the minimal number of changes to get this to
-compile on a modern machine—for example, I switched to ANSI C function
-definitions—, but it helped me better understand what’s going on.
+compile on a modern <span class="nowrap">machine—</span>for example, I switched to ANSI C function
+<span class="nowrap">definitions—</span>, but it helped me better understand what’s going on.
 Here’s the minimal set of changes to <a href="https://code.jsoftware.com/wiki/Essays/Incunabulum">the original</a> I’ve found to work:</p>
 <details>
 <summary>
@@ -194,7 +194,7 @@ I guess this is based on <span class="small-caps">apl</span>’s α and ω argum
 </div>
 </div>
 <div class="tc-row">
-<p>This is the main attraction—the array struct <code>a</code>,
+<p>This is the main <span class="nowrap">attraction—</span>the array struct <code>a</code>,
 with pointer type <code>A</code>.
 It contains the following fields:</p>
 <div class="tc-code">
@@ -382,7 +382,7 @@ Make of that what you will.</p>
 <div class="tc-row">
 <p>Onto execution.
 There’s enough memory for 26 variables, <code>a</code> to <code>z</code>, which are stored in the <code>st</code> array.
-Execution—like parsing—is done character by character.
+<span class="nowrap">Execution—</span>like <span class="nowrap">parsing—</span>is done character by character.
 There are two queries that will be important here:
 with <code>qp</code> one can ask whether the character is a letter,
 and <code>qv</code> checks if it’s a verb (all of the symbols <code>+{~&lt;#,</code> have an ASCII value less than <code>a</code>).</p>
@@ -407,7 +407,7 @@ if it is, then it must be a monadic one,
 so we call the corresponding function pointer with the result of first evaluating its argument.
 If <code>a</code> is not a verb, we check if there is anything to its right.
 If yes, this thing to its right must be a dyadic function,
-so we call that dyadic function with its left argument <code>a</code>—which is already evaluated, and we now know must be an array—, and with the array its right argument evaluates to.
+so we call that dyadic function with its left argument <code>a</code><span class="nowrap">—</span>which is already evaluated, and we now know must be an <span class="nowrap">array—</span>, and with the array its right argument evaluates to.
 If none of those conditions match, <code>a</code> must be a lone array that is already fully evaluated, so return that.</p>
 <div class="tc-code">
 
@@ -430,7 +430,7 @@ If none of those conditions match, <code>a</code> must be a lone array that is a
 <p>The main pretty-printing function is <code>pr</code>.
 The first line prints the shape vector of the given array.
 The second line checks whether the array is boxed;
-if it’s not, then it just prints the array as a flat list—hence the shape information in the first line, I suppose.
+if it’s not, then it just prints the array as a flat <span class="nowrap">list—</span>hence the shape information in the first line, I suppose.
 If it is a boxed array, we indicate that with <code>&lt;</code>, and recurse.
 Here we dangerously reinterpret the integer that’s stored in each <code>w-&gt;p[i]</code> as a pointer to an array.</p>
 <div class="tc-code">
@@ -444,7 +444,7 @@ Here we dangerously reinterpret the integer that’s stored in each <code>w-&gt;
 <div class="tc-row">
 <p>Obviously, this code is <em>super</em> brittle and basically segfaults if you look at it wrong.
 When holding it just right, however, it does sort of work,
-and then it feels a bit magical—here are the core ideas of an array programming language in barely 40 lines of C.
+and then it feels a bit <span class="nowrap">magical—</span>here are the core ideas of an array programming language in barely 40 lines of C.
 Plus, it made me feel a bit like a computer science archaeologist.
 An afternoon well spent, I’d say!
 If you’re interested in playing with this yourself,

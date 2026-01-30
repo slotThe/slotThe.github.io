@@ -92,7 +92,7 @@ so that this will not be a 20’000-word post:
 <li>Only (positive) integers.</li>
 <li>ASCII only and only <code>\</code>-based escaping.</li>
 <li>No constants.</li>
-<li>Absolutely no input validation—we’ll try to parse the wildest things.</li>
+<li>Absolutely no input <span class="nowrap">validation—</span>we’ll try to parse the wildest things.</li>
 </ul>
 <p></p>
 Some of those are not difficult to add:
@@ -104,7 +104,7 @@ but seemed a bit too tedious for this blog post to me.
 I’m staying away from Unicode though,
 see <a href="https://github.com/mlochbaum/bqn-libs/blob/master/json.bqn">bqn-libs/json.bqn</a> for that.
 In general, I do not claim originality for any line of code in this post<!--
--->—this is more or less my attempt to understand <a href="https://github.com/mlochbaum/bqn-libs/blob/master/json.bqn">bqn-libs/json.bqn</a> to a reasonable degree.
+--><span class="nowrap">—</span>this is more or less my attempt to understand <a href="https://github.com/mlochbaum/bqn-libs/blob/master/json.bqn">bqn-libs/json.bqn</a> to a reasonable degree.
 <p></p>
 This article assumes that you are already a bit familiar with <span class="small-caps">bqn</span> as a language,
 or know some amount of array programming and are willing to look up unknown symbols.
@@ -125,7 +125,7 @@ I am by no means the expert here.</div><!--
 We’ll start with simply trying to parse lists of integers.
 Can’t be that hard, right?
 Additionally<!--
--->—and this is where <em>array-oriented</em> starts to come into play—<!--
+--><span class="nowrap">—</span>and this is where <em>array-oriented</em> starts to come into <span class="nowrap">play—</span><!--
 -->we want to handle as much as possible using flat arrays.
 This is both faster and way cooler.
 In particular, this will result in a parser that has essentially no branching to speak of:
@@ -139,10 +139,10 @@ about this exact type of thing,
 including a comparison with two other approaches:
 recursive descent, as well as a more nested array-style parser.<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">Although <span class="small-caps">cbqn</span> seems to have improved since then<!--
-  -->—for me, even the nested array version is faster than the recursive approach now.</div><!--
+  --><span class="nowrap">—</span>for me, even the nested array version is faster than the recursive approach now.</div><!--
 -->
 I will follow the same approach for this part of the parser;
-if you’ve already read—and understood—Sylvia’s post, feel free to skip to <a href="#adding-strings">Adding strings</a>.
+if you’ve already <span class="nowrap">read—</span>and <span class="nowrap">understood—</span>Sylvia’s post, feel free to skip to <a href="#adding-strings">Adding strings</a>.
 <p></p>
 Assume we have a list of numbers like the following:<!--
 --><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
@@ -159,7 +159,7 @@ If I refer to an unknown variable further down, it was probably defined in such 
 <span class="s2">&quot;[12,34,5,678,910]&quot;</span>
 </pre></div>
 <p></p>
-We’ll follow standard practise by first tokenising—lexing—the string,
+We’ll follow standard practise by first <span class="nowrap">tokenising—</span><span class="nowrap">lexing—</span>the string,
 and then parsing the tokens.
 <h3 id="tokenisation">Tokenisation<a href="#tokenisation" class="floatleft sec-link">§</a></h3>
 <p></p>
@@ -360,7 +360,7 @@ and every time we encounter a <code>[</code> we look for the “oldest” <code>
 We now assign each sublist the depth in this tree representation.
 This works much like the <code>+`o-c</code> trick above,
 only we don’t need to care about closing parentheses<!--
--->—they only show up when we are going a level deeper anyways.
+--><span class="nowrap">—</span>they only show up when we are going a level deeper anyways.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="s1">'['</span><span class="o">=</span><span class="nv">d</span><span class="o">⊏</span><span class="nv">ts</span>
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">⟩</span>
@@ -423,7 +423,7 @@ this should come after the list <code>[2,[3,4]]</code>,
 the closing bracket of which is however assigned to index <code>10</code>.
 <p></p>
 To fix this, we use the nesting variable <code>l</code> defined above<!--
--->—there, we’ve already associated a sublist to its depth in the breadth-first representation.
+--><span class="nowrap">—</span>there, we’ve already associated a sublist to its depth in the breadth-first representation.
 Looking at <code>l</code> again, we can find the index of the sublist that a given <code>]</code> is closing by looking at the index of the element in front of it:
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">ts</span><span class="w"> </span><span class="o">DP</span><span class="w"> </span><span class="nv">l</span>
@@ -696,7 +696,7 @@ no further changes necessary.
 </pre></div>
 <h3 id="escaping">Escaping<a href="#escaping" class="floatleft sec-link">§</a></h3>
 <p></p>
-To make things a little bit—though not too—interesting, let’s add some easy escaping.
+To make things a little <span class="nowrap">bit—</span>though not <span class="nowrap">too—</span>interesting, let’s add some easy escaping.
 By this I exclusively mean backslash-based escaping:
 every time we encounter a backslash inside of a string,
 we treat the following character (e.g., a quote) literally.
@@ -785,7 +785,7 @@ They should look like
 <p></p>
 and so on.
 <p></p>
-This time, lexing is the easy part—we merely have to add curly braces to our list of tokens.
+This time, lexing is the easy <span class="nowrap">part—</span>we merely have to add curly braces to our list of tokens.
 Actually, to keep things visually comprehensible,
 let’s go back on what I said at the beginning
 and do the same for the comma as the array separator,
@@ -834,7 +834,7 @@ Up to getting the depth, things don’t really change much.
 </pre></div>
 <p></p>
 Since we now have two different “container” types,
-we also need to be careful about how “nesting” is defined—<!--
+we also need to be careful about how “nesting” is <span class="nowrap">defined—</span><!--
 -->sometimes we may only want the delimiters of one container to increase the level of nesting.
 Let’s start with getting a mask of the start of all new sublists<!--
 --><label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="sidenote">I will use this as shorthand for “sub-object and sub-array”.
@@ -881,7 +881,7 @@ Moving on, we can use the mask of sublists <code>s</code> to build a mask of sub
 <p></p>
 The <code>of</code> variable is to be read as something like “there are three sublists, the first and third of which are sub-objects”.
 This is good, but doesn’t yet take object nesting into account<!--
--->—the second <code>1</code> in <code>of</code>,
+--><span class="nowrap">—</span>the second <code>1</code> in <code>of</code>,
 being nested inside of the first object,
 is actually at depth two and should be treated accordingly.
 To fix this, we proceed as before and do a sum <a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> across <code>of</code>,
@@ -1017,10 +1017,10 @@ a comma, a colon, any opening parenthesis, and its token should not occur immedi
 <span class="p">⟨</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
 <p></p>
-Almost done—the only thing left is to build up the finished, nested, array.
+Almost <span class="nowrap">done—</span>the only thing left is to build up the finished, nested, array.
 This is also the time we have to decide upon the final representation of an object.
 What turns out to be quite convenient for small-ish <span class="small-caps">json</span><!--
--->—which, let’s be honest, will be the only kind of <span class="small-caps">json</span> that <code>Parse</code> ever gets to see—<!--
+--><span class="nowrap">—</span>which, let’s be honest, will be the only kind of <span class="small-caps">json</span> that <code>Parse</code> ever gets to <span class="nowrap">see—</span><!--
 -->is to use <a href="https://mlochbaum.github.io/BQN/doc/rank.html">rank</a> 2 arrays;
 an object <code>{"a": 1}</code> gets parsed into <code>2‿1⥊"a"‿1</code>.
 Further, when building the result we have to make sure to “recognise” when to pull values and sublists out of the recursively built up <code>vs</code>,
@@ -1083,7 +1083,7 @@ almost magical.</div><!--
 <span class="w">      </span><span class="err">┘</span>
 </pre></div>
 <p></p>
-And that’s pretty much it—here are the last two lines, in all their glory:
+And that’s pretty much <span class="nowrap">it—</span>here are the last two lines, in all their glory:
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">on</span><span class="w"> </span><span class="kt">{</span><span class="nv">vs</span><span class="w"> </span><span class="o">∾</span><span class="kd">↩</span><span class="w"> </span><span class="o">&lt;</span><span class="ni">𝕨</span><span class="o">Sel</span><span class="ni">𝕩</span><span class="o">⊏</span><span class="nv">vs</span><span class="w"> </span><span class="p">⋄</span><span class="ss">@</span><span class="kt">}</span><span class="na">¨</span><span class="py">○</span><span class="o">⌽</span><span class="w"> </span><span class="sr">((</span><span class="o">≠</span><span class="nv">on</span><span class="sr">)</span><span class="o">∾</span><span class="na">˜</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="nv">ln</span><span class="o">/</span><span class="nv">n</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">vi</span><span class="w">  </span><span class="c1"># Build result</span>
 
@@ -1148,7 +1148,7 @@ but I think it’s pretty incredible that one can write a parser for a reasonabl
 this already parses the <code>cargo metadata</code> output of a few Rust crates that I’ve tried,
 which is the sort of data I would characterise as “ordinary <span class="small-caps">json</span>”.
 The resulting representation is probably not super easy to work with<!--
-  -->—there’s quite a lot of metadata and thus the nesting gets quite deep—<!--
+  --><span class="nowrap">—</span>there’s quite a lot of metadata and thus the nesting gets quite <span class="nowrap">deep—</span><!--
   -->but still, it works.</div><!--
 --> of <span class="small-caps">json</span>,
 using what are essentially only flat arrays of numbers,
@@ -1179,14 +1179,14 @@ since there’s essentially no branching, control flow is trivial,
 and furthermore everything is just a flat array of numbers.
 Once that one <code>0</code> that should be a <code>1</code> is identified, going back to the source just involves reading backwards, with no logic to keep track of at all.
 <p></p>
-Interestingly, this feels quite different from ordinary array programming—<!--
+Interestingly, this feels quite different from ordinary array <span class="nowrap">programming—</span><!--
 -->especially the quite tricky task to give lots of names<!--
 --><label for="sn-14" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-14" class="margin-toggle" /><div class="sidenote">Short names at that, otherwise things just look too cumbersome in this style of programming.</div><!--
 --> to lots of concepts.
 Still, I suppose this is much more readable than if one tried to make the names go away by using combinators.
 At least there are comments, right?
 <p></p>
-I certainly wouldn’t write all—or even most—parsers in this style,
+I certainly wouldn’t write <span class="nowrap">all—</span>or even <span class="nowrap">most—</span>parsers in this style,
 but honestly this whole thing was so refreshing that I can’t help but recommend anyone to try at least getting the hang of a simplified form of one of the parsing libraries in <a href="https://github.com/mlochbaum/bqn-libs">bqn-libs</a>.
 <!-- Body is included in the above file -->
     </section>

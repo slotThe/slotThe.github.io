@@ -63,15 +63,15 @@
 </ul></li>
 </ul>
   </div>
-As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
+As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with <span class="nowrap">another—</span>and it’s quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
 But this is Emacs, after all, which means that I can write that <code>query-replace-many</code> function I’ve always wanted, and even share it with others!
 The <a href="#the-code">code</a> is packaged as <code>query-replace-many</code>, available on <a href="https://gitlab.com/slotThe/query-replace-many">GitLab</a> and <a href="https://github.com/slotThe/query-replace-many">GitHub</a>.
 <!--more-->
 <p></p>
 I quite like the workflow that <code>query-replace</code> offers. In comparison to
-other tools that are used for similar purposes—keyboard macros and
-multiple-cursors—the whole process after entering the <code>from</code> and <code>to</code>
+other tools that are used for similar <span class="nowrap">purposes—</span>keyboard macros and
+<span class="nowrap">multiple-cursors—</span>the whole process after entering the <code>from</code> and <code>to</code>
 strings is interactive all the way through: it’s quite fast to step
 through the individual matches and decide whether one would like to
 replace them or not. In true Emacs fashion, the function also takes way
@@ -89,7 +89,7 @@ switching <code>T</code> to <code>H</code>, a simple <code>query-replace</code> 
 current region of interest is totally sufficient. For others, like
 changing <code>T</code> to <code>H</code> <em>and</em> <code>S</code> to <code>G</code>, this solution, along with
 multiple-cursors and other tools people usually go for, would already be
-unsatisfactory—the whole region would need to be traversed twice. Now
+<span class="nowrap">unsatisfactory—</span>the whole region would need to be traversed twice. Now
 imagine that you want to change <code>T</code> to <code>U</code> <em>and</em> <code>U</code> to <code>T</code>: chaos!
 Save having to give some sort of temporary name to one of the objects,
 which would be even slower, <code>query-replace</code> is quite useless in this
@@ -115,8 +115,8 @@ suddenly appears much more reasonable. Thus, when we get back a
 query that has already been entered in one way or another, we bail
 out.</div><!--
 --> build up a regular expression of the
-form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, and—when it comes to
-replacing—test the current thing to be replaced against all of the
+form <code>"\\(?:query-1\\|query-2\\|…\\)"</code>, <span class="nowrap">and—</span>when it comes to
+<span class="nowrap">replacing—</span>test the current thing to be replaced against all of the
 queries to select the correct one.
 <p></p>
 The beauty of this is that, since it’s really just a thin wrapper over
@@ -139,7 +139,7 @@ require some work and one of course sees what’s to be replaced by
 looking at the thing at point, I can live with this for the moment.
 <h3 id="the-code">The code<a href="#the-code" class="floatleft sec-link">§</a></h3>
 <p></p>
-As one might imagine, the code is actually quite straightforward—it only
+As one might imagine, the code is actually quite <span class="nowrap">straightforward—</span>it only
 consists of two functions! The first one is a little helper, querying
 the user for multiple pairs.
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">query-replace-many--get-queries</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">pairs</span><span class="p">)</span>
@@ -202,7 +202,7 @@ And that’s it! As an aside, calling <code>query-replace-many</code> also works
 from lisp; <code>(query-replace-many '(("1" . "2") ("2" . "1")))</code> has exactly
 the effect one would imagine it to have. As I said, everything is
 conveniently packaged up on <a href="https://gitlab.com/slotThe/query-replace-many">GitLab</a> and
-<a href="https://github.com/slotThe/query-replace-many">GitHub</a>—get it while it’s hot!
+<a href="https://github.com/slotThe/query-replace-many">GitHub</a><span class="nowrap">—</span>get it while it’s hot!
 <!-- Body is included in the above file -->
     </section>
     <!-- A footer-ish thing above the actual boring footer for pretty

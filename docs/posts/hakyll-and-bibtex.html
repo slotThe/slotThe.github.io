@@ -71,7 +71,7 @@
 <li><a href="#conclusion">Conclusion</a></li>
 </ul>
   </div>
-When writing a blog post that feels academic—or pretentious—enough to invoke the need for citations,
+When writing a blog post that feels <span class="nowrap">academic—</span>or <span class="nowrap">pretentious—</span>enough to invoke the need for citations,
 having them automatically generated feels like a mandatory requirement.
 I can only shudder to imagine the alternatives.
 <p></p>
@@ -81,14 +81,14 @@ and any number of programs,
 like <code>biblatex</code> or <code>natbib</code>,
 to generate good-looking citations from that.
 Further, everyone’s favourite document format converter<!--
--->—pandoc—<!--
+--><span class="nowrap">—</span><span class="nowrap">pandoc—</span><!--
 -->has excellent support for leveraging this functionality.
 All that’s left is to integrate this into Hakyll;
 and to play around with it, of course!
 <!--more-->
 <h2 id="introduction">Introduction<a href="#introduction" class="floatleft sec-link">§</a></h2>
 <p></p>
-Pandoc—using the <a href="https://github.com/jgm/citeproc">citeproc</a> library—can
+<span class="nowrap">Pandoc—</span>using the <a href="https://github.com/jgm/citeproc">citeproc</a> <span class="nowrap">library—</span>can
 make use of <a href="https://citationstyles.org/"><span class="small-caps">csl</span></a>,
 which is an <span class="small-caps">xml</span>-based formatting specification,<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">If you want some more information,
@@ -184,7 +184,7 @@ the incantation one needs to write is quite simple:
 <p></p>
 Integrating this into a basic Hakyll setup is not much more complicated,
 as some kind soul has given us
-<a href="https://hackage.haskell.org/package/hakyll-4.16.0.0/docs/Hakyll-Web-Pandoc-Biblio.html#v:pandocBiblioCompiler">Hakyll.Web.Pandoc.Biblio</a>—<!--
+<a href="https://hackage.haskell.org/package/hakyll-4.16.0.0/docs/Hakyll-Web-Pandoc-Biblio.html#v:pandocBiblioCompiler">Hakyll.Web.Pandoc.Biblio</a><span class="nowrap">—</span><!--
 -->a library specifically written to make use of pandoc’s bibliography handling.
 <p></p>
 In fact, <a href="https://jaspervdj.be/">Jasper Van der Jeugt</a> himself created a <a href="https://github.com/jaspervdj/hakyll-citeproc-example">tutorial</a> for this.
@@ -265,7 +265,7 @@ B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax cent
 While the basic setup really is this easy,
 incorporating citations into a real-world Hakyll code base
 proves to be slightly more difficult<!--
--->—not to mention addressing all of my neuroses.
+--><span class="nowrap">—</span>not to mention addressing all of my neuroses.
 Let’s get straight into it.
 <h2 id="integration-into-my-hakyll-setup">Integration into my Hakyll setup<a href="#integration-into-my-hakyll-setup" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -315,7 +315,7 @@ which associates a unique identifier to some contents.
 In the best case,
 one would like to treat this as an implementation detail and not think about it at all.
 However, most of Hakyll’s other pandoc functions that let you do <span class="small-caps">ast</span>
-transformations—like <code>pandoc​Compiler​With​TransformM</code>—have a bit of a different <span class="small-caps">api</span>,
+<span class="nowrap">transformations—</span>like <code>pandoc​Compiler​With​TransformM</code><span class="nowrap">—</span>have a bit of a different <span class="small-caps">api</span>,
 accepting only a <code>Pandoc -&gt; Compiler Pandoc</code> argument.
 This means that some care is needed to get everything to type check.
 <p></p>
@@ -606,7 +606,7 @@ Next, notice that there is no link from the label in the text
 to the actual citation at the end.
 This seems pretty inconvenient,
 as at least I often jump to citations whose label is
-unfamiliar—just to get an idea what kind of article it is.
+<span class="nowrap">unfamiliar—</span>just to get an idea what kind of article it is.
 <p></p>
 Pandoc does accept a <code>link-citations</code> option that controls this behaviour,
 which works fine for my purposes.
@@ -665,7 +665,7 @@ B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax cent
 Lastly,
 and this is perhaps the most important modification,
 I think that not having a table-like
-look—aligning labels and not letting the citation information run under its label—looks
+<span class="nowrap">look—</span>aligning labels and not letting the citation information run under its <span class="nowrap">label—</span>looks
 a bit awkward.
 As so many times before, pandoc filters come to the rescue here.
 There is a <code>Table</code> constructor of the <code>Block</code> type which we will use:
@@ -713,7 +713,7 @@ and replace accordingly:
 Just signaling an <code>error</code> here
 in case of an unexpected format
 was nice for debugging the code<!--
--->—I missed the <code>Para</code> at first—<!--
+--><span class="nowrap">—</span>I missed the <code>Para</code> at <span class="nowrap">first—</span><!--
 -->and at this point I see no reason to change it.
 Perhaps it is better to fail fast in theses kinds of situations,
 instead of trying to desperately produce something based off garbage input.
@@ -731,7 +731,7 @@ in a straightforward fashion:
 All that’s left is to nicely align everything:
 the right side of the table will,
 in general,
-span multiple lines—in stark contrast to the label.
+span multiple <span class="nowrap">lines—</span>in stark contrast to the label.
 This is again just a few lines of <span class="small-caps">css</span>:
 
 <div class="highlight-css" style="padding-left: 1em;"><pre><span></span><span class="c">/* Align citations to the top. */</span>
@@ -798,7 +798,7 @@ this was surprisingly easy to add for such a useful feature!
 Plus, playing around with pandoc filters is always fun.
 <p></p>
 Especially the <code>my​{render​Pandoc,Pandoc​Compiler}​With​TransformM</code> functions
-could—with different names, of course—perhaps be contributed to upstream Hakyll.
+<span class="nowrap">could—</span>with different names, of <span class="nowrap">course—</span>perhaps be contributed to upstream Hakyll.
 A variant of any of the <code>*PandocBiblio</code> functions
 that explicitly accepts a list of additional arguments
 to give to <code>citeproc</code> might also be useful;

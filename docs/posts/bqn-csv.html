@@ -64,7 +64,7 @@ Let’s write a <span class="small-caps">csv</span> parser in <a href="https://m
 <p></p>
 Working my way towards a full blown <span class="small-caps">json</span> parser,
 I thought it might be a good idea to start with something simpler<!--
--->—<a href="https://www.ietf.org/rfc/rfc4180.txt"><span class="small-caps">rfc</span> 4180</a> sounds like a good candidate.<!--
+--><span class="nowrap">—</span><a href="https://www.ietf.org/rfc/rfc4180.txt"><span class="small-caps">rfc</span> 4180</a> sounds like a good candidate.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">For the sake of convenience, I will interpret the <span class="small-caps">rfc</span> somewhat loosely in places,
 though hopefully still implementing the gist of it.</div><!--
 -->
@@ -115,7 +115,7 @@ one just needs to split at the newlines while keeping the shorter list of all sp
 <p></p>
 Easy.
 <p></p>
-Now, this was probably quite fast—if not, feel free to skip to the next section.
+Now, this was probably quite <span class="nowrap">fast—</span>if not, feel free to skip to the next section.
 Let’s go through that last line more carefully, as it contains lots of important concepts for array-oriented parsing.
 <p></p>
 First, we create a depth scan according to all characters we’d like to split the string at:<!--
@@ -136,7 +136,7 @@ in case you were wondering what that glyph meant.</div><!--
 </pre></div>
 <p></p>
 To single out all of the characters that we’d like to delete<!--
--->—i.e., the ones we are splitting at—<!--
+--><span class="nowrap">—</span>i.e., the ones we are splitting <span class="nowrap">at—</span><!--
 -->we multiply the depth scan by <code>¬s</code>,
 set all commas and newlines to <code>0</code>,
 and then subtract one.
@@ -150,7 +150,7 @@ and then subtract one.
 <span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="w"> </span><span class="s2">&quot;g&quot;</span><span class="w"> </span><span class="s2">&quot;h&quot;</span><span class="w"> </span><span class="p">⟩</span>
 </pre></div>
 <p></p>
-This is also why we gave the depth scan above an initial argument of <code>1</code>—otherwise, we’d get
+This is also why we gave the depth scan above an initial argument of <code>1</code><span class="nowrap">—</span>otherwise, we’d get
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="o">≍</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">s</span><span class="sr">)</span><span class="o">×+</span><span class="na">`</span><span class="nv">s</span>
 <span class="err">┌─</span>
@@ -182,7 +182,7 @@ This yields a grouping of the different splitting characters into their respecti
 </pre></div>
 <p></p>
 Since we don’t operate on the objects directly,
-but rather on their “connections”—I think of this a bit like a graph—,
+but rather on their “connections”<span class="nowrap">—</span>I think of this a bit like a <span class="nowrap">graph—</span>,
 we additionally have to add a starting cell for the first object.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="nv">n</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="nv">sl</span>
@@ -228,7 +228,7 @@ the following example consists of a single field with value <code>"a","b"</code>
 <p></p>
 In terms of parsing,
 the first thing we need is to somehow figure out which characters are escaped.
-Thankfully, this turns out to be pretty easy—start in an unescaped setting,
+Thankfully, this turns out to be pretty <span class="nowrap">easy—</span>start in an unescaped setting,
 and then every time a quote is encountered, flip some “are we quoted yet?”-bit.
 In code, this can rather beautifully be expressed as a not-equal scan:<!--
 --><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">󠀠
@@ -258,7 +258,7 @@ and for <code>"""a"",""b"""</code> we have the wonderful
 <span class="w">                                                                         </span><span class="err">┘</span>
 </pre></div>
 <p></p>
-The next step is a little non obvious—at least to me.
+The next step is a little non <span class="nowrap">obvious—</span>at least to me.
 Instead of having a single variable <code>s←n∨c</code> that controls where to split the text,
 we will instead have two: one for where to split, and one for which separators to drop.
 The latter is needed because we don’t actually want to keep all of the double quotes when parsing the <span class="small-caps">csv</span> into a <span class="small-caps">bqn</span> type.

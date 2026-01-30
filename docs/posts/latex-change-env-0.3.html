@@ -70,7 +70,7 @@ major improvements with regard to inline maths and macro handling; this
 seems as good a time as any to talk about the package in full. I
 briefly mentioned it in the post about my <a href="https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes" class="local-link">research workflow</a>, but I
 figure now that the library has reached a state where I’m not ashamed of
-it anymore—at least, not at the time of writing this—it may warrant its
+it <span class="nowrap">anymore—</span>at least, not at the time of writing <span class="nowrap">this—</span>it may warrant its
 own post.
 <!--more-->
 <h2 id="functionality">Functionality<a href="#functionality" class="floatleft sec-link">§</a></h2>
@@ -208,12 +208,12 @@ variable. When it is customised to <code>t</code>, a label change/deletion
 triggers a project-wide <code>query-replace-regexp</code>, such that the user can
 decide whether referencing labels should change as well. This utilises
 Emacs’s own <code>project.el</code>, so one should make sure that the LaTeX project
-is version controlled—in which case the relevant ignore file is also
-respected—or otherwise recognisable by the library.<!--
+is version <span class="nowrap">controlled—</span>in which case the relevant ignore file is also
+<span class="nowrap">respected—</span>or otherwise recognisable by the library.<!--
 --><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">If you look closely at the video, you can see that, while the
 label changes, the “Lemma” before the reference does not. This
-would require more sophisticated regular expressions, but—reading
-<code>latex​-​change-env-labels</code> and making some assumptions—it certainly
+would require more sophisticated regular expressions, <span class="nowrap">but—</span>reading
+<code>latex​-​change-env-labels</code> and making some <span class="nowrap">assumptions—</span>it certainly
 seems possible to do.</div><!--
 -->
 <p>
@@ -225,7 +225,7 @@ Label handling
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
 That’s about all of the functionality that the package currently has.
-It has certainly served me quite well so far—my hope is that it will be
+It has certainly served me quite well so <span class="nowrap">far—</span>my hope is that it will be
 useful to at least one other person.
 <p></p>
 On that note: contributions welcome! For example, something that should

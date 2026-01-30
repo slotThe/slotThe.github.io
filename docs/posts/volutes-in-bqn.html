@@ -63,7 +63,7 @@ On <a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-3" class="local-li
 of my post about doing some
 <a href="https://tony-zorman.com/posts/aoc-in-bqn.html" class="local-link">Advent of Code problems in <span class="small-caps">bqn</span></a>,
 the task was to walk along some <em>integer volutes</em>:
-spirals, either spiralling inwards—involutes—or outwards—evolutes—in either direction.
+spirals, either spiralling <span class="nowrap">inwards—</span><span class="nowrap">involutes—</span>or <span class="nowrap">outwards—</span><span class="nowrap">evolutes—</span>in either direction.
 While the specific problem didn’t require it,
 I think it’s a pretty neat exercise to think about how to generate these things.
 Let’s talk about that.
@@ -122,7 +122,7 @@ let’s think about what kind of steps we’re taking:
 <p></p>
 Just writing out the directions yields something like <code>ENWWSSEEENNNWWWWSSSS…</code>.
 We alternate between east, north, west, and south in that order,
-and always bunch up two of them with the same frequency—first one, then two, etc.
+and always bunch up two of them with the same <span class="nowrap">frequency—</span>first one, then two, etc.
 In particular, we “break into” a new iteration in the spiralling
 every time a number is increased:
 
@@ -198,7 +198,7 @@ This yields the function to generate a vector of directions.
 <span class="sr">(</span><span class="nv">function</span><span class="w"> </span><span class="nv">block</span><span class="sr">)</span>
 </pre></div>
 <p></p>
-To get the coordinates, we just have to “walk the path”—that is,
+To get the coordinates, we just have to “walk the path”<span class="nowrap">—</span>that is,
 compute the
 <code>+</code>-<a href="https://mlochbaum.github.io/BQN/doc/scan.html">scan</a> (<a href="https://mlochbaum.github.io/BQN/doc/scan.html"><code>`</code></a>)
 and add the origin.
@@ -263,7 +263,7 @@ A verbose way of doing that would be the following:<!--
 <p></p>
 This works, but feels a bit unsatisfactory.
 We seem to be doing a lot of extra work just to get the correct ordering of the indices.
-Luckily, <span class="small-caps">bqn</span> has a primitive function—two, actually—that exactly encapsulates operations like the above:
+Luckily, <span class="small-caps">bqn</span> has a primitive <span class="nowrap">function—</span>two, <span class="nowrap">actually—</span>that exactly encapsulates operations like the above:
 a <a href="https://mlochbaum.github.io/BQN/doc/order.html">grade</a>.
 Briefly,
 given an array with major cells <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>,
@@ -272,7 +272,7 @@ returns a permutation <span class="katex"><span class="katex-html" aria-hidden="
 which yields the order that would sort the cells:
 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6807em;vertical-align:-0.2501em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3173em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2501em;"><span></span></span></span></span></span></span></span></span></span> is the smallest element, <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6807em;vertical-align:-0.2501em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3173em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2501em;"><span></span></span></span></span></span></span></span></span></span> is the second smallest, and so on.
 This can be used to sort the vector by <em>picking</em> each <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9456em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> in order.<!--
---><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">In fact, in <span class="small-caps">apl</span> this is the only way to do this—there is no other sorting primitive!</div><!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">In fact, in <span class="small-caps">apl</span> this is the only way to do <span class="nowrap">this—</span>there is no other sorting primitive!</div><!--
 -->
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">a</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="p">⟨</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">19</span><span class="p">,</span><span class="m">16</span><span class="p">⟩</span>
@@ -318,7 +318,7 @@ a fun aspect of array programming is to come up with
 <a href="https://saltysylvi.github.io/blog/flat1.html">completely</a>
 <a href="https://saltysylvi.github.io/blog/flat2.html">flat</a>
 solutions to problems.
-That is, solutions that do not use any nested arrays—like vectors of coordinates—whatsoever.
+That is, solutions that do not use any nested <span class="nowrap">arrays—</span>like vectors of <span class="nowrap">coordinates—</span>whatsoever.
 This is often much more efficient,
 and may yield new insights in how the problem actually works.
 Plus, working in a more constrained setting can be fun just in and of itself.
@@ -345,7 +345,7 @@ As far as I can tell, one just needs enough intuition about these flat arrays to
 Now, from the first solution we already know that <code>spiral</code> is the <a href="https://mlochbaum.github.io/BQN/doc/order.html">grade</a> of some list of coordinates,
 which we however have no hope of recovering.
 After enough staring, one notices that <code>spiral</code> itself looks like a permutation<!--
--->—why not try to find the inverse of that?
+--><span class="nowrap">—</span>why not try to find the inverse of that?
 Thankfully this is very easy, as <a href="https://mlochbaum.github.io/BQN/doc/order.html">grade up</a> is self-inverse in this case:<!--
 --><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">A quick justification:
 suppose that we have a vector <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.4653em;"><span style="top:-3.0347em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">:</span></span></span></span></span></span></span></span><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> of natural numbers,
@@ -518,7 +518,7 @@ this time as an involute.
 <span class="m">1</span>
 </pre></div>
 <p></p>
-I will leave it to the interested reader to figure out that one—or to consult the
+I will leave it to the interested reader to figure out that <span class="nowrap">one—</span>or to consult the
 <a href="https://codegolf.stackexchange.com/questions/241803/print-a-nxn-integer-involute">relevant StackExchange thread</a>,
 which I perhaps should have looked up before writing this whole thing.
 Still, all of this transposing and reversing the matrix means that this solution is on the slower side.

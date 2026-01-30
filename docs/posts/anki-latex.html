@@ -89,7 +89,7 @@ instead of
 The latter is extremely dependent on the desired outcome,
 types of maths that one studies,
 experience of the person writing the notes, and so on.
-Too many facets for me—or anyone, really—to give blanket recommendations.
+Too many facets for <span class="nowrap">me—</span>or anyone, <span class="nowrap">really—</span>to give blanket recommendations.
 <p></p>
 A lot of things here are rehashes of <a href="https://unhewn-thoughts.org/anki/guide-on-using-latex-xetex-luatex-with-anki.html">Unhewn Thought’s</a>
 post about the same thing,
@@ -101,7 +101,7 @@ As always, this post is mostly about reminding myself about some details in two 
 Anki fully supports MathJax as a backend for its LaTeX previewing system.
 This is great for most users:
 MathJax is trivial to set up, and fits snugly into the generated <span class="small-caps">html</span><!--
--->—there’s a reason it’s used so widely all over the internet!
+--><span class="nowrap">—</span>there’s a reason it’s used so widely all over the internet!
 <p></p>
 However,
 especially for personal notes like these,
@@ -135,7 +135,7 @@ like <code>}}</code> inside of maths closing the current cloze deletion,
 are solved completely by <code>anki-editor</code> without me even having to think about them.<!--
 --><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">For the specific example of maths and cloze deletions,
 one needs to set <code>anki-editor-break-consecutive-braces-in-LaTeX</code>.
-This should probably be the default—and perhaps it will be in the future!</div><!--
+This should probably be the <span class="nowrap">default—</span>and perhaps it will be in the future!</div><!--
 -->
 As an added bonus,
 Org mode’s <a href="https://www.youtube.com/watch?v=n-AfvuV-bYo">new LaTeX preview functionality</a> is just fantastic,
@@ -165,7 +165,7 @@ It looks like this:<!--
 Very far from perfect, but readable.
 Since this seems to be the only drawback with not using MathJax,
 I’ll take it.
-Content over form—at least in this case.
+Content over <span class="nowrap">form—</span>at least in this case.
 <h2 id="preview-generation-with-preview.sty">Preview generation with <code>preview.sty</code><a href="#preview-generation-with-preview.sty" class="floatleft sec-link">§</a></h2>
 <p></p>
 The <code>preview</code> package is specifically designed for these kinds of previews.
@@ -181,11 +181,11 @@ but to the whole line.
 Operationally this means that display maths is automatically centred on my Anki card,
 even if the rest of the text is left-aligned.<!--
 --><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">One could solve this by making <code>anki-editor</code> output an extra <code>div</code> that it only wraps display maths with<!--
-  -->—and I have done that in the past—but using <code>preview.sty</code> feels much cleaner to me.</div><!--
+  --><span class="nowrap">—</span>and I have done that in the <span class="nowrap">past—</span>but using <code>preview.sty</code> feels much cleaner to me.</div><!--
 -->
 <p></p>
 To use <code>preview.sty</code> in this way,
-one simply has to include it Anki’s LaTeX preamble—<code>C-S-n</code> and then “Options”—and wrap the whole document (i.e., the formula being rendered) with the <code>preview</code> environment:
+one simply has to include it Anki’s LaTeX <span class="nowrap">preamble—</span><code>C-S-n</code> and then “Options”<span class="nowrap">—</span>and wrap the whole document (i.e., the formula being rendered) with the <code>preview</code> environment:
 
 <div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="c">%%% Header</span>
 <span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
@@ -206,7 +206,7 @@ and to tweak Anki’s LaTeX compilation pipeline.
 The handy <a href="https://ankiweb.net/shared/info/937148547">Edit LaTeX build process</a> addon can be used for that purpose.
 My <code>svgCommands</code> settings look like this:<!--
 --><label for="sn-5" class="margin-toggle">⊕</label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="marginnote">For compatibility reasons with all of my papers (and other notes) I use <code>latex</code> here.
-In case you are not bound by these restrictions—or more adventurous than me—I would recommend you use lualatex instead.</div><!--
+In case you are not bound by these <span class="nowrap">restrictions—</span>or more adventurous than <span class="nowrap">me—</span>I would recommend you use lualatex instead.</div><!--
 -->
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span> &quot;svgCommands&quot;: [
@@ -244,7 +244,7 @@ If you want to dig deeper into how Anki generates maths, I recommend looking at
 and the
 <a href="https://unhewn-thoughts.org/anki/guide-on-using-latex-xetex-luatex-with-anki.html#tex-generation"><code>.tex</code> Generation</a>
 section in Unhewn Thought’s blog post.<!--
---><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">It should be noted that Anki—thankfully—caches previews by hashing their contents,
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">It should be noted that <span class="nowrap">Anki—</span><span class="nowrap">thankfully—</span>caches previews by hashing their contents,
 and reuses the same <span class="small-caps">svg</span> every time it encounters a LaTeX fragment with the same hash.
 Thus, if you want to completely regenerate everything, just delete the respective directory.
 For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.</div><!--
@@ -272,7 +272,7 @@ it merely also includes my <a href="https://github.com/slotThe/latex-styles">per
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
 <p></p>
 With these relatively straightforward tweaks,
-Anki’s LaTeX integration is really plug and play—I can just use my whole style file as-is,
+Anki’s LaTeX integration is really plug and <span class="nowrap">play—</span>I can just use my whole style file as-is,
 no extra care needed.
 Nice.
 <!-- Body is included in the above file -->
