@@ -387,14 +387,14 @@ but it's still worth a read to get a feeling for all of the different options th
 In terms of
 [microtype](https://ctan.org/pkg/microtype)
 I'm actually quite happy with the default settings.
-I merely added a little bit more
+I added a little bit more
 [tracking](https://en.wikipedia.org/wiki/Letter_spacing)
 to <span class="small-caps">small caps</span> and
 [protrusion](https://en.wikipedia.org/wiki/Hanging_punctuation)
 to sub and superscripts:[^9]
 
 ``` tex
-\usepackage[tracking=true]{microtype}
+\usepackage[tracking=true,kerning=true]{microtype}
 \SetTracking{encoding=*,shape=it*}{10}
 \SetTracking{encoding=*}{10}
 \SetProtrusion%
@@ -402,6 +402,27 @@ to sub and superscripts:[^9]
   {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},
     6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}
 ```
+
+I also added some additional
+[kerning](https://en.wikipedia.org/wiki/Kerning)
+to certain symbols—just a tiny bit of space for en and em dashes,
+so things "breathe" a bit more.
+
+``` tex
+\SetExtraKerning[unit=space]{encoding=*}% Add space to {left,right}
+%  –                      —
+  {\textendash={100,100}, \textemdash={200,200}}
+```
+
+This transforms text like this
+
+<img src="../images/phd-typesetting/no-kerning.png" alt="No kerning">
+
+into text like this
+
+<img src="../images/phd-typesetting/kerning.png" alt="Kerning">
+
+Quite subtle, but certainly noticeable it, I think!
 
 ---
 

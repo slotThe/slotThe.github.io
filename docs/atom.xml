@@ -1782,8 +1782,8 @@ and for <code>"""a"",""b"""</code> we have the wonderful
     <updated>2025-04-13T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      13th Apr 2025–4 Jan 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1981 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      13th Apr 2025–2 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2032 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
       </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
@@ -2088,18 +2088,30 @@ but it’s still worth a read to get a feeling for all of the different options 
 <p>In terms of
 <a href="https://ctan.org/pkg/microtype">microtype</a>
 I’m actually quite happy with the default settings.
-I merely added a little bit more
+I added a little bit more
 <a href="https://en.wikipedia.org/wiki/Letter_spacing">tracking</a>
 to <span class="small-caps">small caps</span> and
 <a href="https://en.wikipedia.org/wiki/Hanging_punctuation">protrusion</a>
 to sub and superscripts:<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[tracking=true]{<span class="ex">microtype</span>}</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[tracking=true,kerning=true]{<span class="ex">microtype</span>}</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\SetTracking</span>{encoding=*,shape=it*}{10}</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\SetTracking</span>{encoding=*}{10}</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\SetProtrusion</span><span class="co">%</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  {encoding=T1,size={7,8}}</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}</span></code></pre></div>
+<p>I also added some additional
+<a href="https://en.wikipedia.org/wiki/Kerning">kerning</a>
+to certain symbols—just a tiny bit of space for en and em dashes,
+so things “breathe” a bit more.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\SetExtraKerning</span>[unit=space]{encoding=*}<span class="co">% Add space to {left,right}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">%  –                      —</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">\textendash</span>={100,100}, <span class="fu">\textemdash</span>={200,200}}</span></code></pre></div>
+<p>This transforms text like this</p>
+<p><img src="../images/phd-typesetting/no-kerning.png" alt="No kerning"></p>
+<p>into text like this</p>
+<p><img src="../images/phd-typesetting/kerning.png" alt="Kerning"></p>
+<p>Quite subtle, but certainly noticeable it, I think!</p>
 <hr />
 <p>One important change has to be made to <code>biblatex</code> when using a font’s oldstyle figures:
 the references in the main text should nevertheless use
@@ -2109,31 +2121,31 @@ That is, instead of</p>
 <p>we rather want<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <p><img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="Citations using lining figures."></p>
 <p>Luckily, it’s pretty easy to change the field format:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareFieldFormat</span>{labelalpha}{<span class="fu">\liningnums</span>{#1}}</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareFieldFormat</span>{labelalpha}{<span class="fu">\liningnums</span>{#1}}</span></code></pre></div>
 <h2 id="miscellaneous-thoughts">Miscellaneous thoughts</h2>
 <p>Small macros like the following
 (inspired by <a href="https://tex.stackexchange.com/questions/422/how-do-i-repeat-a-theorem-number">this answer</a>)
 were rather large quality of life improvements:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatletter</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\newtheorem*</span>{rep@theorem}{<span class="fu">\rep@title</span>}</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\newenvironment</span>{reptheorem}[1]{<span class="co">%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\def\rep@title</span>{<span class="kw">\cref</span>{<span class="ex">#1</span>}}<span class="kw">\begin</span>{<span class="ex">rep</span><span class="er">@theorem</span>}<span class="co">%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}{<span class="co">%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">\end</span>{<span class="ex">rep</span><span class="er">@theorem</span>}<span class="co">%</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatother</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatletter</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\newtheorem*</span>{rep@theorem}{<span class="fu">\rep@title</span>}</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\newenvironment</span>{reptheorem}[1]{<span class="co">%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\def\rep@title</span>{<span class="kw">\cref</span>{<span class="ex">#1</span>}}<span class="kw">\begin</span>{<span class="ex">rep</span><span class="er">@theorem</span>}<span class="co">%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}{<span class="co">%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">\end</span>{<span class="ex">rep</span><span class="er">@theorem</span>}<span class="co">%</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\makeatother</span></span></code></pre></div>
 <p>This creates an environment with an immediate reference to an already existing theorem, proposition, and so on,
 which you might want to use in an introduction—much more sightly than something like <em>Theorem (Theorem x.y)</em>.
 One can use it just like a regular <code>theoremstyle</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Label should exist elsewhere.</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">reptheorem</span>}{cor: pivotal_from_central_anti_central}</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  Let <span class="ss">\(</span><span class="sc">\cat</span><span class="ss">{C}\)</span> be a rigid monoidal category.</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  If <span class="ss">\(</span><span class="sc">\cat</span><span class="ss">{C}\)</span> admits a central Hopf monad <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{D}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  and an anti<span class="fu">\hyp</span>{}central comodule monad <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{Q}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  then it is pivotal if and only if</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{D}(</span><span class="sc">\cat</span><span class="ss">{C}) </span><span class="sc">\cong</span><span class="ss"> </span><span class="sc">\mathfrak</span><span class="ss">{Q}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  as monads.</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">reptheorem</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Label should exist elsewhere.</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">reptheorem</span>}{cor: pivotal_from_central_anti_central}</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  Let <span class="ss">\(</span><span class="sc">\cat</span><span class="ss">{C}\)</span> be a rigid monoidal category.</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  If <span class="ss">\(</span><span class="sc">\cat</span><span class="ss">{C}\)</span> admits a central Hopf monad <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{D}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  and an anti<span class="fu">\hyp</span>{}central comodule monad <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{Q}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  then it is pivotal if and only if</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="ss">\(</span><span class="sc">\mathfrak</span><span class="ss">{D}(</span><span class="sc">\cat</span><span class="ss">{C}) </span><span class="sc">\cong</span><span class="ss"> </span><span class="sc">\mathfrak</span><span class="ss">{Q}(</span><span class="sc">\cat</span><span class="ss">{C})\)</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  as monads.</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">reptheorem</span>}</span></code></pre></div>
 <p>This will then be typeset like so, with a link to the actual result:</p>
 <p><img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result."></p>
 <p>This taught me a bit more about how <code>amsmath</code> environments work under the hood.
@@ -2149,9 +2161,9 @@ so chances are that someone else will probably have solved your super specific p
 Still, start early.</p>
 <hr />
 <p>Lastly, I will just leave the following <em>very important</em> bibLaTeX configuration here.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareDelimFormat</span>{finalnamedelim}{<span class="co">% Force Oxford comma</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\ifnumgreater</span>{<span class="fu">\value</span>{liststop}}{2}{,}{}<span class="co">%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\addspace\bibstring</span>{and}<span class="fu">\space</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareDelimFormat</span>{finalnamedelim}{<span class="co">% Force Oxford comma</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\ifnumgreater</span>{<span class="fu">\value</span>{liststop}}{2}{,}{}<span class="co">%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\addspace\bibstring</span>{and}<span class="fu">\space</span>}</span></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

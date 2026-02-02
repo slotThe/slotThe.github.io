@@ -47,8 +47,8 @@
       <div id="content">
         <article>
     <div class="header">
-      13th Apr 2025–4 Jan 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1983 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      13th Apr 2025–2 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2034 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#LaTeX'." href="../tags/LaTeX.html" rel="tag">#LaTeX</a>
       </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
@@ -472,7 +472,7 @@ but it’s still worth a read to get a feeling for all of the different options 
 In terms of
 <a href="https://ctan.org/pkg/microtype">microtype</a>
 I’m actually quite happy with the default settings.
-I merely added a little bit more
+I added a little bit more
 <a href="https://en.wikipedia.org/wiki/Letter_spacing">tracking</a>
 to <span class="small-caps">small caps</span> and
 <a href="https://en.wikipedia.org/wiki/Hanging_punctuation">protrusion</a>
@@ -487,7 +487,7 @@ to sub and superscripts:<!--
 </pre></div></div><!--
 -->
 
-<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="na">[tracking=true]</span><span class="nb">{</span>microtype<span class="nb">}</span>
+<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\usepackage</span><span class="na">[tracking=true,kerning=true]</span><span class="nb">{</span>microtype<span class="nb">}</span>
 <span class="k">\SetTracking</span><span class="nb">{</span>encoding=*,shape=it*<span class="nb">}{</span>10<span class="nb">}</span>
 <span class="k">\SetTracking</span><span class="nb">{</span>encoding=*<span class="nb">}{</span>10<span class="nb">}</span>
 <span class="k">\SetProtrusion</span><span class="c">%</span>
@@ -495,6 +495,26 @@ to sub and superscripts:<!--
   <span class="nb">{</span>1=<span class="nb">{</span> ,750<span class="nb">}</span>,2=<span class="nb">{</span> ,500<span class="nb">}</span>,3=<span class="nb">{</span> ,500<span class="nb">}</span>,4=<span class="nb">{</span> ,500<span class="nb">}</span>,5=<span class="nb">{</span> ,500<span class="nb">}</span>,
     6=<span class="nb">{</span> ,500<span class="nb">}</span>,7=<span class="nb">{</span> ,600<span class="nb">}</span>,8=<span class="nb">{</span> ,500<span class="nb">}</span>,9=<span class="nb">{</span> ,500<span class="nb">}</span>,0=<span class="nb">{</span> ,500<span class="nb">}}</span>
 </pre></div>
+<p></p>
+I also added some additional
+<a href="https://en.wikipedia.org/wiki/Kerning">kerning</a>
+to certain <span class="nowrap">symbols—</span>just a tiny bit of space for en and em dashes,
+so things “breathe” a bit more.
+
+<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\SetExtraKerning</span><span class="na">[unit=space]</span><span class="nb">{</span>encoding=*<span class="nb">}</span><span class="c">% Add space to {left,right}</span>
+<span class="c">%  –                      —</span>
+  <span class="nb">{</span><span class="k">\textendash</span>=<span class="nb">{</span>100,100<span class="nb">}</span>, <span class="k">\textemdash</span>=<span class="nb">{</span>200,200<span class="nb">}}</span>
+</pre></div>
+<p></p>
+This transforms text like this
+<p></p>
+<img src="../images/phd-typesetting/no-kerning.png" alt="No kerning">
+<p></p>
+into text like this
+<p></p>
+<img src="../images/phd-typesetting/kerning.png" alt="Kerning">
+<p></p>
+Quite subtle, but certainly noticeable it, I think!
 <hr />
 <p></p>
 One important change has to be made to <code>biblatex</code> when using a font’s oldstyle figures:
