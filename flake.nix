@@ -37,7 +37,7 @@
           { };
         hakyll = self.callCabal2nix "hakyll" (builtins.fetchGit {
           url = "https://github.com/jaspervdj/hakyll";
-          rev = "800a612923fac90017b2050ccde3e031af09091e";
+          rev = "86621ff29982dc4a85cddde3c80fe54295482b2e";
         }) {};
       });
     in {
@@ -54,16 +54,7 @@
             p.brotli
             p.fonttools
             p.beautifulsoup4
-            # BQN syntax highlighting; contains https://github.com/pygments/pygments/pull/2789
-            (p.pygments.overrideAttrs (old: {
-              version = "2.19.2";
-              src = fetchFromGitHub {
-                owner = "pygments";
-                repo = "pygments";
-                rev = "0328cfaf1d953b3a0c7eb0ec0efd363deb2f9d51";
-                hash = "sha256-toYPxqaOObK8S4vL58+QippZ53jWW8tKJ2xcL0bHll8=";
-              };
-            }))
+            p.pygments
           ]))
           optipng
           zlib
