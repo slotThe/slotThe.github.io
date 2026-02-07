@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noai, noimageai">
+    <title>DUCK · Tony Zorman</title>
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/katex.css">
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
+  </head>
+
+  <body>
+    <div class="navbar-space">
+      <div id="navigation">
+        <a href="../" class="menu-title">Tony's blog</a>
+        <ul>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../free-software.html">Free Software</a></li>
+          <li><a href="../about.html">About</a></li>
+        </ul>
+      </div>
+      <!-- A table of contents on the left side, but only for screens that are big enough -->
+    </div>
+    <div class="text-space">
+      <div id="content">
+        <article>
+    <div class="header">
+      7th Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="380 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        <a title="All pages tagged '#hardware'." href="../tags/hardware.html" rel="tag">#hardware</a>
+      </div>
+    <h1 class="post-title">DUCK</h1>
+    <div id="title-underline"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      I have a duck on my keyboard now.<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">This is basically the entire post. I’m just, unexpectedly,
+<em>really</em> excited about this.</div><!--
+-->
+<!--more-->
+<p></p>
+I got it from the mechanical keyboard meetup at
+<a href="https://events.ccc.de/congress/2025/infos/startpage.html"><span class="small-caps">39c3</span></a>. It’s
+straight out of <span class="nowrap">a—</span>judging by the quality of the <span class="nowrap">print—</span>cheap <span class="small-caps">3d</span> printer,
+and looks like just about the derpiest duck one can imagine:
+<figure>
+<img src="../images/duck/duck1.png" style="max-width: 50%; height: 100%;" alt="Duck 1">
+<img src="../images/duck/duck2.png" style="max-width: 41.2%; height: 100%;" alt="Duck 2">
+</figure>
+<p></p>
+What does it do? Since the key is in one of the
+<a href="https://tony-zorman.com/posts/atreus-review.html#physical-layout" class="local-link">inaccessible-ish</a>
+positions on the Atreus, and hitting the duck all the time is quite
+mean, I think there’s only one obvious choice.<!--
+--><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote">󠀠
+<p></p>
+I normally have the Atreus sitting directly on my laptop keyboard
+(with it disabled), but of course I wanted to showcase the
+backlight party as well.</div><!--
+-->
+<p>
+<video width="100%" controls>
+<source src="../images/duck/duck.mp4" type="video/mp4">
+</video>
+</p>
+<div style="text-align: center;">
+<p></p>
+<img class="fleuron-block" src="../images/fleuron.svg" alt="Fleuron">
+</div>
+<p></p>
+The implementation is what one would expect, but if you’re still reading
+this I might as well show you some hacky code. The basic flow is quite
+simple: upon pressing (or holding down) the key, generate some unique
+key combination, match on that combination in my <span class="small-caps">xm</span>onad configuration,
+and defer the rest to a bash script.
+<p></p>
+I already have a <a href="https://docs.qmk.fm/features/tap_dance">tap dance</a>
+setup with <span class="small-caps">qmk</span>; the basic idea is that each tap dance key <code>TDKEY</code>
+defines a function like the following:
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Tap dance state</span>
+<span class="w">  </span><span class="n">TD_NONE</span><span class="p">,</span><span class="w"> </span><span class="n">TD_UNKNOWN</span><span class="p">,</span><span class="w"> </span><span class="n">TD_SINGLE_TAP</span><span class="p">,</span><span class="w"> </span><span class="n">TD_SINGLE_HOLD</span><span class="p">,</span><span class="w"> </span><span class="n">TD_DOUBLE_TAP</span><span class="p">,</span>
+<span class="p">}</span><span class="w"> </span><span class="n">td_state_t</span><span class="p">;</span>
+
+
+<span class="k">static</span><span class="w"> </span><span class="n">td_state_t</span><span class="w"> </span><span class="n">TDKEY_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TD_NONE</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">TDKEY_finished</span><span class="p">(</span><span class="n">tap_dance_state_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">TDKEY_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur_dance</span><span class="p">(</span><span class="n">state</span><span class="p">);</span>
+<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">TDKEY_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// what to do on key press</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_HOLD</span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_DOUBLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w">                 </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">TDKEY_reset</span><span class="p">(</span><span class="n">tap_dance_state_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">TDKEY_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// what to do on key release</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_HOLD</span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_DOUBLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w">                 </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">TDKEY_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TD_NONE</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p></p>
+For example, I mapped the keys to output <code>M-C-S-v 2</code><span class="nowrap">—</span>I figured that even
+with my crazy keybindings it’s quite unlikely I’ll ever press that by
+accident.
+<p></p>
+My <a href="https://codeberg.org/slotThe/dotfiles/src/branch/main/xmonad/xmonad.hs">xmonad.hs</a>
+then just needs support for that keybinding
+
+<div class="highlight-haskell" style="padding-left: 1em;"><pre><span></span><span class="w">  </span><span class="p">(</span><span class="s">&quot;M-C-S-v 2&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">spawn</span><span class="w"> </span><span class="s">&quot;~/.scripts/duck.sh&quot;</span><span class="p">)</span>
+</pre></div>
+<p></p>
+and then the script does something like
+
+<div class="highlight-shell" style="padding-left: 1em;"><pre><span></span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>xdotool<span class="w"> </span>search<span class="w"> </span>--name<span class="w"> </span>--classname<span class="w"> </span>duckmpv<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>mpv<span class="w"> </span>--x11-name<span class="o">=</span>duckmpv<span class="w"> </span>~/duck/rick-roll.webm<span class="w"> </span><span class="p">&amp;</span>
+<span class="w">    </span><span class="nv">p</span><span class="o">=</span>/sys/devices/platform/tuxedo_keyboard/leds/white:kbd_backlight/brightness
+<span class="w">    </span><span class="k">for</span><span class="w"> </span>_<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">0</span>..10<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..5<span class="o">}</span><span class="w"> </span><span class="o">{</span><span class="m">4</span>..0<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$i</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span>sleep<span class="w"> </span>.03s<span class="p">;</span><span class="w"> </span><span class="k">done</span>
+<span class="w">    </span><span class="k">done</span>
+<span class="k">fi</span>
+</pre></div>
+<p></p>
+The relevant diffs for
+<a href="https://github.com/slotThe/qmk_firmware/commit/3841ac9f09fba488f3abf9b138dfee264e707b93"><span class="small-caps">qmk</span></a>,
+and <a href="https://codeberg.org/slotThe/dotfiles/commit/826295572b54e06b2aaa8719283d162782566228">the rest</a>
+of my config are available.
+<!-- Body is included in the above file -->
+    </section>
+    <!-- A footer-ish thing above the actual boring footer for pretty
+           fleurons and things that should only appear on posts. -->
+      <div style="text-align: center;">
+        <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
+        Have a comment? Write me an <a href="../about.html">email!</a>
+      </div>
+</article>
+</div>
+      <div id="footer">
+        <!-- Left -->
+        <a id="to-top" href="#">top</a>
+        <!-- Right -->
+        <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+        &nbsp;|&nbsp;
+        <a href="../impressum.html">Legal notice and privacy policy</a>
+        <!-- Newline -->
+        <p style="margin-top:0;">Everything on this website—<a style="color:var(--fg-footer-pipe)" href="https://en.wikipedia.org/wiki/Dash#Em_dash">em dash</a> and all—was created by a human</p>
+      </div>
+    </div>
+  </body>
+</html>

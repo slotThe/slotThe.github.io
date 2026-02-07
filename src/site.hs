@@ -697,7 +697,8 @@ myPandocCompiler =
                     , "HATC", "CSL", "BY-SA", "TOC", "CT23", "README", "LSP"
                     , "PR", "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
                     , "CBQN", "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM"
-                    , "KOMA", "JSON", "RFC", "CSV", "CRLF", "CR", "LF"
+                    , "KOMA", "JSON", "RFC", "CSV", "CRLF", "CR", "LF", "39C3"
+                    , "3D"
                     ]
     inline -> inline
    where
