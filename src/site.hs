@@ -68,6 +68,7 @@ main = hakyllWith config do
          .||. "talks/**.pdf"
          .||. "css/fonts/**"
          .||. "robots.txt"
+         .||. "CNAME"
         )
     do route   idRoute
        compile copyFileCompiler
