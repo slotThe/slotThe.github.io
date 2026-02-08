@@ -20,8 +20,8 @@
     <updated>2026-02-07T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      7th Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="381 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      7th Feb 2026–8 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="419 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
       </div>
     <h1 class="post-title">DUCK</h1>
@@ -36,8 +36,8 @@
 straight out of a—judging by the quality of the print—cheap 3D printer,
 and looks like just about the derpiest duck one can imagine:</p>
 <figure>
-<img src="../images/duck/duck1.png" style="max-width: 50%; height: 100%;" alt="Duck 1">
 <img src="../images/duck/duck2.png" style="max-width: 41.2%; height: 100%;" alt="Duck 2">
+<img src="../images/duck/duck1.png" style="max-width: 50%; height: 100%;" alt="Duck 1">
 </figure>
 <p>What does it do? Since the key is in one of the
 <a href="https://tony-zorman.com/posts/atreus-review.html#physical-layout">inaccessible-ish</a>
@@ -57,40 +57,41 @@ simple: upon pressing (or holding down) the key, generate some unique
 key combination, match on that combination in my XMonad configuration,
 and defer the rest to a bash script.</p>
 <p>I already have a <a href="https://docs.qmk.fm/features/tap_dance">tap dance</a>
-setup with QMK; the basic idea is that each tap dance key <code>TDKEY</code>
-defines a function like the following:</p>
+setup with QMK; the idea is that one can predefine different tap states,
+such as holding down the key, a single tap, a double tap, and so on.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">enum</span> <span class="op">{</span> <span class="co">// Tap dance state</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  TD_NONE<span class="op">,</span> TD_UNKNOWN<span class="op">,</span> TD_SINGLE_TAP<span class="op">,</span> TD_SINGLE_HOLD<span class="op">,</span> TD_DOUBLE_TAP<span class="op">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> td_state_t<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> td_state_t TDKEY_state <span class="op">=</span> TD_NONE<span class="op">;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> TDKEY_finished<span class="op">(</span>tap_dance_state_t <span class="op">*</span>state<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>user_data<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  TDKEY_state <span class="op">=</span> cur_dance<span class="op">(</span>state<span class="op">);</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">switch</span> <span class="op">(</span>TDKEY_state<span class="op">)</span> <span class="op">{</span>  <span class="co">// what to do on key press</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_HOLD<span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_DOUBLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span>                 <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> TDKEY_reset<span class="op">(</span>tap_dance_state_t <span class="op">*</span>state<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>user_data<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">switch</span> <span class="op">(</span>TDKEY_state<span class="op">)</span> <span class="op">{</span>  <span class="co">// what to do on key release</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_HOLD<span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_DOUBLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span>                 <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  TDKEY_state <span class="op">=</span> TD_NONE<span class="op">;</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>For example, I mapped the keys to output <code>M-C-S-v 2</code>—I figured that even
-with my crazy keybindings it’s quite unlikely I’ll ever press that by
-accident.</p>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> td_state_t<span class="op">;</span></span></code></pre></div>
+<p>Then, each new tap dance key, say <code>DUCK</code>, defines a function like the
+following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> td_state_t DUCK_state <span class="op">=</span> TD_NONE<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> DUCK_finished<span class="op">(</span>tap_dance_state_t <span class="op">*</span>state<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>user_data<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  DUCK_state <span class="op">=</span> cur_dance<span class="op">(</span>state<span class="op">);</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">switch</span> <span class="op">(</span>DUCK_state<span class="op">)</span> <span class="op">{</span>  <span class="co">// what to do on key press</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_HOLD<span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_DOUBLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span>                 <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> DUCK_reset<span class="op">(</span>tap_dance_state_t <span class="op">*</span>state<span class="op">,</span> <span class="dt">void</span> <span class="op">*</span>user_data<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">switch</span> <span class="op">(</span>DUCK_state<span class="op">)</span> <span class="op">{</span>  <span class="co">// what to do on key release</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_SINGLE_HOLD<span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> TD_DOUBLE_TAP <span class="op">:</span> …<span class="op">;</span> <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">default</span><span class="op">:</span>                 <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  DUCK_state <span class="op">=</span> TD_NONE<span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>One still has to feed these functions into the tap dance machinery, but
+that’s essentially it. I mapped my duck key to output <code>M-C-S-v 2</code>—I
+figured that even with my crazy keybindings it’s quite unlikely I’ll
+ever press that by accident.</p>
 <p>My <a href="https://codeberg.org/slotThe/dotfiles/src/branch/main/xmonad/xmonad.hs">xmonad.hs</a>
 then just needs support for that keybinding</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;M-C-S-v 2&quot;</span>, spawn <span class="st">&quot;~/.scripts/duck.sh&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;M-C-S-v 2&quot;</span>, spawn <span class="st">&quot;~/.scripts/duck.sh&quot;</span>)</span></code></pre></div>
 <p>and then the script does something like</p>
 <pre class="shell"><code>if ! xdotool search --name --classname duckmpv; then
     mpv --x11-name=duckmpv ~/duck/rick-roll.webm &amp;

@@ -15,12 +15,12 @@ straight out of a—judging by the quality of the print—cheap 3D printer,
 and looks like just about the derpiest duck one can imagine:
 
 <figure>
-  <img src="../images/duck/duck1.png"
-       style="max-width: 50%; height: 100%;"
-       alt="Duck 1">
   <img src="../images/duck/duck2.png"
        style="max-width: 41.2%; height: 100%;"
        alt="Duck 2">
+  <img src="../images/duck/duck1.png"
+       style="max-width: 50%; height: 100%;"
+       alt="Duck 1">
 </figure>
 
 What does it do? Since the key is in one of the
@@ -46,20 +46,24 @@ key combination, match on that combination in my XMonad configuration,
 and defer the rest to a bash script.
 
 I already have a [tap dance](https://docs.qmk.fm/features/tap_dance)
-setup with QMK; the basic idea is that each tap dance key `TDKEY`
-defines a function like the following:
+setup with QMK; the idea is that one can predefine different tap states,
+such as holding down the key, a single tap, a double tap, and so on.
 
 ``` c
 typedef enum { // Tap dance state
   TD_NONE, TD_UNKNOWN, TD_SINGLE_TAP, TD_SINGLE_HOLD, TD_DOUBLE_TAP,
 } td_state_t;
+```
 
+Then, each new tap dance key, say `DUCK`, defines a function like the
+following:
 
-static td_state_t TDKEY_state = TD_NONE;
+``` c
+static td_state_t DUCK_state = TD_NONE;
 
-void TDKEY_finished(tap_dance_state_t *state, void *user_data) {
-  TDKEY_state = cur_dance(state);
-  switch (TDKEY_state) {  // what to do on key press
+void DUCK_finished(tap_dance_state_t *state, void *user_data) {
+  DUCK_state = cur_dance(state);
+  switch (DUCK_state) {  // what to do on key press
   case TD_SINGLE_TAP : …; break;
   case TD_SINGLE_HOLD: …; break;
   case TD_DOUBLE_TAP : …; break;
@@ -67,20 +71,21 @@ void TDKEY_finished(tap_dance_state_t *state, void *user_data) {
   }
 }
 
-void TDKEY_reset(tap_dance_state_t *state, void *user_data) {
-  switch (TDKEY_state) {  // what to do on key release
+void DUCK_reset(tap_dance_state_t *state, void *user_data) {
+  switch (DUCK_state) {  // what to do on key release
   case TD_SINGLE_TAP : …; break;
   case TD_SINGLE_HOLD: …; break;
   case TD_DOUBLE_TAP : …; break;
   default:                 break;
   }
-  TDKEY_state = TD_NONE;
+  DUCK_state = TD_NONE;
 }
 ```
 
-For example, I mapped the keys to output `M-C-S-v 2`—I figured that even
-with my crazy keybindings it's quite unlikely I'll ever press that by
-accident.
+One still has to feed these functions into the tap dance machinery, but
+that's essentially it. I mapped my duck key to output `M-C-S-v 2`—I
+figured that even with my crazy keybindings it's quite unlikely I'll
+ever press that by accident.
 
 My [xmonad.hs](https://codeberg.org/slotThe/dotfiles/src/branch/main/xmonad/xmonad.hs)
 then just needs support for that keybinding

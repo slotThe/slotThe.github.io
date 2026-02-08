@@ -34,8 +34,8 @@
       <div id="content">
         <article>
     <div class="header">
-      7th Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="380 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      7th Feb 2026–8 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="418 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#hardware'." href="../tags/hardware.html" rel="tag">#hardware</a>
       </div>
     <h1 class="post-title">DUCK</h1>
@@ -54,8 +54,8 @@ I got it from the mechanical keyboard meetup at
 straight out of <span class="nowrap">a—</span>judging by the quality of the <span class="nowrap">print—</span>cheap <span class="small-caps">3d</span> printer,
 and looks like just about the derpiest duck one can imagine:
 <figure>
-<img src="../images/duck/duck1.png" style="max-width: 50%; height: 100%;" alt="Duck 1">
 <img src="../images/duck/duck2.png" style="max-width: 41.2%; height: 100%;" alt="Duck 2">
+<img src="../images/duck/duck1.png" style="max-width: 50%; height: 100%;" alt="Duck 1">
 </figure>
 <p></p>
 What does it do? Since the key is in one of the
@@ -85,18 +85,21 @@ key combination, match on that combination in my <span class="small-caps">xm</sp
 and defer the rest to a bash script.
 <p></p>
 I already have a <a href="https://docs.qmk.fm/features/tap_dance">tap dance</a>
-setup with <span class="small-caps">qmk</span>; the basic idea is that each tap dance key <code>TDKEY</code>
-defines a function like the following:
+setup with <span class="small-caps">qmk</span>; the idea is that one can predefine different tap states,
+such as holding down the key, a single tap, a double tap, and so on.
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Tap dance state</span>
 <span class="w">  </span><span class="n">TD_NONE</span><span class="p">,</span><span class="w"> </span><span class="n">TD_UNKNOWN</span><span class="p">,</span><span class="w"> </span><span class="n">TD_SINGLE_TAP</span><span class="p">,</span><span class="w"> </span><span class="n">TD_SINGLE_HOLD</span><span class="p">,</span><span class="w"> </span><span class="n">TD_DOUBLE_TAP</span><span class="p">,</span>
 <span class="p">}</span><span class="w"> </span><span class="n">td_state_t</span><span class="p">;</span>
+</pre></div>
+<p></p>
+Then, each new tap dance key, say <code>DUCK</code>, defines a function like the
+following:
 
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">td_state_t</span><span class="w"> </span><span class="n">DUCK_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TD_NONE</span><span class="p">;</span>
 
-<span class="k">static</span><span class="w"> </span><span class="n">td_state_t</span><span class="w"> </span><span class="n">TDKEY_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TD_NONE</span><span class="p">;</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">TDKEY_finished</span><span class="p">(</span><span class="n">tap_dance_state_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">TDKEY_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur_dance</span><span class="p">(</span><span class="n">state</span><span class="p">);</span>
-<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">TDKEY_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// what to do on key press</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">DUCK_finished</span><span class="p">(</span><span class="n">tap_dance_state_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">DUCK_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur_dance</span><span class="p">(</span><span class="n">state</span><span class="p">);</span>
+<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">DUCK_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// what to do on key press</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_HOLD</span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_DOUBLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
@@ -104,20 +107,21 @@ defines a function like the following:
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">TDKEY_reset</span><span class="p">(</span><span class="n">tap_dance_state_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">TDKEY_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// what to do on key release</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">DUCK_reset</span><span class="p">(</span><span class="n">tap_dance_state_t</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">DUCK_state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// what to do on key release</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_SINGLE_HOLD</span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">TD_DOUBLE_TAP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">…</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
 <span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w">                 </span><span class="k">break</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="n">TDKEY_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TD_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="n">DUCK_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TD_NONE</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 <p></p>
-For example, I mapped the keys to output <code>M-C-S-v 2</code><span class="nowrap">—</span>I figured that even
-with my crazy keybindings it’s quite unlikely I’ll ever press that by
-accident.
+One still has to feed these functions into the tap dance machinery, but
+that’s essentially it. I mapped my duck key to output <code>M-C-S-v 2</code><span class="nowrap">—</span>I
+figured that even with my crazy keybindings it’s quite unlikely I’ll
+ever press that by accident.
 <p></p>
 My <a href="https://codeberg.org/slotThe/dotfiles/src/branch/main/xmonad/xmonad.hs">xmonad.hs</a>
 then just needs support for that keybinding
