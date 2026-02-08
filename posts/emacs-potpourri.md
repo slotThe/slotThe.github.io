@@ -53,8 +53,8 @@ again praise `pixel-scroll-precision-mode`.  My day job is being a [PhD
 student in maths][posts:phd-workflow], which means that I write a lot of
 LaTeX and also use Org extensively for taking notes.  While ordinary
 LaTeX entry in Org works quite well, commutative diagrams are a pain
-more often than not.  In fact, It's much easier to draw them with a tool
-like [quiver], make a screenshot, and then include the resulting picture
+more often than not.  In fact, it's much easier to draw them with a tool
+like [quiver], take a screenshot, and then include the resulting picture
 in the file.  However, now we have the problem that Emacs treats
 pictures as very large single characters—the result is a scrolling
 experience that's very far from optimal.  This is _exactly_ where
@@ -179,7 +179,7 @@ my research workflow.
 
 This story is interesting enough that I've written a whole [post][posts:prett-latex] about it<!--
 -->—go check it out!
-Long story short, one can transform a buffers like this
+Long story short, one can transform a buffer like this
 
 <img class="pure-img"
      style="padding-left: 1em"
@@ -248,7 +248,7 @@ also clutters the `ERC Keywords` buffer (which is built-in and akin to
 WeeChat's `highmon.pl`).
 
 Thankfully, however, there is a straightforward hack around this: just
-check the message for certain regular expression first and do nothing
+check the message for certain regular expressions first and do nothing
 when they are present.
 
 ``` emacs-lisp
@@ -295,7 +295,7 @@ don't have to dig up these links again and again?
 I currently have a set-up where I can link to every XMonad module, all
 of my blog posts, as well as selected extra sites, like our tutorial and
 installation instructions.  Depending on the given universal argument, a
-different link style is used, to accomodate for different platforms.
+different link style is used, to accommodate for different platforms.
 
 ``` emacs-lisp
 (defun slot/get-xmonad-modules ()
@@ -362,8 +362,7 @@ three times.  A great introduction to `repeat-mode` can be found
 
 There are [lots][emacs:repeat-mode:1] of [packages][emacs:repeat-mode:2]
 around that define different macros which probably work much better than
-the one below.  Even [use-package] now sports a `:repeat-map` keyword
-now.  However, obviously the one I wrote feels the most natural to _me_,
+the one below.  Even [use-package] now sports a `:repeat-map` keyword.  However, obviously the one I wrote feels the most natural to _me_,
 so it's being kept around regardless.
 
 ``` emacs-lisp
@@ -487,7 +486,7 @@ and we're good to go.
 
 # Sane type signatures with lsp-mode
 
-By default, `lsp-mode`s type signatures for certain languages are… not great.
+By default, `lsp-mode`'s type signatures for certain languages are… not great.
 
 <img class="pure-img"
      style="padding-left: 1em;"
@@ -512,7 +511,7 @@ However, unification is not as easy as `(setq eshell-history-file-name "~/.confi
 since zsh stores its history file in a metafied format.[^5]
 This means that,
 on the eshell side,
-we have to make sure unmetafy the history file before writing to it.
+we have to make sure to unmetafy the history file before writing to it.
 
 [The implementation and more details can be found here](https://tony-zorman.com/posts/eshell-zsh-history.html).
 
@@ -569,8 +568,8 @@ it will be returned exactly as-is:
 ```
 
 While this is expected behaviour, it gravely messes with awesome tools like paredit.
-As I'm in the habit—using the power of [whole-line-or-region](https://github.com/purcell/whole-line-or-region)—of lazily copying with with `M-w` all the time,
-this posits a problem.[^6]
+As I'm in the habit—using the power of [whole-line-or-region](https://github.com/purcell/whole-line-or-region)—of lazily copying with `M-w` all the time,
+this poses a problem.[^6]
 
 The solution, thankfully, does not involve all that much code.
 [You can read about it here](https://tony-zorman.com/posts/yanking.html).
@@ -586,7 +585,7 @@ and is thus quite useless for a majority of cases
 
 However,
 with a bit of [monkey-patching],
-one can get a result that approximated a sane solution!
+one can get a result that approximates a sane solution!
 [Here is the corresponding post for this](https://tony-zorman.com/posts/join-lines-comments.html).
 
 # Converting markdown to Element-flavoured HTML
@@ -661,7 +660,7 @@ I can just bind the conversion and subsequent loading of the message into the cl
                              (emacs-anywhere--done)))))
 ```
 
-The results ends up being much more ergonomic:
+The result ends up being much more ergonomic:
 
 <img class="pure-img" src="../images/emacs-potpourri/spoiler2.gif" alt="Easier spoiler entry with the new system.">
 
