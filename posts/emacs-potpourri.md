@@ -515,6 +515,84 @@ we have to make sure to unmetafy the history file before writing to it.
 
 [The implementation and more details can be found here](https://tony-zorman.com/posts/eshell-zsh-history.html).
 
+## Integrating fish's history into eshell
+
+If instead of zsh you're a fan of [fish](https://fishshell.com/), then
+the integration into eshell also needs a bit of work. The default fish
+history keeps track of a bit of metadata, and is specified in a
+YAML-like syntax:
+
+``` emacs-lisp
+- cmd: ssh blah blah blah
+  when: 2348237
+  paths:
+    - /path/to/something
+    - /path/to/something_else
+```
+
+Newlines are replaced by `\n` (the two characters) and backslashes are
+replaced by `\\`.[^10]
+
+Reading this history is a bit more complicated than for zsh, since we
+can't just unmetafy some characters, add a hook, and call things a day.
+The only reliable way I've found to do this is to completely overwrite
+the `eshell-read-history` function, and thus to necessarily reproduce
+some of its logic.
+
+``` emacs-lisp
+(advice-add 'eshell-read-history :override
+  (lambda (&optional _filename _silent)
+    (let* ((size eshell-history-size)
+           (ring (make-ring size))
+           (count 0))
+      (with-temp-buffer
+        (insert-file-contents eshell-history-file-name)
+        (goto-char (point-max))
+        (while (and (< count size)
+                    (re-search-backward "^- cmd: \\(.*\\)$" nil t))
+          (let ((cmd (thread-last
+                       (match-string 1)
+                       (string-replace "\\n" "\n")
+                       (string-replace "\\\\" "\\"))))
+            (when (and (not (string-blank-p cmd))
+                       (ring-empty-p ring))
+              (ring-insert-at-beginning ring cmd)
+              (setq count (1+ count))))))
+      (setq eshell-history-ring ring
+            eshell-history-index nil
+            eshell-hist--new-items 0))))
+```
+
+For writing to the history file, there is `eshell-write-history`. An
+alternative is to add some advice to `eshell-add-input-to-history` that
+immediately writes to the history file after adding the command to
+eshell's builtin history. This sounds so stupid that I just had to try.
+
+``` emacs-lisp
+(advice-add 'eshell-write-history :override #'ignore)
+(advice-add 'eshell-add-input-to-history :after
+
+  (lambda (input)
+    (when (funcall eshell-input-filter input)
+      (write-region
+       (format "- cmd: %s\n  when: %d\n"
+               (thread-last
+                 (string-trim input)
+                 (string-replace "\\" "\\\\")
+                 (string-replace "\n" "\\n"))
+               (time-convert nil 'integer))
+       nil eshell-history-file-name t 'silent))))
+```
+
+I'm currently ignoring `paths` when writing the history file, as
+eshell's autosuggestion functionality does not make use of that. Let's
+leave that as an exercise for the motivated reader.
+
+Now one can just set `eshell-history-file-name` to fish's history file.
+This approach doesn't handle deduplication (eshell uses a spicy vector
+for its history, so checking for membership is linear) or any other more
+complicated operation, since fish already does.
+
 ## Integrating zoxide with eshell
 
 [Zoxide](https://github.com/ajeetdsouza/zoxide) is a rewrite
@@ -750,3 +828,8 @@ The result ends up being much more ergonomic:
       󠀠
 
       [:vc](https://tony-zorman.com/posts/use-package-vc.html) goes brrrrr
+
+[^10]: I don't think there's user-facing documentation for this, interestingly enough.
+       I had to dig through fish's
+       [source](https://github.com/fish-shell/fish-shell/blob/fe3c42af9e605937b52e856d77c50b81cb082fc2/src/history/yaml_backend.rs)
+       for it!

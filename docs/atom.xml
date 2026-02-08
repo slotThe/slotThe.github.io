@@ -11471,8 +11471,8 @@ certainly know which of the two I’d rather write!</p>
     <updated>2022-10-22T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      22nd Oct 2022–17 Dec 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3634 words">15 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      22nd Oct 2022–8 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3983 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
       </div>
     <h1 class="post-title">A Potpourri of Emacs Tweaks</h1>
@@ -11523,8 +11523,8 @@ again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a 
 student in maths</a>, which means that I write a lot of
 LaTeX and also use Org extensively for taking notes. While ordinary
 LaTeX entry in Org works quite well, commutative diagrams are a pain
-more often than not. In fact, It’s much easier to draw them with a tool
-like <a href="https://q.uiver.app/">quiver</a>, make a screenshot, and then include the resulting picture
+more often than not. In fact, it’s much easier to draw them with a tool
+like <a href="https://q.uiver.app/">quiver</a>, take a screenshot, and then include the resulting picture
 in the file. However, now we have the problem that Emacs treats
 pictures as very large single characters—the result is a scrolling
 experience that’s very far from optimal. This is <em>exactly</em> where
@@ -11623,7 +11623,7 @@ my research workflow.</p>
 <h3 id="prettify-latex-buffers">Prettify LaTeX buffers</h3>
 <p>This story is interesting enough that I’ve written a whole <a href="./pretty-latex.html">post</a> about it<!--
 -->—go check it out!
-Long story short, one can transform a buffers like this</p>
+Long story short, one can transform a buffer like this</p>
 <p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math"></p>
 <p>into one like this</p>
 <p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math"></p>
@@ -11672,7 +11672,7 @@ beeping and throwing around urgency hints—not a good experience. This
 also clutters the <code>ERC Keywords</code> buffer (which is built-in and akin to
 WeeChat’s <code>highmon.pl</code>).</p>
 <p>Thankfully, however, there is a straightforward hack around this: just
-check the message for certain regular expression first and do nothing
+check the message for certain regular expressions first and do nothing
 when they are present.</p>
 <pre class="emacs-lisp"><code>(defun slot/erc-ignore-highlight (msg)
   &quot;Don't highlight me when these things happen.&quot;
@@ -11708,7 +11708,7 @@ don’t have to dig up these links again and again?</p>
 <p>I currently have a set-up where I can link to every XMonad module, all
 of my blog posts, as well as selected extra sites, like our tutorial and
 installation instructions. Depending on the given universal argument, a
-different link style is used, to accomodate for different platforms.</p>
+different link style is used, to accommodate for different platforms.</p>
 <pre class="emacs-lisp"><code>(defun slot/get-xmonad-modules ()
   &quot;Get all XMonad modules in the form (NAME . DOC-URL).&quot;
   (let* ((xmonad-cabal &quot;~/repos/xmonad/xmonad-contrib/xmonad-contrib.cabal&quot;)
@@ -11766,8 +11766,7 @@ three times. A great introduction to <code>repeat-mode</code> can be found
 <a href="https://karthinks.com/software/it-bears-repeating/">here</a>.</p>
 <p>There are <a href="https://tildegit.org/acdw/define-repeat-map.el">lots</a> of <a href="https://github.com/mmarshall540/repeaters">packages</a>
 around that define different macros which probably work much better than
-the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword
-now. However, obviously the one I wrote feels the most natural to <em>me</em>,
+the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword. However, obviously the one I wrote feels the most natural to <em>me</em>,
 so it’s being kept around regardless.</p>
 <pre class="emacs-lisp"><code>(defmacro defrepeatmap (sym pairs &amp;optional docstring)
   &quot;A macro for defining `repeat-map's.
@@ -11865,7 +11864,7 @@ check for a certain regular expression, whitespace, and say something if it matc
 <pre class="emacs-lisp"><code>(add-hook 'notmuch-mua-send-hook #'notmuch-mua-attachment-check)</code></pre>
 <p>and we’re good to go.</p>
 <h2 id="sane-type-signatures-with-lsp-mode">Sane type signatures with lsp-mode</h2>
-<p>By default, <code>lsp-mode</code>s type signatures for certain languages are… not great.</p>
+<p>By default, <code>lsp-mode</code>’s type signatures for certain languages are… not great.</p>
 <p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
 <p>However, with a bit of hacking around this turns out to be quite fixable:</p>
 <p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature"></p>
@@ -11877,12 +11876,74 @@ However, unification is not as easy as <code>(setq eshell-history-file-name "~/.
 since zsh stores its history file in a metafied format.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
 This means that,
 on the eshell side,
-we have to make sure unmetafy the history file before writing to it.</p>
+we have to make sure to unmetafy the history file before writing to it.</p>
 <p><a href="https://tony-zorman.com/posts/eshell-zsh-history.html">The implementation and more details can be found here</a>.</p>
+<h3 id="integrating-fishs-history-into-eshell">Integrating fish’s history into eshell</h3>
+<p>If instead of zsh you’re a fan of <a href="https://fishshell.com/">fish</a>, then
+the integration into eshell also needs a bit of work. The default fish
+history keeps track of a bit of metadata, and is specified in a
+YAML-like syntax:</p>
+<pre class="emacs-lisp"><code>- cmd: ssh blah blah blah
+  when: 2348237
+  paths:
+    - /path/to/something
+    - /path/to/something_else</code></pre>
+<p>Newlines are replaced by <code>\n</code> (the two characters) and backslashes are
+replaced by <code>\\</code>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>Reading this history is a bit more complicated than for zsh, since we
+can’t just unmetafy some characters, add a hook, and call things a day.
+The only reliable way I’ve found to do this is to completely overwrite
+the <code>eshell-read-history</code> function, and thus to necessarily reproduce
+some of its logic.</p>
+<pre class="emacs-lisp"><code>(advice-add 'eshell-read-history :override
+  (lambda (&amp;optional _filename _silent)
+    (let* ((size eshell-history-size)
+           (ring (make-ring size))
+           (count 0))
+      (with-temp-buffer
+        (insert-file-contents eshell-history-file-name)
+        (goto-char (point-max))
+        (while (and (&lt; count size)
+                    (re-search-backward &quot;^- cmd: \\(.*\\)$&quot; nil t))
+          (let ((cmd (thread-last
+                       (match-string 1)
+                       (string-replace &quot;\\n&quot; &quot;\n&quot;)
+                       (string-replace &quot;\\\\&quot; &quot;\\&quot;))))
+            (when (and (not (string-blank-p cmd))
+                       (ring-empty-p ring))
+              (ring-insert-at-beginning ring cmd)
+              (setq count (1+ count))))))
+      (setq eshell-history-ring ring
+            eshell-history-index nil
+            eshell-hist--new-items 0))))</code></pre>
+<p>For writing to the history file, there is <code>eshell-write-history</code>. An
+alternative is to add some advice to <code>eshell-add-input-to-history</code> that
+immediately writes to the history file after adding the command to
+eshell’s builtin history. This sounds so stupid that I just had to try.</p>
+<pre class="emacs-lisp"><code>(advice-add 'eshell-write-history :override #'ignore)
+(advice-add 'eshell-add-input-to-history :after
+
+  (lambda (input)
+    (when (funcall eshell-input-filter input)
+      (write-region
+       (format &quot;- cmd: %s\n  when: %d\n&quot;
+               (thread-last
+                 (string-trim input)
+                 (string-replace &quot;\\&quot; &quot;\\\\&quot;)
+                 (string-replace &quot;\n&quot; &quot;\\n&quot;))
+               (time-convert nil 'integer))
+       nil eshell-history-file-name t 'silent))))</code></pre>
+<p>I’m currently ignoring <code>paths</code> when writing the history file, as
+eshell’s autosuggestion functionality does not make use of that. Let’s
+leave that as an exercise for the motivated reader.</p>
+<p>Now one can just set <code>eshell-history-file-name</code> to fish’s history file.
+This approach doesn’t handle deduplication (eshell uses a spicy vector
+for its history, so checking for membership is linear) or any other more
+complicated operation, since fish already does.</p>
 <h3 id="integrating-zoxide-with-eshell">Integrating zoxide with eshell</h3>
 <p><a href="https://github.com/ajeetdsouza/zoxide">Zoxide</a> is a rewrite
 of the original <a href="https://github.com/rupa/z"><code>z</code></a> shell script
-to quickly jump around directories.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+to quickly jump around directories.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>
 Basically, it keeps a history of your most visited directories<!--
 -->—ranked by <a href="https://github.com/ajeetdsouza/zoxide/wiki/Algorithm">frecency</a>—<!--
 -->and jumps to the best match.
@@ -11917,8 +11978,8 @@ it will be returned exactly as-is:</p>
 <pre class="emacs-lisp"><code>   (t (1- arg)))))
 </code></pre>
 <p>While this is expected behaviour, it gravely messes with awesome tools like paredit.
-As I’m in the habit—using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>—of lazily copying with with <code>M-w</code> all the time,
-this posits a problem.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+As I’m in the habit—using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>—of lazily copying with <code>M-w</code> all the time,
+this poses a problem.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <p>The solution, thankfully, does not involve all that much code.
 <a href="https://tony-zorman.com/posts/yanking.html">You can read about it here</a>.</p>
 <h2 id="make-join-line-handle-comments-sanely">Make <code>join-line</code> handle comments sanely</h2>
@@ -11927,10 +11988,10 @@ and is thus quite useless for a majority of cases</p>
 <p><img class="pure-img" src="../images/join-line/join-line-comment.gif" alt="Original join-line behaviour with respect to comments."></p>
 <p>However,
 with a bit of <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey-patching</a>,
-one can get a result that approximated a sane solution!
+one can get a result that approximates a sane solution!
 <a href="https://tony-zorman.com/posts/join-lines-comments.html">Here is the corresponding post for this</a>.</p>
 <h2 id="converting-markdown-to-element-flavoured-html">Converting markdown to Element-flavoured HTML</h2>
-<p>As sad as it makes me, lots of online communities don’t have a dedicated IRC channel anymore, preferring to use the likes of <a href="https://matrix.org/">Matrix</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> instead.
+<p>As sad as it makes me, lots of online communities don’t have a dedicated IRC channel anymore, preferring to use the likes of <a href="https://matrix.org/">Matrix</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> instead.
 Seemingly, the only client that’s actually usable is the very heavy, electron laden, <a href="https://element.io/en">Element</a>.
 It mostly works <em>fine</em> for quick messages,
 but some things are just so manual as to make using them essentially impossible.</p>
@@ -11940,7 +12001,7 @@ You can send a spoiler by simply prepending your message with <code>\spoiler</co
 <p><img class="pure-img" src="../images/emacs-potpourri/spoiler.gif" alt="Inserting a /spoiler in Element."></p>
 <p>However, what if I wanted to not spoil the entire message, but only a part of it?
 Oh, it’s just</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>/html This is a <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> data-mx-spoiler</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="dt">&gt;</span>cool<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> message</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>/html This is a <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> data-mx-spoiler</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="dt">&gt;</span>cool<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span> message</span></code></pre></div>
 <p>…easy, right?</p>
 <p>I don’t know why extending the flavour of markdown that they’re using was not on the cards, but I’m certainly not going to write raw HTML for basic functionality.
 Thankfully, I’m using Emacs—and pandoc exists—so I don’t have to.
@@ -11970,7 +12031,7 @@ inserts the correct <code>span</code> by hand, and just chugs the result into pa
        (user-error &quot;Pandoc conversion failed with exit code %d: %s&quot;
                    exit-code (buffer-string))))))</code></pre>
 <p>In combination with <a href="https://gitlab.com/slotThe/emacs-anywhere">emacs-anywhere</a>,
-I can just bind the conversion and subsequent loading of the message into the clipboard to a key.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+I can just bind the conversion and subsequent loading of the message into the clipboard to a key.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <pre class="emacs-lisp"><code>(use-package emacs-anywhere
   :vc (:url &quot;https://gitlab.com/slotThe/emacs-anywhere&quot;)
   :preface
@@ -11984,7 +12045,7 @@ I can just bind the conversion and subsequent loading of the message into the cl
               (&quot;C-c C-e&quot; . (lambda () (interactive)
                              (slot/matrix-convert-buffer)
                              (emacs-anywhere--done)))))</code></pre>
-<p>The results ends up being much more ergonomic:</p>
+<p>The result ends up being much more ergonomic:</p>
 <p><img class="pure-img" src="../images/emacs-potpourri/spoiler2.gif" alt="Easier spoiler entry with the new system."></p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
@@ -12029,16 +12090,20 @@ However, this is not important for what follows, so I simply omitted it.</p>
 <p>Alternatively, check the source code of <code>notmuch-mua-attachment-check</code> directly.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>For whatever reason, when any character from the <code>0x80</code>–<code>0x9F</code> range is encountered
 the “Meta character” <code>0x83</code> is inserted and the following character gets XORed with 32.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>Eshell’s own <code>cd=</code> command only keeps track of the last <code>n</code> directories without filtering or ranking anything.
+<li id="fn6"><p>I don’t think there’s user-facing documentation for this, interestingly enough.
+I had to dig through fish’s
+<a href="https://github.com/fish-shell/fish-shell/blob/fe3c42af9e605937b52e856d77c50b81cb082fc2/src/history/yaml_backend.rs">source</a>
+for it!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Eshell’s own <code>cd=</code> command only keeps track of the last <code>n</code> directories without filtering or ranking anything.
 I know about <a href="https://github.com/xuchunyang/eshell-z">eshell-z</a>,
 but since I’m using zoxide within zsh anyways
-it seems prudent to not depend on an additional package here.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>Of course, the <em>real problem</em> is my lack of discipline,
-but I’m certainly not going to change my habits if I can instead change my editor around me!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>Or, even worse, Discord.
+it seems prudent to not depend on an additional package here.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Of course, the <em>real problem</em> is my lack of discipline,
+but I’m certainly not going to change my habits if I can instead change my editor around me!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Or, even worse, Discord.
 But this just means I will not participate in that particular community,
-so there’s nothing more to be said on that front.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p><a href="https://tony-zorman.com/posts/use-package-vc.html">:vc</a> goes brrrrr<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+so there’s nothing more to be said on that front.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><a href="https://tony-zorman.com/posts/use-package-vc.html">:vc</a> goes brrrrr<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!-- Body is included in the above file -->

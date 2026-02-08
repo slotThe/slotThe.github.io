@@ -52,6 +52,7 @@
 <li><a href="#eshell">Eshell</a>
 <ul>
 <li><a href="#integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</a></li>
+<li><a href="#integrating-fishs-history-into-eshell">Integrating fish’s history into eshell</a></li>
 <li><a href="#integrating-zoxide-with-eshell">Integrating zoxide with eshell</a></li>
 </ul></li>
 <li><a href="#parentheses-aware-yanking">Parentheses-aware yanking</a></li>
@@ -64,8 +65,8 @@
       <div id="content">
         <article>
     <div class="header">
-      22nd Oct 2022–17 Dec 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3627 words">15 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      22nd Oct 2022–8 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3975 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#emacs'." href="../tags/emacs.html" rel="tag">#emacs</a>
       </div>
     <h1 class="post-title">A Potpourri of Emacs Tweaks</h1>
@@ -96,6 +97,7 @@
 <li><a href="#eshell">Eshell</a>
 <ul>
 <li><a href="#integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</a></li>
+<li><a href="#integrating-fishs-history-into-eshell">Integrating fish’s history into eshell</a></li>
 <li><a href="#integrating-zoxide-with-eshell">Integrating zoxide with eshell</a></li>
 </ul></li>
 <li><a href="#parentheses-aware-yanking">Parentheses-aware yanking</a></li>
@@ -155,8 +157,8 @@ again praise <code>pixel-scroll-precision-mode</code>. My day job is being a <a 
 student in maths</a>, which means that I write a lot of
 LaTeX and also use Org extensively for taking notes. While ordinary
 LaTeX entry in Org works quite well, commutative diagrams are a pain
-more often than not. In fact, It’s much easier to draw them with a tool
-like <a href="https://q.uiver.app/">quiver</a>, make a screenshot, and then include the resulting picture
+more often than not. In fact, it’s much easier to draw them with a tool
+like <a href="https://q.uiver.app/">quiver</a>, take a screenshot, and then include the resulting picture
 in the file. However, now we have the problem that Emacs treats
 pictures as very large single <span class="nowrap">characters—</span>the result is a scrolling
 experience that’s very far from optimal. This is <em>exactly</em> where
@@ -274,7 +276,7 @@ my research workflow.
 <p></p>
 This story is interesting enough that I’ve written a whole <a href="./pretty-latex.html" class="local-link">post</a> about it<!--
 --><span class="nowrap">—</span>go check it out!
-Long story short, one can transform a buffers like this
+Long story short, one can transform a buffer like this
 <p></p>
 <img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math">
 <p></p>
@@ -336,7 +338,7 @@ also clutters the <code>ERC Keywords</code> buffer (which is built-in and akin t
 WeeChat’s <code>highmon.pl</code>).
 <p></p>
 Thankfully, however, there is a straightforward hack around this: just
-check the message for certain regular expression first and do nothing
+check the message for certain regular expressions first and do nothing
 when they are present.
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/erc-ignore-highlight</span><span class="w"> </span><span class="p">(</span><span class="nv">msg</span><span class="p">)</span>
@@ -380,7 +382,7 @@ don’t have to dig up these links again and again?
 I currently have a set-up where I can link to every <span class="small-caps">xm</span>onad module, all
 of my blog posts, as well as selected extra sites, like our tutorial and
 installation instructions. Depending on the given universal argument, a
-different link style is used, to accomodate for different platforms.
+different link style is used, to accommodate for different platforms.
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">slot/get-xmonad-modules</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="s">&quot;Get all XMonad modules in the form (NAME . DOC-URL).&quot;</span>
@@ -444,8 +446,7 @@ three times. A great introduction to <code>repeat-mode</code> can be found
 <p></p>
 There are <a href="https://tildegit.org/acdw/define-repeat-map.el">lots</a> of <a href="https://github.com/mmarshall540/repeaters">packages</a>
 around that define different macros which probably work much better than
-the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword
-now. However, obviously the one I wrote feels the most natural to <em>me</em>,
+the one below. Even <a href="https://github.com/jwiegley/use-package">use-package</a> now sports a <code>:repeat-map</code> keyword. However, obviously the one I wrote feels the most natural to <em>me</em>,
 so it’s being kept around regardless.
 
 <div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defmacro</span><span class="w"> </span><span class="nv">defrepeatmap</span><span class="w"> </span><span class="p">(</span><span class="nv">sym</span><span class="w"> </span><span class="nv">pairs</span><span class="w"> </span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">docstring</span><span class="p">)</span>
@@ -598,7 +599,7 @@ All one has to do is to execute this before sending a mail:
 and we’re good to go.
 <h2 id="sane-type-signatures-with-lsp-mode">Sane type signatures with lsp-mode<a href="#sane-type-signatures-with-lsp-mode" class="floatleft sec-link">§</a></h2>
 <p></p>
-By default, <code>lsp-mode</code>s type signatures for certain languages are… not great.
+By default, <code>lsp-mode</code>’s type signatures for certain languages are… not great.
 <p></p>
 <img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`">
 <p></p>
@@ -618,15 +619,94 @@ the “Meta character” <code>0x83</code> is inserted and the following charact
 -->
 This means that,
 on the eshell side,
-we have to make sure unmetafy the history file before writing to it.
+we have to make sure to unmetafy the history file before writing to it.
 <p></p>
 <a href="https://tony-zorman.com/posts/eshell-zsh-history.html" class="local-link">The implementation and more details can be found here</a>.
+<h3 id="integrating-fishs-history-into-eshell">Integrating fish’s history into eshell<a href="#integrating-fishs-history-into-eshell" class="floatleft sec-link">§</a></h3>
+<p></p>
+If instead of zsh you’re a fan of <a href="https://fishshell.com/">fish</a>, then
+the integration into eshell also needs a bit of work. The default fish
+history keeps track of a bit of metadata, and is specified in a
+YAML-like syntax:
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="nf">-</span><span class="w"> </span><span class="nv">cmd:</span><span class="w"> </span><span class="nv">ssh</span><span class="w"> </span><span class="nv">blah</span><span class="w"> </span><span class="nv">blah</span><span class="w"> </span><span class="nv">blah</span>
+<span class="w">  </span><span class="nv">when:</span><span class="w"> </span><span class="mi">2348237</span>
+<span class="w">  </span><span class="nv">paths:</span>
+<span class="w">    </span><span class="nf">-</span><span class="w"> </span><span class="nv">/path/to/something</span>
+<span class="w">    </span><span class="nf">-</span><span class="w"> </span><span class="nv">/path/to/something_else</span>
+</pre></div>
+<p></p>
+Newlines are replaced by <code>\n</code> (the two characters) and backslashes are
+replaced by <code>\\</code>.<!--
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">I don’t think there’s user-facing documentation for this, interestingly enough.
+I had to dig through fish’s
+<a href="https://github.com/fish-shell/fish-shell/blob/fe3c42af9e605937b52e856d77c50b81cb082fc2/src/history/yaml_backend.rs">source</a>
+for it!</div><!--
+-->
+<p></p>
+Reading this history is a bit more complicated than for zsh, since we
+can’t just unmetafy some characters, add a hook, and call things a day.
+The only reliable way I’ve found to do this is to completely overwrite
+the <code>eshell-read-history</code> function, and thus to necessarily reproduce
+some of its logic.
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">advice-add</span><span class="w"> </span><span class="ss">'eshell-read-history</span><span class="w"> </span><span class="nb">:override</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="kp">&amp;optional</span><span class="w"> </span><span class="nv">_filename</span><span class="w"> </span><span class="nv">_silent</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nv">size</span><span class="w"> </span><span class="nv">eshell-history-size</span><span class="p">)</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">ring</span><span class="w"> </span><span class="p">(</span><span class="nv">make-ring</span><span class="w"> </span><span class="nv">size</span><span class="p">))</span>
+<span class="w">           </span><span class="p">(</span><span class="nv">count</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
+<span class="w">      </span><span class="p">(</span><span class="nb">with-temp-buffer</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">insert-file-contents</span><span class="w"> </span><span class="nv">eshell-history-file-name</span><span class="p">)</span>
+<span class="w">        </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+<span class="w">        </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="nf">&lt;</span><span class="w"> </span><span class="nv">count</span><span class="w"> </span><span class="nv">size</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">(</span><span class="nf">re-search-backward</span><span class="w"> </span><span class="s">&quot;^- cmd: \\(.*\\)$&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">))</span>
+<span class="w">          </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">cmd</span><span class="w"> </span><span class="p">(</span><span class="nv">thread-last</span>
+<span class="w">                       </span><span class="p">(</span><span class="nv">match-string</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">                       </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\\n&quot;</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="w">                       </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="s">&quot;\\&quot;</span><span class="p">))))</span>
+<span class="w">            </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="p">(</span><span class="nv">string-blank-p</span><span class="w"> </span><span class="nv">cmd</span><span class="p">))</span>
+<span class="w">                       </span><span class="p">(</span><span class="nv">ring-empty-p</span><span class="w"> </span><span class="nv">ring</span><span class="p">))</span>
+<span class="w">              </span><span class="p">(</span><span class="nv">ring-insert-at-beginning</span><span class="w"> </span><span class="nv">ring</span><span class="w"> </span><span class="nv">cmd</span><span class="p">)</span>
+<span class="w">              </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">count</span><span class="w"> </span><span class="p">(</span><span class="nf">1+</span><span class="w"> </span><span class="nv">count</span><span class="p">))))))</span>
+<span class="w">      </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">eshell-history-ring</span><span class="w"> </span><span class="nv">ring</span>
+<span class="w">            </span><span class="nv">eshell-history-index</span><span class="w"> </span><span class="no">nil</span>
+<span class="w">            </span><span class="nv">eshell-hist--new-items</span><span class="w"> </span><span class="mi">0</span><span class="p">))))</span>
+</pre></div>
+<p></p>
+For writing to the history file, there is <code>eshell-write-history</code>. An
+alternative is to add some advice to <code>eshell-add-input-to-history</code> that
+immediately writes to the history file after adding the command to
+eshell’s builtin history. This sounds so stupid that I just had to try.
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">advice-add</span><span class="w"> </span><span class="ss">'eshell-write-history</span><span class="w"> </span><span class="nb">:override</span><span class="w"> </span><span class="nf">#'</span><span class="nv">ignore</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">advice-add</span><span class="w"> </span><span class="ss">'eshell-add-input-to-history</span><span class="w"> </span><span class="nb">:after</span>
+
+<span class="w">  </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">input</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">eshell-input-filter</span><span class="w"> </span><span class="nv">input</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">write-region</span>
+<span class="w">       </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;- cmd: %s\n  when: %d\n&quot;</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">thread-last</span>
+<span class="w">                 </span><span class="p">(</span><span class="nv">string-trim</span><span class="w"> </span><span class="nv">input</span><span class="p">)</span>
+<span class="w">                 </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\\&quot;</span><span class="w"> </span><span class="s">&quot;\\\\&quot;</span><span class="p">)</span>
+<span class="w">                 </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="s">&quot;\\n&quot;</span><span class="p">))</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">time-convert</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="ss">'integer</span><span class="p">))</span>
+<span class="w">       </span><span class="no">nil</span><span class="w"> </span><span class="nv">eshell-history-file-name</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="ss">'silent</span><span class="p">))))</span>
+</pre></div>
+<p></p>
+I’m currently ignoring <code>paths</code> when writing the history file, as
+eshell’s autosuggestion functionality does not make use of that. Let’s
+leave that as an exercise for the motivated reader.
+<p></p>
+Now one can just set <code>eshell-history-file-name</code> to fish’s history file.
+This approach doesn’t handle deduplication (eshell uses a spicy vector
+for its history, so checking for membership is linear) or any other more
+complicated operation, since fish already does.
 <h3 id="integrating-zoxide-with-eshell">Integrating zoxide with eshell<a href="#integrating-zoxide-with-eshell" class="floatleft sec-link">§</a></h3>
 <p></p>
 <a href="https://github.com/ajeetdsouza/zoxide">Zoxide</a> is a rewrite
 of the original <a href="https://github.com/rupa/z"><code>z</code></a> shell script
 to quickly jump around directories.<!--
---><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">Eshell’s own <code>cd=</code> command only keeps track of the last <code>n</code> directories without filtering or ranking anything.
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Eshell’s own <code>cd=</code> command only keeps track of the last <code>n</code> directories without filtering or ranking anything.
 I know about <a href="https://github.com/xuchunyang/eshell-z">eshell-z</a>,
 but since I’m using zoxide within zsh anyways
 it seems prudent to not depend on an additional package here.</div><!--
@@ -674,9 +754,9 @@ it will be returned exactly as-is:
 </pre></div>
 <p></p>
 While this is expected behaviour, it gravely messes with awesome tools like paredit.
-As I’m in the <span class="nowrap">habit—</span>using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a><span class="nowrap">—</span>of lazily copying with with <code>M-w</code> all the time,
-this posits a problem.<!--
---><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Of course, the <em>real problem</em> is my lack of discipline,
+As I’m in the <span class="nowrap">habit—</span>using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a><span class="nowrap">—</span>of lazily copying with <code>M-w</code> all the time,
+this poses a problem.<!--
+--><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Of course, the <em>real problem</em> is my lack of discipline,
 but I’m certainly not going to change my habits if I can instead change my editor around me!</div><!--
 -->
 <p></p>
@@ -691,12 +771,12 @@ and is thus quite useless for a majority of cases
 <p></p>
 However,
 with a bit of <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey-patching</a>,
-one can get a result that approximated a sane solution!
+one can get a result that approximates a sane solution!
 <a href="https://tony-zorman.com/posts/join-lines-comments.html" class="local-link">Here is the corresponding post for this</a>.
 <h2 id="converting-markdown-to-element-flavoured-html">Converting markdown to Element-flavoured <span class="small-caps">html</span><a href="#converting-markdown-to-element-flavoured-html" class="floatleft sec-link">§</a></h2>
 <p></p>
 As sad as it makes me, lots of online communities don’t have a dedicated IRC channel anymore, preferring to use the likes of <a href="https://matrix.org/">Matrix</a><!--
---><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">Or, even worse, Discord.
+--><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="sidenote">Or, even worse, Discord.
 But this just means I will not participate in that particular community,
 so there’s nothing more to be said on that front.</div><!--
 --> instead.
@@ -750,7 +830,7 @@ inserts the correct <code>span</code> by hand, and just chugs the result into pa
 <p></p>
 In combination with <a href="https://gitlab.com/slotThe/emacs-anywhere">emacs-anywhere</a>,
 I can just bind the conversion and subsequent loading of the message into the clipboard to a key.<!--
---><label for="sn-8" class="margin-toggle">⊕</label><input type="checkbox" id="sn-8" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-9" class="margin-toggle">⊕</label><input type="checkbox" id="sn-9" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -772,7 +852,7 @@ I can just bind the conversion and subsequent loading of the message into the cl
 <span class="w">                             </span><span class="p">(</span><span class="nv">emacs-anywhere--done</span><span class="p">)))))</span>
 </pre></div>
 <p></p>
-The results ends up being much more ergonomic:
+The result ends up being much more ergonomic:
 <p></p>
 <img class="pure-img" src="../images/emacs-potpourri/spoiler2.gif" alt="Easier spoiler entry with the new system.">
 <!-- Body is included in the above file -->
