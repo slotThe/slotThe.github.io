@@ -180,7 +180,7 @@ CodeBlock ("", ["haskell"], [])
 Importantly, the language (if any) is the first argument of the
 `classes` field of `Attr`.
 
-A strategy begins to form: look for all occurences of a `CodeBlock` in
+A strategy begins to form: look for all occurrences of a `CodeBlock` in
 the `Pandoc` type, and replace it with a `RawBlock "html"` such that it
 isn't touched anymore.  Doing so will not pose very many
 challenges—pandoc has really great capabilities for
@@ -270,7 +270,7 @@ pandocCompilerWithTransformM
   -> Compiler (Item String)
 ```
 
-Basically, in additions to reader and writer options, it also takes a
+Basically, in addition to reader and writer options, it also takes a
 monadic transformation of pandoc's AST and builds an appropriate
 `Compiler` from that.
 

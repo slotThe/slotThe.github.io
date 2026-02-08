@@ -22,9 +22,9 @@ As basically my entire digital life happens in either [Emacs] or
 [XMonad], my setup is heavily skewed in that direction; I will make use
 of these tools almost every step of the way.
 <!--more-->
-As such, there is a lot of tangential almost relevant bits that I could
+As such, there are a lot of tangential almost relevant bits that I could
 cover here.  However, since these aren't directly related to my
-_research_ workflow—and there is a lot of great resources out there
+_research_ workflow—and there are a lot of great resources out there
 already—I decided to not do this here.[^1]
 
 # High level structure
@@ -322,7 +322,7 @@ convenience:
       bureaucracy ([notmuch.el]), keeping some sort of up-to-date
       calendar and readable todo-notes ([org-mode] and goodies, as well
       as integration via [XMonad's OrgMode prompt]), accessing the
-      universities internal nextcloud server ([khalel] and `davfs2` or
+      university's internal nextcloud server ([khalel] and `davfs2` or
       `TRAMP`), …  You get the idea.
 
 [^2]: I will be using Emacs style notation throughout the article.  This
@@ -352,6 +352,6 @@ convenience:
 [^6]: Ostensibly, this should be an XMonad module, as it does not
       necessarily have anything to do with Emacs itself.  However, I had
       already written the elfeed integration and so the most annoying
-      part (scraping the arXiv xml for certain bits) was already done.
+      part (scraping the arXiv XML for certain bits) was already done.
       On the other hand, there are more Emacs than XMonad users, so
       perhaps doing it like this will help more people anyways.

@@ -1840,7 +1840,7 @@ for this would look something like</p>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;fibs :: [Integer]\nfibs = 0 : scanl' (+) 1 fibs&quot;</span></span></code></pre></div>
 <p>Importantly, the language (if any) is the first argument of the
 <code>classes</code> field of <code>Attr</code>.</p>
-<p>A strategy begins to form: look for all occurences of a <code>CodeBlock</code> in
+<p>A strategy begins to form: look for all occurrences of a <code>CodeBlock</code> in
 the <code>Pandoc</code> type, and replace it with a <code>RawBlock "html"</code> such that it
 isn’t touched anymore. Doing so will not pose very many
 challenges—pandoc has really great capabilities for
@@ -1904,7 +1904,7 @@ there is also <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">WriterOptions</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> (<span class="dt">Pandoc</span> <span class="ot">-&gt;</span> <span class="dt">Compiler</span> <span class="dt">Pandoc</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</span></code></pre></div>
-<p>Basically, in additions to reader and writer options, it also takes a
+<p>Basically, in addition to reader and writer options, it also takes a
 monadic transformation of pandoc’s AST and builds an appropriate
 <code>Compiler</code> from that.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import Hakyll</span></span>

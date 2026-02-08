@@ -214,7 +214,7 @@ Diff
 <p>The next three definitions are just utility functions:
 <code>P</code> and <code>R</code> are to make the code even terser,
 and <code>DO</code> is a neat way to compactify loops.
-For example, given some <code>int a=0</code>, then <code>DO(n,a+=i)</code> is the same as <code>for(int i=0, i&lt;n, ++i) a+=i;</code>.
+For example, given some <code>int a=0</code>, then <code>DO(n,a+=i)</code> is the same as <code>for(int i=0; i&lt;n; ++i) a+=i;</code>.
 Notice how the argument <code>x</code> has access to the loop variable <code>i</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define P printf</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define R </span><span class="cf">return</span></span>
@@ -463,7 +463,7 @@ but the default for all of them is pretty “meh”.<a href="#fn2" class="footno
 </picture></p>
 <p>I will draw your attention to the second line in the minibuffer;
 the first is just additional context,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
-and the third are available code actions.
+and the third shows available code actions.
 What eglot shows me is that <code>apply_ctx</code> is a method of the <code>Type</code> type,
 sitting in <code>./type/context.rs</code>,
 with <code>./</code> being the root of the crate.</p></li>
@@ -732,7 +732,7 @@ which argument is currently being filled in!<a href="#fnref3" class="footnote-ba
     <summary type="html"><![CDATA[<article>
     <div class="header">
       8th Oct 2025–18 Oct 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6544 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6545 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
       </div>
     <h1 class="post-title">Writing a JSON Parser in BQN</h1>
@@ -1052,7 +1052,7 @@ This way, the later indices <code>8</code>, <code>9</code>, and <code>10</code> 
                               ┘</code></pre>
 <p>One tiny change has to be made to the building of the sublists:
 if our input is <code>"[]"</code>, then <code>1-˜ln/l</code> will be <code>⟨¯1⟩</code>,
-to the list as a whole will be dropped!
+so the list as a whole will be dropped!
 We can hackily fix this by always appending the total number of closing brackets to the back of the list via <code>(+´c)∾˜</code>.
 If the list is empty, then this will accommodate for that case.
 Otherwise, the left argument to <em>group</em> will be one element longer than the right one.
@@ -1565,7 +1565,7 @@ but honestly this whole thing was so refreshing that I can’t help but recommen
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>In case anyone not familiar with BQN finds themselves reading this post: BQN is an array programming language in the APL-family.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>If you feel like I’m going too slow, or that I got something wrong, sorry!
 As I said, this is more or less my way of learning and better understanding this style of parsing;
 I am by no means the expert here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1593,7 +1593,7 @@ if you want to treat both pairs as being inside of the pair you can use
 <li id="fn7"><p>A questionable API choice, for sure, but I’ll take it!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>The double quotes <code>""</code> in the string are BQN’s way of escaping quotes
 (the same way that CSV does it).
-<em>Everything</em> else is treated as a literal characters, even backslashes!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<em>Everything</em> else is treated as a literal character, even a backslash!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>You will see repeated definitions of <code>Tokenise</code> and <code>Parse</code> throughout this article.
 I figured that perhaps indicating changes in this way is more readable than giving you diffs,
 if only because all context one needs is right there.
@@ -1891,8 +1891,8 @@ and for <code>"""a"",""b"""</code> we have the wonderful
     <updated>2025-04-13T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      13th Apr 2025–2 Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2032 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      13th Apr 2025–8 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2031 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
       </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
@@ -1959,11 +1959,11 @@ their mere existence probably stretches my
 quite a bit.</p>
 <h3 id="chapter-headings">Chapter headings</h3>
 <p>For chapter headings memoir features a <code>bringhurst</code> chapter style,
-which however doesn’t include the chapter number besides it:</p>
+which however doesn’t include the chapter number beside it:</p>
 <p><img class="pure-img" src="../images/phd-typesetting/no-chapter-number.png" alt="The default memoir style does not feature a chapter number."></p>
 <p>The famous book <span class="citation" data-cites="bringhurst92:el-typ">[@bringhurst92:el-typ]</span> puts a rather large number in the margin,
 which is also what I ended up going with (see the first double page in this post).
-Thankfully, this is not difficult to fix—so much so that someone on TeX.Stack​exachange has
+Thankfully, this is not difficult to fix—so much so that someone on TeX.Stackexchange has
 <a href="https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir">already done it</a>.
 The exact <code>bringhurst.sty</code> file I used is <a href="../images/phd-typesetting/bringhurst.txt">here</a>;
 to use it just replace the call to <code>\chapterstyle</code> with a call to <code>\usepackage</code>:</p>
@@ -2158,7 +2158,7 @@ which is that the italic <em>f</em> extends way too far to the right.
 This clashes quite significantly with <code>boondoxupr</code></p>
 <p><img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font."></p>
 <p>and the issue only gets exacerbated once <a href="https://ctan.org/pkg/microtype">microtype</a> comes into play and squashes those spaces even more.
-Palatino, while not perfect, fairs much better here:</p>
+Palatino, while not perfect, fares much better here:</p>
 <p><img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*."></p>
 <p>As I didn’t want to manually check every occurrence of <em>f</em> at the end of a word and potentially add a thin space after it,
 the choice was forced upon me.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
@@ -2170,9 +2170,9 @@ the full code looks like this:</p>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">textcomp</span>}</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[amsthm,upint]{<span class="ex">newpxmath</span>}</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[cal=boondoxupr,frak=esstix,frakscaled=0.95]{<span class="ex">mathalfa</span>}</span></code></pre></div>
-<p>Some options should be self-explanitory<!--
+<p>Some options should be self-explanatory<!--
 -->—like <code>tighter</code> or the <code>amsthm</code> compatibility—<!--
--->while other might require some further explanation.</p>
+-->while others might require some further explanation.</p>
 <ul>
 <li><p><code>osf</code> and <code>scosf</code> make sure to enable
 <a href="https://en.wikipedia.org/wiki/Text_figures">oldstyle figures</a>
@@ -2220,7 +2220,7 @@ so things “breathe” a bit more.</p>
 <p><img src="../images/phd-typesetting/no-kerning.png" alt="No kerning"></p>
 <p>into text like this</p>
 <p><img src="../images/phd-typesetting/kerning.png" alt="Kerning"></p>
-<p>Quite subtle, but certainly noticeable it, I think!</p>
+<p>Quite subtle, but certainly noticeable, I think!</p>
 <hr />
 <p>One important change has to be made to <code>biblatex</code> when using a font’s oldstyle figures:
 the references in the main text should nevertheless use
@@ -2262,7 +2262,7 @@ Plus, using <code>cleveref</code> saves one from having to define many different
 -->—no going around obsessively checking whether a theorem invariably became a proposition a while ago.</p>
 <hr />
 <p>A general advice I have—and also got from an older PhD student—is to start early.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>
-Even just streamlining and unifying notation takes more time than ones thinks,
+Even just streamlining and unifying notation takes more time than one thinks,
 especially if one also cares at least an epsilon about typography.
 What thankfully cuts down on the time needed is that LaTeX has been around for a long time,
 and most package manuals (that I’ve read) are quite high quality,
@@ -3078,7 +3078,7 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Oct 2024–28 Oct 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22372 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22369 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
       </div>
     <h1 class="post-title">BQNing Advent of Code</h1>
@@ -3150,7 +3150,7 @@ Next to fantastic sites such as <a href="https://mlochbaum.github.io/bqncrate/">
 matrix room, which is part of the larger
 <a href="https://app.element.io/#/room/%23array:matrix.org">#array:matrix.org</a> space.
 Someone knowledgeable is always there to answer your stupid questions.
-Special thank to
+Special thanks to
 Marshall Lochbaum (the creator of the language!),
 dzaima, and
 brian_e.
@@ -3192,7 +3192,7 @@ A user-defined function is something in curly braces that mentions the special n
 standing in for the left and right argument to it.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
 Functions are always infix, and can only be called with either one or two arguments.
 In the former case, the function takes its argument on the right and <code>𝕨</code> will be given a special value:
-<em>nothing</em> (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>)!.</p>
+<em>nothing</em> (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>).</p>
 <pre class="bqn"><code>    1 {𝕨+𝕩} 2
 3
     1 {𝕨-𝕩} 2
@@ -3287,7 +3287,7 @@ Likewise, modifiers taking two functions are called 2-modifiers.</p>
 0
 
     {𝕩+1}∘{𝕩-3} 4 # ∘ is the function composition 2-modifier called *atop*.
-                  # Called monatically, 𝔽∘𝔾 𝕩 is just 𝔽𝔾𝕩
+                  # Called monadically, 𝔽∘𝔾 𝕩 is just 𝔽𝔾𝕩
 2
     1 {𝕩+1}∘{𝕩-𝕨} 4 # Called dyadically, 𝕨 𝔽∘𝔾 𝕩 transforms to 𝔽(𝕨𝔾𝕩)
 4
@@ -3488,7 +3488,7 @@ so we just need <code>'\t' Split input</code>, right?</p>
 <p>Wrong!</p>
 <p>BQN’s characters and strings are almost completely void of any kind of escaping mechanism.
 That is to say, besides for double quotes, which are inserted by duplicating them,
-every character entered into a string it interpreted verbatim.
+every character entered into a string is interpreted verbatim.
 Indeed, <code>'\t'</code> is not even a valid character,
 as it actually comprises two characters: <code>'\'</code> and <code>'t'</code>!
 To write a tab we either need to actually insert a tab character,<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>
@@ -3559,7 +3559,7 @@ coming from another language, are just not true in BQN.</p>
    b≡a
 0</code></pre></li>
 <li><p>Piggybacking off of that: “depth is not rank”.
-The type of the elements is not at all important in determining the arrays rank.</p>
+The type of the elements is not at all important in determining the array’s rank.</p>
 <pre class="bqn"><code>   =1‿2‿3‿4‿5 # vector
 1
    =3‿3⥊↕9    # matrix
@@ -3685,7 +3685,7 @@ does what it says on the tin—it’s comparable to <code>map</code> in many oth
 Parsing the input works as expected,
 in that we split each line on the tab character,
 and parse all the resulting sequences of digits as numbers.
-All that’s left to do is to assembly the table in to a rank two array.
+All that’s left to do is to assemble the table into a rank two array.
 By means of <em>cells</em> we get the maximum and minimum for every row<!--
 -->—using the <code>⌈´-⌊´</code> train, which is a great one to reason through—<!--
 -->and sum up the resulting vector to get our answer.</p>
@@ -4480,7 +4480,7 @@ sw +--+ se
   / s  \</code></pre>
 <p>Part one asks us to follow our input<!--
 -->—which is a string of instructions where to walk, like <code>ne,sw,ne,s,…</code>—<!--
--->and then calculate a Manhattan-type distance from from the origin to the stopping point.</p>
+-->and then calculate a Manhattan-type distance from the origin to the stopping point.</p>
 <p>The difficult part here would be to find a comprehensible coordinate system to represent hexagonal grids.
 Thankfully—or sadly?—I remember doing the exact same thing in a previous year.
 I wanted to use
@@ -4944,7 +4944,7 @@ di ← ⊑(h.Keys@)⊐&lt;d                                      # dup index
 {𝕎𝕩}´⟜inp⍟(di+(h.Count@)|10e9-di) d # ⇒ &quot;iecopnahgdflmkjb&quot;</code></pre>
 <p>I used a hash map here since I figured the loop was still going to be substantial
 (it wasn’t—oh well).
-The test function supplied to while <code>•_while_</code> (ab)uses the fact that,
+The test function supplied to <code>•_while_</code> (ab)uses the fact that,
 while <code>⊢</code> only ever returns <code>𝕩</code>,
 it actually evaluates both of its arguments.
 Remember that evaluation happens right-to-left, though;
@@ -4984,7 +4984,7 @@ As such, a straightforward solution for part one looks like this:</p>
 ((1+⊑)⊐⟜2017)⊸⊑ ¯1⊑ { 𝕊i‿p‿b:         # index, position, buffer
   np←1+i|p+n ⋄ ⟨i+1,np,(np↑b)∾i∾np↓b⟩
 }⍟2017 1‿0‿⟨0⟩                        # ⇒ 1487</code></pre>
-<p>However, this feel immensely unsatisfactory to me.
+<p>However, this feels immensely unsatisfactory to me.
 Repeatedly breaking apart an array and assembling it again (<code>(np↑b)∾i∾np↓b</code>) sort of signals that something must be amiss.
 Instead, it would be much better to not have to care about the position at all,
 always insert the element at the front, and rotate the array instead.
@@ -5061,7 +5061,7 @@ mod a 5
 …</code></pre>
 <p>Part one asks us what value is recovered the first time an <code>rcv</code> instruction is actually executed
 (i.e., called with a non-zero argument).
-Let’s first to some parsing.</p>
+Let’s first do some parsing.</p>
 <pre class="bqn"><code>⟨Split⟩←•Import&quot;../../util/bqn_util/util.bqn&quot;
 inp ← •ParseFloat⎊⊢¨∘(' '⊸Split)¨•FLines &quot;../inputs/day18.txt&quot;</code></pre>
 <p>Note the <code>•ParseFloat⎊⊢</code>.
@@ -9382,7 +9382,7 @@ sudo make install</code></pre>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       6th May 2023–17 Jun 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4133 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4130 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
       </div>
     <h1 class="post-title">Keyboardio Atreus Review</h1>
@@ -9426,11 +9426,10 @@ sculpted keycaps would have been nice,
 if only to go with the ergo theme.
 The one key I do have with a label (the <code>Any</code> key) is laser engraved,
 and feels quite good as well.
-I went with blank keycaps mostly because I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my keyboard layout,
-and I can’t stand TODOs on the wrong fingers!
-Plus,
-not being sure how the key layout was actually going to look like in the end,
-this seemed like the safer choice, aesthetically.</p>
+I went with blank keycaps, mostly because I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my keyboard layout,
+and with a whole bunch of custom functionality baked into the Atreus,
+whatever labels I would have chosen, they would have been wrong.
+This is much more aesthetically pleasing, anyways.</p>
 <p>Being quite inexperienced with these sorts of things,
 I don’t have too many things to say about the switches:
 they’re honestly pretty much exactly what I wanted.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
@@ -9538,7 +9537,7 @@ A cursory analysis reveals the following:<a href="#fn10" class="footnote-ref" id
 <p>This is not 100% accurate,
 as xkbcat uses X11 input events in order to find out which keys were pressed,
 and so my layer key—with which I also press keys like <code>Down</code>—does not show up at all.
-I did, however, go through the trouble of remapping every right variant of a key (like <code>Shift_R</code>) to their respective left versions,
+I did, however, go through the trouble of remapping every right variant of a key (like <code>Shift_R</code>) to its respective left version,
 so that there was no need for further <code>sed</code>ing.
 Based on the prevalence of <code>Up</code> and <code>Down</code>,
 it’s probably fair to say that the layer key and Control are my two most pressed keys.</p>
@@ -9635,7 +9634,7 @@ especially the more parentheses-heavy languages—whether that’d be Clojure or
 <p>The <code>REP</code> and <code>AREP</code> keys make use of the <a href="https://docs.qmk.fm/#/feature_repeat_key">Repeat Key</a> functionality;
 basically, <code>REP</code> executes the key chord that was last pressed.
 On the other hand,
-<code>AREP</code> is an alternative, configurable, of “repeating” things;
+<code>AREP</code> is an alternative, configurable, way of “repeating” things;
 by default, it turns some directional movements
 around—e.g., <code>M-f</code> becomes <code>M-b</code>—but
 it can be made to pretty much input anything one wants.</p>
@@ -9706,7 +9705,7 @@ Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the di
 As should be obvious, this is the least developed layer,
 and also the one that’ll probably change the most in the future.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
 Currently, I’m thinking of putting some XMonad specific bindings on here,
-which could even to free up the Super key to be used inside of Emacs
+which could even free up the Super key to be used inside of Emacs
 for certain things—that would certainly be a worthwhile experiment.
 Other thoughts include things like volume and brightness controls,
 although this is less critical since my laptop keyboard is never far away.</p>
@@ -9726,7 +9725,7 @@ There is a good way to define Unicode characters by setting up one’s own X11 k
 but I haven’t gotten around to this yet.
 Some day!</p>
 <h3 id="key-overridesqmkkey-overrides"><a href="https://docs.qmk.fm/#/feature_key_overrides">Key overrides</a></h3>
-<p>Quoting from the documentation</p>
+<p>Quoting from the documentation:</p>
 <blockquote>
 <p>Key overrides allow you to override modifier-key combinations to send a different modifier-key combination
 or perform completely custom actions.</p>
@@ -9746,7 +9745,7 @@ I’m definitely looking forward to discovering new and interesting ways of usin
 <h3 id="autocorrectqmkautocorrect"><a href="https://docs.qmk.fm/#/feature_autocorrect">Autocorrect</a></h3>
 <p>This is a quaint little feature: auto-correct inside of your keyboard’s firmware!
 I promise that it’s not as bad as it sounds.
-It does not work automatically, thankfully, but is based off a given list of replacements.
+It does not work automatically, thankfully, but is based on a given list of replacements.
 For example,</p>
 <pre><code>widht -&gt; width</code></pre>
 <p>would fire anytime one writes <code>widht</code>, which then gets replaced by <code>width</code>.
@@ -9763,7 +9762,7 @@ I think the solution to stop misspelling a word is not to remap key sequences on
 but to—you know—learn how to spell that word.
 Still,
 I can imagine at least one or two use-cases where something like this could be useful,
-so I figured it might be nice to make people aware of this features’ existence.</p>
+so I figured it might be nice to make people aware of this feature’s existence.</p>
 <p>In addition—as I’ve found out on three separate occasions so far—using the words “auto-correct, but in firmware”
 makes people stare in utter disbelief and/or disgust at your keyboard.
 That alone makes this feature worth it.</p>
@@ -9813,7 +9812,7 @@ Plus, <a href="https://ncatlab.org/nlab/show/braided+monoidal+category">braids</
 make everything better!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>I think the full name—at least as far as I could make out—is
 “Kailh deep sea tactile silent BOX islet switches”.
-Quite the mouthfull indeed!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+Quite the mouthful indeed!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>This may seem debatable at this point,
 but I guess part of this post is convincing the sceptics that 44 keys really are enough.
 Indeed, one might even argue that the form-factor is a big strength of the keyboard,
@@ -9824,12 +9823,12 @@ for me it’s much faster to hit a capital <code>E</code>
 than having to do an awkward stretch in order to reach <code>6</code> or—even worse—<code>F6</code>.
 On the Atreus everything is close together,
 which means these kinds of big stretches are a thing of the past!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the switches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>The outer two keys would suffer from the same issue, but these are actually very easy to hit with one’s palm. I press the two keys under the middle finger with a thumb or middle finger curl, both of which feel fine for me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Thanks, Emacs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I did not try the default layout in any way, instead diving straight into designing my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>This was very straightforward—after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
-After, that, one simply has to execute</p>
+After that, one simply has to execute</p>
 <pre class="console"><code>$ xset r rate 230 70
 $ setxkbmap -option compose:menu</code></pre>
 <p>to get some sane key repeat and compose key settings, and that’s it!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -10772,7 +10771,7 @@ for this would look something like</p>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;fibs :: [Integer]\nfibs = 0 : scanl' (+) 1 fibs&quot;</span></span></code></pre></div>
 <p>Importantly, the language (if any) is the first argument of the
 <code>classes</code> field of <code>Attr</code>.</p>
-<p>A strategy begins to form: look for all occurences of a <code>CodeBlock</code> in
+<p>A strategy begins to form: look for all occurrences of a <code>CodeBlock</code> in
 the <code>Pandoc</code> type, and replace it with a <code>RawBlock "html"</code> such that it
 isn’t touched anymore. Doing so will not pose very many
 challenges—pandoc has really great capabilities for
@@ -10836,7 +10835,7 @@ there is also <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">WriterOptions</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> (<span class="dt">Pandoc</span> <span class="ot">-&gt;</span> <span class="dt">Compiler</span> <span class="dt">Pandoc</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="ot">-&gt;</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</span></code></pre></div>
-<p>Basically, in additions to reader and writer options, it also takes a
+<p>Basically, in addition to reader and writer options, it also takes a
 monadic transformation of pandoc’s AST and builds an appropriate
 <code>Compiler</code> from that.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- import Hakyll</span></span>
@@ -13395,9 +13394,9 @@ manuscripts!</p>
 <a href="https://xmonad.org/">XMonad</a>, my setup is heavily skewed in that direction; I will make use
 of these tools almost every step of the way.
 <!--more-->
-As such, there is a lot of tangential almost relevant bits that I could
+As such, there are a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
-<em>research</em> workflow—and there is a lot of great resources out there
+<em>research</em> workflow—and there are a lot of great resources out there
 already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <h2 id="high-level-structure">High level structure</h2>
 <h3 id="topics">Topics</h3>
@@ -13614,7 +13613,7 @@ means I have to worry a bit about efficiently dealing with
 bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
 calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
 as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
-universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
+university’s internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
 <code>TRAMP</code>), … You get the idea.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>I will be using Emacs style notation throughout the article. This
 means that, for example, <code>C-x a</code> should be read as “hold down
@@ -13639,7 +13638,7 @@ rather smooth.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎
 <li id="fn6"><p>Ostensibly, this should be an XMonad module, as it does not
 necessarily have anything to do with Emacs itself. However, I had
 already written the elfeed integration and so the most annoying
-part (scraping the arXiv xml for certain bits) was already done.
+part (scraping the arXiv XML for certain bits) was already done.
 On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

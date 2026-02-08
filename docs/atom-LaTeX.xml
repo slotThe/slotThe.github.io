@@ -20,8 +20,8 @@
     <updated>2025-04-13T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      13th Apr 2025–2 Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2032 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      13th Apr 2025–8 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2031 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
       </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
@@ -88,11 +88,11 @@ their mere existence probably stretches my
 quite a bit.</p>
 <h3 id="chapter-headings">Chapter headings</h3>
 <p>For chapter headings memoir features a <code>bringhurst</code> chapter style,
-which however doesn’t include the chapter number besides it:</p>
+which however doesn’t include the chapter number beside it:</p>
 <p><img class="pure-img" src="../images/phd-typesetting/no-chapter-number.png" alt="The default memoir style does not feature a chapter number."></p>
 <p>The famous book <span class="citation" data-cites="bringhurst92:el-typ">[@bringhurst92:el-typ]</span> puts a rather large number in the margin,
 which is also what I ended up going with (see the first double page in this post).
-Thankfully, this is not difficult to fix—so much so that someone on TeX.Stack​exachange has
+Thankfully, this is not difficult to fix—so much so that someone on TeX.Stackexchange has
 <a href="https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir">already done it</a>.
 The exact <code>bringhurst.sty</code> file I used is <a href="../images/phd-typesetting/bringhurst.txt">here</a>;
 to use it just replace the call to <code>\chapterstyle</code> with a call to <code>\usepackage</code>:</p>
@@ -287,7 +287,7 @@ which is that the italic <em>f</em> extends way too far to the right.
 This clashes quite significantly with <code>boondoxupr</code></p>
 <p><img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font."></p>
 <p>and the issue only gets exacerbated once <a href="https://ctan.org/pkg/microtype">microtype</a> comes into play and squashes those spaces even more.
-Palatino, while not perfect, fairs much better here:</p>
+Palatino, while not perfect, fares much better here:</p>
 <p><img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*."></p>
 <p>As I didn’t want to manually check every occurrence of <em>f</em> at the end of a word and potentially add a thin space after it,
 the choice was forced upon me.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
@@ -299,9 +299,9 @@ the full code looks like this:</p>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">textcomp</span>}</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[amsthm,upint]{<span class="ex">newpxmath</span>}</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>[cal=boondoxupr,frak=esstix,frakscaled=0.95]{<span class="ex">mathalfa</span>}</span></code></pre></div>
-<p>Some options should be self-explanitory<!--
+<p>Some options should be self-explanatory<!--
 -->—like <code>tighter</code> or the <code>amsthm</code> compatibility—<!--
--->while other might require some further explanation.</p>
+-->while others might require some further explanation.</p>
 <ul>
 <li><p><code>osf</code> and <code>scosf</code> make sure to enable
 <a href="https://en.wikipedia.org/wiki/Text_figures">oldstyle figures</a>
@@ -349,7 +349,7 @@ so things “breathe” a bit more.</p>
 <p><img src="../images/phd-typesetting/no-kerning.png" alt="No kerning"></p>
 <p>into text like this</p>
 <p><img src="../images/phd-typesetting/kerning.png" alt="Kerning"></p>
-<p>Quite subtle, but certainly noticeable it, I think!</p>
+<p>Quite subtle, but certainly noticeable, I think!</p>
 <hr />
 <p>One important change has to be made to <code>biblatex</code> when using a font’s oldstyle figures:
 the references in the main text should nevertheless use
@@ -391,7 +391,7 @@ Plus, using <code>cleveref</code> saves one from having to define many different
 -->—no going around obsessively checking whether a theorem invariably became a proposition a while ago.</p>
 <hr />
 <p>A general advice I have—and also got from an older PhD student—is to start early.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>
-Even just streamlining and unifying notation takes more time than ones thinks,
+Even just streamlining and unifying notation takes more time than one thinks,
 especially if one also cares at least an epsilon about typography.
 What thankfully cuts down on the time needed is that LaTeX has been around for a long time,
 and most package manuals (that I’ve read) are quite high quality,

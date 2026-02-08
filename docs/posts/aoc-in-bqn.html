@@ -47,7 +47,7 @@
         <article>
     <div class="header">
       27th Oct 2024–28 Oct 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22189 words">89 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22186 words">89 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#BQN'." href="../tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="../tags/array-lang.html" rel="tag">#array-lang</a>
       </div>
     <h1 class="post-title">BQNing Advent of Code</h1>
@@ -153,7 +153,7 @@ Next to fantastic sites such as <a href="https://mlochbaum.github.io/bqncrate/">
 matrix room, which is part of the larger
 <a href="https://app.element.io/#/room/%23array:matrix.org">#array:matrix.org</a> space.
 Someone knowledgeable is always there to answer your stupid questions.
-Special thank to
+Special thanks to
 Marshall Lochbaum (the creator of the language!),
 dzaima, and
 brian_e.
@@ -209,7 +209,7 @@ the former really are the blackboard bold variants of the respective letters.</d
 -->
 Functions are always infix, and can only be called with either one or two arguments.
 In the former case, the function takes its argument on the right and <code>𝕨</code> will be given a special value:
-<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing">nothing</a> (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>)!.
+<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing">nothing</a> (<a href="https://mlochbaum.github.io/BQN/doc/expression.html#nothing"><code>·</code></a>).
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="m">1</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕨</span><span class="o">+</span><span class="ni">𝕩</span><span class="kt">}</span><span class="w"> </span><span class="m">2</span>
 <span class="m">3</span>
@@ -362,7 +362,7 @@ Likewise, modifiers taking two functions are called 2-modifiers.
 <span class="m">0</span>
 
 <span class="w">    </span><span class="kt">{</span><span class="ni">𝕩</span><span class="o">+</span><span class="m">1</span><span class="kt">}</span><span class="py">∘</span><span class="kt">{</span><span class="ni">𝕩</span><span class="o">-</span><span class="m">3</span><span class="kt">}</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c1"># ∘ is the function composition 2-modifier called *atop*.</span>
-<span class="w">                  </span><span class="c1"># Called monatically, 𝔽∘𝔾 𝕩 is just 𝔽𝔾𝕩</span>
+<span class="w">                  </span><span class="c1"># Called monadically, 𝔽∘𝔾 𝕩 is just 𝔽𝔾𝕩</span>
 <span class="m">2</span>
 <span class="w">    </span><span class="m">1</span><span class="w"> </span><span class="kt">{</span><span class="ni">𝕩</span><span class="o">+</span><span class="m">1</span><span class="kt">}</span><span class="py">∘</span><span class="kt">{</span><span class="ni">𝕩</span><span class="o">-</span><span class="ni">𝕨</span><span class="kt">}</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c1"># Called dyadically, 𝕨 𝔽∘𝔾 𝕩 transforms to 𝔽(𝕨𝔾𝕩)</span>
 <span class="m">4</span>
@@ -685,7 +685,7 @@ Wrong!
 <p></p>
 <span class="small-caps">bqn</span>’s characters and strings are almost completely void of any kind of escaping mechanism.
 That is to say, besides for double quotes, which are inserted by duplicating them,
-every character entered into a string it interpreted verbatim.
+every character entered into a string is interpreted verbatim.
 Indeed, <code>'\t'</code> is not even a valid character,
 as it actually comprises two characters: <code>'\'</code> and <code>'t'</code>!
 To write a tab we either need to actually insert a tab character,<!--
@@ -787,7 +787,7 @@ Lists of lists are not equivalent to higher-dimensional arrays:
 <li><p></p>
 
 Piggybacking off of that: “depth is not rank”.
-The type of the elements is not at all important in determining the arrays rank.
+The type of the elements is not at all important in determining the array’s rank.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">   </span><span class="o">=</span><span class="m">1</span><span class="p">‿</span><span class="m">2</span><span class="p">‿</span><span class="m">3</span><span class="p">‿</span><span class="m">4</span><span class="p">‿</span><span class="m">5</span><span class="w"> </span><span class="c1"># vector</span>
 <span class="m">1</span>
@@ -951,7 +951,7 @@ does what it says on the <span class="nowrap">tin—</span>it’s comparable to 
 Parsing the input works as expected,
 in that we split each line on the tab character,
 and parse all the resulting sequences of digits as numbers.
-All that’s left to do is to assembly the table in to a rank two array.
+All that’s left to do is to assemble the table into a rank two array.
 By means of <a href="https://mlochbaum.github.io/BQN/doc/rank.html">cells</a> we get the maximum and minimum for every row<!--
 --><span class="nowrap">—</span>using the <code>⌈´-⌊´</code> train, which is a great one to reason <span class="nowrap">through—</span><!--
 -->and sum up the resulting vector to get our answer.
@@ -2011,7 +2011,7 @@ sw +--+ se
 <p></p>
 Part one asks us to follow our input<!--
 --><span class="nowrap">—</span>which is a string of instructions where to walk, like <code>ne,sw,ne,s,…</code><span class="nowrap">—</span><!--
--->and then calculate a Manhattan-type distance from from the origin to the stopping point.
+-->and then calculate a Manhattan-type distance from the origin to the stopping point.
 <p></p>
 The difficult part here would be to find a comprehensible coordinate system to represent hexagonal grids.
 <span class="nowrap">Thankfully—</span>or <span class="nowrap">sadly?—</span>I remember doing the exact same thing in a previous year.
@@ -2664,7 +2664,7 @@ Instead, let’s try to find a loop.
 <p></p>
 I used a hash map here since I figured the loop was still going to be substantial
 (it <span class="nowrap">wasn’t—</span>oh well).
-The test function supplied to while <code>•_while_</code> (ab)uses the fact that,
+The test function supplied to <code>•_while_</code> (ab)uses the fact that,
 while <code>⊢</code> only ever returns <code>𝕩</code>,
 it actually evaluates both of its arguments.
 Remember that evaluation happens right-to-left, though;
@@ -2718,7 +2718,7 @@ As such, a straightforward solution for part one looks like this:
 <span class="kt">}</span><span class="py">⍟</span><span class="m">2017</span><span class="w"> </span><span class="m">1</span><span class="p">‿</span><span class="m">0</span><span class="p">‿⟨</span><span class="m">0</span><span class="p">⟩</span><span class="w">                        </span><span class="c1"># ⇒ 1487</span>
 </pre></div>
 <p></p>
-However, this feel immensely unsatisfactory to me.
+However, this feels immensely unsatisfactory to me.
 Repeatedly breaking apart an array and assembling it again (<code>(np↑b)∾i∾np↓b</code>) sort of signals that something must be amiss.
 Instead, it would be much better to not have to care about the position at all,
 always insert the element at the front, and rotate the array instead.
@@ -2824,7 +2824,7 @@ mod a 5
 <p></p>
 Part one asks us what value is recovered the first time an <code>rcv</code> instruction is actually executed
 (i.e., called with a non-zero argument).
-Let’s first to some parsing.
+Let’s first do some parsing.
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="p">⟨</span><span class="o">Split</span><span class="p">⟩</span><span class="kd">←</span><span class="o">•Import</span><span class="s2">&quot;../../util/bqn_util/util.bqn&quot;</span>
 <span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">•ParseFloat</span><span class="py">⎊</span><span class="o">⊢</span><span class="na">¨</span><span class="py">∘</span><span class="sr">(</span><span class="s1">' '</span><span class="py">⊸</span><span class="o">Split</span><span class="sr">)</span><span class="na">¨</span><span class="o">•FLines</span><span class="w"> </span><span class="s2">&quot;../inputs/day18.txt&quot;</span>

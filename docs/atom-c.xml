@@ -106,7 +106,7 @@ Diff
 <p>The next three definitions are just utility functions:
 <code>P</code> and <code>R</code> are to make the code even terser,
 and <code>DO</code> is a neat way to compactify loops.
-For example, given some <code>int a=0</code>, then <code>DO(n,a+=i)</code> is the same as <code>for(int i=0, i&lt;n, ++i) a+=i;</code>.
+For example, given some <code>int a=0</code>, then <code>DO(n,a+=i)</code> is the same as <code>for(int i=0; i&lt;n; ++i) a+=i;</code>.
 Notice how the argument <code>x</code> has access to the loop variable <code>i</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define P printf</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define R </span><span class="cf">return</span></span>

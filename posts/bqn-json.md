@@ -453,7 +453,7 @@ More concisely:
 
 One tiny change has to be made to the building of the sublists:
 if our input is `"[]"`, then `1-˜ln/l` will be `⟨¯1⟩`,
-to the list as a whole will be dropped!
+so the list as a whole will be dropped!
 We can hackily fix this by always appending the total number of closing brackets to the back of the list via `(+´c)∾˜`.
 If the list is empty, then this will accommodate for that case.
 Otherwise, the left argument to *group* will be one element longer than the right one.
@@ -1197,7 +1197,7 @@ but honestly this whole thing was so refreshing that I can't help but recommend 
 
 [^13]: {-} The double quotes `""` in the string are BQN's way of escaping quotes
        (the same way that CSV does it).
-       *Everything* else is treated as a literal characters, even backslashes!
+       *Everything* else is treated as a literal character, even a backslash!
 
 [^14]: I will use this as shorthand for "sub-object and sub-array".
        Not the best terminology, I suppose, but it will have to do.
@@ -1212,7 +1212,7 @@ but honestly this whole thing was so refreshing that I can't help but recommend 
 
 [^17]: Short names at that, otherwise things just look too cumbersome in this style of programming.
 
-[^18]: {-} In case anyone not familiar with BQN finds itself reading this post: BQN is an array programming language in the APL-family.
+[^18]: {-} In case anyone not familiar with BQN finds themselves reading this post: BQN is an array programming language in the APL-family.
 
 [bqn-libs:json]: https://github.com/mlochbaum/bqn-libs/blob/master/json.bqn
 [bqn-libs]: https://github.com/mlochbaum/bqn-libs

@@ -55,7 +55,7 @@
         <article>
     <div class="header">
       8th Oct 2025–18 Oct 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6541 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6542 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#BQN'." href="../tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="../tags/array-lang.html" rel="tag">#array-lang</a>
       </div>
     <h1 class="post-title">Writing a JSON Parser in BQN</h1>
@@ -85,7 +85,7 @@
   </div>
 At least, for some vague definition of <span class="small-caps">json</span>.<!--more-->
 I will restrict myself to the following underspecified subset,<!--
---><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">In case anyone not familiar with <span class="small-caps">bqn</span> finds itself reading this post: <span class="small-caps">bqn</span> is an array programming language in the <span class="small-caps">apl</span>-family.</div><!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">In case anyone not familiar with <span class="small-caps">bqn</span> finds themselves reading this post: <span class="small-caps">bqn</span> is an array programming language in the <span class="small-caps">apl</span>-family.</div><!--
 -->
 so that this will not be a 20’000-word post:
 <ul>
@@ -520,7 +520,7 @@ More concisely:
 <p></p>
 One tiny change has to be made to the building of the sublists:
 if our input is <code>"[]"</code>, then <code>1-˜ln/l</code> will be <code>⟨¯1⟩</code>,
-to the list as a whole will be dropped!
+so the list as a whole will be dropped!
 We can hackily fix this by always appending the total number of closing brackets to the back of the list via <code>(+´c)∾˜</code>.
 If the list is empty, then this will accommodate for that case.
 Otherwise, the left argument to <a href="https://mlochbaum.github.io/BQN/doc/group.html">group</a> will be one element longer than the right one.
@@ -578,7 +578,7 @@ strings sound like a good idea.
 First, the lexer: getting the strings and their beginnings works almost the same as in the numbers case above.<!--
 --><label for="sn-7" class="margin-toggle">⊕</label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="marginnote">The double quotes <code>""</code> in the string are <span class="small-caps">bqn</span>’s way of escaping quotes
 (the same way that <span class="small-caps">csv</span> does it).
-<em>Everything</em> else is treated as a literal characters, even backslashes!</div><!--
+<em>Everything</em> else is treated as a literal character, even a backslash!</div><!--
 -->
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="nv">inp</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="s2">&quot;[1,&quot;&quot;a&quot;&quot;,2,&quot;&quot;b&quot;&quot;]&quot;</span>

@@ -57,7 +57,7 @@
         <article>
     <div class="header">
       6th May 2023–17 Jun 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4128 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4125 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#hardware'." href="../tags/hardware.html" rel="tag">#hardware</a>
       </div>
     <h1 class="post-title">Keyboardio Atreus Review</h1>
@@ -124,7 +124,7 @@ this is a 40%, vertically staggered, split-ish mechanical keyboard
 with Kailh tactile silent <span class="small-caps">box</span> switches.<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">I think the full <span class="nowrap">name—</span>at least as far as I could make <span class="nowrap">out—</span>is
 “Kailh deep sea tactile silent <span class="small-caps">box</span> islet switches”.
-Quite the mouthfull indeed!</div><!--
+Quite the mouthful indeed!</div><!--
 -->
 In particular,
 the Keyboardio version builds upon an <a href="https://atreus.technomancy.us/">earlier design</a> by Phil Hagelberg.
@@ -158,16 +158,15 @@ sculpted keycaps would have been nice,
 if only to go with the ergo theme.
 The one key I do have with a label (the <code>Any</code> key) is laser engraved,
 and feels quite good as well.
-I went with blank keycaps mostly because I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my keyboard layout,
-and I can’t stand <span class="small-caps">todo</span>s on the wrong fingers!
-Plus,
-not being sure how the key layout was actually going to look like in the end,
-this seemed like the safer choice, aesthetically.
+I went with blank keycaps, mostly because I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my keyboard layout,
+and with a whole bunch of custom functionality baked into the Atreus,
+whatever labels I would have chosen, they would have been wrong.
+This is much more aesthetically pleasing, anyways.
 <p></p>
 Being quite inexperienced with these sorts of things,
 I don’t have too many things to say about the switches:
 they’re honestly pretty much exactly what I wanted.<!--
---><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.</div><!--
+--><label for="sn-3" class="margin-toggle">⊕</label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="marginnote">I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the switches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.</div><!--
 -->
 Comparing them with the two other switches that I have access to,
 Cherry MX Browns and Hako Trues,
@@ -243,14 +242,14 @@ Speaking of which, let’s talk about that.
 <h2 id="keyboard-layout">Keyboard layout<a href="#keyboard-layout" class="floatleft sec-link">§</a></h2>
 <p></p>
 <!--
---><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.</div><!--
+--><label for="sn-6" class="margin-toggle">⊕</label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="marginnote">I did not try the default layout in any way, instead diving straight into designing my own, so I can’t say much about that aspect.</div><!--
 -->The Atreus comes loaded with the <a href="https://github.com/keyboardio/Kaleidoscope">Kaleidoscope</a> firmware,
 and Keyboardio are very keen to point to their GUI configurator <a href="https://github.com/keyboardio/Chrysalis">Chrysalis</a> for interfacing with the keyboard.
 Personally, I was planning on using <span class="nowrap">features—</span>like tap <span class="nowrap">dancing—</span>that Chrysalis does not support,
 and I didn’t see much of a point in using Kaleidoscope just to be different,
 so I immediately flashed my Atreus with <a href="https://qmk.fm/"><span class="small-caps">qmk</span></a>.<!--
 --><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">This was very <span class="nowrap">straightforward—</span>after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
-After, that, one simply has to execute
+After that, one simply has to execute
 
 <div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>xset<span class="w"> </span>r<span class="w"> </span>rate<span class="w"> </span><span class="m">230</span><span class="w"> </span><span class="m">70</span>
 <span class="gp">$ </span>setxkbmap<span class="w"> </span>-option<span class="w"> </span>compose:menu
@@ -319,7 +318,7 @@ until I remembered that <code>M1-x</code> and <code>C-x</code> exist!</div><!--
 This is not 100% accurate,
 as xkbcat uses X11 input events in order to find out which keys were pressed,
 and so my layer <span class="nowrap">key—</span>with which I also press keys like <code>Down</code><span class="nowrap">—</span>does not show up at all.
-I did, however, go through the trouble of remapping every right variant of a key (like <code>Shift_R</code>) to their respective left versions,
+I did, however, go through the trouble of remapping every right variant of a key (like <code>Shift_R</code>) to its respective left version,
 so that there was no need for further <code>sed</code>ing.
 Based on the prevalence of <code>Up</code> and <code>Down</code>,
 it’s probably fair to say that the layer key and Control are my two most pressed keys.
@@ -433,7 +432,7 @@ especially the more parentheses-heavy <span class="nowrap">languages—</span>wh
 The <code>REP</code> and <code>AREP</code> keys make use of the <a href="https://docs.qmk.fm/#/feature_repeat_key">Repeat Key</a> functionality;
 basically, <code>REP</code> executes the key chord that was last pressed.
 On the other hand,
-<code>AREP</code> is an alternative, configurable, of “repeating” things;
+<code>AREP</code> is an alternative, configurable, way of “repeating” things;
 by default, it turns some directional movements
 <span class="nowrap">around—</span>e.g., <code>M-f</code> becomes <code>M-b</code><span class="nowrap">—</span>but
 it can be made to pretty much input anything one wants.
@@ -524,7 +523,7 @@ and also the one that’ll probably change the most in the future.<!--
 --><label for="sn-13" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-13" class="margin-toggle" /><div class="sidenote">I will try to keep this post updated with newer versions.</div><!--
 -->
 Currently, I’m thinking of putting some <span class="small-caps">xm</span>onad specific bindings on here,
-which could even to free up the Super key to be used inside of Emacs
+which could even free up the Super key to be used inside of Emacs
 for certain <span class="nowrap">things—</span>that would certainly be a worthwhile experiment.
 Other thoughts include things like volume and brightness controls,
 although this is less critical since my laptop keyboard is never far away.
@@ -547,7 +546,7 @@ but I haven’t gotten around to this yet.
 Some day!
 <h3 id="key-overridesqmkkey-overrides"><a href="https://docs.qmk.fm/#/feature_key_overrides">Key overrides</a><a href="#key-overridesqmkkey-overrides" class="floatleft sec-link">§</a></h3>
 <p></p>
-Quoting from the documentation
+Quoting from the documentation:
 <blockquote>
 <p></p>
 Key overrides allow you to override modifier-key combinations to send a different modifier-key combination
@@ -571,7 +570,7 @@ I’m definitely looking forward to discovering new and interesting ways of usin
 <p></p>
 This is a quaint little feature: auto-correct inside of your keyboard’s firmware!
 I promise that it’s not as bad as it sounds.
-It does not work automatically, thankfully, but is based off a given list of replacements.
+It does not work automatically, thankfully, but is based on a given list of replacements.
 For example,
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>widht -&gt; width
@@ -595,7 +594,7 @@ I think the solution to stop misspelling a word is not to remap key sequences on
 but <span class="nowrap">to—</span>you <span class="nowrap">know—</span>learn how to spell that word.
 Still,
 I can imagine at least one or two use-cases where something like this could be useful,
-so I figured it might be nice to make people aware of this features’ existence.
+so I figured it might be nice to make people aware of this feature’s existence.
 <p></p>
 In <span class="nowrap">addition—</span>as I’ve found out on three separate occasions so <span class="nowrap">far—</span>using the words “auto-correct, but in firmware”
 makes people stare in utter disbelief and/or disgust at your keyboard.

@@ -45,7 +45,7 @@ but the default for all of them is pretty "meh".[^2]
 
   I will draw your attention to the second line in the minibuffer;
   the first is just additional context,[^3]
-  and the third are available code actions.
+  and the third shows available code actions.
   What eglot shows me is that `apply_ctx` is a method of the `Type` type,
   sitting in `./type/context.rs`,
   with `./` being the root of the crate.

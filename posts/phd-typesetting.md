@@ -83,7 +83,7 @@ quite a bit.
 ## Chapter headings
 
 For chapter headings memoir features a `bringhurst` chapter style,
-which however doesn't include the chapter number besides it:
+which however doesn't include the chapter number beside it:
 
 <img class="pure-img"
      src="../images/phd-typesetting/no-chapter-number.png"
@@ -91,7 +91,7 @@ which however doesn't include the chapter number besides it:
 
 The famous book [@bringhurst92:el-typ] puts a rather large number in the margin,
 which is also what I ended up going with (see the first double page in this post).
-Thankfully, this is not difficult to fix—so much so that someone on TeX.Stack​exachange has
+Thankfully, this is not difficult to fix—so much so that someone on TeX.Stackexchange has
 [already done it](https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir).
 The exact `bringhurst.sty` file I used is [here](../images/phd-typesetting/bringhurst.txt);
 to use it just replace the call to `\chapterstyle` with a call to `\usepackage`:
@@ -335,7 +335,7 @@ This clashes quite significantly with `boondoxupr`
 <img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font.">
 
 and the issue only gets exacerbated once [microtype](https://ctan.org/pkg/microtype) comes into play and squashes those spaces even more.
-Palatino, while not perfect, fairs much better here:
+Palatino, while not perfect, fares much better here:
 
 <img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*.">
 
@@ -353,9 +353,9 @@ the full code looks like this:
 \usepackage[cal=boondoxupr,frak=esstix,frakscaled=0.95]{mathalfa}
 ```
 
-Some options should be self-explanitory<!--
+Some options should be self-explanatory<!--
 -->—like `tighter` or the `amsthm` compatibility—<!--
--->while other might require some further explanation.
+-->while others might require some further explanation.
 
 - `osf` and `scosf` make sure to enable
   [oldstyle figures](https://en.wikipedia.org/wiki/Text_figures)
@@ -422,7 +422,7 @@ into text like this
 
 <img src="../images/phd-typesetting/kerning.png" alt="Kerning">
 
-Quite subtle, but certainly noticeable it, I think!
+Quite subtle, but certainly noticeable, I think!
 
 ---
 
@@ -487,7 +487,7 @@ Plus, using `cleveref` saves one from having to define many different commands l
 ---
 
 A general advice I have—and also got from an older PhD student—is to start early.[^5]
-Even just streamlining and unifying notation takes more time than ones thinks,
+Even just streamlining and unifying notation takes more time than one thinks,
 especially if one also cares at least an epsilon about typography.
 What thankfully cuts down on the time needed is that LaTeX has been around for a long time,
 and most package manuals (that I've read) are quite high quality,

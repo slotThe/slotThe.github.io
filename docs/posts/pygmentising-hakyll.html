@@ -238,7 +238,7 @@ for this would look something like
 Importantly, the language (if any) is the first argument of the
 <code>classes</code> field of <code>Attr</code>.
 <p></p>
-A strategy begins to form: look for all occurences of a <code>CodeBlock</code> in
+A strategy begins to form: look for all occurrences of a <code>CodeBlock</code> in
 the <code>Pandoc</code> type, and replace it with a <code>RawBlock "html"</code> such that it
 isn’t touched anymore. Doing so will not pose very many
 <span class="nowrap">challenges—</span>pandoc has really great capabilities for
@@ -324,7 +324,7 @@ there is also <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/
 <span class="w">  </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Compiler</span><span class="w"> </span><span class="p">(</span><span class="kt">Item</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span>
 </pre></div>
 <p></p>
-Basically, in additions to reader and writer options, it also takes a
+Basically, in addition to reader and writer options, it also takes a
 monadic transformation of pandoc’s <span class="small-caps">ast</span> and builds an appropriate
 <code>Compiler</code> from that.
 

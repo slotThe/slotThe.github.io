@@ -1174,9 +1174,9 @@ manuscripts!</p>
 <a href="https://xmonad.org/">XMonad</a>, my setup is heavily skewed in that direction; I will make use
 of these tools almost every step of the way.
 <!--more-->
-As such, there is a lot of tangential almost relevant bits that I could
+As such, there are a lot of tangential almost relevant bits that I could
 cover here. However, since these aren’t directly related to my
-<em>research</em> workflow—and there is a lot of great resources out there
+<em>research</em> workflow—and there are a lot of great resources out there
 already—I decided to not do this here.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <h2 id="high-level-structure">High level structure</h2>
 <h3 id="topics">Topics</h3>
@@ -1393,7 +1393,7 @@ means I have to worry a bit about efficiently dealing with
 bureaucracy (<a href="https://notmuchmail.org/">notmuch.el</a>), keeping some sort of up-to-date
 calendar and readable todo-notes (<a href="https://orgmode.org/">org-mode</a> and goodies, as well
 as integration via <a href="https://hackage.haskell.org/package/xmonad-contrib/docs/XMonad-Prompt-OrgMode.html">XMonad’s OrgMode prompt</a>), accessing the
-universities internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
+university’s internal nextcloud server (<a href="https://gitlab.com/hperrey/khalel">khalel</a> and <code>davfs2</code> or
 <code>TRAMP</code>), … You get the idea.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>I will be using Emacs style notation throughout the article. This
 means that, for example, <code>C-x a</code> should be read as “hold down
@@ -1418,7 +1418,7 @@ rather smooth.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎
 <li id="fn6"><p>Ostensibly, this should be an XMonad module, as it does not
 necessarily have anything to do with Emacs itself. However, I had
 already written the elfeed integration and so the most annoying
-part (scraping the arXiv xml for certain bits) was already done.
+part (scraping the arXiv XML for certain bits) was already done.
 On the other hand, there are more Emacs than XMonad users, so
 perhaps doing it like this will help more people anyways.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

@@ -129,7 +129,7 @@ backlight party as well.<a href="#fnref2" class="footnote-back" role="doc-backli
     <summary type="html"><![CDATA[<article>
     <div class="header">
       6th May 2023–17 Jun 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4133 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4130 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
       </div>
     <h1 class="post-title">Keyboardio Atreus Review</h1>
@@ -173,11 +173,10 @@ sculpted keycaps would have been nice,
 if only to go with the ergo theme.
 The one key I do have with a label (the <code>Any</code> key) is laser engraved,
 and feels quite good as well.
-I went with blank keycaps mostly because I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my keyboard layout,
-and I can’t stand TODOs on the wrong fingers!
-Plus,
-not being sure how the key layout was actually going to look like in the end,
-this seemed like the safer choice, aesthetically.</p>
+I went with blank keycaps, mostly because I use <a href="https://colemakmods.github.io/mod-dh/">Colemak Mod-DH</a> as my keyboard layout,
+and with a whole bunch of custom functionality baked into the Atreus,
+whatever labels I would have chosen, they would have been wrong.
+This is much more aesthetically pleasing, anyways.</p>
 <p>Being quite inexperienced with these sorts of things,
 I don’t have too many things to say about the switches:
 they’re honestly pretty much exactly what I wanted.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
@@ -285,7 +284,7 @@ A cursory analysis reveals the following:<a href="#fn10" class="footnote-ref" id
 <p>This is not 100% accurate,
 as xkbcat uses X11 input events in order to find out which keys were pressed,
 and so my layer key—with which I also press keys like <code>Down</code>—does not show up at all.
-I did, however, go through the trouble of remapping every right variant of a key (like <code>Shift_R</code>) to their respective left versions,
+I did, however, go through the trouble of remapping every right variant of a key (like <code>Shift_R</code>) to its respective left version,
 so that there was no need for further <code>sed</code>ing.
 Based on the prevalence of <code>Up</code> and <code>Down</code>,
 it’s probably fair to say that the layer key and Control are my two most pressed keys.</p>
@@ -382,7 +381,7 @@ especially the more parentheses-heavy languages—whether that’d be Clojure or
 <p>The <code>REP</code> and <code>AREP</code> keys make use of the <a href="https://docs.qmk.fm/#/feature_repeat_key">Repeat Key</a> functionality;
 basically, <code>REP</code> executes the key chord that was last pressed.
 On the other hand,
-<code>AREP</code> is an alternative, configurable, of “repeating” things;
+<code>AREP</code> is an alternative, configurable, way of “repeating” things;
 by default, it turns some directional movements
 around—e.g., <code>M-f</code> becomes <code>M-b</code>—but
 it can be made to pretty much input anything one wants.</p>
@@ -453,7 +452,7 @@ Plus, putting <code>'</code> and <code>"</code> on this layer circumvents the di
 As should be obvious, this is the least developed layer,
 and also the one that’ll probably change the most in the future.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
 Currently, I’m thinking of putting some XMonad specific bindings on here,
-which could even to free up the Super key to be used inside of Emacs
+which could even free up the Super key to be used inside of Emacs
 for certain things—that would certainly be a worthwhile experiment.
 Other thoughts include things like volume and brightness controls,
 although this is less critical since my laptop keyboard is never far away.</p>
@@ -473,7 +472,7 @@ There is a good way to define Unicode characters by setting up one’s own X11 k
 but I haven’t gotten around to this yet.
 Some day!</p>
 <h3 id="key-overridesqmkkey-overrides"><a href="https://docs.qmk.fm/#/feature_key_overrides">Key overrides</a></h3>
-<p>Quoting from the documentation</p>
+<p>Quoting from the documentation:</p>
 <blockquote>
 <p>Key overrides allow you to override modifier-key combinations to send a different modifier-key combination
 or perform completely custom actions.</p>
@@ -493,7 +492,7 @@ I’m definitely looking forward to discovering new and interesting ways of usin
 <h3 id="autocorrectqmkautocorrect"><a href="https://docs.qmk.fm/#/feature_autocorrect">Autocorrect</a></h3>
 <p>This is a quaint little feature: auto-correct inside of your keyboard’s firmware!
 I promise that it’s not as bad as it sounds.
-It does not work automatically, thankfully, but is based off a given list of replacements.
+It does not work automatically, thankfully, but is based on a given list of replacements.
 For example,</p>
 <pre><code>widht -&gt; width</code></pre>
 <p>would fire anytime one writes <code>widht</code>, which then gets replaced by <code>width</code>.
@@ -510,7 +509,7 @@ I think the solution to stop misspelling a word is not to remap key sequences on
 but to—you know—learn how to spell that word.
 Still,
 I can imagine at least one or two use-cases where something like this could be useful,
-so I figured it might be nice to make people aware of this features’ existence.</p>
+so I figured it might be nice to make people aware of this feature’s existence.</p>
 <p>In addition—as I’ve found out on three separate occasions so far—using the words “auto-correct, but in firmware”
 makes people stare in utter disbelief and/or disgust at your keyboard.
 That alone makes this feature worth it.</p>
@@ -560,7 +559,7 @@ Plus, <a href="https://ncatlab.org/nlab/show/braided+monoidal+category">braids</
 make everything better!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>I think the full name—at least as far as I could make out—is
 “Kailh deep sea tactile silent BOX islet switches”.
-Quite the mouthfull indeed!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+Quite the mouthful indeed!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>This may seem debatable at this point,
 but I guess part of this post is convincing the sceptics that 44 keys really are enough.
 Indeed, one might even argue that the form-factor is a big strength of the keyboard,
@@ -571,12 +570,12 @@ for me it’s much faster to hit a capital <code>E</code>
 than having to do an awkward stretch in order to reach <code>6</code> or—even worse—<code>F6</code>.
 On the Atreus everything is close together,
 which means these kinds of big stretches are a thing of the past!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I will note that the Atreus does have hot-swappable switches, so while I’m satisfied and will probably never fiddle with the switches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>The outer two keys would suffer from the same issue, but these are actually very easy to hit with one’s palm. I press the two keys under the middle finger with a thumb or middle finger curl, both of which feel fine for me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Thanks, Emacs.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>I did not try the default layout in any way, instead diving straight into designign my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I did not try the default layout in any way, instead diving straight into designing my own, so I can’t say much about that aspect.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>This was very straightforward—after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
-After, that, one simply has to execute</p>
+After that, one simply has to execute</p>
 <pre class="console"><code>$ xset r rate 230 70
 $ setxkbmap -option compose:menu</code></pre>
 <p>to get some sane key repeat and compose key settings, and that’s it!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

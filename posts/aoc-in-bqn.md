@@ -87,7 +87,7 @@ Next to fantastic sites such as [BQNcrate]<!--
 matrix room, which is part of the larger
 [#array:matrix.org](https://app.element.io/#/room/%23array:matrix.org) space.
 Someone knowledgeable is always there to answer your stupid questions.
-Special thank to
+Special thanks to
 Marshall Lochbaum (the creator of the language!),
 dzaima, and
 brian\_e.
@@ -144,7 +144,7 @@ A user-defined function is something in curly braces that mentions the special n
 standing in for the left and right argument to it.[^22]
 Functions are always infix, and can only be called with either one or two arguments.
 In the former case, the function takes its argument on the right and `𝕨` will be given a special value:
-*nothing* ([`·`](https://mlochbaum.github.io/BQN/doc/expression.html#nothing))!.
+*nothing* ([`·`](https://mlochbaum.github.io/BQN/doc/expression.html#nothing)).
 
 ``` bqn
     1 {𝕨+𝕩} 2
@@ -264,7 +264,7 @@ Likewise, modifiers taking two functions are called 2-modifiers.
 0
 
     {𝕩+1}∘{𝕩-3} 4 # ∘ is the function composition 2-modifier called *atop*.
-                  # Called monatically, 𝔽∘𝔾 𝕩 is just 𝔽𝔾𝕩
+                  # Called monadically, 𝔽∘𝔾 𝕩 is just 𝔽𝔾𝕩
 2
     1 {𝕩+1}∘{𝕩-𝕨} 4 # Called dyadically, 𝕨 𝔽∘𝔾 𝕩 transforms to 𝔽(𝕨𝔾𝕩)
 4
@@ -546,7 +546,7 @@ Wrong!
 
 BQN's characters and strings are almost completely void of any kind of escaping mechanism.
 That is to say, besides for double quotes, which are inserted by duplicating them,
-every character entered into a string it interpreted verbatim.
+every character entered into a string is interpreted verbatim.
 Indeed, `'\t'` is not even a valid character,
 as it actually comprises two characters: `'\'` and `'t'`!
 To write a tab we either need to actually insert a tab character,[^13]
@@ -641,7 +641,7 @@ coming from another language, are just not true in BQN.
   ```
 
 - Piggybacking off of that: "depth is not rank".
-  The type of the elements is not at all important in determining the arrays rank.
+  The type of the elements is not at all important in determining the array's rank.
 
   ``` bqn
      =1‿2‿3‿4‿5 # vector
@@ -804,7 +804,7 @@ does what it says on the tin—it's comparable to `map` in many other languages.
 Parsing the input works as expected,
 in that we split each line on the tab character,
 and parse all the resulting sequences of digits as numbers.
-All that's left to do is to assembly the table in to a rank two array.
+All that's left to do is to assemble the table into a rank two array.
 By means of *cells* we get the maximum and minimum for every row<!--
 -->—using the `⌈´-⌊´` train, which is a great one to reason through—<!--
 -->and sum up the resulting vector to get our answer.
@@ -1885,7 +1885,7 @@ sw +--+ se
 
 Part one asks us to follow our input<!--
 -->—which is a string of instructions where to walk, like `ne,sw,ne,s,…`—<!--
--->and then calculate a Manhattan-type distance from from the origin to the stopping point.
+-->and then calculate a Manhattan-type distance from the origin to the stopping point.
 
 The difficult part here would be to find a comprehensible coordinate system to represent hexagonal grids.
 Thankfully—or sadly?—I remember doing the exact same thing in a previous year.
@@ -2559,7 +2559,7 @@ di ← ⊑(h.Keys@)⊐<d                                      # dup index
 
 I used a hash map here since I figured the loop was still going to be substantial
 (it wasn't—oh well).
-The test function supplied to while `•_while_` (ab)uses the fact that,
+The test function supplied to `•_while_` (ab)uses the fact that,
 while `⊢` only ever returns `𝕩`,
 it actually evaluates both of its arguments.
 Remember that evaluation happens right-to-left, though;
@@ -2611,7 +2611,7 @@ n ← •ParseFloat⊑•FLines"../inputs/day17.txt"
 }⍟2017 1‿0‿⟨0⟩                        # ⇒ 1487
 ```
 
-However, this feel immensely unsatisfactory to me.
+However, this feels immensely unsatisfactory to me.
 Repeatedly breaking apart an array and assembling it again (`(np↑b)∾i∾np↓b`) sort of signals that something must be amiss.
 Instead, it would be much better to not have to care about the position at all,
 always insert the element at the front, and rotate the array instead.
@@ -2713,7 +2713,7 @@ mod a 5
 
 Part one asks us what value is recovered the first time an `rcv` instruction is actually executed
 (i.e., called with a non-zero argument).
-Let's first to some parsing.
+Let's first do some parsing.
 
 ``` bqn
 ⟨Split⟩←•Import"../../util/bqn_util/util.bqn"

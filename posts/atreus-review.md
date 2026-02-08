@@ -50,11 +50,10 @@ sculpted keycaps would have been nice,
 if only to go with the ergo theme.
 The one key I do have with a label (the `Any` key) is laser engraved,
 and feels quite good as well.
-I went with blank keycaps mostly because I use [Colemak Mod-DH][colemak-dh] as my keyboard layout,
-and I can't stand TODOs on the wrong fingers!
-Plus,
-not being sure how the key layout was actually going to look like in the end,
-this seemed like the safer choice, aesthetically.
+I went with blank keycaps, mostly because I use [Colemak Mod-DH][colemak-dh] as my keyboard layout,
+and with a whole bunch of custom functionality baked into the Atreus,
+whatever labels I would have chosen, they would have been wrong.
+This is much more aesthetically pleasing, anyways.
 
 Being quite inexperienced with these sorts of things,
 I don't have too many things to say about the switches:
@@ -182,7 +181,7 @@ $ sort ~/.keylog.txt | uniq -c | sort -r | head -n15
 This is not 100% accurate,
 as xkbcat uses X11 input events in order to find out which keys were pressed,
 and so my layer key—with which I also press keys like `Down`—does not show up at all.
-I did, however, go through the trouble of remapping every right variant of a key (like `Shift_R`) to their respective left versions,
+I did, however, go through the trouble of remapping every right variant of a key (like `Shift_R`) to its respective left version,
 so that there was no need for further `sed`ing.
 Based on the prevalence of `Up` and `Down`,
 it's probably fair to say that the layer key and Control are my two most pressed keys.
@@ -292,7 +291,7 @@ especially the more parentheses-heavy languages—whether that'd be Clojure or R
 The `REP` and `AREP` keys make use of the [Repeat Key][qmk:repeat-key] functionality;
 basically, `REP` executes the key chord that was last pressed.
 On the other hand,
-`AREP` is an alternative, configurable, of "repeating" things;
+`AREP` is an alternative, configurable, way of "repeating" things;
 by default, it turns some directional movements
 around—e.g., `M-f` becomes `M-b`—but
 it can be made to pretty much input anything one wants.
@@ -374,7 +373,7 @@ So far, only the seldom used F-keys are present here.
 As should be obvious, this is the least developed layer,
 and also the one that'll probably change the most in the future.[^14]
 Currently, I'm thinking of putting some XMonad specific bindings on here,
-which could even to free up the Super key to be used inside of Emacs
+which could even free up the Super key to be used inside of Emacs
 for certain things—that would certainly be a worthwhile experiment.
 Other thoughts include things like volume and brightness controls,
 although this is less critical since my laptop keyboard is never far away.
@@ -399,7 +398,7 @@ Some day!
 
 ## [Key overrides][qmk:key-overrides]
 
-Quoting from the documentation
+Quoting from the documentation:
 
 > Key overrides allow you to override modifier-key combinations to send a different modifier-key combination
 > or perform completely custom actions.
@@ -422,7 +421,7 @@ I'm definitely looking forward to discovering new and interesting ways of using 
 
 This is a quaint little feature: auto-correct inside of your keyboard's firmware!
 I promise that it's not as bad as it sounds.
-It does not work automatically, thankfully, but is based off a given list of replacements.
+It does not work automatically, thankfully, but is based on a given list of replacements.
 For example,
 
     widht -> width
@@ -444,7 +443,7 @@ I think the solution to stop misspelling a word is not to remap key sequences on
 but to—you know—learn how to spell that word.
 Still,
 I can imagine at least one or two use-cases where something like this could be useful,
-so I figured it might be nice to make people aware of this features' existence.
+so I figured it might be nice to make people aware of this feature's existence.
 
 In addition—as I've found out on three separate occasions so far—using the words "auto-correct, but in firmware"
 makes people stare in utter disbelief and/or disgust at your keyboard.
@@ -519,7 +518,7 @@ plus, building something yourself is much more rewarding than buying it!
 [xkbcat]: https://github.com/anko/xkbcat
 
 [^3]: This was very straightforward—after I figured out that one needs to hold the Escape key when plugging in the keyboard while flashing.
-      After, that, one simply has to execute
+      After that, one simply has to execute
 
       ``` console
       $ xset r rate 230 70
@@ -548,9 +547,9 @@ plus, building something yourself is much more rewarding than buying it!
 
 [^9]: The outer two keys would suffer from the same issue, but these are actually very easy to hit with one's palm. I press the two keys under the middle finger with a thumb or middle finger curl, both of which feel fine for me.
 
-[^10]: {-} I did not try the default layout in any way, instead diving straight into designign my own, so I can't say much about that aspect.
+[^10]: {-} I did not try the default layout in any way, instead diving straight into designing my own, so I can't say much about that aspect.
 
-[^12]: {-} I will note that the Atreus does have hot-swappable switches, so while I'm satisfied and will probably never fiddle with the swtiches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.
+[^12]: {-} I will note that the Atreus does have hot-swappable switches, so while I'm satisfied and will probably never fiddle with the switches myself, swapping them out should only be a matter of minutes. This is a nice touch, I think.
 
 [^13]: I.e., it does not matter whether I press `S-L1-«key»` or `L1-S-«key»`.
 
@@ -588,4 +587,4 @@ plus, building something yourself is much more rewarding than buying it!
 
 [^23]: I think the full name—at least as far as I could make out—is
        "Kailh deep sea tactile silent BOX islet switches".
-       Quite the mouthfull indeed!
+       Quite the mouthful indeed!

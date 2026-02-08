@@ -96,7 +96,7 @@ We first include some libraries, which were apparently implicit in the original 
 The next three definitions are just utility functions:
 `P` and `R` are to make the code even terser,
 and `DO` is a neat way to compactify loops.
-For example, given some `int a=0`, then `DO(n,a+=i)` is the same as `for(int i=0, i<n, ++i) a+=i;`.
+For example, given some `int a=0`, then `DO(n,a+=i)` is the same as `for(int i=0; i<n; ++i) a+=i;`.
 Notice how the argument `x` has access to the loop variable `i`.
 
 ``` c
