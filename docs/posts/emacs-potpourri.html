@@ -65,8 +65,8 @@
       <div id="content">
         <article>
     <div class="header">
-      22nd Oct 2022–8 Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3975 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      22nd Oct 2022–9 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3972 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#emacs'." href="../tags/emacs.html" rel="tag">#emacs</a>
       </div>
     <h1 class="post-title">A Potpourri of Emacs Tweaks</h1>
@@ -664,8 +664,7 @@ some of its logic.
 <span class="w">                       </span><span class="p">(</span><span class="nv">match-string</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 <span class="w">                       </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\\n&quot;</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="w">                       </span><span class="p">(</span><span class="nv">string-replace</span><span class="w"> </span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="s">&quot;\\&quot;</span><span class="p">))))</span>
-<span class="w">            </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="p">(</span><span class="nv">string-blank-p</span><span class="w"> </span><span class="nv">cmd</span><span class="p">))</span>
-<span class="w">                       </span><span class="p">(</span><span class="nv">ring-empty-p</span><span class="w"> </span><span class="nv">ring</span><span class="p">))</span>
+<span class="w">            </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="p">(</span><span class="nv">string-blank-p</span><span class="w"> </span><span class="nv">cmd</span><span class="p">))</span>
 <span class="w">              </span><span class="p">(</span><span class="nv">ring-insert-at-beginning</span><span class="w"> </span><span class="nv">ring</span><span class="w"> </span><span class="nv">cmd</span><span class="p">)</span>
 <span class="w">              </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">count</span><span class="w"> </span><span class="p">(</span><span class="nf">1+</span><span class="w"> </span><span class="nv">count</span><span class="p">))))))</span>
 <span class="w">      </span><span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">eshell-history-ring</span><span class="w"> </span><span class="nv">ring</span>

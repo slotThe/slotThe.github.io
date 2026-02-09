@@ -11470,8 +11470,8 @@ certainly know which of the two I’d rather write!</p>
     <updated>2022-10-22T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      22nd Oct 2022–8 Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3983 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      22nd Oct 2022–9 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3980 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
       </div>
     <h1 class="post-title">A Potpourri of Emacs Tweaks</h1>
@@ -11908,8 +11908,7 @@ some of its logic.</p>
                        (match-string 1)
                        (string-replace &quot;\\n&quot; &quot;\n&quot;)
                        (string-replace &quot;\\\\&quot; &quot;\\&quot;))))
-            (when (and (not (string-blank-p cmd))
-                       (ring-empty-p ring))
+            (when (not (string-blank-p cmd))
               (ring-insert-at-beginning ring cmd)
               (setq count (1+ count))))))
       (setq eshell-history-ring ring

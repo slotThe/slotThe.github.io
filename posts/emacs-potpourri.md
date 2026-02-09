@@ -554,8 +554,7 @@ some of its logic.
                        (match-string 1)
                        (string-replace "\\n" "\n")
                        (string-replace "\\\\" "\\"))))
-            (when (and (not (string-blank-p cmd))
-                       (ring-empty-p ring))
+            (when (not (string-blank-p cmd))
               (ring-insert-at-beginning ring cmd)
               (setq count (1+ count))))))
       (setq eshell-history-ring ring
