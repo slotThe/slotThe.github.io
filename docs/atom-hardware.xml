@@ -20,8 +20,8 @@
     <updated>2026-02-07T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      7th Feb 2026–8 Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="419 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      7th Feb 2026–23 Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="471 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
       </div>
     <h1 class="post-title">DUCK</h1>
@@ -88,7 +88,7 @@ following:</p>
 <p>One still has to feed these functions into the tap dance machinery, but
 that’s essentially it. I mapped my duck key to output <code>M-C-S-v 2</code>—I
 figured that even with my crazy keybindings it’s quite unlikely I’ll
-ever press that by accident.</p>
+ever press that by accident.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>My <a href="https://codeberg.org/slotThe/dotfiles/src/branch/main/xmonad/xmonad.hs">xmonad.hs</a>
 then just needs support for that keybinding</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  (<span class="st">&quot;M-C-S-v 2&quot;</span>, spawn <span class="st">&quot;~/.scripts/duck.sh&quot;</span>)</span></code></pre></div>
@@ -112,6 +112,10 @@ of my config are available.</p>
 <li id="fn2"><p>I normally have the Atreus sitting directly on my laptop keyboard
 (with it disabled), but of course I wanted to showcase the
 backlight party as well.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The reason for not using a key that’s not on my keyboard at all,
+such as F24 and the like, is that I don’t have the Atreus
+connected to my laptop 100% of the time. Imagine the tragedy of
+wanting a bit of fun and not knowing how to press the key!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!-- Body is included in the above file -->

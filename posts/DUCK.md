@@ -85,7 +85,7 @@ void DUCK_reset(tap_dance_state_t *state, void *user_data) {
 One still has to feed these functions into the tap dance machinery, but
 that's essentially it. I mapped my duck key to output `M-C-S-v 2`—I
 figured that even with my crazy keybindings it's quite unlikely I'll
-ever press that by accident.
+ever press that by accident.[^3]
 
 My [xmonad.hs](https://codeberg.org/slotThe/dotfiles/src/branch/main/xmonad/xmonad.hs)
 then just needs support for that keybinding
@@ -119,3 +119,8 @@ of my config are available.
       I normally have the Atreus sitting directly on my laptop keyboard
       (with it disabled), but of course I wanted to showcase the
       backlight party as well.
+
+[^3]: The reason for not using a key that's not on my keyboard at all,
+      such as F24 and the like, is that I don't have the Atreus
+      connected to my laptop 100% of the time. Imagine the tragedy of
+      wanting a bit of fun and not knowing how to press the key!
