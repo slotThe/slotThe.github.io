@@ -97,6 +97,11 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *The Reflection Equation and Braided Module Categories* \
+  2026-02-19,
+  [Seminario di Algebra e Teoria dei Numeri](https://www.seminarioatn.unito.it/),
+  Turin.
+
 - *Category Theory and All That* \
    2025-11-06,
    [ZMP Seminar](https://www.zmp.uni-hamburg.de/events/seminar.html),
