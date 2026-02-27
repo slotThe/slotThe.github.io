@@ -11,8 +11,767 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2026-02-07T00:00:00Z</updated>
+    <updated>2026-02-27T00:00:00Z</updated>
     <entry>
+    <title>Sudoku Solving in BQN</title>
+    <link href="https://tony-zorman.com/posts/bqn-sudoku.html" />
+    <id>https://tony-zorman.com/posts/bqn-sudoku.html</id>
+    <published>2026-02-27T00:00:00Z</published>
+    <updated>2026-02-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <div class="header">
+      27th Feb 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="8549 words">35 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>   <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
+      </div>
+    <h1 class="post-title">Sudoku Solving in BQN</h1>
+    <div id="title-underline"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      
+<p>A few days ago, I read a very interesting <a href="https://blog.veitheller.de/Simple_Sudoku_Solvers_SII,_EI:_Dyalog_APL.html">blog post</a> by Veit Heller about solving a regular 9×9 Sudoku puzzle in Dyalog APL.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It’s part of a series of blog posts, starting with a <a href="https://blog.veitheller.de/Six_Simple_Sudoku_Solvers_I:_Python_(Reference).html">reference implementation</a> in Python, about writing a simple depth first search Sudoku solver in a variety of different languages. This made me realise that I’ve never written such a solver—not even a stupid one—myself!</p>
+<!--more-->
+<p>Needless to say, it’s probably about time for that to change. Naturally, I’ll use <a href="https://mlochbaum.github.io/BQN/">BQN</a> for this—what better tool could there be to solve a problem about a literal array of numbers than an array programming language.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<h2 id="setup">Setup</h2>
+<p>As mentioned above, the algorithm that the reference implementation uses—which I’ll try to follow in version 0, for comparison’s sake—is a straightforward depth first search. In so many words, it runs about as follows:</p>
+<ul>
+<li>Make changes for which only one candidate exists (“propagate”).
+<ul>
+<li>If no changes are possible, the Sudoku is unsolvable.</li>
+</ul></li>
+<li>If there are no unfilled spots left, return the (first) solution.</li>
+<li>Find a cell with the minimal number of candidates.
+<ul>
+<li>Create a new board for each candidate (with its value at the cell) and recurse.</li>
+<li>Return solution if any of those recursive steps solved the board.</li>
+</ul></li>
+</ul>
+<p>There are quite a lot of conditionals here, which perhaps makes this solution a bit unergonomic for array languages, but let’s put that aside for now and just implement the algorithm essentially verbatim.</p>
+<h2 id="version-0">Version 0</h2>
+<p>You can read this post as a sort of literate program: things we’ve defined in previous blocks will be available in later ones.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Let’s first define a board that we’ll use throughout.</p>
+<pre class="bqn"><code>board ← [ 6‿0‿2‿1‿3‿0‿0‿0‿0
+        , 0‿0‿0‿0‿0‿0‿2‿0‿4
+        , 0‿0‿0‿0‿0‿0‿0‿9‿0
+        , 0‿7‿0‿0‿2‿0‿0‿8‿0
+        , 0‿0‿0‿6‿7‿0‿0‿3‿0
+        , 3‿0‿9‿0‿0‿0‿6‿0‿0
+        , 0‿0‿3‿0‿0‿0‿0‿0‿0
+        , 0‿0‿0‿0‿6‿0‿8‿1‿0
+        , 1‿9‿0‿0‿0‿7‿0‿0‿0 ]</code></pre>
+<p>The first thing we need to implement is some kind of <code>candidates</code> function, which should return a list of valid numbers to be inserted at a given position. If we already have a position in mind, it’s pretty easy to get the correct row and column:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<pre class="bqn"><code>   0⊏board  # first row
+⟨ 6 0 2 1 3 0 0 0 0 ⟩
+   1⊏⍉board # second column
+⟨ 0 0 0 7 0 0 0 0 9 ⟩</code></pre>
+<p>Next up is to find a way to locate the 3×3 grid a given cell is in, and get all numbers from that region. So, for example given our board</p>
+<pre><code>┌─
+╵ 6 0 2 1 3 0 0 0 0
+  0 0 0 0 0 0 2 0 4
+  0 0 0 0 0 0 0 9 0
+  0 7 0 0 2 0 0 8 0
+  0 0 0 6 7 0 0 3 0
+  3 0 9 0 0 0 6 0 0
+  0 0 3 0 0 0 0 0 0
+  0 0 0 0 6 0 8 1 0
+  1 9 0 0 0 7 0 0 0
+                    ┘</code></pre>
+<p>if we want to zoom in to the <code>0</code> at index <code>1‿2</code>, we would have to consider the following numbers as “not available”:</p>
+<pre><code>┌─
+╵ 6 0 2 · · · · · ·
+  0 0 0 0 0 0 2 0 4
+  0 0 0 · · · · · ·
+  · · 0 · · · · · ·
+  · · 0 · · · · · ·
+  · · 9 · · · · · ·
+  · · 3 · · · · · ·
+  · · 0 · · · · · ·
+  · · 0 · · · · · ·
+                    ┘</code></pre>
+<p>Let’s create a matrix 3×3 matrix where the element at index <code>i‿j</code> exactly corresponds to the neighbouring grid indices:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<pre class="bqn"><code>   ⌊3÷˜↕9
+⟨ 0 0 0 1 1 1 2 2 2 ⟩
+   2⥊&lt;⌊3÷˜↕9
+⟨ ⟨ 0 0 0 1 1 1 2 2 2 ⟩ ⟨ 0 0 0 1 1 1 2 2 2 ⟩ ⟩
+   (2⥊&lt;⌊3÷˜↕9)⊔↕9‿9
+┌─
+╵ ┌─                          ┌─                          ┌─
+  ╵ ⟨ 0 0 ⟩ ⟨ 0 1 ⟩ ⟨ 0 2 ⟩   ╵ ⟨ 0 3 ⟩ ⟨ 0 4 ⟩ ⟨ 0 5 ⟩   ╵ ⟨ 0 6 ⟩ ⟨ 0 7 ⟩ ⟨ 0 8 ⟩
+    ⟨ 1 0 ⟩ ⟨ 1 1 ⟩ ⟨ 1 2 ⟩     ⟨ 1 3 ⟩ ⟨ 1 4 ⟩ ⟨ 1 5 ⟩     ⟨ 1 6 ⟩ ⟨ 1 7 ⟩ ⟨ 1 8 ⟩
+    ⟨ 2 0 ⟩ ⟨ 2 1 ⟩ ⟨ 2 2 ⟩     ⟨ 2 3 ⟩ ⟨ 2 4 ⟩ ⟨ 2 5 ⟩     ⟨ 2 6 ⟩ ⟨ 2 7 ⟩ ⟨ 2 8 ⟩
+                            ┘                           ┘                           ┘
+  ┌─                          ┌─                          ┌─
+  ╵ ⟨ 3 0 ⟩ ⟨ 3 1 ⟩ ⟨ 3 2 ⟩   ╵ ⟨ 3 3 ⟩ ⟨ 3 4 ⟩ ⟨ 3 5 ⟩   ╵ ⟨ 3 6 ⟩ ⟨ 3 7 ⟩ ⟨ 3 8 ⟩
+    ⟨ 4 0 ⟩ ⟨ 4 1 ⟩ ⟨ 4 2 ⟩     ⟨ 4 3 ⟩ ⟨ 4 4 ⟩ ⟨ 4 5 ⟩     ⟨ 4 6 ⟩ ⟨ 4 7 ⟩ ⟨ 4 8 ⟩
+    ⟨ 5 0 ⟩ ⟨ 5 1 ⟩ ⟨ 5 2 ⟩     ⟨ 5 3 ⟩ ⟨ 5 4 ⟩ ⟨ 5 5 ⟩     ⟨ 5 6 ⟩ ⟨ 5 7 ⟩ ⟨ 5 8 ⟩
+                            ┘                           ┘                           ┘
+  ┌─                          ┌─                          ┌─
+  ╵ ⟨ 6 0 ⟩ ⟨ 6 1 ⟩ ⟨ 6 2 ⟩   ╵ ⟨ 6 3 ⟩ ⟨ 6 4 ⟩ ⟨ 6 5 ⟩   ╵ ⟨ 6 6 ⟩ ⟨ 6 7 ⟩ ⟨ 6 8 ⟩
+    ⟨ 7 0 ⟩ ⟨ 7 1 ⟩ ⟨ 7 2 ⟩     ⟨ 7 3 ⟩ ⟨ 7 4 ⟩ ⟨ 7 5 ⟩     ⟨ 7 6 ⟩ ⟨ 7 7 ⟩ ⟨ 7 8 ⟩
+    ⟨ 8 0 ⟩ ⟨ 8 1 ⟩ ⟨ 8 2 ⟩     ⟨ 8 3 ⟩ ⟨ 8 4 ⟩ ⟨ 8 5 ⟩     ⟨ 8 6 ⟩ ⟨ 8 7 ⟩ ⟨ 8 8 ⟩
+                            ┘                           ┘                           ┘
+                                                                                      ┘
+   3↑¨ nbs ← ⥊¨(2⥊&lt;⌊3÷˜↕9)⊔↕9‿9 # neighbours as flat coordinates
+┌─
+╵ ⟨ ⟨ 0 0 ⟩ ⟨ 0 1 ⟩ ⟨ 0 2 ⟩ ⟩ ⟨ ⟨ 0 3 ⟩ ⟨ 0 4 ⟩ ⟨ 0 5 ⟩ ⟩ ⟨ ⟨ 0 6 ⟩ ⟨ 0 7 ⟩ ⟨ 0 8 ⟩ ⟩
+  ⟨ ⟨ 3 0 ⟩ ⟨ 3 1 ⟩ ⟨ 3 2 ⟩ ⟩ ⟨ ⟨ 3 3 ⟩ ⟨ 3 4 ⟩ ⟨ 3 5 ⟩ ⟩ ⟨ ⟨ 3 6 ⟩ ⟨ 3 7 ⟩ ⟨ 3 8 ⟩ ⟩
+  ⟨ ⟨ 6 0 ⟩ ⟨ 6 1 ⟩ ⟨ 6 2 ⟩ ⟩ ⟨ ⟨ 6 3 ⟩ ⟨ 6 4 ⟩ ⟨ 6 5 ⟩ ⟩ ⟨ ⟨ 6 6 ⟩ ⟨ 6 7 ⟩ ⟨ 6 8 ⟩ ⟩
+                                                                                      ┘</code></pre>
+<p>The above uses the <a href="https://mlochbaum.github.io/BQN/doc/group.html#multidimensional-grouping">multidimensional grouping</a> functionality of <em>group</em>: the first list runs along the rows of the matrix, and the second one runs along the columns.</p>
+<p>To translate a given coordinate <code>i‿j</code> of a Sudoku grid into one that indexes into <code>nbs</code>, divide each number by 3 and round down.</p>
+<pre class="bqn"><code>   ⌊3÷˜1‿2 # upper left
+⟨ 0 0 ⟩
+   ⌊3÷˜5‿3 # middle
+⟨ 1 1 ⟩
+   ⌊3÷˜7‿8 # bottom right
+⟨ 2 2 ⟩
+   3‿3⥊ board⊑˜ nbs⊑˜ ⌊3÷˜1‿2
+┌─
+╵ 6 0 2
+  0 0 0
+  0 0 0
+        ┘</code></pre>
+<p>Now having access to the numbers we <em>don’t</em> want, we just have to “negate” the aggregated array somehow. This kind of pruning can be done in various ways, but I find APL’s <em>without</em> function <code>~</code> to be particularly neat. It’s essentially a <code>\setminus</code>, although it works on arrays, and can be implemented in BQN via the <em>train</em> <code>¬∘∊/⊣</code>:</p>
+<pre class="bqn"><code>   ↕10
+⟨ 0 1 2 3 4 5 6 7 8 9 ⟩
+   (↕10) (¬∘∊/⊣) 5‿6‿1‿0 # ↕10 without 5, 6, 1, or 0
+⟨ 2 3 4 7 8 9 ⟩
+   0‿1 { i‿j 𝕊 b: (↕10) (¬∘∊/⊣) (j⊏⍉b)∾(i⊏b) } board
+⟨ 4 5 8 ⟩</code></pre>
+<p>Amalgamating all of these tricks, we can write our candidates function:</p>
+<pre class="bqn"><code>Cands ← { i‿j𝕊b: (↕10) (¬∘∊/⊣) (j⊏⍉b)∾(i⊏b)∾(b⊑˜nbs⊑˜⌊3÷˜i‿j) }</code></pre>
+<pre class="bqn"><code>   1‿2 Cands board
+⟨ 1 5 7 8 ⟩
+   5‿6 Cands board
+⟨ 1 4 5 7 ⟩</code></pre>
+<hr />
+<p>Instead of all cells, we actually only care about the empty ones; i.e., those that have a 0 in them. Filtering for them can be done with <em>replicate</em>, although this involves a bit of <a href="https://mlochbaum.github.io/BQN/doc/replicate.html#just-rank-1">additional ceremony</a>, since we’re looking at a matrix instead of a flat list:</p>
+<pre class="bqn"><code>   0=board                  # Empty spots
+┌─
+╵ 0 1 0 0 0 1 1 1 1
+  1 1 1 1 1 1 0 1 0
+  1 1 1 1 1 1 1 0 1
+  1 0 1 1 0 1 1 0 1
+  1 1 1 0 0 1 1 0 1
+  0 1 0 1 1 1 0 1 1
+  1 1 0 1 1 1 1 1 1
+  1 1 1 1 0 1 0 0 1
+  0 0 1 1 1 0 1 1 1
+                    ┘
+   ↕≢board                  # matrix of indices
+┌─
+╵ ⟨ 0 0 ⟩ ⟨ 0 1 ⟩ ⟨ 0 2 ⟩ ⟨ 0 3 ⟩ ⟨ 0 4 ⟩ ⟨ 0 5 ⟩ ⟨ 0 6 ⟩ ⟨ 0 7 ⟩ ⟨ 0 8 ⟩
+  ⟨ 1 0 ⟩ ⟨ 1 1 ⟩ ⟨ 1 2 ⟩ ⟨ 1 3 ⟩ ⟨ 1 4 ⟩ ⟨ 1 5 ⟩ ⟨ 1 6 ⟩ ⟨ 1 7 ⟩ ⟨ 1 8 ⟩
+  ⟨ 2 0 ⟩ ⟨ 2 1 ⟩ ⟨ 2 2 ⟩ ⟨ 2 3 ⟩ ⟨ 2 4 ⟩ ⟨ 2 5 ⟩ ⟨ 2 6 ⟩ ⟨ 2 7 ⟩ ⟨ 2 8 ⟩
+  ⟨ 3 0 ⟩ ⟨ 3 1 ⟩ ⟨ 3 2 ⟩ ⟨ 3 3 ⟩ ⟨ 3 4 ⟩ ⟨ 3 5 ⟩ ⟨ 3 6 ⟩ ⟨ 3 7 ⟩ ⟨ 3 8 ⟩
+  ⟨ 4 0 ⟩ ⟨ 4 1 ⟩ ⟨ 4 2 ⟩ ⟨ 4 3 ⟩ ⟨ 4 4 ⟩ ⟨ 4 5 ⟩ ⟨ 4 6 ⟩ ⟨ 4 7 ⟩ ⟨ 4 8 ⟩
+  ⟨ 5 0 ⟩ ⟨ 5 1 ⟩ ⟨ 5 2 ⟩ ⟨ 5 3 ⟩ ⟨ 5 4 ⟩ ⟨ 5 5 ⟩ ⟨ 5 6 ⟩ ⟨ 5 7 ⟩ ⟨ 5 8 ⟩
+  ⟨ 6 0 ⟩ ⟨ 6 1 ⟩ ⟨ 6 2 ⟩ ⟨ 6 3 ⟩ ⟨ 6 4 ⟩ ⟨ 6 5 ⟩ ⟨ 6 6 ⟩ ⟨ 6 7 ⟩ ⟨ 6 8 ⟩
+  ⟨ 7 0 ⟩ ⟨ 7 1 ⟩ ⟨ 7 2 ⟩ ⟨ 7 3 ⟩ ⟨ 7 4 ⟩ ⟨ 7 5 ⟩ ⟨ 7 6 ⟩ ⟨ 7 7 ⟩ ⟨ 7 8 ⟩
+  ⟨ 8 0 ⟩ ⟨ 8 1 ⟩ ⟨ 8 2 ⟩ ⟨ 8 3 ⟩ ⟨ 8 4 ⟩ ⟨ 8 5 ⟩ ⟨ 8 6 ⟩ ⟨ 8 7 ⟩ ⟨ 8 8 ⟩
+                                                                          ┘
+   5↑ (0=board)/○⥊(↕≢board) # Filter for indices of empty elements
+⟨ ⟨ 0 1 ⟩ ⟨ 0 5 ⟩ ⟨ 0 6 ⟩ ⟨ 0 7 ⟩ ⟨ 0 8 ⟩ ⟩</code></pre>
+<pre class="bqn"><code>Empty ← {(0=𝕩)/○⥊(↕≢𝕩)}</code></pre>
+<p>Now we have everything we need to implement the first two lines of the algorithm:</p>
+<blockquote>
+<ul>
+<li>Make changes for which only one candidate exists (“propagate”).
+<ul>
+<li>If no changes are possible, the Sudoku is unsolvable.</li>
+</ul></li>
+</ul>
+</blockquote>
+<p>I’ll first give you the version without recursion, as that’s a bit prettier (and works essentially just as well, actually; the inner loop of the final solve function is reasonably fast):</p>
+<pre class="bqn"><code>Prop ← {𝕩≡0?0; ix𝕊b: 2⊸⌊∘≠◶⟨0, {(⊑𝕩)⌾(ix⊸⊑)b}, b⟩ ix Cands b}´⟜Empty</code></pre>
+<p>We fold over all of the empty cells; if there is only one possible candidate to fill in, change the accumulator of the fold (initially the input board to <code>Prop</code>) to include that as a guess. If there are ever no candidates to fill in, the board gets set to <code>0</code>, which indicates impossibility of the puzzle.</p>
+<pre class="bqn"><code>easy ← [ 0‿0‿0‿0‿2‿0‿0‿9‿5 # an easy puzzle
+       , 6‿0‿0‿0‿1‿0‿7‿2‿4
+       , 0‿0‿2‿6‿0‿5‿0‿1‿8
+       , 0‿1‿7‿0‿6‿0‿0‿3‿9
+       , 4‿0‿0‿0‿3‿9‿0‿0‿0
+       , 5‿0‿3‿8‿0‿0‿4‿0‿2
+       , 0‿0‿4‿0‿5‿6‿9‿0‿0
+       , 0‿0‿5‿9‿0‿3‿0‿4‿0
+       , 0‿3‿8‿1‿0‿7‿2‿0‿6 ]</code></pre>
+<pre class="bqn"><code>   10↑ Cands⟜easy¨Empty easy # A few with only one choice
+⟨ ⟨ 1 3 7 8 ⟩ ⟨ 4 7 8 ⟩ ⟨ 1 ⟩ ⟨ 3 4 7 ⟩ ⟨ 4 8 ⟩ ⟨ 3 6 ⟩ ⟨ 5 8 9 ⟩ ⟨ 9 ⟩ ⟨ 3 ⟩ ⟨ 8 ⟩ ⟩
+   easy ∾○&lt; Prop easy        # Before and after
+┌─
+· ┌─                    ┌─
+  ╵ 0 0 0 0 2 0 0 9 5   ╵ 3 8 1 7 2 4 6 9 5
+    6 0 0 0 1 0 7 2 4     6 5 9 3 1 8 7 2 4
+    0 0 2 6 0 5 0 1 8     7 4 2 6 9 5 3 1 8
+    0 1 7 0 6 0 0 3 9     8 1 7 4 6 2 5 3 9
+    4 0 0 0 3 9 0 0 0     4 2 6 5 3 9 8 7 1
+    5 0 3 8 0 0 4 0 2     5 9 3 8 7 1 4 6 2
+    0 0 4 0 5 6 9 0 0     1 7 4 2 5 6 9 8 3
+    0 0 5 9 0 3 0 4 0     2 6 5 9 8 3 1 4 7
+    0 3 8 1 0 7 2 0 6     9 3 8 1 4 7 2 5 6
+                      ┘                     ┘
+                                              ┘</code></pre>
+<p>Recursion essentially only involves adding a check if we’ve done anything—if yes, we try again, as perhaps the candidates for a specific field decreased and it’s now uniquely solvable.</p>
+<pre class="bqn"><code>Prop ← { c←1 # changed?
+  { c↩0
+    𝕩{𝕩≡0?0; ix𝕊b: 2⊸⌊∘≠◶⟨0, {c↩1⋄(⊑𝕩)⌾(ix⊸⊑)b}, b⟩ ix Cands b}´Empty 𝕩
+  }•_while_{𝕊·:c} 𝕩
+}</code></pre>
+<pre class="bqn"><code>   Prop easy          # Actually solves the whole board!
+┌─
+╵ 3 8 1 7 2 4 6 9 5
+  6 5 9 3 1 8 7 2 4
+  7 4 2 6 9 5 3 1 8
+  8 1 7 4 6 2 5 3 9
+  4 2 6 5 3 9 8 7 1
+  5 9 3 8 7 1 4 6 2
+  1 7 4 2 5 6 9 8 3
+  2 6 5 9 8 3 1 4 7
+  9 3 8 1 4 7 2 5 6
+                    ┘</code></pre>
+<hr />
+<p>Onto the main loop:</p>
+<blockquote>
+<ul>
+<li>If there are no unfilled spots left, return the solution</li>
+<li>Find a cell with the minimal number of candidates
+<ul>
+<li>Create a new board for each candidate (with its value at the cell) and recurse</li>
+<li>Return solution if any of those steps solve the board</li>
+</ul></li>
+</ul>
+</blockquote>
+<p>To find the cell with the minimal number of elements, we can use an idiom similar to <code>⍋⊸⊏</code> (<em>grade up</em> <em>before</em> <em>select</em>), which acts as a kind of “sort by” function</p>
+<pre class="bqn"><code>   r ← (7 •rand.Deal 7) ⋈¨ (7 •rand.Deal 7)
+⟨ ⟨ 1 1 ⟩ ⟨ 2 2 ⟩ ⟨ 6 5 ⟩ ⟨ 5 4 ⟩ ⟨ 4 0 ⟩ ⟨ 0 6 ⟩ ⟨ 3 3 ⟩ ⟩
+   (⍋    +´¨)⊸⊏ r # Sort  by sum
+⟨ ⟨ 1 1 ⟩ ⟨ 2 2 ⟩ ⟨ 4 0 ⟩ ⟨ 0 6 ⟩ ⟨ 3 3 ⟩ ⟨ 5 4 ⟩ ⟨ 6 5 ⟩ ⟩
+   (⍋   1⊸⊑¨)⊸⊏ r # Sort  by second
+⟨ ⟨ 4 0 ⟩ ⟨ 1 1 ⟩ ⟨ 2 2 ⟩ ⟨ 3 3 ⟩ ⟨ 5 4 ⟩ ⟨ 6 5 ⟩ ⟨ 0 6 ⟩ ⟩
+   (⊑∘⍋  +´¨)⊸⊑ r # First by sum
+⟨ 1 1 ⟩</code></pre>
+<pre class="bqn"><code>   (⊑∘⍋ ≠∘Cands⟜board¨)⊸⊑ Empty board # First empty cell by number of candidates
+⟨ 0 6 ⟩</code></pre>
+<p>We now just need to create a new board for every candidate, and recurse appropriately.</p>
+<pre class="bqn"><code>Solve0 ← { Rec 𝕩:
+  { 0≡𝕩? 0;      # Unsolvable
+    ⊑¬0∊⥊𝕩? 𝕩;   # No unfilled spots left -&gt; return
+    𝕊b: pt ← (⊑∘⍋ ≠∘Cands⟜b¨)⊸⊑ Empty b
+        0{0≢𝕩? 𝕩; Rec 𝕨⌾(pt⊸⊑)b}´pt Cands b
+  } Prop𝕩
+}</code></pre>
+<p>Voilà:</p>
+<pre class="bqn"><code>   Solve0 easy
+┌─
+╵ 3 8 1 7 2 4 6 9 5
+  6 5 9 3 1 8 7 2 4
+  7 4 2 6 9 5 3 1 8
+  8 1 7 4 6 2 5 3 9
+  4 2 6 5 3 9 8 7 1
+  5 9 3 8 7 1 4 6 2
+  1 7 4 2 5 6 9 8 3
+  2 6 5 9 8 3 1 4 7
+  9 3 8 1 4 7 2 5 6
+                    ┘
+   Solve0 board
+┌─
+╵ 6 4 2 1 3 9 7 5 8
+  9 3 1 7 8 5 2 6 4
+  5 8 7 2 4 6 1 9 3
+  4 7 6 9 2 3 5 8 1
+  8 1 5 6 7 4 9 3 2
+  3 2 9 5 1 8 6 4 7
+  2 6 3 8 9 1 4 7 5
+  7 5 4 3 6 2 8 1 9
+  1 9 8 4 5 7 3 2 6
+                    ┘</code></pre>
+<hr />
+<p>One last thing to add: the reference implementation sports a pretty-printing function that separates the grid into 3×3 chunks:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_board(board):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> board:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Unsolvable&quot;</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;-&quot;</span> <span class="op">*</span> <span class="dv">25</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, row <span class="kw">in</span> <span class="bu">enumerate</span>(board):</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="kw">and</span> i <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;-&quot;</span> <span class="op">*</span> <span class="dv">25</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;|&quot;</span>, end<span class="op">=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j, e <span class="kw">in</span> <span class="bu">enumerate</span>(row):</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> j <span class="kw">and</span> j <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">&quot;|&quot;</span>, end<span class="op">=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(e, end<span class="op">=</span><span class="st">&quot; &quot;</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;|&quot;</span>, end<span class="op">=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;&quot;</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;-&quot;</span> <span class="op">*</span> <span class="dv">25</span>)</span></code></pre></div>
+<p>Let’s write that as well, so we can more easily compare the results. I’ll use a slightly different approach for the implementation: in BQN it’s much easier to add the vertical bars to the already existing matrix we have, and then slice and dice it:</p>
+<pre class="bqn"><code>   board
+┌─
+╵ 6 0 2 1 3 0 0 0 0
+  0 0 0 0 0 0 2 0 4
+  0 0 0 0 0 0 0 9 0
+  0 7 0 0 2 0 0 8 0
+  0 0 0 6 7 0 0 3 0
+  3 0 9 0 0 0 6 0 0
+  0 0 3 0 0 0 0 0 0
+  0 0 0 0 6 0 8 1 0
+  1 9 0 0 0 7 0 0 0
+                    ┘
+   1 {(-𝕨)⌽˘'|'∾˘𝕨⌽˘𝕩} board # Insert a '|' at the given position
+┌─
+╵ 6 '|' 0 2 1 3 0 0 0 0
+  0 '|' 0 0 0 0 0 2 0 4
+  0 '|' 0 0 0 0 0 0 9 0
+  0 '|' 7 0 0 2 0 0 8 0
+  0 '|' 0 0 6 7 0 0 3 0
+  3 '|' 0 9 0 0 0 6 0 0
+  0 '|' 0 3 0 0 0 0 0 0
+  0 '|' 0 0 0 6 0 8 1 0
+  1 '|' 9 0 0 0 7 0 0 0
+                        ┘
+   seps ← (•Fmt¨board){(-𝕨)⌽˘'|'∾˘𝕨⌽˘𝕩}´3‿6‿9
+┌─
+╵ &quot;6&quot; &quot;0&quot; &quot;2&quot; '|' &quot;1&quot; &quot;3&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|'
+  &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;2&quot; &quot;0&quot; &quot;4&quot; '|'
+  &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;9&quot; &quot;0&quot; '|'
+  &quot;0&quot; &quot;7&quot; &quot;0&quot; '|' &quot;0&quot; &quot;2&quot; &quot;0&quot; '|' &quot;0&quot; &quot;8&quot; &quot;0&quot; '|'
+  &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;6&quot; &quot;7&quot; &quot;0&quot; '|' &quot;0&quot; &quot;3&quot; &quot;0&quot; '|'
+  &quot;3&quot; &quot;0&quot; &quot;9&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;6&quot; &quot;0&quot; &quot;0&quot; '|'
+  &quot;0&quot; &quot;0&quot; &quot;3&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|'
+  &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;6&quot; &quot;0&quot; '|' &quot;8&quot; &quot;1&quot; &quot;0&quot; '|'
+  &quot;1&quot; &quot;9&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;7&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|'
+                                                  ┘
+   3‿1⥊ (⌊3÷˜↕9) ⊔ seps      # Vertical slicing (transposed for easier display)
+┌─
+╵ ┌─
+  ╵ &quot;6&quot; &quot;0&quot; &quot;2&quot; '|' &quot;1&quot; &quot;3&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|'
+    &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;2&quot; &quot;0&quot; &quot;4&quot; '|'
+    &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;9&quot; &quot;0&quot; '|'
+                                                    ┘
+  ┌─
+  ╵ &quot;0&quot; &quot;7&quot; &quot;0&quot; '|' &quot;0&quot; &quot;2&quot; &quot;0&quot; '|' &quot;0&quot; &quot;8&quot; &quot;0&quot; '|'
+    &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;6&quot; &quot;7&quot; &quot;0&quot; '|' &quot;0&quot; &quot;3&quot; &quot;0&quot; '|'
+    &quot;3&quot; &quot;0&quot; &quot;9&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;6&quot; &quot;0&quot; &quot;0&quot; '|'
+                                                    ┘
+  ┌─
+  ╵ &quot;0&quot; &quot;0&quot; &quot;3&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|'
+    &quot;0&quot; &quot;0&quot; &quot;0&quot; '|' &quot;0&quot; &quot;6&quot; &quot;0&quot; '|' &quot;8&quot; &quot;1&quot; &quot;0&quot; '|'
+    &quot;1&quot; &quot;9&quot; &quot;0&quot; '|' &quot;0&quot; &quot;0&quot; &quot;7&quot; '|' &quot;0&quot; &quot;0&quot; &quot;0&quot; '|'
+                                                    ┘
+                                                      ┘</code></pre>
+<p>The rest is just a bit of additional printing of the horizontal bars:</p>
+<pre class="bqn"><code>PP ← { O←{𝕊·:•Out&quot;-------------------------&quot;} # Pretty-print board
+  {O@ ⋄ •Out∘∾˘ '|'∾˘ &quot; &quot;⊸∾¨𝕩}¨ (⌊3÷˜↕9) ⊔ (•Fmt¨𝕩){(-𝕨)⌽˘'|'∾˘𝕨⌽˘𝕩}´⟨3,6,9⟩ ⋄ O@
+}</code></pre>
+<pre class="bqn"><code>   PP board        ⋄ @
+-------------------------
+| 6 0 2 | 1 3 0 | 0 0 0 |
+| 0 0 0 | 0 0 0 | 2 0 4 |
+| 0 0 0 | 0 0 0 | 0 9 0 |
+-------------------------
+| 0 7 0 | 0 2 0 | 0 8 0 |
+| 0 0 0 | 6 7 0 | 0 3 0 |
+| 3 0 9 | 0 0 0 | 6 0 0 |
+-------------------------
+| 0 0 3 | 0 0 0 | 0 0 0 |
+| 0 0 0 | 0 6 0 | 8 1 0 |
+| 1 9 0 | 0 0 7 | 0 0 0 |
+-------------------------
+@
+   PP Solve0 board ⋄ @
+-------------------------
+| 6 4 2 | 1 3 9 | 7 5 8 |
+| 9 3 1 | 7 8 5 | 2 6 4 |
+| 5 8 7 | 2 4 6 | 1 9 3 |
+-------------------------
+| 4 7 6 | 9 2 3 | 5 8 1 |
+| 8 1 5 | 6 7 4 | 9 3 2 |
+| 3 2 9 | 5 1 8 | 6 4 7 |
+-------------------------
+| 2 6 3 | 8 9 1 | 4 7 5 |
+| 7 5 4 | 3 6 2 | 8 1 9 |
+| 1 9 8 | 4 5 7 | 3 2 6 |
+-------------------------
+@</code></pre>
+<p>Pretty.</p>
+<hr />
+<p>Here’s the full implementation as a single function, for convenience:</p>
+<pre class="bqn"><code>Solve0 ← {
+  nbs ← ⥊¨(2⥊&lt;⌊3÷˜↕9)⊔↕9‿9                                        # 3×3 neighbours grid
+  Cands ← { i‿j𝕊b: (↕10) (¬∘∊/⊣) (j⊏⍉b)∾(i⊏b)∾(b⊑˜nbs⊑˜⌊3÷˜i‿j) } # Candidates
+  Empty ← {(0=𝕩)/○⥊(↕≢𝕩)}
+  Prop  ← { c←1 ⋄ {c↩0 ⋄ 𝕩{𝕩≡0?0; ix𝕊b: 2⊸⌊∘≠◶⟨0, {c↩1⋄(⊑𝕩)⌾(ix⊸⊑)b}, b⟩ ix Cands b}´Empty 𝕩}•_while_{𝕊·:c} 𝕩 }
+  { Rec 𝕩:
+    { 0≡𝕩? 0;  ⊑¬0∊⥊𝕩? 𝕩;
+      𝕊b: pt←(⊑∘⍋ ≠∘Cands⟜b¨)⊸⊑ Empty b ⋄ 0{0≢𝕩? 𝕩; Rec 𝕨⌾(pt⊸⊑)b}´pt Cands b
+    } Prop𝕩
+  }𝕩
+}</code></pre>
+<p>It’s really fast, actually. We can add a bit of benchmarking code to the bottom of the file, which just solves the board 50 times and then prints some stats:<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<pre class="bqn"><code>board ← [ 6‿0‿2‿1‿3‿0‿0‿0‿0
+        , 0‿0‿0‿0‿0‿0‿2‿0‿4
+        , 0‿0‿0‿0‿0‿0‿0‿9‿0
+        , 0‿7‿0‿0‿2‿0‿0‿8‿0
+        , 0‿0‿0‿6‿7‿0‿0‿3‿0
+        , 3‿0‿9‿0‿0‿0‿6‿0‿0
+        , 0‿0‿3‿0‿0‿0‿0‿0‿0
+        , 0‿0‿0‿0‿6‿0‿8‿1‿0
+        , 1‿9‿0‿0‿0‿7‿0‿0‿0 ]
+then←•MonoTime@ ⋄ sol←board{Solve0𝕨}⍟50@ ⋄ now←•MonoTime@
+•Out &quot;Took &quot; ∾ (6↑•Fmt d) ∾ &quot;s/50, avg &quot; ∾ (6↑•Fmt 50÷˜d←now-then) ∾ &quot;s&quot;
+PP sol</code></pre>
+<p>With these in place, I get</p>
+<pre class="console"><code>  $ cbqn sudoku.bqn
+Took 0.0534s/50, avg 0.0010s
+-------------------------
+| 6 4 2 | 1 3 9 | 7 5 8 |
+| 9 3 1 | 7 8 5 | 2 6 4 |
+| 5 8 7 | 2 4 6 | 1 9 3 |
+-------------------------
+| 4 7 6 | 9 2 3 | 5 8 1 |
+| 8 1 5 | 6 7 4 | 9 3 2 |
+| 3 2 9 | 5 1 8 | 6 4 7 |
+-------------------------
+| 2 6 3 | 8 9 1 | 4 7 5 |
+| 7 5 4 | 3 6 2 | 8 1 9 |
+| 1 9 8 | 4 5 7 | 3 2 6 |
+-------------------------</code></pre>
+<p>For the reference Python implementation, we can do the same thing:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># …</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Bottom of the file</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>board <span class="op">=</span> [[<span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">4</span>],</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">0</span>],</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">0</span>],</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>],</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>         [<span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]]</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>then <span class="op">=</span> time.time()</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> solve(board)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>now <span class="op">=</span> time.time()</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>now <span class="op">-</span> then<span class="sc">:.4f}</span><span class="ss">s/50, avg </span><span class="sc">{</span>(now <span class="op">-</span> then) <span class="op">/</span> <span class="dv">50</span><span class="sc">:.4f}</span><span class="ss">s&quot;</span>)</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>print_board(result)</span></code></pre></div>
+<p>This results in:</p>
+<pre class="console"><code>  $ python sudoku.py
+0.4186s/50, avg 0.0084s
+-------------------------
+| 6 4 2 | 1 3 9 | 7 5 8 |
+| 9 3 1 | 7 8 5 | 2 6 4 |
+| 5 8 7 | 2 4 6 | 1 9 3 |
+-------------------------
+| 4 7 6 | 9 2 3 | 5 8 1 |
+| 8 1 5 | 6 7 4 | 9 3 2 |
+| 3 2 9 | 5 1 8 | 6 4 7 |
+-------------------------
+| 2 6 3 | 8 9 1 | 4 7 5 |
+| 7 5 4 | 3 6 2 | 8 1 9 |
+| 1 9 8 | 4 5 7 | 3 2 6 |
+-------------------------</code></pre>
+<h2 id="version-1">Version 1</h2>
+<p>So, where do we go from here? Let’s do something crazy and optimise the algorithm not for speed, but for beauty—and “array-ness”, whatever that means—instead. I feel like that especially in this day and age, where everyone is so focused on only caring about results, no matter the cost, one needs more beautiful code in the world.</p>
+<p>The most straightforward modification we can do is to forego the manual recursion, and instead implement the DFS as a list of boards. Appending a new board to the front corresponds to recursing down another step. The <code>Cands</code> function doesn’t need change for this at all:</p>
+<pre class="bqn"><code>nbs ← ⥊¨(2⥊&lt;⌊3÷˜↕9)⊔↕9‿9                                        # 3×3 neighbours grid
+Cands ← { i‿j𝕊b: (↕10) (¬∘∊/⊣) (j⊏⍉b)∾(i⊏b)∾(b⊑˜nbs⊑˜⌊3÷˜i‿j) } # Candidates</code></pre>
+<pre class="bqn"><code>   bs ← {𝕩⌾(0‿1⊸⊑)board}¨ 0‿1 Cands board # Index 0‿1 changes
+┌─
+· ┌─                    ┌─                    ┌─
+  ╵ 6 4 2 1 3 0 0 0 0   ╵ 6 5 2 1 3 0 0 0 0   ╵ 6 8 2 1 3 0 0 0 0
+    0 0 0 0 0 0 2 0 4     0 0 0 0 0 0 2 0 4     0 0 0 0 0 0 2 0 4
+    0 0 0 0 0 0 0 9 0     0 0 0 0 0 0 0 9 0     0 0 0 0 0 0 0 9 0
+    0 7 0 0 2 0 0 8 0     0 7 0 0 2 0 0 8 0     0 7 0 0 2 0 0 8 0
+    0 0 0 6 7 0 0 3 0     0 0 0 6 7 0 0 3 0     0 0 0 6 7 0 0 3 0
+    3 0 9 0 0 0 6 0 0     3 0 9 0 0 0 6 0 0     3 0 9 0 0 0 6 0 0
+    0 0 3 0 0 0 0 0 0     0 0 3 0 0 0 0 0 0     0 0 3 0 0 0 0 0 0
+    0 0 0 0 6 0 8 1 0     0 0 0 0 6 0 8 1 0     0 0 0 0 6 0 8 1 0
+    1 9 0 0 0 7 0 0 0     1 9 0 0 0 7 0 0 0     1 9 0 0 0 7 0 0 0
+                      ┘                     ┘                     ┘
+                                                                    ┘
+   6↑ ∾{𝕩⌾(0‿1⊸⊑)board}¨¨ 1‿0⊸Cands¨ bs   # recursion
+┌─
+· ┌─                    ┌─                    ┌─                    ┌─                    ┌─                    ┌─
+  ╵ 6 5 2 1 3 0 0 0 0   ╵ 6 7 2 1 3 0 0 0 0   ╵ 6 8 2 1 3 0 0 0 0   ╵ 6 9 2 1 3 0 0 0 0   ╵ 6 7 2 1 3 0 0 0 0   ╵ 6 8 2 1 3 0 0 0 0
+    0 0 0 0 0 0 2 0 4     0 0 0 0 0 0 2 0 4     0 0 0 0 0 0 2 0 4     0 0 0 0 0 0 2 0 4     0 0 0 0 0 0 2 0 4     0 0 0 0 0 0 2 0 4
+    0 0 0 0 0 0 0 9 0     0 0 0 0 0 0 0 9 0     0 0 0 0 0 0 0 9 0     0 0 0 0 0 0 0 9 0     0 0 0 0 0 0 0 9 0     0 0 0 0 0 0 0 9 0
+    0 7 0 0 2 0 0 8 0     0 7 0 0 2 0 0 8 0     0 7 0 0 2 0 0 8 0     0 7 0 0 2 0 0 8 0     0 7 0 0 2 0 0 8 0     0 7 0 0 2 0 0 8 0
+    0 0 0 6 7 0 0 3 0     0 0 0 6 7 0 0 3 0     0 0 0 6 7 0 0 3 0     0 0 0 6 7 0 0 3 0     0 0 0 6 7 0 0 3 0     0 0 0 6 7 0 0 3 0
+    3 0 9 0 0 0 6 0 0     3 0 9 0 0 0 6 0 0     3 0 9 0 0 0 6 0 0     3 0 9 0 0 0 6 0 0     3 0 9 0 0 0 6 0 0     3 0 9 0 0 0 6 0 0
+    0 0 3 0 0 0 0 0 0     0 0 3 0 0 0 0 0 0     0 0 3 0 0 0 0 0 0     0 0 3 0 0 0 0 0 0     0 0 3 0 0 0 0 0 0     0 0 3 0 0 0 0 0 0
+    0 0 0 0 6 0 8 1 0     0 0 0 0 6 0 8 1 0     0 0 0 0 6 0 8 1 0     0 0 0 0 6 0 8 1 0     0 0 0 0 6 0 8 1 0     0 0 0 0 6 0 8 1 0
+    1 9 0 0 0 7 0 0 0     1 9 0 0 0 7 0 0 0     1 9 0 0 0 7 0 0 0     1 9 0 0 0 7 0 0 0     1 9 0 0 0 7 0 0 0     1 9 0 0 0 7 0 0 0
+                      ┘                     ┘                     ┘                     ┘                     ┘                     ┘
+                                                                                                                                      ┘</code></pre>
+<p>That’s basically it: the rest of the function just comprises <code>Empty</code>, which we’ve seen above, and the sort-by idiom to initially sort the empty cells by the number of their candidates.</p>
+<pre class="bqn"><code>Solve1 ← { 𝕊b:
+  nbs ← ⥊¨(2⥊&lt;⌊3÷˜↕9)⊔↕9‿9                                        # 3×3 neighbours grid
+  Cands ← { i‿j𝕊b: (↕10) (¬∘∊/⊣) (j⊏⍉b)∾(i⊏b)∾(b⊑˜nbs⊑˜⌊3÷˜i‿j) } # Candidates
+  Place ← { ix𝕊b: {𝕩⌾(ix⊸⊑)b}¨ix Cands b }
+  ⊑⟨b⟩{∾𝕨⊸Place¨𝕩}´ (⍒ ≠∘Cands⟜b⊸⋈¨)⊸⊏ (0=b)/○⥊(↕≢b)
+}</code></pre>
+<pre class="bqn"><code>   (Solve0 board) ≡ Solve1 board
+1</code></pre>
+<p>To more easily test new solutions, we can augment the solution file with a tiny commandline interface:</p>
+<pre class="bqn"><code># … code …
+slv ← (•ParseFloat⊑•args)⊑⟨Solve0,Solve1⟩
+then←•MonoTime@ ⋄ sol←board{Slv𝕨}⍟50@ ⋄ now←•MonoTime@
+•Out &quot;Took &quot; ∾ (6↑•Fmt d) ∾ &quot;s/50, avg &quot; ∾ (6↑•Fmt 50÷˜d←now-then) ∾ &quot;s&quot;
+PP sol</code></pre>
+<pre class="console"><code>$ cbqn sudoku.bqn 1
+Took 5.2216s/50, avg 0.1044s
+-------------------------
+| 6 4 2 | 1 3 9 | 7 5 8 |
+| 9 3 1 | 7 8 5 | 2 6 4 |
+| 5 8 7 | 2 4 6 | 1 9 3 |
+-------------------------
+| 4 7 6 | 9 2 3 | 5 8 1 |
+| 8 1 5 | 6 7 4 | 9 3 2 |
+| 3 2 9 | 5 1 8 | 6 4 7 |
+-------------------------
+| 2 6 3 | 8 9 1 | 4 7 5 |
+| 7 5 4 | 3 6 2 | 8 1 9 |
+| 1 9 8 | 4 5 7 | 3 2 6 |
+-------------------------</code></pre>
+<p>It’s slower by a factor of 100! This should not be too surprising—there is nothing like the early pruning of <code>Prop</code> in this solution, so the list of possible boards to look at becomes quite long indeed.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Though, technically, this solution is a bit more general: we don’t exit early, so instead of the first one we happened to stumble across, <code>Solve1</code> outputs all solutions (although of course a good Sudoku puzzle should ideally only have a single solution.)</p>
+<h2 id="version-2">Version 2</h2>
+<p>The obvious next step is to eliminate the coordinates completely, and come up with an actual array-oriented solution to the problem. One way to do this is to utilise boolean masks, which are used for a lot of things around these parts, from filtering to control flow.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>The algorithm I’ll present here is not my doing in any way: it seems to be attributed to Arthur Whitney; see the respective <a href="https://dfns.dyalog.com/n_sudoku.htm">Dyalog Workspace</a>, or the famous(?) <a href="https://www.youtube.com/watch?v=DmT80OseAGs">YouTube video</a> for more.</p>
+<p>To start, let’s nicely partition the Sudoku grid into its 3×3 sub-components:</p>
+<pre class="bqn"><code>   3 / 3‿3⥊↕9
+┌─
+╵ 0 1 2
+  0 1 2
+  0 1 2
+  3 4 5
+  3 4 5
+  3 4 5
+  6 7 8
+  6 7 8
+  6 7 8
+        ┘
+   3 /˘ 3 / 3‿3⥊↕9
+┌─
+╵ 0 0 0 1 1 1 2 2 2
+  0 0 0 1 1 1 2 2 2
+  0 0 0 1 1 1 2 2 2
+  3 3 3 4 4 4 5 5 5
+  3 3 3 4 4 4 5 5 5
+  3 3 3 4 4 4 5 5 5
+  6 6 6 7 7 7 8 8 8
+  6 6 6 7 7 7 8 8 8
+  6 6 6 7 7 7 8 8 8
+                    ┘</code></pre>
+<p>Now we can associate each cell with its row and column index, as well as its index in the 3×3 grid above:</p>
+<pre class="bqn"><code>   ↕9‿9
+┌─
+╵ ⟨ 0 0 ⟩ ⟨ 0 1 ⟩ ⟨ 0 2 ⟩ ⟨ 0 3 ⟩ ⟨ 0 4 ⟩ ⟨ 0 5 ⟩ ⟨ 0 6 ⟩ ⟨ 0 7 ⟩ ⟨ 0 8 ⟩
+  ⟨ 1 0 ⟩ ⟨ 1 1 ⟩ ⟨ 1 2 ⟩ ⟨ 1 3 ⟩ ⟨ 1 4 ⟩ ⟨ 1 5 ⟩ ⟨ 1 6 ⟩ ⟨ 1 7 ⟩ ⟨ 1 8 ⟩
+  ⟨ 2 0 ⟩ ⟨ 2 1 ⟩ ⟨ 2 2 ⟩ ⟨ 2 3 ⟩ ⟨ 2 4 ⟩ ⟨ 2 5 ⟩ ⟨ 2 6 ⟩ ⟨ 2 7 ⟩ ⟨ 2 8 ⟩
+  ⟨ 3 0 ⟩ ⟨ 3 1 ⟩ ⟨ 3 2 ⟩ ⟨ 3 3 ⟩ ⟨ 3 4 ⟩ ⟨ 3 5 ⟩ ⟨ 3 6 ⟩ ⟨ 3 7 ⟩ ⟨ 3 8 ⟩
+  ⟨ 4 0 ⟩ ⟨ 4 1 ⟩ ⟨ 4 2 ⟩ ⟨ 4 3 ⟩ ⟨ 4 4 ⟩ ⟨ 4 5 ⟩ ⟨ 4 6 ⟩ ⟨ 4 7 ⟩ ⟨ 4 8 ⟩
+  ⟨ 5 0 ⟩ ⟨ 5 1 ⟩ ⟨ 5 2 ⟩ ⟨ 5 3 ⟩ ⟨ 5 4 ⟩ ⟨ 5 5 ⟩ ⟨ 5 6 ⟩ ⟨ 5 7 ⟩ ⟨ 5 8 ⟩
+  ⟨ 6 0 ⟩ ⟨ 6 1 ⟩ ⟨ 6 2 ⟩ ⟨ 6 3 ⟩ ⟨ 6 4 ⟩ ⟨ 6 5 ⟩ ⟨ 6 6 ⟩ ⟨ 6 7 ⟩ ⟨ 6 8 ⟩
+  ⟨ 7 0 ⟩ ⟨ 7 1 ⟩ ⟨ 7 2 ⟩ ⟨ 7 3 ⟩ ⟨ 7 4 ⟩ ⟨ 7 5 ⟩ ⟨ 7 6 ⟩ ⟨ 7 7 ⟩ ⟨ 7 8 ⟩
+  ⟨ 8 0 ⟩ ⟨ 8 1 ⟩ ⟨ 8 2 ⟩ ⟨ 8 3 ⟩ ⟨ 8 4 ⟩ ⟨ 8 5 ⟩ ⟨ 8 6 ⟩ ⟨ 8 7 ⟩ ⟨ 8 8 ⟩
+                                                                          ┘
+   rcg ← (↕9‿9) ∾¨ 3/˘3/3‿3⥊↕9 # row-column-grid
+┌─
+╵ ⟨ 0 0 0 ⟩ ⟨ 0 1 0 ⟩ ⟨ 0 2 0 ⟩ ⟨ 0 3 1 ⟩ ⟨ 0 4 1 ⟩ ⟨ 0 5 1 ⟩ ⟨ 0 6 2 ⟩ ⟨ 0 7 2 ⟩ ⟨ 0 8 2 ⟩
+  ⟨ 1 0 0 ⟩ ⟨ 1 1 0 ⟩ ⟨ 1 2 0 ⟩ ⟨ 1 3 1 ⟩ ⟨ 1 4 1 ⟩ ⟨ 1 5 1 ⟩ ⟨ 1 6 2 ⟩ ⟨ 1 7 2 ⟩ ⟨ 1 8 2 ⟩
+  ⟨ 2 0 0 ⟩ ⟨ 2 1 0 ⟩ ⟨ 2 2 0 ⟩ ⟨ 2 3 1 ⟩ ⟨ 2 4 1 ⟩ ⟨ 2 5 1 ⟩ ⟨ 2 6 2 ⟩ ⟨ 2 7 2 ⟩ ⟨ 2 8 2 ⟩
+  ⟨ 3 0 3 ⟩ ⟨ 3 1 3 ⟩ ⟨ 3 2 3 ⟩ ⟨ 3 3 4 ⟩ ⟨ 3 4 4 ⟩ ⟨ 3 5 4 ⟩ ⟨ 3 6 5 ⟩ ⟨ 3 7 5 ⟩ ⟨ 3 8 5 ⟩
+  ⟨ 4 0 3 ⟩ ⟨ 4 1 3 ⟩ ⟨ 4 2 3 ⟩ ⟨ 4 3 4 ⟩ ⟨ 4 4 4 ⟩ ⟨ 4 5 4 ⟩ ⟨ 4 6 5 ⟩ ⟨ 4 7 5 ⟩ ⟨ 4 8 5 ⟩
+  ⟨ 5 0 3 ⟩ ⟨ 5 1 3 ⟩ ⟨ 5 2 3 ⟩ ⟨ 5 3 4 ⟩ ⟨ 5 4 4 ⟩ ⟨ 5 5 4 ⟩ ⟨ 5 6 5 ⟩ ⟨ 5 7 5 ⟩ ⟨ 5 8 5 ⟩
+  ⟨ 6 0 6 ⟩ ⟨ 6 1 6 ⟩ ⟨ 6 2 6 ⟩ ⟨ 6 3 7 ⟩ ⟨ 6 4 7 ⟩ ⟨ 6 5 7 ⟩ ⟨ 6 6 8 ⟩ ⟨ 6 7 8 ⟩ ⟨ 6 8 8 ⟩
+  ⟨ 7 0 6 ⟩ ⟨ 7 1 6 ⟩ ⟨ 7 2 6 ⟩ ⟨ 7 3 7 ⟩ ⟨ 7 4 7 ⟩ ⟨ 7 5 7 ⟩ ⟨ 7 6 8 ⟩ ⟨ 7 7 8 ⟩ ⟨ 7 8 8 ⟩
+  ⟨ 8 0 6 ⟩ ⟨ 8 1 6 ⟩ ⟨ 8 2 6 ⟩ ⟨ 8 3 7 ⟩ ⟨ 8 4 7 ⟩ ⟨ 8 5 7 ⟩ ⟨ 8 6 8 ⟩ ⟨ 8 7 8 ⟩ ⟨ 8 8 8 ⟩
+                                                                                            ┘
+   5‿3⊑rcg # Fifth row, third column, and a four in the grid representation
+⟨ 5 3 4 ⟩</code></pre>
+<p>This is the part where a bit of magic happens. We create an <em>equal</em> <em>table</em> of <code>rcg</code> with itself—this takes each element and piecewise compares it to all of <code>rcg</code>. This is cool, because we can now very easily create a mask for a specific cell. Above, we’ve already seen the stencil for the index <code>1‿2</code> in <code>board</code>:</p>
+<pre><code>┌─
+╵ 6 0 2 · · · · · ·
+  0 0 0 0 0 0 2 0 4
+  0 0 0 · · · · · ·
+  · · 0 · · · · · ·
+  · · 0 · · · · · ·
+  · · 9 · · · · · ·
+  · · 3 · · · · · ·
+  · · 0 · · · · · ·
+  · · 0 · · · · · ·
+                    ┘</code></pre>
+<p>We can coax a mask out of <code>rcg</code> by giving it the right row and column numbers (1 and 2), as well as the correct grid number 0:</p>
+<pre class="bqn"><code>   0‿2‿3 =  1‿2‿0    # Do these kinds of comparisons…
+⟨ 0 1 0 ⟩
+   rcg   = &lt;1‿2‿0    # …for all of rcg
+┌─
+╵ ⟨ 0 0 1 ⟩ ⟨ 0 0 1 ⟩ ⟨ 0 1 1 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+  ⟨ 1 0 1 ⟩ ⟨ 1 0 1 ⟩ ⟨ 1 1 1 ⟩ ⟨ 1 0 0 ⟩ ⟨ 1 0 0 ⟩ ⟨ 1 0 0 ⟩ ⟨ 1 0 0 ⟩ ⟨ 1 0 0 ⟩ ⟨ 1 0 0 ⟩
+  ⟨ 0 0 1 ⟩ ⟨ 0 0 1 ⟩ ⟨ 0 1 1 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+  ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 1 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+  ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 1 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+  ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 1 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+  ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 1 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+  ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 1 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+  ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 1 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩ ⟨ 0 0 0 ⟩
+                                                                                            ┘
+   (⊑1⊸∊)¨rcg=&lt;1‿2‿0 # At least one of row/col/grid should match
+┌─
+╵ 1 1 1 0 0 0 0 0 0
+  1 1 1 1 1 1 1 1 1
+  1 1 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+                    ┘</code></pre>
+<p>As said before, the <em>equal</em> <em>table</em> just does this for every element in <code>rcg</code> simultaneously.</p>
+<pre class="bqn"><code>   ≢rcg
+⟨ 9 9 ⟩
+   ≢(⊑1⊸∊)¨=⌜˜rcg
+⟨ 9 9 9 9 ⟩
+   4↑ &lt;˘⊏(⊑1⊸∊)¨=⌜˜rcg # an excerpt
+┌─
+· ┌─                    ┌─                    ┌─                    ┌─
+  ╵ 1 1 1 1 1 1 1 1 1   ╵ 1 1 1 1 1 1 1 1 1   ╵ 1 1 1 1 1 1 1 1 1   ╵ 1 1 1 1 1 1 1 1 1
+    1 1 1 0 0 0 0 0 0     1 1 1 0 0 0 0 0 0     1 1 1 0 0 0 0 0 0     0 0 0 1 1 1 0 0 0
+    1 1 1 0 0 0 0 0 0     1 1 1 0 0 0 0 0 0     1 1 1 0 0 0 0 0 0     0 0 0 1 1 1 0 0 0
+    1 0 0 0 0 0 0 0 0     0 1 0 0 0 0 0 0 0     0 0 1 0 0 0 0 0 0     0 0 0 1 0 0 0 0 0
+    1 0 0 0 0 0 0 0 0     0 1 0 0 0 0 0 0 0     0 0 1 0 0 0 0 0 0     0 0 0 1 0 0 0 0 0
+    1 0 0 0 0 0 0 0 0     0 1 0 0 0 0 0 0 0     0 0 1 0 0 0 0 0 0     0 0 0 1 0 0 0 0 0
+    1 0 0 0 0 0 0 0 0     0 1 0 0 0 0 0 0 0     0 0 1 0 0 0 0 0 0     0 0 0 1 0 0 0 0 0
+    1 0 0 0 0 0 0 0 0     0 1 0 0 0 0 0 0 0     0 0 1 0 0 0 0 0 0     0 0 0 1 0 0 0 0 0
+    1 0 0 0 0 0 0 0 0     0 1 0 0 0 0 0 0 0     0 0 1 0 0 0 0 0 0     0 0 0 1 0 0 0 0 0
+                      ┘                     ┘                     ┘                     ┘
+                                                                                          ┘</code></pre>
+<p>This is quite unwieldy in this 9×9×9×9 representation, but indexing into it already works: <code>j⊏i⊏table</code> returns the correct mask for index <code>i‿j</code>:</p>
+<pre class="bqn"><code>   2⊏1⊏(⊑1⊸∊)¨=⌜˜rcg # Mask for 1‿2
+┌─
+╵ 1 1 1 0 0 0 0 0 0
+  1 1 1 1 1 1 1 1 1
+  1 1 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+                    ┘
+   1⊏2⊏(⊑1⊸∊)¨=⌜˜rcg # Mask for 2‿1
+┌─
+╵ 1 1 1 0 0 0 0 0 0
+  1 1 1 0 0 0 0 0 0
+  1 1 1 1 1 1 1 1 1
+  0 1 0 0 0 0 0 0 0
+  0 1 0 0 0 0 0 0 0
+  0 1 0 0 0 0 0 0 0
+  0 1 0 0 0 0 0 0 0
+  0 1 0 0 0 0 0 0 0
+  0 1 0 0 0 0 0 0 0
+                    ┘</code></pre>
+<p>We can make this behave nicer by enclosing all of those individual masks, so they are treated as scalars instead of arrays.</p>
+<pre class="bqn"><code>   ≢ &lt;⎉2 (⊑1⊸∊)¨=⌜˜rcg     # Enclose rank 2 subarrays
+⟨ 9 9 ⟩
+   1‿2 ⊑ &lt;⎉2 (⊑1⊸∊)¨=⌜˜rcg # Normal indexing now
+┌─
+╵ 1 1 1 0 0 0 0 0 0
+  1 1 1 1 1 1 1 1 1
+  1 1 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+  0 0 1 0 0 0 0 0 0
+                    ┘</code></pre>
+<p>Putting everything together, our definition for the masks is</p>
+<pre class="bqn"><code>ms ← &lt;⎉2{⊑1∊𝕩}¨=⌜˜(↕9‿9)∾¨3/˘3/3‿3⥊↕9 # masks</code></pre>
+<p>The candidates function now needs to be adjusted a little bit, in that we can simply multiply the board by the mask to get the numbers we’re interested in.</p>
+<pre class="bqn"><code>Cands ← { (↕10) (¬∘∊/⊣) ⥊ 𝕩×𝕨⊑ms } # Index 𝕨 in board 𝕩</code></pre>
+<pre class="bqn"><code>   board ∾○&lt; 1‿2⊑ms
+┌─
+· ┌─                    ┌─
+  ╵ 6 0 2 1 3 0 0 0 0   ╵ 1 1 1 0 0 0 0 0 0
+    0 0 0 0 0 0 2 0 4     1 1 1 1 1 1 1 1 1
+    0 0 0 0 0 0 0 9 0     1 1 1 0 0 0 0 0 0
+    0 7 0 0 2 0 0 8 0     0 0 1 0 0 0 0 0 0
+    0 0 0 6 7 0 0 3 0     0 0 1 0 0 0 0 0 0
+    3 0 9 0 0 0 6 0 0     0 0 1 0 0 0 0 0 0
+    0 0 3 0 0 0 0 0 0     0 0 1 0 0 0 0 0 0
+    0 0 0 0 6 0 8 1 0     0 0 1 0 0 0 0 0 0
+    1 9 0 0 0 7 0 0 0     0 0 1 0 0 0 0 0 0
+                      ┘                     ┘
+                                              ┘
+   board×1‿2⊑ms
+┌─
+╵ 6 0 2 0 0 0 0 0 0
+  0 0 0 0 0 0 2 0 4
+  0 0 0 0 0 0 0 0 0
+  0 0 0 0 0 0 0 0 0
+  0 0 0 0 0 0 0 0 0
+  0 0 9 0 0 0 0 0 0
+  0 0 3 0 0 0 0 0 0
+  0 0 0 0 0 0 0 0 0
+  0 0 0 0 0 0 0 0 0
+                    ┘
+   ⍷⥊board×1‿2⊑ms
+⟨ 6 0 2 4 9 3 ⟩
+   1‿2 Cands board
+⟨ 1 5 7 8 ⟩</code></pre>
+<p>The <code>Place</code> function can be adopted verbatim from <code>Solve1</code> (it’s even inlined in the code below, as it’s only used once), and the rest is exactly what we’ve seen before: get all empty cells, sort them by the number of their candidates, fold over that list, and we’re done.</p>
+<pre class="bqn"><code>Solve2 ← {
+  ms ← &lt;⎉⟨2⟩{⊑1∊𝕩}¨=⌜˜(↕9‿9)∾¨3/˘3/3‿3⥊↕9 # masks
+  Cands ← { i𝕊b: (↕10) (¬∘∊/⊣) ⥊b×i⊑ms }
+  ⊑ ⟨𝕩⟩{i𝕊bs: ∾{𝕊b:{𝕩⌾(i⊸⊑)b}¨i Cands b}¨bs}´ (⍒ ≠∘Cands⟜𝕩⊸⋈¨)⊸⊏ (0=𝕩)/○⥊(↕≢𝕩)
+}</code></pre>
+<pre class="bqn"><code>   ∧´≡⌜⟨Solve0, Solve1, Solve2⟩{𝕎𝕩}¨&lt;board # all equal
+1</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>It’s not the same algorithm, so a comparison is perhaps a bit difficult, but looking at the two versions side-by-side I think we certainly improved upon the aesthetics a whole lot!</p>
+<pre class="bqn"><code>Solve0 ← {
+  nbs ← ⥊¨(2⥊&lt;⌊3÷˜↕9)⊔↕9‿9
+  Cands ← { i‿j𝕊b: (↕10) (¬∘∊/⊣) (j⊏⍉b)∾(i⊏b)∾(b⊑˜nbs⊑˜⌊3÷˜i‿j) }
+  Empty ← {(0=𝕩)/○⥊(↕≢𝕩)}
+  Prop  ← { c←1 ⋄ {c↩0 ⋄ 𝕩{𝕩≡0?0; ix𝕊b: 2⊸⌊∘≠◶⟨0, {c↩1⋄(⊑𝕩)⌾(ix⊸⊑)b}, b⟩ ix Cands b}´Empty 𝕩}•_while_{𝕊·:c} 𝕩 }
+  { Rec 𝕩:
+    { 0≡𝕩? 0;  ⊑¬0∊⥊𝕩? 𝕩;
+      𝕊b: pt←(⊑∘⍋ ≠∘Cands⟜b¨)⊸⊑ Empty b ⋄ 0{0≢𝕩? 𝕩; Rec 𝕨⌾(pt⊸⊑)b}´pt Cands b
+    } Prop𝕩
+  }𝕩
+}</code></pre>
+<pre class="bqn"><code>Solve2 ← { 𝕊b:
+  ms ← &lt;⎉2{⊑1∊𝕩}¨=⌜˜(↕9‿9)∾¨3/˘3/3‿3⥊↕9
+  Cands ← { ix𝕊b: (↕10) (¬∘∊/⊣) ⥊b×ix⊑ms }
+  Place ← { ix𝕊b: {𝕩⌾(ix⊸⊑)b}¨ix Cands b }
+  ⊑⟨b⟩{∾𝕨⊸Place¨𝕩}´ (⍒ ≠∘Cands⟜b⊸⋈¨)⊸⊏ (0=b)/○⥊(↕≢b)
+}</code></pre>
+<p>Based on some rough tests, it’s only about 50× slower—but a small price to pay for beauty.</p>
+<hr />
+<p>In case you want to play around with these functions, I’ve created a <a href="https://codeberg.org/slotThe/sudoku">repository</a> on Codeberg.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Don’t be intimidated by the number of words on this one, btw; most of those are just matrices and long tuples of coordinates.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I’m still <em>so</em> excited about this language—it’s just so cute! I mean, just look at this quine and tell me you don’t feel <em>something</em></p>
+<pre class="bqn"><code>   (•Out∾⟜&quot; &quot;∾•Fmt) &quot;(•Out∾⟜&quot;&quot; &quot;&quot;∾•Fmt)&quot;
+(•Out∾⟜&quot; &quot;∾•Fmt) &quot;(•Out∾⟜&quot;&quot; &quot;&quot;∾•Fmt)&quot;</code></pre>
+<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn3"><p>In fact, that’s how this post was written! But more about that in the future, perhaps.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>In these kinds of “REPL” code blocks, input is indented by three spaces, and output is flush to the left.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Note that the <code>3↑¨</code> appears <em>after</em> the definition of <code>nbs</code>; it’s basically only used to not have the code block be unnecessarily long.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>This is using <a href="https://github.com/dzaima/CBQN">CBQN</a>, commit <a href="https://github.com/dzaima/CBQN/commit/3bf115731416327cce0c0ef70e2898efdb9dfc16">3bf11573</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Roughly 16’000 elements, from a quick check. This is against around 20 recursion steps for <code>Solve0</code>. Go figure.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Well, maybe technically that’s the same thing, only dressed in different clothing.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>DUCK</title>
     <link href="https://tony-zorman.com/posts/DUCK.html" />
     <id>https://tony-zorman.com/posts/DUCK.html</id>
