@@ -3,6 +3,7 @@ title: Keyboardio Atreus Review
 date: 2023-05-06
 last-modified: 2023-06-17
 tags: hardware
+og-description: Daily-driving a 44-key split board is fun. Let me tell you about it.
 ---
 
 And now for something completely different—hardware.

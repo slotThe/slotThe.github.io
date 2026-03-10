@@ -3,6 +3,7 @@ title: Writing a JSON Parser in BQN
 date: 2025-10-08
 last-modified: 2025-10-18
 tags: BQN, array-lang
+og-description: Writing a JSON parser in BQN in 24 lines of code.
 ---
 
 At least, for some vague definition of JSON.<!--more-->

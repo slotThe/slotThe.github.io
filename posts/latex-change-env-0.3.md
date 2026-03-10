@@ -1,7 +1,9 @@
 ---
 title: "Announcing: latex-change-env Version 0.3"
 date: 2023-02-19
+last-modified: 2023-06-03
 tags: emacs
+og-description: Adds environment deletion, display maths toggling, label editing, and inline maths support.
 ---
 
 I've just released version 0.3 of `latex-change-env`, featuring some

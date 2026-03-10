@@ -3,6 +3,7 @@ title: "Announcing: rq Version 0.1.0"
 date: 2024-03-23
 last-modified: 2024-05-01
 tags: rust
+og-description: A small jq-inspired functional language for manipulating JSON, written in Rust.
 ---
 
 I've just released version 0.1.0 of [`rq`](https://github.com/slotThe/rq),[^12]

@@ -1,8 +1,10 @@
 ---
 title: Integrating Zsh's History Into Eshell
 date: 2023-11-27
+last-modified: 2023-11-27
 tags: emacs
 no-toc: true
+og-description: Decoding zsh's metafied history format so eshell can use it without corruption.
 ---
 
 I use eshell as my main shell.

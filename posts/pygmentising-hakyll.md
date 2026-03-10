@@ -3,6 +3,7 @@ title: Pygmentising Hakyll's Syntax Highlighting
 date: 2023-01-21
 last-modified: 2025-01-05
 tags: haskell, hakyll
+og-description: Replacing pandoc's skylighting with pygments (or anything else).
 ---
 
 By default, Hakyll uses pandoc to generate syntax highlighting for all

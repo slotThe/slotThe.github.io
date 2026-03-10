@@ -1,7 +1,9 @@
 ---
 title: "XMonad Module Showcase: X.A.Search"
 date: 2023-03-19
+last-modified: 2023-07-12
 tags: haskell, xmonad
+og-description: A showcase of X.A.Search for querying search engines directly from X.Prompt.
 ---
 
 I'd like to highlight another XMonad module that has become quite

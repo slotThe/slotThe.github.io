@@ -4,6 +4,7 @@ date: 2023-01-10
 last-modified: 2023-01-12
 tags: maths
 bib: true
+og-description: Discussing the interplay of closed monoidal, *-autonomous, and rigid monoidal categories.
 ---
 
 I have a new preprint [on the arXiv][the paper]!  It is joint work with

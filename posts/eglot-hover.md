@@ -4,6 +4,7 @@ date: 2025-12-25
 last-modified: 2025-12-25
 tags: emacs
 no-toc: true
+og-description: Advising eglot's display machinery to show complete type signatures.
 ---
 
 In an

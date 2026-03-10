@@ -3,6 +3,7 @@ title: Fixing Lsp-Mode's Hover Signatures
 date: 2023-10-22
 last-modified: 2023-10-27
 tags: emacs, haskell, rust
+og-description: Overriding lsp-mode's hover handler to show type signatures instead of just the first line.
 ---
 
 By now,

@@ -3,6 +3,7 @@ title: Multiple Replacements with query-replace
 date: 2022-08-06
 last-modified: 2023-03-07
 tags: emacs
+og-description: Extending query-replace to support multiple simultaneous from/to replacement pairs.
 ---
 
 As its name suggests, Emacs's `query-replace` function, bound to `M-%` by default, can be used to replace occurences of one string with another—and it's quite good at what it does.

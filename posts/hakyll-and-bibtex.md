@@ -1,7 +1,9 @@
 ---
 title: Incorporating BibTeX into Hakyll
 date: 2023-06-20
+last-modified: 2025-02-01
 tags: haskell, hakyll
+og-description: Wiring pandoc-citeproc and a custom CSL file into Hakyll.
 ---
 
 When writing a blog post that feels academic—or pretentious—enough to invoke the need for citations,

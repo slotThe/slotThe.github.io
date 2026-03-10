@@ -1,7 +1,9 @@
 ---
 title: Change the Insides of an S-Expression in Emacs
 date: 2023-08-26
+last-modified: 2023-08-29
 tags: emacs
+og-description: Fixing the change-inner package to properly handle whitespace when changing the contents of S-Expressions.
 ---
 
 [^14]I have to make a confession:

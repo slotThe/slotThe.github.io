@@ -3,6 +3,7 @@ title: My PhD Research Workflow
 date: 2022-05-01
 last-modified: 2022-05-23
 tags: emacs, maths, xmonad
+og-description: An overview of my PhD research workflow, built around Emacs and XMonad.
 ---
 
 After reading [Gilles Castel]'s excellent blog post about his research

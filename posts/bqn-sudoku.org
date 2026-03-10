@@ -4,7 +4,9 @@
 :END:
 #+title: Sudoku Solving in BQN
 #+date: 2026-02-27
+#+last-modified: 2026-02-27
 #+tags: array-lang, BQN
+#+og-description: From a simple DFS approach to something truly array oriented (and pretty).
 #+options: toc:nil
 
 A few days ago, I read a very interesting [[https://blog.veitheller.de/Simple_Sudoku_Solvers_SII,_EI:_Dyalog_APL.html][blog post]] by Veit Heller about
@@ -1120,7 +1122,7 @@ masks, so they are treated as scalars instead of arrays.
 #+begin_SRC bqn
    ≢ <⎉2 (⊑1⊸∊)¨=⌜˜rcg     # Enclose rank 2 subarrays
 ⟨ 9 9 ⟩
-   1‿2 ⊑ <⎉2 (⊑1⊸∊)¨=⌜˜rcg # Normal indexing
+   1‿2 ⊑ <⎉2 (⊑1⊸∊)¨=⌜˜rcg # Normal indexing now
 ┌─
 ╵ 1 1 1 0 0 0 0 0 0
   1 1 1 1 1 1 1 1 1

@@ -3,6 +3,7 @@ title: Exploring package-vc-install
 date: 2022-11-30
 last-modified: 2023-05-18
 tags: emacs
+og-description: Install packages directly from upstream repositories.
 ---
 
 The Emacs 29 release branch was just cut—and it's chock full of new

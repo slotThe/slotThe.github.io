@@ -3,6 +3,7 @@ title: Leveraging LaTeX in Anki
 date: 2024-05-11
 last-modified: 2025-06-02
 tags: anki, emacs, maths
+og-description: Replacing MathJax with an offline LaTeX pipeline, while getting alignment kinda right.
 ---
 
 Recently, I've been quite invested in learning maths with [Anki][anki].

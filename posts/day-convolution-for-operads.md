@@ -1,8 +1,10 @@
 ---
 title: The tensor product of S-modules is a convolution product
 date: 2023-06-12
+last-modified: 2024-08-30
 tags: maths
 bib: true
+og-description: Explicitly computing the Day convolution for symmetric operads in the category of vector spaces and showing it recovers the tensor product of S-modules.
 ---
 
 Classically, (algebraic) symmetric [operads][nlab:operad] are defined as certain graded objects,

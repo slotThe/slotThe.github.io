@@ -1,8 +1,10 @@
 ---
 title: Adjusting preview.el for vertical monitors
 date: 2022-11-05
+last-modified: 2023-02-13
 tags: emacs
 no-toc: true
+og-description: Fixing distorted LaTeX previews for vertical monitors.
 ---
 
 Here's a fun one: when previewing LaTeX fragments via AUCTeX's

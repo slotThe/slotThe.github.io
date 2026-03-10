@@ -4,6 +4,7 @@ date: 2022-08-27
 last-modified: 2023-03-07
 no-toc: true
 tags: emacs, xmonad
+og-description: Using X.P.OrgMode to capture notes into Org files directly from X.Prompt.
 ---
 
 As I've said before, basically my entire digital life happens in either

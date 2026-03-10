@@ -3,6 +3,7 @@ title: Parsing CSV in BQN
 date: 2025-07-28
 last-modified: 2025-10-18
 tags: BQN, array-lang
+og-description: Writing a simple CSV parser in BQN in 5 lines of code.
 ---
 
 Let's write a CSV parser in [BQN](https://mlochbaum.github.io/BQN)!

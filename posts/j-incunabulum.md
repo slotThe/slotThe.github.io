@@ -4,6 +4,7 @@ date: 2026-01-11
 last-modified: 2026-01-11
 two-column: true
 tags: c, j, array-lang
+og-description: Trying to understand Arthur Whitney's famous one-page J interpreter.
 ---
 
 <div class="fullwidth">

@@ -3,6 +3,7 @@ title: Calling Emacs from XMonad
 date: 2022-05-25
 last-modified: 2023-03-07
 tags: emacs, haskell, xmonad
+og-description: An XMonad module for interacting with Emacs and other programs, using a composable EDSL.
 ---
 
 In the post about my [research workflow], I briefly mentioned having to

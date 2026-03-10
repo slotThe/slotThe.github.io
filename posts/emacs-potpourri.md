@@ -1,7 +1,9 @@
 ---
 title: A Potpourri of Emacs Tweaks
 date: 2022-10-22
+last-modified: 2026-02-09
 tags: emacs
+og-description: A collection of small Emacs customisation snippets and tips.
 ---
 
 Emacs is the "extensible text editor", and it wouldn't be fun if one

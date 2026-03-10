@@ -3,6 +3,7 @@ title: Using Sidenotes with Hakyll
 date: 2023-01-27
 last-modified: 2024-07-17
 tags: haskell, hakyll
+og-description: Integrating Tufte-style sidenotes into Hakyll, with block support.
 ---
 
 I've become quite enamoured with sidenotes recently, and so of course

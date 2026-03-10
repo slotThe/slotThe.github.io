@@ -4,6 +4,7 @@ date: 2022-12-22
 last-modified: 2023-05-18
 tags: emacs
 no-toc: true
+og-description: Integrating package-vc.el with use-package via a :vc keyword.
 ---
 
 I'd like to announce a small package I've written: [vc-use-package].  It

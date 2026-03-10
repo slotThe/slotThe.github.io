@@ -1,7 +1,9 @@
 ---
 title: Speeding up LaTeX compilation
 date: 2025-01-30
+last-modified: 2025-02-15
 tags: LaTeX
+og-description: Getting reasonable LaTeX compilation times from documents with many TikZ pictures.
 ---
 
 Getting reasonable compilation times out of a medium-sized LaTeX document

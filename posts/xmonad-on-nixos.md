@@ -3,6 +3,7 @@ title: Using XMonad with NixOS
 date: 2023-11-13
 last-modified: 2024-10-15
 tags: emacs, nix, xmonad
+og-description: Setting up XMonad on NixOS using the project's custom flake.
 ---
 
 I recently switched to NixOS,

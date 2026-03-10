@@ -3,6 +3,7 @@ title: Prettifying LaTeX Buffers
 date: 2023-09-10
 last-modified: 2023-10-15
 tags: emacs
+og-description: Configuring prettify-symbols-mode for LaTeX buffers in Emacs, including multi-glyph ligatures.
 ---
 
 A friend recently confided in me that,

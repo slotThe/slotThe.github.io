@@ -1,8 +1,10 @@
 ---
 title: "Notmuch: Warn on Empty Subjects"
 date: 2023-07-30
+last-modified: 2023-07-30
 tags: emacs
 no-toc: true
+og-description: Extending notmuch's attachment check to warn about empty email subjects before sending.
 ---
 
 Emacs's `notmuch` package has this fantastic concept of an *attachment check*:

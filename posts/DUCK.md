@@ -1,8 +1,10 @@
 ---
 title: DUCK
 date: 2026-02-07
+last-modified: 2026-02-23
 tags: hardware
 no-toc: true
+og-description: DUCK
 ---
 
 I have a duck on my keyboard now.[^1]

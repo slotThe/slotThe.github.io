@@ -3,6 +3,7 @@ title: Integrating KaTeX Into Hakyll
 date: 2024-07-20
 last-modified: 2025-02-01
 tags: haskell, hakyll
+og-description: Operating directly on the Pandoc AST, and completely removing the need for client-side MathJax.
 ---
 
 Being quite into mathematics,

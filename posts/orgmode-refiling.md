@@ -1,7 +1,9 @@
 ---
 title: Immediately Refile Notes with X.P.OrgMode
 date: 2023-01-14
+last-modified: 2023-02-13
 tags: emacs, haskell, xmonad
+og-description: Adding refiling support to X.P.OrgMode, so notes move under specific headings at capture time.
 ---
 
 In a [previous post][orgmode-post] I talked about

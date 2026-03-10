@@ -3,6 +3,7 @@ title: Understanding Weighted Colimits as Tensor Products of Modules
 date: 2022-10-15
 last-modified: 2023-03-13
 tags: maths
+og-description: How weighted colimits really are tensor products of modules in an enriched setting.
 ---
 
 If you've been doing category theory for any amount of time, you'll

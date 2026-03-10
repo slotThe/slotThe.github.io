@@ -4,6 +4,7 @@ date: 2024-10-27
 last-modified: 2024-10-28
 tags: BQN, array-lang
 toc-depth: 1
+og-description: Learning a language by solving all 25 days of AoC in it.
 ---
 
 I did all of Advent of Code 2017 in [BQN](https://mlochbaum.github.io/BQN) so you don't have to.

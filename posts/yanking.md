@@ -3,6 +3,7 @@ title: Parentheses-Aware Yanking
 date: 2024-01-03
 last-modified: 2024-01-05
 tags: emacs
+og-description: Making yank parentheses-aware, automatically balancing unmatched expressions when pasting.
 ---
 
 Copying, killing, and yanking[^5] text in Emacs is quite straightforward,

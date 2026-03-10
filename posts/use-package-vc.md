@@ -1,8 +1,10 @@
 ---
 title: "Use-package now has a :vc keyword"
 date: 2023-05-18
+last-modified: 2023-05-18
 tags: emacs
 no-toc: true
+og-description: package-vc.el integration using a sane package configuration syntax!
 ---
 
 Just a quick heads-up: `use-package`,

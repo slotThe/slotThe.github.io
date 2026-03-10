@@ -1,7 +1,9 @@
 ---
 title: Dissertation Typesetting Considerations
 date: 2025-04-13
+last-modified: 2026-02-08
 tags: LaTeX
+og-description: Font, layout, and other choices that went into typesetting my dissertation in maths.
 ---
 
 I just handed in my dissertation,[^1]

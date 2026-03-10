@@ -1,7 +1,9 @@
 ---
 title: Sudoku Solving in BQN
 date: 2026-02-27
+last-modified: 2026-02-27
 tags: array-lang, BQN
+og-description: From a simple DFS approach to something truly array oriented (and pretty).
 ---
 
 A few days ago, I read a very interesting [blog post](https://blog.veitheller.de/Simple_Sudoku_Solvers_SII,_EI:_Dyalog_APL.html) by Veit Heller about solving a regular 9×9 Sudoku puzzle in Dyalog APL.[^1] It's part of a series of blog posts, starting with a [reference implementation](https://blog.veitheller.de/Six_Simple_Sudoku_Solvers_I:_Python_(Reference).html) in Python, about writing a simple depth first search Sudoku solver in a variety of different languages. This made me realise that I've never written such a solver—not even a stupid one—myself!

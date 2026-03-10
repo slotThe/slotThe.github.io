@@ -1,7 +1,9 @@
 ---
 title: "XMonad Module Showcase: X.A.TopicSpace"
 date: 2022-09-11
+last-modified: 2023-02-17
 tags: haskell, xmonad
+og-description: Associate a dedicated directory and a startup hook to each workspace.
 ---
 
 One of my favourite—and most used—modules is `XMonad.​Actions.​TopicSpace`.
