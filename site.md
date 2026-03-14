@@ -2,7 +2,7 @@
 title: About This Website
 ---
 
-First of: this site is hosted via [GitHub Pages](https://pages.github.com/),
+First off: this site is hosted via [GitHub Pages](https://pages.github.com/),
 and the full source code is available on [Microsoft GitHub][ghub:site].
 
 My static site generator of choice is [hakyll],
@@ -28,7 +28,7 @@ I've written about the implementation details [here][site:sidenotes].
 
 # Syntax highlighting
 
-Syntax highlighting it not provided by
+Syntax highlighting is not provided by
 [Skylighting](https://hackage.haskell.org/package/skylighting),
 as pandoc would normally do,
 but rather by

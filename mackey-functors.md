@@ -210,7 +210,7 @@ and [@garner22].
 
 1. **Day convolution redux**:
    We explore some further properties of coends,
-   like the coYoneda lemma, which help us with verifying that the Day convolution is, in fact, a monoidal proudct.
+   like the coYoneda lemma, which help us with verifying that the Day convolution is, in fact, a monoidal product.
 
 2. **Enriched Category Theory**:
    A swift introduction to basic enriched category theory.

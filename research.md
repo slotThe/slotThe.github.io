@@ -293,7 +293,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
   Master's thesis; with the help of a higher-dimensional graphical
   calculus, the Hopf algebraic anti-Drinfeld centre is lifted into the
-  language of comodule monads.  An result relating the
+  language of comodule monads.  A result relating the
   (anti-)Drinfeld centre and (anti-)Yetter--Drinfeld modules is proven
   in this monadic setting.
 

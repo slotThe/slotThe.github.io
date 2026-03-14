@@ -77,7 +77,7 @@ A tiny statically typed functional language for processing JSON on the command-l
 
 + [kbd-mode]
 
-  A major more for `.kbd` files,
+  A major mode for `.kbd` files,
   serving as the Emacs integration for KMonad's configuration.
 
 + [arxiv-citation] ([MELPA](https://melpa.org/#/arxiv-citation))
