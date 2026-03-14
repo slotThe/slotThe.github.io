@@ -556,7 +556,7 @@ $\mathcal{J}$.  Every functor $G \colon \mathcal{J} \longrightarrow
 \mathcal{A}$ extends uniquely (up to unique isomorphism) to a
 cocontinuous functor $[\mathcal{J}^{\mathrm{op}}, \mathcal{V}]$ to
 $\mathcal{A}$ by the assignment $W \mapsto W \otimes_{\mathcal{J}} G$;
-note the tensor product of functors!.
+note the tensor product of functors!
 
 # (Re)sources
 

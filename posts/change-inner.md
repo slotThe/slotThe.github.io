@@ -60,7 +60,7 @@ Change-inner as a package builds upon another excellent one from the same author
 an "Emacs extension to increase selected region by semantic units."
 Essentially, change-inner just expands the region
 until it hits something that it's happy with.
-As such, the problem eluded to above is
+As such, the problem alluded to above is
 with the respective expand-region functions that are called;
 specifically, `er/mark-inside-pairs`,
 which is defined like so:

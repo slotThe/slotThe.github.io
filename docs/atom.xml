@@ -7065,7 +7065,7 @@ without having to rely on MathJax.
 As such, this post collects some bits and pieces from all over,
 hoping to weave them together into something coherent.</p>
 <!--more-->
-<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>Note that I will only concerns myself with
+<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>Note that I will only concern myself with
 “how to make LaTeX work to an acceptable degree”,
 instead of
 “how to write mathematics notes”.
@@ -7120,7 +7120,7 @@ It can, however, be somewhat improved by using CSS to vertically centre the imag
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>It looks like this:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<p><img class="pure-img" src="../images/anki-latex/centered.png" alt="A note with approrimately centred LaTeX"></p>
+<p><img class="pure-img" src="../images/anki-latex/centered.png" alt="A note with approximately centred LaTeX"></p>
 <p>Very far from perfect, but readable.
 Since this seems to be the only drawback with not using MathJax,
 I’ll take it.
@@ -8777,7 +8777,7 @@ This is elucidated in, for example,
 an “Emacs extension to increase selected region by semantic units.”
 Essentially, change-inner just expands the region
 until it hits something that it’s happy with.
-As such, the problem eluded to above is
+As such, the problem alluded to above is
 with the respective expand-region functions that are called;
 specifically, <code>er/mark-inside-pairs</code>,
 which is defined like so:</p>
@@ -11947,7 +11947,7 @@ want more details, check the paper <span class="citation" data-cites="halbig23:d
 <span class="citation" data-cites="boyarchenko13:groth-verdier">[@boyarchenko13:groth-verdier]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>This is not a coincidence; for example, adjoints in the monoidal
 category <span class="math inline">([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})</span> are
-exactly duals!.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+exactly duals!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!-- Body is included in the above file -->
@@ -13347,7 +13347,7 @@ about and play around with, and I would invite you to do just that.</p>
 \mathcal{A}</span> extends uniquely (up to unique isomorphism) to a
 cocontinuous functor <span class="math inline">[\mathcal{J}^{\mathrm{op}}, \mathcal{V}]</span> to
 <span class="math inline">\mathcal{A}</span> by the assignment <span class="math inline">W \mapsto W \otimes_{\mathcal{J}} G</span>;
-note the tensor product of functors!.</p>
+note the tensor product of functors!</p>
 <h2 id="resources">(Re)sources</h2>
 <ul>
 <li><p>Monoidal Category Theory:</p>
@@ -13733,7 +13733,7 @@ case, I’d like to <a href="mailto:mail@tony-zorman.com">hear from you</a>!</p>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
       
-<p>As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurences of one string with another—and it’s quite good at what it does.
+<p>As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurrences of one string with another—and it’s quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
 But this is Emacs, after all, which means that I can write that <code>query-replace-many</code> function I’ve always wanted, and even share it with others!
 The <a href="#the-code">code</a> is packaged as <code>query-replace-many</code>, available on <a href="https://gitlab.com/slotThe/query-replace-many">GitLab</a> and <a href="https://github.com/slotThe/query-replace-many">GitHub</a>.</p>

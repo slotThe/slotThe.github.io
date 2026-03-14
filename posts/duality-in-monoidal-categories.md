@@ -151,4 +151,4 @@ want more details, check the paper [@halbig23:dualit-monoid-categ]!
 
 [^2]: This is not a coincidence; for example, adjoints in the monoidal
       category $([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})$ are
-      exactly duals!.
+      exactly duals!

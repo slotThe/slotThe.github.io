@@ -6,7 +6,7 @@ tags: emacs
 og-description: Extending query-replace to support multiple simultaneous from/to replacement pairs.
 ---
 
-As its name suggests, Emacs's `query-replace` function, bound to `M-%` by default, can be used to replace occurences of one string with another—and it's quite good at what it does.
+As its name suggests, Emacs's `query-replace` function, bound to `M-%` by default, can be used to replace occurrences of one string with another—and it's quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple `from → to` pairs.
 But this is Emacs, after all, which means that I can write that `query-replace-many` function I've always wanted, and even share it with others!
 The [code](#the-code) is packaged as `query-replace-many`, available on [GitLab][gitlab:query-replace-many] and [GitHub][github:query-replace-many].

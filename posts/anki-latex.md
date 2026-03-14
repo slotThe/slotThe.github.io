@@ -15,7 +15,7 @@ hoping to weave them together into something coherent.
 
 <!--more-->
 
-[^10]Note that I will only concerns myself with
+[^10]Note that I will only concern myself with
 "how to make LaTeX work to an acceptable degree",
 instead of
 "how to write mathematics notes".
@@ -88,7 +88,7 @@ It looks like this:[^9]
 
 <img class="pure-img"
      src="../images/anki-latex/centered.png"
-     alt="A note with approrimately centred LaTeX">
+     alt="A note with approximately centred LaTeX">
 
 Very far from perfect, but readable.
 Since this seems to be the only drawback with not using MathJax,
