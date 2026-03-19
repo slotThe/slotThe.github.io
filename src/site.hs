@@ -78,6 +78,11 @@ main = hakyllWith config do
     route   (customRoute \(toFilePath -> fp) -> fromMaybe fp (stripPrefix "files/" fp))
     compile copyFileCompiler
 
+  -- https://codeberg.org/susam/wander
+  match "wander/*" do
+    route idRoute
+    compile copyFileCompiler
+
   -- Redirects
   version "redirects" $ createRedirects redirects
 
