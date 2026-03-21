@@ -1,4 +1,4 @@
-window.wander = {
+const wander = {
   // Other Wander consoles that visitors can reach from my console.
   consoles: [
     'https://susam.net/wander/',
