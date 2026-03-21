@@ -21,4 +21,7 @@ const wander = {
     'http://tom7.org/',
     'http://www.marshaln.com',
   ],
+  styles: [
+    'style.css',
+  ],
 }

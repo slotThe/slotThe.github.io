@@ -1,0 +1,18 @@
+body          { background: #f2f2f2; }
+button {
+    &:hover  { background: #B772BB; }
+    &:active { background: #A853AC; }
+}
+a {
+    text-decoration: 1px dotted underline;
+    &:link    { color: #640d57; }
+    &:visited { color: #640d57; }
+    &:hover   { color: gray; }
+}
+dialog button { background: #D7B0D9; }
+button, input, noscript, dialog {
+    background: #cc9bcf;
+    border-color: #640d57;
+    color: black;
+}
+iframe { border: thick solid #89448D; }
