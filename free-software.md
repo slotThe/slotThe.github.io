@@ -121,7 +121,7 @@ A tiny statically typed functional language for processing JSON on the command-l
 + [anki-whitespace]
 
   A minor mode built on top of [anki-editor] that—due to a more lightweight syntax—provides better integration into Zettelkasten-like systems.
-  It's written in such a way that implementing ones own note syntax just consists of overwriting a few functions.
+  It's written in such a way that implementing one's own note syntax just consists of overwriting a few functions.
 
 + [eglot-hover](https://codeberg.org/slotThe/eglot-hover)
 

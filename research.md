@@ -135,7 +135,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
    we study reconstruction results that do not require a forgetful functor.
    This comes at the cost of not recovering the algebraic object of interest on-the-nose,
    but only up to Morita equivalence.
-   This talk generalises a result of Ostrik about Hopf algebras on a finite tensor categories
+   This talk generalises a result of Ostrik about Hopf algebras on finite tensor categories
    to the general case of characterising lax module monads on a nice module category over a general abelian monoidal category with enough projectives.
    Crucially, the proof does not need any rigidity assumptions on the underlying category.
    As an application, we give conceptual proofs of the fundamental theorem of Hopf modules,
@@ -294,13 +294,13 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Master's thesis; with the help of a higher-dimensional graphical
   calculus, the Hopf algebraic anti-Drinfeld centre is lifted into the
   language of comodule monads.  A result relating the
-  (anti-)Drinfeld centre and (anti-)Yetter--Drinfeld modules is proven
+  (anti-)Drinfeld centre and (anti-)Yetter–Drinfeld modules is proven
   in this monadic setting.
 
 - *From Knot Theory to Algebra*
 
   Bachelor's thesis with a focus on keis; objects arising naturally when
-  trying to generalize the number of 3-colourings of a knot.
+  trying to generalise the number of 3-colourings of a knot.
 
 [CT2025]: https://conference.math.muni.cz/ct2025/
 [CT23]: https://sites.uclouvain.be/ct2023/
