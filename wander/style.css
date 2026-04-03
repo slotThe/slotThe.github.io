@@ -1,18 +1,15 @@
-body          { background: #f2f2f2; }
-button {
-    &:hover  { background: #B772BB; }
-    &:active { background: #A853AC; }
-}
+body { background: #f2f2f2; color: black }
+button, input { color: #0f0f0f }
+button, input, dialog { background: #cc9bcf; border-color: #89448d }
+button:hover { background: #b772bb }
+button:active { background: #a853ac }
+button:disabled, button:disabled:hover, button:disabled:active { background: #b772bb }
+dialog { background: #d7b0d9 }
+dialog::backdrop { background: black }
 a {
     text-decoration: 1px dotted underline;
-    &:link    { color: #640d57; }
-    &:visited { color: #640d57; }
-    &:hover   { color: gray; }
+    &:link    { color: #640d57 }
+    &:visited { color: #640d57 }
+    &:hover   { color: gray }
 }
-dialog button { background: #D7B0D9; }
-button, input, noscript, dialog {
-    background: #cc9bcf;
-    border-color: #640d57;
-    color: black;
-}
-iframe { border: thick solid #89448D; }
+#wander-iframe { border: thick solid #89448d }
