@@ -884,9 +884,14 @@ myPandocCompiler =
       | otherwise = b : go bs
 
     isWrappable :: Block -> Bool
-    isWrappable Para{}       = True
-    isWrappable BulletList{} = True
-    isWrappable _            = False
+    isWrappable = \case
+      CodeBlock{}                        -> False
+      Div (_, ["fullwidth"], _) _        -> False
+      HorizontalRule                     -> False
+      Header{}                           -> False
+      Para (RawInline _ "<picture>" : _) -> False -- XXX maybe i want picture in columns sometimes
+      RawBlock (Format "html") _         -> False
+      _                                  -> True
 
   -- Add nowrap to "str—": no line-break immediately before the em dash.
   -- https://sink.krj.st/fl.tr/file/src/Text/Pandoc/Fltr/DashFilter.hs
