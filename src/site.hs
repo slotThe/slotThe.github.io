@@ -703,7 +703,7 @@ myPandocCompiler =
                     , "PR", "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
                     , "CBQN", "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM"
                     , "KOMA", "JSON", "RFC", "CSV", "CRLF", "CR", "LF", "39C3"
-                    , "3D"
+                    , "3D", "NULL", "ASCII"
                     ]
     inline -> inline
    where

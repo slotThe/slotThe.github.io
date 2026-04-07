@@ -58,3 +58,12 @@ div#contents-big {
         margin-bottom: -.5rem;
     }
 }
+
+section#footnotes {          /* Footnotes get as much space as fullwidth */
+                               max-width: 62%;
+    @media (width <= 1366px) { max-width: 75%; }
+    @media (width <= 768px)  { max-width: 100%; }
+}
+
+h2 { margin-top: 1rem;   margin-bottom: .75rem } /* Smaller margins */
+h3 { margin-top: .75rem; margin-bottom: .5rem  }

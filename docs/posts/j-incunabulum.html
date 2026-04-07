@@ -393,7 +393,7 @@ There’s enough memory for 26 variables, <code>a</code> to <code>z</code>, whic
 <span class="nowrap">Execution—</span>like <span class="nowrap">parsing—</span>is done character by character.
 There are two queries that will be important here:
 with <code>qp</code> one can ask whether the character is a letter,
-and <code>qv</code> checks if it’s a verb (all of the symbols <code>+{~&lt;#,</code> have an ASCII value less than <code>a</code>).</p>
+and <code>qv</code> checks if it’s a verb (all of the symbols <code>+{~&lt;#,</code> have an <span class="small-caps">ascii</span> value less than <code>a</code>).</p>
 <div class="tc-code">
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="n">st</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="nf">qp</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">a</span><span class="p">){</span><span class="n">R</span><span class="w"> </span><span class="n">a</span><span class="o">&gt;=</span><span class="sc">'a'</span><span class="o">&amp;&amp;</span><span class="n">a</span><span class="o">&lt;=</span><span class="sc">'z'</span><span class="p">;}</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="nf">qv</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="n">a</span><span class="p">){</span><span class="n">R</span><span class="w"> </span><span class="n">a</span><span class="o">&lt;</span><span class="sc">'a'</span><span class="p">;}</span>
