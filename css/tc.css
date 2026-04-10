@@ -32,7 +32,7 @@ div#contents-big {
 .fullwidth {                    /* For longer sections of prose */
                                max-width: 62%;
     @media (width <= 1366px) { max-width: 75%; }
-    @media (width <= 768px)  { max-width: 100%; }
+    @media (width <= 1024px) { max-width: 100%; }
 }
 
 .tc-row {                       /* A row of text+code */
@@ -45,12 +45,13 @@ div#contents-big {
     margin-right: auto;
     @media (width <= 1024px) {
         grid-template-columns: 1fr;
-        margin-top: -.5rem;
         & .tc-text > p { margin-bottom: 0; }
     }
 }
 
 .tc-text {                      /* Written text next to code */
+                               order: -1;       /* Text left code right on big screens */
+    @media (width <= 1024px) { order: unset; }
     p + p { text-indent: 1.2em; margin-top: 0 } /* Indents for inbetween paras */
     p:has(+ p) { margin-bottom: 0 }
 }
@@ -59,8 +60,8 @@ div#contents-big {
     overflow: auto;
     margin-top: .3em;
     @media (width <= 1024px) {
-        margin-top: 0;
-        margin-bottom: -.5rem;
+        margin-top: .5rem;
+        margin-bottom: -1rem;
     }
 }
 

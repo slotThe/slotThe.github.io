@@ -138,11 +138,6 @@ I think that that’s really <span class="nowrap">pretty—</span>reason enough 
 <hr />
 <h2 id="a.h">a.h<a href="#a.h" class="floatleft sec-link">§</a></h2>
 <div class="tc-row">
-<div class="tc-text">
-<p>As always with stuff like this, reading through the header file first is
-important to not lose one’s footing, as this is where most of the macros
-are defined. It starts very slowly, just importing some system libraries.</p>
-</div>
 <div class="tc-code">
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span><span class="c1">  //write(2)</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span><span class="c1">  //strlen memcpy strchr</span>
@@ -151,8 +146,18 @@ are defined. It starts very slowly, just importing some system libraries.</p>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fcntl.h&gt;</span><span class="c1">   //open</span>
 </pre></div>
 </div>
+<div class="tc-text">
+<p>As always with stuff like this, reading through the header file first is
+important to not lose one’s footing, as this is where most of the macros
+are defined. It starts very slowly, just importing some system libraries.</p>
+</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Next, we have the fundamental data types to be used later on. I will
 assume that just like in the <a href="https://tony-zorman.com/posts/j-incunabulum.html" class="local-link">J
@@ -165,21 +170,8 @@ outside observer, everything is a uniform integer type. As a type
 theorist at heart, this is obviously <em>really</em> scary to me, but it is
 what it is.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
-<div class="tc-text">
-<p>Here come some shorter names for primitives and branching/iteration,
-though I can’t tell why <code>O</code> was chosen for <code>printf</code>. I believe dollars
-signs being allowed in identifiers is not standard C, but the GCC manual
-<a href="https://gcc.gnu.org/onlinedocs/gcc/Dollar-Signs.html">says that</a> “many
-traditional C implementations allow such identifiers”, so it’s probably
-fine.</p>
-</div>
 <div class="tc-code">
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define R return</span>
@@ -188,8 +180,22 @@ fine.</p>
 <span class="cp">#define i(n,e) {int $n=n;int i=0;for(;i&lt;$n;++i){e;}}</span>
 </pre></div>
 </div>
+<div class="tc-text">
+<p>Here come some shorter names for primitives and branching/iteration,
+though I can’t tell why <code>O</code> was chosen for <code>printf</code>. I believe dollars
+signs being allowed in identifiers is not standard C, but the GCC manual
+<a href="https://gcc.gnu.org/onlinedocs/gcc/Dollar-Signs.html">says that</a> “many
+traditional C implementations allow such identifiers”, so it’s probably
+fine.</p>
+</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define _(e) ({e;})</span>
+<span class="cp">#define P(b,e) if(b)return _(e);</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>The <code>_(e)</code> macro uses the <a href="https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html">statement
 expression</a> GCC
@@ -207,14 +213,13 @@ thus effectively no value.)</p>
 used once when reading the input into a line buffer, so I wouldn’t worry
 too much about it.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define _(e) ({e;})</span>
-<span class="cp">#define P(b,e) if(b)return _(e);</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define _u(f,e,x...) u f(x){R(u)_(e);}</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Now this is getting interesting. <code>_u</code> is a generic template for defining
 functions: we first give it the function name, then the body, and only
@@ -224,13 +229,16 @@ varargs</a> GCC
 extension. What the function does is to call the body inside of the <code>_</code>
 macro, cast it to <code>u</code>, and return it.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define _u(f,e,x...) u f(x){R(u)_(e);}</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define f(g,e) _u(g,e,u x)</span>
+<span class="cp">#define F(g,e) _u(g,e,u f,u x)</span>
+<span class="cp">#define G(g,e) _u(g,e,u f,u x,u y)</span>
+<span class="cp">#define us(f,e) _u(f,e,c*s)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>With this we can define monadic and dyadic function templates <code>f</code> and
 <code>F</code>. This is a bit like the <code>V1</code> and <code>V2</code> macros in the <a href="https://code.jsoftware.com/wiki/Essays/Incunabulum">J
@@ -249,16 +257,14 @@ later on.</p>
 <p>Lastly, <code>us</code> is a special template for a function getting a string
 as an argument. Think something like an evaluation function.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define f(g,e) _u(g,e,u x)</span>
-<span class="cp">#define F(g,e) _u(g,e,u f,u x)</span>
-<span class="cp">#define G(g,e) _u(g,e,u f,u x,u y)</span>
-<span class="cp">#define us(f,e) _u(f,e,c*s)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define ax (256&gt;x)</span>
+<span class="cp">#define sx ((c*)x)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Here we get some actual clues as to the memory layout of the whole
 thing. The check for atoms <code>ax</code> tells us that we’re restricted to 8-bit
@@ -266,14 +272,15 @@ integers (they’re unsigned here since <code>u</code> is, but, reading ahead, w
 have access to signed integers, the check here just doesn’t tell us).
 The <code>sx</code> macro reinterprets <code>x</code> as an array of bytes.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define ax (256&gt;x)</span>
-<span class="cp">#define sx ((c*)x)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define nx sx[-1]</span>
+<span class="cp">#define rx sx[-2]</span>
+<span class="cp">#define xi (nx&gt;i?sx[i]:0)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Arrays are implemented as fat pointers: the length of the vector <code>nx</code>
 (one byte long!) and its reference count <code>rx</code> are stored before the start
@@ -288,24 +295,8 @@ around! I feel like it would have been a bit more consistent to call
 this <code>ix</code>, although I guess it was chosen due to the normal indexing
 syntax of <span class="nowrap">C—</span><code>xi</code> is much closer to <code>x[i]</code> than <code>ix</code> is.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define nx sx[-1]</span>
-<span class="cp">#define rx sx[-2]</span>
-<span class="cp">#define xi (nx&gt;i?sx[i]:0)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
-<div class="tc-text">
-<p>These are sort of single-use “renaming” operations; e.g., <code>x(a,e)</code> takes
-an argument <code>a</code>, just decides to call it <code>x</code>, and then calls <code>e</code>, which,
-presumably, makes use of an implicit argument <code>x</code>. The whole thing is
-wrapped in a <code>_</code> macro, to make sure we can assign the result of
-<code>x(a,e)</code> to something. Same with <code>y(a,e)</code> and <code>r(a,e)</code>, only the latter
-returns <code>r</code> instead of the value of the last statement of <code>e</code>.</p>
-<p>Likewise, <code>sr</code>, <code>nr</code>, and <code>ri</code> are like <code>sx</code>, <code>nx</code>, and <code>xi</code>, but for <code>r</code>.</p>
-</div>
 <div class="tc-code">
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define x(a,e) _(u x=a;e)</span>
@@ -316,12 +307,17 @@ returns <code>r</code> instead of the value of the last statement of <code>e</co
 <span class="cp">#define ri sr[i]</span>
 </pre></div>
 </div>
+<div class="tc-text">
+<p>These are sort of single-use “renaming” operations; e.g., <code>x(a,e)</code> takes
+an argument <code>a</code>, just decides to call it <code>x</code>, and then calls <code>e</code>, which,
+presumably, makes use of an implicit argument <code>x</code>. The whole thing is
+wrapped in a <code>_</code> macro, to make sure we can assign the result of
+<code>x(a,e)</code> to something. Same with <code>y(a,e)</code> and <code>r(a,e)</code>, only the latter
+returns <code>r</code> instead of the value of the last statement of <code>e</code>.</p>
+<p>Likewise, <code>sr</code>, <code>nr</code>, and <code>ri</code> are like <code>sx</code>, <code>nx</code>, and <code>xi</code>, but for <code>r</code>.</p>
+</div>
 </div>
 <div class="tc-row">
-<div class="tc-text">
-<p>But wait, there’s more! Various accessors and tests for different
-argument names.</p>
-</div>
 <div class="tc-code">
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define ay x(y,ax)</span>
@@ -332,8 +328,25 @@ argument names.</p>
 <span class="cp">#define fi x(f,xi)</span>
 </pre></div>
 </div>
+<div class="tc-text">
+<p>But wait, there’s more! Various accessors and tests for different
+argument names.</p>
+</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">Q</span><span class="o">=</span><span class="mi">128</span><span class="p">;</span>
+<span class="cp">#define Q(e)    if(Q==(e))R Q;</span>
+<span class="cp">#define Qe(s)   err((u)__FUNCTION__,(u)__LINE__,(u)s)</span>
+<span class="cp">#define Qs(e,s) if(e)R Qe(s);</span>
+<span class="cp">#define Qr(e)   Qs(e,&quot;rank&quot;)</span>
+<span class="cp">#define Qz(e)   Qs(e,&quot;nyi&quot;)</span>
+<span class="cp">#define Qd(e)   Qs(e,&quot;domain&quot;)</span>
+<span class="cp">#define Qp()    Qs(Q==x,&quot;parse&quot;)</span>
+<span class="cp">#define Ql()    Qe(&quot;length&quot;)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>We even have some kind of error handling!</p>
 <p>Even though it might not look like it, the definition <code>u Q=128</code> is
@@ -357,21 +370,14 @@ true.</p>
 <em>rank</em> (expecting an array/atom and getting the other type) or <em>nyi</em>
 (not yet implemented).</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">Q</span><span class="o">=</span><span class="mi">128</span><span class="p">;</span>
-<span class="cp">#define Q(e)    if(Q==(e))R Q;</span>
-<span class="cp">#define Qe(s)   err((u)__FUNCTION__,(u)__LINE__,(u)s)</span>
-<span class="cp">#define Qs(e,s) if(e)R Qe(s);</span>
-<span class="cp">#define Qr(e)   Qs(e,&quot;rank&quot;)</span>
-<span class="cp">#define Qz(e)   Qs(e,&quot;nyi&quot;)</span>
-<span class="cp">#define Qd(e)   Qs(e,&quot;domain&quot;)</span>
-<span class="cp">#define Qp()    Qs(Q==x,&quot;parse&quot;)</span>
-<span class="cp">#define Ql()    Qe(&quot;length&quot;)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">WS</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">U</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p><span class="nowrap">Apparently—</span>and I admit I had to look this <span class="nowrap">up—</span><code>WS</code> stands for
 <a href="https://course.dyalog.com/Workspaces/">workspace</a>, which is a wonderfully ancient <span class="small-caps">apl</span> term. In this case, it just gives us, in bytes, the number of
@@ -379,14 +385,13 @@ things allocated in the current <span class="small-caps">repl</span> session. <c
 global variables. Since both are declared <code>static</code>, both variables are
 zero initialised, hence all globals are initially set to <code>0</code>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">WS</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<span class="k">static</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">U</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define N(n,e) r(a(n),i(n,ri=e))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>This macro (and the following two) use things that are only defined in
 <code>a.c</code>. The <code>a</code> function just allocates an array, so <code>N(n,e)</code> allocates
@@ -395,13 +400,14 @@ the given expression <code>e</code> (which presumably uses <code>i</code> somewh
 it) in each step, and assigning the result to <code>r[i]</code>. For example,
 something like <code>N(5,i)</code> would generate the array <code>0 1 2 3 4</code>.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define N(n,e) r(a(n),i(n,ri=e))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define _f(e) r(e,_r(f))</span>
+<span class="cp">#define _x(e) r(e,_r(x))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>The <code>_r</code> function (to be defined in <code>a.c</code>) decreases the reference count
 of the given object (and deallocates it if that count ever reaches 0).
@@ -410,34 +416,34 @@ that, just with another named argument. E.g., <code>_f(e)</code> would rename <c
 to <code>r</code>, call <code>_r(f)</code> (decrementing the reference count of <code>f</code>), and then
 return <code>r</code>.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define _f(e) r(e,_r(f))</span>
-<span class="cp">#define _x(e) r(e,_r(x))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
-<div class="tc-text">
-<p>The banner that shows up when one starts the <span class="small-caps">repl</span>.</p>
-</div>
 <div class="tc-code">
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define BA &quot;k/simple (c) 2024 atw/kpc\n&quot;</span>
 </pre></div>
 </div>
+<div class="tc-text">
+<p>The banner that shows up when one starts the <span class="small-caps">repl</span>.</p>
+</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+</div>
 <div class="tc-text">
 <p>Would you believe me when I told you that that was the most readable
 part of the code?</p>
 </div>
-<div class="tc-code">
-
-</div>
 </div>
 <h2 id="a.c">a.c<a href="#a.c" class="floatleft sec-link">§</a></h2>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">wu</span><span class="p">,</span><span class="n">O</span><span class="p">(</span><span class="s">&quot;%lu</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">wg</span><span class="p">(){</span><span class="n">i</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">$</span><span class="p">(</span><span class="o">!</span><span class="n">ax</span><span class="p">,</span><span class="n">O</span><span class="p">(</span><span class="s">&quot;%c[%d] %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">97</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">rx</span><span class="p">))))}</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>We start simple again: <code>wu</code> writes a single <code>u</code> to stdout. The <code>wg</code>
 function looks a bit scarier, but it’s actually not that bad: it
@@ -451,14 +457,17 @@ exist in the first place. As <a href="https://xkcd.com/1053/">everyone knows</a>
 <code>97</code> is <span class="small-caps">ascii</span> <code>a</code>, so <code>i+97</code> would print <code>a</code> for <code>i=0</code>, <code>b</code> for <code>i=1</code>,
 and so on.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">wu</span><span class="p">,</span><span class="n">O</span><span class="p">(</span><span class="s">&quot;%lu</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
-<span class="kt">void</span><span class="w"> </span><span class="n">wg</span><span class="p">(){</span><span class="n">i</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span><span class="n">x</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">$</span><span class="p">(</span><span class="o">!</span><span class="n">ax</span><span class="p">,</span><span class="n">O</span><span class="p">(</span><span class="s">&quot;%c[%d] %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">97</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">rx</span><span class="p">))))}</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="o">:</span><span class="n">sx</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="mi">1</span><span class="o">:</span><span class="n">strlen</span><span class="p">(</span><span class="n">sx</span><span class="p">)))</span>
+<span class="k">static</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">pb</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span>
+<span class="n">f</span><span class="p">(</span><span class="n">si</span><span class="p">,</span><span class="n">sprintf</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span><span class="s">&quot;%d &quot;</span><span class="p">,(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">128</span><span class="o">&gt;</span><span class="n">x</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">x</span><span class="mi">-256</span><span class="p">));</span><span class="n">pb</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">wi</span><span class="p">,</span><span class="n">w</span><span class="p">(</span><span class="n">si</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">$</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">wi</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="n">i</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">wi</span><span class="p">(</span><span class="n">xi</span><span class="p">))</span><span class="n">w</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>The next few lines are all about stringifying and printing.</p>
 <p><code>w</code> writes the raw byte(s) at the correct address to stdout.</p>
@@ -473,17 +482,13 @@ integer if <code>x</code> is an atom, or prints the entire array, separated by a
 space (inserted by <code>si</code> automatically). We finish all of that with a
 newline (of course you knew that linefeed was <span class="small-caps">ascii</span> 10, right?)</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">x</span><span class="o">:</span><span class="n">sx</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="mi">1</span><span class="o">:</span><span class="n">strlen</span><span class="p">(</span><span class="n">sx</span><span class="p">)))</span>
-<span class="k">static</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">pb</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span>
-<span class="n">f</span><span class="p">(</span><span class="n">si</span><span class="p">,</span><span class="n">sprintf</span><span class="p">(</span><span class="n">pb</span><span class="p">,</span><span class="s">&quot;%d &quot;</span><span class="p">,(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">128</span><span class="o">&gt;</span><span class="n">x</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">x</span><span class="mi">-256</span><span class="p">));</span><span class="n">pb</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="n">wi</span><span class="p">,</span><span class="n">w</span><span class="p">(</span><span class="n">si</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">$</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">wi</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="n">i</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">wi</span><span class="p">(</span><span class="n">xi</span><span class="p">))</span><span class="n">w</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">G</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="n">w</span><span class="p">(</span><span class="n">f</span><span class="p">);</span><span class="n">w</span><span class="p">(</span><span class="mi">58</span><span class="p">);</span><span class="n">wi</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="n">w</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="n">w</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="n">Q</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>The first time we see the <code>G</code> function used, though not quite for an
 adverb! This is the <code>err</code> function that was already referenced in <code>a.h</code>
@@ -491,14 +496,15 @@ before; it essentially prints <code>f:xy\n</code>, just filling in values for <c
 <code>x</code>, and <code>y</code>. For example, recall that <code>Qe(s)</code> was defined as
 <code>err((u)__FUNCTION__,(u)__LINE__,(u)s)</code>.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">G</span><span class="p">(</span><span class="n">err</span><span class="p">,</span><span class="n">w</span><span class="p">(</span><span class="n">f</span><span class="p">);</span><span class="n">w</span><span class="p">(</span><span class="mi">58</span><span class="p">);</span><span class="n">wi</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="n">w</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="n">w</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="n">Q</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 <h3 id="memory-management">Memory management<a href="#memory-management" class="floatleft sec-link">§</a></h3>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">WS</span><span class="o">+=</span><span class="n">x</span><span class="p">;</span><span class="n">c</span><span class="o">*</span><span class="n">s</span><span class="o">=</span><span class="n">malloc</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="o">*</span><span class="n">s</span><span class="o">++=</span><span class="mi">0</span><span class="p">;</span><span class="o">*</span><span class="n">s</span><span class="o">++=</span><span class="n">x</span><span class="p">;</span><span class="n">s</span><span class="p">))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">_a</span><span class="p">,</span><span class="n">WS</span><span class="o">-=</span><span class="n">nx</span><span class="p">;</span><span class="n">free</span><span class="p">(</span><span class="n">sx</span><span class="mi">-2</span><span class="p">);</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>First, we get to that allocation function we had in an earlier
 macro, as well as its destruction counterpart. <code>a(x)</code> increases the
@@ -510,14 +516,15 @@ inside of this implementation! Every verb immediately owns its value,
 and a single call to <code>_r</code> (see below) will deallocate a freshly
 allocated value.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">WS</span><span class="o">+=</span><span class="n">x</span><span class="p">;</span><span class="n">c</span><span class="o">*</span><span class="n">s</span><span class="o">=</span><span class="n">malloc</span><span class="p">(</span><span class="n">y</span><span class="p">);</span><span class="o">*</span><span class="n">s</span><span class="o">++=</span><span class="mi">0</span><span class="p">;</span><span class="o">*</span><span class="n">s</span><span class="o">++=</span><span class="n">x</span><span class="p">;</span><span class="n">s</span><span class="p">))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">_a</span><span class="p">,</span><span class="n">WS</span><span class="o">-=</span><span class="n">nx</span><span class="p">;</span><span class="n">free</span><span class="p">(</span><span class="n">sx</span><span class="mi">-2</span><span class="p">);</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">G</span><span class="p">(</span><span class="n">m</span><span class="p">,(</span><span class="n">u</span><span class="p">)</span><span class="n">memcpy</span><span class="p">((</span><span class="n">c</span><span class="o">*</span><span class="p">)</span><span class="n">x</span><span class="p">,(</span><span class="n">c</span><span class="o">*</span><span class="p">)</span><span class="n">y</span><span class="p">,</span><span class="n">f</span><span class="p">))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">r_</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="p">(</span><span class="o">++</span><span class="n">rx</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">_r</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">rx</span><span class="o">?</span><span class="p">(</span><span class="o">--</span><span class="n">rx</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="n">_a</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Another use of <code>G</code> for something that’s decidedly not an adverb. The <code>m</code>
 function is a <code>memcpy</code> shim, which copies <code>f</code> bytes from <code>y</code> to <code>x</code>, and
@@ -526,16 +533,14 @@ should the count ever be 0. I like the little trick of using the comma
 operator in <code>(++rx,x)</code><span class="nowrap">—</span>you don’t see something like this very often in
 “normal” code.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">G</span><span class="p">(</span><span class="n">m</span><span class="p">,(</span><span class="n">u</span><span class="p">)</span><span class="n">memcpy</span><span class="p">((</span><span class="n">c</span><span class="o">*</span><span class="p">)</span><span class="n">x</span><span class="p">,(</span><span class="n">c</span><span class="o">*</span><span class="p">)</span><span class="n">y</span><span class="p">,</span><span class="n">f</span><span class="p">))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">r_</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="p">(</span><span class="o">++</span><span class="n">rx</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">_r</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">rx</span><span class="o">?</span><span class="p">(</span><span class="o">--</span><span class="n">rx</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="n">_a</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
 </div>
 <h3 id="verbs-and-adverbs">Verbs and adverbs<a href="#verbs-and-adverbs" class="floatleft sec-link">§</a></h3>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">_r</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="n">Qz</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="n">Q</span><span class="p">)</span><span class="n">F</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span><span class="n">_r</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="n">Qz</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="n">Q</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Now we get to the first actual functions, called <em>verbs</em> in K lingo. As
 per the file’s conventions, monadic verbs will be written lowercase,
@@ -544,13 +549,13 @@ two verbs, <code>foo</code> and <code>Foo</code>, are just placeholders that alw
 <code>Foo</code> is unused, so I guess it doesn’t matter, but I reckon it should
 probably also call <code>_r(f)</code>, since it also owns that value.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="n">_r</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="n">Qz</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="n">Q</span><span class="p">)</span><span class="n">F</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span><span class="n">_r</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="n">Qz</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="n">Q</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">-</span><span class="n">x</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="o">-</span><span class="n">xi</span><span class="p">)))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p><code>sub</code> is already quite interesting, I think. It negates an <span class="nowrap">atom—</span>which,
 remember, is an <code>unsigned long</code><span class="nowrap">—</span>and then casts it to an <code>unsigned char</code>!
@@ -561,13 +566,16 @@ the same length where every index is negated, decrease the reference
 count of <code>x</code>, and return the new array. This might be the first function
 that properly shows that immutable arrays are a core part of K.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">-</span><span class="n">x</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="o">-</span><span class="n">xi</span><span class="p">)))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">til</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">ax</span><span class="p">)(</span><span class="n">N</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">i</span><span class="p">)))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span><span class="n">nx</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">ax</span><span class="p">)</span><span class="n">N</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">rev</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">sx</span><span class="p">[</span><span class="n">nx</span><span class="o">-</span><span class="n">i</span><span class="mi">-1</span><span class="p">])))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>More functions, but this time a little less exciting than <code>sub</code>: an
 <a href="https://aplwiki.com/wiki/Index_Generator">iota</a>, a
@@ -582,16 +590,15 @@ an <span class="nowrap">array—</span>and, as such, gets ownership over <span c
 refcount. This means that calling <code>cnt</code> lots of times will blow up the
 refcount of any variable for no discernible reason.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">til</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">ax</span><span class="p">)(</span><span class="n">N</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">i</span><span class="p">)))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span><span class="n">nx</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">ax</span><span class="p">)</span><span class="n">N</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">rev</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">sx</span><span class="p">[</span><span class="n">nx</span><span class="o">-</span><span class="n">i</span><span class="mi">-1</span><span class="p">])))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Add</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">af</span><span class="o">?</span><span class="p">(</span><span class="n">c</span><span class="p">)(</span><span class="n">f</span><span class="o">+</span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="n">Add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="n">af</span><span class="o">?</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">f</span><span class="o">+</span><span class="n">xi</span><span class="p">))</span>
+<span class="w">           </span><span class="o">:</span><span class="n">nx</span><span class="o">-</span><span class="n">nf</span><span class="o">?</span><span class="p">(</span><span class="n">_x</span><span class="p">(</span><span class="n">_f</span><span class="p">(</span><span class="n">Ql</span><span class="p">())))</span><span class="o">:</span><span class="n">_f</span><span class="p">(</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">xi</span><span class="o">+</span><span class="n">fi</span><span class="p">))))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>This is certainly a combination of symbols that one could write, and
 I’ve already exploded the view a <span class="nowrap">bit—</span>blame the width of this website.
@@ -607,15 +614,15 @@ quite the syntax.)</p>
 addition is commutative to just do a recursive call with the arguments
 swapped, to get to the <code>atom+arr</code> case. Hold onto that thought.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Add</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">af</span><span class="o">?</span><span class="p">(</span><span class="n">c</span><span class="p">)(</span><span class="n">f</span><span class="o">+</span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="n">Add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
-<span class="w">        </span><span class="o">:</span><span class="n">af</span><span class="o">?</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">f</span><span class="o">+</span><span class="n">xi</span><span class="p">))</span>
-<span class="w">           </span><span class="o">:</span><span class="n">nx</span><span class="o">-</span><span class="n">nf</span><span class="o">?</span><span class="p">(</span><span class="n">_x</span><span class="p">(</span><span class="n">_f</span><span class="p">(</span><span class="n">Ql</span><span class="p">())))</span><span class="o">:</span><span class="n">_f</span><span class="p">(</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">xi</span><span class="o">+</span><span class="n">fi</span><span class="p">))))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Sub</span><span class="p">,</span><span class="n">Add</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">sub</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">F</span><span class="p">(</span><span class="n">Mod</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="o">||!</span><span class="n">af</span><span class="p">)</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">%</span><span class="n">f</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">xi</span><span class="o">%</span><span class="n">f</span><span class="p">)))</span>
+<span class="n">F</span><span class="p">(</span><span class="n">Tak</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">af</span><span class="p">)</span><span class="n">_f</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">sx</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="n">nx</span><span class="p">])))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Subtraction is addition with the multiplicative inverse of one of the
 arguments.</p>
@@ -633,15 +640,14 @@ bigger than <code>nx</code>. The <code>_f</code> here is obviously wrong, since 
 explicitly not allowed to be an array. I guess that should have been
 <code>_x</code>.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Sub</span><span class="p">,</span><span class="n">Add</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">sub</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-<span class="n">F</span><span class="p">(</span><span class="n">Mod</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="o">||!</span><span class="n">af</span><span class="p">)</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">%</span><span class="n">f</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">xi</span><span class="o">%</span><span class="n">f</span><span class="p">)))</span>
-<span class="n">F</span><span class="p">(</span><span class="n">Tak</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="o">!</span><span class="n">af</span><span class="p">)</span><span class="n">_f</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">sx</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="n">nx</span><span class="p">])))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Cat</span><span class="p">,</span><span class="n">f</span><span class="o">=</span><span class="n">af</span><span class="o">?</span><span class="n">cat</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">:</span><span class="n">f</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">ax</span><span class="o">?</span><span class="n">cat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">a</span><span class="p">(</span><span class="n">nf</span><span class="o">+</span><span class="n">nx</span><span class="p">);</span>
+<span class="w"> </span><span class="n">m</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">r</span><span class="o">+</span><span class="n">nf</span><span class="p">,</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="n">m</span><span class="p">(</span><span class="n">nf</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">f</span><span class="p">);</span><span class="w"> </span><span class="n">_r</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="n">_r</span><span class="p">(</span><span class="n">f</span><span class="p">);</span><span class="w"> </span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Now there’s the catenate I was looking for. First we do some
 preprocessing of the arguments: if either <code>f</code> or <code>x</code> are atoms, they’re
@@ -652,14 +658,14 @@ this was written in the way it is, and not using <code>_x</code> and <code>_f</c
 other functions, because we’d have to come up with another name for the
 result value other than <code>r</code> and names are bad.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Cat</span><span class="p">,</span><span class="n">f</span><span class="o">=</span><span class="n">af</span><span class="o">?</span><span class="n">cat</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">:</span><span class="n">f</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">ax</span><span class="o">?</span><span class="n">cat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">a</span><span class="p">(</span><span class="n">nf</span><span class="o">+</span><span class="n">nx</span><span class="p">);</span>
-<span class="w"> </span><span class="n">m</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">r</span><span class="o">+</span><span class="n">nf</span><span class="p">,</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="n">m</span><span class="p">(</span><span class="n">nf</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">f</span><span class="p">);</span><span class="w"> </span><span class="n">_r</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="n">_r</span><span class="p">(</span><span class="n">f</span><span class="p">);</span><span class="w"> </span><span class="n">r</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">At</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="n">af</span><span class="p">)</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">&gt;</span><span class="n">nf</span><span class="o">?</span><span class="n">Ql</span><span class="p">()</span><span class="o">:</span><span class="n">sf</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">_f</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">sf</span><span class="p">[</span><span class="n">xi</span><span class="p">]))))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">at</span><span class="p">,</span><span class="n">At</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Indexing can either be done with an atom, in which case we just get the
 index, or with an array, in which case we return back the array of all
@@ -668,21 +674,8 @@ there’s an ownership bug here, in that the case where <code>f</code> is an arr
 and <code>x</code> is an atom is just <code>sf[x]</code> when I think it should probably be
 <code>_f(sf[x])</code>.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">At</span><span class="p">,</span><span class="n">Qr</span><span class="p">(</span><span class="n">af</span><span class="p">)</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">&gt;</span><span class="n">nf</span><span class="o">?</span><span class="n">Ql</span><span class="p">()</span><span class="o">:</span><span class="n">sf</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">_f</span><span class="p">(</span><span class="n">N</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span><span class="n">sf</span><span class="p">[</span><span class="n">xi</span><span class="p">]))))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">at</span><span class="p">,</span><span class="n">At</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
-<div class="tc-text">
-<p>Again, this looks pretty scary, but if you compare it with the
-definition of <code>Add</code> above, you’ll see that it’s almost identical. In
-particular, this scheme of how to do scalar pervasion, as well as the
-array-on-array definition, can be used for any simple commutative
-operation one can do on arrays: equality, multiplication, and so on.</p>
-</div>
 <div class="tc-code">
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#define op(fn,OP) \</span>
@@ -692,16 +685,15 @@ operation one can do on arrays: equality, multiplication, and so on.</p>
 <span class="n">op</span><span class="p">(</span><span class="n">Eql</span><span class="p">,</span><span class="o">==</span><span class="p">)</span><span class="n">op</span><span class="p">(</span><span class="n">Not</span><span class="p">,</span><span class="o">!=</span><span class="p">)</span><span class="n">op</span><span class="p">(</span><span class="n">And</span><span class="p">,</span><span class="o">&amp;</span><span class="p">)</span><span class="n">op</span><span class="p">(</span><span class="n">Or</span><span class="p">,</span><span class="o">|</span><span class="p">)</span><span class="n">op</span><span class="p">(</span><span class="n">Prd</span><span class="p">,</span><span class="o">*</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="tc-text">
+<p>Again, this looks pretty scary, but if you compare it with the
+definition of <code>Add</code> above, you’ll see that it’s almost identical. In
+particular, this scheme of how to do scalar pervasion, as well as the
+array-on-array definition, can be used for any simple commutative
+operation one can do on arrays: equality, multiplication, and so on.</p>
+</div>
 </div>
 <div class="tc-row">
-<div class="tc-text">
-<p>Finally, syntax! As explained above, this version of K is composed of
-single digit numeric literals, single character globals, and the symbols
-you can see in <code>V</code>. Each of those has a monadic and dyadic meaning,
-which is realised by having an array <code>f</code> of monadic function pointers,
-and an array <code>F</code> of dyadic ones. Not-yet-implemented functionality is
-indicated by <code>foo</code> or <code>Foo</code>.</p>
-</div>
 <div class="tc-code">
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="kt">char</span><span class="o">*</span><span class="n">V</span><span class="o">=</span><span class="s">&quot; +-!#,@=~&amp;|*&quot;</span><span class="p">;</span>
@@ -710,8 +702,23 @@ indicated by <code>foo</code> or <code>Foo</code>.</p>
 <span class="c1">// V:           +   -   !   #   ,   @  =   ~   &amp;   |   *</span>
 </pre></div>
 </div>
+<div class="tc-text">
+<p>Finally, syntax! As explained above, this version of K is composed of
+single digit numeric literals, single character globals, and the symbols
+you can see in <code>V</code>. Each of those has a monadic and dyadic meaning,
+which is realised by having an array <code>f</code> of monadic function pointers,
+and an array <code>F</code> of dyadic ones. Not-yet-implemented functionality is
+indicated by <code>foo</code> or <code>Foo</code>.</p>
+</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Ovr</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">r</span><span class="p">(</span><span class="o">*</span><span class="n">sx</span><span class="p">,</span><span class="n">i</span><span class="p">(</span><span class="n">nx</span><span class="mi">-1</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="n">F</span><span class="p">[</span><span class="n">f</span><span class="p">](</span><span class="n">r</span><span class="p">,</span><span class="n">sx</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))))</span>
+<span class="n">F</span><span class="p">(</span><span class="n">Scn</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">r</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">nx</span><span class="p">),</span><span class="o">*</span><span class="n">sr</span><span class="o">=*</span><span class="n">sx</span><span class="p">;</span><span class="n">i</span><span class="p">(</span><span class="n">nx</span><span class="mi">-1</span><span class="p">,</span><span class="n">sr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">F</span><span class="p">[</span><span class="n">f</span><span class="p">](</span><span class="n">sr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">sx</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))))</span>
+<span class="kt">char</span><span class="o">*</span><span class="n">AV</span><span class="o">=</span><span class="s">&quot; /</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">;</span><span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="n">D</span><span class="p">[])(</span><span class="n">u</span><span class="p">,</span><span class="n">u</span><span class="p">)</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="n">Ovr</span><span class="p">,</span><span class="n">Scn</span><span class="p">};</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>Having defined our verbs, we still need some adverbs; what better to
 implement than a fold and a scan. We use <code>F</code> instead of <code>G</code> here, since
@@ -727,15 +734,17 @@ value, we return each step in the computation. This works by allocating
 an array the same size as <code>x</code>, and filling it in each step of the
 iteration.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">Ovr</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">r</span><span class="p">(</span><span class="o">*</span><span class="n">sx</span><span class="p">,</span><span class="n">i</span><span class="p">(</span><span class="n">nx</span><span class="mi">-1</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="n">F</span><span class="p">[</span><span class="n">f</span><span class="p">](</span><span class="n">r</span><span class="p">,</span><span class="n">sx</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))))</span>
-<span class="n">F</span><span class="p">(</span><span class="n">Scn</span><span class="p">,</span><span class="n">ax</span><span class="o">?</span><span class="n">x</span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">r</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">nx</span><span class="p">),</span><span class="o">*</span><span class="n">sr</span><span class="o">=*</span><span class="n">sx</span><span class="p">;</span><span class="n">i</span><span class="p">(</span><span class="n">nx</span><span class="mi">-1</span><span class="p">,</span><span class="n">sr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">F</span><span class="p">[</span><span class="n">f</span><span class="p">](</span><span class="n">sr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">sx</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))))</span>
-<span class="kt">char</span><span class="o">*</span><span class="n">AV</span><span class="o">=</span><span class="s">&quot; /</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">;</span><span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="n">D</span><span class="p">[])(</span><span class="n">u</span><span class="p">,</span><span class="n">u</span><span class="p">)</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="n">Ovr</span><span class="p">,</span><span class="n">Scn</span><span class="p">};</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">x</span><span class="o">&gt;=</span><span class="sc">'a'</span><span class="o">&amp;&amp;</span><span class="n">x</span><span class="o">&lt;=</span><span class="sc">'z'</span><span class="p">)</span>
+<span class="n">F</span><span class="p">(</span><span class="n">ag</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">f</span><span class="p">],</span><span class="o">!</span><span class="n">ay</span><span class="o">?</span><span class="n">_a</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">:</span><span class="n">x</span><span class="p">;</span><span class="n">r_</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">=</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">f</span><span class="p">(</span><span class="n">v</span><span class="p">,(</span><span class="n">strchr</span><span class="p">(</span><span class="n">V</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">?:</span><span class="n">V</span><span class="p">)</span><span class="o">-</span><span class="n">V</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">,(</span><span class="n">strchr</span><span class="p">(</span><span class="n">AV</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">?:</span><span class="n">AV</span><span class="p">)</span><span class="o">-</span><span class="n">AV</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">10</span><span class="o">&gt;</span><span class="n">x</span><span class="mi">-48</span><span class="o">?</span><span class="n">x</span><span class="mi">-48</span><span class="o">:</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">?</span><span class="n">r_</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">x</span><span class="mi">-97</span><span class="p">])</span><span class="o">:</span><span class="n">Q</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>What follows are some utility functions: <code>g</code> checks if something is a
 global variable (look at those glorious character literals), and <code>ag</code>
@@ -760,17 +769,13 @@ immediately. The check <code>10&gt;x-48</code> is decently obscure, until one
 becomes clear-ish, though I still reckon that a parsing step would
 probably greatly improve the clarity of this interpreter.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">x</span><span class="o">&gt;=</span><span class="sc">'a'</span><span class="o">&amp;&amp;</span><span class="n">x</span><span class="o">&lt;=</span><span class="sc">'z'</span><span class="p">)</span>
-<span class="n">F</span><span class="p">(</span><span class="n">ag</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">f</span><span class="p">],</span><span class="o">!</span><span class="n">ay</span><span class="o">?</span><span class="n">_a</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">:</span><span class="n">x</span><span class="p">;</span><span class="n">r_</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">=</span><span class="n">x</span><span class="p">)))</span>
-<span class="n">f</span><span class="p">(</span><span class="n">v</span><span class="p">,(</span><span class="n">strchr</span><span class="p">(</span><span class="n">V</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">?:</span><span class="n">V</span><span class="p">)</span><span class="o">-</span><span class="n">V</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">,(</span><span class="n">strchr</span><span class="p">(</span><span class="n">AV</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="o">?:</span><span class="n">AV</span><span class="p">)</span><span class="o">-</span><span class="n">AV</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">10</span><span class="o">&gt;</span><span class="n">x</span><span class="mi">-48</span><span class="o">?</span><span class="n">x</span><span class="mi">-48</span><span class="o">:</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">?</span><span class="n">r_</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">x</span><span class="mi">-97</span><span class="p">])</span><span class="o">:</span><span class="n">Q</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="n">l</span><span class="p">;</span><span class="n">u</span><span class="w"> </span><span class="n">mx</span><span class="o">=</span><span class="mi">99</span><span class="p">;</span><span class="kt">FILE</span><span class="o">*</span><span class="n">t</span><span class="p">;</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p><code>l</code> is our line buffer, in which we’ll read a single line of input,
 before moving onto parsing and execution. To start, a single line might
@@ -778,14 +783,15 @@ at most be <code>mx=99</code> characters long (though <code>getline</code> can c
 later on). The interpreter also supports reading from a file, which is
 what <code>t</code> is for.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="n">l</span><span class="p">;</span><span class="n">u</span><span class="w"> </span><span class="n">mx</span><span class="o">=</span><span class="mi">99</span><span class="p">;</span><span class="kt">FILE</span><span class="o">*</span><span class="n">t</span><span class="p">;</span>
-</pre></div>
-</div>
 </div>
 <h3 id="parsing-and-execution">Parsing and execution<a href="#parsing-and-execution" class="floatleft sec-link">§</a></h3>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">us</span><span class="p">(</span><span class="n">rl</span><span class="p">,</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="o">?:</span><span class="n">malloc</span><span class="p">(</span><span class="n">mx</span><span class="p">);</span><span class="n">P</span><span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">,</span><span class="n">l</span><span class="p">[</span><span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">mx</span><span class="p">)</span><span class="mi">-1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="o">?:</span><span class="n">fopen</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">Qs</span><span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="p">)</span><span class="n">r</span><span class="p">(</span><span class="n">getline</span><span class="p">(</span><span class="o">&amp;</span><span class="n">l</span><span class="p">,</span><span class="o">&amp;</span><span class="n">mx</span><span class="p">,</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="o">&lt;</span><span class="n">mx</span><span class="o">?</span><span class="n">l</span><span class="p">[</span><span class="n">r</span><span class="o">-</span><span class="p">(</span><span class="sc">'\n'</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="n">r</span><span class="mi">-1</span><span class="p">])]</span><span class="o">=</span><span class="mi">0</span><span class="o">:</span><span class="n">Q</span><span class="p">))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>The read line function. We allocate space for <code>l</code> (if we haven’t done so
 already).</p>
@@ -800,14 +806,19 @@ the rest of the code is just there in case <code>s</code> is present.</p>
 from it. On success, if present, we clean up the extra newline at the
 end and return <code>0</code>, or <code>Q</code> if we’ve reached the end of the file.</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">us</span><span class="p">(</span><span class="n">rl</span><span class="p">,</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="o">?:</span><span class="n">malloc</span><span class="p">(</span><span class="n">mx</span><span class="p">);</span><span class="n">P</span><span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">,</span><span class="n">l</span><span class="p">[</span><span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">mx</span><span class="p">)</span><span class="mi">-1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="o">?:</span><span class="n">fopen</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="n">Qs</span><span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="p">)</span><span class="n">r</span><span class="p">(</span><span class="n">getline</span><span class="p">(</span><span class="o">&amp;</span><span class="n">l</span><span class="p">,</span><span class="o">&amp;</span><span class="n">mx</span><span class="p">,</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="o">&lt;</span><span class="n">mx</span><span class="o">?</span><span class="n">l</span><span class="p">[</span><span class="n">r</span><span class="o">-</span><span class="p">(</span><span class="sc">'\n'</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="n">r</span><span class="mi">-1</span><span class="p">])]</span><span class="o">=</span><span class="mi">0</span><span class="o">:</span><span class="n">Q</span><span class="p">))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">us</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">*</span><span class="n">t</span><span class="o">=</span><span class="n">s</span><span class="p">;</span><span class="n">c</span><span class="w"> </span><span class="n">i</span><span class="o">=*</span><span class="n">t</span><span class="o">++</span><span class="p">;</span>
+<span class="w">   </span><span class="o">!*</span><span class="n">t</span><span class="o">?</span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">Qp</span><span class="p">()</span><span class="n">x</span><span class="p">)</span>
+<span class="w">      </span><span class="o">:</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">?</span><span class="n">d</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">?</span><span class="n">x</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">D</span><span class="p">[</span><span class="n">d</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)](</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">x</span><span class="p">))</span>
+<span class="w">                 </span><span class="o">:</span><span class="n">x</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)](</span><span class="n">x</span><span class="p">))</span>
+<span class="w">           </span><span class="o">:</span><span class="n">y</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Q</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="w">              </span><span class="mi">58</span><span class="o">==*</span><span class="n">t</span><span class="o">?</span><span class="n">x</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">Qp</span><span class="p">()</span><span class="n">ag</span><span class="p">(</span><span class="n">i</span><span class="mi">-97</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+<span class="w">                    </span><span class="o">:</span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">Qp</span><span class="p">()</span><span class="n">c</span><span class="w"> </span><span class="n">f</span><span class="o">=</span><span class="n">v</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">);</span><span class="n">Qd</span><span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">f</span><span class="p">](</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))))</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>We’ve reached the evaluation step. As you will probably have guessed
 from the likes of the <code>n</code> function, lexing and parsing happens
@@ -845,19 +856,18 @@ both <code>a</code> and <code>b</code> point to the same bit of memory. In parti
 something else immediately deallocates what it was pointing to. For the
 same reason, don’t try <code>a:b:!5</code> followed by <code>b:a</code> :)</p>
 </div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">us</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">*</span><span class="n">t</span><span class="o">=</span><span class="n">s</span><span class="p">;</span><span class="n">c</span><span class="w"> </span><span class="n">i</span><span class="o">=*</span><span class="n">t</span><span class="o">++</span><span class="p">;</span>
-<span class="w">   </span><span class="o">!*</span><span class="n">t</span><span class="o">?</span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">Qp</span><span class="p">()</span><span class="n">x</span><span class="p">)</span>
-<span class="w">      </span><span class="o">:</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">?</span><span class="n">d</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">?</span><span class="n">x</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">D</span><span class="p">[</span><span class="n">d</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)](</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">x</span><span class="p">))</span>
-<span class="w">                 </span><span class="o">:</span><span class="n">x</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="n">v</span><span class="p">(</span><span class="n">i</span><span class="p">)](</span><span class="n">x</span><span class="p">))</span>
-<span class="w">           </span><span class="o">:</span><span class="n">y</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">Q</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="w">              </span><span class="mi">58</span><span class="o">==*</span><span class="n">t</span><span class="o">?</span><span class="n">x</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">Qp</span><span class="p">()</span><span class="n">ag</span><span class="p">(</span><span class="n">i</span><span class="mi">-97</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
-<span class="w">                    </span><span class="o">:</span><span class="n">x</span><span class="p">(</span><span class="n">n</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">Qp</span><span class="p">()</span><span class="n">c</span><span class="w"> </span><span class="n">f</span><span class="o">=</span><span class="n">v</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">);</span><span class="n">Qd</span><span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="n">f</span><span class="p">](</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))))</span>
-</pre></div>
-</div>
 </div>
 <div class="tc-row">
+<div class="tc-code">
+
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="kt">char</span><span class="o">**</span><span class="n">v</span><span class="p">){</span><span class="n">u</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="o">==</span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="o">?:</span><span class="n">O</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">BA</span><span class="p">);</span>
+<span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="n">r</span><span class="o">?:</span><span class="n">w</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span><span class="n">Q</span><span class="o">!=</span><span class="n">rl</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">l</span><span class="p">){</span>
+<span class="w">   </span><span class="n">$</span><span class="p">(</span><span class="mi">92</span><span class="o">==*</span><span class="n">l</span><span class="o">&amp;&amp;!</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">$</span><span class="p">(</span><span class="mi">92</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="k">break</span><span class="p">)</span><span class="n">$</span><span class="p">(</span><span class="mi">119</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">wu</span><span class="p">(</span><span class="n">WS</span><span class="p">))</span><span class="n">$</span><span class="p">(</span><span class="mi">118</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">wg</span><span class="p">()))</span>
+<span class="w">   </span><span class="n">$</span><span class="p">(</span><span class="sc">'/'</span><span class="o">==*</span><span class="n">l</span><span class="p">,</span><span class="k">continue</span><span class="p">)</span>
+<span class="w">   </span><span class="n">x</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">l</span><span class="p">),</span><span class="w"> </span><span class="mi">58</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">?</span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">x</span><span class="p">)));}</span>
+<span class="w">  </span><span class="n">R</span><span class="w"> </span><span class="n">free</span><span class="p">(</span><span class="n">l</span><span class="p">),</span><span class="n">fclose</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="mi">0</span><span class="p">;}</span>
+</pre></div>
+</div>
 <div class="tc-text">
 <p>The main function starts off with checking whether an argument was
 supplied; if not, we’re in <span class="small-caps">repl</span> mode, so print the startup banner. It’s
@@ -887,16 +897,6 @@ However, since we were in <span class="small-caps">repl</span> mode before, the 
 either <span class="small-caps">null</span> or non-initialised, so this immediately segfaults the
 program. A fitting end for the person foolish enough to try and exit K,
 I would say!</p>
-</div>
-<div class="tc-code">
-
-<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="kt">char</span><span class="o">**</span><span class="n">v</span><span class="p">){</span><span class="n">u</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="o">==</span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="o">?:</span><span class="n">O</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">BA</span><span class="p">);</span>
-<span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="n">r</span><span class="o">?:</span><span class="n">w</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span><span class="n">Q</span><span class="o">!=</span><span class="n">rl</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">l</span><span class="p">){</span>
-<span class="w">   </span><span class="n">$</span><span class="p">(</span><span class="mi">92</span><span class="o">==*</span><span class="n">l</span><span class="o">&amp;&amp;!</span><span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">$</span><span class="p">(</span><span class="mi">92</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="k">break</span><span class="p">)</span><span class="n">$</span><span class="p">(</span><span class="mi">119</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">wu</span><span class="p">(</span><span class="n">WS</span><span class="p">))</span><span class="n">$</span><span class="p">(</span><span class="mi">118</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">wg</span><span class="p">()))</span>
-<span class="w">   </span><span class="n">$</span><span class="p">(</span><span class="sc">'/'</span><span class="o">==*</span><span class="n">l</span><span class="p">,</span><span class="k">continue</span><span class="p">)</span>
-<span class="w">   </span><span class="n">x</span><span class="p">(</span><span class="n">e</span><span class="p">(</span><span class="n">l</span><span class="p">),</span><span class="w"> </span><span class="mi">58</span><span class="o">==</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">?</span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="n">_x</span><span class="p">(</span><span class="n">W</span><span class="p">(</span><span class="n">x</span><span class="p">)));}</span>
-<span class="w">  </span><span class="n">R</span><span class="w"> </span><span class="n">free</span><span class="p">(</span><span class="n">l</span><span class="p">),</span><span class="n">fclose</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="mi">0</span><span class="p">;}</span>
-</pre></div>
 </div>
 </div>
 <h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>

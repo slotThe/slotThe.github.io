@@ -883,8 +883,8 @@ myPandocCompiler =
           let (ps, rs)  = span isWrappable bs
               (cs, rs') = span (\case CodeBlock{} -> True; _ -> False) rs
            in Div ("", ["tc-row"], [])
-                [ Div ("", ["tc-text"], []) (b : ps)
-                , Div ("", ["tc-code"], []) cs
+                [ Div ("", ["tc-code"], []) cs       -- Code first for rss and phones; turns around via css
+                , Div ("", ["tc-text"], []) (b : ps)
                 ]
               : go rs'
       | otherwise = b : go bs
