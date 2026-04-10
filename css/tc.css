@@ -35,7 +35,7 @@ div#contents-big {
     @media (width <= 768px)  { max-width: 100%; }
 }
 
-.tc-row {                       /* Written text next to code */
+.tc-row {                       /* A row of text+code */
                                grid-template-columns: .9fr 1fr;
     @media (width >= 1800px) { grid-template-columns: .75fr 1fr; }
     display: grid;
@@ -46,8 +46,13 @@ div#contents-big {
     @media (width <= 1024px) {
         grid-template-columns: 1fr;
         margin-top: -.5rem;
-        & > p { margin-bottom: 0; }
+        & .tc-text > p { margin-bottom: 0; }
     }
+}
+
+.tc-text {                      /* Written text next to code */
+    p + p { text-indent: 1.2em; margin-top: 0 } /* Indents for inbetween paras */
+    p:has(+ p) { margin-bottom: 0 }
 }
 
 .tc-code {                      /* Code next to written text */

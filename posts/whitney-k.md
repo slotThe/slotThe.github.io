@@ -1,6 +1,7 @@
 ---
 title: But what about K?
 date: 2026-04-07
+last-modified: 2026-04-07
 two-column: true
 tags: c, k, array-lang
 og-description: Trying to understand Arthur Whitney's ~two-page K interpreter.
@@ -113,7 +114,6 @@ fine.
 #define i(n,e) {int $n=n;int i=0;for(;i<$n;++i){e;}}
 ```
 
-<div>
 The `_(e)` macro uses the [statement
 expression](https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html) GCC
 extension—it turns a compound statement into an expression. According to
@@ -125,11 +125,11 @@ the docs
 > statement last within the braces, the construct has type void, and
 > thus effectively no value.)
 
-Better remember that.\
-&emsp;The `P` macro is an early return. Spoiling you a bit, it's only
+Better remember that.
+
+The `P` macro is an early return. Spoiling you a bit, it's only
 used once when reading the input into a line buffer, so I wouldn't worry
 too much about it.
-</div>
 
 ``` c
 #define _(e) ({e;})
@@ -151,18 +151,21 @@ macro, cast it to `u`, and return it.
 With this we can define monadic and dyadic function templates `f` and
 `F`. This is a bit like the `V1` and `V2` macros in the [J
 Incunabulum](https://code.jsoftware.com/wiki/Essays/Incunabulum), if
-you've read through that, only this time they're distinguished by case.\
-&emsp;It's a bit confusing that `F` takes arguments `f` and `x`, instead
+you've read through that, only this time they're distinguished by case.
+
+It's a bit confusing that `F` takes arguments `f` and `x`, instead
 of `x` and `y`, but that's, I guess, because it's used to both define
 dyadic verbs and monadic adverbs, where in the latter case `f` and `x`
 are more appropriate, and this naming convention fits better with the
-next function.\
-&emsp;The `G` function is a template for an adverb, which additionally
+next function.
+
+The `G` function is a template for an adverb, which additionally
 takes a (for real this time) pointer `f` to a function to modify, as
 well as two arguments. There are no dyadic adverbs in this interpreter,
 so `G` is only used as a shorthand to define some utility functions
-later on.\
-&emsp;Lastly, `us` is a special template for a function getting a string
+later on.
+
+Lastly, `us` is a special template for a function getting a string
 as an argument. Think something like an evaluation function.
 
 ``` c
@@ -187,8 +190,9 @@ Arrays are implemented as fat pointers: the length of the vector `nx`
 (one byte long!) and its reference count `rx` are stored before the start
 of the array. `xi` is a simple accessor function that gets the index of
 `x` at `i`, or 0 if `i` is larger or equal than the length of the
-vector.\
-&emsp;It's a bit unfortunate that the language is not entirely consistent
+vector.
+
+It's a bit unfortunate that the language is not entirely consistent
 here, I think: In `ax`, `sx`, `nx`, and `rx`, the argument is the last
 character (which will be important below, when we'll define some
 analogues for other implicit arguments). For `xi`, however, this swaps
@@ -207,8 +211,9 @@ an argument `a`, just decides to call it `x`, and then calls `e`, which,
 presumably, makes use of an implicit argument `x`. The whole thing is
 wrapped in a `_` macro, to make sure we can assign the result of
 `x(a,e)` to something. Same with `y(a,e)` and `r(a,e)`, only the latter
-returns `r` instead of the value of the last statement of `e`.\
-&emsp;Likewise, `sr`, `nr`, and `ri` are like `sx`, `nx`, and `xi`, but for `r`.
+returns `r` instead of the value of the last statement of `e`.
+
+Likewise, `sr`, `nr`, and `ri` are like `sx`, `nx`, and `xi`, but for `r`.
 
 ``` c
 #define x(a,e) _(u x=a;e)
@@ -231,8 +236,9 @@ argument names.
 #define fi x(f,xi)
 ```
 
-We even have some kind of error handling!\
-&emsp;Even though it might not look like it, the definition `u Q=128` is
+We even have some kind of error handling!
+
+Even though it might not look like it, the definition `u Q=128` is
 actually super interesting. This interpreter runs on 8-bit integers, so
 if we go by normal two's complement rules (instead of thinking we'll use
 unsigned longs all the way through), then we can represent numbers from
@@ -241,15 +247,17 @@ this will already wrap around, representing `-128` (you can skip ahead
 to the definition of `si` if you're interested). By defining `Q` to be
 `128`, we're effectively reducing our range of representable numbers
 from `[-128,127]` to `[-127,127]`. But a small price to pay for errors,
-I guess.\
-&emsp;The `Q` macro[^5] tests if something is an error, and if yes
+I guess.
+
+The `Q` macro[^5] tests if something is an error, and if yes
 returns it, `Qe` is sugar for the yet-to-be-defined `err`, which pops up
 an error with some additional information, such as the line number. This
 uses the `__FUNCTION__` variable and `__LINE__` macro to get the name of
 the function where an error occurred, as well as its position in the
 source file. `Qs` throws an error with the given string `s` if `e` is
-true.\
-&emsp;Using this machinery, we can build a bunch of error types, like
+true.
+
+Using this machinery, we can build a bunch of error types, like
 *rank* (expecting an array/atom and getting the other type) or *nyi*
 (not yet implemented).
 
@@ -315,8 +323,9 @@ function looks a bit scarier, but it's actually not that bad: it
 iterates over all global elements (= `U`) and, if they're an array,
 prints name, length, and reference count to stdout. In particular, this
 does not show globals that are just assigned to scalars, but just stuff
-we've allocated.\
-&emsp;This makes heavy use of `x(a,e)` and all of these implicit
+we've allocated.
+
+This makes heavy use of `x(a,e)` and all of these implicit
 arguments we've seen in `a.h`, but now I think it's apparent why they
 exist in the first place. As [everyone knows](https://xkcd.com/1053/),
 `97` is ASCII `a`, so `i+97` would print `a` for `i=0`, `b` for `i=1`,
@@ -327,15 +336,18 @@ f(wu,O("%lu\n",x))
 void wg(){i(26,x(U[i],$(!ax,O("%c[%d] %d\n",i+97,nx,rx))))}
 ```
 
-The next few lines are all about stringifying and printing.\
-&emsp;`w` writes the raw byte(s) at the correct address to stdout.\
-&emsp;`wi` pretty-prints an integer; the real work is done by the
+The next few lines are all about stringifying and printing.
+
+`w` writes the raw byte(s) at the correct address to stdout.
+
+`wi` pretty-prints an integer; the real work is done by the
 stringification function `si`, which turns an atom into a string and
 takes care of all the horrible casting of 8-bit unsigned integers to
 8-bit signed ones. This is actually the only place where we (have to)
 take care of this—in all other instances we just add `unsigned long`'s,
-and pretend that's what we're doing.\
-&emsp;`W` is a more general writing function, which either prints an
+and pretend that's what we're doing.
+
+`W` is a more general writing function, which either prints an
 integer if `x` is an atom, or prints the entire array, separated by a
 space (inserted by `si` automatically). We finish all of that with a
 newline (of course you knew that linefeed was ASCII 10, right?)
@@ -363,8 +375,9 @@ G(err,w(f);w(58);wi(x);w(y);w(10);Q)
 First, we get to that allocation function we had in an earlier
 macro, as well as its destruction counterpart. `a(x)` increases the
 workspace size by `x`, allocates `x+2` bytes, fills in the length and
-ref count, and returns the finished array.\
-&emsp;To me, the most interesting bit here is that the ref counts start
+ref count, and returns the finished array.
+
+To me, the most interesting bit here is that the ref counts start
 at 0 and not at 1. This means there's a tiny ownership system hidden
 inside of this implementation! Every verb immediately owns its value,
 and a single call to `_r` (see below) will deallocate a freshly
@@ -421,8 +434,9 @@ More functions, but this time a little less exciting than `sub`: an
 and a [reverse](https://aplwiki.com/wiki/Reverse). I'm a bit confused as
 to why enlist is called `cat`, which I guess is short for
 [catenate](https://aplwiki.com/wiki/Catenate), which I would however
-expect to be a dyadic function that concatenates its two arguments.\
-&emsp;I do think that I can spot a bug in `cnt`: it explicitly expects
+expect to be a dyadic function that concatenates its two arguments.
+
+I do think that I can spot a bug in `cnt`: it explicitly expects
 an array—and, as such, gets ownership over it—but never decreases its
 refcount. This means that calling `cnt` lots of times will blow up the
 refcount of any variable for no discernible reason.
@@ -436,15 +450,17 @@ f(rev,Qr(ax)_x(N(nx,sx[nx-i-1])))
 
 This is certainly a combination of symbols that one could write, and
 I've already exploded the view a bit—blame the width of this website.
-Imagine reading this on one line.\
-&emsp;The function goes through four cases, `atom+atom`, `atom+arr`,
+Imagine reading this on one line.
+
+The function goes through four cases, `atom+atom`, `atom+arr`,
 `arr+atom`, and `arr+arr`, with the last case having an extra error case
 for arrays of unequal length. The `arr+atom` case implements what's
 usually called [scalar pervasion](https://aplwiki.com/wiki/Pervasion) in APL-type languages, and
 *broadcasting* everywhere else (numpy, Julia, and R; basically, the
 languages that strongly take after the semantics of APL, although not
-quite the syntax.)\
-&emsp;The `arr+atom` case is interesting, in that it uses the fact that
+quite the syntax.)
+
+The `arr+atom` case is interesting, in that it uses the fact that
  addition is commutative to just do a recursive call with the arguments
  swapped, to get to the `atom+arr` case. Hold onto that thought.
 
@@ -455,15 +471,17 @@ F(Add,ax?af?(c)(f+x):Add(x,f)
 ```
 
 Subtraction is addition with the multiplicative inverse of one of the
-arguments.\
-&emsp;`Mod` is, as usual for these types of languages, defined from
+arguments.
+
+`Mod` is, as usual for these types of languages, defined from
 right to left, so `Mod(f,x)` would be $x \mod f$. Again we have some
 kind of scalar pervasion in that `x` is allowed to be an array. The
 really cool thing about this version of mod is that, since we're working
 with unsigned integers under the hood, it automatically has the
 *correct* semantics! Gone are the days where `-3%5` evaluates to `-3`,
-in K we correctly compute `5!-3` to be `3`.[^3]\
-&emsp;`Tak(f,x)` is [take](https://aplwiki.com/wiki/Take). If `x` is an
+in K we correctly compute `5!-3` to be `3`.[^3]
+
+`Tak(f,x)` is [take](https://aplwiki.com/wiki/Take). If `x` is an
 atom, we just create an array with `x` repeated `f` times, otherwise we
 take `f` many things from the array `x`, wrapping around if `f` is
 bigger than `nx`. The `_f` here is obviously wrong, since `f` is
@@ -532,14 +550,16 @@ u(*f[])(u  )={0,foo,sub,til,cnt,cat,at,foo,foo,foo,rev,foo},
 
 Having defined our verbs, we still need some adverbs; what better to
 implement than a fold and a scan. We use `F` instead of `G` here, since
-all of the adverbs are monadic.\
-&emsp;Fold, called `Ovr(f,x)` here, works as one might expect. If `x` is
+all of the adverbs are monadic.
+
+Fold, called `Ovr(f,x)` here, works as one might expect. If `x` is
 not an array, but an atom, return it. Otherwise, we start at the first
 element of `x`, and in each step call the function `f` on both the
 current accumulator `r` and the next element `sx[i+1]`. Notice how the
 `r(a,e)` macro keeps us from having to manually declare an intermediate
-variable, like `u r=*sx`.\
-&emsp;The scan works in much the same way, but instead of a single
+variable, like `u r=*sx`.
+
+The scan works in much the same way, but instead of a single
 value, we return each step in the computation. This works by allocating
 an array the same size as `x`, and filling it in each step of the
 iteration.
@@ -554,16 +574,18 @@ What follows are some utility functions: `g` checks if something is a
 global variable (look at those glorious character literals), and `ag`
 sets the global at `f` to `x`, immediately deallocating the old variable
 `U[f]` if it was heap allocated (surely this will not come back to bite
-us later on!).\
-&emsp;`v` gets the index of `x` in the `V` array; and `d` does the same
+us later on!).
+
+`v` gets the index of `x` in the `V` array; and `d` does the same
 for `AV`. Both of those last ones use `strchr` with some "let's see what
 the pointer offset is" maths, which I think is actually the idiomatic
 way to go about that (but I don't know C, so don't quote me on that.)
 What's not super standard is `x?:y`, which I believe is a [GCC
 extension](https://gcc.gnu.org/onlinedocs/gcc/Conditionals.html) and not
 part of any C standard. It's just a shorter way to write `x?x:y`; cute syntactic
-~~cocaine~~ sugar.\
-&emsp;The [noun](https://aplwiki.com/wiki/A_Dictionary_of_APL) function
+~~cocaine~~ sugar.
+
+The [noun](https://aplwiki.com/wiki/A_Dictionary_of_APL) function
 `n` (think array, variable, number, …) does something we haven't seen
 anywhere else yet—it bumps the ref count of the accessed noun if it's a
 global. This makes the whole refcounting scheme work, otherwise we'd
@@ -594,15 +616,17 @@ static char*l;u mx=99;FILE*t;
 ## Parsing and execution
 
 The read line function. We allocate space for `l` (if we haven't done so
-already).\
-&emsp;If the argument (remember, `us` creates a string function with
+already).
+
+If the argument (remember, `us` creates a string function with
 arguments `s` and not `x`) is NULL, we just read up to `mx` characters
 from stdin. Read either returns the number of bytes read, or a `-1` in
 case of an error, so if everything goes well `l[read(…)-1]` will point
 to `\n`, which we'll clean up and change to `\0`. Recall that `P` causes
 the function to return (`0` in this case, unless assignment fails), so
-the rest of the code is just there in case `s` is present.\
-&emsp;If we give an argument to `rl`, try to open it as a file and read
+the rest of the code is just there in case `s` is present.
+
+If we give an argument to `rl`, try to open it as a file and read
 from it. On success, if present, we clean up the extra newline at the
 end and return `0`, or `Q` if we've reached the end of the file.
 
@@ -610,8 +634,6 @@ end and return `0`, or `Q` if we've reached the end of the file.
 us(rl,l=l?:malloc(mx);P(!s,l[read(0,l,mx)-1]=0)t=t?:fopen(s,"r");
  Qs(!t,s)r(getline(&l,&mx,t), r=r<mx?l[r-('\n'==l[r-1])]=0:Q))
 ```
-
-<div>
 
 We've reached the evaluation step. As you will probably have guessed
 from the likes of the `n` function, lexing and parsing happens
@@ -622,8 +644,9 @@ step, and just process character by character. I freely admit to doing
 some perhaps unnecessary aligning here, as reading this all on one line
 would be quite the exercise. I'll excuse myself with the fact that you'd
 then have to scroll the code box on this website, which is probably not
-a good experience.\
-&emsp;We start by copying the argument `s` into a temp `t`, getting the
+a good experience.
+
+We start by copying the argument `s` into a temp `t`, getting the
 first character of `t`, and advancing. What follows is some simple logic
 to figure out what we should do. I'll try to enumerate the cases, with
 an example in parentheses, before going into it.
@@ -651,8 +674,6 @@ both `a` and `b` point to the same bit of memory. In particular, doing
 something else immediately deallocates what it was pointing to. For the
 same reason, don't try `a:b:!5` followed by `b:a` :)
 
-</div>
-
 ``` c
 us(e, c*t=s;c i=*t++;
    !*t?x(n(i),Qp()x)
@@ -666,12 +687,14 @@ us(e, c*t=s;c i=*t++;
 The main function starts off with checking whether an argument was
 supplied; if not, we're in REPL mode, so print the startup banner. It's
 a bit unfortunate that REPL mode requires `r` to be `0`, but I guess it
-is what it is.\
-&emsp;After that, it's off to the races. If we're in REPL mode, we print
+is what it is.
+
+After that, it's off to the races. If we're in REPL mode, we print
 a single space, so that the input is indented, and try to read the next
 line; if there's any error, abort and clean up (notice the comma
-operator again).\
-&emsp;Once the loop starts, there are some meta characters that one can
+operator again).
+
+Once the loop starts, there are some meta characters that one can
 insert to get some more information about the session.[^4] The numbers sort
 of make this unnecessarily hard to read, but a few `chr` calls later I'm
 reminded that `92` is `\`, `119` is `w` and `118` is `v` (why `/` is
@@ -680,12 +703,15 @@ written as a char literal is beyond me). So `\\` would exit the REPL,
 print all global variables. This doesn't interfere with using `\` for
 scan, since these instructions have to be at the start of the line
 (i.e., there's no verb given yet that scan could act upon), and we
-further also check via `!l[2]` that they're the only instructions given.\
-&emsp;A line starting with a forward slash is ignored as a comment.\
-&emsp;Finally, if nothing else matches, we evaluate the line. If the
+further also check via `!l[2]` that they're the only instructions given.
+
+A line starting with a forward slash is ignored as a comment.
+
+Finally, if nothing else matches, we evaluate the line. If the
 second character was a `:` (i.e., if the line ended with an assignment)
-then don't show anything, otherwise print the results.\
-&emsp;If you're a careful reader, you might have noticed that `\\` will
+then don't show anything, otherwise print the results.
+
+If you're a careful reader, you might have noticed that `\\` will
 break out of the loop, causing `free(l),fclose(t),0` to be executed.
 However, since we were in REPL mode before, the file variable `t` is
 either NULL or non-initialised, so this immediately segfaults the

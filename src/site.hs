@@ -879,8 +879,14 @@ myPandocCompiler =
     go [] = []
     go (b:bs)
       | isWrappable b =
-          let (cbs, rst) = span (\case CodeBlock{} -> True; _ -> False) bs
-           in Div ("", ["tc-row"], []) [b, Div ("", ["tc-code"], []) cbs] : go rst
+          -- Slurp all paragraphs until we find a code block to split on.
+          let (ps, rs)  = span isWrappable bs
+              (cs, rs') = span (\case CodeBlock{} -> True; _ -> False) rs
+           in Div ("", ["tc-row"], [])
+                [ Div ("", ["tc-text"], []) (b : ps)
+                , Div ("", ["tc-code"], []) cs
+                ]
+              : go rs'
       | otherwise = b : go bs
 
     isWrappable :: Block -> Bool

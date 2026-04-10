@@ -118,7 +118,6 @@ fine.</p>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define O printf</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define $(a</span><span class="op">,</span><span class="pp">b</span><span class="op">)</span><span class="pp"> </span><span class="cf">if</span><span class="op">(</span><span class="pp">a</span><span class="op">)</span><span class="pp">b</span><span class="op">;</span><span class="cf">else</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define i</span><span class="op">(</span><span class="pp">n</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp"> </span><span class="op">{</span><span class="dt">int</span><span class="pp"> $n</span><span class="op">=</span><span class="pp">n</span><span class="op">;</span><span class="dt">int</span><span class="pp"> i</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="cf">for</span><span class="op">(;</span><span class="pp">i</span><span class="op">&lt;</span><span class="pp">$n</span><span class="op">;++</span><span class="pp">i</span><span class="op">){</span><span class="pp">e</span><span class="op">;}}</span></span></code></pre></div>
-<div>
 <p>The <code>_(e)</code> macro uses the <a href="https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html">statement
 expression</a> GCC
 extension—it turns a compound statement into an expression. According to
@@ -130,11 +129,10 @@ value of the entire construct. (If you use some other kind of
 statement last within the braces, the construct has type void, and
 thus effectively no value.)</p>
 </blockquote>
-<p>Better remember that.<br />
- The <code>P</code> macro is an early return. Spoiling you a bit, it’s only
+<p>Better remember that.</p>
+<p>The <code>P</code> macro is an early return. Spoiling you a bit, it’s only
 used once when reading the input into a line buffer, so I wouldn’t worry
 too much about it.</p>
-</div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define _</span><span class="op">(</span><span class="pp">e</span><span class="op">)</span><span class="pp"> </span><span class="op">({</span><span class="pp">e</span><span class="op">;})</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define P</span><span class="op">(</span><span class="pp">b</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp"> </span><span class="cf">if</span><span class="op">(</span><span class="pp">b</span><span class="op">)</span><span class="cf">return</span><span class="pp"> _</span><span class="op">(</span><span class="pp">e</span><span class="op">);</span></span></code></pre></div>
 <p>Now this is getting interesting. <code>_u</code> is a generic template for defining
@@ -148,18 +146,18 @@ macro, cast it to <code>u</code>, and return it.</p>
 <p>With this we can define monadic and dyadic function templates <code>f</code> and
 <code>F</code>. This is a bit like the <code>V1</code> and <code>V2</code> macros in the <a href="https://code.jsoftware.com/wiki/Essays/Incunabulum">J
 Incunabulum</a>, if
-you’ve read through that, only this time they’re distinguished by case.<br />
- It’s a bit confusing that <code>F</code> takes arguments <code>f</code> and <code>x</code>, instead
+you’ve read through that, only this time they’re distinguished by case.</p>
+<p>It’s a bit confusing that <code>F</code> takes arguments <code>f</code> and <code>x</code>, instead
 of <code>x</code> and <code>y</code>, but that’s, I guess, because it’s used to both define
 dyadic verbs and monadic adverbs, where in the latter case <code>f</code> and <code>x</code>
 are more appropriate, and this naming convention fits better with the
-next function.<br />
- The <code>G</code> function is a template for an adverb, which additionally
+next function.</p>
+<p>The <code>G</code> function is a template for an adverb, which additionally
 takes a (for real this time) pointer <code>f</code> to a function to modify, as
 well as two arguments. There are no dyadic adverbs in this interpreter,
 so <code>G</code> is only used as a shorthand to define some utility functions
-later on.<br />
- Lastly, <code>us</code> is a special template for a function getting a string
+later on.</p>
+<p>Lastly, <code>us</code> is a special template for a function getting a string
 as an argument. Think something like an evaluation function.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define f</span><span class="op">(</span><span class="pp">g</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp"> _u</span><span class="op">(</span><span class="pp">g</span><span class="op">,</span><span class="pp">e</span><span class="op">,</span>u<span class="pp"> x</span><span class="op">)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define F</span><span class="op">(</span><span class="pp">g</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp"> _u</span><span class="op">(</span><span class="pp">g</span><span class="op">,</span><span class="pp">e</span><span class="op">,</span>u<span class="pp"> f</span><span class="op">,</span>u<span class="pp"> x</span><span class="op">)</span></span>
@@ -176,8 +174,8 @@ The <code>sx</code> macro reinterprets <code>x</code> as an array of bytes.</p>
 (one byte long!) and its reference count <code>rx</code> are stored before the start
 of the array. <code>xi</code> is a simple accessor function that gets the index of
 <code>x</code> at <code>i</code>, or 0 if <code>i</code> is larger or equal than the length of the
-vector.<br />
- It’s a bit unfortunate that the language is not entirely consistent
+vector.</p>
+<p>It’s a bit unfortunate that the language is not entirely consistent
 here, I think: In <code>ax</code>, <code>sx</code>, <code>nx</code>, and <code>rx</code>, the argument is the last
 character (which will be important below, when we’ll define some
 analogues for other implicit arguments). For <code>xi</code>, however, this swaps
@@ -192,8 +190,8 @@ an argument <code>a</code>, just decides to call it <code>x</code>, and then cal
 presumably, makes use of an implicit argument <code>x</code>. The whole thing is
 wrapped in a <code>_</code> macro, to make sure we can assign the result of
 <code>x(a,e)</code> to something. Same with <code>y(a,e)</code> and <code>r(a,e)</code>, only the latter
-returns <code>r</code> instead of the value of the last statement of <code>e</code>.<br />
- Likewise, <code>sr</code>, <code>nr</code>, and <code>ri</code> are like <code>sx</code>, <code>nx</code>, and <code>xi</code>, but for <code>r</code>.</p>
+returns <code>r</code> instead of the value of the last statement of <code>e</code>.</p>
+<p>Likewise, <code>sr</code>, <code>nr</code>, and <code>ri</code> are like <code>sx</code>, <code>nx</code>, and <code>xi</code>, but for <code>r</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define x</span><span class="op">(</span><span class="pp">a</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp"> _</span><span class="op">(</span>u<span class="pp"> x</span><span class="op">=</span><span class="pp">a</span><span class="op">;</span><span class="pp">e</span><span class="op">)</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define y</span><span class="op">(</span><span class="pp">a</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp"> _</span><span class="op">(</span>u<span class="pp"> y</span><span class="op">=</span><span class="pp">a</span><span class="op">;</span><span class="pp">e</span><span class="op">)</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define r</span><span class="op">(</span><span class="pp">a</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp"> _</span><span class="op">(</span>u<span class="pp"> r</span><span class="op">=</span><span class="pp">a</span><span class="op">;</span><span class="pp">e</span><span class="op">;</span><span class="pp">r</span><span class="op">)</span></span>
@@ -208,8 +206,8 @@ argument names.</p>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define rf x</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">rx</span><span class="op">)</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define sf x</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">sx</span><span class="op">)</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#define fi x</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">xi</span><span class="op">)</span></span></code></pre></div>
-<p>We even have some kind of error handling!<br />
- Even though it might not look like it, the definition <code>u Q=128</code> is
+<p>We even have some kind of error handling!</p>
+<p>Even though it might not look like it, the definition <code>u Q=128</code> is
 actually super interesting. This interpreter runs on 8-bit integers, so
 if we go by normal two’s complement rules (instead of thinking we’ll use
 unsigned longs all the way through), then we can represent numbers from
@@ -218,15 +216,15 @@ this will already wrap around, representing <code>-128</code> (you can skip ahea
 to the definition of <code>si</code> if you’re interested). By defining <code>Q</code> to be
 <code>128</code>, we’re effectively reducing our range of representable numbers
 from <code>[-128,127]</code> to <code>[-127,127]</code>. But a small price to pay for errors,
-I guess.<br />
- The <code>Q</code> macro<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> tests if something is an error, and if yes
+I guess.</p>
+<p>The <code>Q</code> macro<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> tests if something is an error, and if yes
 returns it, <code>Qe</code> is sugar for the yet-to-be-defined <code>err</code>, which pops up
 an error with some additional information, such as the line number. This
 uses the <code>__FUNCTION__</code> variable and <code>__LINE__</code> macro to get the name of
 the function where an error occurred, as well as its position in the
 source file. <code>Qs</code> throws an error with the given string <code>s</code> if <code>e</code> is
-true.<br />
- Using this machinery, we can build a bunch of error types, like
+true.</p>
+<p>Using this machinery, we can build a bunch of error types, like
 <em>rank</em> (expecting an array/atom and getting the other type) or <em>nyi</em>
 (not yet implemented).</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">const</span> u Q<span class="op">=</span><span class="dv">128</span><span class="op">;</span></span>
@@ -270,23 +268,23 @@ function looks a bit scarier, but it’s actually not that bad: it
 iterates over all global elements (= <code>U</code>) and, if they’re an array,
 prints name, length, and reference count to stdout. In particular, this
 does not show globals that are just assigned to scalars, but just stuff
-we’ve allocated.<br />
- This makes heavy use of <code>x(a,e)</code> and all of these implicit
+we’ve allocated.</p>
+<p>This makes heavy use of <code>x(a,e)</code> and all of these implicit
 arguments we’ve seen in <code>a.h</code>, but now I think it’s apparent why they
 exist in the first place. As <a href="https://xkcd.com/1053/">everyone knows</a>,
 <code>97</code> is ASCII <code>a</code>, so <code>i+97</code> would print <code>a</code> for <code>i=0</code>, <code>b</code> for <code>i=1</code>,
 and so on.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">(</span>wu<span class="op">,</span>O<span class="op">(</span><span class="st">&quot;</span><span class="sc">%lu\n</span><span class="st">&quot;</span><span class="op">,</span>x<span class="op">))</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> wg<span class="op">(){</span>i<span class="op">(</span><span class="dv">26</span><span class="op">,</span>x<span class="op">(</span>U<span class="op">[</span>i<span class="op">],</span>$<span class="op">(!</span>ax<span class="op">,</span>O<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c</span><span class="st">[</span><span class="sc">%d</span><span class="st">] </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span>i<span class="op">+</span><span class="dv">97</span><span class="op">,</span>nx<span class="op">,</span>rx<span class="op">))))}</span></span></code></pre></div>
-<p>The next few lines are all about stringifying and printing.<br />
- <code>w</code> writes the raw byte(s) at the correct address to stdout.<br />
- <code>wi</code> pretty-prints an integer; the real work is done by the
+<p>The next few lines are all about stringifying and printing.</p>
+<p><code>w</code> writes the raw byte(s) at the correct address to stdout.</p>
+<p><code>wi</code> pretty-prints an integer; the real work is done by the
 stringification function <code>si</code>, which turns an atom into a string and
 takes care of all the horrible casting of 8-bit unsigned integers to
 8-bit signed ones. This is actually the only place where we (have to)
 take care of this—in all other instances we just add <code>unsigned long</code>’s,
-and pretend that’s what we’re doing.<br />
- <code>W</code> is a more general writing function, which either prints an
+and pretend that’s what we’re doing.</p>
+<p><code>W</code> is a more general writing function, which either prints an
 integer if <code>x</code> is an atom, or prints the entire array, separated by a
 space (inserted by <code>si</code> automatically). We finish all of that with a
 newline (of course you knew that linefeed was ASCII 10, right?)</p>
@@ -305,8 +303,8 @@ before; it essentially prints <code>f:xy\n</code>, just filling in values for <c
 <p>First, we get to that allocation function we had in an earlier
 macro, as well as its destruction counterpart. <code>a(x)</code> increases the
 workspace size by <code>x</code>, allocates <code>x+2</code> bytes, fills in the length and
-ref count, and returns the finished array.<br />
- To me, the most interesting bit here is that the ref counts start
+ref count, and returns the finished array.</p>
+<p>To me, the most interesting bit here is that the ref counts start
 at 0 and not at 1. This means there’s a tiny ownership system hidden
 inside of this implementation! Every verb immediately owns its value,
 and a single call to <code>_r</code> (see below) will deallocate a freshly
@@ -346,8 +344,8 @@ that properly shows that immutable arrays are a core part of K.</p>
 and a <a href="https://aplwiki.com/wiki/Reverse">reverse</a>. I’m a bit confused as
 to why enlist is called <code>cat</code>, which I guess is short for
 <a href="https://aplwiki.com/wiki/Catenate">catenate</a>, which I would however
-expect to be a dyadic function that concatenates its two arguments.<br />
- I do think that I can spot a bug in <code>cnt</code>: it explicitly expects
+expect to be a dyadic function that concatenates its two arguments.</p>
+<p>I do think that I can spot a bug in <code>cnt</code>: it explicitly expects
 an array—and, as such, gets ownership over it—but never decreases its
 refcount. This means that calling <code>cnt</code> lots of times will blow up the
 refcount of any variable for no discernible reason.</p>
@@ -357,30 +355,30 @@ refcount of any variable for no discernible reason.</p>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>f<span class="op">(</span>rev<span class="op">,</span>Qr<span class="op">(</span>ax<span class="op">)</span>_x<span class="op">(</span>N<span class="op">(</span>nx<span class="op">,</span>sx<span class="op">[</span>nx<span class="op">-</span>i<span class="op">-</span><span class="dv">1</span><span class="op">])))</span></span></code></pre></div>
 <p>This is certainly a combination of symbols that one could write, and
 I’ve already exploded the view a bit—blame the width of this website.
-Imagine reading this on one line.<br />
- The function goes through four cases, <code>atom+atom</code>, <code>atom+arr</code>,
+Imagine reading this on one line.</p>
+<p>The function goes through four cases, <code>atom+atom</code>, <code>atom+arr</code>,
 <code>arr+atom</code>, and <code>arr+arr</code>, with the last case having an extra error case
 for arrays of unequal length. The <code>arr+atom</code> case implements what’s
 usually called <a href="https://aplwiki.com/wiki/Pervasion">scalar pervasion</a> in APL-type languages, and
 <em>broadcasting</em> everywhere else (numpy, Julia, and R; basically, the
 languages that strongly take after the semantics of APL, although not
-quite the syntax.)<br />
- The <code>arr+atom</code> case is interesting, in that it uses the fact that
+quite the syntax.)</p>
+<p>The <code>arr+atom</code> case is interesting, in that it uses the fact that
 addition is commutative to just do a recursive call with the arguments
 swapped, to get to the <code>atom+arr</code> case. Hold onto that thought.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>Add<span class="op">,</span>ax<span class="op">?</span>af<span class="op">?(</span>c<span class="op">)(</span>f<span class="op">+</span>x<span class="op">):</span>Add<span class="op">(</span>x<span class="op">,</span>f<span class="op">)</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>af<span class="op">?</span>_x<span class="op">(</span>N<span class="op">(</span>nx<span class="op">,</span>f<span class="op">+</span>xi<span class="op">))</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="op">:</span>nx<span class="op">-</span>nf<span class="op">?(</span>_x<span class="op">(</span>_f<span class="op">(</span>Ql<span class="op">()))):</span>_f<span class="op">(</span>_x<span class="op">(</span>N<span class="op">(</span>nx<span class="op">,</span>xi<span class="op">+</span>fi<span class="op">))))</span></span></code></pre></div>
 <p>Subtraction is addition with the multiplicative inverse of one of the
-arguments.<br />
- <code>Mod</code> is, as usual for these types of languages, defined from
+arguments.</p>
+<p><code>Mod</code> is, as usual for these types of languages, defined from
 right to left, so <code>Mod(f,x)</code> would be <span class="math inline">x \mod f</span>. Again we have some
 kind of scalar pervasion in that <code>x</code> is allowed to be an array. The
 really cool thing about this version of mod is that, since we’re working
 with unsigned integers under the hood, it automatically has the
 <em>correct</em> semantics! Gone are the days where <code>-3%5</code> evaluates to <code>-3</code>,
-in K we correctly compute <code>5!-3</code> to be <code>3</code>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a><br />
- <code>Tak(f,x)</code> is <a href="https://aplwiki.com/wiki/Take">take</a>. If <code>x</code> is an
+in K we correctly compute <code>5!-3</code> to be <code>3</code>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p><code>Tak(f,x)</code> is <a href="https://aplwiki.com/wiki/Take">take</a>. If <code>x</code> is an
 atom, we just create an array with <code>x</code> repeated <code>f</code> times, otherwise we
 take <code>f</code> many things from the array <code>x</code>, wrapping around if <code>f</code> is
 bigger than <code>nx</code>. The <code>_f</code> here is obviously wrong, since <code>f</code> is
@@ -429,14 +427,14 @@ indicated by <code>foo</code> or <code>Foo</code>.</p>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">// V:           +   -   !   #   ,   @  =   ~   &amp;   |   *</span></span></code></pre></div>
 <p>Having defined our verbs, we still need some adverbs; what better to
 implement than a fold and a scan. We use <code>F</code> instead of <code>G</code> here, since
-all of the adverbs are monadic.<br />
- Fold, called <code>Ovr(f,x)</code> here, works as one might expect. If <code>x</code> is
+all of the adverbs are monadic.</p>
+<p>Fold, called <code>Ovr(f,x)</code> here, works as one might expect. If <code>x</code> is
 not an array, but an atom, return it. Otherwise, we start at the first
 element of <code>x</code>, and in each step call the function <code>f</code> on both the
 current accumulator <code>r</code> and the next element <code>sx[i+1]</code>. Notice how the
 <code>r(a,e)</code> macro keeps us from having to manually declare an intermediate
-variable, like <code>u r=*sx</code>.<br />
- The scan works in much the same way, but instead of a single
+variable, like <code>u r=*sx</code>.</p>
+<p>The scan works in much the same way, but instead of a single
 value, we return each step in the computation. This works by allocating
 an array the same size as <code>x</code>, and filling it in each step of the
 iteration.</p>
@@ -447,16 +445,16 @@ iteration.</p>
 global variable (look at those glorious character literals), and <code>ag</code>
 sets the global at <code>f</code> to <code>x</code>, immediately deallocating the old variable
 <code>U[f]</code> if it was heap allocated (surely this will not come back to bite
-us later on!).<br />
- <code>v</code> gets the index of <code>x</code> in the <code>V</code> array; and <code>d</code> does the same
+us later on!).</p>
+<p><code>v</code> gets the index of <code>x</code> in the <code>V</code> array; and <code>d</code> does the same
 for <code>AV</code>. Both of those last ones use <code>strchr</code> with some “let’s see what
 the pointer offset is” maths, which I think is actually the idiomatic
 way to go about that (but I don’t know C, so don’t quote me on that.)
 What’s not super standard is <code>x?:y</code>, which I believe is a <a href="https://gcc.gnu.org/onlinedocs/gcc/Conditionals.html">GCC
 extension</a> and not
 part of any C standard. It’s just a shorter way to write <code>x?x:y</code>; cute syntactic
-<del>cocaine</del> sugar.<br />
- The <a href="https://aplwiki.com/wiki/A_Dictionary_of_APL">noun</a> function
+<del>cocaine</del> sugar.</p>
+<p>The <a href="https://aplwiki.com/wiki/A_Dictionary_of_APL">noun</a> function
 <code>n</code> (think array, variable, number, …) does something we haven’t seen
 anywhere else yet—it bumps the ref count of the accessed noun if it’s a
 global. This makes the whole refcounting scheme work, otherwise we’d
@@ -478,20 +476,19 @@ what <code>t</code> is for.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">char</span><span class="op">*</span>l<span class="op">;</span>u mx<span class="op">=</span><span class="dv">99</span><span class="op">;</span><span class="dt">FILE</span><span class="op">*</span>t<span class="op">;</span></span></code></pre></div>
 <h3 id="parsing-and-execution">Parsing and execution</h3>
 <p>The read line function. We allocate space for <code>l</code> (if we haven’t done so
-already).<br />
- If the argument (remember, <code>us</code> creates a string function with
+already).</p>
+<p>If the argument (remember, <code>us</code> creates a string function with
 arguments <code>s</code> and not <code>x</code>) is NULL, we just read up to <code>mx</code> characters
 from stdin. Read either returns the number of bytes read, or a <code>-1</code> in
 case of an error, so if everything goes well <code>l[read(…)-1]</code> will point
 to <code>\n</code>, which we’ll clean up and change to <code>\0</code>. Recall that <code>P</code> causes
 the function to return (<code>0</code> in this case, unless assignment fails), so
-the rest of the code is just there in case <code>s</code> is present.<br />
- If we give an argument to <code>rl</code>, try to open it as a file and read
+the rest of the code is just there in case <code>s</code> is present.</p>
+<p>If we give an argument to <code>rl</code>, try to open it as a file and read
 from it. On success, if present, we clean up the extra newline at the
 end and return <code>0</code>, or <code>Q</code> if we’ve reached the end of the file.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>us<span class="op">(</span>rl<span class="op">,</span>l<span class="op">=</span>l<span class="op">?:</span>malloc<span class="op">(</span>mx<span class="op">);</span>P<span class="op">(!</span>s<span class="op">,</span>l<span class="op">[</span>read<span class="op">(</span><span class="dv">0</span><span class="op">,</span>l<span class="op">,</span>mx<span class="op">)-</span><span class="dv">1</span><span class="op">]=</span><span class="dv">0</span><span class="op">)</span>t<span class="op">=</span>t<span class="op">?:</span>fopen<span class="op">(</span>s<span class="op">,</span><span class="st">&quot;r&quot;</span><span class="op">);</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a> Qs<span class="op">(!</span>t<span class="op">,</span>s<span class="op">)</span>r<span class="op">(</span>getline<span class="op">(&amp;</span>l<span class="op">,&amp;</span>mx<span class="op">,</span>t<span class="op">),</span> r<span class="op">=</span>r<span class="op">&lt;</span>mx<span class="op">?</span>l<span class="op">[</span>r<span class="op">-(</span><span class="ch">'</span><span class="sc">\n</span><span class="ch">'</span><span class="op">==</span>l<span class="op">[</span>r<span class="op">-</span><span class="dv">1</span><span class="op">])]=</span><span class="dv">0</span><span class="op">:</span>Q<span class="op">))</span></span></code></pre></div>
-<div>
 <p>We’ve reached the evaluation step. As you will probably have guessed
 from the likes of the <code>n</code> function, lexing and parsing happens
 approximately nowhere in this interpreter. Every valid token is exactly
@@ -501,8 +498,8 @@ step, and just process character by character. I freely admit to doing
 some perhaps unnecessary aligning here, as reading this all on one line
 would be quite the exercise. I’ll excuse myself with the fact that you’d
 then have to scroll the code box on this website, which is probably not
-a good experience.<br />
- We start by copying the argument <code>s</code> into a temp <code>t</code>, getting the
+a good experience.</p>
+<p>We start by copying the argument <code>s</code> into a temp <code>t</code>, getting the
 first character of <code>t</code>, and advancing. What follows is some simple logic
 to figure out what we should do. I’ll try to enumerate the cases, with
 an example in parentheses, before going into it.</p>
@@ -527,7 +524,6 @@ both <code>a</code> and <code>b</code> point to the same bit of memory. In parti
 <code>b:0</code> will make <code>a</code> point to random memory, since assigning a global to
 something else immediately deallocates what it was pointing to. For the
 same reason, don’t try <code>a:b:!5</code> followed by <code>b:a</code> :)</p>
-</div>
 <div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>us<span class="op">(</span>e<span class="op">,</span> c<span class="op">*</span>t<span class="op">=</span>s<span class="op">;</span>c i<span class="op">=*</span>t<span class="op">++;</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>   <span class="op">!*</span>t<span class="op">?</span>x<span class="op">(</span>n<span class="op">(</span>i<span class="op">),</span>Qp<span class="op">()</span>x<span class="op">)</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>      <span class="op">:</span>v<span class="op">(</span>i<span class="op">)?</span>d<span class="op">(*</span>t<span class="op">)?</span>x<span class="op">(</span>e<span class="op">(</span>t<span class="op">+</span><span class="dv">1</span><span class="op">),</span>Q<span class="op">(</span>x<span class="op">)</span>D<span class="op">[</span>d<span class="op">(*</span>t<span class="op">)](</span>v<span class="op">(</span>i<span class="op">),</span>x<span class="op">))</span></span>
@@ -538,12 +534,12 @@ same reason, don’t try <code>a:b:!5</code> followed by <code>b:a</code> :)</p>
 <p>The main function starts off with checking whether an argument was
 supplied; if not, we’re in REPL mode, so print the startup banner. It’s
 a bit unfortunate that REPL mode requires <code>r</code> to be <code>0</code>, but I guess it
-is what it is.<br />
- After that, it’s off to the races. If we’re in REPL mode, we print
+is what it is.</p>
+<p>After that, it’s off to the races. If we’re in REPL mode, we print
 a single space, so that the input is indented, and try to read the next
 line; if there’s any error, abort and clean up (notice the comma
-operator again).<br />
- Once the loop starts, there are some meta characters that one can
+operator again).</p>
+<p>Once the loop starts, there are some meta characters that one can
 insert to get some more information about the session.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The numbers sort
 of make this unnecessarily hard to read, but a few <code>chr</code> calls later I’m
 reminded that <code>92</code> is <code>\</code>, <code>119</code> is <code>w</code> and <code>118</code> is <code>v</code> (why <code>/</code> is
@@ -552,12 +548,12 @@ written as a char literal is beyond me). So <code>\\</code> would exit the REPL,
 print all global variables. This doesn’t interfere with using <code>\</code> for
 scan, since these instructions have to be at the start of the line
 (i.e., there’s no verb given yet that scan could act upon), and we
-further also check via <code>!l[2]</code> that they’re the only instructions given.<br />
- A line starting with a forward slash is ignored as a comment.<br />
- Finally, if nothing else matches, we evaluate the line. If the
+further also check via <code>!l[2]</code> that they’re the only instructions given.</p>
+<p>A line starting with a forward slash is ignored as a comment.</p>
+<p>Finally, if nothing else matches, we evaluate the line. If the
 second character was a <code>:</code> (i.e., if the line ended with an assignment)
-then don’t show anything, otherwise print the results.<br />
- If you’re a careful reader, you might have noticed that <code>\\</code> will
+then don’t show anything, otherwise print the results.</p>
+<p>If you’re a careful reader, you might have noticed that <code>\\</code> will
 break out of the loop, causing <code>free(l),fclose(t),0</code> to be executed.
 However, since we were in REPL mode before, the file variable <code>t</code> is
 either NULL or non-initialised, so this immediately segfaults the
