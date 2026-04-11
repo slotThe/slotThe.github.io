@@ -20,6 +20,10 @@ const wander = {
     'http://leahneukirchen.org',
     'http://tom7.org/',
     'http://www.marshaln.com',
+    'https://100r.co/site/home.html',
+    'https://kokorobot.ca/site/home.html',
+    'https://xxiivv.com/',
+    'https://krasjet.com/',
   ],
   styles: [
     'style.css',
