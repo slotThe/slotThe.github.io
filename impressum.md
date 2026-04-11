@@ -19,12 +19,11 @@ Die verwendeten Begriffe sind nicht geschlechtsspezifisch.
 
 ## Verantwortlicher
 
-  Tony Zorman                    \
-  WIL/B217, Zellescher Weg 12–14 \
-  Technische Universität Dresden \
-  Fakultät Mathematik            \
-  Institut für Geometrie         \
-  01062 Dresden, Germany         \
+Tony Zorman                                              \
+Geomatikum 305, Bundesstraße 55                          \
+University of Hamburg                                    \
+Faculty of Mathematics, Informatics and Natural Sciences \
+20146 Hamburg, Germany                                   \
 
 E-Mail-Adresse: `mail@tony-zorman.com`
 
