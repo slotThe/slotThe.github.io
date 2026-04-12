@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# fmt: off
 
 import os
 import re
@@ -34,16 +35,14 @@ def used_glyphs(path: str) -> tuple[str, str, str, str]:
     [code.update(tag.get_text()) for page in code_html for tag in page]
 
     # Fonts used only for titles and headings.
-    title_html = [
-        page.find_all(h) for page in html for h in ["h" + str(x) for x in range(1, 7)]
-    ]
+    title_html = [page.find_all(h) for page in html for h in ["h" + str(x) for x in range(1, 7)]]
     title = set()
     [title.update(tag.get_text()) for page in title_html for tag in page]
 
     # For the regular text, only keep what's strictly needed.
     normal = set()
     [tag.extract() for page in latex_html for tag in page]  # Mutates `hmtl`!
-    [tag.extract() for page in code_html for tag in page]  # Mutates `html`!
+    [tag.extract() for page in code_html for tag in page]   # Mutates `html`!
     [normal.update(page.get_text()) for page in html]
 
     # Return only the relevant glyphs for each of the fonts.
@@ -56,6 +55,8 @@ def optimise_font(in_file: str, out_file: str, text: str) -> None:
     options = Options(hinting=False, desubroutinize=True)
     if text_font in in_file or latex_font in in_file:
         options.layout_features = ["*"]  # small-caps et al
+    elif title_font in in_file:
+        options.layout_features += ["smcp", "c2sc"]
     font = TTFont(in_file, lazy=True)
     font.flavor = "woff2"
     subs = Subsetter(options)
@@ -71,25 +72,17 @@ def optimise_font(in_file: str, out_file: str, text: str) -> None:
     )
 
 
-def main() -> None:
-    PR = os.environ["PROJECT_ROOT"]
-    in_path = f"{PR}/uncompressed_fonts/"
-    code, title, normal, latex = used_glyphs(f"{PR}/docs")
+PR = os.environ["PROJECT_ROOT"]
+in_path = f"{PR}/uncompressed_fonts/"
+code, title, normal, latex = used_glyphs(f"{PR}/docs")
 
-    for font in os.listdir(in_path):
-        in_file = in_path + font
-        optimise_font(
-            in_file,
-            f"{PR}/css/fonts/{font.replace('.ttf', '.woff2')}",
-            code
-            if code_font in in_file
-            else title
-            if title_font in in_file
-            else latex
-            if latex_font in in_file
-            else normal,
-        )
-
-
-if __name__ == "__main__":
-    main()
+for font in os.listdir(in_path):
+    in_file = in_path + font
+    optimise_font(
+        in_file,
+        f"{PR}/css/fonts/{font.replace('.ttf', '.woff2')}",
+        code if code_font in in_file
+        else title if title_font in in_file
+        else latex if latex_font in in_file
+        else normal,
+    )
