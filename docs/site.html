@@ -28,8 +28,9 @@
   <body>
     <div class="navbar-space">
       <div id="navigation">
-        <a href="./" class="menu-title">Tony's blog</a>
+        <a href="./" class="menu-title">Tony's site</a>
         <ul>
+          <li><a href="./blog.html">Blog</a></li>
           <li><a href="./posts.html">Posts</a></li>
           <li><a href="./research.html">Research</a></li>
           <li><a href="./free-software.html">Free Software</a></li>
@@ -70,13 +71,13 @@
  
 <h1>About This Website</h1>
  
-First off: this site is hosted via <a href="https://pages.github.com/">GitHub Pages</a>,
+This site is hosted via <a href="https://pages.github.com/">GitHub Pages</a>,
 and the full source code is available on <a href="https://github.com/slotThe/slotThe.github.io">Microsoft GitHub</a>.
 <p></p>
 My static site generator of choice is <a href="https://jaspervdj.be/hakyll/">hakyll</a>,
 which leverages <a href="https://pandoc.org/">pandoc</a> for the actual rendering.
 While the bulk of the work is done by these two programs,
-there are a few thin layers on top for, e.g., prerendering LaTeX.
+there are a few thin layers on top for <a href="#syntax-highlighting">syntax highlighting</a> and <a href="#katex-rendering">prerendering LaTeX</a>.
 With the bundled nix flake,
 building should hopefully be deterministic enough that a simple <code>make watch</code> creates a preview server.
 <p></p>
@@ -86,7 +87,8 @@ should they not have gotten their own blog post already.
 <h2 id="sidenotes">Sidenotes<a href="#sidenotes" class="floatleft sec-link">§</a></h2>
 <p></p>
 <span class="nowrap">Sidenotes—</span>as opposed to <span class="nowrap">footnotes—</span>are implemented using
-(a somewhat customised) <a href="https://github.com/edwardtufte/tufte-css">Tufte <span class="small-caps">css</span></a>,
+a somewhat customised <a href="https://github.com/edwardtufte/tufte-css">Tufte <span class="small-caps">css</span></a>,
+called <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/sidenotes.css">sidenotes.css</a> in my case,
 as well as <a href="https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs">SideNotesHTML.hs</a> from the <code>pandoc-sidenote</code> library.<!--
 --><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote">Here is an example!
 By the way, you might notice some links having a little <code>°</code> after <span class="nowrap">them—</span>these are links to this domain.
@@ -95,7 +97,11 @@ I’m honestly still not sure this is useful in any way, but I quite like the ey
 While this uses absolutely no JavaScript,
 unlike most pure <span class="small-caps">css</span> implementations
 it allows arbitrary blocks to be placed inside of sidenotes.
-I’ve written about the implementation details <a href="https://tony-zorman.com/posts/block-sidenotes.html" class="local-link">here</a>.
+I have a <a href="./posts/block-sidenotes.html" class="local-link">post</a> about the implementation details on the Haskell-side of things.
+<p></p>
+One tricky thing to remember is that the landing page for the blog has to
+<a href="https://github.com/slotThe/slotThe.github.io/blob/5a06d94a50ed348afadece5af4da607db36f1487/src/site.hs#L130">recount</a>
+the sidenotes, as otherwise they’d show the wrong numbers.
 <h2 id="syntax-highlighting">Syntax highlighting<a href="#syntax-highlighting" class="floatleft sec-link">§</a></h2>
 <p></p>
 Syntax highlighting is not provided by
@@ -105,7 +111,30 @@ but rather by
 <a href="https://pygments.org/">pygments</a>.
 It provides better highlighting and supports a lot more languages,
 so I really see no reason not to use it.
-I’ve written about transitioning to pygments <a href="https://tony-zorman.com/posts/pygmentising-hakyll.html" class="local-link">here</a>.
+It’s still regexp-based instead of being more akin to a “real” parser,
+but at least I don’t have to trust random C code to not pwn me when I add a new language.
+<div class="highlight-Python" style="padding-left: 1em;"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygments</span><span class="w"> </span><span class="kn">import</span> <span class="n">highlight</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygments.lexers</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_lexer_by_name</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygments.formatters</span><span class="w"> </span><span class="kn">import</span> <span class="n">HtmlFormatter</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))),</span>
+        <span class="n">get_lexer_by_name</span><span class="p">(</span><span class="n">lang</span><span class="p">),</span>
+        <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">cssclass</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;highlight-</span><span class="si">{</span><span class="n">lang</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cssstyles</span><span class="o">=</span><span class="s2">&quot;padding-left: 1em;&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+<p></p>
+The <a href="https://github.com/slotThe/slotThe.github.io/blob/main/css/pygments.css">pygments.css</a>
+file is an absolute mess of different special cases,
+and I feel like I need to start over quite soon,
+but so far it works!
+I’ve also <a href="./posts/pygmentising-hakyll.html" class="local-link">written</a> a few more words about my transition process from skylighting to pygments, if you’re interested.
 <h2 id="katex-rendering">KaTeX rendering<a href="#katex-rendering" class="floatleft sec-link">§</a></h2>
 <p></p>
 All LaTeX output is pregenerated with <a href="https://katex.org/">KaTeX</a> and directly embedded into the <span class="small-caps">html</span>.
@@ -116,8 +145,12 @@ rather than doing it once server-side.
 <p></p>
 Interfacing with KaTeX is done with the tiny
 <a href="https://github.com/slotThe/slotThe.github.io/blob/main/scripts/maths.js">maths.js</a>
-script:
-<div class="highlight-JavaScript" style="padding-left: 1em;"><pre><span></span><span class="c1">// Source: https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774</span>
+script.
+I originally got the idea from pandoc issue
+<a href="https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774">#6651</a>,
+and the JS side of things hasn’t changed much, except for removing the dependency on <code>deno</code>:
+
+<div class="highlight-JavaScript" style="padding-left: 1em;"><pre><span></span><span class="c1">// https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774</span>
 
 <span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createInterface</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;node:readline&quot;</span>
 
@@ -150,8 +183,8 @@ Some more implementation considerations are mentioned in a
 This is a very small thing,
 but I think many sites get section marks “wrong” by placing them at the <em>end</em> of the headline.
 This makes them appear somewhat “ragged” to me,
-even if they are hidden most of the time anyways.
-Here, they are instead moved to the left side of the heading,
+even if they are hidden most of the time (and only shown on hover) anyways.
+On this site, they are instead moved to the left side of the heading,
 in the space between the table of contents (or sidebar) and the main content.
 <h2 id="bibtex">BibTeX<a href="#bibtex" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -171,17 +204,17 @@ Not finding anything that I’m completely happy with, the site is currently usi
 of an
 <a href="https://www.zotero.org/styles/din-1505-2-alphanumeric">alphanumeric DIN 1505-2 style</a>,
 which most reminded me of BibLaTeX’s <code>alphabetic</code> style.
-I’ve written many more words about this <a href="https://tony-zorman.com/posts/hakyll-and-bibtex.html" class="local-link">here</a>.
+I’ve written many more words about this in a <a href="./posts/hakyll-and-bibtex.html" class="local-link">dedicated post</a>.
 <h2 id="no-javascript">No JavaScript<a href="#no-javascript" class="floatleft sec-link">§</a></h2>
 <p></p>
 As many of the above points already hint at,
-not using any JavaScript is an explicit goal.
-Relatedly, I am aiming for a usable site in text-based browser such as <code>eww</code>.
-Some eye candy like small-caps, as well as features such as sidenotes are obviously lost,
+not using any JavaScript is an explicit goal of mine,
+which also means aiming for a usable site in text-based browsers such as <code>eww</code>.
+Some eye candy like small-caps and sidenotes are obviously lost,
 but the main content should still be comfortably viewable.
 <h2 id="fonts">Fonts<a href="#fonts" class="floatleft sec-link">§</a></h2>
 <p></p>
-This website <span class="nowrap">uses—</span>at least if you let <span class="nowrap">it—</span>lots of <a href="https://github.com/slotThe/slotThe.github.io/tree/main/css/fonts">custom fonts</a>.
+If you let it, this website uses lots of <a href="https://github.com/slotThe/slotThe.github.io/tree/main/css/fonts">custom fonts</a>.
 The default serif font is
 <a href="https://www.huertatipografica.com/en/fonts/alegreya-ht-pro">Alegreya</a>,
 <a href="https://github.com/slotThe/hopf-mono">my own build</a>
@@ -193,14 +226,25 @@ there are also quite a few LaTeX fonts loaded whenever a page needs them.
 While the site of course works with system fonts as well,
 there has been a somewhat conscious choice to deviate from them.
 Especially code should look exactly as it appears in my editor,
-which is especially relevant when it comes to alignment<!--
+which is particularly relevant when it comes to alignment<!--
 --><span class="nowrap">—</span>Unicode characters may indeed have different apparent widths!
 Further, lots of system fonts do not support some typographical features,
-such as small caps,
-that I think give this site a certain “flair”.<!--
+such as small caps<!--
 --><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote">Instead of proper small caps, many system fonts scale down their capital letters.
-This makes them entirely too thin, and really rather ugly looking.</div><!--
--->
+This makes them entirely too thin, and really rather ugly looking.
+If you’ve not blocked hosted fonts,
+compare “this <span class="small-caps">this</span> THIS”
+with
+“<span style="font-family: var(--monospace-fonts)">this</span>
+<span class="small-caps" style="font-family: var(--monospace-fonts)">this</span>
+<span style="font-family: var(--monospace-fonts)">THIS</span>”,
+and notice how small-caps (the middle “this”) in the former example are well-formed,
+while in the latter they are way too thin.
+<p></p>
+I’m sorry if this is a sort of “remember that you breathe” situation,
+and you now notice whenever people use small-caps “incorrectly” in this way.</div><!--
+-->,
+that I think give this site a certain “flair”.
 <p></p>
 I do, however, want to make sure that I’m not sending 2mb per font to every visitor.
 The <a href="https://en.wikipedia.org/wiki/Web_Open_Font_Format">Web Open Font Format</a> exists specifically for this purpose,

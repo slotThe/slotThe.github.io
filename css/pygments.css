@@ -35,8 +35,9 @@
 .gu { color: var(--fg-keyword); font-weight: bold }                     /* Generic.Subheading */
                   .kc { color: var(--fg-keyword); font-weight: 500 }    /* Keyword.Constant */
 .highlight-Python .kc { color: var(--fg) }                              /* Keyword.Constant */
-               .kd { color: var(--fg-keyword); font-weight: bold }      /* Keyword.Declaration */
-.highlight-bqn .kd { color: var(--fg-bqn-2-mod); font-weight: bold }    /* Keyword.Declaration */
+                      .kd{color:var(--fg-keyword); font-weight:bold}    /* Keyword.Declaration */
+.highlight-JavaScript .kd{color:var(--fg); font-weight:500}             /* Keyword.Declaration */
+.highlight-bqn        .kd{color:var(--fg-bqn-2-mod); font-weight:bold}  /* Keyword.Declaration */
                   .kn { color: var(--fg-keyword); font-weight: bold }   /* Keyword.Namespace */
 .highlight-Python .kn { color: var(--fg) }                              /* Keyword.Reserved */
 .kp { color: var(--fg-keyword); font-weight: bold }                     /* Keyword.Pseudo */

@@ -1,4 +1,4 @@
-// Source: https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774
+// https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774
 
 import { createInterface } from "node:readline"
 
