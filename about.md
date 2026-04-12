@@ -44,6 +44,8 @@ and a separate page detailing some design decisions is [here](./site.html).
 All posts are written on a TUXEDO Aura 14 in GNU Emacs, probably on an [Atreus][site:atreus].
 If the latter is unavailable, [KMonad] supplies me with a proper keyboard layout.
 
+# Contact
+
 Most of the time I'm fastest to reply via E-Mail,
 but you can try any of the following channels:
 

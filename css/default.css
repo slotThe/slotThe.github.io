@@ -304,7 +304,6 @@ div#contents-big {
         text-decoration: none;
     }
     a:hover {
-        background: var(--bg);
         text-decoration: 1px underline;
         text-underline-offset: 0.1em;
     }
@@ -373,11 +372,8 @@ a {
         }
     }
     &:hover {
-        background: var(--bg-code-accent);
-        @media (prefers-color-scheme: light) {
-            text-decoration: 1px underline;
-            text-underline-offset: 0.1em;
-        }
+        text-decoration: 1px underline;
+        text-underline-offset: 0.1em;
     }
     &:visited {
         color: var(--fg-link);
@@ -440,7 +436,6 @@ a#to-top {
 
 :is(h1, h2, h3, h4, h5, h6):hover .sec-link {
     visibility: visible;
-    background: var(--bg);
 }
 
 /*** Accordion menus ***/

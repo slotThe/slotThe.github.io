@@ -100,15 +100,21 @@ main = hakyllWith config do
             <> postCtx
 
   -- Build some pages!
-  landingPage tagCtx
+  landing
+  blog        tagCtx
   posts       tagCtx
   listOfPosts tags
   aboutMe
   standalones tagCtx
   rss         tags
 
-landingPage :: Context String -> Rules ()
-landingPage tagCtx = match "index.html" do
+landing :: Rules ()
+landing = match "index.html" do
+  route idRoute
+  compile $ getResourceBody >>= relativizeUrls
+
+blog :: Context String -> Rules ()
+blog tagCtx = match "blog.html" do
   route idRoute
   compile do
     allposts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
@@ -307,7 +313,7 @@ rss tags = do
   feedConfig :: FeedConfiguration
   feedConfig = FeedConfiguration
     { feedTitle       = "Tony Zorman · Blog"
-    , feedDescription = "Maths, Haskell, Emacs, and whatever else comes to mind."
+    , feedDescription = "Maths, array languages, Emacs, Haskell, and whatever else comes to mind."
     , feedAuthorName  = "Tony Zorman"
     , feedAuthorEmail = "mail@tony-zorman.com"
     , feedRoot        = siteURL
