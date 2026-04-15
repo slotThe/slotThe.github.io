@@ -24,6 +24,32 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## Published
 
+- *[Duality in Monoidal Categories]* <span class="floatright">[@halbig23:dualit-monoid-categ]</span> \
+  Joint work with Sebastian Halbig.
+
+  We compare closed and rigid monoidal categories.
+  Closedness is defined by the tensor product having a right adjoint:
+  the internal hom functor.
+  Rigidity, on the other hand, generalises the duality of finite-dimensional vector spaces.
+  In the latter, the internal hom functor is implemented by tensoring with the respective duals.
+  This raises the question:
+  can one decide whether a closed monoidal category is rigid,
+  simply by verifying that the internal hom is tensor-representable?
+  We provide a counterexample in terms of finitely-generated projective objects in an abelian k-linear category.
+  A byproduct of our work is that we obtain characterisations of the Grothendieck–Verdier duality,
+  also called *-autonomy,
+  and rigidity of functor categories endowed with Day convolution as their tensor product.
+  Applied to Mackey functors,
+  this yields a proof of a sketched argument by Bouc linking rigidity of an object to it being finitely-generated projective.
+
+- *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
+  Joint work with Sebastian Halbig.
+
+  We extend Willerton's [@Willerton2008] graphical calculus for bimonads
+  to comodule monads, a monadic interpretation of module categories
+  over a monoidal category. As an application, we prove a version of
+  Tannaka–Krein duality for these structures.
+
 - *[Pivotality, twisted centres, and the anti-double of a Hopf monad]* <span class="floatright">[@halbig24:pivot-hopf]</span> \
   Joint work with Sebastian Halbig.
 
@@ -36,14 +62,6 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   anti-Drinfeld double of a Hopf monad.  As an application the
   connection with the pivotality of Drinfeld centres and their
   underlying categories is discussed.
-
-- *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
-  Joint work with Sebastian Halbig.
-
-  We extend Willerton's [@Willerton2008] graphical calculus for bimonads
-  to comodule monads, a monadic interpretation of module categories
-  over a monoidal category. As an application, we prove a version of
-  Tannaka–Krein duality for these structures.
 
 ## Preprints
 
@@ -76,24 +94,6 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Using lax module functors we give a categorical proof of the variant of the fundamental theorem of Hopf modules which applies to Hopf trimodules.
   We also give a characterisation of fusion operators for a Hopf monad as coherence cells for a module functor structure,
   using which we similarly reinterpret and reprove the Hopf-monadic fundamental theorem of Hopf modules due to Bruguières, Lack, and Virelizier.
-
-- *[Duality in Monoidal Categories]* <span class="floatright">[@halbig23:dualit-monoid-categ]</span> \
-  Joint work with Sebastian Halbig.
-
-  We compare closed and rigid monoidal categories.
-  Closedness is defined by the tensor product having a right adjoint:
-  the internal hom functor.
-  Rigidity, on the other hand, generalises the duality of finite-dimensional vector spaces.
-  In the latter, the internal hom functor is implemented by tensoring with the respective duals.
-  This raises the question:
-  can one decide whether a closed monoidal category is rigid,
-  simply by verifying that the internal hom is tensor-representable?
-  We provide a counterexample in terms of finitely-generated projective objects in an abelian k-linear category.
-  A byproduct of our work is that we obtain characterisations of the Grothendieck–Verdier duality,
-  also called *-autonomy,
-  and rigidity of functor categories endowed with Day convolution as their tensor product.
-  Applied to Mackey functors,
-  this yields a proof of a sketched argument by Bouc linking rigidity of an object to it being finitely-generated projective.
 
 # Talks
 
