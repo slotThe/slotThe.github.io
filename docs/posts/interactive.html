@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noai, noimageai">
+    <!-- Link previews in Signal and friends -->
+    <title>Writing Literate Blog Posts · Tony Zorman</title>
+    <meta name="og:title" content="Writing Literate Blog Posts">
+    
+    <meta name="og:site" content="tony-zorman.com">
+    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.png">
+    <meta property="og:image:height" content="221">
+    <meta property="og:image:width" content="197">
+
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/katex.css">
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
+  </head>
+
+  <body>
+    <div class="navbar-space">
+      <div id="navigation">
+        <a href="../" class="menu-title">Tony's site</a>
+        <ul>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../free-software.html">Free Software</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../site.html">Colophon</a></li>
+        </ul>
+      </div>
+      <!-- A table of contents on the left side, but only for screens that are big enough -->
+      <div id="contents-big">
+        <p class="mini-header">Contents <a id="up-arrow" href="#">↑</a></p>
+        <ul>
+<li><a href="#babel">Babel</a>
+<ul>
+<li><a href="#repl-blocks">REPL blocks</a></li>
+</ul></li>
+<li><a href="#exporting">Exporting</a>
+<ul>
+<li><a href="#headers">Headers</a></li>
+<li><a href="#footnotes">Footnotes</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+      </div>
+    </div>
+    <div class="text-space">
+      <div id="content">
+        <article>
+    <div class="header">
+      23rd Apr 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1954 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        <a title="All pages tagged '#emacs'." href="../tags/emacs.html" rel="tag">#emacs</a>
+      </div>
+    <h1 class="post-title">Writing Literate Blog Posts</h1>
+    <div id="title-underline"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      <div id="contents">
+    <p class="mini-header">Contents</p>
+    <ul>
+<li><a href="#babel">Babel</a>
+<ul>
+<li><a href="#repl-blocks">REPL blocks</a></li>
+</ul></li>
+<li><a href="#exporting">Exporting</a>
+<ul>
+<li><a href="#headers">Headers</a></li>
+<li><a href="#footnotes">Footnotes</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+  </div>
+Let’s try to contort enough Emacs packages to allow for a smooth Org to
+<span class="small-caps">gfm</span>⁺⁺ export, so I can write literate programs in the comfort of Org
+mode.
+<!--more-->
+<p></p>
+This website is powered by hakyll, which eventually hands off to pandoc
+to do all of the <abbr title="(Microsoft) GitHub-flavoured
+markdown"><span class="small-caps">gfm</span></abbr> to <span class="small-caps">html</span> mangling. I have a <a href="https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs">moderately
+involved</a>
+hakyll configuration, which in particular means I’ll not be moving to a
+purely Emacs-based setup anytime soon. However, the mere existence of
+Org mode is a straight upgrade for certain things, which I’d like to
+leverage somehow.
+<p></p>
+For this post, I’ll concentrate on “literate blog posts”, in the sense
+of <a href="https://en.wikipedia.org/wiki/Literate_programming">literate
+programming</a>.<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote"><a href="https://wiki.haskell.org/index.php?title=Literate_programming">Some languages</a> even have extra support for this!</div><!--
+-->
+Basically, this is about having executable code blocks interspersed with
+prose, explaining what’s going on, with the niceties that later code
+blocks can refer to earlier ones, and so on. An example is <a href="../posts/bqn-sudoku.html" class="local-link">Sudoku
+Solving in <span class="small-caps">bqn</span></a>, which was written with this
+kind of setup (as one can see by the <a href="https://github.com/slotThe/slotThe.github.io/blob/main/posts/bqn-sudoku.org">associated Org
+file</a>
+in the repository). As getting the Org to <span class="small-caps">html</span> export exactly right
+sounds like a huge headache, it seems easier to go from Org to <span class="small-caps">gfm</span>
+inside of Emacs, and then have pandoc take over for the <span class="small-caps">gfm</span> to <span class="small-caps">html</span>
+step. Hence, I will focus mostly on wrangling with Babel to generate
+<span class="small-caps">repl</span>-like blocks, as well as with Org’s export machinery to sanely
+translate the blocks to markdown.
+<hr />
+<p></p>
+The techniques used here work for essentially all languages that come
+with some kind of way to evaluate code in a <span class="small-caps">repl</span>. If you’re curious,
+I’ve personally tried this with <a href="https://mlochbaum.github.io/BQN/"><span class="small-caps">bqn</span></a>
+and <a href="https://codeberg.org/growler/k">growler/k</a>. If you want, you can
+peruse the resulting <a href="https://codeberg.org/slotThe/ob-bqn">ob-bqn.el</a>,
+<a href="https://codeberg.org/slotThe/ob-k">ob-k.el</a>, and
+<a href="https://codeberg.org/slotThe/ox-gfm">ox-gfm</a> packages.
+<h2 id="babel">Babel<a href="#babel" class="floatleft sec-link">§</a></h2>
+<p></p>
+<!--
+--><label for="sn-1" class="margin-toggle">⊕</label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="marginnote">If you already know what Org Babel is, feel free to skip to <a href="#repl-blocks"><span class="small-caps">repl</span> blocks</a>.</div><!--
+-->You can think of <a href="https://orgmode.org/worg/org-contrib/babel/intro.html">Org
+Babel</a> as a bit
+like <a href="https://jupyter.org/">Jupyter Notebooks</a>, but for any language,
+and on steroids. It’s Org mode’s machinery for working with source code
+blocks, and there’s a lot of cool functionality packed into it: blocks
+can share state, pipe their output into other blocks, be exported with
+or without their results, and so on. For this application, we’re mostly
+going to focus on basic evaluation, as well as exporting. For example,
+<div class="highlight-org" style="padding-left: 1em;"><pre><span></span><span class="ow">#+BEGIN_SRC python :results output</span>
+  print(&quot;beep boop&quot;)
+<span class="ow">#+END_SRC</span>
+</pre></div>
+<p></p>
+will, upon executing the fantastically named <code>org-ctrl-c-ctrl-c</code> with
+<code>C-c C-c</code>, yield a results block underneath it.<!--
+--><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle" /><div class="sidenote">The <code>:results output</code> directive is an additional instruction to Org, which returns whatever is displayed on stdout. By default, Org wraps your code in a function, calls that function, and displays the return value. If one uses IO, this obviously doesn’t really display what one wants.</div><!--
+-->
+
+<div class="highlight-org" style="padding-left: 1em;"><pre><span></span><span class="nn">#+RESULTS:</span>
+: beep boop
+</pre></div>
+<p></p>
+In the very unlikely case that you’re using a language that’s not
+covered by an existing Babel package, either
+<a href="https://orgmode.org/worg/org-contrib/babel/languages/index.html">officially</a>
+or on some random repository,<!--
+--><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle" /><div class="sidenote">I’ve not seen this happen for any language I know, btw,
+though if you wander too far outside of the mainstream you might have to go hunting inside of other people’s configurations instead of just searching on {NonGnu,M}<span class="small-caps">elpa</span>.</div><!--
+--> it’s actually pretty easy to write a
+package yourself. All that’s needed is an <code>org-babel-execute:«lang»</code>
+function, which tells Org how to evaluate code for your language, and
+Org takes care of the rest. There’s even an official
+<a href="https://git.sr.ht/~bzg/worg/tree/master/item/org-contrib/babel/ob-template.el">template.el</a>
+available, which one can use to get up and running a bit quicker, and
+the
+<a href="https://orgmode.org/worg/org-contrib/babel/languages/index.html">docs</a>
+are <span class="nowrap">also—</span>as <span class="nowrap">always—</span>informative to read.
+<h3 id="repl-blocks"><span class="small-caps">repl</span> blocks<a href="#repl-blocks" class="floatleft sec-link">§</a></h3>
+<p></p>
+For the specific posts I’m writing, I’m looking for more of an
+interactive experience. Basically, I want to simulate a <span class="small-caps">repl</span>, where,
+say, the input is indented by a certain number of spaces, and the output
+is flush to the left:
+
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">   </span><span class="nv">i</span><span class="kd">←</span><span class="s2">&quot;10+((5+42)+8)×(3-(24+5))&quot;</span>
+<span class="s2">&quot;10+((5+42)+8)×(3-(24+5))&quot;</span>
+<span class="w">   </span><span class="sr">(</span><span class="m">¯1</span><span class="o">+</span><span class="nv">d</span><span class="o">×+</span><span class="na">`</span><span class="o">»</span><span class="py">⊸</span><span class="o">&lt;</span><span class="nv">d</span><span class="kd">←</span><span class="nv">i</span><span class="o">∊</span><span class="s1">'0'</span><span class="o">+↕</span><span class="m">10</span><span class="sr">)</span><span class="o">⊔</span><span class="nv">i</span>
+<span class="p">⟨</span><span class="w"> </span><span class="s2">&quot;10&quot;</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="w"> </span><span class="s2">&quot;42&quot;</span><span class="w"> </span><span class="s2">&quot;8&quot;</span><span class="w"> </span><span class="s2">&quot;3&quot;</span><span class="w"> </span><span class="s2">&quot;24&quot;</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="w"> </span><span class="p">⟩</span>
+</pre></div>
+<p></p>
+This more or less just uses building blocks that are already present in
+Org mode and rearranges them: the Org block looks like
+
+<div class="highlight-org" style="padding-left: 1em;"><pre><span></span><span class="ow">#+BEGIN_SRC bqn :results repl :exports results :wrap SRC bqn</span>
+  i←&quot;10+((5+42)+8)×(3-(24+5))&quot;
+  (10⊸×⊸+˜´·⌽-⟜'0')¨(¯1+d×+`»⊸&lt;d←i∊'0'+↕10)⊔i
+<span class="ow">#+END_SRC</span>
+</pre></div>
+<p></p>
+The <code>:exports results</code> and <code>:wrap SRC bqn</code> directives should hopefully
+be self-explanatory. The <code>repl</code> results type is a very simple twist on
+the execution of a block, wherein I just send one line per block to the
+<span class="small-caps">repl</span>, await the result, and print that right below the line. The
+ordinary <code>bqn-mode</code> already integrates with <code>comint</code>, so one can just
+reuse the respective function for this application.
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">org-babel-bqn--execute-repl</span><span class="w"> </span><span class="p">(</span><span class="nv">body</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Execute BODY line-by-line, returning input/output pairs.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">lines</span><span class="w"> </span><span class="p">(</span><span class="nv">split-string</span><span class="w"> </span><span class="nv">body</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="s">&quot;[ \t]+&quot;</span><span class="p">)))</span><span class="w"> </span><span class="c1">; trim whitespace, drop empty</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">mapconcat</span>
+<span class="w">     </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">line</span><span class="p">)</span>
+<span class="w">       </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;   %s\n%s&quot;</span><span class="w"> </span><span class="nv">line</span><span class="w"> </span><span class="p">(</span><span class="nv">bqn-comint-evaluate-command</span><span class="w"> </span><span class="nv">line</span><span class="p">)))</span>
+<span class="w">     </span><span class="nv">lines</span>
+<span class="w">     </span><span class="s">&quot;\n&quot;</span><span class="p">)))</span>
+</pre></div>
+<p></p>
+Threading that through to the execution function works by just matching
+on the correct result parameter.
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">org-babel-execute:bqn</span><span class="w"> </span><span class="p">(</span><span class="nv">body</span><span class="w"> </span><span class="nv">params</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Execute a block of BQN code with org-babel.</span>
+<span class="s">When PARAMS includes `:results repl', evaluate each line separately</span>
+<span class="s">and return all results interleaved.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">result-params</span><span class="w"> </span><span class="p">(</span><span class="nf">cdr</span><span class="w"> </span><span class="p">(</span><span class="nf">assq</span><span class="w"> </span><span class="nb">:results</span><span class="w"> </span><span class="nv">params</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="nv">result-params</span><span class="w"> </span><span class="p">(</span><span class="nv">string-match-p</span><span class="w"> </span><span class="s">&quot;\\brepl\\b&quot;</span><span class="w"> </span><span class="nv">result-params</span><span class="p">))</span>
+<span class="w">        </span><span class="p">(</span><span class="nv">org-babel-bqn--execute-repl</span><span class="w"> </span><span class="nv">body</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">bqn-comint-evaluate-command</span><span class="w"> </span><span class="nv">body</span><span class="p">))))</span>
+</pre></div>
+<p></p>
+Executing the block results in
+
+<div class="highlight-org" style="padding-left: 1em;"><pre><span></span><span class="nn">#+RESULTS:</span>
+<span class="ow">#+begin_SRC bqn</span>
+   i←&quot;10+((5+42)+8)×(3-(24+5))&quot;
+&quot;10+((5+42)+8)×(3-(24+5))&quot;
+   (10⊸×⊸+˜´·⌽-⟜'0')¨(¯1+d×+`»⊸&lt;d←i∊'0'+↕10)⊔i
+⟨ 10 5 42 8 3 24 5 ⟩
+<span class="ow">#+end_SRC</span>
+</pre></div>
+<p></p>
+All we have to do then is to export the results, wrapped in the right
+src block, so that the finished markdown will exactly be
+
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>``` bqn
+   i←&quot;10+((5+42)+8)×(3-(24+5))&quot;
+&quot;10+((5+42)+8)×(3-(24+5))&quot;
+   (10⊸×⊸+˜´·⌽-⟜'0')¨(¯1+d×+`»⊸&lt;d←i∊'0'+↕10)⊔i
+⟨ 10 5 42 8 3 24 5 ⟩
+```
+</pre></div>
+<p></p>
+Given a sufficiently good Markdown export package, Org’s machinery now
+just works™ on my machine®.
+<hr />
+<p></p>
+One convenience function that I ended up using a lot is to execute all
+(named) src blocks in a file, except those that are inside of a results
+block.
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">org-babel-bqn-execute-named-blocks</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Execute named src blocks not part of a #+RESULTS block.</span>
+<span class="s">This may be useful when using `:results repl', and wrapping the</span>
+<span class="s">resulting block in a BQN src block again.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">org-babel-map-src-blocks</span><span class="w"> </span><span class="no">nil</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="nf">string-equal</span><span class="w"> </span><span class="s">&quot;bqn&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">car</span><span class="w"> </span><span class="p">(</span><span class="nv">org-babel-get-src-block-info</span><span class="w"> </span><span class="ss">'no-eval</span><span class="p">)))</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">not</span><span class="w"> </span><span class="p">(</span><span class="k">progn</span><span class="w"> </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="nv">beg-block</span><span class="p">)</span>
+<span class="w">                           </span><span class="p">(</span><span class="nf">forward-line</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span>
+<span class="w">                           </span><span class="p">(</span><span class="nv">looking-at-p</span><span class="w"> </span><span class="s">&quot;#\\+RESULTS:&quot;</span><span class="p">))))</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="nv">beg-block</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nv">org-babel-execute-src-block</span><span class="p">))))</span>
+</pre></div>
+<p></p>
+This is great for only executing the blocks I actually want to be
+“literate”, while leaving the others alone.
+<h2 id="exporting">Exporting<a href="#exporting" class="floatleft sec-link">§</a></h2>
+<p></p>
+Another nook of Org that’s worth spending a weekend on is
+<a href="https://orgmode.org/manual/Exporting.html">exporting</a>. The gist is that
+writing exporters in Emacs can have many advantages over using more
+generic programs like pandoc, as Org itself is reasonably complicated,
+and introspection is actually good sometimes.
+<p></p>
+For exporting from Org to <span class="small-caps">gfm</span> there’s already
+<a href="https://github.com/larstvei/ox-gfm">ox-gfm.el</a>. This already does the
+bulk of the work; however, it’s not quite specialised enough for my
+purposes, and does seem to be abandoned.<!--
+--><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle" /><div class="sidenote">Or just feature complete, I can’t tell.</div><!--
+--> As such, I decided to fork
+it, and hack in some changes myself.
+<h3 id="headers">Headers<a href="#headers" class="floatleft sec-link">§</a></h3>
+<p></p>
+One thing that one needs to teach <code>ox-gfm</code> is the <span class="small-caps">yaml</span>-esque headers
+that hakyll uses; every post begins with a quick list of the most
+salient data:
+
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>---
+title: Writing Literate Blog Posts
+date: 2026-03-02
+tags: emacs
+---
+</pre></div>
+<p></p>
+Defining an export backend based on another one is done using the
+<code>org-export-define-derived-backend</code> function.<!--
+--><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle" /><div class="sidenote">There are so many export backends that this will essentially always be the case when defining a new one. Your file format is not as unique as you think it is.</div><!--
+--> It takes a name, the
+parent it builds on, and a handful of keyword arguments that describe
+how the two differ. Everything the parent already knows how to translate
+is inherited for free. For example, <code>ox-gfm</code> inherits from the builtin
+<code>ox-md</code>, which in turn inherits from <code>ox-html</code>, so in particular this
+will be the fallback if nothing else matches.
+<p></p>
+There are a few possible keyword arguments to the function, so I’d
+encourage you to peruse <code>C-h f org-export-define-derived-backend RET</code>.
+The ones we’re interested in are <code>:translate-alist</code>, which can attach
+exporting functions to smaller elements of the format (tables, code,
+footnotes, you name it), and <code>:options-alist</code>, which defines the <a href="https://orgmode.org/manual/Export-Settings.html">export
+options</a> accepted by
+Org.
+<p></p>
+To not keep you in unnecessary suspense, here’s what we need to actually
+add to the existing backend derivation:
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nv">org-export-define-derived-backend</span><span class="w"> </span><span class="ss">'gfm</span><span class="w"> </span><span class="ss">'md</span>
+<span class="w">  </span><span class="c1">; …</span>
+<span class="w">  </span><span class="nb">:options-alist</span>
+<span class="w">  </span><span class="o">'</span><span class="p">((</span><span class="nb">:tags</span><span class="w"> </span><span class="s">&quot;TAGS&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="nv">split</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">:last-modified</span><span class="w"> </span><span class="s">&quot;LAST-MODIFIED&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">:og-description</span><span class="w"> </span><span class="s">&quot;OG-DESCRIPTION&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">nil</span><span class="p">))</span>
+<span class="w">  </span><span class="nb">:translate-alist</span><span class="w"> </span><span class="o">'</span><span class="p">((</span><span class="nv">template</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">org-gfm-template</span><span class="p">)</span>
+<span class="w">                     </span><span class="c1">; …</span>
+<span class="w">                     </span><span class="p">))</span>
+</pre></div>
+<p></p>
+Some of hakyll’s metadata fields weren’t known to Org,<!--
+--><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle" /><div class="sidenote">Not the case for <code>:title</code> or <code>:date</code>; even though I’m using them later on, Org already knows about their existence.</div><!--
+--> and for
+translating this into a <span class="small-caps">yaml</span>-style header at the top of the document, we
+need to add a function to translate the <em>template</em> of an Org document.
+This gets the final converted document as an input, so it’s the
+canonical place for a pre- or postamble. It’s fine to just slap in a new
+definition here; <code>ox-gfm</code> doesn’t override it by default, and in
+<code>ox-md</code><span class="nowrap">—</span>which does do <span class="nowrap">that—</span>it’s defined as the identity function.
+<p></p>
+Each list element given to <code>:options-alist</code> is comprised of <code>(ALIST-KEY KEYWORD OPTION DEFAULT BEHAVIOR)</code>; see the docs of
+<code>org-export-options-alist</code> for more information. Briefly, <code>ALIST-KEY</code> is
+the key under which the value ends up in the export <code>info</code> plist;
+<code>KEYWORD</code> is the keyword the user writes into the document; and
+<code>BEHAVIOR</code> tells Org how to handle a single option having multiple
+values, if any. The builtin <code>split</code> already does exactly what I want for
+<code>tags</code>,<!--
+--><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle" /><div class="sidenote">This allows several tags to just be specified by comma separation: <code>#+tags: array-lang, c, k</code>.</div><!--
+--> and for the others I’m fine with the default behaviour,
+which is overwriting.
+<p></p>
+The template function just slurps out the arguments we care about, and
+puts them at the very top of the document.
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">org-gfm--build-yaml</span><span class="w"> </span><span class="p">(</span><span class="nv">info</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Build YAML front matter string from INFO plist.</span>
+<span class="s">Returns nil if no fields have values.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">when-let*</span><span class="w"> </span><span class="p">((</span><span class="nv">lines</span>
+<span class="w">               </span><span class="p">(</span><span class="nv">seq-keep</span>
+<span class="w">                </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">f</span><span class="p">)</span>
+<span class="w">                  </span><span class="p">(</span><span class="nv">when-let*</span><span class="w"> </span><span class="p">((</span><span class="nv">field</span><span class="w"> </span><span class="p">(</span><span class="nf">plist-get</span><span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="nv">f</span><span class="p">))</span>
+<span class="w">                              </span><span class="p">(</span><span class="nv">val</span><span class="w"> </span><span class="p">(</span><span class="nb">pcase</span><span class="w"> </span><span class="nv">f</span>
+<span class="w">                                     </span><span class="p">(</span><span class="nb">:title</span><span class="w">          </span><span class="nf">#'car</span><span class="p">)</span>
+<span class="w">                                     </span><span class="p">(</span><span class="nb">:date</span><span class="w">           </span><span class="nf">#'car</span><span class="p">)</span>
+<span class="w">                                     </span><span class="p">(</span><span class="nb">:tags</span><span class="w">           </span><span class="p">(</span><span class="nb">lambda</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">mapconcat</span><span class="w"> </span><span class="nf">#'identity</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">)))</span>
+<span class="w">                                     </span><span class="p">(</span><span class="nb">:last-modified</span><span class="w">  </span><span class="nf">#'identity</span><span class="p">)</span>
+<span class="w">                                     </span><span class="p">(</span><span class="nb">:og-description</span><span class="w"> </span><span class="nf">#'identity</span><span class="p">))))</span>
+<span class="w">                    </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;%s: %s&quot;</span>
+<span class="w">                            </span><span class="p">(</span><span class="nv">string-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">pp-to-string</span><span class="w"> </span><span class="nv">f</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="w">                            </span><span class="p">(</span><span class="nf">funcall</span><span class="w"> </span><span class="nv">val</span><span class="w"> </span><span class="nv">field</span><span class="p">))))</span>
+<span class="w">                </span><span class="o">'</span><span class="p">(</span><span class="nb">:title</span><span class="w"> </span><span class="nb">:date</span><span class="w"> </span><span class="nb">:last-modified</span><span class="w"> </span><span class="nb">:tags</span><span class="w"> </span><span class="nb">:og-description</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;---\n&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">mapconcat</span><span class="w"> </span><span class="nf">#'identity</span><span class="w"> </span><span class="nv">lines</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;\n---\n\n&quot;</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">org-gfm-template</span><span class="w"> </span><span class="p">(</span><span class="nv">contents</span><span class="w"> </span><span class="nv">info</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Return complete document string after GFM conversion.</span>
+<span class="s">CONTENTS is the transcoded contents string.  INFO is a plist holding</span>
+<span class="s">export options.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="p">(</span><span class="nv">org-gfm--build-yaml</span><span class="w"> </span><span class="nv">info</span><span class="p">)</span><span class="w"> </span><span class="nv">contents</span><span class="p">))</span>
+</pre></div>
+<h3 id="footnotes">Footnotes<a href="#footnotes" class="floatleft sec-link">§</a></h3>
+<p></p>
+The export machinery already knows about footnotes, but since this site
+uses <a href="../posts/block-sidenotes.html" class="local-link">sidenotes</a>, I had to adjust the
+exporting a tad.
+<p></p>
+First of all, by default the label of an Org footnote, which looks like
+<code>[fn:1]</code>, will not get translated to a <span class="small-caps">gfm</span>-style <code>[^1]</code>, but directly
+into <span class="small-caps">html</span>:
+
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>&lt;sup&gt;&lt;a id=&quot;fnr.1&quot; class=&quot;footref&quot; href=&quot;#fn.1&quot; role=&quot;doc-backlink&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;
+</pre></div>
+<p></p>
+To fix this, we just need to add <code>(footnote-reference . org-gfm-footnote-reference)</code> to the translate alist of our backend,
+where the mentioned function just gets the footnote number and
+translates it:
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">org-gfm-footnote-reference</span><span class="w"> </span><span class="p">(</span><span class="nv">footnote-reference</span><span class="w"> </span><span class="nv">_contents</span><span class="w"> </span><span class="nv">info</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Transcode a FOOTNOTE-REFERENCE element into GFM format.</span>
+<span class="s">_CONTENTS is nil.  INFO is a plist holding contextual information.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;[^%d]&quot;</span><span class="w"> </span><span class="p">(</span><span class="nv">org-export-get-footnote-number</span><span class="w"> </span><span class="nv">footnote-reference</span><span class="w"> </span><span class="nv">info</span><span class="p">)))</span>
+</pre></div>
+<p></p>
+While I do want the content of the footnotes to be there at the end of
+the file, I don’t want a big <code>Footnotes</code> section header, as the
+exporting will grab and move them anyways. Thus, I adjusted the already
+existing <code>org-gfm-footnote-section</code> to
+
+<div class="highlight-emacs-lisp" style="padding-left: 1em;"><pre><span></span><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">org-gfm-footnote-section</span><span class="w"> </span><span class="p">(</span><span class="nv">info</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Format the footnote section.</span>
+<span class="s">INFO is a plist used as a communication channel.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="nv">and-let*</span><span class="w"> </span><span class="p">((</span><span class="nv">fn-alist</span><span class="w"> </span><span class="p">(</span><span class="nv">org-export-collect-footnote-definitions</span><span class="w"> </span><span class="nv">info</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;%s\n&quot;</span>
+<span class="w">            </span><span class="p">(</span><span class="nf">mapconcat</span><span class="w"> </span><span class="p">(</span><span class="nv">pcase-lambda</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="p">(</span><span class="o">,</span><span class="nv">n</span><span class="w"> </span><span class="o">,</span><span class="nv">_type</span><span class="w"> </span><span class="o">,</span><span class="nv">def</span><span class="p">))</span>
+<span class="w">                         </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">&quot;[^%d]: %s&quot;</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="p">(</span><span class="nv">org-trim</span><span class="w"> </span><span class="p">(</span><span class="nv">org-export-data</span><span class="w"> </span><span class="nv">def</span><span class="w"> </span><span class="nv">info</span><span class="p">))))</span>
+<span class="w">                       </span><span class="nv">fn-alist</span>
+<span class="w">                       </span><span class="s">&quot;\n\n&quot;</span><span class="p">))))</span>
+</pre></div>
+<p></p>
+This is called in <code>org-gfm-inner-template</code><span class="nowrap">—</span>the function that stitches
+the document body <span class="nowrap">together—</span>but that call-site does not have to be
+adjusted at all.
+<h2 id="conclusion">Conclusion<a href="#conclusion" class="floatleft sec-link">§</a></h2>
+<p></p>
+With just a few patches to already existing libraries, I can now write
+“literate” articles in Org, export them to Markdown with a single key
+combination, and have the usual hakyll+pandoc machinery take over. A big
+win in ergonomics, certainly: it saves me having to copy everything from
+an actual <span class="small-caps">repl</span> into the file, hoping I won’t forget to update an earlier
+block if a variable name changes. Indeed, this might actually inspire me
+to write more of that flavour of post, which is what the whole thing is
+all about, I guess.
+<!-- Body is included in the above file -->
+    </section>
+    <!-- A footer-ish thing above the actual boring footer for pretty
+           fleurons and things that should only appear on posts. -->
+      <div style="text-align: center;">
+        <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
+        Have a comment? Write me an <a href="../about.html">email!</a>
+      </div>
+</article>
+</div>
+      <div id="footer">
+        <!-- Left -->
+        <a id="to-top" href="#">top</a>
+        <!-- Right -->
+        <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+        &nbsp;|&nbsp;
+        <a href="../impressum.html">Legal notice and privacy policy</a>
+        <!-- Newline -->
+        <p style="margin-top:0;">Everything on this website—<a style="color:var(--fg-footer-pipe)" href="https://en.wikipedia.org/wiki/Dash#Em_dash">em dash</a> and all—was created by a human</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -185,7 +185,7 @@ what it is.</p>
 <div class="tc-text">
 <p>Here come some shorter names for primitives and branching/iteration,
 though I can’t tell why <code>O</code> was chosen for <code>printf</code>. I believe dollars
-signs being allowed in identifiers is not standard C, but the GCC manual
+signs being allowed in identifiers is not standard C, but the <span class="small-caps">gcc</span> manual
 <a href="https://gcc.gnu.org/onlinedocs/gcc/Dollar-Signs.html">says that</a> “many
 traditional C implementations allow such identifiers”, so it’s probably
 fine.</p>
@@ -200,7 +200,7 @@ fine.</p>
 </div>
 <div class="tc-text">
 <p>The <code>_(e)</code> macro uses the <a href="https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html">statement
-expression</a> GCC
+expression</a> <span class="small-caps">gcc</span>
 <span class="nowrap">extension—</span>it turns a compound statement into an expression. According to
 the docs</p>
 <blockquote>
@@ -227,7 +227,7 @@ too much about it.</p>
 functions: we first give it the function name, then the body, and only
 then (due to the varargs) the arguments of the function. Instead of
 <code>__VA_ARGS__</code>, this uses the more old-school <a href="https://gcc.gnu.org/onlinedocs/cpp/Variadic-Macros.html">named
-varargs</a> GCC
+varargs</a> <span class="small-caps">gcc</span>
 extension. What the function does is to call the body inside of the <code>_</code>
 macro, cast it to <code>u</code>, and return it.</p>
 </div>
@@ -757,7 +757,7 @@ us later on!).</p>
 for <code>AV</code>. Both of those last ones use <code>strchr</code> with some “let’s see what
 the pointer offset is” maths, which I think is actually the idiomatic
 way to go about that (but I don’t know C, so don’t quote me on that.)
-What’s not super standard is <code>x?:y</code>, which I believe is a <a href="https://gcc.gnu.org/onlinedocs/gcc/Conditionals.html">GCC
+What’s not super standard is <code>x?:y</code>, which I believe is a <a href="https://gcc.gnu.org/onlinedocs/gcc/Conditionals.html"><span class="small-caps">gcc</span>
 extension</a> and not
 part of any C standard. It’s just a shorter way to write <code>x?x:y</code>; cute syntactic
 <del>cocaine</del> sugar.</p>

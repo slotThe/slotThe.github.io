@@ -709,7 +709,7 @@ myPandocCompiler =
                     , "PR", "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
                     , "CBQN", "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM"
                     , "KOMA", "JSON", "RFC", "CSV", "CRLF", "CR", "LF", "39C3"
-                    , "3D", "NULL", "ASCII"
+                    , "3D", "NULL", "ASCII", "GFM", "GCC", "YAML"
                     ]
     inline -> inline
    where
@@ -727,7 +727,7 @@ myPandocCompiler =
       = zbmath . orcid
       . go "KMonad" (firstN 2)
       . go "XMonad" (firstN 2)
-      . go "HTML" (firstN 4)
+      . go "HTML"   (firstN 4)
      where
       orcid, zbmath :: Text -> Text
       orcid  s = if s == "orcid"  then sc "orc" <> "i" <> sc "d" else s

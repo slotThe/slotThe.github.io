@@ -11,8 +11,310 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2025-12-25T00:00:00Z</updated>
+    <updated>2026-04-23T00:00:00Z</updated>
     <entry>
+    <title>Writing Literate Blog Posts</title>
+    <link href="https://tony-zorman.com/posts/interactive.html" />
+    <id>https://tony-zorman.com/posts/interactive.html</id>
+    <published>2026-04-23T00:00:00Z</published>
+    <updated>2026-04-23T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <div class="header">
+      23rd Apr 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1962 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+      </div>
+    <h1 class="post-title">Writing Literate Blog Posts</h1>
+    <div id="title-underline"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      
+<p>Let’s try to contort enough Emacs packages to allow for a smooth Org to
+GFM⁺⁺ export, so I can write literate programs in the comfort of Org
+mode.</p>
+<!--more-->
+<p>This website is powered by hakyll, which eventually hands off to pandoc
+to do all of the <abbr title="(Microsoft) GitHub-flavoured
+markdown">GFM</abbr> to HTML mangling. I have a <a href="https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs">moderately
+involved</a>
+hakyll configuration, which in particular means I’ll not be moving to a
+purely Emacs-based setup anytime soon. However, the mere existence of
+Org mode is a straight upgrade for certain things, which I’d like to
+leverage somehow.</p>
+<p>For this post, I’ll concentrate on “literate blog posts”, in the sense
+of <a href="https://en.wikipedia.org/wiki/Literate_programming">literate
+programming</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+Basically, this is about having executable code blocks interspersed with
+prose, explaining what’s going on, with the niceties that later code
+blocks can refer to earlier ones, and so on. An example is <a href="/posts/bqn-sudoku.html">Sudoku
+Solving in BQN</a>, which was written with this
+kind of setup (as one can see by the <a href="https://github.com/slotThe/slotThe.github.io/blob/main/posts/bqn-sudoku.org">associated Org
+file</a>
+in the repository). As getting the Org to HTML export exactly right
+sounds like a huge headache, it seems easier to go from Org to GFM
+inside of Emacs, and then have pandoc take over for the GFM to HTML
+step. Hence, I will focus mostly on wrangling with Babel to generate
+REPL-like blocks, as well as with Org’s export machinery to sanely
+translate the blocks to markdown.</p>
+<hr />
+<p>The techniques used here work for essentially all languages that come
+with some kind of way to evaluate code in a REPL. If you’re curious,
+I’ve personally tried this with <a href="https://mlochbaum.github.io/BQN/">BQN</a>
+and <a href="https://codeberg.org/growler/k">growler/k</a>. If you want, you can
+peruse the resulting <a href="https://codeberg.org/slotThe/ob-bqn">ob-bqn.el</a>,
+<a href="https://codeberg.org/slotThe/ob-k">ob-k.el</a>, and
+<a href="https://codeberg.org/slotThe/ox-gfm">ox-gfm</a> packages.</p>
+<h2 id="babel">Babel</h2>
+<p><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>You can think of <a href="https://orgmode.org/worg/org-contrib/babel/intro.html">Org
+Babel</a> as a bit
+like <a href="https://jupyter.org/">Jupyter Notebooks</a>, but for any language,
+and on steroids. It’s Org mode’s machinery for working with source code
+blocks, and there’s a lot of cool functionality packed into it: blocks
+can share state, pipe their output into other blocks, be exported with
+or without their results, and so on. For this application, we’re mostly
+going to focus on basic evaluation, as well as exporting. For example,</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode org"><code class="sourceCode orgmode"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">#+BEGIN_SRC python</span> :results output</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;beep boop&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">#+END_SRC</span></span></code></pre></div>
+<p>will, upon executing the fantastically named <code>org-ctrl-c-ctrl-c</code> with
+<code>C-c C-c</code>, yield a results block underneath it.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode org"><code class="sourceCode orgmode"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#+RESULTS:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>: beep boop</span></code></pre></div>
+<p>In the very unlikely case that you’re using a language that’s not
+covered by an existing Babel package, either
+<a href="https://orgmode.org/worg/org-contrib/babel/languages/index.html">officially</a>
+or on some random repository,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> it’s actually pretty easy to write a
+package yourself. All that’s needed is an <code>org-babel-execute:«lang»</code>
+function, which tells Org how to evaluate code for your language, and
+Org takes care of the rest. There’s even an official
+<a href="https://git.sr.ht/~bzg/worg/tree/master/item/org-contrib/babel/ob-template.el">template.el</a>
+available, which one can use to get up and running a bit quicker, and
+the
+<a href="https://orgmode.org/worg/org-contrib/babel/languages/index.html">docs</a>
+are also—as always—informative to read.</p>
+<h3 id="repl-blocks">REPL blocks</h3>
+<p>For the specific posts I’m writing, I’m looking for more of an
+interactive experience. Basically, I want to simulate a REPL, where,
+say, the input is indented by a certain number of spaces, and the output
+is flush to the left:</p>
+<pre class="bqn"><code>   i←&quot;10+((5+42)+8)×(3-(24+5))&quot;
+&quot;10+((5+42)+8)×(3-(24+5))&quot;
+   (¯1+d×+`»⊸&lt;d←i∊'0'+↕10)⊔i
+⟨ &quot;10&quot; &quot;5&quot; &quot;42&quot; &quot;8&quot; &quot;3&quot; &quot;24&quot; &quot;5&quot; ⟩</code></pre>
+<p>This more or less just uses building blocks that are already present in
+Org mode and rearranges them: the Org block looks like</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode org"><code class="sourceCode orgmode"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">#+BEGIN_SRC bqn :results repl :exports results :wrap SRC bqn</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  i←&quot;10+((5+42)+8)×(3-(24+5))&quot;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  (10⊸×⊸+˜´·⌽-⟜'0')¨(¯1+d×+`»⊸&lt;d←i∊'0'+↕10)⊔i</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>#+END_SRC</span></code></pre></div>
+<p>The <code>:exports results</code> and <code>:wrap SRC bqn</code> directives should hopefully
+be self-explanatory. The <code>repl</code> results type is a very simple twist on
+the execution of a block, wherein I just send one line per block to the
+REPL, await the result, and print that right below the line. The
+ordinary <code>bqn-mode</code> already integrates with <code>comint</code>, so one can just
+reuse the respective function for this application.</p>
+<pre class="emacs-lisp"><code>(defun org-babel-bqn--execute-repl (body)
+  &quot;Execute BODY line-by-line, returning input/output pairs.&quot;
+  (let ((lines (split-string body &quot;\n&quot; t &quot;[ \t]+&quot;))) ; trim whitespace, drop empty
+    (mapconcat
+     (lambda (line)
+       (format &quot;   %s\n%s&quot; line (bqn-comint-evaluate-command line)))
+     lines
+     &quot;\n&quot;)))</code></pre>
+<p>Threading that through to the execution function works by just matching
+on the correct result parameter.</p>
+<pre class="emacs-lisp"><code>(defun org-babel-execute:bqn (body params)
+  &quot;Execute a block of BQN code with org-babel.
+When PARAMS includes `:results repl', evaluate each line separately
+and return all results interleaved.&quot;
+  (let ((result-params (cdr (assq :results params))))
+    (if (and result-params (string-match-p &quot;\\brepl\\b&quot; result-params))
+        (org-babel-bqn--execute-repl body)
+      (bqn-comint-evaluate-command body))))</code></pre>
+<p>Executing the block results in</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode org"><code class="sourceCode orgmode"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#+RESULTS:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>#+begin_SRC bqn</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   i←&quot;10+((5+42)+8)×(3-(24+5))&quot;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>&quot;10+((5+42)+8)×(3-(24+5))&quot;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   (10⊸×⊸+˜´·⌽-⟜'0')¨(¯1+d×+`»⊸&lt;d←i∊'0'+↕10)⊔i</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>⟨ 10 5 42 8 3 24 5 ⟩</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>#+end_SRC</span></code></pre></div>
+<p>All we have to do then is to export the results, wrapped in the right
+src block, so that the finished markdown will exactly be</p>
+<pre><code>``` bqn
+   i←&quot;10+((5+42)+8)×(3-(24+5))&quot;
+&quot;10+((5+42)+8)×(3-(24+5))&quot;
+   (10⊸×⊸+˜´·⌽-⟜'0')¨(¯1+d×+`»⊸&lt;d←i∊'0'+↕10)⊔i
+⟨ 10 5 42 8 3 24 5 ⟩
+```</code></pre>
+<p>Given a sufficiently good Markdown export package, Org’s machinery now
+just works™ on my machine®.</p>
+<hr />
+<p>One convenience function that I ended up using a lot is to execute all
+(named) src blocks in a file, except those that are inside of a results
+block.</p>
+<pre class="emacs-lisp"><code>(defun org-babel-bqn-execute-named-blocks ()
+  &quot;Execute named src blocks not part of a #+RESULTS block.
+This may be useful when using `:results repl', and wrapping the
+resulting block in a BQN src block again.&quot;
+  (interactive)
+  (org-babel-map-src-blocks nil
+    (when (and (string-equal &quot;bqn&quot; (car (org-babel-get-src-block-info 'no-eval)))
+               (not (progn (goto-char beg-block)
+                           (forward-line -1)
+                           (looking-at-p &quot;#\\+RESULTS:&quot;))))
+      (goto-char beg-block)
+      (org-babel-execute-src-block))))</code></pre>
+<p>This is great for only executing the blocks I actually want to be
+“literate”, while leaving the others alone.</p>
+<h2 id="exporting">Exporting</h2>
+<p>Another nook of Org that’s worth spending a weekend on is
+<a href="https://orgmode.org/manual/Exporting.html">exporting</a>. The gist is that
+writing exporters in Emacs can have many advantages over using more
+generic programs like pandoc, as Org itself is reasonably complicated,
+and introspection is actually good sometimes.</p>
+<p>For exporting from Org to GFM there’s already
+<a href="https://github.com/larstvei/ox-gfm">ox-gfm.el</a>. This already does the
+bulk of the work; however, it’s not quite specialised enough for my
+purposes, and does seem to be abandoned.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> As such, I decided to fork
+it, and hack in some changes myself.</p>
+<h3 id="headers">Headers</h3>
+<p>One thing that one needs to teach <code>ox-gfm</code> is the YAML-esque headers
+that hakyll uses; every post begins with a quick list of the most
+salient data:</p>
+<pre><code>---
+title: Writing Literate Blog Posts
+date: 2026-03-02
+tags: emacs
+---</code></pre>
+<p>Defining an export backend based on another one is done using the
+<code>org-export-define-derived-backend</code> function.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> It takes a name, the
+parent it builds on, and a handful of keyword arguments that describe
+how the two differ. Everything the parent already knows how to translate
+is inherited for free. For example, <code>ox-gfm</code> inherits from the builtin
+<code>ox-md</code>, which in turn inherits from <code>ox-html</code>, so in particular this
+will be the fallback if nothing else matches.</p>
+<p>There are a few possible keyword arguments to the function, so I’d
+encourage you to peruse <code>C-h f org-export-define-derived-backend RET</code>.
+The ones we’re interested in are <code>:translate-alist</code>, which can attach
+exporting functions to smaller elements of the format (tables, code,
+footnotes, you name it), and <code>:options-alist</code>, which defines the <a href="https://orgmode.org/manual/Export-Settings.html">export
+options</a> accepted by
+Org.</p>
+<p>To not keep you in unnecessary suspense, here’s what we need to actually
+add to the existing backend derivation:</p>
+<pre class="emacs-lisp"><code>(org-export-define-derived-backend 'gfm 'md
+  ; …
+  :options-alist
+  '((:tags &quot;TAGS&quot; nil nil split)
+    (:last-modified &quot;LAST-MODIFIED&quot; nil nil)
+    (:og-description &quot;OG-DESCRIPTION&quot; nil nil))
+  :translate-alist '((template . org-gfm-template)
+                     ; …
+                     ))</code></pre>
+<p>Some of hakyll’s metadata fields weren’t known to Org,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> and for
+translating this into a YAML-style header at the top of the document, we
+need to add a function to translate the <em>template</em> of an Org document.
+This gets the final converted document as an input, so it’s the
+canonical place for a pre- or postamble. It’s fine to just slap in a new
+definition here; <code>ox-gfm</code> doesn’t override it by default, and in
+<code>ox-md</code>—which does do that—it’s defined as the identity function.</p>
+<p>Each list element given to <code>:options-alist</code> is comprised of <code>(ALIST-KEY KEYWORD OPTION DEFAULT BEHAVIOR)</code>; see the docs of
+<code>org-export-options-alist</code> for more information. Briefly, <code>ALIST-KEY</code> is
+the key under which the value ends up in the export <code>info</code> plist;
+<code>KEYWORD</code> is the keyword the user writes into the document; and
+<code>BEHAVIOR</code> tells Org how to handle a single option having multiple
+values, if any. The builtin <code>split</code> already does exactly what I want for
+<code>tags</code>,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> and for the others I’m fine with the default behaviour,
+which is overwriting.</p>
+<p>The template function just slurps out the arguments we care about, and
+puts them at the very top of the document.</p>
+<pre class="emacs-lisp"><code>(defun org-gfm--build-yaml (info)
+  &quot;Build YAML front matter string from INFO plist.
+Returns nil if no fields have values.&quot;
+  (when-let* ((lines
+               (seq-keep
+                (lambda (f)
+                  (when-let* ((field (plist-get info f))
+                              (val (pcase f
+                                     (:title          #'car)
+                                     (:date           #'car)
+                                     (:tags           (lambda (x) (mapconcat #'identity x &quot; &quot;)))
+                                     (:last-modified  #'identity)
+                                     (:og-description #'identity))))
+                    (format &quot;%s: %s&quot;
+                            (string-trim (pp-to-string f) &quot;:&quot; &quot;\n&quot;)
+                            (funcall val field))))
+                '(:title :date :last-modified :tags :og-description))))
+    (concat &quot;---\n&quot; (mapconcat #'identity lines &quot;\n&quot;) &quot;\n---\n\n&quot;)))
+
+(defun org-gfm-template (contents info)
+  &quot;Return complete document string after GFM conversion.
+CONTENTS is the transcoded contents string.  INFO is a plist holding
+export options.&quot;
+  (concat (org-gfm--build-yaml info) contents))</code></pre>
+<h3 id="footnotes">Footnotes</h3>
+<p>The export machinery already knows about footnotes, but since this site
+uses <a href="/posts/block-sidenotes.html">sidenotes</a>, I had to adjust the
+exporting a tad.</p>
+<p>First of all, by default the label of an Org footnote, which looks like
+<code>[fn:1]</code>, will not get translated to a GFM-style <code>[^1]</code>, but directly
+into HTML:</p>
+<pre><code>&lt;sup&gt;&lt;a id=&quot;fnr.1&quot; class=&quot;footref&quot; href=&quot;#fn.1&quot; role=&quot;doc-backlink&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;</code></pre>
+<p>To fix this, we just need to add <code>(footnote-reference . org-gfm-footnote-reference)</code> to the translate alist of our backend,
+where the mentioned function just gets the footnote number and
+translates it:</p>
+<pre class="emacs-lisp"><code>(defun org-gfm-footnote-reference (footnote-reference _contents info)
+  &quot;Transcode a FOOTNOTE-REFERENCE element into GFM format.
+_CONTENTS is nil.  INFO is a plist holding contextual information.&quot;
+  (format &quot;[^%d]&quot; (org-export-get-footnote-number footnote-reference info)))</code></pre>
+<p>While I do want the content of the footnotes to be there at the end of
+the file, I don’t want a big <code>Footnotes</code> section header, as the
+exporting will grab and move them anyways. Thus, I adjusted the already
+existing <code>org-gfm-footnote-section</code> to</p>
+<pre class="emacs-lisp"><code>(defun org-gfm-footnote-section (info)
+  &quot;Format the footnote section.
+INFO is a plist used as a communication channel.&quot;
+  (and-let* ((fn-alist (org-export-collect-footnote-definitions info)))
+    (format &quot;%s\n&quot;
+            (mapconcat (pcase-lambda (`(,n ,_type ,def))
+                         (format &quot;[^%d]: %s&quot; n (org-trim (org-export-data def info))))
+                       fn-alist
+                       &quot;\n\n&quot;))))</code></pre>
+<p>This is called in <code>org-gfm-inner-template</code>—the function that stitches
+the document body together—but that call-site does not have to be
+adjusted at all.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>With just a few patches to already existing libraries, I can now write
+“literate” articles in Org, export them to Markdown with a single key
+combination, and have the usual hakyll+pandoc machinery take over. A big
+win in ergonomics, certainly: it saves me having to copy everything from
+an actual REPL into the file, hoping I won’t forget to update an earlier
+block if a variable name changes. Indeed, this might actually inspire me
+to write more of that flavour of post, which is what the whole thing is
+all about, I guess.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://wiki.haskell.org/index.php?title=Literate_programming">Some languages</a> even have extra support for this!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If you already know what Org Babel is, feel free to skip to <a href="#repl-blocks">REPL blocks</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The <code>:results output</code> directive is an additional instruction to Org, which returns whatever is displayed on stdout. By default, Org wraps your code in a function, calls that function, and displays the return value. If one uses IO, this obviously doesn’t really display what one wants.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>I’ve not seen this happen for any language I know, btw,
+though if you wander too far outside of the mainstream you might have to go hunting inside of other people’s configurations instead of just searching on {NonGnu,M}ELPA.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Or just feature complete, I can’t tell.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>There are so many export backends that this will essentially always be the case when defining a new one. Your file format is not as unique as you think it is.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Not the case for <code>:title</code> or <code>:date</code>; even though I’m using them later on, Org already knows about their existence.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>This allows several tags to just be specified by comma separation: <code>#+tags: array-lang, c, k</code>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Fixing Eglot's Hover Signatures</title>
     <link href="https://tony-zorman.com/posts/eglot-hover.html" />
     <id>https://tony-zorman.com/posts/eglot-hover.html</id>
