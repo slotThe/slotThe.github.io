@@ -12,7 +12,8 @@ there are a few thin layers on top for [syntax highlighting](#syntax-highlightin
 With the bundled nix flake,
 building should hopefully be deterministic enough that a simple `make watch` creates a preview server.
 
-Most of what makes the site "unique" is already stated in the README;
+Most of what makes the site "unique" is already stated in the
+[README](https://github.com/slotThe/slotThe.github.io/blob/main/README.md);
 however, this page gives me the chance to expand on some of the ideas,
 should they not have gotten their own blog post already.
 
