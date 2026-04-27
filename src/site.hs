@@ -523,9 +523,9 @@ mkPostList tags ctx title feedName template = do
   addFeedInfo :: String
   addFeedInfo = mconcat
     [ title <> " "
-    , "<div class=\"floatright\">"
+    , "<span class=\"floatright\">"
     ,   "<a href=\"" <> feedName <> ".xml\">feed</a>"
-    , "</div>"
+    , "</span>"
     ]
 
 --- Snapshots

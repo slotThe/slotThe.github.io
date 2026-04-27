@@ -21,7 +21,6 @@ body {
     font-size: 21px;
     font-family: var(--proportional-fonts);
     font-variant-numeric: oldstyle-nums;
-    font-display: block;
     line-height: 1.4;
 
     text-align: justify;
@@ -502,7 +501,7 @@ img {
     }
 }
 
-spoiler {                       /* Spoiler tags */
+.spoiler {                       /* Spoiler tags */
     background-color: var(--border-inline-code);
     color: transparent;
     user-select: none;

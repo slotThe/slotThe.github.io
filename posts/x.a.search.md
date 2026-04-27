@@ -126,7 +126,6 @@ only a single candidate left.[^6]
   <video width="100%" controls>
     <source src="../images/search-showcase/search-git.webm"
             type="video/webm">
-            <img class="pure-img"
     Showcasing the git search engine defined above
   </video>
 </p>

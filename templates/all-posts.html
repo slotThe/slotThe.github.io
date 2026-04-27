@@ -9,13 +9,11 @@
 </table>
 
 <h1>By tag</h1>
-<ul>
-  $for(tags)$
-</ul>
-  <h2>$title$
-    <div class="floatright">
+$for(tags)$
+  <h2><a href="/tags/$title$.html">#$title$</a>
+    <span class="floatright">
       <a href="atom-$title$.xml">feed</a>
-    </div>
+    </span>
   </h2>
   <table>
     $for(posts)$

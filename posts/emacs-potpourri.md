@@ -14,7 +14,7 @@ little context to some snippets that have accumulated over time.
 
 While there is a post about [my version][posts:query-replace] of the
 `query-replace` function, most other tidbits have only seen the light of
-day in places like the "Weekly Tips, Tricks, &c." thread on Reddit.  In
+day in places like the "Weekly Tips, Tricks, &​c." thread on Reddit.  In
 the spirit of hosting my content somewhere that I actually control,
 I chose to showcase these again here, hoping that other people may also
 find some of this stuff useful.[^2]
@@ -675,7 +675,7 @@ It mostly works *fine* for quick messages,
 but some things are just so manual as to make using them essentially impossible.
 
 For example, there is a spoiler function,
-which creates messages that are obscured until you click on them <spoiler>a bit like this</spoiler>.
+which creates messages that are obscured until you click on them <span class="spoiler">a bit like this</span>.
 You can send a spoiler by simply prepending your message with `\spoiler`.
 
 <img class="pure-img" src="../images/emacs-potpourri/spoiler.gif" alt="Inserting a /spoiler in Element.">
