@@ -13,13 +13,13 @@ is a first attempt at integrating the new (as of Emacs 29)
 about how these two interact in my [last post][post:package-vc]—you can
 see this package as automating things juuuust a little more.
 
-[post:package-vc]: https://tony-zorman.com/posts/package-vc-install.html
+[post:package-vc]: /posts/package-vc-install.html
 [vc-use-package]: https://github.com/slotThe/vc-use-package
 
 <!--more-->
 
 *Update (2023-05-18)*: This is now built into Emacs 30!
-Check [here](https://tony-zorman.com/posts/use-package-vc.html) for more details.
+Check [here](/posts/use-package-vc.html) for more details.
 
 # Motivation
 
@@ -59,7 +59,7 @@ more information (and manual controls), see the
 
 As I said above,
 this is no longer only available as an external package,
-but actually [built into Emacs](https://tony-zorman.com/posts/use-package-vc.html)!
+but actually [built into Emacs](/posts/use-package-vc.html)!
 By virtue of being a part of it now,
 the integration with `use-package` is a lot tighter—try it out if you're using `HEAD` anyways!
 If not, then don't worry: `vc-use-package` will not go anywhere for the forseeable future.

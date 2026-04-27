@@ -18,7 +18,7 @@ Plus, there is also a great reference implementation available in
 
 This article will assume that you are already at least a little bit familiar with BQN as a language.
 If not, I would recommend starting with the official [tutorials](https://mlochbaum.github.io/BQN/tutorial/index.html).
-I've also written about my experience [using BQN](https://tony-zorman.com/posts/aoc-in-bqn.html) for Advent of Code,
+I've also written about my experience [using BQN](/posts/aoc-in-bqn.html) for Advent of Code,
 which certainly contains some amount of written words that talk about the language.
 
 # The simplest case

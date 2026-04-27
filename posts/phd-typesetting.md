@@ -32,7 +32,7 @@ For reference, here are a few pages of how the end product looks like:
 
 While this post really is about typography,
 I will say that making LaTeX
-[acceptably fast](https://tony-zorman.com/posts/speeding-up-latex.html)
+[acceptably fast](/posts/speeding-up-latex.html)
 for these kinds of medium-sized documents really helped preserve an epsilon of sanity.
 Fiddling around with preamble precompiling and externalisation is—while painful—definitely worth it.
 
@@ -506,9 +506,9 @@ Lastly, I will just leave the following *very important* bibLaTeX configuration 
   \addspace\bibstring{and}\space}
 ```
 
-[^1]: {-} The thesis is available [here](https://tony-zorman.com/dissertation.pdf),
+[^1]: {-} The thesis is available [here](/dissertation.pdf),
       and you can also check out the [full source code](https://github.com/slotThe/dissertation).
-      For more information, also check [here](https://tony-zorman.com/research#theses).
+      For more information, also check [here](/research#theses).
 
       This post is also available as an
       [article](https://tug.org/TUGboat/tb46-3/tb144zorman-thesis.html)

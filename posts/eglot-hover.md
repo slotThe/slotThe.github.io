@@ -8,7 +8,7 @@ og-description: Advising eglot's display machinery to show complete type signatu
 ---
 
 In an
-[earlier post](https://tony-zorman.com/posts/fixing-lsp-mode.html)
+[earlier post](/posts/fixing-lsp-mode.html)
 I talked about making the hover signatures for
 [lsp-mode](https://emacs-lsp.github.io/lsp-mode/)
 a little bit more useful.
@@ -308,7 +308,7 @@ That's pretty much it—you can now enjoy having useful hover information!
 ---
 
 In case you want to
-[manually add type signatures](https://tony-zorman.com/posts/fixing-lsp-mode.html#bonus-adding-type-signatures)
+[manually add type signatures](/posts/fixing-lsp-mode.html#bonus-adding-type-signatures)
 then this is similarly straightforward,
 provided one knows the correct incantations:
 

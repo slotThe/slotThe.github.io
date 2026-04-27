@@ -6,9 +6,9 @@ tags: BQN, array-lang
 og-description: A rendition of Joey Tuttle's algorithm for generating integer volutes.
 ---
 
-On [day 3](https://tony-zorman.com/posts/aoc-in-bqn.html#day-3)
+On [day 3](/posts/aoc-in-bqn.html#day-3)
 of my post about doing some
-[Advent of Code problems in BQN](https://tony-zorman.com/posts/aoc-in-bqn.html),
+[Advent of Code problems in BQN](/posts/aoc-in-bqn.html),
 the task was to walk along some *integer volutes*:
 spirals, either spiralling inwards—involutes—or outwards—evolutes—in either direction.
 While the specific problem didn't require it,

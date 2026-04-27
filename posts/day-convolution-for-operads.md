@@ -252,5 +252,5 @@ which is exactly the kind of formula that we wanted to end up with. Neat.
 [^7]: Really, this definition always works,
       one just needs to substitute the $\mathtt{k}$-linearisation of the hom-set
       with a [Copower](https://ncatlab.org/nlab/show/copower).
-      I have written about these things [before](https://tony-zorman.com/posts/weighted-colimits.html#copowers),
+      I have written about these things [before](/posts/weighted-colimits.html#copowers),
       just in a different context.

@@ -33,7 +33,7 @@ This is probably completely broken if you view this post in an RSS viewer, or on
 with the best-case being that you just experience this as a normal, linear, post.
 Sorry about that.
 If you notice any CSS irregularities because you're using a vertical monitor with a 1504×2256 resolution or something,
-please [let me know](https://tony-zorman.com/about.html).
+please [let me know](/about.html).
 </div>
 
 ---

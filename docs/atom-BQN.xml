@@ -812,12 +812,12 @@ In general, I do not claim originality for any line of code in this post<!--
 or know some amount of array programming and are willing to look up unknown symbols.
 If not, I recommend starting with the official <a href="https://mlochbaum.github.io/BQN/tutorial/index.html">tutorials</a>.
 I’ve also written about my experience of
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html">using BQN</a>
+<a href="/posts/aoc-in-bqn.html">using BQN</a>
 for Advent of Code,
 a post which certainly contains some amount of written words that talk about the language.
 I’ll recall the basic tricks that one uses in array-oriented parsing,
 though if you feel like I’m going too fast perhaps it’s a good idea to peruse my post about writing a
-<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV parser</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<a href="/posts/bqn-csv.html">CSV parser</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <h2 id="lists-of-numbers">Lists of numbers</h2>
 <p>We’ll start with simply trying to parse lists of integers.
 Can’t be that hard, right?
@@ -1585,7 +1585,7 @@ using what are essentially only flat arrays of numbers,
 and still have it be this compact.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>I can probably offer the same conclusion as in the
-<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV post</a>:</p>
+<a href="/posts/bqn-csv.html">CSV post</a>:</p>
 <blockquote>
 <p>Q: Is writing (and reading) a parser in an array language unnecessarily hard?<br />
 A: Yes.</p>
@@ -1697,7 +1697,7 @@ Plus, there is also a great reference implementation available in
 <a href="https://github.com/mlochbaum/bqn-libs/blob/master/csv.bqn">bqn-libs</a>.</p>
 <p>This article will assume that you are already at least a little bit familiar with BQN as a language.
 If not, I would recommend starting with the official <a href="https://mlochbaum.github.io/BQN/tutorial/index.html">tutorials</a>.
-I’ve also written about my experience <a href="https://tony-zorman.com/posts/aoc-in-bqn.html">using BQN</a> for Advent of Code,
+I’ve also written about my experience <a href="/posts/aoc-in-bqn.html">using BQN</a> for Advent of Code,
 which certainly contains some amount of written words that talk about the language.</p>
 <h2 id="the-simplest-case">The simplest case</h2>
 <p>We’ll start with a subset of CSV in which we don’t have to think about escaping at all.
@@ -1949,9 +1949,9 @@ and for <code>"""a"",""b"""</code> we have the wonderful
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
       
-<p>On <a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-3">day 3</a>
+<p>On <a href="/posts/aoc-in-bqn.html#day-3">day 3</a>
 of my post about doing some
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html">Advent of Code problems in BQN</a>,
+<a href="/posts/aoc-in-bqn.html">Advent of Code problems in BQN</a>,
 the task was to walk along some <em>integer volutes</em>:
 spirals, either spiralling inwards—involutes—or outwards—evolutes—in either direction.
 While the specific problem didn’t require it,
@@ -5148,10 +5148,10 @@ Nice.</p>
 <hr />
 <ol>
 <li id="fn1"><p>If you’re impatient, I think I had the most fun on days
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-8">8</a>,
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-14">14</a>,
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-17">17</a>, and
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-21">21</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<a href="/posts/aoc-in-bqn.html#day-8">8</a>,
+<a href="/posts/aoc-in-bqn.html#day-14">14</a>,
+<a href="/posts/aoc-in-bqn.html#day-17">17</a>, and
+<a href="/posts/aoc-in-bqn.html#day-21">21</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>I flirted with APL for about a week before picking up BQN,
 but the dialect that everyone seems to use is Dyalog APL,
 and I didn’t have the guts to commit to a proprietary language implementation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

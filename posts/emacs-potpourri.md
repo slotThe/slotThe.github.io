@@ -502,7 +502,7 @@ However, with a bit of hacking around this turns out to be quite fixable:
      src="../images/fixing-lsp-mode/lsp-mode-fixed.png"
      alt="Properly syntax highlighted type signature">
 
-[The full post with all the code is here](https://tony-zorman.com/posts/fixing-lsp-mode.html).
+[The full post with all the code is here](/posts/fixing-lsp-mode.html).
 
 # Eshell
 
@@ -515,7 +515,7 @@ This means that,
 on the eshell side,
 we have to make sure to unmetafy the history file before writing to it.
 
-[The implementation and more details can be found here](https://tony-zorman.com/posts/eshell-zsh-history.html).
+[The implementation and more details can be found here](/posts/eshell-zsh-history.html).
 
 ## Integrating fish's history into eshell
 
@@ -651,7 +651,7 @@ As I'm in the habit—using the power of [whole-line-or-region](https://github.c
 this poses a problem.[^6]
 
 The solution, thankfully, does not involve all that much code.
-[You can read about it here](https://tony-zorman.com/posts/yanking.html).
+[You can read about it here](/posts/yanking.html).
 
 # Make `join-line` handle comments sanely
 
@@ -665,7 +665,7 @@ and is thus quite useless for a majority of cases
 However,
 with a bit of [monkey-patching],
 one can get a result that approximates a sane solution!
-[Here is the corresponding post for this](https://tony-zorman.com/posts/join-lines-comments.html).
+[Here is the corresponding post for this](/posts/join-lines-comments.html).
 
 # Converting markdown to Element-flavoured HTML
 
@@ -756,7 +756,7 @@ The result ends up being much more ergonomic:
 [posts:phd-workflow:entry]: ./my-phd-workflow.html#digital-notes
 [posts:phd-workflow]: ./my-phd-workflow.html
 [posts:prett-latex]: ./pretty-latex.html
-[posts:query-replace]: https://tony-zorman.com/posts/query-replace-many.html
+[posts:query-replace]: /posts/query-replace-many.html
 [quiver]: https://q.uiver.app/
 [use-package]: https://github.com/jwiegley/use-package
 [x11:reparenting]: https://old.reddit.com/r/emacs/comments/xjyuni/weekly_tips_tricks_c_thread/ipfjlw0/
@@ -828,7 +828,7 @@ The result ends up being much more ergonomic:
 
       󠀠
 
-      [:vc](https://tony-zorman.com/posts/use-package-vc.html) goes brrrrr
+      [:vc](/posts/use-package-vc.html) goes brrrrr
 
 [^10]: I don't think there's user-facing documentation for this, interestingly enough.
        I had to dig through fish's

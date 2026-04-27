@@ -26,7 +26,7 @@ and looks like just about the derpiest duck one can imagine:
 </figure>
 
 What does it do? Since the key is in one of the
-[inaccessible-ish](https://tony-zorman.com/posts/atreus-review.html#physical-layout)
+[inaccessible-ish](/posts/atreus-review.html#physical-layout)
 positions on the Atreus, and hitting the duck all the time is quite
 mean, I think there's only one obvious choice.[^2]
 

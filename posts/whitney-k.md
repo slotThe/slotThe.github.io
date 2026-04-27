@@ -87,7 +87,7 @@ are defined. It starts very slowly, just importing some system libraries.
 
 Next, we have the fundamental data types to be used later on. I will
 assume that just like in the [J
-version](https://tony-zorman.com/posts/j-incunabulum.html), `u` is
+version](/posts/j-incunabulum.html), `u` is
 opaque, in the sense that it sort of might be anything: an actual
 number, a pointer to an array, a pointer to a function… I feel like this
 is really fundamental to K's design, in that a lot of the shorthand

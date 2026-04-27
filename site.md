@@ -73,7 +73,7 @@ and the JS side of things hasn't changed much, except for removing the dependenc
 
 On the hakyll site, all that's needed to interface with this is [hlKaTeX][site:impl:hlkatex].
 Some more implementation considerations are mentioned in a
-[dedicated post](https://tony-zorman.com/posts/katex-with-hakyll.html).
+[dedicated post](/posts/katex-with-hakyll.html).
 
 # Section marks
 

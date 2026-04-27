@@ -128,7 +128,7 @@ A tiny statically typed functional language for processing JSON on the command-l
   A minor mode for improving
   [eglot](https://www.gnu.org/software/emacs/manual/html_node/eglot/Quick-Start.html)'s
   default hover messages;
-  see the [dedicated post](https://tony-zorman.com/posts/eglot-hover.html)
+  see the [dedicated post](/posts/eglot-hover.html)
   for pretty pictures.
 
 # Talks
@@ -137,7 +137,7 @@ A tiny statically typed functional language for processing JSON on the command-l
 
   An introduction to Git for people at the mathematics faculty at TU Dresden.
 
-[Atreus]: https://tony-zorman.com/posts/atreus-review.html
+[Atreus]: /posts/atreus-review.html
 [Git Introduction]: ./talks/git-introduction.html
 [KMonad]: https://github.com/kmonad/kmonad
 [QMK configuration]: https://github.com/slotThe/qmk_firmware/tree/keyboardio/atreus/slotThe/keyboards/keyboardio/atreus/keymaps/slotthe
@@ -155,15 +155,15 @@ A tiny statically typed functional language for processing JSON on the command-l
 [hmenu]: https://github.com/slotThe/hmenu
 [html-parse-util]: https://github.com/slotThe/html-parse-util
 [html-parse]: https://hackage.haskell.org/package/html-parse
-[html:vc-use-package]: https://tony-zorman.com/posts/vc-use-package.html
+[html:vc-use-package]: /posts/vc-use-package.html
 [kbd-mode]: https://github.com/kmonad/kbd-mode
 [latex-change-env]: https://github.com/slotThe/change-env
 [optparse-applicative-cmdline-util]: https://github.com/slotThe/optparse-applicative-cmdline-util
 [optparse-applicative]: https://hackage.haskell.org/package/optparse-applicative
-[post:package-vc-install]: https://tony-zorman.com/posts/package-vc-install.html
-[post:query-replace-many]: https://tony-zorman.com/posts/query-replace-many.html
-[post:vc-use-package]: https://tony-zorman.com/posts/vc-use-package.html
-[post:yanking]: https://tony-zorman.com/posts/yanking.html
+[post:package-vc-install]: /posts/package-vc-install.html
+[post:query-replace-many]: /posts/query-replace-many.html
+[post:vc-use-package]: /posts/vc-use-package.html
+[post:yanking]: /posts/yanking.html
 [query-replace-many]: https://github.com/slotThe/query-replace-many
 [rq]: https://github.com/slotThe/rq
 [vc-use-package]: https://github.com/slotThe/vc-use-package

@@ -318,8 +318,8 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [Uppsala Algebra Seminar]: https://www2.math.uu.se/~vomaz677/seminar.html
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
-[sem:hsha]: https://tony-zorman.com/hsha
-[sem:mackey-functors]: https://tony-zorman.com/mackey-functors
+[sem:hsha]: /hsha.html
+[sem:mackey-functors]: /mackey-functors.html
 [slides:abstact-schur-functors]: /talks/abstract-schur-functors.pdf
 [slides:mackey-functors:handout]: /talks/mackey-functors.pdf
 [slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf

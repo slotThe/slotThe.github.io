@@ -492,7 +492,7 @@ aren't strictly necessary, so there isn't much one is missing;
 plus, building something yourself is much more rewarding than buying it!
 
 [CDLaTeX]: https://github.com/cdominik/cdlatex
-[My PhD Research Workflow]: https://tony-zorman.com/posts/my-phd-workflow.html
+[My PhD Research Workflow]: /posts/my-phd-workflow.html
 [atreus:technomancy]: https://atreus.technomancy.us/
 [colemak-dh]: https://colemakmods.github.io/mod-dh/
 [emacs:paredit]: https://paredit.org/

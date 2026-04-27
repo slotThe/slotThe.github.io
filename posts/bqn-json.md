@@ -30,12 +30,12 @@ This article assumes that you are already a bit familiar with BQN as a language,
 or know some amount of array programming and are willing to look up unknown symbols.
 If not, I recommend starting with the official [tutorials](https://mlochbaum.github.io/BQN/tutorial/index.html).
 I've also written about my experience of
-[using BQN](https://tony-zorman.com/posts/aoc-in-bqn.html)
+[using BQN](/posts/aoc-in-bqn.html)
 for Advent of Code,
 a post which certainly contains some amount of written words that talk about the language.
 I'll recall the basic tricks that one uses in array-oriented parsing,
 though if you feel like I'm going too fast perhaps it's a good idea to peruse my post about writing a
-[CSV parser](https://tony-zorman.com/posts/bqn-csv.html).[^9]
+[CSV parser](/posts/bqn-csv.html).[^9]
 
 # Lists of numbers
 
@@ -1094,7 +1094,7 @@ and still have it be this compact.
 # Conclusion
 
 I can probably offer the same conclusion as in the
-[CSV post](https://tony-zorman.com/posts/bqn-csv.html):
+[CSV post](/posts/bqn-csv.html):
 
 > Q: Is writing (and reading) a parser in an array language unnecessarily hard? \
 > A: Yes.

@@ -344,7 +344,7 @@ instead—since we render directly to HTML now, that door opened for us.
 This means no more standard violations!
 
 [aphyr:typing-the-technical-interview]: https://aphyr.com/posts/342-typing-the-technical-interview
-[blog:pygmentising]: https://tony-zorman.com/posts/pygmentising-hakyll.html
+[blog:pygmentising]: /posts/pygmentising-hakyll.html
 [github:pandoc-sidenote:div]: https://github.com/jez/pandoc-sidenote/issues/4#issuecomment-1426123545
 [github:tufte-css:paragraph-fixes]: https://github.com/edwardtufte/tufte-css/issues/93#issuecomment-671102819
 [hackage:hakyll:writePandocWith]: https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Pandoc.html#v:writePandocWith

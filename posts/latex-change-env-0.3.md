@@ -14,7 +14,7 @@ figure now that the library has reached a state where I'm not ashamed of
 it anymore—at least, not at the time of writing this—it may warrant its
 own post.
 
-[research workflow]: https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes
+[research workflow]: /posts/my-phd-workflow.html#digital-notes
 
 <!--more-->
 

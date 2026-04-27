@@ -210,9 +210,9 @@ Nice.
       In case you are not bound by these restrictions—or more adventurous than me—I would recommend you use lualatex instead.
 
 [^4]: See, for example,
-      [here](https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes),
-      [here](https://tony-zorman.com/posts/emacs-potpourri.html#latex),
-      [here](https://tony-zorman.com/posts/pretty-latex.html),
+      [here](/posts/my-phd-workflow.html#digital-notes),
+      [here](/posts/emacs-potpourri.html#latex),
+      [here](/posts/pretty-latex.html),
       or
       [here](https://gitlab.com/slotThe/dotfiles/-/blob/master/emacs/lisp/hopf-latex-math.el?ref_type=heads).
 

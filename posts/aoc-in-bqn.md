@@ -4004,10 +4004,10 @@ Nice.
        Let's say that tree manipulations are not necessarily my favourite thing to do in an array language.
 
 [^60]: If you're impatient, I think I had the most fun on days
-       [8](https://tony-zorman.com/posts/aoc-in-bqn.html#day-8),
-       [14](https://tony-zorman.com/posts/aoc-in-bqn.html#day-14),
-       [17](https://tony-zorman.com/posts/aoc-in-bqn.html#day-17), and
-       [21](https://tony-zorman.com/posts/aoc-in-bqn.html#day-21).
+       [8](/posts/aoc-in-bqn.html#day-8),
+       [14](/posts/aoc-in-bqn.html#day-14),
+       [17](/posts/aoc-in-bqn.html#day-17), and
+       [21](/posts/aoc-in-bqn.html#day-21).
 
 [^61]: {-} For example,
 

@@ -400,7 +400,7 @@ are defined. It starts very slowly, just importing some system libraries.</p>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">   </span><span class="co">//(s)printf</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span><span class="pp">   </span><span class="co">//open</span></span></code></pre></div>
 <p>Next, we have the fundamental data types to be used later on. I will
-assume that just like in the <a href="https://tony-zorman.com/posts/j-incunabulum.html">J
+assume that just like in the <a href="/posts/j-incunabulum.html">J
 version</a>, <code>u</code> is
 opaque, in the sense that it sort of might be anything: an actual
 number, a pointer to an array, a pointer to a function… I feel like this
@@ -1707,7 +1707,7 @@ and looks like just about the derpiest duck one can imagine:</p>
 <img src="../images/duck/duck1.png" style="max-width: 50%; height: 100%;" alt="Duck 1">
 </figure>
 <p>What does it do? Since the key is in one of the
-<a href="https://tony-zorman.com/posts/atreus-review.html#physical-layout">inaccessible-ish</a>
+<a href="/posts/atreus-review.html#physical-layout">inaccessible-ish</a>
 positions on the Atreus, and hitting the duck all the time is quite
 mean, I think there’s only one obvious choice.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>
@@ -1831,7 +1831,7 @@ This is probably completely broken if you view this post in an RSS viewer, or on
 with the best-case being that you just experience this as a normal, linear, post.
 Sorry about that.
 If you notice any CSS irregularities because you’re using a vertical monitor with a 1504×2256 resolution or something,
-please <a href="https://tony-zorman.com/about.html">let me know</a>.</p>
+please <a href="/about.html">let me know</a>.</p>
 </div>
 <hr />
 <div class="fullwidth">
@@ -2102,7 +2102,7 @@ I’ve pushed everything in this post to a
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
       <p>In an
-<a href="https://tony-zorman.com/posts/fixing-lsp-mode.html">earlier post</a>
+<a href="/posts/fixing-lsp-mode.html">earlier post</a>
 I talked about making the hover signatures for
 <a href="https://emacs-lsp.github.io/lsp-mode/">lsp-mode</a>
 a little bit more useful.
@@ -2351,7 +2351,7 @@ but since the implementation is relatively brittle it’ll probably need some ad
 <p>That’s pretty much it—you can now enjoy having useful hover information!</p>
 <hr />
 <p>In case you want to
-<a href="https://tony-zorman.com/posts/fixing-lsp-mode.html#bonus-adding-type-signatures">manually add type signatures</a>
+<a href="/posts/fixing-lsp-mode.html#bonus-adding-type-signatures">manually add type signatures</a>
 then this is similarly straightforward,
 provided one knows the correct incantations:</p>
 <pre class="emacs-lisp"><code>(defun +haskell-type-sig-at-point ()
@@ -2435,12 +2435,12 @@ In general, I do not claim originality for any line of code in this post<!--
 or know some amount of array programming and are willing to look up unknown symbols.
 If not, I recommend starting with the official <a href="https://mlochbaum.github.io/BQN/tutorial/index.html">tutorials</a>.
 I’ve also written about my experience of
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html">using BQN</a>
+<a href="/posts/aoc-in-bqn.html">using BQN</a>
 for Advent of Code,
 a post which certainly contains some amount of written words that talk about the language.
 I’ll recall the basic tricks that one uses in array-oriented parsing,
 though if you feel like I’m going too fast perhaps it’s a good idea to peruse my post about writing a
-<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV parser</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<a href="/posts/bqn-csv.html">CSV parser</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <h2 id="lists-of-numbers">Lists of numbers</h2>
 <p>We’ll start with simply trying to parse lists of integers.
 Can’t be that hard, right?
@@ -3208,7 +3208,7 @@ using what are essentially only flat arrays of numbers,
 and still have it be this compact.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>I can probably offer the same conclusion as in the
-<a href="https://tony-zorman.com/posts/bqn-csv.html">CSV post</a>:</p>
+<a href="/posts/bqn-csv.html">CSV post</a>:</p>
 <blockquote>
 <p>Q: Is writing (and reading) a parser in an array language unnecessarily hard?<br />
 A: Yes.</p>
@@ -3320,7 +3320,7 @@ Plus, there is also a great reference implementation available in
 <a href="https://github.com/mlochbaum/bqn-libs/blob/master/csv.bqn">bqn-libs</a>.</p>
 <p>This article will assume that you are already at least a little bit familiar with BQN as a language.
 If not, I would recommend starting with the official <a href="https://mlochbaum.github.io/BQN/tutorial/index.html">tutorials</a>.
-I’ve also written about my experience <a href="https://tony-zorman.com/posts/aoc-in-bqn.html">using BQN</a> for Advent of Code,
+I’ve also written about my experience <a href="/posts/aoc-in-bqn.html">using BQN</a> for Advent of Code,
 which certainly contains some amount of written words that talk about the language.</p>
 <h2 id="the-simplest-case">The simplest case</h2>
 <p>We’ll start with a subset of CSV in which we don’t have to think about escaping at all.
@@ -3590,7 +3590,7 @@ some of the typesetting considerations that went into the document might not be.
 </figure>
 <p>While this post really is about typography,
 I will say that making LaTeX
-<a href="https://tony-zorman.com/posts/speeding-up-latex.html">acceptably fast</a>
+<a href="/posts/speeding-up-latex.html">acceptably fast</a>
 for these kinds of medium-sized documents really helped preserve an epsilon of sanity.
 Fiddling around with preamble precompiling and externalisation is—while painful—definitely worth it.</p>
 <h2 id="the-document-class">The document class</h2>
@@ -3947,9 +3947,9 @@ Still, start early.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>The thesis is available <a href="https://tony-zorman.com/dissertation.pdf">here</a>,
+<li id="fn1"><p>The thesis is available <a href="/dissertation.pdf">here</a>,
 and you can also check out the <a href="https://github.com/slotThe/dissertation">full source code</a>.
-For more information, also check <a href="https://tony-zorman.com/research#theses">here</a>.</p>
+For more information, also check <a href="/research#theses">here</a>.</p>
 <p>This post is also available as an
 <a href="https://tug.org/TUGboat/tb46-3/tb144zorman-thesis.html">article</a>
 in <a href="https://tug.org/TUGboat/tb46-3/">TUGboat 46:3</a>.
@@ -4343,9 +4343,9 @@ Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
       
-<p>On <a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-3">day 3</a>
+<p>On <a href="/posts/aoc-in-bqn.html#day-3">day 3</a>
 of my post about doing some
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html">Advent of Code problems in BQN</a>,
+<a href="/posts/aoc-in-bqn.html">Advent of Code problems in BQN</a>,
 the task was to walk along some <em>integer volutes</em>:
 spirals, either spiralling inwards—involutes—or outwards—evolutes—in either direction.
 While the specific problem didn’t require it,
@@ -7542,10 +7542,10 @@ Nice.</p>
 <hr />
 <ol>
 <li id="fn1"><p>If you’re impatient, I think I had the most fun on days
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-8">8</a>,
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-14">14</a>,
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-17">17</a>, and
-<a href="https://tony-zorman.com/posts/aoc-in-bqn.html#day-21">21</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<a href="/posts/aoc-in-bqn.html#day-8">8</a>,
+<a href="/posts/aoc-in-bqn.html#day-14">14</a>,
+<a href="/posts/aoc-in-bqn.html#day-17">17</a>, and
+<a href="/posts/aoc-in-bqn.html#day-21">21</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>I flirted with APL for about a week before picking up BQN,
 but the dialect that everyone seems to use is Dyalog APL,
 and I didn’t have the guts to commit to a proprietary language implementation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -8119,9 +8119,9 @@ Nice.</p>
 <a href="https://augmentingcognition.com/ltm.html">people</a>
 have done a much better job at that than I ever could.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>See, for example,
-<a href="https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes">here</a>,
-<a href="https://tony-zorman.com/posts/emacs-potpourri.html#latex">here</a>,
-<a href="https://tony-zorman.com/posts/pretty-latex.html">here</a>,
+<a href="/posts/my-phd-workflow.html#digital-notes">here</a>,
+<a href="/posts/emacs-potpourri.html#latex">here</a>,
+<a href="/posts/pretty-latex.html">here</a>,
 or
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/master/emacs/lisp/hopf-latex-math.el?ref_type=heads">here</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>For the specific example of maths and cloze deletions,
@@ -10937,7 +10937,7 @@ these more involved concepts seem overkill.<a href="#fnref1" class="footnote-bac
 <li id="fn2"><p>Really, this definition always works,
 one just needs to substitute the <span class="math inline">\mathtt{k}</span>-linearisation of the hom-set
 with a <a href="https://ncatlab.org/nlab/show/copower">Copower</a>.
-I have written about these things <a href="https://tony-zorman.com/posts/weighted-colimits.html#copowers">before</a>,
+I have written about these things <a href="/posts/weighted-colimits.html#copowers">before</a>,
 just in a different context.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>󠀠
 󠀠</p>
@@ -11238,7 +11238,7 @@ Much better to have Space and the layer key on opposite hands,
 and set up a fall-through for it on the respective layer
 (i.e., so that one can just hold down the layer key and write <code>3 + 3</code> “in one go”).
 This situation gets exacerbated when writing LaTeX
-(which I do <a href="https://tony-zorman.com/posts/my-phd-workflow.html">quite a lot</a>).</p>
+(which I do <a href="/posts/my-phd-workflow.html">quite a lot</a>).</p>
 <p>So much for my preparation.</p>
 <p>Of course, I still changed the layout every two minutes during the first few days of usage,
 and I’m only now slowing down a little bit.
@@ -11773,7 +11773,7 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
 <p>I’ve just released version 0.3 of <code>latex-change-env</code>, featuring some
 major improvements with regard to inline maths and macro handling; this
 seems as good a time as any to talk about the package in full. I
-briefly mentioned it in the post about my <a href="https://tony-zorman.com/posts/my-phd-workflow.html#digital-notes">research workflow</a>, but I
+briefly mentioned it in the post about my <a href="/posts/my-phd-workflow.html#digital-notes">research workflow</a>, but I
 figure now that the library has reached a state where I’m not ashamed of
 it anymore—at least, not at the time of writing this—it may warrant its
 own post.</p>
@@ -12035,7 +12035,7 @@ to inline elements.</p>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  deNote x        <span class="ot">=</span> x</span></code></pre></div>
 <p>The <code>coerceToInline</code> function behaves sensibly with respect to the
 simplest kinds of blocks, but already mentions that the <code>RawBlock → RawInline</code> transformation may have some caveats. For example,
-<a href="https://tony-zorman.com/posts/pygmentising-hakyll.html">prerendering code blocks</a> puts one in exactly such a
+<a href="/posts/pygmentising-hakyll.html">prerendering code blocks</a> puts one in exactly such a
 “now we have a <code>&lt;div&gt;</code> tag inside of a <code>RawInline</code> element” situation.
 Well, what happens?</p>
 <span class="sidenote-wrapper">
@@ -12060,7 +12060,7 @@ variant.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>
 <p>So what to do? Well, life wouldn’t be fun if we didn’t at least try to
 hack our way around a standard, would it?</p>
 <h2 id="rewriting-pandoc-sidenote">Rewriting <code>pandoc-sidenote</code></h2>
-<p>As I’ve learned while <a href="https://tony-zorman.com/posts/pygmentising-hakyll.html">writing</a> about using
+<p>As I’ve learned while <a href="/posts/pygmentising-hakyll.html">writing</a> about using
 <code>pygmentize</code> to syntax highlight code for this site, pandoc has quite
 good support for changing its AST in creative ways. A strategy unfolds:
 find every <code>Note</code> block in a document, somehow render its contents, and
@@ -12883,11 +12883,11 @@ exactly duals!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎
       <p>I’d like to announce a small package I’ve written: <a href="https://github.com/slotThe/vc-use-package">vc-use-package</a>. It
 is a first attempt at integrating the new (as of Emacs 29)
 <code>package-vc.el</code> with the now built-in use-package. I’ve already talked
-about how these two interact in my <a href="https://tony-zorman.com/posts/package-vc-install.html">last post</a>—you can
+about how these two interact in my <a href="/posts/package-vc-install.html">last post</a>—you can
 see this package as automating things juuuust a little more.</p>
 <!--more-->
 <p><em>Update (2023-05-18)</em>: This is now built into Emacs 30!
-Check <a href="https://tony-zorman.com/posts/use-package-vc.html">here</a> for more details.</p>
+Check <a href="/posts/use-package-vc.html">here</a> for more details.</p>
 <h2 id="motivation">Motivation</h2>
 <p>For the last post, someone gave me some <a href="https://old.reddit.com/r/emacs/comments/z9i4ce/exploring_packagevcinstall_as_an_alternative_to/iygzeum/">feedback</a>:
 couldn’t we go a little further? In particular, they wanted a new <code>:vc</code>
@@ -12914,7 +12914,7 @@ more information (and manual controls), see the
 <h2 id="conclusion">Conclusion</h2>
 <p>As I said above,
 this is no longer only available as an external package,
-but actually <a href="https://tony-zorman.com/posts/use-package-vc.html">built into Emacs</a>!
+but actually <a href="/posts/use-package-vc.html">built into Emacs</a>!
 By virtue of being a part of it now,
 the integration with <code>use-package</code> is a lot tighter—try it out if you’re using <code>HEAD</code> anyways!
 If not, then don’t worry: <code>vc-use-package</code> will not go anywhere for the forseeable future.</p>
@@ -12951,9 +12951,9 @@ straight.el.</p>
 <!--more-->
 <p><em>Update (2023-05-18)</em>:
 Integration into <code>use-package</code> is now available as
-a <a href="https://tony-zorman.com/posts/vc-use-package.html">standalone package</a>,
+a <a href="/posts/vc-use-package.html">standalone package</a>,
 as well as—as of Emacs 30—a
-<a href="https://tony-zorman.com/posts/use-package-vc.html">built-in option</a></p>
+<a href="/posts/use-package-vc.html">built-in option</a></p>
 <h2 id="the-story-so-far">The story so far</h2>
 <p>I’ve been using <a href="https://github.com/quelpa/quelpa">quelpa</a> and <a href="https://github.com/quelpa/quelpa-use-package">quelpa-use-package</a> to install packages
 that are not on any popular archive straight from source. Especially
@@ -13155,7 +13155,7 @@ didn’t at least try to take advantage of that, right? Having just
 written a <a href="https://gitlab.com/slotThe/dotfiles/-/tree/master/emacs">README</a> for my Emacs configuration, I
 thought it might be nice to somewhat expand on certain ideas and give a
 little context to some snippets that have accumulated over time.</p>
-<p>While there is a post about <a href="https://tony-zorman.com/posts/query-replace-many.html">my version</a> of the
+<p>While there is a post about <a href="/posts/query-replace-many.html">my version</a> of the
 <code>query-replace</code> function, most other tidbits have only seen the light of
 day in places like the “Weekly Tips, Tricks, &amp;​c.” thread on Reddit. In
 the spirit of hosting my content somewhere that I actually control,
@@ -13537,7 +13537,7 @@ check for a certain regular expression, whitespace, and say something if it matc
 <p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
 <p>However, with a bit of hacking around this turns out to be quite fixable:</p>
 <p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature"></p>
-<p><a href="https://tony-zorman.com/posts/fixing-lsp-mode.html">The full post with all the code is here</a>.</p>
+<p><a href="/posts/fixing-lsp-mode.html">The full post with all the code is here</a>.</p>
 <h2 id="eshell">Eshell</h2>
 <h3 id="integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</h3>
 <p>If you use zsh and eshell together, you—like me—will soon be annoyed at the fact that the two programs use separate history files.
@@ -13546,7 +13546,7 @@ since zsh stores its history file in a metafied format.<a href="#fn5" class="foo
 This means that,
 on the eshell side,
 we have to make sure to unmetafy the history file before writing to it.</p>
-<p><a href="https://tony-zorman.com/posts/eshell-zsh-history.html">The implementation and more details can be found here</a>.</p>
+<p><a href="/posts/eshell-zsh-history.html">The implementation and more details can be found here</a>.</p>
 <h3 id="integrating-fishs-history-into-eshell">Integrating fish’s history into eshell</h3>
 <p>If instead of zsh you’re a fan of <a href="https://fishshell.com/">fish</a>, then
 the integration into eshell also needs a bit of work. The default fish
@@ -13649,7 +13649,7 @@ it will be returned exactly as-is:</p>
 As I’m in the habit—using the power of <a href="https://github.com/purcell/whole-line-or-region">whole-line-or-region</a>—of lazily copying with <code>M-w</code> all the time,
 this poses a problem.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <p>The solution, thankfully, does not involve all that much code.
-<a href="https://tony-zorman.com/posts/yanking.html">You can read about it here</a>.</p>
+<a href="/posts/yanking.html">You can read about it here</a>.</p>
 <h2 id="make-join-line-handle-comments-sanely">Make <code>join-line</code> handle comments sanely</h2>
 <p>By default, the <code>join-line</code> function does not handle comments at all,
 and is thus quite useless for a majority of cases</p>
@@ -13657,7 +13657,7 @@ and is thus quite useless for a majority of cases</p>
 <p>However,
 with a bit of <a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey-patching</a>,
 one can get a result that approximates a sane solution!
-<a href="https://tony-zorman.com/posts/join-lines-comments.html">Here is the corresponding post for this</a>.</p>
+<a href="/posts/join-lines-comments.html">Here is the corresponding post for this</a>.</p>
 <h2 id="converting-markdown-to-element-flavoured-html">Converting markdown to Element-flavoured HTML</h2>
 <p>As sad as it makes me, lots of online communities don’t have a dedicated IRC channel anymore, preferring to use the likes of <a href="https://matrix.org/">Matrix</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> instead.
 Seemingly, the only client that’s actually usable is the very heavy, electron laden, <a href="https://element.io/en">Element</a>.
@@ -13771,7 +13771,7 @@ but I’m certainly not going to change my habits if I can instead change my edi
 <li id="fn9"><p>Or, even worse, Discord.
 But this just means I will not participate in that particular community,
 so there’s nothing more to be said on that front.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p><a href="https://tony-zorman.com/posts/use-package-vc.html">:vc</a> goes brrrrr<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><a href="/posts/use-package-vc.html">:vc</a> goes brrrrr<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!-- Body is included in the above file -->

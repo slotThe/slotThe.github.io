@@ -17,9 +17,9 @@ straight.el.
 
 *Update (2023-05-18)*:
 Integration into `use-package` is now available as
-a [standalone package](https://tony-zorman.com/posts/vc-use-package.html),
+a [standalone package](/posts/vc-use-package.html),
 as well as—as of Emacs 30—a
-[built-in option](https://tony-zorman.com/posts/use-package-vc.html)
+[built-in option](/posts/use-package-vc.html)
 
 # The story so far
 

@@ -20,7 +20,7 @@ In particular, I like thinking about [Hopf monads]; [graphical calculi]; [rigid]
 [linearly distributive], [Grothendieck–Verdier], and [duoidal] categories;
 as well as [operads].
 If you're interested in my publications, you can check out my name on the [arXiv].
-I've also given some talks, with a few slides available [here](https://tony-zorman.com/research.html#talks).
+I've also given some talks, with a few slides available [here](/research.html#talks).
 
 In my copious free time[^1] I like to
 hack on [free software],
@@ -80,7 +80,7 @@ I do not use (any other) social media.
 [operads]: https://ncatlab.org/nlab/show/operad
 [pandoc]: https://pandoc.org/
 [rigid]: https://ncatlab.org/nlab/show/rigid+monoidal+category
-[site:atreus]: https://tony-zorman.com/posts/atreus-review.html
+[site:atreus]: /posts/atreus-review.html
 [site]: https://github.com/slotThe/slotThe.github.io
 
 [^1]: I wish.
@@ -88,5 +88,5 @@ I do not use (any other) social media.
 [^3]: Not-quite-so-incidentally, the latter is also the name of my dissertation,
       which you can access [here](./dissertation.pdf).
       I've also
-      [written about](https://tony-zorman.com/posts/phd-typesetting.html)
+      [written about](/posts/phd-typesetting.html)
       some typographical aspects of it.

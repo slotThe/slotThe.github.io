@@ -98,7 +98,7 @@ are defined. It starts very slowly, just importing some system libraries.</p>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">   </span><span class="co">//(s)printf</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fcntl.h&gt;</span><span class="pp">   </span><span class="co">//open</span></span></code></pre></div>
 <p>Next, we have the fundamental data types to be used later on. I will
-assume that just like in the <a href="https://tony-zorman.com/posts/j-incunabulum.html">J
+assume that just like in the <a href="/posts/j-incunabulum.html">J
 version</a>, <code>u</code> is
 opaque, in the sense that it sort of might be anything: an actual
 number, a pointer to an array, a pointer to a function… I feel like this
