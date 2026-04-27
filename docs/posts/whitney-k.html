@@ -798,7 +798,7 @@ what <code>t</code> is for.</p>
 <p>The read line function. We allocate space for <code>l</code> (if we haven’t done so
 already).</p>
 <p>If the argument (remember, <code>us</code> creates a string function with
-arguments <code>s</code> and not <code>x</code>) is <span class="small-caps">null</span>, we just read up to <code>mx</code> characters
+arguments <code>s</code> and not <code>x</code>) is NULL, we just read up to <code>mx</code> characters
 from stdin. Read either returns the number of bytes read, or a <code>-1</code> in
 case of an error, so if everything goes well <code>l[read(…)-1]</code> will point
 to <code>\n</code>, which we’ll clean up and change to <code>\0</code>. Recall that <code>P</code> causes
@@ -840,7 +840,7 @@ an example in parentheses, before going into it.</p>
 <li><p>(<code>a</code>/<code>1</code>): If we’re already <span class="nowrap">done—</span>i.e., the input was only a single
 character <span class="nowrap">long—</span>we check if the input is a noun and return it.</p></li>
 <li><p>(<code>+/!5</code>,<code>-1</code>): In case <code>*t</code>, which is the second character, is not
-<span class="small-caps">null</span>, we check if the first character <code>i</code> was a verb. There is some
+NULL, we check if the first character <code>i</code> was a verb. There is some
 twiddling happening here, depending on whether the next character is
 then an adverb (which acts on the verb) or not, but the important thing
 is how we get the argument to <code>v(i)</code>: we start one step ahead of where
@@ -896,7 +896,7 @@ then don’t show anything, otherwise print the results.</p>
 <p>If you’re a careful reader, you might have noticed that <code>\\</code> will
 break out of the loop, causing <code>free(l),fclose(t),0</code> to be executed.
 However, since we were in <span class="small-caps">repl</span> mode before, the file variable <code>t</code> is
-either <span class="small-caps">null</span> or non-initialised, so this immediately segfaults the
+either NULL or non-initialised, so this immediately segfaults the
 program. A fitting end for the person foolish enough to try and exit K,
 I would say!</p>
 </div>
