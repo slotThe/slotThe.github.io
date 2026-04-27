@@ -13,40 +13,35 @@
     <meta property="og:image:width" content="197">
     <link rel="stylesheet" type="text/css" href="./css/colours.css">
     <link rel="stylesheet" type="text/css" href="./css/fonts.css">
-    <style type="text/css">
-      body {
-          font-family: var(--title-fonts);
-          background-color: var(--bg);
-          font-size: 45px;
-          text-align: justify;
-          @media (width <= 1366px) { font-size: 35px }
-          @media (width <= 960px)  { font-size: 30px; text-align: left }
-          font-weight: bold;
-          font-variant-numeric: oldstyle-nums;
-          font-display: block;
-          line-height: 1.2;
-          text-justify: inter-word;
-          hyphens: auto;
-          text-rendering: optimizeLegibility;
-          width: 80%;
-          max-width: 1500px;
-          margin-top: 1em;
-          margin-left: auto;
-          margin-right: auto;
-          color: #999;
-      }
-      h1 { display: inline; font-size: 1em; }
-      a {
-          &:link, &:visited { color: var(--fg-link); text-decoration: none }
-          &:hover {
-              background: var(--bg-code-accent);
-              @media (prefers-color-scheme: light) {
-                  text-decoration: 1px underline;
-                  text-underline-offset: 0.1em;
-              }
-          }
-      }
-      span.small-caps { font-variant: small-caps; }
+    <style>
+body {
+    font-family: var(--title-fonts);
+    background-color: var(--bg);
+    font-size: 45px;
+    text-align: justify;
+    font-weight: bold;
+    font-variant-numeric: oldstyle-nums;
+    line-height: 1.2;
+    text-justify: inter-word;
+    hyphens: auto;
+    text-rendering: optimizeLegibility;
+    width: 80%;
+    max-width: 1500px;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    color: #999;
+}
+h1 { display: inline; font-size: 1em; }
+a:link, a:visited { color: var(--fg-link); text-decoration: none; }
+a:hover {
+    background: var(--bg-code-accent);
+    text-decoration: 1px underline;
+    text-underline-offset: 0.1em;
+}
+span.small-caps { font-variant: small-caps; }
+@media (width <= 1366px) { body { font-size: 35px; } }
+@media (width <= 960px)  { body { font-size: 30px; text-align: left; } }
     </style>
   </head>
 
