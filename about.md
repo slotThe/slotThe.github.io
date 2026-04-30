@@ -49,11 +49,13 @@ If the latter is unavailable, [KMonad] supplies me with a proper keyboard layout
 Most of the time I'm fastest to reply via E-Mail,
 but you can try any of the following channels:
 
-+ E-Mail:
-  <span class="email">mail@tony-zorman<b>.mailbox</b>.com</span> or
-  tonyzorman@<span class="email">mailbox<b>.mailbox</b>.org</span>.
-  In case that sounds too unprofessional,
-  you can also try <span class="email">tony<b>.mailbox</b>.zorman@uni-hamburg.de</span>
++ <span style="text-justify:none">
+    E-Mail:
+    <span class="email">mail@tony-zorman<b>.mailbox</b>.com</span> or
+    tonyzorman@<span class="email">mailbox<b>.mailbox</b>.org</span>.
+    In case that sounds too unprofessional, you can also try
+    <span class="email">tony<b>.mailbox</b>.zorman@uni-hamburg.de</span>
+  </span>
 + PGP: [`4896FB6C952846C3414C2475C927DE8C7DFD57B8`](./key.txt)
 + IRC: `Solid`@[irc.libera.chat](https://libera.chat/)
 + Matrix: `slot-`@[matrix.org](https://matrix.org/)
