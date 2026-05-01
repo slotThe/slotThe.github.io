@@ -58,7 +58,7 @@
         <article>
     <div class="header">
       13th Apr 2025–8 Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1989 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2033 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#LaTeX'." href="../tags/LaTeX.html" rel="tag">#LaTeX</a>
       </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
@@ -200,14 +200,60 @@ Here is the diff
  \RequirePackage{marginnote} % Provides an offset option for the marginals instead of a float
  \RequirePackage{caption} % Handles the captions (in the margin)
  \RequirePackage{xparse} % New LaTeX3 syntax to define macros and environments
-<div class="gd">-\RequirePackage[strict]{changepage} % Changepage package for symmetric twoside handling</div> \ExplSyntaxOn
+<span class="gd">-\RequirePackage[strict]{changepage} % Changepage package for symmetric twoside handling</span>
+ \ExplSyntaxOn
  \keys_define:nn { sidenotes }
    {
 <span class="gu">@@ -88,51 +87,6 @@</span>
  }
      {\@sidenotes@placemarginal{#2}{\textsuperscript{#1}~#3}}
  }
-<div class="gd">-\DeclareCaptionStyle{sidecaption}{font=footnotesize}</div><div class="gd">-\NewDocumentCommand \sidecaption {s o o m}</div><div class="gd">-{</div><div class="gd">-  \captionsetup{style=sidecaption}</div><div class="gd">-  \IfBooleanTF{#1}</div><div class="gd">-  { % starred</div><div class="gd">-    \IfNoValueOrEmptyTF{#2}</div><div class="gd">-    {\marginnote{\caption*{#4}}}</div><div class="gd">-    {\marginnote{\caption*{#4}}[#2]}</div><div class="gd">-  }</div><div class="gd">-  { % unstarred</div><div class="gd">-  \IfNoValueOrEmptyTF{#2}</div><div class="gd">-    {\def\@sidenotes@sidecaption@tof{#4}}</div><div class="gd">-    {\def\@sidenotes@sidecaption@tof{#2}}</div><div class="gd">-  \IfNoValueOrEmptyTF{#3}</div><div class="gd">-    {\marginnote{\caption[\@sidenotes@sidecaption@tof]{#4}}}</div><div class="gd">-    {\marginnote{\caption[\@sidenotes@sidecaption@tof]{#4}}[#3]}</div><div class="gd">-  }</div><div class="gd">-}</div><div class="gd">-\newsavebox{\@sidenotes@marginfigurebox}</div><div class="gd">-\DeclareCaptionStyle{marginfigure}{font=footnotesize}</div><div class="gd">-\NewDocumentEnvironment{marginfigure} { o }</div><div class="gd">-{</div><div class="gd">-  \begin{lrbox}{\@sidenotes@marginfigurebox}</div><div class="gd">-    \begin{minipage}{\marginparwidth}</div><div class="gd">-      \captionsetup{type=figure,style=marginfigure}</div><div class="gd">-}</div><div class="gd">-{</div><div class="gd">-    \end{minipage}%</div><div class="gd">-  \end{lrbox}%</div><div class="gd">-  \@sidenotes@placemarginal{#1}{\usebox{\@sidenotes@marginfigurebox}}</div><div class="gd">-}</div><div class="gd">-\newsavebox{\@sidenotes@margintablebox}</div><div class="gd">-\DeclareCaptionStyle{margintable}{font=footnotesize}</div><div class="gd">-\NewDocumentEnvironment{margintable} { o }</div><div class="gd">-{</div><div class="gd">-  \begin{lrbox}{\@sidenotes@margintablebox}</div><div class="gd">-    \begin{minipage}{\marginparwidth}</div><div class="gd">-      \captionsetup{type=table,style=margintable}</div><div class="gd">-}</div><div class="gd">-{</div><div class="gd">-    \end{minipage}</div><div class="gd">-  \end{lrbox}</div><div class="gd">-  \@sidenotes@placemarginal{#1}{\usebox{\@sidenotes@margintablebox}}</div><div class="gd">-}</div> \AtBeginDocument{%
+<span class="gd">-\DeclareCaptionStyle{sidecaption}{font=footnotesize}</span>
+<span class="gd">-\NewDocumentCommand \sidecaption {s o o m}</span>
+<span class="gd">-{</span>
+<span class="gd">-  \captionsetup{style=sidecaption}</span>
+<span class="gd">-  \IfBooleanTF{#1}</span>
+<span class="gd">-  { % starred</span>
+<span class="gd">-    \IfNoValueOrEmptyTF{#2}</span>
+<span class="gd">-    {\marginnote{\caption*{#4}}}</span>
+<span class="gd">-    {\marginnote{\caption*{#4}}[#2]}</span>
+<span class="gd">-  }</span>
+<span class="gd">-  { % unstarred</span>
+<span class="gd">-  \IfNoValueOrEmptyTF{#2}</span>
+<span class="gd">-    {\def\@sidenotes@sidecaption@tof{#4}}</span>
+<span class="gd">-    {\def\@sidenotes@sidecaption@tof{#2}}</span>
+<span class="gd">-  \IfNoValueOrEmptyTF{#3}</span>
+<span class="gd">-    {\marginnote{\caption[\@sidenotes@sidecaption@tof]{#4}}}</span>
+<span class="gd">-    {\marginnote{\caption[\@sidenotes@sidecaption@tof]{#4}}[#3]}</span>
+<span class="gd">-  }</span>
+<span class="gd">-}</span>
+<span class="gd">-\newsavebox{\@sidenotes@marginfigurebox}</span>
+<span class="gd">-\DeclareCaptionStyle{marginfigure}{font=footnotesize}</span>
+<span class="gd">-\NewDocumentEnvironment{marginfigure} { o }</span>
+<span class="gd">-{</span>
+<span class="gd">-  \begin{lrbox}{\@sidenotes@marginfigurebox}</span>
+<span class="gd">-    \begin{minipage}{\marginparwidth}</span>
+<span class="gd">-      \captionsetup{type=figure,style=marginfigure}</span>
+<span class="gd">-}</span>
+<span class="gd">-{</span>
+<span class="gd">-    \end{minipage}%</span>
+<span class="gd">-  \end{lrbox}%</span>
+<span class="gd">-  \@sidenotes@placemarginal{#1}{\usebox{\@sidenotes@marginfigurebox}}</span>
+<span class="gd">-}</span>
+<span class="gd">-\newsavebox{\@sidenotes@margintablebox}</span>
+<span class="gd">-\DeclareCaptionStyle{margintable}{font=footnotesize}</span>
+<span class="gd">-\NewDocumentEnvironment{margintable} { o }</span>
+<span class="gd">-{</span>
+<span class="gd">-  \begin{lrbox}{\@sidenotes@margintablebox}</span>
+<span class="gd">-    \begin{minipage}{\marginparwidth}</span>
+<span class="gd">-      \captionsetup{type=table,style=margintable}</span>
+<span class="gd">-}</span>
+<span class="gd">-{</span>
+<span class="gd">-    \end{minipage}</span>
+<span class="gd">-  \end{lrbox}</span>
+<span class="gd">-  \@sidenotes@placemarginal{#1}{\usebox{\@sidenotes@margintablebox}}</span>
+<span class="gd">-}</span>
+ \AtBeginDocument{%
  \newlength{\@sidenotes@extrawidth}
  \setlength{\@sidenotes@extrawidth}{\marginparwidth}
 </pre></div>

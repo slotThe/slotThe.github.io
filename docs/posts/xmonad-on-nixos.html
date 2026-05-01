@@ -52,7 +52,7 @@
         <article>
     <div class="header">
       13th Nov 2023–15 Oct 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1136 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1169 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#emacs'." href="../tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="../tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="../tags/xmonad.html" rel="tag">#xmonad</a>
       </div>
     <h1 class="post-title">Using XMonad with NixOS</h1>
@@ -151,27 +151,34 @@ If you still have this in your flake, you should probably remove <span class="no
      emacs-overlay.url = github:nix-community/emacs-overlay;
      hmenu.url         = gitlab:slotThe/hmenu;
      kmonad.url        = git+https://github.com/kmonad/kmonad?submodules=1&dir=nix;
-<div class="gi">+    xmonad-contrib.url= github:xmonad/xmonad-contrib;</div>     home-manager      = {
+<span class="gi">+    xmonad-contrib.url= github:xmonad/xmonad-contrib;</span>
+     home-manager      = {
        url = github:nix-community/home-manager;
        inputs.nixpkgs.follows = "nixpkgs";
      };
    };
 
-<div class="gd">-  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, home-manager, ... }:</div><div class="gi">+  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, <span class="gic">xmonad-contrib, </span>home-manager, ... }:</div>     let my-overlays = {
+<span class="gd">-  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, home-manager, ... }:</span>
+<span class="gi">+  outputs = inputs@{ self, nixpkgs, emacs-overlay, hmenu, kmonad, <span class="gic">xmonad-contrib, </span>home-manager, ... }:</span>
+     let my-overlays = {
            nixpkgs.overlays = [
              emacs-overlay.overlays.default
 <span class="gu">@@ -20,7 +21,7 @@</span>
            ];
          };
      in {
-<div class="gd">-      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem {</div><div class="gi">+      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem <span class="gic">rec </span>{</div>         system  = "x86_64-linux";
+<span class="gd">-      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem {</span>
+<span class="gi">+      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem <span class="gic">rec </span>{</span>
+         system  = "x86_64-linux";
          modules = [
            ./nix/hardware-configuration.nix
 <span class="gu">@@ -34,6 +35,8 @@</span>
              home-manager.useUserPackages = true;
              home-manager.users.slot      = import ./nix/home.nix;
            }
-<div class="gi">+        ] ++ xmonad-contrib.nixosModules ++ [</div><div class="gi">+          xmonad-contrib.modernise.${system}</div>         ];
+<span class="gi">+        ] ++ xmonad-contrib.nixosModules ++ [</span>
+<span class="gi">+          xmonad-contrib.modernise.${system}</span>
+         ];
        };
      };
 </pre></div>
@@ -198,7 +205,17 @@ Enabling the flake
      enable = true;
      layout = "us";
      displayManager.startx.enable = true;
-<div class="gi">+    windowManager.xmonad = {</div><div class="gi">+      enable = true;</div><div class="gi">+      enableContribAndExtras = true;</div><div class="gi">+      flake  = {</div><div class="gi">+        enable   = true;</div><div class="gi">+        compiler = "ghc947";</div><div class="gi">+      };</div><div class="gi">+      config = builtins.readFile ../xmonad/xmonad.hs;</div><div class="gi">+      enableConfiguredRecompile = true;</div><div class="gi">+    };</div>   };
+<span class="gi">+    windowManager.xmonad = {</span>
+<span class="gi">+      enable = true;</span>
+<span class="gi">+      enableContribAndExtras = true;</span>
+<span class="gi">+      flake  = {</span>
+<span class="gi">+        enable   = true;</span>
+<span class="gi">+        compiler = "ghc947";</span>
+<span class="gi">+      };</span>
+<span class="gi">+      config = builtins.readFile ../xmonad/xmonad.hs;</span>
+<span class="gi">+      enableConfiguredRecompile = true;</span>
+<span class="gi">+    };</span>
+   };
 
    fonts.packages = with pkgs; [
 </pre></div>
@@ -251,7 +268,9 @@ Moving Emacs
  { config, pkgs, ... }:
 
  {
-<div class="gd">-  services.emacs.enable = true; # Start as daemon</div><div class="gd">-</div>   xdg.configFile."emacs".source = config.lib.my.mkSymlink "emacs";
+<span class="gd">-  services.emacs.enable = true; # Start as daemon</span>
+<span class="gd">-</span>
+   xdg.configFile."emacs".source = config.lib.my.mkSymlink "emacs";
 
    home.packages = with pkgs; [
 <span class="gh">diff --git a/xinitrc/.xinitrc b/xinitrc/.xinitrc</span>
@@ -262,14 +281,20 @@ Moving Emacs
  # 14dec2019
  redshift -l 55.7:12.6 -t 6500K:3200K -b 1.0:0.8 &
 
-<div class="gd">-# Start emacs as a daemon.</div><div class="gd">-emacs --daemon &</div><div class="gd">-emacs --daemon=eshell &</div><div class="gd">-</div> # Hide mouse cursor when idle.
+<span class="gd">-# Start emacs as a daemon.</span>
+<span class="gd">-emacs --daemon &</span>
+<span class="gd">-emacs --daemon=eshell &</span>
+<span class="gd">-</span>
+ # Hide mouse cursor when idle.
  unclutter --ignore-scrolling &
 
 <span class="gu">@@ -46,4 +42,4 @@ wallpaper-changer &</span>
  compton --blur-method kawase --blur-strength 5 --config ~/.config/compton/compton.conf &
 
  # Start the window manager.
-<div class="gd">-exec <span class="gdc">"$XMONAD_CONFIG_DIR"/</span>xmonad<span class="gdc">-x86_64-linux</span></div><div class="gi">+exec xmonad</div><span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
+<span class="gd">-exec <span class="gdc">"$XMONAD_CONFIG_DIR"/</span>xmonad<span class="gdc">-x86_64-linux</span></span>
+<span class="gi">+exec xmonad</span>
+<span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
 <span class="gh">index 5802888..933a274 100644</span>
 <span class="gu">--- a/xmonad/xmonad.hs</span>
 <span class="gu">+++ b/xmonad/xmonad.hs</span>
@@ -277,21 +302,35 @@ Moving Emacs
 
  import XMonad.Util.Cursor (setDefaultCursor)
  import XMonad.Util.EZConfig (additionalKeysP)
-<div class="gi">+import XMonad.Util.SpawnOnce (spawnOnce)</div> import XMonad.Util.Loggers (logTitlesOnScreen)
+<span class="gi">+import XMonad.Util.SpawnOnce (spawnOnce)</span>
+ import XMonad.Util.Loggers (logTitlesOnScreen)
  import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), customFloating, namedScratchpadAction, namedScratchpadManageHook, scratchpadWorkspaceTag)
  import XMonad.Util.Run (EmacsLib (ElpaLib, Special), asBatch, asString, elispFun, eval, execute, executeNoQuote, findFile, getInput, inEditor, inEmacs, inProgram, inTerm, proc, progn, quote, require, setFrameName, setXClass, spawnExternalProcess, termInDir, toInput, withEmacsLibs, (>&&>), (>-$), (>->))
 <span class="gu">@@ -121,7 +122,10 @@ myConfig = def</span>
    , normalBorderColor  = colorBg
    , focusedBorderColor = colorBlue
    , terminal           = "alacritty"
-<div class="gd">-  , startupHook        = <span class="gdc">setDefaultCurs</span>o<span class="gdc">r xC_left_ptr</span></div><div class="gi">+  , startupHook        = <span class="gic">d</span>o</div><div class="gi">+      setDefaultCursor xC_left_ptr</div><div class="gi">+      spawnOnce "emacs --daemon"        -- See Note [Emacs]</div><div class="gi">+      spawnOnce "emacs --daemon=eshell"</div>   , workspaces         = topicNames topics
+<span class="gd">-  , startupHook        = <span class="gdc">setDefaultCurs</span>o<span class="gdc">r xC_left_ptr</span></span>
+<span class="gi">+  , startupHook        = <span class="gic">d</span>o</span>
+<span class="gi">+      setDefaultCursor xC_left_ptr</span>
+<span class="gi">+      spawnOnce "emacs --daemon"        -- See Note [Emacs]</span>
+<span class="gi">+      spawnOnce "emacs --daemon=eshell"</span>
+   , workspaces         = topicNames topics
    , manageHook         = myManageHook
    , layoutHook         = lessBorders (Combine Union Screen OnlyFloat) layoutOrder
 <span class="gu">@@ -132,6 +136,14 @@ myConfig = def</span>
                           -- move pointer to exact center of that window.
    }
 
-<div class="gi">+{- Note [Emacs]</div><div class="gi">+</div><div class="gi">+All of the Emacs daemons are spawned here, and *not* as systemd services</div><div class="gi">+or in the ~/.xinitrc. The reason is that, in this way, Emacs inherits</div><div class="gi">+all environment variables that are set by the XMonad executable, like</div><div class="gi">+$XMONAD_GHC. See the bottom of this file for a use-case.</div><div class="gi">+-}</div><div class="gi">+</div> -- | Building my own pretty-printer.
+<span class="gi">+{- Note [Emacs]</span>
+<span class="gi">+</span>
+<span class="gi">+All of the Emacs daemons are spawned here, and *not* as systemd services</span>
+<span class="gi">+or in the ~/.xinitrc. The reason is that, in this way, Emacs inherits</span>
+<span class="gi">+all environment variables that are set by the XMonad executable, like</span>
+<span class="gi">+$XMONAD_GHC. See the bottom of this file for a use-case.</span>
+<span class="gi">+-}</span>
+<span class="gi">+</span>
+ -- | Building my own pretty-printer.
  xmobarPP :: ScreenId -> X PP
  xmobarPP sid = pure . filterOutWsPP [scratchpadWorkspaceTag] $ def
 </pre></div>
@@ -311,7 +350,12 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
  -- submap from a list of @(key, action)@ pairs.
  basicSubmapFromList :: Ord key => [(key, action)] -> Map (KeyMask, key) action
  basicSubmapFromList = fromList . map \(k, a) -> ((0, k), a)
-<div class="gi">+</div><div class="gi">+--- Local Variables:</div><div class="gi">+--- mode: haskell</div><div class="gi">+--- eval: (setopt haskell-process-path-ghci (concat (or (getenv "XMONAD_GHC") "ghc") "i"))</div><div class="gi">+--- End:</div></pre></div>
+<span class="gi">+</span>
+<span class="gi">+--- Local Variables:</span>
+<span class="gi">+--- mode: haskell</span>
+<span class="gi">+--- eval: (setopt haskell-process-path-ghci (concat (or (getenv "XMONAD_GHC") "ghc") "i"))</span>
+<span class="gi">+--- End:</span>
+</pre></div>
 </details>
 <p></p>
 Now <code>C-c C-c</code> works out of the box!

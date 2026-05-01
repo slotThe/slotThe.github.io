@@ -668,19 +668,19 @@ myPandocCompiler =
       hlDiff :: [Text] -> [Text]
       hlDiff [] = []
       hlDiff (x : xs)
-        | any (`T.isPrefixOf` x) ["diff", "index"]    = spn "gh" x <> "\n" : hlDiff xs
-        | any (`T.isPrefixOf` x) ["@@", "---", "+++"] = spn "gu" x <> "\n" : hlDiff xs
-        | "+" `T.isPrefixOf` x                        = dv  "gi" x         : hlDiff xs
+        | any (`T.isPrefixOf` x) ["diff", "index"]    = spnl "gh" x : hlDiff xs
+        | any (`T.isPrefixOf` x) ["@@", "---", "+++"] = spnl "gu" x : hlDiff xs
+        | "+" `T.isPrefixOf` x                        = spnl "gi" x : hlDiff xs
         | "-" `T.isPrefixOf` x =
             -- Check if -'s are followed by +'s
             let (ds, r ) = first (x :) $ span ("-" `T.isPrefixOf`) xs
                 (is, r') =               span ("+" `T.isPrefixOf`) r
              in case is of
-                  [] -> map (dv "gd") ds ++ hlDiff r -- Not followed, so just render normally
+                  [] -> map (spnl "gd") ds ++ hlDiff r -- Not followed, so just render normally
                   _  -> let n = min (length ds) (length is)
                             (d, i) = unzip $ zipWith go (take n ds) (take n is)
-                         in concat [ d <> map (dv "gd") (drop n ds)
-                                   , i <> map (dv "gi") (drop n is)
+                         in concat [ d <> map (spnl "gd") (drop n ds)
+                                   , i <> map (spnl "gi") (drop n is)
                                    , hlDiff r'
                                    ]
         | otherwise = x <> "\n" : hlDiff xs
@@ -688,7 +688,7 @@ myPandocCompiler =
         go :: Text -> Text -> (Text, Text)
         go (T.unpack -> '-' : del) (T.unpack -> '+' : ins) =
           let (d, i) = both concat . unzip . map trans $ getGroupedDiff del ins
-           in both T.pack (dv "gd" ('-' : d), dv "gi" ('+' : i))
+           in both T.pack (spnl "gd" ('-' : d), spnl "gi" ('+' : i))
          where
           trans :: Diff String -> (String, String)
           trans = \case
@@ -697,9 +697,9 @@ myPandocCompiler =
             Second s -> ("", spn "gic" s)
         go _ _ = error "hlDiff"
 
-        spn, dv :: (IsString s, Semigroup s) => s -> s -> s
-        spn c a = "<span class=\"" <> c <> "\">" <> a <> "</span>"
-        dv  c a = "<div class=\""  <> c <> "\">" <> a <> "</div>"
+        spn, spnl :: (IsString s, Semigroup s) => s -> s -> s
+        spn  c a = "<span class=\"" <> c <> "\">" <> a <> "</span>"
+        spnl c a = (spn c a) <> "\n"
 
   includeFiles :: Pandoc -> Compiler Pandoc
   includeFiles = walkM \case
