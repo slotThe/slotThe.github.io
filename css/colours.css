@@ -64,6 +64,18 @@
                                         --fg-diff-deleted: #8f1313;
   @media (prefers-color-scheme: dark) { --fg-diff-deleted: #ffbfbf; };
 
+                                        --bg-diff-added-faint: #e6ffec;
+  @media (prefers-color-scheme: dark) { --bg-diff-added-faint: #1a2e1f; };
+
+                                        --bg-diff-added-strong: #acf2bb;
+  @media (prefers-color-scheme: dark) { --bg-diff-added-strong: #125225; };
+
+                                        --bg-diff-deleted-faint: #ffeef0;
+  @media (prefers-color-scheme: dark) { --bg-diff-deleted-faint: #3a1d24; };
+
+                                        --bg-diff-deleted-strong: #fdb8c0;
+  @media (prefers-color-scheme: dark) { --bg-diff-deleted-strong: #582028; };
+
                                         --fg-bqn-sub: #005e8b;
   @media (prefers-color-scheme: dark) { --fg-bqn-sub: #9ac8e0; };
 

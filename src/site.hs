@@ -15,10 +15,11 @@
 import Data.Text         qualified as T
 import Data.Text.IO.Utf8 qualified as T
 
-import Control.Arrow ((>>>))
+import Control.Arrow ((>>>), first)
 import Control.Monad
 import Control.Monad.Except (catchError)
-import Data.Bifunctor (second)
+import Data.Algorithm.Diff (Diff, PolyDiff (..), getGroupedDiff)
+import Data.Bifunctor (bimap, second)
 import Data.ByteString.Lazy.Char8 qualified as BL
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
@@ -493,6 +494,9 @@ asTxt f = T.unpack . f . T.pack
 tshow :: Show a => a -> Text
 tshow = T.pack . show
 
+both :: (a -> b) -> (a, a) -> (b, b)
+both f = bimap f f
+
 --- Tags
 
 -- | Associate every @s@ in @tagsMap@ to the list @[id]@; @s@ is a tag and
@@ -636,9 +640,11 @@ myPandocCompiler =
     hSetBuffering hout NoBuffering
     (`walkM` pandoc) \case
       CodeBlock (_, listToMaybe -> mbLang, _) body -> do
-        let lang = fromMaybe "text" mbLang
-        T.hPutStr hin $ T.intercalate "\n" [lang, tshow (T.length body), body]
-        RawBlock "html" <$> getResponse hout
+        case fromMaybe "text" mbLang of
+          "diff" -> pure $ diffHighlight body
+          lang   -> do
+            T.hPutStr hin (T.intercalate "\n" [lang, tshow (T.length body), body])
+            RawBlock "html" <$> getResponse hout
       block -> pure block
    where
     getResponse :: Handle -> IO Text
@@ -650,6 +656,50 @@ myPandocCompiler =
         if "</div>" `T.isSuffixOf` ln
           then pure $ T.intercalate "\n" (reverse (ln : acc))
           else go (ln : acc)
+
+    -- Manually highlight diffs, so we can also highlight the differences.
+    diffHighlight :: Text -> Block
+    diffHighlight body = RawBlock "html" . mconcat $
+      [ "<div class=\"highlight-diff\" style=\"padding-left: 1em;\"><pre>"
+      , T.concat (hlDiff (T.lines body))
+      , "</pre></div>"
+      ]
+     where
+      hlDiff :: [Text] -> [Text]
+      hlDiff [] = []
+      hlDiff (x : xs)
+        | any (`T.isPrefixOf` x) ["diff", "index"]    = spn "gh" x <> "\n" : hlDiff xs
+        | any (`T.isPrefixOf` x) ["@@", "---", "+++"] = spn "gu" x <> "\n" : hlDiff xs
+        | "+" `T.isPrefixOf` x                        = dv  "gi" x         : hlDiff xs
+        | "-" `T.isPrefixOf` x =
+            -- Check if -'s are followed by +'s
+            let (ds, r ) = first (x :) $ span ("-" `T.isPrefixOf`) xs
+                (is, r') =               span ("+" `T.isPrefixOf`) r
+             in case is of
+                  [] -> map (dv "gd") ds ++ hlDiff r -- Not followed, so just render normally
+                  _  -> let n = min (length ds) (length is)
+                            (d, i) = unzip $ zipWith go (take n ds) (take n is)
+                         in concat [ d <> map (dv "gd") (drop n ds)
+                                   , i <> map (dv "gi") (drop n is)
+                                   , hlDiff r'
+                                   ]
+        | otherwise = x <> "\n" : hlDiff xs
+       where
+        go :: Text -> Text -> (Text, Text)
+        go (T.unpack -> '-' : del) (T.unpack -> '+' : ins) =
+          let (d, i) = both concat . unzip . map trans $ getGroupedDiff del ins
+           in both T.pack (dv "gd" ('-' : d), dv "gi" ('+' : i))
+         where
+          trans :: Diff String -> (String, String)
+          trans = \case
+            Both s _ -> (s, s)
+            First s  -> (spn "gdc" s, "")
+            Second s -> ("", spn "gic" s)
+        go _ _ = error "hlDiff"
+
+        spn, dv :: (IsString s, Semigroup s) => s -> s -> s
+        spn c a = "<span class=\"" <> c <> "\">" <> a <> "</span>"
+        dv  c a = "<div class=\""  <> c <> "\">" <> a <> "</div>"
 
   includeFiles :: Pandoc -> Compiler Pandoc
   includeFiles = walkM \case

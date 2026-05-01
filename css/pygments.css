@@ -24,10 +24,12 @@
 .cpf { color: var(--fg-comment2); }                                     /* Comment.PreprocFile */
 .c1  { color: var(--fg-comment2); font-style: italic }                  /* Comment.Single */
 .cs  { color: var(--fg-comment2); font-weight: bold }                   /* Comment.Special */
-.highlight-diff .gd { color: var(--fg-diff-deleted) }                   /* Generic.Deleted */
+.highlight-diff .gd { color: var(--fg-diff-deleted); background: var(--bg-diff-deleted-faint); } /* Generic.Deleted */
+.highlight-diff .gdc  { background: var(--bg-diff-deleted-strong); }
 .ge { font-style: italic }                                              /* Generic.Emph */
 .gh { color: var(--fg-output); font-weight: bold }                      /* Generic.Heading */
-.highlight-diff .gi { color: var(--fg-diff-added) }                     /* Generic.Inserted */
+.highlight-diff .gi { color: var(--fg-diff-added)  ; background: var(--bg-diff-added-faint); } /* Generic.Inserted */
+.highlight-diff .gic  { background: var(--bg-diff-added-strong);   }
 .go { color: var(--fg-output) }                                         /* Generic.Output */
                    .gp { font-weight: bold }                            /* Generic.Prompt */
 .highlight-console .gp { color: var(--fg-maroon); font-weight: normal } /* Generic.Prompt */

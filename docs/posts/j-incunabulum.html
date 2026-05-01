@@ -60,7 +60,7 @@
         <article>
     <div class="header">
       11th Jan 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1992 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1986 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#c'." href="../tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="../tags/j.html" rel="tag">#j</a>   <a title="All pages tagged '#array-lang'." href="../tags/array-lang.html" rel="tag">#array-lang</a>
       </div>
     <h1 class="post-title">The J Incunabulum</h1>
@@ -122,30 +122,22 @@ Here’s the minimal set of changes to <a href="https://code.jsoftware.com/wiki/
 <summary>
 Diff
 </summary>
-<div class="highlight-diff" style="padding-left: 1em;"><pre><span></span><span class="gu">@@ -1,11 +1,11 @@</span>
-<span class="gd">-typedef char C;typedef long I;</span>
-<span class="gi">+typedef char C;typedef long long I;</span>
-<span class="w"> </span>typedef struct a{I t,r,d[3],p[2];}*A;
-<span class="w"> </span>#define P printf
-<span class="w"> </span>#define R return
-<span class="w"> </span>#define V1(f) A f(w)A w;
-<span class="w"> </span>#define V2(f) A f(a,w)A a,w;
-<span class="w"> </span>#define DO(n,x) {I i=0,_n=(n);for(;i&lt;_n;++i){x;}}
-<span class="gd">-I *ma(n){R(I*)malloc(n*4);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</span>
-<span class="gi">+I *ma(n){R(I*)malloc(n*8);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</span>
-<span class="w"> </span>tr(r,d)I *d;{I z=1;DO(r,z=z*d[i]);R z;}
-<span class="w"> </span>A ga(t,r,d)I *d;{A z=(A)ma(5+tr(r,d));z-&gt;t=t,z-&gt;r=r,mv(z-&gt;d,d,r);
-<span class="w"> </span> R z;}
+<div class="highlight-diff" style="padding-left: 1em;"><pre><span class="gu">@@ -1,11 +1,11 @@</span>
+<div class="gd">-typedef char C;typedef long I;</div><div class="gi">+typedef char C;typedef long <span class="gic">long </span>I;</div> typedef struct a{I t,r,d[3],p[2];}*A;
+ #define P printf
+ #define R return
+ #define V1(f) A f(w)A w;
+ #define V2(f) A f(a,w)A a,w;
+ #define DO(n,x) {I i=0,_n=(n);for(;i<_n;++i){x;}}
+<div class="gd">-I *ma(n){R(I*)malloc(n*<span class="gdc">4</span>);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</div><div class="gi">+I *ma(n){R(I*)malloc(n*<span class="gic">8</span>);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</div> tr(r,d)I *d;{I z=1;DO(r,z=z*d[i]);R z;}
+ A ga(t,r,d)I *d;{A z=(A)ma(5+tr(r,d));z->t=t,z->r=r,mv(z->d,d,r);
+  R z;}
 <span class="gu">@@ -34,8 +34,8 @@</span>
-<span class="w"> </span>A ex(e)I *e;{I a=*e;
-<span class="w"> </span> if(qp(a)){if(e[1]=='=')R st[a-'a']=ex(e+2);a= st[ a-'a'];}
-<span class="w"> </span> R qv(a)?(*vm[a])(ex(e+1)):e[1]?(*vd[e[1]])(a,ex(e+2)):(A)a;}
-<span class="gd">-noun(c){A z;if(c&lt;'0'||c&gt;'9')R 0;z=ga(0,0,0);*z-&gt;p=c-'0';R z;}</span>
-<span class="gd">-verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</span>
-<span class="gi">+I noun(c){A z;if(c&lt;'0'||c&gt;'9')R 0;z=ga(0,0,0);*z-&gt;p=c-'0';R z;}</span>
-<span class="gi">+I verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</span>
-<span class="w"> </span>I *wd(s)C *s;{I a,n=strlen(s),*e=ma(n+1);C c;
-<span class="w"> </span> DO(n,e[i]=(a=noun(c=s[i]))?a:(a=verb(c))?a:c);e[n]=0;R e;}
+ A ex(e)I *e;{I a=*e;
+  if(qp(a)){if(e[1]=='=')R st[a-'a']=ex(e+2);a= st[ a-'a'];}
+  R qv(a)?(*vm[a])(ex(e+1)):e[1]?(*vd[e[1]])(a,ex(e+2)):(A)a;}
+<div class="gd">-noun(c){A z;if(c<'0'||c>'9')R 0;z=ga(0,0,0);*z->p=c-'0';R z;}</div><div class="gd">-verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</div><div class="gi">+<span class="gic">I </span>noun(c){A z;if(c<'0'||c>'9')R 0;z=ga(0,0,0);*z->p=c-'0';R z;}</div><div class="gi">+<span class="gic">I </span>verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</div> I *wd(s)C *s;{I a,n=strlen(s),*e=ma(n+1);C c;
+  DO(n,e[i]=(a=noun(c=s[i]))?a:(a=verb(c))?a:c);e[n]=0;R e;}
 </pre></div>
 </details>
 <p>Anyways, let’s crack on.</p>
@@ -154,7 +146,6 @@ Diff
 <h2 id="the-array-type">The array type<a href="#the-array-type" class="floatleft sec-link">§</a></h2>
 <div class="tc-row">
 <div class="tc-code">
-
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>

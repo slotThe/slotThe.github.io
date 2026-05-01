@@ -21,6 +21,7 @@ executable site
                   , time
                   , bytestring
                   , directory
+                  , Diff
   ghc-options:    -Weverything
                   -Wno-implicit-prelude
                   -Wno-missing-import-lists
