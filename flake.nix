@@ -58,6 +58,7 @@
           ]))
           optipng
           zlib
+          html-tidy
           # KaTeX rendering of maths, see scripts/maths.js
           nodejs
           nodePackages.katex

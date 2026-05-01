@@ -1,5 +1,5 @@
 .ONESHELL:
-.PHONY: builds watch clean
+.PHONY: builds watch clean tidy
 
 build:
 	nix run . rebuild
@@ -13,3 +13,22 @@ watch:
 clean:
 	cabal clean
 	nix run . clean
+
+tidy: # Courtesy of Susam (https://codeberg.org/susam/susam.net/src/branch/main/Makefile)
+	find docs -name "*.html" | \
+        grep -v "docs/posts/hakyll-and-bibtex.html" | \
+        grep -v "docs/posts/weighted-colimits.html" | \
+        grep -v "docs/posts/block-sidenotes.html" | \
+        grep -v "docs/wander/index.html" | \
+        grep -v "docs/hsha.html" | \
+        grep -v "docs/impressum.html" | \
+        grep -v "docs/mackey-functors.html" | \
+	while read -r p; do \
+	  echo Tidying "$$p"; \
+	  sed 's/<p><\/p>//' "$$p" > /tmp/tmp.html; \
+          sed 's/><\/label>/>a<\/label>/g' -i /tmp/tmp.html; \
+          sed 's/><\/span>/>a<\/span>/g' -i /tmp/tmp.html; \
+          sed 's/<ol type="1">/<ol>/g' -i /tmp/tmp.html; \
+	  tidy -q -e --warn-proprietary-attributes no /tmp/tmp.html || exit 1; \
+	done
+	@echo Done; echo
