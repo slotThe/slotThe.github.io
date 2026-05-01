@@ -60,7 +60,7 @@
         <article>
     <div class="header">
       11th Jan 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1991 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1992 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#c'." href="../tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="../tags/j.html" rel="tag">#j</a>   <a title="All pages tagged '#array-lang'." href="../tags/array-lang.html" rel="tag">#array-lang</a>
       </div>
     <h1 class="post-title">The J Incunabulum</h1>
@@ -130,19 +130,19 @@ Diff
  #define R return
  #define V1(f) A f(w)A w;
  #define V2(f) A f(a,w)A a,w;
- #define DO(n,x) {I i=0,_n=(n);for(;i<_n;++i){x;}}
+ #define DO(n,x) {I i=0,_n=(n);for(;i&lt;_n;++i){x;}}
 <span class="gd">-I *ma(n){R(I*)malloc(n*<span class="gdc">4</span>);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</span>
 <span class="gi">+I *ma(n){R(I*)malloc(n*<span class="gic">8</span>);}mv(d,s,n)I *d,*s;{DO(n,d[i]=s[i]);}</span>
  tr(r,d)I *d;{I z=1;DO(r,z=z*d[i]);R z;}
- A ga(t,r,d)I *d;{A z=(A)ma(5+tr(r,d));z->t=t,z->r=r,mv(z->d,d,r);
+ A ga(t,r,d)I *d;{A z=(A)ma(5+tr(r,d));z-&gt;t=t,z-&gt;r=r,mv(z-&gt;d,d,r);
   R z;}
 <span class="gu">@@ -34,8 +34,8 @@</span>
  A ex(e)I *e;{I a=*e;
   if(qp(a)){if(e[1]=='=')R st[a-'a']=ex(e+2);a= st[ a-'a'];}
   R qv(a)?(*vm[a])(ex(e+1)):e[1]?(*vd[e[1]])(a,ex(e+2)):(A)a;}
-<span class="gd">-noun(c){A z;if(c<'0'||c>'9')R 0;z=ga(0,0,0);*z->p=c-'0';R z;}</span>
+<span class="gd">-noun(c){A z;if(c&lt;'0'||c&gt;'9')R 0;z=ga(0,0,0);*z-&gt;p=c-'0';R z;}</span>
 <span class="gd">-verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</span>
-<span class="gi">+<span class="gic">I </span>noun(c){A z;if(c<'0'||c>'9')R 0;z=ga(0,0,0);*z->p=c-'0';R z;}</span>
+<span class="gi">+<span class="gic">I </span>noun(c){A z;if(c&lt;'0'||c&gt;'9')R 0;z=ga(0,0,0);*z-&gt;p=c-'0';R z;}</span>
 <span class="gi">+<span class="gic">I </span>verb(c){I i=0;for(;vt[i];)if(vt[i++]==c)R i;R 0;}</span>
  I *wd(s)C *s;{I a,n=strlen(s),*e=ma(n+1);C c;
   DO(n,e[i]=(a=noun(c=s[i]))?a:(a=verb(c))?a:c);e[n]=0;R e;}

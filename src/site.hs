@@ -34,7 +34,7 @@ import Hakyll hiding (dateField)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- Only for language recognition; see 'pygmentsHighlight'
 import System.Directory (createDirectoryIfMissing)
 import System.Process (readProcess, runInteractiveCommand)
-import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==))
+import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==), escapeHTML)
 import Text.Pandoc.Builder (Format (..), HasMeta (setMeta), Many, Pandoc (..), nullAttr, simpleTable)
 import Text.Pandoc.Builder qualified as Many (toList, singleton)
 import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..))
@@ -668,22 +668,22 @@ myPandocCompiler =
       hlDiff :: [Text] -> [Text]
       hlDiff [] = []
       hlDiff (x : xs)
-        | any (`T.isPrefixOf` x) ["diff", "index"]    = spnl "gh" x : hlDiff xs
-        | any (`T.isPrefixOf` x) ["@@", "---", "+++"] = spnl "gu" x : hlDiff xs
-        | "+" `T.isPrefixOf` x                        = spnl "gi" x : hlDiff xs
+        | any (`T.isPrefixOf` x) ["diff", "index"]    = spnl "gh" (escapeHTML x) : hlDiff xs
+        | any (`T.isPrefixOf` x) ["@@", "---", "+++"] = spnl "gu" (escapeHTML x) : hlDiff xs
+        | "+" `T.isPrefixOf` x                        = spnl "gi" (escapeHTML x) : hlDiff xs
         | "-" `T.isPrefixOf` x =
             -- Check if -'s are followed by +'s
             let (ds, r ) = first (x :) $ span ("-" `T.isPrefixOf`) xs
                 (is, r') =               span ("+" `T.isPrefixOf`) r
              in case is of
-                  [] -> map (spnl "gd") ds ++ hlDiff r -- Not followed, so just render normally
+                  [] -> map (spnl "gd". escapeHTML) ds ++ hlDiff r -- Not followed, so just render normally
                   _  -> let n = min (length ds) (length is)
                             (d, i) = unzip $ zipWith go (take n ds) (take n is)
-                         in concat [ d <> map (spnl "gd") (drop n ds)
-                                   , i <> map (spnl "gi") (drop n is)
+                         in concat [ d <> map (spnl "gd" . escapeHTML) (drop n ds)
+                                   , i <> map (spnl "gi" . escapeHTML) (drop n is)
                                    , hlDiff r'
                                    ]
-        | otherwise = x <> "\n" : hlDiff xs
+        | otherwise = escapeHTML x <> "\n" : hlDiff xs
        where
         go :: Text -> Text -> (Text, Text)
         go (T.unpack -> '-' : del) (T.unpack -> '+' : ins) =
@@ -692,9 +692,9 @@ myPandocCompiler =
          where
           trans :: Diff String -> (String, String)
           trans = \case
-            Both s _ -> (s, s)
-            First s  -> (spn "gdc" s, "")
-            Second s -> ("", spn "gic" s)
+            Both s _ -> both escapeHTML (s, s)
+            First s  -> (spn "gdc" (escapeHTML s), "")
+            Second s -> ("", spn "gic" (escapeHTML s))
         go _ _ = error "hlDiff"
 
         spn, spnl :: (IsString s, Semigroup s) => s -> s -> s

@@ -221,11 +221,11 @@ Click
  When BEG and END are non-nil, join all lines in the region they
  define.  Interactively, BEG and END are, respectively, the start
  and end of the region if it is active, else nil.  (The region is
-<span class="gd">-ignored if prefix ARG is given.)<span class="gdc">"</span></span>
+<span class="gd">-ignored if prefix ARG is given.)<span class="gdc">&quot;</span></span>
 <span class="gi">+ignored if prefix ARG is given.)</span>
 <span class="gi">+</span>
 <span class="gi">+When joining lines, smartly delete comment beginnings, such that one</span>
-<span class="gi">+does not have to do this by oneself."</span>
+<span class="gi">+does not have to do this by oneself.&quot;</span>
    (interactive
     (progn (barf-if-buffer-read-only)
            (cons current-prefix-arg
@@ -233,10 +233,10 @@ Click
      ;; (subtracting 1 in order to compare less than BOB).
      (setq beg (1- (line-beginning-position (and arg 2))))
      (when arg (forward-line)))
-<span class="gd">-  (let ((<span class="gdc">pr</span>e<span class="gdc">fix (a</span>n<span class="gdc">d (></span> (<span class="gdc">le</span>ngt<span class="gdc">h f</span>i<span class="gdc">ll</span>-<span class="gdc">p</span>r<span class="gdc">ef</span>i<span class="gdc">x)</span> <span class="gdc">0</span>)</span>
+<span class="gd">-  (let ((<span class="gdc">pr</span>e<span class="gdc">fix (a</span>n<span class="gdc">d (&gt;</span> (<span class="gdc">le</span>ngt<span class="gdc">h f</span>i<span class="gdc">ll</span>-<span class="gdc">p</span>r<span class="gdc">ef</span>i<span class="gdc">x)</span> <span class="gdc">0</span>)</span>
 <span class="gd">-         <span class="gdc">            </span>(re<span class="gdc">ge</span>x<span class="gdc">p</span>-<span class="gdc">quo</span>t<span class="gdc">e</span> <span class="gdc">fil</span>l-<span class="gdc">p</span>r<span class="gdc">efix))</span>))</span>
 <span class="gi">+  (let<span class="gic">*</span> ((<span class="gic">comm</span>en<span class="gic">t</span> (<span class="gic">stri</span>ng<span class="gic">-</span>t<span class="gic">r</span>i<span class="gic">m</span>-ri<span class="gic">ght</span> <span class="gic">comment-start</span>)<span class="gic">)</span></span>
-<span class="gi">+         (<span class="gic">p</span>re<span class="gic">fi</span>x-<span class="gic">s</span>t<span class="gic">art</span> <span class="gic">(and (> (</span>l<span class="gic">ength comment</span>-<span class="gic">sta</span>r<span class="gic">t</span>)<span class="gic"> 0</span>)</span>
+<span class="gi">+         (<span class="gic">p</span>re<span class="gic">fi</span>x-<span class="gic">s</span>t<span class="gic">art</span> <span class="gic">(and (&gt; (</span>l<span class="gic">ength comment</span>-<span class="gic">sta</span>r<span class="gic">t</span>)<span class="gic"> 0</span>)</span>
 <span class="gi">+                            (regexp-quote comment)))</span>
 <span class="gi">+         ;; A continuation of a comment. This is important for</span>
 <span class="gi">+         ;; languages such as Haskell, where -- starts a comment</span>
@@ -247,23 +247,23 @@ Click
 <span class="gi">+            (forward-line -1)</span>
 <span class="gi">+            (back-to-indentation)</span>
 <span class="gi">+            (search-forward prefix-start (pos-eol) 'no-error))))</span>
-     (while (and (> (line-beginning-position) beg)
+     (while (and (&gt; (line-beginning-position) beg)
                  (forward-line 0)
                  (= (preceding-char) ?\n))
        (delete-char -1)
 <span class="gd">-      <span class="gdc">;; If th</span>e a<span class="gdc">pp</span>e<span class="gdc">nd</span>e<span class="gdc">d l</span>in<span class="gdc">e</span> <span class="gdc">st</span>ar<span class="gdc">te</span>d<span class="gdc"> w</span>i<span class="gdc">th th</span>e <span class="gdc">fill</span> <span class="gdc">pr</span>e<span class="gdc">fix,</span></span>
 <span class="gd">-      <span class="gdc">;;</span> delete<span class="gdc"> t</span>h<span class="gdc">e p</span>r<span class="gdc">ef</span>i<span class="gdc">x.</span></span>
 <span class="gd">-      <span class="gdc">(if</span> <span class="gdc">(and</span> <span class="gdc">prefix</span> <span class="gdc">(</span>loo<span class="gdc">ki</span>n<span class="gdc">g-a</span>t <span class="gdc">pr</span>e<span class="gdc">fix))</span></span>
-<span class="gd">-        <span class="gdc"> </span> (re<span class="gdc">pla</span>ce-<span class="gdc">m</span>at<span class="gdc">ch</span> <span class="gdc">"" </span>t t))</span>
+<span class="gd">-        <span class="gdc"> </span> (re<span class="gdc">pla</span>ce-<span class="gdc">m</span>at<span class="gdc">ch</span> <span class="gdc">&quot;&quot; </span>t t))</span>
 <span class="gd">-      (<span class="gdc">fixup-whit</span>e<span class="gdc">s</span>pace<span class="gdc">)))</span>)</span>
 <span class="gi">+      <span class="gic">(unl</span>e<span class="gic">ss</span> <span class="gic">(s</span>a<span class="gic">v</span>e<span class="gic">-</span>e<span class="gic">xcurs</span>i<span class="gic">o</span>n <span class="gic">(forw</span>ard<span class="gic">-l</span>i<span class="gic">n</span>e <span class="gic">-1)</span> <span class="gic">(</span>e<span class="gic">olp))</span></span>
 <span class="gi">+       <span class="gic"> (</span>delete<span class="gic">-</span>h<span class="gic">o</span>ri<span class="gic">zontal-space)</span></span>
 <span class="gi">+        <span class="gic">;;</span> <span class="gic">De</span>l<span class="gic">ete the start </span>o<span class="gic">f a c</span>o<span class="gic">mme</span>nt <span class="gic">onc</span>e<span class="gic">.</span></span>
 <span class="gi">+        <span class="gic">(when</span> (<span class="gic">and p</span>re<span class="gic">v-</span>c<span class="gic">omm</span>e<span class="gic">nt? prefix</span>-<span class="gic">st</span>a<span class="gic">r</span>t <span class="gic">(looking-a</span>t <span class="gic">prefix-s</span>t<span class="gic">art</span>))</span>
-<span class="gi">+      <span class="gic">    </span>(<span class="gic">r</span>ep<span class="gic">l</span>ace<span class="gic">-match "" t t</span>)</span>
+<span class="gi">+      <span class="gic">    </span>(<span class="gic">r</span>ep<span class="gic">l</span>ace<span class="gic">-match &quot;&quot; t t</span>)</span>
 <span class="gi">+          ;; Look for continuations.</span>
 <span class="gi">+          (while (and prefix-cont (looking-at prefix-cont))</span>
-<span class="gi">+            (replace-match "" t t)))</span>
+<span class="gi">+            (replace-match &quot;&quot; t t)))</span>
 <span class="gi">+        (fixup-whitespace)))</span>
 </pre></div>
 </details>

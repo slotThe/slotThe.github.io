@@ -150,11 +150,11 @@ If you still have this in your flake, you should probably remove <span class="no
 <span class="gu">@@ -6,13 +6,14 @@</span>
      emacs-overlay.url = github:nix-community/emacs-overlay;
      hmenu.url         = gitlab:slotThe/hmenu;
-     kmonad.url        = git+https://github.com/kmonad/kmonad?submodules=1&dir=nix;
+     kmonad.url        = git+https://github.com/kmonad/kmonad?submodules=1&amp;dir=nix;
 <span class="gi">+    xmonad-contrib.url= github:xmonad/xmonad-contrib;</span>
      home-manager      = {
        url = github:nix-community/home-manager;
-       inputs.nixpkgs.follows = "nixpkgs";
+       inputs.nixpkgs.follows = &quot;nixpkgs&quot;;
      };
    };
 
@@ -169,7 +169,7 @@ If you still have this in your flake, you should probably remove <span class="no
      in {
 <span class="gd">-      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem {</span>
 <span class="gi">+      nixosConfigurations.comonad = nixpkgs.lib.nixosSystem <span class="gic">rec </span>{</span>
-         system  = "x86_64-linux";
+         system  = &quot;x86_64-linux&quot;;
          modules = [
            ./nix/hardware-configuration.nix
 <span class="gu">@@ -34,6 +35,8 @@</span>
@@ -203,14 +203,14 @@ Enabling the flake
 <span class="gu">+++ b/nix/configuration.nix</span>
 <span class="gu">@@ -63,6 +63,16 @@</span>
      enable = true;
-     layout = "us";
+     layout = &quot;us&quot;;
      displayManager.startx.enable = true;
 <span class="gi">+    windowManager.xmonad = {</span>
 <span class="gi">+      enable = true;</span>
 <span class="gi">+      enableContribAndExtras = true;</span>
 <span class="gi">+      flake  = {</span>
 <span class="gi">+        enable   = true;</span>
-<span class="gi">+        compiler = "ghc947";</span>
+<span class="gi">+        compiler = &quot;ghc947&quot;;</span>
 <span class="gi">+      };</span>
 <span class="gi">+      config = builtins.readFile ../xmonad/xmonad.hs;</span>
 <span class="gi">+      enableConfiguredRecompile = true;</span>
@@ -270,29 +270,29 @@ Moving Emacs
  {
 <span class="gd">-  services.emacs.enable = true; # Start as daemon</span>
 <span class="gd">-</span>
-   xdg.configFile."emacs".source = config.lib.my.mkSymlink "emacs";
+   xdg.configFile.&quot;emacs&quot;.source = config.lib.my.mkSymlink &quot;emacs&quot;;
 
    home.packages = with pkgs; [
 <span class="gh">diff --git a/xinitrc/.xinitrc b/xinitrc/.xinitrc</span>
 <span class="gh">index c9a6958..b8176bd 100755</span>
 <span class="gu">--- a/xinitrc/.xinitrc</span>
 <span class="gu">+++ b/xinitrc/.xinitrc</span>
-<span class="gu">@@ -32,10 +32,6 @@ kmonad ~/.config/kmonad/config.kbd &</span>
+<span class="gu">@@ -32,10 +32,6 @@ kmonad ~/.config/kmonad/config.kbd &amp;</span>
  # 14dec2019
- redshift -l 55.7:12.6 -t 6500K:3200K -b 1.0:0.8 &
+ redshift -l 55.7:12.6 -t 6500K:3200K -b 1.0:0.8 &amp;
 
 <span class="gd">-# Start emacs as a daemon.</span>
-<span class="gd">-emacs --daemon &</span>
-<span class="gd">-emacs --daemon=eshell &</span>
+<span class="gd">-emacs --daemon &amp;</span>
+<span class="gd">-emacs --daemon=eshell &amp;</span>
 <span class="gd">-</span>
  # Hide mouse cursor when idle.
- unclutter --ignore-scrolling &
+ unclutter --ignore-scrolling &amp;
 
-<span class="gu">@@ -46,4 +42,4 @@ wallpaper-changer &</span>
- compton --blur-method kawase --blur-strength 5 --config ~/.config/compton/compton.conf &
+<span class="gu">@@ -46,4 +42,4 @@ wallpaper-changer &amp;</span>
+ compton --blur-method kawase --blur-strength 5 --config ~/.config/compton/compton.conf &amp;
 
  # Start the window manager.
-<span class="gd">-exec <span class="gdc">"$XMONAD_CONFIG_DIR"/</span>xmonad<span class="gdc">-x86_64-linux</span></span>
+<span class="gd">-exec <span class="gdc">&quot;$XMONAD_CONFIG_DIR&quot;/</span>xmonad<span class="gdc">-x86_64-linux</span></span>
 <span class="gi">+exec xmonad</span>
 <span class="gh">diff --git a/xmonad/xmonad.hs b/xmonad/xmonad.hs</span>
 <span class="gh">index 5802888..933a274 100644</span>
@@ -305,16 +305,16 @@ Moving Emacs
 <span class="gi">+import XMonad.Util.SpawnOnce (spawnOnce)</span>
  import XMonad.Util.Loggers (logTitlesOnScreen)
  import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), customFloating, namedScratchpadAction, namedScratchpadManageHook, scratchpadWorkspaceTag)
- import XMonad.Util.Run (EmacsLib (ElpaLib, Special), asBatch, asString, elispFun, eval, execute, executeNoQuote, findFile, getInput, inEditor, inEmacs, inProgram, inTerm, proc, progn, quote, require, setFrameName, setXClass, spawnExternalProcess, termInDir, toInput, withEmacsLibs, (>&&>), (>-$), (>->))
+ import XMonad.Util.Run (EmacsLib (ElpaLib, Special), asBatch, asString, elispFun, eval, execute, executeNoQuote, findFile, getInput, inEditor, inEmacs, inProgram, inTerm, proc, progn, quote, require, setFrameName, setXClass, spawnExternalProcess, termInDir, toInput, withEmacsLibs, (&gt;&amp;&amp;&gt;), (&gt;-$), (&gt;-&gt;))
 <span class="gu">@@ -121,7 +122,10 @@ myConfig = def</span>
    , normalBorderColor  = colorBg
    , focusedBorderColor = colorBlue
-   , terminal           = "alacritty"
+   , terminal           = &quot;alacritty&quot;
 <span class="gd">-  , startupHook        = <span class="gdc">setDefaultCurs</span>o<span class="gdc">r xC_left_ptr</span></span>
 <span class="gi">+  , startupHook        = <span class="gic">d</span>o</span>
 <span class="gi">+      setDefaultCursor xC_left_ptr</span>
-<span class="gi">+      spawnOnce "emacs --daemon"        -- See Note [Emacs]</span>
-<span class="gi">+      spawnOnce "emacs --daemon=eshell"</span>
+<span class="gi">+      spawnOnce &quot;emacs --daemon&quot;        -- See Note [Emacs]</span>
+<span class="gi">+      spawnOnce &quot;emacs --daemon=eshell&quot;</span>
    , workspaces         = topicNames topics
    , manageHook         = myManageHook
    , layoutHook         = lessBorders (Combine Union Screen OnlyFloat) layoutOrder
@@ -331,7 +331,7 @@ Moving Emacs
 <span class="gi">+-}</span>
 <span class="gi">+</span>
  -- | Building my own pretty-printer.
- xmobarPP :: ScreenId -> X PP
+ xmobarPP :: ScreenId -&gt; X PP
  xmobarPP sid = pure . filterOutWsPP [scratchpadWorkspaceTag] $ def
 </pre></div>
 </details>
@@ -348,12 +348,12 @@ Adding <code>haskell-process-path</code> to my <code>xmonad.hs</code>
 <span class="gu">+++ b/xmonad/xmonad.hs</span>
 <span class="gu">@@ -881,3 +881,8 @@ switchToLayout = sendMessage . JumpToLayout</span>
  -- submap from a list of @(key, action)@ pairs.
- basicSubmapFromList :: Ord key => [(key, action)] -> Map (KeyMask, key) action
- basicSubmapFromList = fromList . map \(k, a) -> ((0, k), a)
+ basicSubmapFromList :: Ord key =&gt; [(key, action)] -&gt; Map (KeyMask, key) action
+ basicSubmapFromList = fromList . map \(k, a) -&gt; ((0, k), a)
 <span class="gi">+</span>
 <span class="gi">+--- Local Variables:</span>
 <span class="gi">+--- mode: haskell</span>
-<span class="gi">+--- eval: (setopt haskell-process-path-ghci (concat (or (getenv "XMONAD_GHC") "ghc") "i"))</span>
+<span class="gi">+--- eval: (setopt haskell-process-path-ghci (concat (or (getenv &quot;XMONAD_GHC&quot;) &quot;ghc&quot;) &quot;i&quot;))</span>
 <span class="gi">+--- End:</span>
 </pre></div>
 </details>
