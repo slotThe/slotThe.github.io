@@ -40,23 +40,11 @@
                                         --fg-output: #303030;
   @media (prefers-color-scheme: dark) { --fg-output: #e0e0e0; };
 
-                                        --fg-nametag: #3B3B3B;
-  @media (prefers-color-scheme: dark) { --fg-nametag: #ebebeb; };
-
-                                        --fg-literal: #676767;
-  @media (prefers-color-scheme: dark) { --fg-literal: #d0d0d0; };
-
                                         --fg-keyword: #575757;
   @media (prefers-color-scheme: dark) { --fg-keyword: #c0c0c0; };
 
-                                        --fg-exception: black;
-  @media (prefers-color-scheme: dark) { --fg-exception: white; };
-
-                                        --fg-comment: #888888;
-  @media (prefers-color-scheme: dark) { --fg-comment: #aaa; };
-
-                                        --fg-comment2: #666666;
-  @media (prefers-color-scheme: dark) { --fg-comment2: #999; };
+                                        --fg-comment: #666666;
+  @media (prefers-color-scheme: dark) { --fg-comment: #999; };
 
                                         --fg-diff-added: #005000;
   @media (prefers-color-scheme: dark) { --fg-diff-added: #a0e0a0; };
