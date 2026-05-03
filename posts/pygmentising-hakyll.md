@@ -362,7 +362,7 @@ pygmentsHighlight pandoc = unsafeCompiler do
   Seeing how there are a lot of language extensions that `pygmentize` does not highlight correctly,
   this seems well worth it!
 
-[KDE XML syntax definitions]: https://docs.kde.org/stable5/en/kate/katepart/highlight.html
+[KDE XML syntax definitions]: https://docs.kde.org/stable_kf6/en/kate/katepart/highlight.html
 [LSLeary]: https://old.reddit.com/r/haskell/comments/10ilrui/pygmentising_hakylls_syntax_highlighting/j5fih5h/
 [backlinks:ghc-syntax-highlighter-hakyll]: https://vaibhavsagar.com/blog/2023/01/29/ghc-syntax-hakyll/
 [cfg:site]: https://github.com/slotThe/slotThe.github.io/blob/main/src/site.hs#L87

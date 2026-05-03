@@ -1259,7 +1259,7 @@ tool that can output HTML.</p>
 <!--more-->
 <h2 id="the-problem">The problem</h2>
 <p>Pandoc uses the <a href="https://hackage.haskell.org/package/skylighting">skylighting</a> library to generate syntax highlighting
-for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.org/stable5/en/kate/katepart/highlight.html">KDE XML syntax
+for a given block of code. Skylighting, in turn, uses <a href="https://docs.kde.org/stable_kf6/en/kate/katepart/highlight.html">KDE XML syntax
 definitions</a> for the respective tokenisers. However, even for simple
 examples I don’t agree with the HTML this generates. Consider the
 following Haskell code block.</p>

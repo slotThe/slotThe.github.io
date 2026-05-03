@@ -1433,7 +1433,7 @@ thanks <a href="https://github.com/lsleary">Leary</a>!</p>
 <h2 id="primitive-emacs-integration">Primitive Emacs integration</h2>
 <p>Though not directly relevant to making the flake work,
 a nice-to-have feature is Emacs support.
-One could <a href="https://srid.ca/xmonad-conf-ide">create a cabal project</a> to get real <code>haskell-language-server</code> support,
+One could create a cabal project to get real <code>haskell-language-server</code> support,
 but that seems a bit overkill to me.
 I don’t really need more than a <code>ghci</code> session for my configuration<!--
 -->—anything complicated enough to warrant a language server should immediately be upstreamed into <code>xmonad-contrib</code>.</p>

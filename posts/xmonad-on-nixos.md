@@ -116,7 +116,7 @@ thanks [Leary](https://github.com/lsleary)!
 
 Though not directly relevant to making the flake work,
 a nice-to-have feature is Emacs support.
-One could [create a cabal project][nix:xmonad-hs-cabal-project] to get real `haskell-language-server` support,
+One could create a cabal project to get real `haskell-language-server` support,
 but that seems a bit overkill to me.
 I don't really need more than a `ghci` session for my configuration<!--
 -->—anything complicated enough to warrant a language server should immediately be upstreamed into `xmonad-contrib`.
@@ -235,8 +235,6 @@ index 933a274..185ed2e 100644
 </details>
 
 Now `C-c C-c` works out of the box!
-
-[nix:xmonad-hs-cabal-project]: https://srid.ca/xmonad-conf-ide
 
 [^1]: More precisely, I have `C-c C-c` bound to
 

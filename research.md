@@ -282,11 +282,11 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   + The [slides][disputation]
     for my thesis defence and the
     [full source code](https://github.com/slotThe/disputation).
-  + My [dissertation](./diss-tud.pdf) as I handed it in ([source code](https://github.com/slotThe/dissertation/tree/tud)).
+  + My [dissertation](./diss-tud.pdf) as I handed it in ([source code](https://codeberg.org/slotThe/dissertation/src/branch/diss-tud)).
     Additionally, I have made minor improvements as suggested by the referees,
     but due to some bylaws of the TU Dresden I'm not allowed to modify the version I originally handed in.
     The PDF of the updated version can be found [here](./dissertation.pdf).
-    The source code stays the same, one merely has to switch to the [default branch](https://github.com/slotThe/dissertation).
+    The source code stays the same, one merely has to switch to the [default branch](https://codeberg.org/slotThe/dissertation/).
     Note that the numbering is still consistent with the original version, I merely corrected some spelling errors and mathematical typos.
 
 - *Comodules for Categories*
