@@ -1,7 +1,9 @@
 ---
 title: Writing Literate Blog Posts
 date: 2026-04-23
+last-modified: 2026-04-23
 tags: emacs
+og-description: Hacking on Org Babel and export, for hakyll/pandoc integration.
 ---
 
 Let's try to contort enough Emacs packages to allow for a smooth Org to
