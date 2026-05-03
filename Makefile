@@ -14,6 +14,10 @@ clean:
 	cabal clean
 	nix run . clean
 
+check: tidy
+	@miss=$$(grep -L -- 'og-description:' posts/*.md); \
+	if [ -n "$$miss" ]; then echo -e "Missing desc:\n$$miss"; exit 1; fi
+
 tidy: # Courtesy of Susam (https://codeberg.org/susam/susam.net/src/branch/main/Makefile)
 	find docs -name "*.html" | \
         grep -v "docs/posts/hakyll-and-bibtex.html" | \
