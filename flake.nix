@@ -59,6 +59,7 @@
           optipng
           zlib
           html-tidy
+          linkchecker
           # KaTeX rendering of maths, see scripts/maths.js
           nodejs
           nodePackages.katex
