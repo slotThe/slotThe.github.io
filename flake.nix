@@ -62,7 +62,7 @@
           linkchecker
           # KaTeX rendering of maths, see scripts/maths.js
           nodejs
-          nodePackages.katex
+          katex
           # Directly rendering TikZ pictures into SVGs
           rubber
           (texlive.combine {
@@ -72,6 +72,7 @@
         ];
         shellHook = ''
           export PROJECT_ROOT="$(pwd)"
+          export NODE_PATH="${pkgs.katex}/lib/node_modules:$NODE_PATH"
           GI="./talks/git-introduction"
           ln -sf ${git-intro}/README.md "$GI.md"
           mkdir -p "$GI"
