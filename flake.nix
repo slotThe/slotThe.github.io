@@ -66,7 +66,7 @@
           # Directly rendering TikZ pictures into SVGs
           rubber
           (texlive.combine {
-            inherit (texlive) scheme-basic amsmath preview pgf pgfplots tikz-cd;
+            inherit (texlive) scheme-basic amsmath preview pgf pgfplots tikz-cd amsfonts metafont rsfs jknapltx mathtools;
           })
           poppler-utils
         ];
