@@ -97,6 +97,9 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *Closed reconstruction* \
+  2026-05-12, Seminar [GMM], Dresden.
+
 - *The Reflection Equation and Braided Module Categories* \
   2026-02-19,
   [Seminario di Algebra e Teoria dei Numeri](https://www.seminarioatn.unito.it/),
