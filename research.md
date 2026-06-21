@@ -98,24 +98,18 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 # Talks
 
 - *Closed reconstruction* \
-  2026-05-12, Seminar [GMM], Dresden.
+  2026-05-12, Seminar [GMM], Dresden. \
+  2026-05-26, [Seminar on Quantum groups, Hopf algebras and monoidal categories](https://hopfalgb.ulb.be/), Brussels. \
+  2026-06-17, [European Quantum Algebra Lectures](https://sites.google.com/view/equalseminar/home), Online; [slides](https://codeberg.org/slotThe/equal26) ([handout](https://codeberg.org/slotThe/equal26/src/branch/main/handout.pdf)).
 
 - *The Reflection Equation and Braided Module Categories* \
-  2026-02-19,
-  [Seminario di Algebra e Teoria dei Numeri](https://www.seminarioatn.unito.it/),
-  Turin.
+  2026-02-19, [Seminario di Algebra e Teoria dei Numeri](https://www.seminarioatn.unito.it/), Turin.
 
 - *Category Theory and All That* \
-   2025-11-06,
-   [ZMP Seminar](https://www.zmp.uni-hamburg.de/events/seminar.html),
-   Hamburg;
-   [slides](https://codeberg.org/slotThe/zmp25).
+   2025-11-06, [ZMP Seminar](https://www.zmp.uni-hamburg.de/events/seminar.html), Hamburg; [slides](https://codeberg.org/slotThe/zmp25).
 
 - *Categorical Reconstruction Theory* \
-   2025-10-21,
-   [AMP Seminar](https://www.math.uni-hamburg.de/home/runkel/ws25-fose.html),
-   Hamburg;
-   [slides](https://codeberg.org/slotThe/amp25).
+   2025-10-21, [AMP Seminar](https://www.math.uni-hamburg.de/home/runkel/ws25-fose.html), Hamburg; [slides](https://codeberg.org/slotThe/amp25).
 
 - *Categorical Reconstruction Theory* \
    2025-07-04, Dresden; [slides][disputation].
