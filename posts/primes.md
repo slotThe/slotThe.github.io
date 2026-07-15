@@ -717,7 +717,7 @@ even more numbers, which is why that particular parameter is built into
 ```
 
 This is where things get interesting. We allocate exactly as many bytes
-as fit into the L1 cache on my laptop. Since each byte holds 8 bits, and
+as fit into the L1 cache on my laptop.[^49] Since each byte holds 8 bits, and
 we don't represent even numbers, each iteration through `E` actually
 touches `s=L1*16` numbers, so that's the stride length. We start at 3,
 since that's the next odd (= representable) number we haven't checked
@@ -1661,3 +1661,9 @@ code again at some point, who knows.
        󠀠
 
        `hyperfine` speeds primesieve up for unknown reasons.
+
+[^49]: Note that this might not be optimal, as the other data structures
+       also need to be accessed sometimes, so one might even want a
+       slightly smaller allocation here. Playing around with it however,
+       it seems that access to `E` actually dominates, so I chose the
+       exact size of my L1.

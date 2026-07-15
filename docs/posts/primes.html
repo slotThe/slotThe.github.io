@@ -84,7 +84,7 @@
         <article>
     <div class="header">
       15th Jul 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="8667 words">35 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="8716 words">35 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#c'." href="../tags/c.html" rel="tag">#c</a>
       </div>
     <h1 class="post-title">Sieving Primes</h1>
@@ -938,7 +938,13 @@ even more numbers, which is why that particular parameter is built into
 </pre></div>
 <p></p>
 This is where things get interesting. We allocate exactly as many bytes
-as fit into the L1 cache on my laptop. Since each byte holds 8 bits, and
+as fit into the L1 cache on my laptop.<!--
+--><label for="sn-24" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-24" class="margin-toggle" /><div class="sidenote">Note that this might not be optimal, as the other data structures
+also need to be accessed sometimes, so one might even want a
+slightly smaller allocation here. Playing around with it however,
+it seems that access to <code>E</code> actually dominates, so I chose the
+exact size of my L1.</div><!--
+--> Since each byte holds 8 bits, and
 we don’t represent even numbers, each iteration through <code>E</code> actually
 touches <code>s=L1*16</code> numbers, so that’s the stride length. We start at 3,
 since that’s the next odd (= representable) number we haven’t checked
@@ -997,7 +1003,7 @@ aligned with <code>era4</code> to showcase the differences:
 This does indeed give a pretty nice performance boost:
 <p></p>
 <!--
---><label for="sn-24" class="margin-toggle">⊕</label><input type="checkbox" id="sn-24" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-25" class="margin-toggle">⊕</label><input type="checkbox" id="sn-25" class="margin-toggle" /><div class="marginnote">󠀠
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>N           era2     era3     era4     era5
 -------  -------  -------  -------  -------
@@ -1020,7 +1026,7 @@ This does indeed give a pretty nice performance boost:
 </picture>
 <p></p>
 I guess array access really is <em>much</em> faster than manual bit-twiddling.<!--
---><label for="sn-25" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-25" class="margin-toggle" /><div class="sidenote"><code>perf</code> reports around 15 billion instructions for <code>era4</code>, but only 10 billion for <code>era5</code>!</div><!--
+--><label for="sn-26" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-26" class="margin-toggle" /><div class="sidenote"><code>perf</code> reports around 15 billion instructions for <code>era4</code>, but only 10 billion for <code>era5</code>!</div><!--
 -->
 Optimisation is weird.
 <hr />
@@ -1036,7 +1042,7 @@ Applying the idea of segmentation to a wheeled sieve is not <em>that</em> much
 more complicated conceptually, but a bit fiddly in the actual
 implementation. Since a wheel very much skews towards bit-packing, let’s
 also use <code>era4</code> as a base, instead of <code>era5</code>.<!--
---><label for="sn-26" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-26" class="margin-toggle" /><div class="sidenote">From some cursory tests, a byte-based wheel is around 15% slower than a bit-based one. Optimisation is weird.</div><!--
+--><label for="sn-27" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-27" class="margin-toggle" /><div class="sidenote">From some cursory tests, a byte-based wheel is around 15% slower than a bit-based one. Optimisation is weird.</div><!--
 -->
 
 <div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="n">F</span><span class="p">(</span><span class="n">era6</span><span class="p">,</span><span class="n">P5</span><span class="p">;</span><span class="n">U</span><span class="w"> </span><span class="n">_P</span><span class="p">,</span><span class="o">*</span><span class="n">P</span><span class="o">=</span><span class="n">eraH</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">&amp;</span><span class="n">_P</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">s</span><span class="o">=</span><span class="n">L1</span><span class="o">*</span><span class="mi">30</span><span class="p">,</span><span class="o">*</span><span class="n">E</span><span class="o">=</span><span class="n">M</span><span class="p">(</span><span class="n">L1</span><span class="p">);</span><span class="k">for</span><span class="p">(</span><span class="n">U</span><span class="w"> </span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">l</span><span class="o">&lt;</span><span class="n">x</span><span class="p">;</span><span class="n">l</span><span class="o">+=</span><span class="n">s</span><span class="p">){</span>
@@ -1080,7 +1086,7 @@ increasing in steps that are reasonable for the wheel.
 </pre></div>
 <p></p>
 <!--
---><label for="sn-27" class="margin-toggle">⊕</label><input type="checkbox" id="sn-27" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-28" class="margin-toggle">⊕</label><input type="checkbox" id="sn-28" class="margin-toggle" /><div class="marginnote">󠀠
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>N           era3     era4     era5     era6
 -------  -------  -------  -------  -------
@@ -1132,7 +1138,7 @@ start with the actual function, though:
 <p></p>
 The start is the same as before. The number <code>_S=1155</code> is the product of
 the small primes that we aren’t ignoring outright (like 2).<!--
---><label for="sn-28" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-28" class="margin-toggle" /><div class="sidenote">I could have included 13 here as well, but some preliminary benchmarks tell me that that’s not really any faster.
+--><label for="sn-29" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-29" class="margin-toggle" /><div class="sidenote">I could have included 13 here as well, but some preliminary benchmarks tell me that that’s not really any faster.
 Really, the most important ones are 3, 5, and 7, the rest is window-dressing.</div><!--
 --> This
 will serve as the period of the prime stencil <code>S</code> we’ll use. Notice
@@ -1175,7 +1181,7 @@ This looks exactly the same as before, so I won’t dwell on it too much.
 </pre></div>
 <p></p>
 I added something else while I was at it,<!--
---><label for="sn-29" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-29" class="margin-toggle" /><div class="sidenote">Shamelessly cribbed from ngn’s excellent <a href="https://codeberg.org/ngn/k/src/branch/master/4.c">4.c</a>.</div><!--
+--><label for="sn-30" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-30" class="margin-toggle" /><div class="sidenote">Shamelessly cribbed from ngn’s excellent <a href="https://codeberg.org/ngn/k/src/branch/master/4.c">4.c</a>.</div><!--
 --> which will be good training
 for the denser wheels below. Instead of going through all of the numbers
 and checking which one is a prime via <code>I(l,i&lt;h,i+=2,A(i,!E[(i-l)/2]))</code>,
@@ -1217,7 +1223,7 @@ the segment start <code>l</code>. Then just force-add it to the array.
 This gives a small boost after a certain point:
 <p></p>
 <!--
---><label for="sn-30" class="margin-toggle">⊕</label><input type="checkbox" id="sn-30" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-31" class="margin-toggle">⊕</label><input type="checkbox" id="sn-31" class="margin-toggle" /><div class="marginnote">󠀠
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>N           era4     era5     era6     era7
 -------  -------  -------  -------  -------
@@ -1251,7 +1257,7 @@ array, and at 1e9 the array is, like, 400MiB in size. Completely
 unnecessary, and actually not a great comparison with <code>primesieve</code>,
 which doesn’t materialise the whole array at all. In fact, it doesn’t
 even tell you the highest prime in that range; it just counts!<!--
---><label for="sn-31" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-31" class="margin-toggle" /><div class="sidenote">Though, as said before, it doesn’t use counting-specific algorithms like <code>primecount</code> does.</div><!--
+--><label for="sn-32" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-32" class="margin-toggle" /><div class="sidenote">Though, as said before, it doesn’t use counting-specific algorithms like <code>primecount</code> does.</div><!--
 --> If
 we bit-pack the primes, counting can be done much more rapidly with a
 popcount instruction, which is quite a bit faster than what we’re doing
@@ -1328,7 +1334,7 @@ This gives a significant <span class="nowrap">boost—</span>not necessarily due
 mostly just because the array-less approach is so much faster.
 <p></p>
 <!--
---><label for="sn-32" class="margin-toggle">⊕</label><input type="checkbox" id="sn-32" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-33" class="margin-toggle">⊕</label><input type="checkbox" id="sn-33" class="margin-toggle" /><div class="marginnote">󠀠
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>N           era6     era7     era8
 -------  -------  -------  -------
@@ -1480,7 +1486,7 @@ It has a certain brutalist aesthetic, for sure, but I kinda like that.
 Some more benchmarks:
 <p></p>
 <!--
---><label for="sn-33" class="margin-toggle">⊕</label><input type="checkbox" id="sn-33" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-34" class="margin-toggle">⊕</label><input type="checkbox" id="sn-34" class="margin-toggle" /><div class="marginnote">󠀠
 
 <div class="highlight-text" style="padding-left: 1em;"><pre><span></span>N           era6     era7     era8     era9
 -------  -------  -------  -------  -------
@@ -1565,12 +1571,12 @@ The table is entirely too big for a sidenote, so here it is in a drawer.
 </figure>
 <p></p>
 What did we learn?<!--
---><label for="sn-34" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-34" class="margin-toggle" /><div class="sidenote">Besides the fact that I much rather prefer things that can be proven over things that have to be measured, but I knew that beforehand.
+--><label for="sn-35" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-35" class="margin-toggle" /><div class="sidenote">Besides the fact that I much rather prefer things that can be proven over things that have to be measured, but I knew that beforehand.
 Feels more “real”.</div><!--
 --> Mostly that optimisation is weird and messy, I
 guess, but also that some memory is just actually more equal than
 others. Almost<!--
---><label for="sn-35" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-35" class="margin-toggle" /><div class="sidenote">But see <code>era5</code> being faster than <code>era4</code> since, once everything fits into L1, other things become important again.</div><!--
+--><label for="sn-36" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-36" class="margin-toggle" /><div class="sidenote">But see <code>era5</code> being faster than <code>era4</code> since, once everything fits into L1, other things become important again.</div><!--
 --> every performance improvement came down to that:
 pack the sieve into bits so that more of it fits into the smaller
 caches, make that even better by not representing numbers that are easy
@@ -1582,7 +1588,7 @@ squeeze out of “just look at your hardware, duh” (and I definitely am
 still far from doing that to its full extend).
 <p></p>
 Finally, an actual comparison against <code>primesieve</code>:<!--
---><label for="sn-36" class="margin-toggle">⊕</label><input type="checkbox" id="sn-36" class="margin-toggle" /><div class="marginnote">󠀠
+--><label for="sn-37" class="margin-toggle">⊕</label><input type="checkbox" id="sn-37" class="margin-toggle" /><div class="marginnote">󠀠
 <p></p>
 󠀠
 <p></p>
@@ -1637,7 +1643,7 @@ room, which is why I chose to <del>obfuscate</del> write this project in
 <del>brainfuck</del> the style of C that I wrote it in. Honestly, I just
 thought it’d be fun. Whitney C has a certain charm
 <a href="./j-incunabulum.html" class="local-link">to</a> <a href="./whitney-k.html" class="local-link">me</a>,<!--
---><label for="sn-37" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-37" class="margin-toggle" /><div class="sidenote">I sometimes wonder if this is a subconscious act of defiance against the over-commented slop that a lot of LLMs produce en masse nowadays;
+--><label for="sn-38" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-38" class="margin-toggle" /><div class="sidenote">I sometimes wonder if this is a subconscious act of defiance against the over-commented slop that a lot of LLMs produce en masse nowadays;
 in the spirit of <a href="https://ashwinsundar.com/posts/legibility-and-programming">staying illegible</a>, although I don’t think this is what the author had in mind.</div><!--
 --> and I figured I
 might try it out for something kind of trivial, which I however don’t
