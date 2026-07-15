@@ -11,8 +11,1174 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2026-04-07T00:00:00Z</updated>
+    <updated>2026-07-15T00:00:00Z</updated>
     <entry>
+    <title>Sieving Primes</title>
+    <link href="https://tony-zorman.com/posts/primes.html" />
+    <id>https://tony-zorman.com/posts/primes.html</id>
+    <published>2026-07-15T00:00:00Z</published>
+    <updated>2026-07-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <div class="header">
+      15th Jul 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="8766 words">36 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>
+      </div>
+    <h1 class="post-title">Sieving Primes</h1>
+    <div id="title-underline"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      
+<p>As a mathematician, I naturally have no idea how a computer <em>actually</em>
+works. Of course, the easiest way to change that is to try and optimise
+a 2000 year old algorithm. To not keep you in suspense, the learning
+seems to be that some memory is just more equal than others.</p>
+<!--more-->
+<p>Concretely, the problem is finding all primes below a given threshold—a
+deceptively simple problem that however has a few nifty approaches to
+make things really go brrrr. In order to do that—and as an additional
+challenge, I guess, given my weak grasp of the language—let’s write some
+good old C.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Note that there are a <em>lot</em> of these kinds of prime optimisation posts
+out there, most of them better <a href="https://www.youtube.com/watch?v=uJkoI5TnKzA">and
+funnier</a> than this one. I’m
+mostly writing this for myself, though this may prove useful to a rare
+reader someday, <a href="https://www.youtube.com/watch?v=zGM-wSKFBpo">perhaps in a somewhat bizarre set of
+circumstances</a>.</p>
+<p>Special thanks to Kim Walisch’s excellent
+<a href="https://github.com/kimwalisch/primesieve">primesieve</a> library, as well
+as <a href="https://github.com/kimwalisch/primesieve/blob/master/doc/ALGORITHMS.md">the references
+therein</a>,
+which made this stuff really easy to learn. Also ngn’s
+<a href="https://codeberg.org/ngn/k/src/branch/master/4.c">4.c</a> for some style
+inspiration.</p>
+<h2 id="basic-setup">Basic setup</h2>
+<p>The goal is to get as close to <code>primesieve -t1 1e9</code> as possible (which
+completes in slightly over 100ms on my machine), using whatever
+techniques might be most effective. This in particular means no
+multi-core stuff, and I won’t mess with <a href="https://sweet.ua.pt/tos/software/prime_sieve.html">bucket
+sieving</a> for large
+primes. This is just to constrain the problem space a bit, for my own
+sanity.</p>
+<p>Additionally, I don’t want to just count the primes using a
+Legendre-type formula, which is what e.g.
+<a href="https://github.com/kimwalisch/primecount">primecount</a> does. In fact,
+I’d like to materialise the full prime array (but see <a href="#giving-up-on-rules">Giving up on
+rules</a>), knowing full well that this will incur
+some kind of performance penalty.</p>
+<p>The <a href="https://codeberg.org/slotThe/primes">repo</a> has some additional
+constraints, like not using libc, that I’ll deemphasise in this post.
+You might see me importing <code>c.h</code> below somewhere, with a comment
+explaining which functions I care about. Replace that with your
+favourite combination of <code>math.h</code>, <code>stdlib.h</code>, etc.</p>
+<h3 id="benchmarking">Benchmarking</h3>
+<p>You’ll see some benchmarks every now and then, so let’s talk about that.
+This isn’t going to be very fancy—if you’re expecting that, prepare to
+be disappointed.</p>
+<p>I used the following flags when compiling; <code>clang</code> version is <code>21.1.8</code>:</p>
+<pre><code>clang -std=gnu23 -s -Wall -Wextra -O3 -march=native -no-pie -nostdlib \
+      -fno-unwind-tables -fno-asynchronous-unwind-tables -Wl,-n \
+      -fno-builtin -fno-stack-protector -masm=intel -op a.c</code></pre>
+<p>The actual benchmarking is done by a <a href="https://codeberg.org/slotThe/primes/src/branch/main/benchmark.py">simple Python
+script</a>
+that executes the command as a subprocess three times, and takes the
+best result:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> best_time(argv: <span class="bu">list</span>[<span class="bu">str</span>]) <span class="op">-&gt;</span> <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    best <span class="op">=</span> math.inf</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        start <span class="op">=</span> time.perf_counter()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> wait(subprocess.Popen(argv, stdout<span class="op">=</span>subprocess.DEVNULL), <span class="fl">1.0</span>):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        best <span class="op">=</span> <span class="bu">min</span>(best, time.perf_counter() <span class="op">-</span> start)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best</span></code></pre></div>
+<p>Because this will be important for L1 stuff later on, note that I have
+48KiB of L1d cache, at least on some cores.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<h2 id="notation">Notation</h2>
+<p>So that we don’t end up producing programs like <a href="https://gerlacdt.github.io/blog/posts/clean_code/#the-ugly">Clean Code’s prime
+generator</a>,
+let’s come up with some notation to make writing these functions more
+uniform—a kind of <a href="https://aplwiki.com/wiki/Whitney_C">consistent
+vocabulary</a>, if you will.</p>
+<p>Instead of dumping an entire header file on you, I’ll introduce these as
+needed above the first code blocks that use them. If you’d rather read
+through everything in one go, feel free to peruse
+<a href="https://codeberg.org/slotThe/primes/src/branch/main/a.h">a.h</a> directly.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="dt">char</span> C<span class="op">;</span> <span class="kw">typedef</span> <span class="dt">void</span> V<span class="op">;</span> <span class="kw">typedef</span> <span class="dt">int</span> I<span class="op">;</span> <span class="kw">typedef</span> <span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> U<span class="op">;</span></span></code></pre></div>
+<p>Types are descriptive one-letter names; I don’t have the patience to
+read through a sea of <code>unsigned long long</code>s, when a simple <code>U</code> will do
+the trick just as well.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define TY       __typeof__</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define _</span><span class="op">(</span><span class="pp">e</span><span class="op">...)</span><span class="pp">  </span><span class="op">({</span><span class="pp">e</span><span class="op">;})</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define max</span><span class="op">(</span><span class="pp">x</span><span class="op">,</span><span class="pp">y</span><span class="op">)</span><span class="pp"> _</span><span class="op">(</span><span class="pp">TY</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="pp">$x</span><span class="op">=(</span><span class="pp">x</span><span class="op">);</span><span class="pp">TY</span><span class="op">(</span><span class="pp">y</span><span class="op">)</span><span class="pp">$y</span><span class="op">=(</span><span class="pp">y</span><span class="op">);</span><span class="pp">$x</span><span class="op">&lt;</span><span class="pp">$y</span><span class="op">?</span><span class="pp">$y</span><span class="op">:</span><span class="pp">$x</span><span class="op">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define min</span><span class="op">(</span><span class="pp">a</span><span class="op">,</span><span class="pp">b</span><span class="op">)</span><span class="pp"> _</span><span class="op">(</span><span class="pp">TY</span><span class="op">(</span><span class="pp">a</span><span class="op">)</span><span class="pp">$a</span><span class="op">=(</span><span class="pp">a</span><span class="op">);</span><span class="pp">TY</span><span class="op">(</span><span class="pp">b</span><span class="op">)</span><span class="pp">$b</span><span class="op">=(</span><span class="pp">b</span><span class="op">);</span><span class="pp">$a</span><span class="op">&lt;</span><span class="pp">$b</span><span class="op">?</span><span class="pp">$a</span><span class="op">:</span><span class="pp">$b</span><span class="op">)</span></span></code></pre></div>
+<p>We’ll need <code>min</code> and <code>max</code> at some point, so this is as good a time to
+introduce them as any.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Now, I realise this code might look like a
+fever dream if you’re not used to it, but bear with me here—I promise
+that this strips away enough noise so the algorithms will be clearer to
+read. The <code>({e;})</code> macro is a <a href="https://gcc.gnu.org/onlinedocs/gcc-7.1.0/gcc/Statement-Exprs.html">GCC statement
+expression</a>.
+It makes sequences of declarations and statements expression-valued, so
+that <code>U a = _(x)</code> works, even if <code>x</code> is a complicated thing.</p>
+<h3 id="defining-functions">Defining functions</h3>
+<p>Let’s define a function template for all prime searching functions we’ll
+use. It should get an upper bound on the number, as well as an output
+pointer to be filled in, and return the array of primes.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define F</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span>U<span class="op">*</span><span class="pp"> f</span><span class="op">(</span>U<span class="pp"> x</span><span class="op">,</span>U<span class="op">*</span><span class="pp">y</span><span class="op">){</span><span class="co">/*...*/</span><span class="op">}</span></span></code></pre></div>
+<p>Here, <code>f</code> is the function name, and <code>e</code> is the body. For now, let’s say
+we allocate a big bunch of memory, set some kind of counter, execute the
+body, and then just return the array.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;c.h&quot;</span><span class="pp">    </span><span class="co">// calloc</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define R         </span><span class="cf">return</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define M</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="pp">      calloc</span><span class="op">(</span><span class="dv">1</span><span class="op">,(</span><span class="pp">x</span><span class="op">)+</span><span class="dv">8</span><span class="op">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define F</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span>U<span class="op">*</span><span class="pp"> f</span><span class="op">(</span>U<span class="pp"> x</span><span class="op">,</span>U<span class="op">*</span><span class="pp">y</span><span class="op">){</span>U<span class="op">*</span><span class="pp">a</span><span class="op">=</span><span class="pp">M</span><span class="op">(</span><span class="co">/*...*/</span><span class="op">);</span><span class="pp"> </span>U<span class="pp"> _a</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="pp"> </span><span class="op">*</span><span class="pp">y</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="pp"> e</span><span class="op">;</span><span class="pp"> </span><span class="op">*</span><span class="pp">y</span><span class="op">=</span><span class="pp">_a</span><span class="op">;</span><span class="pp"> </span>R<span class="pp"> a</span><span class="op">;}</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define A</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="pp">      a</span><span class="op">[</span><span class="pp">_a</span><span class="op">++]=</span><span class="pp">x</span></span></code></pre></div>
+<p>In the body of the function, we can easily add a prime to the array by
+just using <code>A(x)</code>, without having to worry about how this is managed
+internally.</p>
+<p>An important note about the <code>calloc</code> that I’m using (it’s really
+<code>mmap(2)</code>) is that it’s zero-initialised. Since we’ll often actually
+allocate a <code>U</code> array and manipulate that, it’s a good thing that <a href="https://man7.org/linux/man-pages/man2/mmap.2.html">mmap
+is page-aligned</a> as
+well, I guess. The cheeky <code>+8</code> was revealed to me in a dream; it’s so
+that allocations like <code>M(x/8)</code> (which round down) don’t accidentally
+touch memory they’re not supposed to.</p>
+<hr />
+<p>Let’s make two small optimisations right off the bat, so we won’t have
+to worry about that later on.</p>
+<p>First, there obviously aren’t <span class="math inline">x</span> primes between <span class="math inline">1</span> and <span class="math inline">x</span>. There’s a
+nice <a href="https://www.jstor.org/stable/2371291">upper bound</a> involving the
+natural logarithm of <span class="math inline">x</span> given by <span class="math inline">\pi(x) &lt; x/(\log x - 4)</span> for <span class="math inline">x \ge
+55</span>. We can thread that into the definition of <code>F</code>, where we fall back
+to just <code>1</code> if the argument is too small for the upper bound to hold.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// log from c.h</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define F</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span>U<span class="op">*</span><span class="pp"> f</span><span class="op">(</span>U<span class="pp"> x</span><span class="op">,</span>U<span class="op">*</span><span class="pp">y</span><span class="op">){</span>U<span class="op">*</span><span class="pp">a</span><span class="op">=</span><span class="pp">M</span><span class="op">(</span><span class="dv">8</span><span class="op">*(</span><span class="pp">x</span><span class="op">/</span><span class="pp">max</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="pp">log</span><span class="op">(</span><span class="pp">x</span><span class="op">)-</span><span class="dv">4</span><span class="op">)));</span>U<span class="pp"> _a</span><span class="op">=</span><span class="dv">0</span><span class="op">;*</span><span class="pp">y</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="pp">e</span><span class="op">;*</span><span class="pp">y</span><span class="op">=</span><span class="pp">_a</span><span class="op">;</span>R<span class="pp"> a</span><span class="op">;}</span></span></code></pre></div>
+<p>The other issue is with the definition—or, rather, the usage—of <code>A</code>. The
+way it’s written, you’d check for primality and then add the number if
+that check succeeds: <code>if (is_prime(x)) A(x);</code>. However, this <em>really</em>
+upsets the branch predictor, which is no good when trying to optimise
+something. This is no big deal, though, as we can simply always write
+the number into the slot <code>a[_a]</code> and only increase <code>_a</code> if the number
+was prime.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define A</span><span class="op">(</span><span class="pp">x</span><span class="op">,</span><span class="pp">y</span><span class="op">)</span><span class="pp"> a</span><span class="op">[</span><span class="pp">_a</span><span class="op">]=(</span><span class="pp">x</span><span class="op">);</span><span class="pp">_a</span><span class="op">+=(</span><span class="pp">y</span><span class="op">);</span><span class="co">//array access in F, advance by y</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define A1</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="pp">  A</span><span class="op">(</span><span class="pp">x</span><span class="op">,</span><span class="dv">1</span><span class="op">)</span><span class="pp">            </span><span class="co">//if you really mean it</span></span></code></pre></div>
+<p>We can use this macro like <code>A(x,is_prime(x))</code>. The branch predictor is
+very happy about this indeed.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>Let’s write some prime functions, then.</p>
+<h2 id="iteration">Iteration</h2>
+<p>As a baseline for both performance and reading the notation we’ve
+introduced, let’s start with just iteration—that is, the algorithm will
+be of the shape</p>
+<pre><code>for i in 2..LIMIT:
+  A(i,is_prime(i))</code></pre>
+<p>The simplest <code>is_prime(i)</code> function is just to go through every number
+between <code>2</code> and <code>i</code>, and check if that’s a divisor of <code>i</code>; if yes, <code>i</code>
+is composite. In ordinary C, one might write</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdbool.h&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> is_prime<span class="op">(</span><span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> p <span class="op">=</span> i <span class="op">&gt;</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// is prime?</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> j <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>i <span class="op">%</span> j <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Let’s introduce some more notation, to write this down in a more
+succinct way.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define I</span><span class="op">(</span><span class="pp">s</span><span class="op">,</span><span class="pp">c</span><span class="op">,</span><span class="pp">n</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span><span class="op">{</span><span class="cf">for</span><span class="op">(</span>U<span class="pp"> i</span><span class="op">=</span><span class="pp">s</span><span class="op">;</span><span class="pp">c</span><span class="op">;</span><span class="pp">n</span><span class="op">){</span><span class="pp">e</span><span class="op">;}}</span><span class="co">//Iterate</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define J</span><span class="op">(</span><span class="pp">s</span><span class="op">,</span><span class="pp">c</span><span class="op">,</span><span class="pp">n</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span><span class="op">{</span><span class="cf">for</span><span class="op">(</span>U<span class="pp"> j</span><span class="op">=</span><span class="pp">s</span><span class="op">;</span><span class="pp">c</span><span class="op">;</span><span class="pp">n</span><span class="op">){</span><span class="pp">e</span><span class="op">;}}</span><span class="co">//Jterate</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define $(x</span><span class="op">,</span><span class="pp">y</span><span class="op">)</span><span class="pp">        </span><span class="cf">if</span><span class="op">(</span><span class="pp">x</span><span class="op">){</span><span class="pp">y</span><span class="op">;}</span><span class="cf">else</span><span class="pp">       </span><span class="co">//if-then-else</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define B</span><span class="op">(</span><span class="pp">x</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp">        $</span><span class="op">(</span><span class="pp">x</span><span class="op">,</span><span class="pp">e</span><span class="op">;</span><span class="cf">break</span><span class="op">);</span><span class="pp">       </span><span class="co">//break and execute</span></span></code></pre></div>
+<p>The <code>I</code> and <code>J</code> macros just make iteration shorter, so instead of</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>U j <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> j <span class="op">&lt;</span> i<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>one can write</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>J<span class="op">(</span><span class="dv">2</span><span class="op">,</span>j<span class="op">&lt;</span>i<span class="op">,</span>j<span class="op">++,...)</span></span></code></pre></div>
+<p>The <code>if</code> and <code>break</code> macros are perhaps a bit more unhinged, but you’ll
+get used to them.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> Using these, the above <code>is_prime</code> function becomes</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>U is_prime<span class="op">(</span>U i<span class="op">){</span>C p<span class="op">=</span>i<span class="op">&gt;</span><span class="dv">1</span><span class="op">;</span>J<span class="op">(</span><span class="dv">2</span><span class="op">,</span>j<span class="op">&lt;</span>i<span class="op">,++</span>j<span class="op">,</span>B<span class="op">(</span>i<span class="op">%</span>j<span class="op">==</span><span class="dv">0</span><span class="op">,</span>p<span class="op">=</span><span class="dv">0</span><span class="op">));</span>R p<span class="op">;}</span></span></code></pre></div>
+<p>Much better! But seriously, I’m quite glad an algorithm this simple
+doesn’t take up 10 whole lines any more. We can even inline this into the
+big algorithm, since the decider macro <code>A</code> takes a boolean condition.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>triv<span class="op">,</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">++,</span>C p<span class="op">=</span><span class="dv">1</span><span class="op">;</span>J<span class="op">(</span><span class="dv">2</span><span class="op">,</span>j<span class="op">&lt;</span>i<span class="op">,++</span>j<span class="op">,</span>B<span class="op">(</span>i<span class="op">%</span>j<span class="op">==</span><span class="dv">0</span><span class="op">,</span>p<span class="op">=</span><span class="dv">0</span><span class="op">))</span>A<span class="op">(</span>i<span class="op">,</span>p<span class="op">)))</span></span></code></pre></div>
+<p>Performance, however, is not great:</p>
+<pre><code>  alg          N        time (ms)
+  --------------------------------
+  triv       10,000      15.85
+             14,592      32.00
+             21,294      64.08
+             31,072     114.61
+             45,342     164.81
+             66,164     314.35
+             96,549     614.83
+            140,887     &gt;1s</code></pre>
+<p>This isn’t too surprising—the algorithm has complexity
+<span class="math inline">\mathcal{O}(x^2)</span> and is furthermore doing a bunch of extra work that
+makes it quite inefficient. Let’s try to fix that.</p>
+<h3 id="the-simple-case">The simple case</h3>
+<p>Two obvious things we can do to make <code>triv</code> faster are to only walk over
+the odd numbers (we already know all even numbers are divisible by two),
+and to check divisibility by numbers only up to <span class="math inline">\sqrt{i}</span>
+(equivalently, numbers <span class="math inline">j</span> such that <span class="math inline">j^2 \le i</span>). The latter works
+because if <span class="math inline">n</span> is composite then it clearly has to have a divisor <span class="math inline">\le
+\sqrt{n}</span>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>simp<span class="op">,</span>A1<span class="op">(</span><span class="dv">2</span><span class="op">);</span>I<span class="op">(</span><span class="dv">3</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>C p<span class="op">=</span><span class="dv">1</span><span class="op">;</span>J<span class="op">(</span><span class="dv">2</span><span class="op">,</span>j<span class="op">*</span>j<span class="op">&lt;=</span>i<span class="op">,++</span>j<span class="op">,</span>B<span class="op">(</span>i<span class="op">%</span>j<span class="op">==</span><span class="dv">0</span><span class="op">,</span>p<span class="op">=</span><span class="dv">0</span><span class="op">))</span>A<span class="op">(</span>i<span class="op">,</span>p<span class="op">)))</span></span></code></pre></div>
+<p>This looks much the same as <code>triv</code>, only that we start at <code>i=3</code> (and
+thus have to forcefully add <code>2</code> to our list of primes), we advance
+<code>i+=2</code>, and instead of <code>j&lt;i</code> we check for <code>j*j&lt;=i</code>. Here’s a
+side-by-side:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>triv<span class="op">,</span>      I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">++</span> <span class="op">,</span>C p<span class="op">=</span><span class="dv">1</span><span class="op">;</span>J<span class="op">(</span><span class="dv">2</span><span class="op">,</span>j  <span class="op">&lt;</span> i<span class="op">,++</span>j<span class="op">,</span>B<span class="op">(</span>i<span class="op">%</span>j<span class="op">==</span><span class="dv">0</span><span class="op">,</span>p<span class="op">=</span><span class="dv">0</span><span class="op">))</span>A<span class="op">(</span>i<span class="op">,</span>p<span class="op">)))</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>simp<span class="op">,</span>A1<span class="op">(</span><span class="dv">2</span><span class="op">);</span>I<span class="op">(</span><span class="dv">3</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>C p<span class="op">=</span><span class="dv">1</span><span class="op">;</span>J<span class="op">(</span><span class="dv">2</span><span class="op">,</span>j<span class="op">*</span>j<span class="op">&lt;=</span>i<span class="op">,++</span>j<span class="op">,</span>B<span class="op">(</span>i<span class="op">%</span>j<span class="op">==</span><span class="dv">0</span><span class="op">,</span>p<span class="op">=</span><span class="dv">0</span><span class="op">))</span>A<span class="op">(</span>i<span class="op">,</span>p<span class="op">)))</span></span></code></pre></div>
+<p>The plot comparing <code>triv</code> and <code>simp</code> looks kinda funny, actually:</p>
+<p><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
+<picture>
+<source srcset="../images/primes/ts.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/ts-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/ts.png" alt="-t vs. -s">
+</picture></p>
+<p>However, only being able to check 5 million numbers in one second isn’t
+all that impressive on a modern computer. We’ve already seen a better
+way, actually: just exclude numbers that we already know are composite.
+This made us walk just the odd numbers in <code>simp</code>, and following this
+train of thought leads straight to sieves.</p>
+<h2 id="sieving">Sieving</h2>
+<p>The idea of sieving primes is quite old, still carrying the name of
+<a href="https://en.wikipedia.org/wiki/Eratosthenes">Eratosthenes</a>, who
+apparently came up with the first version of the algorithm. In fact, the
+GIF on the Wikipedia page is quite good at explaining the basic idea:</p>
+<p><a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>
+<img src="../images/primes/eras.gif" alt="Algorithm steps for small primes below 121, starting from a prime's square." style="display:block"></p>
+<p>Start with the smallest prime, 2, and mark all multiples of it. After
+having done so, advance to the next unmarked number—which must be prime
+for size reasons—and do it all over again. When starting to mark the
+multiples of a prime <span class="math inline">p</span>, we don’t have to start with <span class="math inline">2p</span> (since that
+has already been marked), nor <span class="math inline">3p</span> if <span class="math inline">p &gt; 3</span>, and so on, so the first
+composite number to be marked is actually <span class="math inline">p^2</span>. In particular, the
+marking can stop if <span class="math inline">p^2 &gt; n</span>, as by the same argument all remaining
+unmarked numbers are guaranteed to be prime.</p>
+<p>That’s it for basic theory. The complexity is <em>obviously</em>
+<span class="math inline">\mathcal{O}(n\cdot\log\log n)</span> (<a href="https://en.wikipedia.org/wiki/Divergence_of_the_sum_of_the_reciprocals_of_the_primes">primes are
+weird</a>),
+which will be quite noticeable when compared with the iteration-based
+techniques. This will also be the last time that we’ll make any kind of
+limit-based gains in this post; everything else will be implementation
+details and awful hacking.</p>
+<h3 id="a-simple-sieve">A simple sieve</h3>
+<p>Let’s just implement the above algorithm essentially verbatim:<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era0<span class="op">,</span>C<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">);</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,++</span>i<span class="op">,</span>$<span class="op">(!</span>E<span class="op">[</span>i<span class="op">],</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">,</span>E<span class="op">[</span>j<span class="op">]=</span><span class="dv">1</span><span class="op">)))</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,++</span>i<span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">[</span>i<span class="op">])))</span></span></code></pre></div>
+<p>That’s in fact all of it; let’s read it character by character.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era0<span class="op">,</span>C<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">)</span></span></code></pre></div>
+<p>From now on, we’ll call the array of numbers to check <code>E</code>, so whenever
+you see that letter, the code will manipulate or otherwise involve that.
+In particular, as a convention, all<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> arrays in this project will have
+upper-case names, so that one can easily distinguish them at a glance.</p>
+<p>As said, the <code>M</code> macro gives back a zero-initialised array. Since all
+numbers of the sieve should start out with “I’m prime”, <code>0</code> means a
+number is prime, and <code>1</code> means it’s composite. Note that <code>E</code> is a
+character array, so we’re representing each <code>0</code> or <code>1</code> by one byte.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,++</span>i<span class="op">,</span>$<span class="op">(!</span>E<span class="op">[</span>i<span class="op">],</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">,</span>E<span class="op">[</span>j<span class="op">]=</span><span class="dv">1</span><span class="op">)))</span></span></code></pre></div>
+<p>The outer and inner marking loops, as discussed before. Here’s a blown-up version:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,++</span>i<span class="op">,</span>  <span class="co">// For each number i starting from 2 such that i ≤ √x,</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                  <span class="co">// or equivalently, i² ≤ x.</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  $<span class="op">(!</span>E<span class="op">[</span>i<span class="op">],</span>        <span class="co">// IF the number is prime (E[i]==0)</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>   J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">,</span><span class="co">// THEN start the inner loop at i² in steps of i,</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    E<span class="op">[</span>j<span class="op">]=</span><span class="dv">1</span><span class="op">)))</span>     <span class="co">//  marking each i²,i+i²,2i+i²,... as composite</span></span></code></pre></div>
+<p>After we’re done with all numbers, all that’s left unchecked in <code>E</code> are
+the primes, so we can add them to the output array:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,++</span>i<span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">[</span>i<span class="op">]))</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//F(…</span></span></code></pre></div>
+<p>Compared to <code>simp</code>, <code>era0</code> is only a few characters longer</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>simp<span class="op">,</span>A1<span class="op">(</span><span class="dv">2</span><span class="op">);</span>I<span class="op">(</span><span class="dv">3</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>C p<span class="op">=</span><span class="dv">1</span><span class="op">;</span>J<span class="op">(</span><span class="dv">2</span><span class="op">,</span>j<span class="op">*</span>j<span class="op">&lt;=</span>i<span class="op">,++</span>j<span class="op">,</span>B<span class="op">(</span>i<span class="op">%</span>j<span class="op">==</span><span class="dv">0</span><span class="op">,</span>p<span class="op">=</span><span class="dv">0</span><span class="op">))</span>A<span class="op">(</span>i<span class="op">,</span>p<span class="op">)))</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era0<span class="op">,</span>C<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">);</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,++</span>i<span class="op">,</span>$<span class="op">(!</span>E<span class="op">[</span>i<span class="op">],</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">,</span>E<span class="op">[</span>j<span class="op">]=</span><span class="dv">1</span><span class="op">)))</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,++</span>i<span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">[</span>i<span class="op">])))</span></span></code></pre></div>
+<p>The benchmark results are quite decisive, however.</p>
+<p><a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
+<picture>
+<source srcset="../images/primes/s0.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/s0-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/s0.png" alt="-s vs. -e0">
+</picture></p>
+<h3 id="packing-bits">Packing bits</h3>
+<p>Instead of using a full byte to represent a single bit, how about we
+just use a single bit? The general shape of the algorithm doesn’t need
+to change for this; we just need to replace the getter <code>E[i]</code> and the
+setter <code>E[i]=1</code> with appropriate bit variants.</p>
+<p>If <code>E</code> is an array of <code>U</code>s, then each index <code>E[i]</code> holds 64 bits, with
+the <code>j</code>th bit of <code>E[i]</code> representing the decision “is this composite?”
+for the number <code>64*i + j</code>. To translate a number <code>n</code> to its associated
+index, we thus just have to integer-divide <code>n</code> by 64, use that number to
+index into <code>E</code>, compute the offset <code>j</code> as <code>n%64</code>, and select the
+appropriate bit using shifts. In formulas, this is</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="op">(</span>E<span class="op">[</span>n<span class="op">/</span><span class="dv">64</span><span class="op">])</span> <span class="op">&amp;</span> <span class="op">(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span>n<span class="op">%</span><span class="dv">64</span><span class="op">))</span></span></code></pre></div>
+<p>Setting a bit works analogously, only now we actually have to change <code>E</code>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>E<span class="op">[</span>n<span class="op">/</span><span class="dv">64</span><span class="op">]</span> <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span>n<span class="op">%</span><span class="dv">64</span><span class="op">))</span></span></code></pre></div>
+<p>All in all, we can create bit-checking and bit-setting macros, as well
+as some shorthand for the <code>E</code> array.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define E</span><span class="op">(</span><span class="pp">i</span><span class="op">)</span><span class="pp">  _</span><span class="op">(</span><span class="pp">TY</span><span class="op">(</span><span class="pp">i</span><span class="op">)</span><span class="pp">$i</span><span class="op">=(</span><span class="pp">i</span><span class="op">);</span><span class="pp">E</span><span class="op">[</span><span class="pp">$i</span><span class="op">/</span><span class="dv">64</span><span class="op">]&amp;</span><span class="pp"> </span><span class="op">(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span><span class="pp">$i</span><span class="op">%</span><span class="dv">64</span><span class="op">)))</span><span class="co">//bit</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Es</span><span class="op">(</span><span class="pp">i</span><span class="op">)</span><span class="pp"> _</span><span class="op">(</span><span class="pp">TY</span><span class="op">(</span><span class="pp">i</span><span class="op">)</span><span class="pp">$i</span><span class="op">=(</span><span class="pp">i</span><span class="op">);</span><span class="pp">E</span><span class="op">[</span><span class="pp">$i</span><span class="op">/</span><span class="dv">64</span><span class="op">]|=(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span><span class="pp">$i</span><span class="op">%</span><span class="dv">64</span><span class="op">)))</span><span class="co">//bit set</span></span></code></pre></div>
+<p>With this notation, the packed variant of <code>era0</code>, which I’ll call
+<code>era1</code>, looks really quite the same as the original, just that we have
+to allocate 8 times less memory:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era1<span class="op">,</span>U<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">/</span><span class="dv">8</span><span class="op">);</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,++</span>i<span class="op">,</span>$<span class="op">(!</span>E<span class="op">(</span>i<span class="op">),</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">,</span>Es<span class="op">(</span>j<span class="op">))))</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,++</span>i<span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">(</span>i<span class="op">))))</span></span></code></pre></div>
+<p>A direct comparison:<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era0<span class="op">,</span>C<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">)</span>  <span class="op">;</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,++</span>i<span class="op">,</span>$<span class="op">(!</span>E<span class="op">[</span>i<span class="op">],</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">,</span>E<span class="op">[</span>j<span class="op">]=</span><span class="dv">1</span><span class="op">)))</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,++</span>i<span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">[</span>i<span class="op">])))</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era1<span class="op">,</span>U<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">/</span><span class="dv">8</span><span class="op">);</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,++</span>i<span class="op">,</span>$<span class="op">(!</span>E<span class="op">(</span>i<span class="op">),</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">,</span>Es<span class="op">(</span>j<span class="op">)</span> <span class="op">)))</span>I<span class="op">(</span><span class="dv">2</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,++</span>i<span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">(</span>i<span class="op">))))</span></span></code></pre></div>
+<p>As it turns out, even though this kind of indexing is much more
+expensive than a simple <code>E[i]</code>—more on that later—, the memory gains
+mean that a lot more of this stuff fits into the smaller, though faster,
+regions of memory, which does pay off:</p>
+<p><a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>
+<picture>
+<source srcset="../images/primes/01.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/01-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/01.png" alt="-e0 vs. -e1">
+</picture></p>
+<h3 id="odds-only">Odds-only</h3>
+<p>An immediate optimisation that one could do is to throw away all of the
+even numbers immediately, just as we did for <code>simp</code>. This cuts down the
+numbers to check by 50%, which would further improve cache efficiency.
+Let’s call the version <code>era2</code>. I’ll use <code>era1</code> as a template, since we
+certainly want to pack the binary decision into a single bit again.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era2<span class="op">,</span>A1<span class="op">(</span><span class="dv">2</span><span class="op">);</span>U<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">/</span><span class="dv">16</span><span class="op">);</span></span></code></pre></div>
+<p>The implementation starts by allocating memory: <code>x/8</code> for the
+bit-packing and <code>x/(8*2)</code> due to the fact that we are in odds-only
+encoding.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">3</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;=</span>x<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>$<span class="op">(!</span>E<span class="op">(</span>i<span class="op">/</span><span class="dv">2</span><span class="op">),</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span><span class="dv">2</span><span class="op">*</span>i<span class="op">,</span>Es<span class="op">(</span>j<span class="op">/</span><span class="dv">2</span><span class="op">))))</span></span></code></pre></div>
+<p>The outer marking loop now starts at the first admissible prime 3, and
+goes up in steps of two, so that we only check the odd numbers. Hence
+<code>i</code> is in reality some number <code>2*k+1</code>. As such, <code>i/2</code>—being integer
+division—extracts the <code>k</code>; feeding that into <code>E()</code> yields the correct
+index in <code>E</code>. The inner loop again starts at <code>i*i</code>, but increases in
+steps of <code>2*i</code>: this is because we need to skip <code>i+i*i</code>, <code>3*i+i*i</code>, and
+so on, as these are all even numbers (being the sum of two odd numbers),
+which we can’t even represent as an index in <code>E</code>.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">3</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">(</span>i<span class="op">/</span><span class="dv">2</span><span class="op">)))</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//F(era2...)</span></span></code></pre></div>
+<p>When going through the primes at the end, we obviously also only walk
+over the odd numbers, with the same justification as before.</p>
+<p>The wins are quite immediate:</p>
+<p><a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>
+<picture>
+<source srcset="../images/primes/012.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/012-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/012.png" alt="-e0 vs. -e1 vs. -e2">
+</picture></p>
+<h2 id="wheels">Wheels</h2>
+<p>So, how can one improve on the odds-only sieve? One approach is to try
+and exclude more small primes other than <span class="math inline">2</span>. This is usually called a
+<em>wheel</em>—the association here being one of those old cart wheels with a
+few individual spokes, only picking up a few numbers along the way. For
+the first 100 numbers, the difference between an odds-only sieve and a
+wheel sieve that also includes <code>3</code> is having to examine 50 numbers, vs.
+having to look at only 33. Note that this doesn’t mean we just skip the
+numbers when iterating—this works at the representation level, much like
+<code>era2</code> already had some additional encoding to represent odd numbers
+only. In particular, this will make the data representation the CPU has
+to juggle much smaller.</p>
+<p>A small complication is that the step between numbers will not be
+constant any more, so while for <code>era2</code> we could just advance by two every
+time, this is not necessarily the case when incorporating more numbers.
+However, the step will at least be periodic in the product of the
+primes:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> N <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">101</span>) <span class="cf">if</span> x<span class="op">%</span><span class="dv">2</span><span class="op">!=</span><span class="dv">0</span> <span class="kw">and</span> x<span class="op">%</span><span class="dv">3</span><span class="op">!=</span><span class="dv">0</span>] <span class="co"># Numbers to investigate</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> N</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">13</span>, <span class="dv">17</span>, <span class="dv">19</span>, <span class="dv">23</span>, <span class="dv">25</span>, <span class="dv">29</span>, <span class="dv">31</span>, <span class="dv">35</span>, <span class="dv">37</span>, <span class="dv">41</span>, <span class="dv">43</span>, <span class="dv">47</span>, <span class="dv">49</span>, <span class="dv">53</span>, <span class="dv">55</span>, <span class="dv">59</span>, <span class="dv">61</span>, <span class="dv">65</span>, <span class="dv">67</span>, <span class="dv">71</span>, <span class="dv">73</span>, <span class="dv">77</span>, <span class="dv">79</span>, <span class="dv">83</span>, <span class="dv">85</span>, <span class="dv">89</span>, <span class="dv">91</span>, <span class="dv">95</span>, <span class="dv">97</span>]</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> [y<span class="op">-</span>x <span class="cf">for</span> (x,y) <span class="kw">in</span> <span class="bu">zip</span>(N,N[<span class="dv">1</span>:])]                    <span class="co"># Differences</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>]</span></code></pre></div>
+<p>So we always advance by 4, then by 2, and then the pattern just repeats.
+If there are more primes, this pattern just gets longer, but the general
+idea stays the same.</p>
+<p>Encoding of the numbers gets a tad more involved: say we just pick <span class="math inline">2</span>
+and <span class="math inline">3</span> as our primes; the first few numbers to be checked are numbers
+<span class="math inline">1,5,7,11,13,17,19,23,25,29,31,35</span>. Writing <span class="math inline">x/\!\!/y</span> for
+<span class="math inline">\lfloor\frac{x}{y}\rfloor</span>, every valid number is of the form <span class="math inline">6i+1</span> or
+<span class="math inline">6i+5</span>.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> Given some <span class="math inline">n=6i+j</span>, its bit position is <span class="math inline">2i</span> for <span class="math inline">j=1</span> and
+<span class="math inline">2i+1</span> for <span class="math inline">j=5</span>, which can be conveniently written as <span class="math inline">2i + j/\!\!/3 =
+n/\!\!/3</span>. The addressing scheme we would have to use in this example is
+thus <code>/3</code> instead of <code>/2</code> as we did for the odds-only sieve.</p>
+<p>In general, let <span class="math inline">N</span> be a number that’s the product of some distinct
+consecutive primes. Suppose there are <span class="math inline">R</span> integers coprime to <span class="math inline">N</span> in the
+range from <span class="math inline">1</span> to <span class="math inline">N</span>. This means we form “blocks” of <span class="math inline">R</span> numbers, each
+spanning <span class="math inline">N</span> numbers (since we don’t represent the numbers that aren’t
+coprime to <span class="math inline">N</span>). Hence, a valid <span class="math inline">n</span> is inside of block number
+<span class="math inline">n/\!\!/N</span>, which is located at bit <span class="math inline">n/\!\!/N \cdot R</span>. Now, all that’s
+left is to record the offset of <span class="math inline">n</span>, to find it inside of the block.
+Since everything is cyclic, we just have to record the offsets of the
+first <span class="math inline">R</span> numbers coprime to <span class="math inline">N</span>, and pick out which one of those fits
+<span class="math inline">n</span> using a lookup table.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a></p>
+<hr />
+<p>Just two and three already give us a big reduction in numbers to look
+through, but of course this can be increased by just including more
+primes. There is a bit of a balance to be struck between having to
+predefine really quite a lot of numbers, and the resulting efficiency
+gains. Common wheel sizes are <span class="math inline">2 \cdot 3 \cdot 5 = 30</span> and <span class="math inline">2 \cdot 3
+\cdot 5 \cdot 7 = 210</span>. I chose the former: for size and alignment
+reasons, as well as the fact that the gain with the latter is actually
+not that big: ~27% (8/30) vs. ~23% (48/210) of numbers that have to be
+inspected.</p>
+<p>We can apply the general formula for <span class="math inline">N=30</span> and <span class="math inline">R=8</span>; the lookup table
+looks like this:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>C o<span class="op">[</span><span class="dv">30</span><span class="op">]={[</span><span class="dv">1</span><span class="op">]=</span><span class="dv">0</span><span class="op">,[</span><span class="dv">7</span><span class="op">]=</span><span class="dv">1</span><span class="op">,[</span><span class="dv">11</span><span class="op">]=</span><span class="dv">2</span><span class="op">,[</span><span class="dv">13</span><span class="op">]=</span><span class="dv">3</span><span class="op">,[</span><span class="dv">17</span><span class="op">]=</span><span class="dv">4</span><span class="op">,[</span><span class="dv">19</span><span class="op">]=</span><span class="dv">5</span><span class="op">,[</span><span class="dv">23</span><span class="op">]=</span><span class="dv">6</span><span class="op">,[</span><span class="dv">29</span><span class="op">]=</span><span class="dv">7</span><span class="op">};</span></span></code></pre></div>
+<p>Getting the index of <code>i</code> would then work via</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>i<span class="op">/</span><span class="dv">30</span><span class="op">*</span><span class="dv">8</span><span class="op">+</span>o<span class="op">[</span>i<span class="op">%</span><span class="dv">30</span><span class="op">]</span></span></code></pre></div>
+<p>However, since the numbers are so small, here’s a shortcut I found<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>
+that seems to work:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>i<span class="op">/</span><span class="dv">30</span><span class="op">*</span><span class="dv">8</span><span class="op">+</span>o<span class="op">[</span>i<span class="op">%</span><span class="dv">30</span><span class="op">]</span>  ≡  <span class="dv">4</span><span class="op">*</span>i<span class="op">/</span><span class="dv">15</span></span></code></pre></div>
+<hr />
+<p>Let’s actually implement <code>era3</code> now.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define P5    A1</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">3</span><span class="op">,</span><span class="pp">A1</span><span class="op">(</span><span class="dv">3</span><span class="op">));</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">5</span><span class="op">,</span><span class="pp">A1</span><span class="op">(</span><span class="dv">5</span><span class="op">));</span><span class="co">//add small primes</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define w</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="pp">  </span><span class="op">(</span><span class="dv">4</span><span class="op">*(</span><span class="pp">x</span><span class="op">)/</span><span class="dv">15</span><span class="op">)</span><span class="pp">                      </span><span class="co">//wheel index</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era3<span class="op">,</span>P5<span class="op">;</span>U<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>x<span class="op">/</span><span class="dv">30</span><span class="op">),</span>m<span class="op">=</span><span class="dv">1</span><span class="op">;</span>C g<span class="op">[</span><span class="dv">8</span><span class="op">]={</span><span class="dv">6</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">6</span><span class="op">,</span><span class="dv">2</span><span class="op">};</span></span></code></pre></div>
+<p>Allocation for the numbers goes from <code>x/16</code> to <code>x/30</code>. Out of 30
+numbers, we only have to check 8, which conveniently fits into one byte.
+So it comes down to allocating <code>8*x/30</code> bits, or <code>x/30</code> bytes.</p>
+<p>The gap array <code>g</code> is exactly the number of steps between the coprime
+numbers that we’re checking.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a> I<span class="op">(</span><span class="dv">7</span><span class="op">,</span>i<span class="op">*</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">+=</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>$<span class="op">(!</span>E<span class="op">(</span>m<span class="op">),</span>U n<span class="op">=</span>m<span class="op">;</span>J<span class="op">(</span>i<span class="op">*</span>i<span class="op">,</span>j<span class="op">&lt;</span>x<span class="op">,</span>j<span class="op">+=</span>i<span class="op">*</span>g<span class="op">[</span>n<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>Es<span class="op">(</span>w<span class="op">(</span>j<span class="op">)))))</span></span></code></pre></div>
+<p>The outer and inner marking loops. <code>m</code> keeps track of the offset index
+<em>and</em> is a running counter of which bit we’re on. This is because in the
+outer loop we’re examining each bit in sequence, so there’s no need for
+complex indexing here, it’s just <code>E(m)</code>. I guess <code>i+=g[m++&amp;7]</code> has to be
+read quite slowly, but at the end of the day it’s not much different
+from weird stuff like <code>*p++=q</code> that you see all the time in C. Note
+that, if you wanted to use <code>%8</code> instead of <code>&amp;7</code>, there would need to be
+one extra set of parentheses.</p>
+<p>Tracing through one iteration, we find that the first number under
+consideration is <code>i=7</code>, which is exactly at index <code>m=1</code>. After whatever
+happens in the inner loop, we step forward by the required <code>g[1]=4</code>
+steps and increase <code>m</code> to <code>2</code>. Then we do the same thing again with
+<code>11</code>, and so on.</p>
+<p>Once we’ve found a prime <code>i</code>, the inner loop does essentially the same,
+starting at <code>i*i</code>, and then just crossing off each valid multiple.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a> m<span class="op">=</span><span class="dv">1</span><span class="op">;</span>I<span class="op">(</span><span class="dv">7</span><span class="op">,</span>i<span class="op">&lt;</span>x<span class="op">,</span>i<span class="op">+=</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">(</span>m<span class="op">)))</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//era3</span></span></code></pre></div>
+<p>For the outer loop, we’re again walking every bit in order.</p>
+<p>Again, we get a noticeable speedup:</p>
+<p><a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>
+<picture>
+<source srcset="../images/primes/123.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/123-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/123.png" alt="-e1 vs. -e2 vs. -e3">
+</picture></p>
+<p>We’re doing more work in the inner loop with <code>4*j/15</code>, instead of just
+<code>j/2</code>—while both compile down to shifts, the former also has some
+multiplications with magic constants added in. This will be much more
+noticeable later on, but for now I’m quite happy with the performance
+improvements of this simple wheel.</p>
+<h2 id="segmentation">Segmentation</h2>
+<p>The wheel optimisation is essentially there to improve memory usage, so
+that more data fits into L1. Another way of achieving this is with a
+segmented sieve: instead of crossing off all multiples of a prime
+immediately, work in chunks so that a single chunk exactly fits into the
+L1 cache. The way this works is that we know primes <span class="math inline">p</span> such that <span class="math inline">p^2 &gt;
+x</span> will not do any crossing out anyways, as all of their relevant
+multiples will have been crossed off before. So, run a normal sieve
+until <span class="math inline">\sqrt{x}</span>, and then just use those primes to cross off the
+remaining numbers in chunks of an appropriate size.</p>
+<p>We can create a small helper function <code>eraH</code>, which takes care of the
+small primes:<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">// sqrt from c.h</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">// x:x, y:number of primes, z:how much to skip</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>U<span class="op">*</span>eraH<span class="op">(</span>U x<span class="op">,</span>U<span class="op">*</span>y<span class="op">,</span>U z<span class="op">){</span>U<span class="op">*</span>p<span class="op">=</span>era2<span class="op">(</span><span class="dv">1</span><span class="op">+</span>sqrt<span class="op">(</span>x<span class="op">),</span>y<span class="op">);</span>p<span class="op">+=</span>z<span class="op">;*</span>y<span class="op">=*</span>y<span class="op">&lt;</span>z<span class="op">?</span><span class="dv">0</span><span class="op">:*</span>y<span class="op">-</span>z<span class="op">;</span>R p<span class="op">;}</span></span></code></pre></div>
+<p>The reason for the existence of <code>z</code> will become clear soon. Let’s roll
+with it for now and write <code>era4</code>, based on <code>era2</code>, meaning we’re already
+baking in the odds-only sieve. First, a bit more notation:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define L1        </span><span class="dv">49152</span><span class="co">//48kib</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define i</span><span class="op">(</span><span class="pp">n</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span><span class="op">{</span>U<span class="pp"> $n</span><span class="op">=(</span><span class="pp">n</span><span class="op">);</span><span class="pp">I</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="pp">i</span><span class="op">&lt;</span><span class="pp">$n</span><span class="op">,++</span><span class="pp">i</span><span class="op">,</span><span class="pp">e</span><span class="op">)}</span><span class="co">//simple iteration</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define j</span><span class="op">(</span><span class="pp">n</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span><span class="op">{</span>U<span class="pp"> $n</span><span class="op">=(</span><span class="pp">n</span><span class="op">);</span><span class="pp">J</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="pp">j</span><span class="op">&lt;</span><span class="pp">$n</span><span class="op">,++</span><span class="pp">j</span><span class="op">,</span><span class="pp">e</span><span class="op">)}</span><span class="co">//simple jteration</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define pi</span><span class="op">(</span><span class="pp">e</span><span class="op">...)</span><span class="pp">  i</span><span class="op">(</span><span class="pp">_P</span><span class="op">,</span>U<span class="pp"> p</span><span class="op">=</span><span class="pp">P</span><span class="op">[</span><span class="pp">i</span><span class="op">];</span><span class="pp">e</span><span class="op">)</span><span class="pp">          </span><span class="co">//prime iteration</span></span></code></pre></div>
+<p>Another convention that’ll be useful going forward is that, for an array
+<code>X</code>, the variable <code>_X</code> denotes its size:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era4<span class="op">,</span>A1<span class="op">(</span><span class="dv">2</span><span class="op">);</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">1</span><span class="op">);</span></span></code></pre></div>
+<p>The <code>P</code> array holds all small primes and <code>_P</code> is its size. We start by
+calling <code>eraH</code>, skipping one prime in the resulting array. This is
+because the odds-only sieve wants its primes to start at 3, while the
+full list that <code>era2</code> returns of course includes 2 as well. When we
+later widen the segmentation to allow wheel sieves, we’ll need to skip
+even more numbers, which is why that particular parameter is built into
+<code>eraH</code>.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a> U s<span class="op">=</span>L1<span class="op">*</span><span class="dv">16</span><span class="op">,*</span>E<span class="op">=</span>M<span class="op">(</span>L1<span class="op">);</span><span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">3</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>s<span class="op">){</span></span></code></pre></div>
+<p>This is where things get interesting. We allocate exactly as many bytes
+as fit into the L1 cache on my laptop. Since each byte holds 8 bits, and
+we don’t represent even numbers, each iteration through <code>E</code> actually
+touches <code>s=L1*16</code> numbers, so that’s the stride length. We start at 3,
+since that’s the next odd (= representable) number we haven’t checked
+yet.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>  U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>s<span class="op">);</span>i<span class="op">(</span>L1<span class="op">/</span><span class="dv">8</span><span class="op">,</span>E<span class="op">[</span>i<span class="op">]=</span><span class="dv">0</span><span class="op">);</span></span></code></pre></div>
+<p>Of course, <code>x</code> doesn’t need to fall exactly on the end of a stride, so
+<code>h</code> is the upper bound for this iteration. Since we’re re-using <code>E</code>
+every time, we zero it before proceeding.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>  pi<span class="op">(</span>J<span class="op">(</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">|</span><span class="dv">1</span><span class="op">)*</span>p<span class="op">,</span>j<span class="op">&lt;</span>h<span class="op">,</span>j<span class="op">+=</span><span class="dv">2</span><span class="op">*</span>p<span class="op">,</span>Es<span class="op">((</span>j<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">)))</span></span></code></pre></div>
+<p>The outer loop now just iterates over all primes <span class="math inline">p</span>, but the inner loop
+is slightly more involved. First, we have to start from the lowest
+multiple of <span class="math inline">p</span> that’s at least the lower bound <span class="math inline">\ell</span>; that is, we want
+the smallest <span class="math inline">k</span> with <span class="math inline">kp \ge \ell</span>. This is solved by <span class="math inline">\lceil \ell/p
+\rceil \cdot p</span>, which can be implemented as <code>(l+p-1)/p</code> in C. The
+<code>max(p,...)</code> is there since, if <code>l&lt;p</code>, then <code>(l+p-1)/p</code> would return <code>1</code>
+(which then becomes <code>p</code> by the multiplication following the <code>max</code>), but
+we actually want to start searching from <code>p*p</code> as before. The little
+<code>|1</code> after getting the index is a hack to make sure we start at an odd
+multiple of <code>p</code>, since we can’t represent even ones in this encoding.</p>
+<p>In each step, we readjust <code>j</code> when indexing into <code>E</code> (since the array
+only holds a single segment), and then increase in steps of <code>2*p</code>, again
+to skip the even multiples.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>  I<span class="op">(</span>l<span class="op">,</span>i<span class="op">&lt;</span>h<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">((</span>i<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">)))</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a> <span class="op">}</span><span class="co">//for(...)</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//era4</span></span></code></pre></div>
+<p>We add the numbers for each segment, so we iterate from <code>l</code> to <code>h</code> in
+steps of two, and just need to again make sure to check the correct
+element in <code>E</code>. The start <code>l</code> of each segment is always odd, since we
+start at <code>3</code> and increase it by an even number, so there’s no correction
+term to be applied here.</p>
+<hr />
+<p>Since everything fits into L1 now, how about we switch out the packed
+representation for a slightly less packed one? If we represent a boolean
+by a <code>char</code>, we can profit from fast array access instead of
+bit-twiddling, which may or may not improve things. In the language
+we’ve defined, this just amounts to switching out <code>E(i)</code> with <code>E[i]</code> and
+<code>Es(i)</code> with <code>E[i]=1</code>. Here’s the whole thing in two lines, as intended,
+aligned with <code>era4</code> to showcase the differences:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era4<span class="op">,</span>A1<span class="op">(</span><span class="dv">2</span><span class="op">);</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">1</span><span class="op">),</span>s<span class="op">=</span>L1<span class="op">*</span><span class="dv">16</span><span class="op">,*</span>E<span class="op">=</span>M<span class="op">(</span>L1<span class="op">);</span><span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">3</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>s<span class="op">){</span>U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>s<span class="op">);</span>i<span class="op">(</span>L1<span class="op">/</span><span class="dv">8</span><span class="op">,</span>E<span class="op">[</span>i<span class="op">]=</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a> pi<span class="op">(</span>J<span class="op">(</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">|</span><span class="dv">1</span><span class="op">)*</span>p<span class="op">,</span>j<span class="op">&lt;</span>h<span class="op">,</span>j<span class="op">+=</span><span class="dv">2</span><span class="op">*</span>p<span class="op">,</span>Es<span class="op">((</span>j<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">)</span> <span class="op">));</span>I<span class="op">(</span>l<span class="op">,</span>i<span class="op">&lt;</span>h<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">((</span>i<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">)))})</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era5<span class="op">,</span>A1<span class="op">(</span><span class="dv">2</span><span class="op">);</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">1</span><span class="op">),</span>s<span class="op">=</span>L1<span class="op">*</span><span class="dv">2</span><span class="op">;</span>C<span class="op">*</span>E<span class="op">=</span>M<span class="op">(</span>L1<span class="op">);</span><span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">3</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>s<span class="op">){</span>U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>s<span class="op">);</span>i<span class="op">(</span>L1<span class="op">,</span>  E<span class="op">[</span>i<span class="op">]=</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a> pi<span class="op">(</span>J<span class="op">(</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">|</span><span class="dv">1</span><span class="op">)*</span>p<span class="op">,</span>j<span class="op">&lt;</span>h<span class="op">,</span>j<span class="op">+=</span><span class="dv">2</span><span class="op">*</span>p<span class="op">,</span>E<span class="op">[(</span>j<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">]=</span><span class="dv">1</span><span class="op">));</span>I<span class="op">(</span>l<span class="op">,</span>i<span class="op">&lt;</span>h<span class="op">,</span>i<span class="op">+=</span><span class="dv">2</span><span class="op">,</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">[(</span>i<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">]))})</span></span></code></pre></div>
+<p>This does indeed give a pretty nice performance boost:</p>
+<p><a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a>
+<picture>
+<source srcset="../images/primes/2345.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/2345-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/2345.png" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
+</picture></p>
+<p>I guess array access really is <em>much</em> faster than manual bit-twiddling.<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>
+Optimisation is weird.</p>
+<hr />
+<p>This is a good point to reflect on what we’ve done so far—I think it’s
+really quite impressive: we’re at ~700ms for all primes under a billion,
+in just two lines of code!</p>
+<p>Anyway, onwards and upwards.</p>
+<h3 id="wheeled-segmentation">Wheeled segmentation</h3>
+<p>Applying the idea of segmentation to a wheeled sieve is not <em>that</em> much
+more complicated conceptually, but a bit fiddly in the actual
+implementation. Since a wheel very much skews towards bit-packing, let’s
+also use <code>era4</code> as a base, instead of <code>era5</code>.<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era6<span class="op">,</span>P5<span class="op">;</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">3</span><span class="op">),</span>s<span class="op">=</span>L1<span class="op">*</span><span class="dv">30</span><span class="op">,*</span>E<span class="op">=</span>M<span class="op">(</span>L1<span class="op">);</span><span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">0</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>s<span class="op">){</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a> U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>s<span class="op">);</span>i<span class="op">(</span>L1<span class="op">/</span><span class="dv">8</span><span class="op">,</span>E<span class="op">[</span>i<span class="op">]=</span><span class="dv">0</span><span class="op">);</span>$<span class="op">(</span>l<span class="op">==</span><span class="dv">0</span><span class="op">,</span>Es<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span></code></pre></div>
+<p>We start with essentially the same loop as above, only now <code>l</code> is 0.
+Since we go up in steps of <code>s</code>, which is a multiple of 30, this ensures
+that <code>l</code> will always be divisible by 30, so that indexing via <code>w(j-l)</code>
+later on always stays valid. Also, in the very first loop we’ll have to
+mark <code>1</code>, the number at index <code>0</code>, as composite. This is a bit of an
+annoying special case, but I haven’t found a good way around
+it—suggestions welcome.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a> C g<span class="op">[</span><span class="dv">8</span><span class="op">]={</span><span class="dv">6</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">6</span><span class="op">,</span><span class="dv">2</span><span class="op">},</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>   o<span class="op">[</span><span class="dv">30</span><span class="op">]={[</span><span class="dv">1</span><span class="op">]=</span><span class="dv">0</span><span class="op">,[</span><span class="dv">7</span><span class="op">]=</span><span class="dv">1</span><span class="op">,[</span><span class="dv">11</span><span class="op">]=</span><span class="dv">2</span><span class="op">,[</span><span class="dv">13</span><span class="op">]=</span><span class="dv">3</span><span class="op">,[</span><span class="dv">17</span><span class="op">]=</span><span class="dv">4</span><span class="op">,[</span><span class="dv">19</span><span class="op">]=</span><span class="dv">5</span><span class="op">,[</span><span class="dv">23</span><span class="op">]=</span><span class="dv">6</span><span class="op">,[</span><span class="dv">29</span><span class="op">]=</span><span class="dv">7</span><span class="op">},</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>   r<span class="op">[</span><span class="dv">30</span><span class="op">]={</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">5</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">5</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">};</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a> pi<span class="op">(</span>U f<span class="op">=</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">);</span>f<span class="op">+=</span>r<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">];</span>U m<span class="op">=</span>o<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">];</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  J<span class="op">(</span>f<span class="op">*</span>p<span class="op">,</span>j<span class="op">&lt;</span>h<span class="op">,</span>j<span class="op">+=</span>p<span class="op">*</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>Es<span class="op">(</span>w<span class="op">(</span>j<span class="op">-</span>l<span class="op">))));</span></span></code></pre></div>
+<p>Okay, the fiddly bit. As above, we’ve already collected the small primes
+less than <span class="math inline">\sqrt{x}</span> and are now in the marking phase. Also as before,
+we need to find the first good multiple of <code>p</code> above <code>l</code>, so we again
+start with <code>max(p,(l+p-1)/p)</code>. Not as before, it’s now a bit more
+complicated to find out when we’ve hit a “bad” multiple—instead of just
+preventing even-ness, we need to disallow any of the 22 numbers not
+coprime to 30 in a single interval. Hence, we need to “jump” from any
+such number to the next highest one that’s coprime to 30, which is
+exactly what the <code>r</code> lookup table (“round”) does. Then, since we might
+start on any coprime, we also need to know which index it has in the
+wheel. In <code>era3</code> we always started at 7, so we would just set <code>m=1</code>, but
+here we need yet another lookup table <code>o</code> (“offset”) to jump to the
+correct position.</p>
+<p>After that, it’s business as usual, starting our search at <code>f*p</code> and
+increasing in steps that are reasonable for the wheel.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>  U m<span class="op">=</span><span class="dv">0</span><span class="op">;</span>I<span class="op">(</span>l<span class="op">+</span><span class="dv">1</span><span class="op">,</span>i<span class="op">&lt;</span>h<span class="op">,</span>i<span class="op">+=</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>A<span class="op">(</span>i<span class="op">,!</span>E<span class="op">(</span>m<span class="op">)))}</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//era6</span></span></code></pre></div>
+<p><a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>
+<picture>
+<source srcset="../images/primes/3456.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/3456-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/3456.png" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
+</picture></p>
+<p>It’s… not actually that much faster. Sometimes one does see an
+improvement at 1e9, but it’s quite flaky. I’m not sure why this is true,
+but I would imagine that the cost of <code>4*j/15</code> over <code>j/2</code> is finally
+catching up to us.</p>
+<h2 id="presieving">Presieving</h2>
+<p>Another optimisation we might try is to presieve small primes and tile
+them into <code>E</code> at every segment. The setup here, with a presieved stencil
+and another surprise later on, very much lends itself to bit-packing
+again.</p>
+<p>Let’s first look at this for an odds-only sieve, as—at least for my smol
+brain—it’s much easier to understand than its wheeled relative. For
+that, let’s introduce just a tad more notation:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define P11     P5</span><span class="op">;</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">7</span><span class="op">,</span><span class="pp">A1</span><span class="op">(</span><span class="dv">7</span><span class="op">));</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">11</span><span class="op">,</span><span class="pp">A1</span><span class="op">(</span><span class="dv">11</span><span class="op">));</span><span class="co">//more primes</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define CTZ</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="pp">  __builtin_ctzll</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="co">//count trailing zeros</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define W</span><span class="op">(</span><span class="pp">x</span><span class="op">,</span><span class="pp">e</span><span class="op">)</span><span class="pp">  </span><span class="cf">while</span><span class="op">(</span><span class="pp">x</span><span class="op">){</span><span class="pp">e</span><span class="op">;}</span></span></code></pre></div>
+<p>We’ll need to count the trailing zeros to find the rightmost <code>1</code> bit in
+a bit sequence, and the more compact while loop will allow us to write
+down some kind of convergence process in a reasonable way. Let’s first
+start with the actual function, though:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>F<span class="op">(</span>era7<span class="op">,</span>P11<span class="op">;</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">5</span><span class="op">),</span>_S<span class="op">=</span><span class="dv">3</span><span class="op">*</span><span class="dv">5</span><span class="op">*</span><span class="dv">7</span><span class="op">*</span><span class="dv">11</span><span class="op">;</span>C<span class="op">*</span>S<span class="op">=</span>M<span class="op">(</span>_S<span class="op">),</span>Q<span class="op">[</span><span class="dv">4</span><span class="op">]={</span><span class="dv">3</span><span class="op">,</span><span class="dv">5</span><span class="op">,</span><span class="dv">7</span><span class="op">,</span><span class="dv">11</span><span class="op">};</span></span></code></pre></div>
+<p>The start is the same as before. The number <code>_S=1155</code> is the product of
+the small primes that we aren’t ignoring outright (like 2).<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a> This
+will serve as the period of the prime stencil <code>S</code> we’ll use. Notice
+that, a priori, <code>_S</code> is actually a period in <em>bits</em>. We can however
+still just allocate <code>_S</code> bytes for <code>S</code>, since 1155 and 8 are coprime, so
+it’ll also be periodic as a byte length.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a> U _E<span class="op">=</span><span class="dv">42</span><span class="op">*</span>_S<span class="op">,*</span>E<span class="op">=</span>M<span class="op">(</span>_E<span class="op">),</span>s<span class="op">=</span><span class="dv">16</span><span class="op">*</span>_E<span class="op">;</span></span></code></pre></div>
+<p>We allocate roughly what fits into L1 for <code>E</code> again: <code>_S</code> is <span class="math inline">1155 = 3
+\cdot 5\cdot 7\cdot 11</span>, so <span class="math inline">42\cdot 1155 = 48510</span> bytes neatly fit
+into 48KiB. Since this is an odds-only sieve, the stride for each
+segment is again <code>_E*2*8</code>.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a> i<span class="op">(</span><span class="dv">4</span><span class="op">,</span>C q<span class="op">=</span>Q<span class="op">[</span>i<span class="op">];</span>J<span class="op">(</span>q<span class="op">/</span><span class="dv">2</span><span class="op">,</span>j<span class="op">&lt;</span><span class="dv">8</span><span class="op">*</span>_S<span class="op">,</span>j<span class="op">+=</span>q<span class="op">,</span>S<span class="op">[</span>j<span class="op">/</span><span class="dv">8</span><span class="op">]|=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>j<span class="op">&amp;</span><span class="dv">7</span><span class="op">)));</span></span></code></pre></div>
+<p>This is the presieving step: for each of the small primes we want to
+presieve, cross off all of its multiples in <code>S</code>. Due to the encoding,
+the start index of each prime <code>q</code> is <code>q/2</code>, and each multiple will
+exactly be at some index <code>n*q/2</code>, so just increasing <code>q/2</code> by <code>q</code> every
+time crosses all of them off. Since <code>j</code> is a bit index but <code>_S</code> is the
+number of bytes, we have to incorporate this into the check for when to
+stop. Marking works on a per-byte basis, with the same logic as the <code>Es</code>
+macro.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">0</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>s<span class="op">){</span>U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>s<span class="op">);</span>i<span class="op">(</span>_E<span class="op">,((</span>C<span class="op">*)</span>E<span class="op">)[</span>i<span class="op">]=</span>S<span class="op">[</span>i<span class="op">%</span>_S<span class="op">]);</span>$<span class="op">(</span>l<span class="op">==</span><span class="dv">0</span><span class="op">,</span>Es<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span></code></pre></div>
+<p>Instead of doing <code>i(_E/8,E[i]=0)</code>, we now copy over the segment
+cyclically, tiling all of <code>E</code>. Note the cast to <code>C*</code>, since that’s what
+<code>S</code> is.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>  pi<span class="op">(</span>J<span class="op">(</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">|</span><span class="dv">1</span><span class="op">)*</span>p<span class="op">,</span>j<span class="op">&lt;</span>h<span class="op">,</span>j<span class="op">+=</span><span class="dv">2</span><span class="op">*</span>p<span class="op">,</span>Es<span class="op">((</span>j<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">)))</span></span></code></pre></div>
+<p>This looks exactly the same as before, so I won’t dwell on it too much.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>  U hb<span class="op">=(</span>h<span class="op">-</span>l<span class="op">)/</span><span class="dv">2</span><span class="op">;</span>E<span class="op">[</span>hb<span class="op">/</span><span class="dv">64</span><span class="op">]|=-(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span>hb<span class="op">%</span><span class="dv">64</span><span class="op">));</span></span></code></pre></div>
+<p>I added something else while I was at it,<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a> which will be good training
+for the denser wheels below. Instead of going through all of the numbers
+and checking which one is a prime via <code>I(l,i&lt;h,i+=2,A(i,!E[(i-l)/2]))</code>,
+we instead use the fact that we already know which numbers are
+prime, and can instead reconstruct them from their packed
+representation.</p>
+<p>We first get the number of valid sieve bits as <code>hb</code>. In the <code>E</code> array,
+composite numbers are assigned <code>1</code> and primes get <code>0</code>. However, the
+array starts off zero-initialised. So if <code>hb</code> is not exactly divisible
+by <code>64</code>, which will probably be the case, it might be that the last
+64-bit word of <code>E</code> has a few high bits that are <code>0</code> because of that
+initialisation, not necessarily because the numbers these bits represent
+are prime. To fix this, we can do some bit twiddling: get the remainder
+of dividing <code>hb</code> by <code>64</code> and shift it to the correct position;
+<code>1ull&lt;&lt;(hb%64)</code> will be something like</p>
+<pre><code>0...010000...0</code></pre>
+<p>Negating this number, we end up with</p>
+<pre><code>1...100000...0</code></pre>
+<p>This can then be used to exclude all of the garbage bits in <code>E</code>.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>  i<span class="op">((</span>hb<span class="op">+</span><span class="dv">63</span><span class="op">)/</span><span class="dv">64</span><span class="op">,</span>U z<span class="op">=~</span>E<span class="op">[</span>i<span class="op">];</span>W<span class="op">(</span>z<span class="op">,</span>A1<span class="op">(</span>l<span class="op">+</span><span class="dv">1</span><span class="op">+</span><span class="dv">2</span><span class="op">*(</span><span class="dv">64</span><span class="op">*</span>i<span class="op">+</span>CTZ<span class="op">(</span>z<span class="op">)));</span>z<span class="op">&amp;=</span>z<span class="op">-</span><span class="dv">1</span><span class="op">))</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="op">})</span><span class="co">//F(era7,...)</span></span></code></pre></div>
+<p>We iterate over <code>E</code> in 64-bit chunks, negate the array to turn all zeros
+into ones and the other way around, and reconstruct each number in
+the chunk: the index of the rightmost <code>1</code> is the number of trailing
+zeros, which we first shift by <code>64*i</code> to get to the correct chunk, then
+double it and add one to undo the odds-only compression, and finally add
+the segment start <code>l</code>. Then just force-add it to the array.</p>
+<p>This gives a small boost after a certain point:</p>
+<p><a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>
+<picture>
+<source srcset="../images/primes/4567.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/4567-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/4567.png" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
+</picture></p>
+<h2 id="giving-up-on-rules">Giving up on rules</h2>
+<p>At this point, I slowly ran out of ideas on what to do that might have a
+measurable impact, without bloating the code size too much. I also
+really wanted to do something with wheel sieves—I feel like they’ve just
+been <em>fine</em> performance wise, but haven’t really wowed me at all. This
+is a real shame, as the basic idea seems quite beautiful.</p>
+<p>If you measure it, a lot of the work is actually spent building the
+array, and at 1e9 the array is, like, 400MiB in size. Completely
+unnecessary, and actually not a great comparison with <code>primesieve</code>,
+which doesn’t materialise the whole array at all. In fact, it doesn’t
+even tell you the highest prime in that range; it just counts!<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a> If
+we bit-pack the primes, counting can be done much more rapidly with a
+popcount instruction, which is quite a bit faster than what we’re doing
+right now.</p>
+<p>So, I’m willing to forgo the rule that the entire array needs to be
+materialised for these last two examples, just to see what’s possible. I
+also won’t compute the highest prime, though adding this isn’t super
+difficult. I’ll leave it as an exercise for the interested reader.</p>
+<p>These will be wheel sieves, so let’s fix the hard-coded stuff
+here—nothing new.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define Z </span><span class="dt">static</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>Z C g<span class="op">[</span><span class="dv">8</span><span class="op">]={</span><span class="dv">6</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">6</span><span class="op">,</span><span class="dv">2</span><span class="op">},</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>    o<span class="op">[</span><span class="dv">30</span><span class="op">]={[</span><span class="dv">1</span><span class="op">]=</span><span class="dv">0</span><span class="op">,[</span><span class="dv">7</span><span class="op">]=</span><span class="dv">1</span><span class="op">,[</span><span class="dv">11</span><span class="op">]=</span><span class="dv">2</span><span class="op">,[</span><span class="dv">13</span><span class="op">]=</span><span class="dv">3</span><span class="op">,[</span><span class="dv">17</span><span class="op">]=</span><span class="dv">4</span><span class="op">,[</span><span class="dv">19</span><span class="op">]=</span><span class="dv">5</span><span class="op">,[</span><span class="dv">23</span><span class="op">]=</span><span class="dv">6</span><span class="op">,[</span><span class="dv">29</span><span class="op">]=</span><span class="dv">7</span><span class="op">},</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>    r<span class="op">[</span><span class="dv">30</span><span class="op">]={</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">5</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">5</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">};</span></span></code></pre></div>
+<p>Also, let’s not use the <code>F</code> function template, but create a new one
+that correctly signals intent.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define G</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp">  Z V f</span><span class="op">(</span>U<span class="pp"> x</span><span class="op">,</span>U<span class="op">*</span><span class="pp">y</span><span class="op">){*</span><span class="pp">y</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="pp">e</span><span class="op">;}</span><span class="co">//cheating</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#define POP</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span><span class="pp">     __builtin_popcountll</span><span class="op">(</span><span class="pp">x</span><span class="op">)</span></span></code></pre></div>
+<p>Instead of adding to the array, for the small primes we then just
+increment the count:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define P13_ </span><span class="op">++*</span><span class="pp">y</span><span class="op">;</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">3</span><span class="op">,++*</span><span class="pp">y</span><span class="op">);</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">5</span><span class="op">,++*</span><span class="pp">y</span><span class="op">);</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">7</span><span class="op">,++*</span><span class="pp">y</span><span class="op">);</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">11</span><span class="op">,++*</span><span class="pp">y</span><span class="op">);</span><span class="pp">$</span><span class="op">(</span><span class="pp">x</span><span class="op">&gt;</span><span class="dv">13</span><span class="op">,++*</span><span class="pp">y</span><span class="op">);</span></span></code></pre></div>
+<h3 id="wheeled-presieving">Wheeled presieving</h3>
+<p>As a basis, let’s implement a wheeled version of <code>era7</code>, without a
+backing array.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>G<span class="op">(</span>era8<span class="op">,</span>P13_<span class="op">;</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">6</span><span class="op">),</span>_S<span class="op">=</span><span class="dv">7</span><span class="op">*</span><span class="dv">11</span><span class="op">*</span><span class="dv">13</span><span class="op">;</span>C<span class="op">*</span>S<span class="op">=</span>M<span class="op">(</span>_S<span class="op">),</span>Q<span class="op">[</span><span class="dv">3</span><span class="op">]={</span><span class="dv">7</span><span class="op">,</span><span class="dv">11</span><span class="op">,</span><span class="dv">13</span><span class="op">};</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a> U _E<span class="op">=</span><span class="dv">48</span><span class="op">*</span>_S<span class="op">,</span>s<span class="op">=</span>_E<span class="op">*</span><span class="dv">30</span><span class="op">,*</span>E<span class="op">=</span>M<span class="op">(</span>_E<span class="op">);</span></span></code></pre></div>
+<p>Since the wheel already uses 2, 3, and 5 as its primes, the small primes
+we’ll be sieving are 7, 11, and 13 instead. As such, the sizes move
+around a bit, but the numbers here are again chosen so that everything
+fits into my L1 cache.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a> i<span class="op">(</span><span class="dv">3</span><span class="op">,</span>U q<span class="op">=</span>Q<span class="op">[</span>i<span class="op">],</span>m<span class="op">=</span><span class="dv">0</span><span class="op">;</span>J<span class="op">(</span>q<span class="op">,</span>j<span class="op">&lt;</span><span class="dv">30</span><span class="op">*</span>_S<span class="op">,</span>j<span class="op">+=</span>q<span class="op">*</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>S<span class="op">[</span>w<span class="op">(</span>j<span class="op">)/</span><span class="dv">8</span><span class="op">]|=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>w<span class="op">(</span>j<span class="op">)&amp;</span><span class="dv">7</span><span class="op">)));</span></span></code></pre></div>
+<p>Presieving looks quite similar to <code>era7</code>, only that we now index into
+the wheel instead. We start at <code>q</code> instead of <code>q/2</code>, since it’s not as
+easy to bake the index into the start, so I’m letting <code>w()</code> do all of
+that work. As such, we need to take care that <code>4*j/15</code> doesn’t exceed
+<code>8*_S</code>, which is the same as checking that <code>j&lt;30*_S</code>. The steps are thus
+also not constant, but again vary by the gap size.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">0</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>s<span class="op">){</span>U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>s<span class="op">);</span> i<span class="op">(</span>_E<span class="op">,((</span>C<span class="op">*)</span>E<span class="op">)[</span>i<span class="op">]=</span>S<span class="op">[</span>i<span class="op">%</span>_S<span class="op">]);</span>$<span class="op">(</span>l<span class="op">==</span><span class="dv">0</span><span class="op">,</span>Es<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  pi<span class="op">(</span>U f<span class="op">=</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">);</span>f<span class="op">+=</span>r<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">];</span>U m<span class="op">=</span>o<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">];</span>J<span class="op">(</span>f<span class="op">*</span>p<span class="op">,</span>j<span class="op">&lt;</span>h<span class="op">,</span>j<span class="op">+=</span>p<span class="op">*</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>Es<span class="op">(</span>w<span class="op">(</span>j<span class="op">-</span>l<span class="op">))));</span></span></code></pre></div>
+<p>Exactly the same as before.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>  U hb<span class="op">=</span>w<span class="op">(</span>h<span class="op">-</span>l<span class="op">+</span>r<span class="op">[(</span>h<span class="op">-</span>l<span class="op">)%</span><span class="dv">30</span><span class="op">]);</span>E<span class="op">[</span>hb<span class="op">/</span><span class="dv">64</span><span class="op">]|=-(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span>hb<span class="op">%</span><span class="dv">64</span><span class="op">));</span>i<span class="op">((</span>hb<span class="op">+</span><span class="dv">63</span><span class="op">)/</span><span class="dv">64</span><span class="op">,*</span>y<span class="op">+=</span>POP<span class="op">(~</span>E<span class="op">[</span>i<span class="op">]))</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="op">})</span><span class="co">//G(era8, ...)</span></span></code></pre></div>
+<p>This part actually becomes easier! We still need to kill the extraneous
+bits in the last word of <code>E</code>, but once that’s done, all that’s needed is
+but a tiny popcount to update <code>y</code>. The calculation of <code>hb</code> becomes a bit
+more involved, but it’s essentially just <code>w(h-l)</code>, with a small
+correction term in case <code>h-l</code> is not coprime to 30, as the number
+still needs to be representable.</p>
+<p>This gives a significant boost—not necessarily due to the wheel, but
+mostly just because the array-less approach is so much faster.</p>
+<p><a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a>
+<picture>
+<source srcset="../images/primes/678.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/678-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/678.png" alt="-e6 vs. -e7 vs. -e8">
+</picture></p>
+<h3 id="fixed-steps">Fixed steps</h3>
+<p>It’s finally time I stop complaining about <code>4*j/15</code> being slow, and just
+fix it. There’s another part of the code that slows us down, though:
+instead of a simple constant <code>2*p</code>-stride, we have this variable
+<code>j+=p*g[m++&amp;7]</code> nonsense. Both of those are rather terrible for reading
+and for execution; let’s try to at least fix the latter.</p>
+<p>The necessary insight is that there are constant stride lengths lurking
+inside of a wheel, but instead of being global, they’re inside of a
+residue class. I think I will defer the exact explanation of how this
+works until we see the code, as it’s a bit involved, so let’s just get
+right into it.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>G<span class="op">(</span>era9<span class="op">,</span>P13_<span class="op">;</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">6</span><span class="op">),</span>_S<span class="op">=</span><span class="dv">7</span><span class="op">*</span><span class="dv">11</span><span class="op">*</span><span class="dv">13</span><span class="op">,</span>_E<span class="op">=</span><span class="dv">48</span><span class="op">*</span>_S<span class="op">,*</span>E<span class="op">=</span>M<span class="op">(</span>_E<span class="op">),</span>n<span class="op">=</span><span class="dv">30</span><span class="op">*</span>_E<span class="op">;</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a> C<span class="op">*</span>S<span class="op">=</span>M<span class="op">(</span>_S<span class="op">),</span>Q<span class="op">[</span><span class="dv">3</span><span class="op">]={</span><span class="dv">7</span><span class="op">,</span><span class="dv">11</span><span class="op">,</span><span class="dv">13</span><span class="op">},*</span>cE<span class="op">=(</span>C<span class="op">*)</span>E<span class="op">;</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a> i<span class="op">(</span><span class="dv">3</span><span class="op">,</span>U q<span class="op">=</span>Q<span class="op">[</span>i<span class="op">],</span>s<span class="op">=</span><span class="dv">0</span><span class="op">;</span>J<span class="op">(</span>q<span class="op">,</span>j<span class="op">&lt;</span><span class="dv">30</span><span class="op">*</span>_S<span class="op">,</span>j<span class="op">+=</span>q<span class="op">*</span>g<span class="op">[</span>s<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>S<span class="op">[</span>w<span class="op">(</span>j<span class="op">)/</span><span class="dv">8</span><span class="op">]|=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>w<span class="op">(</span>j<span class="op">)&amp;</span><span class="dv">7</span><span class="op">)))</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">0</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>n<span class="op">){</span>U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>n<span class="op">);</span>i<span class="op">(</span>_E<span class="op">,</span>cE<span class="op">[</span>i<span class="op">]=</span>S<span class="op">[</span>i<span class="op">%</span>_S<span class="op">]);</span>$<span class="op">(</span>l<span class="op">==</span><span class="dv">0</span><span class="op">,</span>Es<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  U hb<span class="op">=</span>w<span class="op">(</span>h<span class="op">-</span>l<span class="op">+</span>r<span class="op">[(</span>h<span class="op">-</span>l<span class="op">)%</span><span class="dv">30</span><span class="op">]);</span></span></code></pre></div>
+<p>More names, but they’re exactly the same as <code>era8</code>, so I won’t comment
+on them again here. We again try to get as close to the L1 limit as
+possible with the size of <code>E</code>, and the rest follows. Also, the presieving
+step is exactly the same code as in <code>era8</code>.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>  pi<span class="op">(</span>U f<span class="op">=</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">);</span>f<span class="op">+=</span>r<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">];</span>U m<span class="op">=</span>o<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">],</span>z<span class="op">=</span>f<span class="op">*</span>p<span class="op">-</span>l<span class="op">;</span></span></code></pre></div>
+<p>The start of the marking loop looks essentially the same as before, only
+we have to give the first multiple <code>z</code> a name now (booo!), as we’ll
+manually increment it.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>  j<span class="op">(</span><span class="dv">8</span><span class="op">,</span>U b<span class="op">=</span>w<span class="op">(</span>z<span class="op">);</span>B<span class="op">(</span>b<span class="op">&gt;=</span>hb<span class="op">,);</span>U mk<span class="op">=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>b<span class="op">&amp;</span><span class="dv">7</span><span class="op">),</span>B<span class="op">=</span>b<span class="op">/</span><span class="dv">8</span><span class="op">,</span>hB<span class="op">=(</span>hb<span class="op">+</span><span class="dv">7</span><span class="op">)/</span><span class="dv">8</span><span class="op">;</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>   W<span class="op">(</span>B<span class="op">&lt;</span>hB<span class="op">,</span>cE<span class="op">[</span>B<span class="op">]|=</span>mk<span class="op">;</span>B<span class="op">+=</span>p<span class="op">)</span></span></code></pre></div>
+<p>The inner marking loop covers all eight residue classes—one for each
+number coprime to 30—neatly assembling into one byte. Since <code>z</code> is the
+first multiple of <code>p</code> in this segment, <code>b</code> is its bit-, and <code>B</code> its
+byte-index. Since we’re marking one byte at a time, we can use a mask
+<code>mk</code>, with a <code>1</code> at exactly the right place. <code>hB</code> is the number of bytes
+that are currently set, which’ll serve as an upper bound for iteration.</p>
+<p>The actual marking loop <code>W(B&lt;hB,cE[B]|=mk;B+=p)</code> is what makes this
+version fast—compare <code>cE[B]|=mk</code> with</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>Es<span class="op">(</span>w<span class="op">(</span>j<span class="op">-</span>l<span class="op">))</span>  ≡  _<span class="op">(</span>U $i<span class="op">=</span><span class="dv">4</span><span class="op">*(</span>j<span class="op">-</span>l<span class="op">)/</span><span class="dv">15</span><span class="op">;</span> E<span class="op">[</span>$i<span class="op">/</span><span class="dv">64</span><span class="op">]|=(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span>$i<span class="op">%</span><span class="dv">64</span><span class="op">)))</span></span></code></pre></div>
+<p>We start at the <code>f</code>th multiple of <code>p</code>. The next number in the same
+residue class is <code>p*(f+30)</code>, the next one after that is <code>p*(f+60)</code>, and
+so on. In other words, all numbers of a single class differ by <code>30*p</code>.
+Since each byte exactly covers 30 numbers, the next byte with a multiple
+of <code>p</code> in the same residue class is <code>B+p</code>. Marking is just flipping the
+bit associated with the current residue class in <code>E</code>, which we index
+byte-wise via <code>cE</code>. The mask itself doesn’t change for a single residue
+class (more or less by definition), so it’s really a constant stride
+inner loop.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>   z<span class="op">+=</span>p<span class="op">*</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">]</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">)</span><span class="co">//j(8,...)</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a> <span class="op">)</span><span class="co">//pi(...)</span></span></code></pre></div>
+<p>Advancing the multiples works as before by consulting the gap array.</p>
+<p>Actually, to further speed this up, it pays to manually unroll the inner
+loop a bit:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>   j<span class="op">(</span><span class="dv">8</span><span class="op">,</span>U b<span class="op">=</span>w<span class="op">(</span>z<span class="op">);</span>B<span class="op">(</span>b<span class="op">&gt;=</span>hb<span class="op">,);</span>U mk<span class="op">=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>b<span class="op">&amp;</span><span class="dv">7</span><span class="op">),</span>B<span class="op">=</span>b<span class="op">/</span><span class="dv">8</span><span class="op">,</span>hB<span class="op">=(</span>hb<span class="op">+</span><span class="dv">7</span><span class="op">)/</span><span class="dv">8</span><span class="op">;</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>    W<span class="op">(</span>B<span class="op">+</span><span class="dv">3</span><span class="op">*</span>p<span class="op">&lt;</span>hB<span class="op">,</span>i<span class="op">(</span><span class="dv">4</span><span class="op">,</span>cE<span class="op">[</span>B<span class="op">+</span>i<span class="op">*</span>p<span class="op">]|=</span>mk<span class="op">);</span>B<span class="op">+=</span><span class="dv">4</span><span class="op">*</span>p<span class="op">);</span>W<span class="op">(</span>B<span class="op">&lt;</span>hB<span class="op">,</span>cE<span class="op">[</span>B<span class="op">]|=</span>mk<span class="op">;</span>B<span class="op">+=</span>p<span class="op">);</span></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>   z<span class="op">+=</span>p<span class="op">*</span>g<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">])</span></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">)</span><span class="co">//pi(...)</span></span></code></pre></div>
+<p>We step through four bytes at a time in the first loop, and then just
+have to go through what’s left in the second. Harder to read, but
+consistently faster by around 20ms.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>  E<span class="op">[</span>hb<span class="op">/</span><span class="dv">64</span><span class="op">]|=-(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span>hb<span class="op">%</span><span class="dv">64</span><span class="op">));</span>i<span class="op">((</span>hb<span class="op">+</span><span class="dv">63</span><span class="op">)/</span><span class="dv">64</span><span class="op">,*</span>y<span class="op">+=</span>POP<span class="op">(~</span>E<span class="op">[</span>i<span class="op">]))</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a> <span class="op">}</span><span class="co">//for(...)</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//era9</span></span></code></pre></div>
+<p>Finally, we again count primes by population counting them, and that’s
+it.</p>
+<h4 id="even-more-precomputation">Even more precomputation</h4>
+<p>I swear this is the last optimisation we’ll do, which I’ll just fold
+into <code>era9</code> directly: precomputing the offset at which <code>b</code> moves. I’ll
+just highlight the changes. At the start, we have to allocate a gap
+array <code>U *G=M(64*_P)</code>. The 64 is <code>8*8</code>, as we have eight residue
+classes. Then, before the main loop over the segments, we precompute the
+steps:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>pi<span class="op">(</span>U m<span class="op">=</span><span class="dv">1</span><span class="op">,</span>n<span class="op">;</span>j<span class="op">(</span><span class="dv">8</span><span class="op">,</span>n<span class="op">=</span>m<span class="op">,</span>m<span class="op">+=</span>g<span class="op">[</span>j<span class="op">];</span>G<span class="op">[</span><span class="dv">8</span><span class="op">*</span>i<span class="op">+</span>j<span class="op">]=</span>w<span class="op">(</span>p<span class="op">*</span>m<span class="op">)-</span>w<span class="op">(</span>p<span class="op">*</span>n<span class="op">)))</span></span></code></pre></div>
+<p>Each prime <code>p</code> and index <code>i</code> gets the indices <code>8*i</code> to <code>8*i+7</code>, which
+are filled with exactly the step length to the next residue class.</p>
+<p>With that in place, the inner marking loop can become</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>pi<span class="op">(</span>U<span class="op">*</span>Gp<span class="op">=</span>G<span class="op">+</span><span class="dv">8</span><span class="op">*</span>i<span class="op">;</span><span class="co">/*f=...*/</span><span class="op">;</span>U b<span class="op">=</span>w<span class="op">(</span>f<span class="op">*</span>p<span class="op">-</span>l<span class="op">);</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a> j<span class="op">(</span><span class="dv">8</span><span class="op">,</span>B<span class="op">(</span>b<span class="op">&gt;=</span>hb<span class="op">,);</span>U mk<span class="op">=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>b<span class="op">&amp;</span><span class="dv">7</span><span class="op">),</span>B<span class="op">=</span>b<span class="op">/</span><span class="dv">8</span><span class="op">,</span>hB<span class="op">=(</span>hb<span class="op">+</span><span class="dv">7</span><span class="op">)/</span><span class="dv">8</span><span class="op">;</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  W<span class="op">(</span>B<span class="op">+</span><span class="dv">3</span><span class="op">*</span>p<span class="op">&lt;</span>hB<span class="op">,</span>i<span class="op">(</span><span class="dv">4</span><span class="op">,</span>cE<span class="op">[</span>B<span class="op">+</span>i<span class="op">*</span>p<span class="op">]|=</span>mk<span class="op">);</span>B<span class="op">+=</span><span class="dv">4</span><span class="op">*</span>p<span class="op">);</span> W<span class="op">(</span>B<span class="op">&lt;</span>hB<span class="op">,</span>cE<span class="op">[</span>B<span class="op">]|=</span>mk<span class="op">;</span>B<span class="op">+=</span>p<span class="op">);</span></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>  b<span class="op">+=</span>Gp<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">]))</span></span></code></pre></div>
+<p>Compare <code>b+=Gp[m++&amp;7]</code> with the old <code>z+=p*g[m++&amp;7]</code>. It seemingly only
+saves us that unpredictable multiplication with <code>p</code>, but this version is
+actually consistently around 10ms faster than the non-precomputed
+version. The cognitive overhead when reading the code is around the
+same, I think, so I’ll keep it in.</p>
+<hr />
+<p>Here’s the final algorithm in all of its glory:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>G<span class="op">(</span>era9<span class="op">,</span>P13_<span class="op">;</span>U _P<span class="op">,*</span>P<span class="op">=</span>eraH<span class="op">(</span>x<span class="op">,&amp;</span>_P<span class="op">,</span><span class="dv">6</span><span class="op">),</span>_S<span class="op">=</span><span class="dv">7</span><span class="op">*</span><span class="dv">11</span><span class="op">*</span><span class="dv">13</span><span class="op">,*</span>G<span class="op">=</span>M<span class="op">(</span><span class="dv">64</span><span class="op">*</span>_P<span class="op">),</span>_E<span class="op">=</span><span class="dv">48</span><span class="op">*</span>_S<span class="op">,*</span>E<span class="op">=</span>M<span class="op">(</span>_E<span class="op">),</span>n<span class="op">=</span><span class="dv">30</span><span class="op">*</span>_E<span class="op">;</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a> C<span class="op">*</span>S<span class="op">=</span>M<span class="op">(</span>_S<span class="op">),</span>Q<span class="op">[</span><span class="dv">3</span><span class="op">]={</span><span class="dv">7</span><span class="op">,</span><span class="dv">11</span><span class="op">,</span><span class="dv">13</span><span class="op">},*</span>cE<span class="op">=(</span>C<span class="op">*)</span>E<span class="op">;</span>i<span class="op">(</span><span class="dv">3</span><span class="op">,</span>U q<span class="op">=</span>Q<span class="op">[</span>i<span class="op">],</span>s<span class="op">=</span><span class="dv">0</span><span class="op">;</span>J<span class="op">(</span>q<span class="op">,</span>j<span class="op">&lt;</span><span class="dv">30</span><span class="op">*</span>_S<span class="op">,</span>j<span class="op">+=</span>q<span class="op">*</span>g<span class="op">[</span>s<span class="op">++&amp;</span><span class="dv">7</span><span class="op">],</span>S<span class="op">[</span>w<span class="op">(</span>j<span class="op">)/</span><span class="dv">8</span><span class="op">]|=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>w<span class="op">(</span>j<span class="op">)&amp;</span><span class="dv">7</span><span class="op">)))</span></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a> pi<span class="op">(</span>U m<span class="op">=</span><span class="dv">1</span><span class="op">,</span>n<span class="op">;</span>j<span class="op">(</span><span class="dv">8</span><span class="op">,</span>n<span class="op">=</span>m<span class="op">,</span>m<span class="op">+=</span>g<span class="op">[</span>j<span class="op">];</span>G<span class="op">[</span><span class="dv">8</span><span class="op">*</span>i<span class="op">+</span>j<span class="op">]=</span>w<span class="op">(</span>p<span class="op">*</span>m<span class="op">)-</span>w<span class="op">(</span>p<span class="op">*</span>n<span class="op">)))</span><span class="cf">for</span><span class="op">(</span>U l<span class="op">=</span><span class="dv">0</span><span class="op">;</span>l<span class="op">&lt;</span>x<span class="op">;</span>l<span class="op">+=</span>n<span class="op">){</span>U h<span class="op">=</span>min<span class="op">(</span>x<span class="op">,</span>l<span class="op">+</span>n<span class="op">);</span></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  i<span class="op">(</span>_E<span class="op">,</span>cE<span class="op">[</span>i<span class="op">]=</span>S<span class="op">[</span>i<span class="op">%</span>_S<span class="op">]);</span>$<span class="op">(</span>l<span class="op">==</span><span class="dv">0</span><span class="op">,</span>Es<span class="op">(</span><span class="dv">0</span><span class="op">));</span>U hb<span class="op">=</span>w<span class="op">(</span>h<span class="op">-</span>l<span class="op">+</span>r<span class="op">[(</span>h<span class="op">-</span>l<span class="op">)%</span><span class="dv">30</span><span class="op">]);</span>pi<span class="op">(</span>U<span class="op">*</span>Gp<span class="op">=</span>G<span class="op">+</span><span class="dv">8</span><span class="op">*</span>i<span class="op">,</span>f<span class="op">=</span>max<span class="op">(</span>p<span class="op">,(</span>l<span class="op">+</span>p<span class="op">-</span><span class="dv">1</span><span class="op">)/</span>p<span class="op">);</span>f<span class="op">+=</span>r<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">];</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>   U m<span class="op">=</span>o<span class="op">[</span>f<span class="op">%</span><span class="dv">30</span><span class="op">],</span>b<span class="op">=</span>w<span class="op">(</span>f<span class="op">*</span>p<span class="op">-</span>l<span class="op">);</span>j<span class="op">(</span><span class="dv">8</span><span class="op">,</span>B<span class="op">(</span>b<span class="op">&gt;=</span>hb<span class="op">,);</span>U mk<span class="op">=</span><span class="dv">1</span><span class="op">&lt;&lt;(</span>b<span class="op">&amp;</span><span class="dv">7</span><span class="op">),</span>B<span class="op">=</span>b<span class="op">/</span><span class="dv">8</span><span class="op">,</span>hB<span class="op">=(</span>hb<span class="op">+</span><span class="dv">7</span><span class="op">)/</span><span class="dv">8</span><span class="op">;</span>W<span class="op">(</span>B<span class="op">+</span><span class="dv">3</span><span class="op">*</span>p<span class="op">&lt;</span>hB<span class="op">,</span>i<span class="op">(</span><span class="dv">4</span><span class="op">,</span>cE<span class="op">[</span>B<span class="op">+</span>i<span class="op">*</span>p<span class="op">]|=</span>mk<span class="op">);</span>B<span class="op">+=</span><span class="dv">4</span><span class="op">*</span>p<span class="op">);</span></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>   W<span class="op">(</span>B<span class="op">&lt;</span>hB<span class="op">,</span>cE<span class="op">[</span>B<span class="op">]|=</span>mk<span class="op">;</span>B<span class="op">+=</span>p<span class="op">);</span>b<span class="op">+=</span>Gp<span class="op">[</span>m<span class="op">++&amp;</span><span class="dv">7</span><span class="op">]))</span> E<span class="op">[</span>hb<span class="op">/</span><span class="dv">64</span><span class="op">]|=-(</span><span class="dv">1</span><span class="bu">ull</span><span class="op">&lt;&lt;(</span>hb<span class="op">%</span><span class="dv">64</span><span class="op">));</span>i<span class="op">((</span>hb<span class="op">+</span><span class="dv">63</span><span class="op">)/</span><span class="dv">64</span><span class="op">,*</span>y<span class="op">+=</span>POP<span class="op">(~</span>E<span class="op">[</span>i<span class="op">]))})</span></span></code></pre></div>
+<p>It has a certain brutalist aesthetic, for sure, but I kinda like that.
+Some more benchmarks:</p>
+<p><a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a>
+<picture>
+<source srcset="../images/primes/6789.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/6789-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/6789.png" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
+</picture></p>
+<hr />
+<p>I think this is a good time to stop—if only because <code>era10</code> would
+completely destroy the alignment, and continuing in hex looks weird.
+Also, this still neatly fits on my screen without me having to decrease
+the font size, or being forced to use overly long lines:</p>
+<p><picture>
+<source srcset="../images/primes/end.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/end-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/end.png" alt="Full source code.">
+</picture></p>
+<h2 id="the-end">The end</h2>
+<p>Here are all of the variants:</p>
+<p><picture>
+<source srcset="../images/primes/all.png" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/all-dark.png" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/all.png" alt="Comparison of all algorithms.">
+</picture></p>
+<figure>
+<details>
+<summary>
+The table is entirely too big for a sidenote, so here it is in a drawer.
+</summary>
+<pre><code>N           triv     simp     era0     era1     era2     era3     era4     era5     era6     era7     era8     era9
+-------  -------  -------  -------  -------  -------  -------  -------  -------  -------  -------  -------  -------
+1.0M         &gt;1s    96.45     2.87     2.85     2.44     1.65     1.83     1.62     1.57     1.46     1.56     0.91
+1.3M         &gt;1s   133.82     3.40     3.40     2.13     1.83     2.24     1.83     1.95     1.97     1.40     1.06
+1.6M         &gt;1s   186.44     4.12     4.05     2.96     1.91     2.70     2.00     2.10     1.73     1.32     1.40
+2.0M         &gt;1s   261.25     5.92     5.63     3.00     2.28     2.98     2.25     2.64     1.87     1.46     1.73
+2.6M         &gt;1s   360.36     6.96     6.03     4.07     2.49     3.59     2.42     2.61     2.17     1.84     1.06
+3.3M         &gt;1s   505.69     9.23     7.19     4.19     3.02     4.31     2.97     2.95     2.63     1.76     1.93
+4.2M         &gt;1s   708.60    12.81     9.80     4.82     3.57     5.02     3.48     3.69     3.37     1.93     1.52
+5.3M         &gt;1s      &gt;1s    14.79    10.99     5.89     4.53     6.18     4.32     4.18     3.78     2.35     1.79
+6.7M         &gt;1s      &gt;1s    19.56    13.99     7.34     4.99     7.65     4.71     5.10     4.30     2.96     1.45
+8.5M         &gt;1s      &gt;1s    25.04    17.63     9.13     6.21     9.30     6.18     6.25     5.28     3.12     1.59
+10.8M        &gt;1s      &gt;1s    32.48    23.95    11.71     7.71    11.36     7.38     7.66     6.59     4.07     2.06
+13.7M        &gt;1s      &gt;1s    42.44    32.40    14.47     8.82    13.80     8.99     9.33     7.51     4.26     2.60
+17.4M        &gt;1s      &gt;1s    61.88    42.95    19.19    11.44    17.61    10.89    11.40     9.38     5.21     2.40
+22.1M        &gt;1s      &gt;1s    90.01    56.35    24.34    14.56    21.55    14.04    14.26    11.95     6.34     2.97
+28.1M        &gt;1s      &gt;1s   127.14    74.00    33.27    18.28    27.41    17.70    18.14    14.97     7.89     3.25
+35.6M        &gt;1s      &gt;1s   177.53    95.26    44.61    23.89    33.81    21.75    22.79    19.07     9.68     3.66
+45.2M        &gt;1s      &gt;1s   240.48   124.83    58.86    33.11    45.94    27.94    28.37    23.28    12.39     4.82
+57.4M        &gt;1s      &gt;1s   318.85   159.92    77.10    44.09    55.48    36.74    37.39    30.27    16.40     6.00
+72.8M        &gt;1s      &gt;1s   425.98   209.65   101.14    60.37    72.07    47.26    44.55    37.11    19.81     6.90
+92.4M        &gt;1s      &gt;1s   563.49   279.82   132.98    81.96    86.63    58.88    60.64    50.24    25.99     8.67
+117.2M       &gt;1s      &gt;1s   744.33   358.16   170.27    99.92   112.75    76.88    71.99    60.64    34.65    11.58
+148.7M       &gt;1s      &gt;1s      &gt;1s   495.27   220.13   131.91   142.11    88.22    92.12    73.98    46.31    14.17
+188.7M       &gt;1s      &gt;1s      &gt;1s   675.12   297.59   172.19   208.07   112.99   126.48   108.19    56.52    19.46
+239.5M       &gt;1s      &gt;1s      &gt;1s   903.49   391.23   221.35   245.96   144.35   174.01   121.32    72.31    23.56
+303.9M       &gt;1s      &gt;1s      &gt;1s      &gt;1s   541.06   302.64   303.65   191.49   198.22   153.02    95.13    32.62
+385.7M       &gt;1s      &gt;1s      &gt;1s      &gt;1s   726.35   427.34   391.30   238.71   248.83   198.50   122.30    43.70
+489.4M       &gt;1s      &gt;1s      &gt;1s      &gt;1s      &gt;1s   546.64   502.92   314.65   337.60   252.66   154.78    54.44
+621.0M       &gt;1s      &gt;1s      &gt;1s      &gt;1s      &gt;1s   793.78   706.32   456.51   408.93   334.38   203.16    66.73
+788.0M       &gt;1s      &gt;1s      &gt;1s      &gt;1s      &gt;1s      &gt;1s   899.35   518.50   532.83   428.91   262.75    93.48
+1000.0M      &gt;1s      &gt;1s      &gt;1s      &gt;1s      &gt;1s      &gt;1s      &gt;1s   696.30   685.83   552.79   331.99   122.19</code></pre>
+</details>
+</figure>
+<p>What did we learn?<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a> Mostly that optimisation is weird and messy, I
+guess, but also that some memory is just actually more equal than
+others. Almost<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a> every performance improvement came down to that:
+pack the sieve into bits so that more of it fits into the smaller
+caches, make that even better by not representing numbers that are easy
+to reject statically, and make that even <em>even</em> better by working in
+chunks so that the bulk of the work is always done in L1. Cheating and
+just not accessing slow memory much at all by refusing to materialise
+the entire array also works. It’s quite surprising how much one can
+squeeze out of “just look at your hardware, duh” (and I definitely am
+still far from doing that to its full extend).</p>
+<p>Finally, an actual comparison against <code>primesieve</code>:<a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a></p>
+<pre class="console"><code>$ primesieve -t1 1e9
+Sieve size = 256 KiB
+Threads = 1
+100%
+Seconds: 0.105
+Primes: 50847534
+
+$ ./p -e9 1000000000
+n:50847534
+
+$ hyperfine 'primesieve -t1 1e9' 'taskset -c 0-3 ./p -e9 1000000000'
+Benchmark 1: primesieve -t1 1e9
+  Time (mean ± σ):      81.6 ms ±   4.1 ms    [User: 79.5 ms, System: 1.5 ms]
+  Range (min … max):    74.5 ms …  94.9 ms    30 runs
+
+Benchmark 2: taskset -c 0-3 ./p -e9 1000000000
+  Time (mean ± σ):     117.4 ms ±   4.6 ms    [User: 115.5 ms, System: 1.2 ms]
+  Range (min … max):   110.8 ms … 130.5 ms    25 runs
+
+Summary
+  primesieve -t1 1e9 ran
+    1.44 ± 0.09 times faster than taskset -c 0-3 ./p -e9 1000000000</code></pre>
+<p>Not too bad for, like, six lines of code!</p>
+<div style="text-align: center;">
+<p><img class="fleuron-block" src="../images/fleuron.svg" alt="Before appendix fleuron"></p>
+</div>
+<h2 id="appendix-on-the-coding-style">Appendix: On the coding style</h2>
+<p>I guess I can’t stop without briefly talking about the elephant in the
+room, which is why I chose to <del>obfuscate</del> write this project in
+<del>brainfuck</del> the style of C that I wrote it in. Honestly, I just
+thought it’d be fun. Whitney C has a certain charm
+<a href="./j-incunabulum.html">to</a> <a href="./whitney-k.html">me</a>,<a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a> and I figured I
+might try it out for something kind of trivial, which I however don’t
+have a good grasp on, just to see how it works out.</p>
+<p>I think it went quite well. It certainly delivered on me being able to
+get all variants on a single screen.</p>
+<p>Would I use this again? Yes, but probably with some changes. The
+complete lack of comments is a bit jarring, especially for this kind of
+optimisation project, containing lots of magic numbers—like, what does
+<code>4*j/15</code> mean and how does it work? However, this seems to have a nice
+solution: using <a href="https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/coding-style#2-using-notes">GHC-style
+notes</a>!
+This way, the code can still be clean, and afterwards some notes can
+explain some of the more tricky decisions. Maybe I’ll come up with
+another project to learn about an area of computer science that I’ve
+never played with, and try it out. Or maybe I’ll write normal looking
+code again at some point, who knows.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Well, at least for some definition of it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The <code>wait</code> function is essentially <code>proc.wait(timeout=...)</code>, only
+it doesn’t poll quite as slowly as that one.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Sadly, my CPU doesn’t support AVX-512, so I won’t get to play around with SIMD stuff much :(<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>A good compromise is probably the <code>u64</code> et al that you’d see in Rust.
+For this project, however, that name seems much too long, so I’ll go with the shortened version.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>If you’re throwing up into your mouth a little bit right now,
+perhaps perusing <a href="#appendix-on-the-coding-style">the appendix</a>
+helps. Or maybe not, I don’t know.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Btw, just imagine I had to write</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define F</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="op">*</span><span class="pp"> f</span><span class="op">(</span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> x</span><span class="op">,</span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="op">*</span><span class="pp">y</span><span class="op">){</span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="op">*</span><span class="pp">a</span><span class="op">=</span><span class="pp">malloc</span><span class="op">(...);</span><span class="pp"> </span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> _a</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="pp"> </span><span class="op">*</span><span class="pp">y</span><span class="op">=</span><span class="dv">0</span><span class="op">;</span><span class="pp"> e</span><span class="op">;</span><span class="pp"> </span><span class="op">*</span><span class="pp">y</span><span class="op">=</span><span class="pp">_a</span><span class="op">;</span><span class="pp"> </span><span class="cf">return</span><span class="pp"> a</span><span class="op">;}</span></span></code></pre></div>
+<p>here; or, <em>shudder</em></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define F</span><span class="op">(</span><span class="pp">f</span><span class="op">,</span><span class="pp">e</span><span class="op">...)</span><span class="pp"> </span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="op">*</span><span class="pp"> f</span><span class="op">(</span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> x</span><span class="op">,</span><span class="pp"> </span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="op">*</span><span class="pp">y</span><span class="op">)</span><span class="pp"> </span><span class="op">{</span><span class="pp"> </span><span class="op">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">  </span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="op">*</span><span class="pp">a </span><span class="op">=</span><span class="pp"> malloc</span><span class="op">(...);</span><span class="pp">                                                 </span><span class="op">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="pp">  </span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> _a </span><span class="op">=</span><span class="pp"> </span><span class="dv">0</span><span class="op">;</span><span class="pp">                                                           </span><span class="op">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="pp">  </span><span class="op">*</span><span class="pp">y </span><span class="op">=</span><span class="pp"> </span><span class="dv">0</span><span class="op">;</span><span class="pp">                                                                              </span><span class="op">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="pp">  e</span><span class="op">;</span><span class="pp">                                                                                   </span><span class="op">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="pp">  </span><span class="op">*</span><span class="pp">y </span><span class="op">=</span><span class="pp"> _a</span><span class="op">;</span><span class="pp">                                                                             </span><span class="op">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="pp">  </span><span class="cf">return</span><span class="pp"> a</span><span class="op">;</span><span class="pp">                                                                            </span><span class="op">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>This gets slightly better with <code>uint64_t</code>, but honestly not really.
+Maybe it’s because I’m damaged from doing maths for too long, but I certainly know which macro I’d rather read.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Incidentally, this is one of the tricks that seem very natural
+when looking at this from the point of view of an array
+programmer. Funny how those learnings from 1966 are still
+relevant.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><code>perf</code> yielded a reduction in the branch miss rate from around 6% to 0.7%.
+Very, very worth it.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Note in particular that I’ve written <code>$(x,e;break);</code> instead of <code>$(x,e;break)</code>—the semicolon is important, as it nullifies the dangling else.
+The project started out using just <code>if(x){y;}</code>, but actually the dangling else is quite convenient sometimes.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>All times (now and in future) in ms</p>
+<pre><code>N         triv     simp
+-----  -------  -------
+10K      10.07     1.29
+22K      36.67     1.78
+46K     150.17     2.75
+100K    628.66     5.44
+215K       &gt;1s    13.03
+464K       &gt;1s    34.49
+1.0M       &gt;1s    96.50
+2.2M       &gt;1s   280.83
+4.6M       &gt;1s   817.69
+10.0M      &gt;1s      &gt;1s</code></pre>
+<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn11"><p><a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes#/media/File:Animation_Sieve_of_Eratosth.gif">Creative Commons BY-SA 3.0</a><a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>I’ve cut it in half for the website, but it’s really meant to be read as if it was on a single line.
+This will also be the case for the other functions shown here, perhaps you’ll also need to scroll a bit at some point. Sorry.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>I will go on to immediately break this convention with the
+precomputed tables for the wheel sieve, but what can you do. This
+is the beauty (or curse?) of notation, as opposed to syntax—rules
+can be broken if need be. In this case, it’s mostly for æsthetic
+reasons, though; sorry.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><pre><code>N          simp     era0
+------  -------  -------
+1.0M      96.23     3.03
+1.7M     207.72     4.45
+3.0M     444.11     8.52
+5.2M     968.55    15.01
+9.0M        &gt;1s    26.37
+15.6M       &gt;1s    52.06
+27.0M       &gt;1s   121.76
+46.7M       &gt;1s   248.55
+80.8M       &gt;1s   481.66
+140.0M      &gt;1s   897.84</code></pre>
+<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn15"><p>Since <code>E()</code> is a function-like macro, the preprocessor only tries to expand it if <code>E</code> is followed by an opening parenthesis.
+This way <code>E</code> and <code>E(x)</code> can unambiguously be parsed as the array/the accessor.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Imagine this side-by-side comparison using ordinary C syntax, btw. Notation really does pay off sometimes.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><pre><code>N          era0     era1
+------  -------  -------
+100.0M   619.57   305.78
+110.7M   688.00   345.39
+122.6M   791.96   377.72
+135.7M   903.29   437.96
+150.3M      &gt;1s   498.68
+166.4M      &gt;1s   565.73
+184.2M      &gt;1s   627.49
+203.9M      &gt;1s   740.43
+225.8M      &gt;1s   868.40
+250.0M      &gt;1s      &gt;1s</code></pre>
+<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn18"><p>Yes, this whole project was an incredibly great source of off-by-one errors.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><pre><code>N          era0     era1     era2
+------  -------  -------  -------
+100.0M   615.43   307.33   138.87
+119.6M   760.60   368.65   172.45
+143.0M      &gt;1s   458.51   205.59
+171.0M      &gt;1s   583.20   269.31
+204.5M      &gt;1s   752.89   321.38
+244.5M      &gt;1s   959.24   381.86
+292.4M      &gt;1s      &gt;1s   511.19
+349.7M      &gt;1s      &gt;1s   661.78
+418.1M      &gt;1s      &gt;1s   786.27
+500.0M      &gt;1s      &gt;1s      &gt;1s</code></pre>
+<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn20"><p>The other way around, the number at bit <span class="math inline">i</span> is <span class="math inline">6(i/\!\!/2)+k</span>,
+where <span class="math inline">k</span> is <span class="math inline">1</span> if <span class="math inline">i</span> is even, and <span class="math inline">5</span> otherwise.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>We can even recover <code>era2</code> from this: for <span class="math inline">N = 2</span> there is
+exactly one coprime residue, so <span class="math inline">R = 1</span> and the offset table is
+all zeros. The index of <span class="math inline">n</span> degenerates to <span class="math inline">n/\!\!/2 \cdot 1 + 0
+   = n/\!\!/2</span>.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>There’s no theory here, I think, just playing around with numbers a bit.
+It mostly comes down to the fact that <span class="math inline">4j/\!\!/15</span> is the same as <code>o[j]</code> for all residue classes,
+and so for every number <span class="math inline">30i+j</span>, we have that
+<span class="math display">
+     \texttt{8*i+o[j]} = 8i + 4j/\!\!/15.
+   </span>
+But I’m not a number theorist, maybe there’s a “deeper” reason this works.
+It certainly fails for a 210-based wheel, so that’s just another reason to choose 30.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><pre><code>N          era1     era2     era3
+------  -------  -------  -------
+100.0M   308.28   137.73    82.93
+127.7M   401.13   183.09   106.45
+162.9M   554.98   240.11   146.69
+208.0M   752.79   321.40   184.26
+265.5M      &gt;1s   436.01   248.28
+338.9M      &gt;1s   595.49   344.21
+432.7M      &gt;1s   826.98   474.33
+552.3M      &gt;1s      &gt;1s   661.14
+705.0M      &gt;1s      &gt;1s   907.22
+900.0M      &gt;1s      &gt;1s      &gt;1s</code></pre>
+<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn24"><p>Alternatively, you could also hard-code some small primes and
+then run a sort of generation step beforehand, but since we have
+the non-segmented sieves anyways…</p>
+<p>Btw, I’m using <code>era2</code> instead of <code>era3</code> here since it’s prettier.
+Since <span class="math inline">\sqrt{10^9} \approx 31623</span> is very small, it really doesn’t matter.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><pre><code>N           era2     era3     era4     era5
+-------  -------  -------  -------  -------
+100.0M    147.04    82.43    92.83    64.95
+129.2M    185.26   109.76   121.02    84.45
+166.8M    247.19   145.09   154.63   109.07
+215.4M    327.63   188.63   207.25   141.73
+278.3M    466.80   252.52   270.55   193.87
+359.4M    649.83   373.72   332.22   247.44
+464.2M    927.44   506.73   439.30   314.22
+599.5M       &gt;1s   763.87   573.08   417.01
+774.3M       &gt;1s      &gt;1s   754.38   568.20
+1000.0M      &gt;1s      &gt;1s      &gt;1s   733.29</code></pre>
+<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn26"><p><code>perf</code> reports around 15 billion instructions for <code>era4</code>, but only 10 billion for <code>era5</code>!<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>From some cursory tests, a byte-based wheel is around 15% slower than a bit-based one. Optimisation is weird.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28"><pre><code>N           era3     era4     era5     era6
+-------  -------  -------  -------  -------
+100.0M     83.38    93.25    64.67    62.21
+129.2M    108.11   118.91    83.91    78.05
+166.8M    143.95   155.49   107.10   100.36
+215.4M    191.96   199.95   142.12   134.07
+278.3M    255.28   256.79   186.89   168.95
+359.4M    357.68   337.80   250.05   229.71
+464.2M    512.11   453.39   327.27   310.18
+599.5M    741.32   563.87   411.95   361.88
+774.3M       &gt;1s   747.24   539.81   480.69
+1000.0M      &gt;1s      &gt;1s   712.80   710.96</code></pre>
+<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn29"><p>I could have included 13 here as well, but some preliminary benchmarks tell me that that’s not really any faster.
+Really, the most important ones are 3, 5, and 7, the rest is window-dressing.<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30"><p>Shamelessly cribbed from ngn’s excellent <a href="https://codeberg.org/ngn/k/src/branch/master/4.c">4.c</a>.<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn31"><pre><code>N           era4     era5     era6     era7
+-------  -------  -------  -------  -------
+100.0M     92.63    64.47    59.47    50.24
+129.2M    119.35    84.56    76.49    65.66
+166.8M    159.74   109.87   100.30    86.94
+215.4M    201.89   141.78   136.02   108.16
+278.3M    256.99   186.63   168.53   141.88
+359.4M    332.61   242.31   227.74   181.73
+464.2M    459.20   321.82   295.08   235.95
+599.5M    606.25   427.67   432.14   346.90
+774.3M    764.65   558.69   503.31   396.39
+1000.0M   968.54   733.35   670.41   538.10</code></pre>
+<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn32"><p>Though, as said before, it doesn’t use counting-specific algorithms like <code>primecount</code> does.<a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33"><pre><code>N           era6     era7     era8
+-------  -------  -------  -------
+100.0M     63.13    52.16    29.15
+129.2M     77.90    64.95    35.09
+166.8M     99.21    82.02    46.01
+215.4M    128.58   107.64    58.34
+278.3M    169.85   141.04    78.24
+359.4M    226.03   178.46   102.31
+464.2M    283.17   234.89   133.13
+599.5M    365.55   303.65   180.97
+774.3M    492.92   418.51   228.37
+1000.0M   686.37   516.16   304.23</code></pre>
+<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn34"><pre><code>N           era6     era7     era8     era9
+-------  -------  -------  -------  -------
+100.0M     60.79    51.19    27.30     9.33
+129.2M     82.47    63.61    35.22    12.11
+166.8M    100.33    82.97    45.32    15.52
+215.4M    130.64   106.52    61.22    22.22
+278.3M    172.20   152.28    77.87    29.48
+359.4M    225.90   178.93   111.02    36.43
+464.2M    298.50   266.34   143.21    50.70
+599.5M    430.99   309.69   191.89    65.28
+774.3M    525.78   411.50   248.11    88.40
+1000.0M   729.23   545.91   336.01   116.19</code></pre>
+<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn35"><p>Besides the fact that I much rather prefer things that can be proven over things that have to be measured, but I knew that beforehand.
+Feels more “real”.<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn36"><p>But see <code>era5</code> being faster than <code>era4</code> since, once everything fits into L1, other things become important again.<a href="#fnref36" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn37"><p><code>hyperfine</code> speeds primesieve up for unknown reasons.<a href="#fnref37" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn38"><p>I sometimes wonder if this is a subconscious act of defiance against the over-commented slop that a lot of LLMs produce en masse nowadays;
+in the spirit of <a href="https://ashwinsundar.com/posts/legibility-and-programming">staying illegible</a>, although I don’t think this is what the author had in mind.<a href="#fnref38" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>But what about K?</title>
     <link href="https://tony-zorman.com/posts/whitney-k.html" />
     <id>https://tony-zorman.com/posts/whitney-k.html</id>

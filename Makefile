@@ -18,6 +18,9 @@ check: tidy
 	@miss=$$(grep -L -- 'og-description:' posts/*.md); \
 	if [ -n "$$miss" ]; then echo -e "Missing desc:\n$$miss"; exit 1; fi
 
+optipng:
+	for f in `find images -name '**.png'`; do optipng -o7 $$f; done
+
 tidy: # Courtesy of Susam (https://codeberg.org/susam/susam.net/src/branch/main/Makefile)
 	find docs -name "*.html" | \
         grep -v "docs/posts/hakyll-and-bibtex.html" | \
@@ -33,6 +36,7 @@ tidy: # Courtesy of Susam (https://codeberg.org/susam/susam.net/src/branch/main/
           sed 's/><\/label>/>a<\/label>/g' -i /tmp/tmp.html; \
           sed 's/><\/span>/>a<\/span>/g' -i /tmp/tmp.html; \
           sed 's/<ol type="1">/<ol>/g' -i /tmp/tmp.html; \
+          sed 's/width="400em" height="1.08em"//g' -i /tmp/tmp.html; \
 	  tidy -q -e --warn-proprietary-attributes no /tmp/tmp.html || exit 1; \
 	done
 	@echo Done; echo
