@@ -62,15 +62,15 @@
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <div id="contents">
-    <p class="mini-header">Contents</p>
+      <details id="contents">
+    <summary class="mini-header">Contents</summary>
     <ul>
 <li><a href="#the-problem">The problem</a></li>
 <li><a href="#fixing-haskell-type-signatures">Fixing Haskell type signatures</a></li>
 <li><a href="#fixing-rust-hovers">Fixing Rust hovers</a></li>
 <li><a href="#bonus-adding-type-signatures">Bonus: adding type signatures</a></li>
 </ul>
-  </div>
+  </details>
 By now,
 <span class="small-caps">lsp</span> servers have become the norm for editor-agnostic language support.
 As expected, Emacs features at least two packages that implement the protocol:

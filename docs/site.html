@@ -54,8 +54,13 @@
     </div>
     <div class="text-space">
       <div id="content">
-        <div id="contents">
-    <p class="mini-header">Contents</p>
+        <!-- We want to include the RSS/Atom feed in certain scenarios,
+     but this shouldn't mangle the above header title. -->
+ 
+<h1>About This Website</h1>
+ 
+<details id="contents">
+    <summary class="mini-header">Contents</summary>
     <ul>
 <li><a href="#sidenotes">Sidenotes</a></li>
 <li><a href="#syntax-highlighting">Syntax highlighting</a></li>
@@ -65,12 +70,7 @@
 <li><a href="#no-javascript">No JavaScript</a></li>
 <li><a href="#fonts">Fonts</a></li>
 </ul>
-  </div>
-<!-- We want to include the RSS/Atom feed in certain scenarios,
-     but this shouldn't mangle the above header title. -->
- 
-<h1>About This Website</h1>
- 
+  </details>
 This site is hosted via <a href="https://pages.github.com/">GitHub Pages</a>,
 and the full source code is available on <a href="https://github.com/slotThe/slotThe.github.io">Microsoft GitHub</a>.
 <p></p>

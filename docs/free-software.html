@@ -62,8 +62,13 @@
     </div>
     <div class="text-space">
       <div id="content">
-        <div id="contents">
-    <p class="mini-header">Contents</p>
+        <!-- We want to include the RSS/Atom feed in certain scenarios,
+     but this shouldn't mangle the above header title. -->
+ 
+<h1>Free Software</h1>
+ 
+<details id="contents">
+    <summary class="mini-header">Contents</summary>
     <ul>
 <li><a href="#contributor">Contributor</a>
 <ul>
@@ -81,12 +86,7 @@
 </ul></li>
 <li><a href="#talks">Talks</a></li>
 </ul>
-  </div>
-<!-- We want to include the RSS/Atom feed in certain scenarios,
-     but this shouldn't mangle the above header title. -->
- 
-<h1>Free Software</h1>
- 
+  </details>
 Below is an excerpt of projects that I’m either the author of, or heavily involved with.
 For a complete list see any of the popular Git forges mentioned on the <a href="./about.html" class="local-link">about page</a>.
 <h2 id="contributor">Contributor<a href="#contributor" class="floatleft sec-link">§</a></h2>

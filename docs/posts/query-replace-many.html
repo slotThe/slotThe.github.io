@@ -63,8 +63,8 @@
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <div id="contents">
-    <p class="mini-header">Contents</p>
+      <details id="contents">
+    <summary class="mini-header">Contents</summary>
     <ul>
 <li><a href="#motivation">Motivation</a></li>
 <li><a href="#the-solution">The solution</a>
@@ -72,7 +72,7 @@
 <li><a href="#the-code">The code</a></li>
 </ul></li>
 </ul>
-  </div>
+  </details>
 As its name suggests, Emacs’s <code>query-replace</code> function, bound to <code>M-%</code> by default, can be used to replace occurrences of one string with <span class="nowrap">another—</span>and it’s quite good at what it does.
 However, there is one crucial feature missing from its default functionality: the ability to create multiple <code>from → to</code> pairs.
 But this is Emacs, after all, which means that I can write that <code>query-replace-many</code> function I’ve always wanted, and even share it with others!

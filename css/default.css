@@ -257,18 +257,15 @@ There are two table of contents:
   + For bigger screens, it contained in the left margin and `sticky';
     i.e., moves along with the user as they scroll.
 
-  + For smaller screens, it is embedded within the text, at the very top
-    of the page.
+  + For smaller screens, it is embedded within the text as a <details>.
 
-Because I don't know how else to do this without JS, there are simply
-two div classes: `contents' and `contents-big'.  The former is defined
-in the `default.html' template, while the latter is in `post.html' and
-`toc.html`.  *Both are always embedded in the page*, we just use some
-media queries to hide what we don't want to see.
+Because I don't know how else to do this without JS, there are simply two
+elements: contents and contents-big. Both are always embedded in the page,
+we just use a media query to hide the one we don't want to see.
 ***/
 
 /* Settings that are the same regardless of size */
-div#contents,
+details#contents,
 div#contents-big {
     font-size: 90%;
     font-family: var(--serif-fonts);
@@ -280,7 +277,7 @@ div#contents-big {
     min-width: 180px;
     text-align: left;
     ul {
-        font-size: 85%;      /* In relation to div#contents */
+        font-size: 85%;      /* In relation to contents */
         margin-top: 0.5em;
         margin-bottom: 0.5em;
         padding-left: 0;
@@ -323,7 +320,7 @@ div#contents-big {
 
 /* Bigger screens */
 div#contents-big {
-    clear: both;        /* Don't collide with the sidebar. */
+    clear: both;                /* Don't collide with the sidebar. */
     margin-right: 1.7em;
     margin-left: 0.25em;
     position: sticky;
@@ -333,23 +330,18 @@ div#contents-big {
         padding-left: 1.25em;
     }
     @media (width <= 768px) {
-        visibility: hidden; /* Hide on smaller screens */
-        position: fixed;
+        display: none;          /* Hide on smaller screens */
     }
 }
 
 /* Smaller screens */
-div#contents {
-    padding-bottom: 0.25em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    margin-left: 0.75em;
-    margin-bottom: 0.75em;
-    float: right;
-    position: static;
-    @media (width >= 769px) { /* Hide on bigger screens */
-        visibility: hidden;
-        position: fixed;
+details#contents {
+    float: none;
+    max-width: none;
+    min-width: 0;
+    margin: 0 0 0.75em;
+    @media (width >= 769px) {   /* Hide on bigger screens */
+        display: none;
     }
 }
 

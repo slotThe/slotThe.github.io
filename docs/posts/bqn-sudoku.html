@@ -63,8 +63,8 @@
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <div id="contents">
-    <p class="mini-header">Contents</p>
+      <details id="contents">
+    <summary class="mini-header">Contents</summary>
     <ul>
 <li><a href="#setup">Setup</a></li>
 <li><a href="#version-0">Version 0</a></li>
@@ -72,7 +72,7 @@
 <li><a href="#version-2">Version 2</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul>
-  </div>
+  </details>
 A few days ago, I read a very interesting <a href="https://blog.veitheller.de/Simple_Sudoku_Solvers_SII,_EI:_Dyalog_APL.html">blog post</a> by Veit Heller about solving a regular 9×9 Sudoku puzzle in Dyalog <span class="small-caps">apl</span>.<!--
 --><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">Don’t be intimidated by the number of words on this one, btw; most of those are just matrices and long tuples of coordinates.</div><!--
 --> It’s part of a series of blog posts, starting with a <a href="https://blog.veitheller.de/Six_Simple_Sudoku_Solvers_I:_Python_(Reference).html">reference implementation</a> in Python, about writing a simple depth first search Sudoku solver in a variety of different languages. This made me realise that I’ve never written such a <span class="nowrap">solver—</span>not even a stupid <span class="nowrap">one—</span>myself!

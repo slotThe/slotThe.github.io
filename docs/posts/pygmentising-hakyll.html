@@ -68,8 +68,8 @@
     <section>
       <!-- A table of contents inline in the text, in case the screen is
            too small for the one in the `default.html' template -->
-      <div id="contents">
-    <p class="mini-header">Contents</p>
+      <details id="contents">
+    <summary class="mini-header">Contents</summary>
     <ul>
 <li><a href="#the-problem">The problem</a></li>
 <li><a href="#playing-with-pygmentize">Playing with <code>pygmentize</code></a></li>
@@ -82,7 +82,7 @@
 <li><a href="#epilogue-a-pygments-server">Epilogue: a pygments server</a></li>
 <li><a href="#backlinks">Backlinks</a></li>
 </ul>
-  </div>
+  </details>
 By default, Hakyll uses pandoc to generate syntax highlighting for all
 kinds of different programming languages. However, even in simple
 examples the <span class="small-caps">html</span> this produces is unsatisfactory. Thankfully, the two

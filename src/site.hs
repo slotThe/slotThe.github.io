@@ -210,8 +210,8 @@ aboutMe = do
     compile do
       tocCtx <- getTocCtx defaultContext
       myPandocCompiler
-        >>= loadAndApplyTemplate "templates/title.html"   tocCtx
         >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
+        >>= loadAndApplyTemplate "templates/title.html"   tocCtx
         >>= loadAndApplyTemplate "templates/default.html" tocCtx
         >>= relativizeUrls
 
@@ -220,8 +220,8 @@ aboutMe = do
     compile do
       tocCtx <- getTocCtx defaultContext
       myPandocCompiler
-        >>= loadAndApplyTemplate "templates/title.html"   tocCtx
         >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
+        >>= loadAndApplyTemplate "templates/title.html"   tocCtx
         >>= loadAndApplyTemplate "templates/default.html" tocCtx
         >>= relativizeUrls
 
@@ -542,7 +542,7 @@ mkCleanSnapshot name item = item <$
   saveSnapshot name (withTagList (noPilcrow . supressToc) <$> item)
  where
   noPilcrow  = killTags (~== TagOpen ("a" :: String) [("class", "floatright sec-link")]) (== TagClose "a")
-  supressToc = killTags (==  TagOpen "div"           [("id"   , "contents")])            (== TagClose "div")
+  supressToc = killTags (==  TagOpen "details"       [("id"   , "contents")])            (== TagClose "details")
 
   -- Find @open@ and kill everything between it and @close@.
   killTags :: (Tag String -> Bool) -> (Tag String -> Bool) -> [Tag String] -> [Tag String]
