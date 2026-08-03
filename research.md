@@ -97,6 +97,9 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 # Talks
 
+- *Lifting Adjunctions to Categories of Algebras* \
+  2026-08-06, [COSUMS](https://cosums.gitlab.io/), Dresden.
+
 - *Closed reconstruction* \
   2026-05-12, Seminar [GMM], Dresden. \
   2026-05-26, [Seminar on Quantum groups, Hopf algebras and monoidal categories](https://hopfalgb.ulb.be/), Brussels. \
