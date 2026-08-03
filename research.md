@@ -65,6 +65,15 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## Preprints
 
+- *[Gabi-Monads]* <span class="floatright">[@halbig26:gabi-monad]</span> \
+
+  We study gabi-monads on skew-closed categories, extending the gabi-algebras of Berger, the second author, and Vercruysse beyond the linear case.
+  Our main reconstruction theorem identifies gabi-monad structures on a monad with skew-closed structures on its Eilenberg–Moore category for which the canonical forgetful functor is strict closed.
+  We compare this notion with closed monads in the sense of Kock, showing that in representation-theoretic cases these notions are quite different.
+  On closed monoidal categories, every left Hopf monad is a normal gabi-monad, but the converse fails in general.
+  We characterise when a gabi-monad is Hopf by the invertibility of the corresponding parametric mates, which recovers the ring-theoretic result that normal gabi-algebras over a commutative base ring are Hopf algebras.
+  The theory of gabi-monads admits several natural examples, such as torsion-free modules, reflexive digraphs, and simplicial complexes, that we will explore in detail; we also study pointed sets as a quasi-example.
+
 - *[Duoidal R-Matrices]* <span class="floatright">[@zorman25:duoid-r-matric]</span> \
 
   We define an analogue of R-matrices for bialgebras in the setting of a monad that is opmonoidal over two tensor products.
