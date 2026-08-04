@@ -318,6 +318,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
 [Duoidal R-Matrices]: https://arxiv.org/abs/2503.03445
 [GMM]: https://tu-dresden.de/mn/math/geometrie/veranstaltungen/Seminar_Methoden
+[Gabi-Monads]: https://arxiv.org/abs/2607.27846
 [HATC23]: https://www.uni-marburg.de/en/fb12/research-groups/algeblie/projects/hatc23
 [Hopf Algebras and Monoidal Categories]: https://sites.google.com/unife.it/ferrara2024
 [Hopf25]: https://hopfalgb.ulb.be/Hopf2025/
@@ -327,6 +328,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [Uppsala Algebra Seminar]: https://www2.math.uu.se/~vomaz677/seminar.html
 [ct23:landscape]: /talks/ct23-landscape.pdf
 [ct23:portrait]: /talks/ct23-portrait.pdf
+[disputation]: ./disputation.pdf
 [sem:hsha]: /hsha.html
 [sem:mackey-functors]: /mackey-functors.html
 [slides:abstact-schur-functors]: /talks/abstract-schur-functors.pdf
@@ -335,7 +337,6 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
 [slides:profunctor]: /talks/profunctor-optics.pdf
 [slides:visual-cat]: /talks/visual-category-theory.pdf
-[disputation]: ./disputation.pdf
 
 [^1]: {-} I may be found on the [arXiv], [orcid], and [zbmath].
 
