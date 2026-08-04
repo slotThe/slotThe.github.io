@@ -22,6 +22,7 @@ executable site
                   , bytestring
                   , citeproc
                   , directory
+                  , filepath
                   , Diff
   ghc-options:    -Weverything
                   -Wno-implicit-prelude

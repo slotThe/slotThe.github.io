@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noai, noimageai">
+    <!-- Link previews in Signal and friends -->
+    <title>Externalising for arXiv · Tony Zorman</title>
+    <meta name="og:title" content="Externalising for arXiv">
+    
+    <meta name="og:site" content="tony-zorman.com">
+    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.png">
+    <meta property="og:image:height" content="221">
+    <meta property="og:image:width" content="197">
+
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css"><link rel="stylesheet" type="text/css" href="../css/garden.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/katex.css">
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
+  </head>
+
+  <body>
+    <div class="navbar-space">
+      <div id="navigation">
+        <a href="../" class="menu-title">Tony's site</a>
+        <ul>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../posts.html">Posts</a></li>
+          <li><a href="../garden.html">Garden</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../free-software.html">Free Software</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../site.html">Colophon</a></li>
+        </ul>
+      </div>
+      <!-- A table of contents on the left side, but only for screens that are big enough -->
+    </div>
+    <div class="text-space">
+      <div id="content">
+        <article>
+  <div class="header">
+      <a href="../programming.html" class="back">← Programming</a>
+      &nbsp;·&nbsp;&nbsp;planted 9th Aug 2026
+      </div>
+    <h1 class="note-title">Externalising for arXiv</h1>
+    <div id="title-underline"></div>
+    <section>
+      In your main LaTeX file:
+<div class="highlight-tex" style="padding-left: 1em;"><pre><span></span><span class="k">\ifdefined\tikzexternalrealjob</span><span class="c">% Pass defs to externalisation subrun</span>
+  <span class="k">\def\UseTikzCache</span><span class="nb">{}</span><span class="k">\def\MakeTikzCache</span><span class="nb">{}</span>
+  <span class="c">% Cross-references need main.aux, but figure jobs might then read an</span>
+  <span class="c">% incomplete hyperref bookmarks file.</span>
+  <span class="k">\PassOptionsToPackage</span><span class="nb">{</span>bookmarks=false<span class="nb">}{</span>hyperref<span class="nb">}</span>
+<span class="k">\fi</span>
+
+<span class="k">\ifdefined\UseTikzCache</span>
+  <span class="k">\usetikzlibrary</span><span class="nb">{</span>external<span class="nb">}</span>
+  <span class="k">\tikzexternalize</span><span class="na">[prefix=tikz-cache/, figure name=tikz-]</span>
+  <span class="k">\tikzset</span><span class="nb">{</span>external/mode=graphics if exists<span class="nb">}</span>
+  <span class="k">\ifdefined\MakeTikzCache</span>
+    <span class="k">\tikzset</span><span class="nb">{</span>external/mode=convert with system call<span class="nb">}</span>
+  <span class="k">\fi</span>
+  <span class="k">\ExplSyntaxOn\makeatletter</span>
+  <span class="k">\let\orig@tikzcd\tikzcd</span>
+  <span class="k">\let\orig@endtikzcd\endtikzcd</span>
+  <span class="k">\RenewDocumentEnvironment</span><span class="nb">{</span>tikzcd<span class="nb">}{</span>O<span class="nb">{}</span>+b<span class="nb">}{</span>
+    <span class="k">\begin</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>[commutative~diagrams/.cd, every~diagram, #1]
+      <span class="k">\tl_set:Nn</span> <span class="k">\l_tmpa_tl</span> <span class="nb">{</span> #2 <span class="nb">}</span>
+      <span class="k">\tl_replace_all:Nnn</span> <span class="k">\l_tmpa_tl</span> <span class="nb">{</span> <span class="k">\&amp;</span> <span class="nb">}</span> <span class="nb">{</span> <span class="k">\pgfmatrixnextcell</span> <span class="nb">}</span>
+      <span class="k">\tl_replace_all:Nnn</span> <span class="k">\l_tmpa_tl</span> <span class="nb">{</span> <span class="nb">&amp;</span> <span class="nb">}</span> <span class="nb">{</span> <span class="k">\pgfmatrixnextcell</span> <span class="nb">}</span>
+      <span class="k">\let\saved@tikzpicture\tikzpicture</span>
+      <span class="k">\let\saved@endtikzpicture\endtikzpicture</span>
+      <span class="k">\def\tikzpicture</span><span class="na">[##1]</span><span class="nb">{}</span>
+      <span class="k">\let\endtikzpicture\relax</span>
+      <span class="k">\orig@tikzcd</span>
+        <span class="k">\l_tmpa_tl</span>
+      <span class="k">\orig@endtikzcd</span>
+      <span class="k">\let\tikzpicture\saved@tikzpicture</span>
+      <span class="k">\let\endtikzpicture\saved@endtikzpicture</span>
+    <span class="k">\end</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>
+  <span class="nb">}{}</span>
+  <span class="k">\ExplSyntaxOff\makeatother</span>
+<span class="k">\fi</span>
+</pre></div>
+<p></p>
+A makefile to use it:
+
+<div class="highlight-makefile" style="padding-left: 1em;"><pre><span></span><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">arxiv</span> <span class="n">pkg</span> <span class="n">clean</span> <span class="n">nuke</span>
+<span class="nv">.DEFAULT_GOAL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>main.pdf
+
+<span class="nf">%.pdf</span><span class="o">:</span><span class="w"> </span>%.<span class="n">tex</span>
+<span class="w">	</span>latexmk<span class="w"> </span>-pdf<span class="w"> </span>-silent<span class="w"> </span>$&lt;
+
+<span class="nf">arxiv</span><span class="o">:</span>
+<span class="w">	</span>mkdir<span class="w"> </span>-p<span class="w"> </span>tikz-cache
+<span class="w">	</span><span class="k">$(</span>MAKE<span class="k">)</span><span class="w"> </span>clean
+<span class="w">	</span>latexmk<span class="w"> </span>-pdf<span class="w"> </span>-silent<span class="w"> </span>-shell-escape<span class="w"> </span>-usepretex<span class="o">=</span><span class="s1">'\def\MakeTikzCache{}\def\UseTikzCache{}'</span><span class="w"> </span>main.tex
+
+<span class="nf">pkg</span><span class="o">:</span><span class="w"> </span><span class="n">arxiv</span>
+<span class="w">	</span>rm<span class="w"> </span>-f<span class="w"> </span>arxiv.tar.gz
+<span class="w">	</span>mkdir<span class="w"> </span>-p<span class="w"> </span>tmp
+<span class="w">	</span><span class="nb">printf</span><span class="w"> </span><span class="s1">'\\def\\UseTikzCache{}\\pdfoutput=1\n'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cat<span class="w"> </span>-<span class="w"> </span>main.tex<span class="w"> </span>&gt;<span class="w"> </span>tmp/main.tex
+<span class="w">	</span>tar<span class="w"> </span>czf<span class="w"> </span>arxiv.tar.gz<span class="w"> </span>--transform<span class="o">=</span><span class="s1">'s|^tmp/||'</span><span class="w"> </span>tmp/main.tex<span class="w"> </span>main.bbl<span class="w"> </span>tikz-cache/tikz-*.<span class="o">{</span>pdf,dpth<span class="o">}</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+<span class="w">	</span>latexmk<span class="w"> </span>-C<span class="w"> </span>main.tex
+<span class="w">	</span>rm<span class="w"> </span>-f<span class="w"> </span>main.auxlock
+
+<span class="nf">nuke</span><span class="o">:</span><span class="w"> </span><span class="n">clean</span>
+<span class="w">	</span>rm<span class="w"> </span>-rf<span class="w"> </span>tikz-cache<span class="w"> </span>arxiv.tar.gz
+</pre></div>
+<p></p>
+Easy.
+<hr />
+<p></p>
+I used this verbatim for <span class="citation" data-cites="halbig26:gabi-monad">[<a href="#ref-halbig26:gabi-monad" role="doc-biblioref">HSZ26</a>]</span>, and it worked like a charm.
+<h2 id="references">References<a href="#references" class="floatleft sec-link">§</a></h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr>
+<td><div id="ref-halbig26:gabi-monad" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[HSZ26] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Sebastian Halbig</span> and <span class="smallcaps">Paolo Saracco</span> and <span class="smallcaps">Tony Zorman</span>: <a href="https://arxiv.org/abs/2607.27846"><span>G</span>abi-<span>M</span>onads</a>. In: <em>arXiv e-prints</em> (2026)</div></td>
+</tr>
+</tbody>
+</table>
+</div></section>
+    <div style="text-align: center;">
+      <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
+      Have a comment? Write me an <a href="../about.html">email!</a>
+    </div>
+</article>
+</div>
+      <div id="footer">
+        <!-- Left -->
+        <a id="to-top" href="#">top</a>
+        <!-- Right -->
+        <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+        &nbsp;|&nbsp;
+        <a href="../impressum.html">Legal notice and privacy policy</a>
+        <!-- Newline -->
+        <p style="margin-top:0;">Everything on this website—<a style="color:var(--fg-footer-pipe)" href="https://en.wikipedia.org/wiki/Dash#Em_dash">em dash</a> and all—was created by a human</p>
+      </div>
+    </div>
+  </body>
+</html>

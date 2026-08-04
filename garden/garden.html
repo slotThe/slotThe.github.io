@@ -1,0 +1,30 @@
+<h1>Garden</h1>
+
+Welcome to this—so far—quite empty garden.
+Here you can find things that aren't quite good or finished enough to be posts (yet),
+as well as more random things.
+
+<h2 style="border-bottom: 1px solid var(--fg-footer-divider);">Recently tended</h2>
+<table>
+  $for(recently-tended)$
+    <tr>
+      <td style="vertical-align: top; font-variant-numeric: tabular-nums;">$if(tended)$$tended$$else$$date$$endif$</td>
+      <td style="vertical-align: top;">–</td>
+      <td style="vertical-align: top;"><a href="$url$">$title$</a></td>
+    </tr>
+  $endfor$
+</table>
+
+<h2 style="border-bottom: 1px solid var(--fg-footer-divider);">Patches</h2>
+$for(patches)$
+  <h3><a href="$url$">$title$</a></h3>
+  <table>
+    $for(notes)$
+      <tr>
+        <td style="vertical-align: top; font-variant-numeric: tabular-nums;">$date$</td>
+        <td style="vertical-align: top;">–</td>
+        <td style="vertical-align: top;"><a href="$url$">$title$</a></td>
+      </tr>
+    $endfor$
+  </table>
+$endfor$

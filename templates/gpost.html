@@ -1,0 +1,18 @@
+<article>
+  <div class="header">
+      <a href="$patch-url$" class="back">← $patch$</a>
+      &nbsp;·&nbsp;&nbsp;planted $date$
+      $if(tended)$&nbsp;&nbsp;·&nbsp;&nbsp;tended $tended$$endif-$
+    </div>
+    <h1 class="note-title">$title$</h1>
+    <div id="title-underline"></div>
+    <section>
+      $body-$
+    </section>
+    $if(no-comment)-$$else-$
+    <div style="text-align: center;">
+      <img class="fleuron-block" src="/images/fleuron.svg" alt="End of post fleuron">
+      Have a comment? Write me an <a href="/about.html">email!</a>
+    </div>
+    $-endif$
+</article>

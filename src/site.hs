@@ -9,6 +9,7 @@
 {-# LANGUAGE NumDecimals         #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TupleSections       #-}
 {-# LANGUAGE TypeApplications    #-}
 {-# LANGUAGE ViewPatterns        #-}
 
@@ -22,13 +23,15 @@ import Control.Monad.Except (catchError)
 import Data.Algorithm.Diff (Diff, PolyDiff (..), getGroupedDiff)
 import Data.Bifunctor (bimap, second)
 import Data.ByteString.Lazy.Char8 qualified as BL
+import Data.Char (toUpper)
 import Data.Foldable (for_)
 import Data.Function (on)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
-import Data.List (groupBy, intersperse, stripPrefix)
+import Data.List (groupBy, intersperse, sortOn, stripPrefix)
 import qualified Data.Map.Strict as Map
 import Data.Maybe
+import Data.Ord (Down (..))
 import qualified Data.Set as Set
 import Data.String (IsString)
 import Data.Text (Text)
@@ -36,7 +39,8 @@ import Data.Time (UTCTime (..), defaultTimeLocale, formatTime)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll hiding (dateField)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- Only for language recognition; see 'pygmentsHighlight'
-import System.Directory (createDirectoryIfMissing)
+import System.Directory (createDirectoryIfMissing, doesDirectoryExist, listDirectory)
+import System.FilePath (dropExtension, takeBaseName)
 import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==), escapeHTML)
 import Text.Pandoc (PureState (..), FileInfo (FileInfo), insertInFileTree, runPure, modifyPureState)
@@ -64,56 +68,59 @@ config = defaultConfiguration
   ignoreFile' fp = fp `elem` ["dist-newstyle", "scripts", "uncompressed_fonts"]
 
 main :: IO ()
-main = hakyllWith config do
-  -- Housekeeping
-  match "templates/*" $ compile templateBodyCompiler
-  match "css/*" do
-    route   idRoute
-    compile compressCssCompiler
-  match (     "favicon.ico"
-         .||. "images/**"
-         .||. "talks/**.pdf"
-         .||. "css/fonts/**"
-         .||. "robots.txt"
-         .||. "CNAME"
-        )
-    do route   idRoute
-       compile copyFileCompiler
+main = do
+  patches <- filterM doesDirectoryExist . map ("garden/" <>) =<< listDirectory "garden"
+  hakyllWith config do
+    -- Housekeeping
+    match "templates/*" $ compile templateBodyCompiler
+    match "css/*" do
+      route   idRoute
+      compile compressCssCompiler
+    match (     "favicon.ico"
+           .||. "images/**"
+           .||. "talks/**.pdf"
+           .||. "css/fonts/**"
+           .||. "robots.txt"
+           .||. "CNAME"
+          )
+      do route   idRoute
+         compile copyFileCompiler
 
-  -- These files are copied to a URL without any prefix beyond the site root.
-  match "files/**.pdf" do
-    route   (customRoute \(toFilePath -> fp) -> fromMaybe fp (stripPrefix "files/" fp))
-    compile copyFileCompiler
+    -- These files are copied to a URL without any prefix beyond the site root.
+    match "files/**.pdf" do
+      route   (customRoute \(toFilePath -> fp) -> fromMaybe fp (stripPrefix "files/" fp))
+      compile copyFileCompiler
 
-  -- https://codeberg.org/susam/wander
-  match "wander/*" do
-    route idRoute
-    compile copyFileCompiler
+    -- https://codeberg.org/susam/wander
+    match "wander/*" do
+      route idRoute
+      compile copyFileCompiler
 
-  -- Redirects
-  version "redirects" $ createRedirects redirects
+    -- Redirects
+    version "redirects" $ createRedirects redirects
 
-  -- Citations
-  match "bib/style.csl"        $ compile cslCompiler    -- labels: [DaPaSt07]
-  match "bib/bibliography.bib" $ compile biblioCompiler
+    -- Citations
+    match "bib/style.csl"        $ compile cslCompiler    -- labels: [DaPaSt07]
+    match "bib/bibliography.bib" $ compile biblioCompiler
 
-  -- Generate tags
-  tags <- buildTags "posts/**" (fromCapture "tags/**.html")
-  let tagCtx = tagsFieldWith getTags
-                             (simpleRenderLink . ("#" <>))
-                             (mconcat . intersperse "   ")
-                             "tags"
-                             tags
-            <> postCtx
+    -- Generate tags
+    tags <- buildTags "posts/**" (fromCapture "tags/**.html")
+    let tagCtx = tagsFieldWith getTags
+                               (simpleRenderLink . ("#" <>))
+                               (mconcat . intersperse "   ")
+                               "tags"
+                               tags
+              <> postCtx
 
-  -- Build some pages!
-  landing
-  blog        tagCtx
-  posts       tagCtx
-  listOfPosts tags
-  aboutMe
-  standalones tagCtx
-  rss         tags
+    -- Build some pages
+    landing
+    blog        tagCtx
+    posts       tagCtx
+    listOfPosts tags
+    aboutMe
+    standalones tagCtx
+    rss         tags
+    garden      postCtx patches
 
 landing :: Rules ()
 landing = match "index.html" do
@@ -300,6 +307,64 @@ standalones tagCtx = do
         >>= loadAndApplyTemplate "templates/standalone.html" ctx
         >>= action
         >>= relativizeUrls
+
+-- | The garden part of the site.
+garden :: Context String -> [String] -> Rules ()
+garden ctx patches = do
+  let gardenCtx = boolField "garden" (const True) <> ctx
+  -- Patches
+  let patchCtx = listFieldWith "notes" ctx (\(Item p _) -> recentFirst
+                   =<< loadAllSnapshots (fromGlob . (<> "/**.md") . dropExtension $ toFilePath p) "note")
+              <> field "title" (pure . patchTitle . toFilePath . itemIdentifier)
+              <> gardenCtx
+  create patchIds do
+    route noG
+    compile $ makeItem ""
+          >>= loadAndApplyTemplate "templates/gpatch.html"  patchCtx
+          >>= loadAndApplyTemplate "templates/default.html" patchCtx
+          >>= relativizeUrls
+  -- Notes
+  let noteCtx patch = constField "patch" (patchTitle patch)
+                  <> field "patch-url" (const (toUrl . fromJust <$> getRoute (patchId patch)))
+                  <> gardenCtx
+  for_ patches \patch -> match (fromGlob (patch <> "/**.md")) do
+    route $ setExtension "html" `composeRoutes` noG
+    compile $ myPandocCompiler
+      >>= saveSnapshot "note"
+      >>= loadAndApplyTemplate "templates/gpost.html"   (noteCtx patch)
+      >>= loadAndApplyTemplate "templates/default.html" (noteCtx patch)
+      >>= relativizeUrls
+  -- Landing page
+  let landingCtx = listField "recently-tended" ctx (fmap (take 5) $ recentNotes
+                     =<< loadAllSnapshots (fromGlob "garden/*/**.md") "note")
+                <> listField "patches" patchCtx (traverse load patchIds)
+                <> gardenCtx
+  match "garden/garden.html" do
+    route (customRoute \_ -> "garden.html")
+    compile $ getResourceBody
+          >>= applyAsTemplate                               landingCtx
+          >>= loadAndApplyTemplate "templates/default.html" landingCtx
+          >>= relativizeUrls
+ where
+  noG :: Routes
+  noG = customRoute \(toFilePath -> fp) -> fromMaybe fp (stripPrefix "garden/" fp)
+
+  patchIds :: [Identifier]
+  patchIds = map patchId patches
+
+  patchId :: String -> Identifier
+  patchId = fromFilePath . (<> ".html")
+
+  patchTitle :: FilePath -> String
+  patchTitle fp = toUpper c : cs where (c:cs) = takeBaseName fp
+
+  -- Recreate essentially recentFirst because we want to sort by both
+  -- last-modified and creation date.
+  recentNotes :: [Item a] -> Compiler [Item a]
+  recentNotes notes = map snd . sortOn (Down . fst) <$>
+    traverse (\i -> (,i) . fromMaybe "" . listToMaybe . catMaybes <$>
+                traverse (getMetadataField (itemIdentifier i)) ["tended", "isodate"])
+             notes
 
 rss :: Tags -> Rules ()
 rss tags = do
@@ -548,7 +613,7 @@ mkCleanSnapshot name item = item <$
   saveSnapshot name (withTagList (noPilcrow . supressToc) <$> item)
  where
   noPilcrow  = killTags (~== TagOpen ("a" :: String) [("class", "floatright sec-link")]) (== TagClose "a")
-  supressToc = killTags (==  TagOpen "details"       [("id"   , "contents")])            (== TagClose "details")
+  supressToc = killTags (==  TagOpen "details"      [("id"   , "contents")])            (== TagClose "details")
 
   -- Find @open@ and kill everything between it and @close@.
   killTags :: (Tag String -> Bool) -> (Tag String -> Bool) -> [Tag String] -> [Tag String]

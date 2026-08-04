@@ -1,0 +1,23 @@
+h1.note-title {
+                               font-size: 2.5rem;
+    @media (width <= 1366px) { font-size: 2rem; }
+    line-height: 1.15;
+    font-variant: normal;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+a.back {
+    font-family: var(--monospace-fonts);
+}
+
+/* Put footer at bottom of viewport for very short posts */
+.text-space {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    @media (width <= 960px) { min-height: 80vh; }
+}
+div#content { flex-grow: 1; }
