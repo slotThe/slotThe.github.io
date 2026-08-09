@@ -30,6 +30,7 @@ tidy: # Courtesy of Susam (https://codeberg.org/susam/susam.net/src/branch/main/
         grep -v "docs/hsha.html" | \
         grep -v "docs/impressum.html" | \
         grep -v "docs/mackey-functors.html" | \
+        grep -v "blog.html" | \
 	while read -r p; do \
 	  echo Tidying "$$p"; \
 	  sed 's/<p><\/p>//' "$$p" > /tmp/tmp.html; \
