@@ -11266,8 +11266,8 @@ However, this is not important for what follows, so I simply omitted it.</p>
     <updated>2023-06-20T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      20th Jun 2023–1 Feb 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2970 words">12 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+      20th Jun 2023–9 Aug 2026
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3559 words">15 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
       </div>
     <h1 class="post-title">Incorporating BibTeX into Hakyll</h1>
@@ -11302,9 +11302,9 @@ I settled on one that closely resembles <code>biblatex</code>’s “alphabetic�
 <div class="highlight">
 <p>
 This is a line citing
-<span>[<a href="#ref-benabou67:bicats-intro" role="doc-biblioref">Béna67</a>]</span>
+<span>[<a href="#ref-benabou67:bicats-intro" role="doc-biblioref">Bén67</a>]</span>
 and
-<span>[<a href="ref-day07:lax-intro" role="doc-biblioref">DaPaSt07</a>]</span>.
+<span>[<a href="#ref-day07:lax-intro" role="doc-biblioref">DPS07</a>]</span>.
 </p>
 <h2>
 References
@@ -11315,7 +11315,7 @@ References
 <div id="ref-benabou67:bicats-intro">
 <td style="vertical-align: top">
 <div class="csl-left-margin">
-[Béna67]
+[Bén67]
 </div>
 </td>
 <td>
@@ -11331,7 +11331,7 @@ J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction 
 <div id="ref-day07:lax-intro" class="csl-entry" role="doc-biblioentry">
 <td style="vertical-align: top">
 <div class="csl-left-margin">
-[DaPaSt07]
+[DPS07]
 </div>
 </td>
 <td>
@@ -11402,12 +11402,12 @@ Citations should now work out of the box using the <code>[@citation-name]</code>
 They appear like this:</p>
 <div id="ref-first-try" class="highlight">
 <p>
-This is a line citing <span>[Béna67]</span>, and <span>[DaPaSt07]</span>.
+This is a line citing <span>[Bén67]</span>, and <span>[DPS07]</span>.
 </p>
 <div>
 <div>
 <div>
-[Béna67]
+[Bén67]
 </div>
 <div>
 J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
@@ -11415,7 +11415,7 @@ J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction 
 </div>
 <div>
 <div>
-[DaPaSt07]
+[DPS07]
 </div>
 <div>
 B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
@@ -11495,7 +11495,7 @@ already gives some idea as to what needs to be done:</p>
 which in turn has quite a simple implementation.
 Notice in particular the <code>traverse f =&lt;&lt; readPandocWith ropt i</code> bit;
 <code>readPandocWith</code> returns a <code>Compiler (Item Pandoc)</code>,
-so the <code>traverse</code> above exactly transform our <code>f</code> into a function that works at the <code>Item</code> level.
+so the <code>traverse</code> above exactly transforms our <code>f</code> into a function that works at the <code>Item</code> level.
 Omitting this yields the desired functions:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>myRenderPandocWithTransformM</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  ::</span> <span class="dt">ReaderOptions</span> <span class="ot">-&gt;</span> <span class="dt">WriterOptions</span></span>
@@ -11613,7 +11613,7 @@ this time inside our <code>processBib</code> function:<a href="#fn5" class="foot
 <p>The citations now look like this:</p>
 <div class="highlight">
 <p>
-This is a line citing <span>[Béna67]</span>, and <span>[DaPaSt07]</span>.
+This is a line citing <span>[Bén67]</span>, and <span>[DPS07]</span>.
 </p>
 <h2>
 References
@@ -11621,7 +11621,7 @@ References
 <div>
 <div>
 <div>
-[Béna67]
+[Bén67]
 </div>
 <div>
 J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
@@ -11629,7 +11629,7 @@ J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction 
 </div>
 <div>
 <div>
-[DaPaSt07]
+[DPS07]
 </div>
 <div>
 B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
@@ -11651,7 +11651,7 @@ Thankfully, this is easily fixed by a tiny bit of CSS.</p>
 <p>Much better:</p>
 <div class="highlight">
 <p>
-This is a line citing <span>[Béna67]</span> and <span>[DaPaSt07]</span>.
+This is a line citing <span>[Bén67]</span> and <span>[DPS07]</span>.
 </p>
 <h2>
 References
@@ -11659,7 +11659,7 @@ References
 <div>
 <div>
 <div class="csl-left-margin">
-[Béna67]
+[Bén67]
 </div>
 <div class="csl-right-inline">
 J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
@@ -11667,7 +11667,7 @@ J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction 
 </div>
 <div>
 <div class="csl-left-margin">
-[DaPaSt07]
+[DPS07]
 </div>
 <div class="csl-right-inline">
 B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
@@ -11703,17 +11703,17 @@ so I didn’t.</p>
 <div class="highlight">
 <p>
 This is a line citing
-<span>[<a href="#ref-benabou67:bicats-1" role="doc-biblioref">Béna67</a>]</span>
+<span>[<a href="#ref-benabou67:bicats-1" role="doc-biblioref">Bén67</a>]</span>
 and
-<span>[<a href="ref-day07:lax-1" role="doc-biblioref">DaPaSt07</a>]</span>.
+<span>[<a href="#ref-day07:lax-1" role="doc-biblioref">DPS07</a>]</span>.
 </p>
 <h2>
 References
 </h2>
 <div id="refs1" class="references csl-bib-body" role="doc-bibliography">
-<div id="ref-benabou67:bicats-a">
+<div id="ref-benabou67:bicats-1">
 <div class="csl-left-margin">
-[Béna67]
+[Bén67]
 </div>
 <div class="csl-right-inline">
 J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967.
@@ -11721,7 +11721,7 @@ J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction 
 </div>
 <div id="ref-day07:lax-1" class="csl-entry" role="doc-biblioentry">
 <div class="csl-left-margin">
-[DaPaSt07]
+[DPS07]
 </div>
 <div class="csl-right-inline">
 B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17.
@@ -11768,12 +11768,12 @@ and replace accordingly:</p>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Div</span> attr [<span class="dt">Para</span> [s1, s2]] <span class="ot">-&gt;</span></span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>      [<span class="dt">Div</span> attr [<span class="dt">Plain</span> [s1]], <span class="dt">Plain</span> [<span class="dt">Space</span>], <span class="dt">Plain</span> [s2]]</span>
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    _ <span class="ot">-&gt;</span> <span class="fu">error</span> <span class="st">&quot;citToRow: unexpected citation format.&quot;</span></span></code></pre></div>
-<p>Just signaling an <code>error</code> here
+<p>Just signalling an <code>error</code> here
 in case of an unexpected format
 was nice for debugging the code<!--
 -->—I missed the <code>Para</code> at first—<!--
 -->and at this point I see no reason to change it.
-Perhaps it is better to fail fast in theses kinds of situations,
+Perhaps it is better to fail fast in these kinds of situations,
 instead of trying to desperately produce something based off garbage input.</p>
 <p>The <code>tableiseBib</code> function can
 be incorporated into <code>processBib</code>
@@ -11796,9 +11796,9 @@ For completeness, here it is again:</p>
 <div class="highlight">
 <p>
 This is a line citing
-<span>[<a href="#ref-benabou67:bicats" role="doc-biblioref">Béna67</a>]</span>
+<span>[<a href="#ref-benabou67:bicats" role="doc-biblioref">Bén67</a>]</span>
 and
-<span>[<a href="ref-day07:lax" role="doc-biblioref">DaPaSt07</a>]</span>.
+<span>[<a href="#ref-day07:lax" role="doc-biblioref">DPS07</a>]</span>.
 </p>
 <h2>
 References
@@ -11809,7 +11809,7 @@ References
 <div id="ref-benabou67:bicats">
 <td style="vertical-align: top">
 <div class="csl-left-margin">
-[Béna67]
+[Bén67]
 </div>
 </td>
 <td>
@@ -11825,7 +11825,7 @@ J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction 
 <div id="ref-day07:lax" class="csl-entry" role="doc-biblioentry">
 <td style="vertical-align: top">
 <div class="csl-left-margin">
-[DaPaSt07]
+[DPS07]
 </div>
 </td>
 <td>
@@ -11846,7 +11846,7 @@ B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax cent
 this was surprisingly easy to add for such a useful feature!
 Plus, playing around with pandoc filters is always fun.</p>
 <p>Especially the <code>my​{render​Pandoc,Pandoc​Compiler}​With​TransformM</code> functions
-could—with different names, of course—perhaps be contributed to upstream Hakyll.
+could—with different names, of course—perhaps be contributed to upstream Hakyll.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
 A variant of any of the <code>*PandocBiblio</code> functions
 that explicitly accepts a list of additional arguments
 to give to <code>citeproc</code> might also be useful;
@@ -11855,6 +11855,77 @@ after all.
 Finally, I think a format along the lines of <code>tableiseBib</code> would be quite nice to have with label-style citations.
 However, the current implementation is much too specific to justify living anywhere but a personal configuration.
 Some day, maybe.</p>
+<div style="text-align: center;">
+<p><img class="fleuron-block" src="../images/fleuron.svg" alt="Before appendix fleuron"></p>
+</div>
+<h2 id="extra-tuning-citation-rendering">Extra: tuning citation rendering</h2>
+<p>You’ll probably notice that the citation style I linked does not <em>quite</em> resemble BibTeX’s <code>alphabetic</code> style:
+instead of three letters for a single-author paper and one for a multi-author one, it instead uses four and two, respectively.
+I think this is quite ugly, but fixing it is a bit of an annoying task, as <code>citeproc</code> has lots of hard-coded internals it doesn’t really expose in a friendly way.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>To fix this, we’ll have to slurp citations from the bibliography file, recreate what <code>citeproc</code>’s
+<a href="https://hackage-content.haskell.org/package/citeproc-0.13.0.1/docs/src/Citeproc.Eval.html#citationLabel">citationLabel</a>
+function does internally, and then substitute our own abbreviations in the already rendered HTML.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ot">relabel ::</span> <span class="dt">Item</span> <span class="dt">Biblio</span> <span class="ot">-&gt;</span> <span class="dt">Pandoc</span> <span class="ot">-&gt;</span> <span class="dt">Pandoc</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>relabel bib <span class="ot">=</span> walk \<span class="kw">case</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Cite</span> cs is                                        <span class="ot">-&gt;</span> <span class="dt">Cite</span> cs (go is)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Span</span> as<span class="op">@</span>(_, c, _) is <span class="op">|</span> <span class="st">&quot;csl-left-margin&quot;</span> <span class="ot">`elem`</span> c <span class="ot">-&gt;</span> <span class="dt">Span</span> as (go is)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  i                                                 <span class="ot">-&gt;</span> i</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="ot">  go ::</span> [<span class="dt">Inline</span>] <span class="ot">-&gt;</span> [<span class="dt">Inline</span>]</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  go <span class="ot">=</span> <span class="fu">map</span> \<span class="kw">case</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Str</span> s <span class="ot">-&gt;</span> <span class="dt">Str</span> <span class="op">.</span> (\t <span class="ot">-&gt;</span> foldl' (\u (new, old) <span class="ot">-&gt;</span> T.replace old new u) t subs)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>           <span class="op">$</span> T.filter (<span class="op">/=</span> <span class="ch">' '</span>) s</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Link</span> a is t <span class="ot">-&gt;</span> <span class="dt">Link</span> a (go is) t</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    is <span class="ot">-&gt;</span> is</span></code></pre></div>
+<p>At least the relabelling part is relatively straightforward, we just have to make sure to preserve links.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ot">subs ::</span> [(<span class="dt">Text</span>, <span class="dt">Text</span>)]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>subs <span class="ot">=</span> <span class="fu">either</span> (<span class="fu">fail</span> <span class="op">.</span> <span class="fu">show</span>) mkSubs <span class="op">$</span> runPure <span class="kw">do</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    modifyPureState \st <span class="ot">-&gt;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>      st{ stFiles <span class="ot">=</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        insertInFileTree</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;_.bib&quot;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>          (<span class="dt">FileInfo</span> (<span class="dt">UTCTime</span> (<span class="fu">toEnum</span> <span class="dv">0</span>) <span class="dv">0</span>) (unBiblio (itemBody bib)))</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>          (stFiles st) }</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    getReferences <span class="dt">Nothing</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span> setMeta</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;nocite&quot;</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>          (<span class="dt">MetaInlines</span> [<span class="dt">Cite</span> [<span class="dt">Citation</span> <span class="st">&quot;*&quot;</span> [] [] <span class="dt">NormalCitation</span> <span class="dv">0</span> <span class="dv">0</span>] []])</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span> setMeta <span class="st">&quot;bibliography&quot;</span> (<span class="st">&quot;_.bib&quot;</span><span class="ot"> ::</span> <span class="dt">Text</span>)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>      <span class="op">$</span> <span class="fu">mempty</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="ot">  mkSubs ::</span> [<span class="dt">Reference</span> a] <span class="ot">-&gt;</span> [(<span class="dt">Text</span>, <span class="dt">Text</span>)]</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  mkSubs <span class="ot">=</span> <span class="fu">foldMap</span> dis <span class="op">.</span> groupBy ((<span class="op">==</span>) <span class="ot">`on`</span> <span class="fu">fst</span>) <span class="op">.</span> Set.toList <span class="op">.</span> Set.fromList</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>     <span class="op">.</span> <span class="fu">map</span> newOld</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>   <span class="kw">where</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="ot">    dis ::</span> [(<span class="dt">Text</span>, <span class="dt">Text</span>)] <span class="ot">-&gt;</span> [(<span class="dt">Text</span>, <span class="dt">Text</span>)] <span class="co">-- disambiguation</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    dis <span class="ot">=</span> \<span class="kw">case</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>      [x] <span class="ot">-&gt;</span> [x]</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>      xs  <span class="ot">-&gt;</span> <span class="fu">zipWith</span> (\x s <span class="ot">-&gt;</span> first (<span class="op">&lt;&gt;</span> s) x) xs (<span class="fu">map</span> T.singleton [<span class="ch">'a'</span> <span class="op">..</span> <span class="ch">'z'</span>])</span></code></pre></div>
+<p><code>subs</code> consists of <code>new,old</code> pairs, for mangling in <code>relabel</code>.
+It really is necessary that we create a fake <code>_.bib</code> file, and not just give <code>setMeta</code> a string with all the citations,
+since <code>getReferences</code> expects a file that it can read from, and recreating that function as well sounds like even more of a pain.
+We also have to do disambiguation of references ourselves, in which case we just append a lower-case letter after the year.
+Thankfully at least <a href="https://pandoc.org/demo/example33/9.5-including-uncited-items-in-the-bibliography.html">including all references</a> is easy.</p>
+<p>Where is the manual recreation of <code>citationLabel</code> internals, you ask? Well…</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ot">newOld ::</span> <span class="dt">Reference</span> a <span class="ot">-&gt;</span> (<span class="dt">Text</span>, <span class="dt">Text</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>newOld ref <span class="ot">=</span> (new <span class="op">&lt;&gt;</span> year, <span class="fu">foldMap</span> (T.take abbrev) (<span class="fu">take</span> <span class="dv">4</span> fam) <span class="op">&lt;&gt;</span> year)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">where</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  names  <span class="ot">=</span> ns <span class="kw">where</span> <span class="dt">NamesVal</span> ns <span class="ot">=</span> referenceVariables ref <span class="op">Map.!</span> <span class="st">&quot;author&quot;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  fam    <span class="ot">=</span> <span class="fu">map</span> (fromMaybe <span class="st">&quot;&quot;</span> <span class="op">.</span> nameFamily) names</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  abbrev <span class="ot">=</span> <span class="kw">case</span> <span class="fu">length</span> names <span class="kw">of</span> <span class="dv">1</span><span class="ot">-&gt;</span><span class="dv">4</span>; n<span class="op">|</span>n<span class="op">&gt;=</span><span class="dv">4</span><span class="ot">-&gt;</span><span class="dv">1</span>; _<span class="ot">-&gt;</span><span class="dv">2</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  new    <span class="ot">=</span> <span class="kw">case</span> fam <span class="kw">of</span> [f]<span class="ot">-&gt;</span>T.take <span class="dv">3</span> f; fs<span class="ot">-&gt;</span><span class="fu">foldMap</span> (T.take <span class="dv">1</span>) fs</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  year   <span class="ot">=</span> <span class="kw">case</span> referenceVariables ref <span class="op">Map.!?</span> <span class="st">&quot;issued&quot;</span> <span class="kw">of</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Just</span> (<span class="dt">DateVal</span> d) <span class="op">|</span> (<span class="dt">DateParts</span> (y <span class="op">:</span> _) <span class="op">:</span> _) <span class="ot">&lt;-</span> dateParts d</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>      <span class="ot">-&gt;</span> T.justifyRight <span class="dv">2</span> <span class="ch">'0'</span> <span class="op">.</span> T.pack <span class="op">.</span> <span class="fu">show</span> <span class="op">$</span> y <span class="ot">`mod`</span> <span class="dv">100</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    _ <span class="ot">-&gt;</span> <span class="st">&quot;&quot;</span></span></code></pre></div>
+<p>Having all of this in place, one simply needs to adjust <code>processBib</code> to</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ot">processBib ::</span> <span class="dt">Item</span> <span class="dt">Pandoc</span> <span class="ot">-&gt;</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">Pandoc</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>processBib pandoc <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- ...</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmap</span> (tableiseBib <span class="op">.</span> insertRefHeading <span class="op">.</span> relabel bib)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;$&gt;</span> processPandocBiblio csl bib p</span></code></pre></div>
+<p>for these changes to take effect.
+But a small price to pay for a better look.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
@@ -11891,6 +11962,8 @@ Via the</p>
 I seamlessly walk over all <code>Block</code>s in the AST
 and pick out the ones I’d like to change.
 Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>If you’re reading this post in 2026, then you can now use <code>pandocItemCompilerWithTransformM</code>!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>This is already noted in <a href="https://hackage-content.haskell.org/package/hakyll-4.17.0.0/docs/src/Hakyll.Web.Pandoc.Biblio.html#processPandocBiblio">processPandocBiblio</a>, and not much has improved since then.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!-- Body is included in the above file -->

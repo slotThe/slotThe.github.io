@@ -71,9 +71,10 @@ div#content {           /* body width */
 }
 
 
-/* Don't split up a citation over multiple lines. */
-div.csl-left-margin  { display: inline; }
+/* Don't split up a citation over multiple lines and use lining figures for labels. */
+div.csl-left-margin  { display: inline; font-variant-numeric: lining-nums; }
 div.csl-right-inline { display: inline; }
+.citation            {                  font-variant-numeric: lining-nums; }
 /* No justification for references, as otherwise it's rivers galore. */
 div#refs {
     text-align: left;

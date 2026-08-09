@@ -1,4 +1,4 @@
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas -Wno-operator-whitespace -Wno-incomplete-uni-patterns #-}
 {-# HLINT ignore "Redundant <&>" #-}
 {-# LANGUAGE BangPatterns        #-}
 {-# LANGUAGE BlockArguments      #-}
@@ -15,6 +15,7 @@
 import Data.Text         qualified as T
 import Data.Text.IO.Utf8 qualified as T
 
+import Citeproc.Types (Date (..), DateParts (..), Name (..), Reference (..), Val (..))
 import Control.Arrow ((>>>), first)
 import Control.Monad
 import Control.Monad.Except (catchError)
@@ -22,22 +23,27 @@ import Data.Algorithm.Diff (Diff, PolyDiff (..), getGroupedDiff)
 import Data.Bifunctor (bimap, second)
 import Data.ByteString.Lazy.Char8 qualified as BL
 import Data.Foldable (for_)
+import Data.Function (on)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
-import Data.List (intersperse, stripPrefix)
+import Data.List (groupBy, intersperse, stripPrefix)
+import qualified Data.Map.Strict as Map
 import Data.Maybe
+import qualified Data.Set as Set
 import Data.String (IsString)
 import Data.Text (Text)
-import Data.Time (defaultTimeLocale, formatTime)
+import Data.Time (UTCTime (..), defaultTimeLocale, formatTime)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
 import Hakyll hiding (dateField)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- Only for language recognition; see 'pygmentsHighlight'
 import System.Directory (createDirectoryIfMissing)
 import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==), escapeHTML)
+import Text.Pandoc (PureState (..), FileInfo (FileInfo), insertInFileTree, runPure, modifyPureState)
 import Text.Pandoc.Builder (Format (..), HasMeta (setMeta), Many, Pandoc (..), nullAttr, simpleTable)
-import Text.Pandoc.Builder qualified as Many (toList, singleton)
-import Text.Pandoc.Definition (Block (..), Inline (..), MathType (..))
+import qualified Text.Pandoc.Builder as Many
+import Text.Pandoc.Citeproc (getReferences)
+import Text.Pandoc.Definition (Block (..), Citation (..), CitationMode (..), Inline (..), MathType (..), MetaValue (..))
 import Text.Pandoc.Options (Extension (..), HTMLMathMethod (..), ReaderOptions (readerExtensions), WriterOptions (..), extensionsFromList)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
@@ -724,7 +730,7 @@ myPandocCompiler =
     bib <- load @Biblio "bib/bibliography.bib"
     -- We do want to link citations.
     p <- withItemBody (pure . setMeta "link-citations" True) pandoc
-    fmap (tableiseBib . insertRefHeading) <$> processPandocBiblio csl bib p
+    fmap (tableiseBib . insertRefHeading . relabel bib) <$> processPandocBiblio csl bib p
    where
     -- Insert a heading for the citations.
     insertRefHeading :: Pandoc -> Pandoc
@@ -744,6 +750,54 @@ myPandocCompiler =
         Div attr [Para (s1 : ss)] -> [Div attr [Plain [s1]], Plain [Space], Plain ss]
         d                         -> error $ "citToRow: unexpected citation format: " <> show d
 
+    -- Citation naming is hardcoded in Citeproc.Eval.citationLabel: four
+    -- letters of the last name for single author papers, and two per name in
+    -- multi author papers. I'd rather follows what bibtex does more closely.
+    relabel :: Item Biblio -> Pandoc -> Pandoc
+    relabel bib = walk \case
+      Cite cs is                                   -> Cite cs (go is)
+      Span as@(_, c, _) is | "csl-left-margin" `elem` c -> Span as (go is)
+      i                                            -> i
+     where
+      go :: [Inline] -> [Inline]
+      go = map \case
+        Link a is t -> Link a (go is) t
+        Str s       -> Str . (\t -> foldl' (\u (new, old) -> T.replace old new u) t subs) $ T.filter (/= ' ') s
+        is          -> is
+
+      subs :: [(Text, Text)] -- [(new, old)]
+      subs = either (fail . show) mkSubs $ runPure do
+          -- Get citations. This is terrible for the same reasons that
+          -- processPandocBiblio is, and also has to use pandoc's ersatz
+          -- filesystem, because getReferences expects a file.
+          modifyPureState \st -> st{ stFiles =
+            insertInFileTree "_.bib" (FileInfo (UTCTime (toEnum 0) 0) (unBiblio (itemBody bib))) (stFiles st) }
+          getReferences Nothing
+            . setMeta "nocite" (MetaInlines [Cite [Citation "*" [] [] NormalCitation 0 0] []])
+            . setMeta "bibliography" ("_.bib" :: Text)
+            $ mempty
+       where
+        mkSubs :: [Reference a] -> [(Text, Text)]
+        mkSubs = foldMap dis . groupBy ((==) `on` fst) . Set.toList . Set.fromList . map newOld
+         where
+          dis :: [(Text, Text)] -> [(Text, Text)] -- disambiguation
+          dis = \case
+            [x] -> [x]
+            xs  -> zipWith (\x s -> first (<> s) x) xs (map T.singleton ['a' .. 'z'])
+
+        -- Manually recreate what citationLabel does...
+        newOld :: Reference a -> (Text, Text)
+        newOld ref = (new <> year, foldMap (T.take abbrev) (take 4 fam) <> year)
+         where
+          names  :: [Name] = ns where NamesVal ns = referenceVariables ref Map.! "author"
+          fam    :: [Text] = map (fromMaybe "" . nameFamily) names
+          abbrev :: Int    = case length names of 1->4; n|n>=4->1; _->2
+          new    :: Text   = case fam of [f]->T.take 3 f; fs->foldMap (T.take 1) fs
+          year   :: Text   = case referenceVariables ref Map.!? "issued" of
+            Just (DateVal d) | (DateParts (y : _) : _) <- dateParts d
+              -> T.justifyRight 2 '0' . T.pack . show $ y `mod` 100
+            _ -> ""
+
   -- This is very manual, but for now that's "good enough".
   smallCaps :: Pandoc -> Pandoc
   smallCaps = walk \case
@@ -756,7 +810,7 @@ myPandocCompiler =
                     , "PSSL", "TODO", "EDSL", "DSL", "API", "BCQT", "LOWER"
                     , "RAISE", "ADJUST", "TL;DR", "BOX", "PBT", "XDA", "GTK"
                     , "HATC", "CSL", "BY-SA", "TOC", "CT23", "README", "LSP"
-                    , "PR", "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
+                    , "GIF", "XOR", "TUXEDO", "PNG", "SVG", "CDN", "APL"
                     , "CBQN", "BQN", "AOC", "REPL", "HECS", "EWMH", "ICCCM"
                     , "KOMA", "JSON", "RFC", "CSV", "CRLF", "CR", "LF", "39C3"
                     , "3D", "ASCII", "GFM", "GCC", "YAML", "CPU", "SIMD", "AVX"
@@ -847,8 +901,8 @@ myPandocCompiler =
          i      -> i
     `catchError` const (pure pandoc)
    where
-    stringify :: [Inline] -> Text
-    stringify = T.concat . map \case
+    textify :: [Inline] -> Text
+    textify = T.concat . map \case
       RawInline (Format "html") s -> s
       Space -> " "
       Str s -> s
@@ -857,7 +911,7 @@ myPandocCompiler =
     -- https://mlochbaum.github.io/BQN/doc/index.html
     lookupBqn :: [Inline] -> Inline
     lookupBqn is =
-      let s = stringify is
+      let s = textify is
           l = T.toLower s
           linkTo :: Text -> Inline = \link ->
             let u = if "https" `T.isPrefixOf` link then link

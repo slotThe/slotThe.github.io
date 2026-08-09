@@ -1,7 +1,6 @@
 ---
 title: Incorporating BibTeX into Hakyll
 date: 2023-06-20
-last-modified: 2025-02-01
 tags: haskell, hakyll
 og-description: Wiring pandoc-citeproc and a custom CSL file into Hakyll.
 ---
@@ -38,9 +37,9 @@ To not keep anyone in suspense, the final result looks like this:
 <div class="highlight">
  <p>
   This is a line citing
-  <span>[<a href="#ref-benabou67:bicats-intro" role="doc-biblioref">Béna67</a>]</span>
+  <span>[<a href="#ref-benabou67:bicats-intro" role="doc-biblioref">Bén67</a>]</span>
   and
-  <span>[<a href="ref-day07:lax-intro" role="doc-biblioref">DaPaSt07</a>]</span>.
+  <span>[<a href="#ref-day07:lax-intro" role="doc-biblioref">DPS07</a>]</span>.
  </p>
 
  <h2>References</h2>
@@ -48,14 +47,14 @@ To not keep anyone in suspense, the final result looks like this:
  <table>
  <tr>
   <div id="ref-benabou67:bicats-intro">
-   <td style="vertical-align: top"><div class="csl-left-margin">[Béna67] </div></td>
+   <td style="vertical-align: top"><div class="csl-left-margin">[Bén67] </div></td>
    <td> </td>
    <td><div class="csl-right-inline">J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div></td>
   </div>
  </tr>
  <tr>
   <div id="ref-day07:lax-intro" class="csl-entry" role="doc-biblioentry">
-   <td style="vertical-align: top"><div class="csl-left-margin">[DaPaSt07] </div></td>
+   <td style="vertical-align: top"><div class="csl-left-margin">[DPS07] </div></td>
    <td> </td>
    <td><div class="csl-right-inline">B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17. </div></td>
   </div>
@@ -148,16 +147,16 @@ They appear like this:
 
 <div id="ref-first-try" class="highlight">
  <p>
-  This is a line citing <span>[Béna67]</span>, and <span>[DaPaSt07]</span>.
+  This is a line citing <span>[Bén67]</span>, and <span>[DPS07]</span>.
  </p>
 
  <div>
   <div>
-   <div>[Béna67] </div>
+   <div>[Bén67] </div>
    <div>J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div>
   </div>
   <div>
-   <div>[DaPaSt07] </div>
+   <div>[DPS07] </div>
    <div>B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17. </div>
   </div>
  </div>
@@ -259,7 +258,7 @@ So `pandoc​Compiler​With​TransformM` is defined in terms of `render​Pand
 which in turn has quite a simple implementation.
 Notice in particular the `traverse f =<< readPandocWith ropt i` bit;
 `readPandocWith` returns a `Compiler (Item Pandoc)`,
-so the `traverse` above exactly transform our `f` into a function that works at the `Item` level.
+so the `traverse` above exactly transforms our `f` into a function that works at the `Item` level.
 Omitting this yields the desired functions:
 
 ``` haskell
@@ -416,17 +415,17 @@ The citations now look like this:
 
 <div class="highlight">
  <p>
-  This is a line citing <span>[Béna67]</span>, and <span>[DaPaSt07]</span>.
+  This is a line citing <span>[Bén67]</span>, and <span>[DPS07]</span>.
  </p>
 
  <h2>References</h2>
  <div>
   <div>
-   <div>[Béna67] </div>
+   <div>[Bén67] </div>
    <div>J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div>
   </div>
   <div>
-   <div>[DaPaSt07] </div>
+   <div>[DPS07] </div>
    <div>B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17. </div>
   </div>
  </div>
@@ -452,17 +451,17 @@ Much better:
 
 <div class="highlight">
  <p>
-  This is a line citing <span>[Béna67]</span> and <span>[DaPaSt07]</span>.
+  This is a line citing <span>[Bén67]</span> and <span>[DPS07]</span>.
  </p>
 
  <h2>References</h2>
  <div>
   <div>
-   <div class="csl-left-margin">[Béna67] </div>
+   <div class="csl-left-margin">[Bén67] </div>
    <div class="csl-right-inline">J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div>
   </div>
   <div>
-   <div class="csl-left-margin">[DaPaSt07] </div>
+   <div class="csl-left-margin">[DPS07] </div>
    <div class="csl-right-inline">B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17. </div>
   </div>
  </div>
@@ -503,19 +502,19 @@ Everything works as expected:
 <div class="highlight">
  <p>
   This is a line citing
-  <span>[<a href="#ref-benabou67:bicats-1" role="doc-biblioref">Béna67</a>]</span>
+  <span>[<a href="#ref-benabou67:bicats-1" role="doc-biblioref">Bén67</a>]</span>
   and
-  <span>[<a href="ref-day07:lax-1" role="doc-biblioref">DaPaSt07</a>]</span>.
+  <span>[<a href="#ref-day07:lax-1" role="doc-biblioref">DPS07</a>]</span>.
  </p>
 
  <h2>References</h2>
  <div id="refs1" class="references csl-bib-body" role="doc-bibliography">
-  <div id="ref-benabou67:bicats-a">
-   <div class="csl-left-margin">[Béna67] </div>
+  <div id="ref-benabou67:bicats-1">
+   <div class="csl-left-margin">[Bén67] </div>
    <div class="csl-right-inline">J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div>
   </div>
   <div id="ref-day07:lax-1" class="csl-entry" role="doc-biblioentry">
-   <div class="csl-left-margin">[DaPaSt07] </div>
+   <div class="csl-left-margin">[DPS07] </div>
    <div class="csl-right-inline">B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17. </div>
   </div>
  </div>
@@ -572,12 +571,12 @@ tableiseBib = walk \case
     _ -> error "citToRow: unexpected citation format."
 ```
 
-Just signaling an `error` here
+Just signalling an `error` here
 in case of an unexpected format
 was nice for debugging the code<!--
 -->—I missed the `Para` at first—<!--
 -->and at this point I see no reason to change it.
-Perhaps it is better to fail fast in theses kinds of situations,
+Perhaps it is better to fail fast in these kinds of situations,
 instead of trying to desperately produce something based off garbage input.
 
 The `tableiseBib` function can
@@ -610,9 +609,9 @@ For completeness, here it is again:
 <div class="highlight">
  <p>
   This is a line citing
-  <span>[<a href="#ref-benabou67:bicats" role="doc-biblioref">Béna67</a>]</span>
+  <span>[<a href="#ref-benabou67:bicats" role="doc-biblioref">Bén67</a>]</span>
   and
-  <span>[<a href="ref-day07:lax" role="doc-biblioref">DaPaSt07</a>]</span>.
+  <span>[<a href="#ref-day07:lax" role="doc-biblioref">DPS07</a>]</span>.
  </p>
 
  <h2>References</h2>
@@ -620,14 +619,14 @@ For completeness, here it is again:
  <table>
  <tr>
   <div id="ref-benabou67:bicats">
-   <td style="vertical-align: top"><div class="csl-left-margin">[Béna67] </div></td>
+   <td style="vertical-align: top"><div class="csl-left-margin">[Bén67] </div></td>
    <td> </td>
    <td><div class="csl-right-inline">J. Bénabou, <span>“<a href="https://doi.org/10.1007/BFb0074299">Introduction to bicategories</a>.”</span> B<span>é</span>nabou, <span>Jean</span> et al., <span>Reports</span> of the <span>Midwest</span> <span>Category</span> <span>Seminar</span>. <span>Lect</span>. <span>Notes</span> <span>Math</span>. 47, 1–77, 1967. </div></td>
   </div>
  </tr>
  <tr>
   <div id="ref-day07:lax" class="csl-entry" role="doc-biblioentry">
-   <td style="vertical-align: top"><div class="csl-left-margin">[DaPaSt07] </div></td>
+   <td style="vertical-align: top"><div class="csl-left-margin">[DPS07] </div></td>
    <td> </td>
    <td><div class="csl-right-inline">B. Day, E. Panchadcharam, and R. Street, <span>“Lax braidings and the lax centre,”</span> in <em>Hopf algebras and generalizations. AMS special session on hopf algebras at the crossroads of algebra, category theory, and topology, evanston, IL, USA, october 23–24, 2004.</em>, Providence, RI: American Mathematical Society (AMS), 2007, pp. 1–17. </div></td>
   </div>
@@ -645,7 +644,7 @@ this was surprisingly easy to add for such a useful feature!
 Plus, playing around with pandoc filters is always fun.
 
 Especially the `my​{render​Pandoc,Pandoc​Compiler}​With​TransformM` functions
-could—with different names, of course—perhaps be contributed to upstream Hakyll.
+could—with different names, of course—perhaps be contributed to upstream Hakyll.[^9]
 A variant of any of the `*PandocBiblio` functions
 that explicitly accepts a list of additional arguments
 to give to `citeproc` might also be useful;
@@ -654,6 +653,98 @@ after all.
 Finally, I think a format along the lines of `tableiseBib` would be quite nice to have with label-style citations.
 However, the current implementation is much too specific to justify living anywhere but a personal configuration.
 Some day, maybe.
+
+<div style="text-align: center;">
+  <img class="fleuron-block" src="../images/fleuron.svg" alt="Before appendix fleuron">
+</div>
+
+# Extra: tuning citation rendering
+
+You'll probably notice that the citation style I linked does not *quite* resemble BibTeX's `alphabetic` style:
+instead of three letters for a single-author paper and one for a multi-author one, it instead uses four and two, respectively.
+I think this is quite ugly, but fixing it is a bit of an annoying task, as `citeproc` has lots of hard-coded internals it doesn't really expose in a friendly way.[^10]
+
+To fix this, we'll have to slurp citations from the bibliography file, recreate what `citeproc`'s
+[citationLabel](https://hackage-content.haskell.org/package/citeproc-0.13.0.1/docs/src/Citeproc.Eval.html#citationLabel)
+function does internally, and then substitute our own abbreviations in the already rendered HTML.
+
+``` haskell
+relabel :: Item Biblio -> Pandoc -> Pandoc
+relabel bib = walk \case
+  Cite cs is                                        -> Cite cs (go is)
+  Span as@(_, c, _) is | "csl-left-margin" `elem` c -> Span as (go is)
+  i                                                 -> i
+ where
+  go :: [Inline] -> [Inline]
+  go = map \case
+    Str s -> Str . (\t -> foldl' (\u (new, old) -> T.replace old new u) t subs)
+           $ T.filter (/= ' ') s
+    Link a is t -> Link a (go is) t
+    is -> is
+```
+
+At least the relabelling part is relatively straightforward, we just have to make sure to preserve links.
+
+``` haskell
+subs :: [(Text, Text)]
+subs = either (fail . show) mkSubs $ runPure do
+    modifyPureState \st ->
+      st{ stFiles =
+        insertInFileTree
+          "_.bib"
+          (FileInfo (UTCTime (toEnum 0) 0) (unBiblio (itemBody bib)))
+          (stFiles st) }
+    getReferences Nothing
+      . setMeta
+          "nocite"
+          (MetaInlines [Cite [Citation "*" [] [] NormalCitation 0 0] []])
+      . setMeta "bibliography" ("_.bib" :: Text)
+      $ mempty
+ where
+  mkSubs :: [Reference a] -> [(Text, Text)]
+  mkSubs = foldMap dis . groupBy ((==) `on` fst) . Set.toList . Set.fromList
+     . map newOld
+   where
+    dis :: [(Text, Text)] -> [(Text, Text)] -- disambiguation
+    dis = \case
+      [x] -> [x]
+      xs  -> zipWith (\x s -> first (<> s) x) xs (map T.singleton ['a' .. 'z'])
+```
+
+`subs` consists of `new,old` pairs, for mangling in `relabel`.
+It really is necessary that we create a fake `_.bib` file, and not just give `setMeta` a string with all the citations,
+since `getReferences` expects a file that it can read from, and recreating that function as well sounds like even more of a pain.
+We also have to do disambiguation of references ourselves, in which case we just append a lower-case letter after the year.
+Thankfully at least [including all references](https://pandoc.org/demo/example33/9.5-including-uncited-items-in-the-bibliography.html) is easy.
+
+Where is the manual recreation of `citationLabel` internals, you ask? Well…
+
+``` haskell
+newOld :: Reference a -> (Text, Text)
+newOld ref = (new <> year, foldMap (T.take abbrev) (take 4 fam) <> year)
+ where
+  names  = ns where NamesVal ns = referenceVariables ref Map.! "author"
+  fam    = map (fromMaybe "" . nameFamily) names
+  abbrev = case length names of 1->4; n|n>=4->1; _->2
+  new    = case fam of [f]->T.take 3 f; fs->foldMap (T.take 1) fs
+  year   = case referenceVariables ref Map.!? "issued" of
+    Just (DateVal d) | (DateParts (y : _) : _) <- dateParts d
+      -> T.justifyRight 2 '0' . T.pack . show $ y `mod` 100
+    _ -> ""
+```
+
+Having all of this in place, one simply needs to adjust `processBib` to
+
+``` haskell
+processBib :: Item Pandoc -> Compiler (Item Pandoc)
+processBib pandoc = do
+  -- ...
+  fmap (tableiseBib . insertRefHeading . relabel bib)
+    <$> processPandocBiblio csl bib p
+```
+
+for these changes to take effect.
+But a small price to pay for a better look.
 
 [CSL]: https://citationstyles.org/
 [Hakyll.Web.Pandoc.Biblio]: https://hackage.haskell.org/package/hakyll-4.16.0.0/docs/Hakyll-Web-Pandoc-Biblio.html#v:pandocBiblioCompiler
@@ -730,3 +821,7 @@ Some day, maybe.
 [^8]: While this style is good enough for now,
       it's still not quite perfect;
       suggestions for other styles would be most welcome!
+
+[^9]: If you're reading this post in 2026, then you can now use `pandocItemCompilerWithTransformM`!
+
+[^10]: This is already noted in [processPandocBiblio](https://hackage-content.haskell.org/package/hakyll-4.17.0.0/docs/src/Hakyll.Web.Pandoc.Biblio.html#processPandocBiblio), and not much has improved since then.
