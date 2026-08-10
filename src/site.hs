@@ -363,7 +363,7 @@ garden ctx patches = do
   recentNotes :: [Item a] -> Compiler [Item a]
   recentNotes notes = map snd . sortOn (Down . fst) <$>
     traverse (\i -> (,i) . fromMaybe "" . listToMaybe . catMaybes <$>
-                traverse (getMetadataField (itemIdentifier i)) ["tended", "isodate"])
+                traverse (getMetadataField (itemIdentifier i)) ["tended", "date"])
              notes
 
 rss :: Tags -> Rules ()
