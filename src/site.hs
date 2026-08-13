@@ -4,9 +4,7 @@
 {-# LANGUAGE BlockArguments      #-}
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE LambdaCase          #-}
-{-# LANGUAGE MultiWayIf          #-}
 {-# LANGUAGE NamedFieldPuns      #-}
-{-# LANGUAGE NumDecimals         #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TupleSections       #-}
@@ -19,7 +17,6 @@ import Data.Text.IO.Utf8 qualified as T
 import Citeproc.Types (Date (..), DateParts (..), Name (..), Reference (..), Val (..))
 import Control.Arrow ((>>>), first)
 import Control.Monad
-import Control.Monad.Except (catchError)
 import Data.Algorithm.Diff (Diff, PolyDiff (..), getGroupedDiff)
 import Data.Bifunctor (bimap, second)
 import Data.ByteString.Lazy.Char8 qualified as BL
@@ -29,18 +26,20 @@ import Data.Function (on)
 import Data.Functor ((<&>))
 import Data.Hashable (hash)
 import Data.List (groupBy, intersperse, sortOn, stripPrefix)
+import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import Data.Maybe
 import Data.Ord (Down (..))
 import qualified Data.Set as Set
 import Data.String (IsString)
 import Data.Text (Text)
-import Data.Time (UTCTime (..), defaultTimeLocale, formatTime)
+import Data.Time (Day, UTCTime (..), defaultTimeLocale, formatTime, parseTimeM)
+import Data.Tuple (swap)
 import GHC.IO.Handle (BufferMode (..), Handle, hSetBuffering)
-import Hakyll hiding (dateField)
+import Hakyll hiding (dateField, replaceAll)
 import Skylighting (syntaxesByFilename, defaultSyntaxMap, Syntax (sName)) -- Only for language recognition; see 'pygmentsHighlight'
 import System.Directory (createDirectoryIfMissing, doesDirectoryExist, listDirectory)
-import System.FilePath (dropExtension, takeBaseName)
+import System.FilePath (dropExtension, takeBaseName, takeDirectory, takeFileName)
 import System.Process (readProcess, runInteractiveCommand)
 import Text.HTML.TagSoup (Tag (TagClose, TagOpen), (~==), escapeHTML)
 import Text.Pandoc (PureState (..), FileInfo (FileInfo), insertInFileTree, runPure, modifyPureState)
@@ -61,11 +60,9 @@ siteURL = "https://tony-zorman.com"
 config :: Configuration
 config = defaultConfiguration
   { destinationDirectory = "docs"
-  , ignoreFile = (||) <$> ignoreFile defaultConfiguration <*> ignoreFile'
+  , ignoreFile = (||) <$> ignoreFile defaultConfiguration
+                      <*> (`elem` ["dist-newstyle", "scripts", "uncompressed_fonts"])
   }
- where
-  ignoreFile' :: FilePath -> Bool
-  ignoreFile' fp = fp `elem` ["dist-newstyle", "scripts", "uncompressed_fonts"]
 
 main :: IO ()
 main = do
@@ -150,10 +147,10 @@ blog tagCtx = match "blog.html" do
   recountSidenotes :: String -> String
   recountSidenotes = asTxt (go 0)
    where
-    go :: Double -> Text -> Text
+    go :: Int -> Text -> Text
     go n str = case T.breakOn "=\"sn-" str of
       (r, "") -> r
-      (h, t ) -> h <> "=\"sn-" <> tshow @Int (floor n) <> "\"" <> go (n + 0.5) (killSn t)
+      (h, t ) -> h <> "=\"sn-" <> tshow (n `div` 2) <> "\"" <> go (n + 1) (killSn t)
 
     killSn :: Text -> Text
     killSn = d.d where d = T.drop 1 . T.dropWhile (/= '\"')
@@ -218,17 +215,7 @@ listOfPosts tags@Tags{ tagsMakeId, tagsMap } = do
 
 aboutMe :: Rules ()
 aboutMe = do
-  match (fromList ["about.md", "research.md", "free-software.md"]) do
-    route $ setExtension "html"
-    compile do
-      tocCtx <- getTocCtx defaultContext
-      myPandocCompiler
-        >>= loadAndApplyTemplate "templates/toc.html"     tocCtx
-        >>= loadAndApplyTemplate "templates/title.html"   tocCtx
-        >>= loadAndApplyTemplate "templates/default.html" tocCtx
-        >>= relativizeUrls
-
-  match (fromList ["site.md"]) do
+  match (fromList ["about.md", "research.md", "free-software.md", "site.md"]) do
     route $ setExtension "html"
     compile do
       tocCtx <- getTocCtx defaultContext
@@ -250,14 +237,12 @@ aboutMe = do
 standalones :: Context String -> Rules ()
 standalones tagCtx = do
   -- Seminars, symposia, and the like
-  mkStandalone "mackey-functors.md" pure tagCtx Nothing
-  mkStandalone "hsha.md" pure tagCtx Nothing
+  mkStandalone (fromList ["mackey-functors.md", "hsha.md"]) pure tagCtx Nothing
   -- Automatically add talks and posters
   ids <- getMatches (fromRegex "(talks|posters)/[^/]+/[^/]+\\.md")
-  for_ ids \ident ->  -- No backrefs in Text.Regex.TDFA :(
-    case take 3 . T.split (== '/') . T.pack . toFilePath $ ident of
-      [p, d, f] -> when (f == d <> ".md") $ mkPosterTalk (p <> "/" <> d)
-      _         -> pure ()
+  for_ ids \(toFilePath -> fp) ->  -- No backrefs in Text.Regex.TDFA :(
+    let dir = takeDirectory fp
+     in when (takeBaseName fp == takeBaseName dir) $ mkPosterTalk dir
   -- Git introduction
   let gitCtx title = constField "title" title <> tagCtx
       fixTranscript = withItemBody $ pure .                  -- I know…
@@ -279,8 +264,8 @@ standalones tagCtx = do
     route idRoute
     compile $ getResourceBody >>= relativizeUrls
  where
-  mkPosterTalk :: Text -> Rules ()
-  mkPosterTalk (T.unpack -> dir) = do
+  mkPosterTalk :: FilePath -> Rules ()
+  mkPosterTalk dir = do
     match (fromGlob (dir <> "/**") .&&. complement "**.md") do
       route   idRoute
       compile copyFileCompiler
@@ -289,7 +274,7 @@ standalones tagCtx = do
                  tagCtx
                  (Just $ file <> ".html")
    where
-    file = reverse . takeWhile (/= '/') . reverse $ dir
+    file = takeFileName dir
 
   -- Compile a standalone site.
   mkStandalone
@@ -396,8 +381,8 @@ rss tags = do
 
 postCtx :: Context String
 postCtx = mconcat
-  [ dateField "date"    "%d %b %Y" fixDate  -- Creation date
-  , dateField "isodate" "%F"       id       -- Creation date in YYYY-MM-DD
+  [ dateField "date"    "%-d %b %Y" addSuf  -- Creation date
+  , dateField "isodate" "%F"        id      -- Creation date in YYYY-MM-DD
   , modTime                                 -- Last modification date
   , numWords
   , estimatedReadingTime
@@ -406,9 +391,7 @@ postCtx = mconcat
  where
   -- Like the one in Hakyll, but with ability to adjust the date string.
   dateField :: String -> String -> (String -> String) -> Context a
-  dateField key format adj = field key \i -> do
-    time <- getItemUTC defaultTimeLocale (itemIdentifier i)
-    pure . adj $ formatTime defaultTimeLocale format time
+  dateField key format adj = mapContext adj (dateFieldWith defaultTimeLocale key format)
 
   -- If no manual modification time is given, create one based on the last
   -- change to the file. If this is the same as the creation date, ignore it.
@@ -418,7 +401,7 @@ postCtx = mconcat
     lastMod <- case lookupString "last-modified" meta of
       Just t  -> pure t
       Nothing -> do
-        git <- unsafeCompiler $ asTxt T.strip <$>
+        git <- unsafeCompiler $ trim <$>
                 readProcess "git"
                              [ "log", "-1", "--format=%ad", "--date=format:%F"
                              , "--", toFilePath ident ]
@@ -428,7 +411,7 @@ postCtx = mconcat
           str -> pure str
     case lookupString "date" meta of
       Nothing      -> noResult "No creation date means no last modified date."
-      Just created -> if lastMod /= created then pure (fixDate lastMod)
+      Just created -> if lastMod /= created then pure (toISO lastMod)
                      else noResult "Last modified equal to date."
 
   numWords :: Context String
@@ -446,20 +429,19 @@ postCtx = mconcat
   calcWords :: Item String -> Int
   calcWords = length . words . stripTags . itemBody
 
-  fixDate :: String -> String
-  fixDate s = case splitAll "-" s of
-    [y, fixMonth -> m, read @Int -> d] -> show d <> " " <> m <> " " <> y
-    [t] -> case words t of
-      ((show . read @Int -> d) : ds) -> unwords . (: ds) . (d <>) $
-        if | d `elem` ["1","21","31"] -> "st"
-           | d `elem` ["2", "22"]     -> "nd"
-           | d `elem` ["3", "23"]     -> "rd"
-           | otherwise           -> "th"
-      [] -> error "fixDate called with " <> s
-    _ -> error "fixDate called with " <> s
+  toISO :: String -> String
+  toISO s = maybe @_ @Day s (formatTime defaultTimeLocale "%-d %b %Y") (parseTimeM True defaultTimeLocale "%F" s)
+
+  addSuf :: String -> String
+  addSuf = \case
+    (words -> d : ds) -> unwords $ (d <> go d) : ds
+    s                 -> s
    where
-    fixMonth :: String -> String
-    fixMonth m = case read @Int m of 1 -> "Jan"; 2 -> "Feb"; 3 -> "Mar"; 4 -> "Apr"; 5 -> "May"; 6 -> "Jun"; 7 -> "Jul"; 8 -> "Aug"; 9 -> "Sep"; 10 -> "Oct"; 11 -> "Nov"; 12 -> "Dec"; _ -> undefined
+    go :: String -> String
+    go d | d `elem` ["1", "21", "31"] = "st"
+         | d `elem` ["2", "22"]       = "nd"
+         | d `elem` ["3", "23"]       = "rd"
+         | otherwise                  = "th"
 
 -- | Augment the 'defaultContext' with a list of all tags, as well as
 -- all posts associated to a given tag.
@@ -505,8 +487,8 @@ defaultCtxWithTags tagAssocs = listField "tags" tagCtx tagAssocs <> defaultConte
 -- There is some CSS that makes section links only show on hover.
 getTocCtx :: Context a -> Compiler (Context a)
 getTocCtx ctx = do
-  noToc      <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "no-toc"))
-  bib        <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "bib"))
+  noToc      <- metaFlag "no-toc"
+  bib        <- metaFlag "bib"
   writerOpts <- mkTocWriter defaultHakyllWriterOptions
   toc        <- renderPandocWith myReader writerOpts =<< getResourceBody
   pure $ mconcat [ ctx
@@ -518,7 +500,7 @@ getTocCtx ctx = do
   mkTocWriter :: WriterOptions -> Compiler WriterOptions
   mkTocWriter writerOpts = do
     tmpl <- either (const Nothing) Just <$> unsafeCompiler (compileTemplate "" "$toc$")
-    dpth <- fromMaybe 3 <$> (getUnderlying >>= (`getMetadataField` "toc-depth") <&> fmap read)
+    dpth <- fmap (maybe 3 read) . (`getMetadataField` "toc-depth") =<< getUnderlying
     -- Headings will NOT be shifted down by this point because this
     -- happens before `myPandocCompiler'.
     pure $ writerOpts
@@ -536,12 +518,9 @@ getTocCtx ctx = do
   -- [1]: https://github.com/jgm/pandoc/issues/7907
   -- [2]: https://github.com/jgm/pandoc/pull/7913
   killLinkIds :: String -> String
-  killLinkIds = asTxt (mconcat . go . T.splitOn "id=\"toc-")
-   where
-    go :: [Text] -> [Text]
-    go = \case
-      []     -> []
-      x : xs -> x : map (T.drop 1 . T.dropWhile (/= '\"')) xs
+  killLinkIds = asTxt \s -> mconcat case T.splitOn "id=\"toc-" s of
+    []     -> []
+    x : xs -> x : map (T.drop 1 . T.dropWhile (/= '\"')) xs
 
   -- If needed, add a heading for the bibliography at the very end of
   -- the TOC.
@@ -567,6 +546,12 @@ tshow = T.pack . show
 
 both :: (a -> b) -> (a, a) -> (b, b)
 both f = bimap f f
+
+replaceAll :: [(Text, Text)] -> Text -> Text
+replaceAll subs t = foldl' (\acc (old, new) -> T.replace old new acc) t subs
+
+metaFlag :: String -> Compiler Bool
+metaFlag key = fmap (Just "true" ==) . (`getMetadataField` key) =<< getUnderlying
 
 --- Tags
 
@@ -652,7 +637,7 @@ pandocCompilerWorker =
 -- | A simple pandoc compiler for RSS/Atom feeds, with none of the
 -- fanciness that 'myPandocCompiler' has.
 pandocRssCompiler :: Compiler (Item String)
-pandocRssCompiler = pandocCompilerWorker (traverse (pure . cleanFootnotes))
+pandocRssCompiler = pandocCompilerWorker (pure . fmap cleanFootnotes)
  where
   cleanFootnotes :: Pandoc -> Pandoc
   cleanFootnotes = walk \case
@@ -710,10 +695,9 @@ myPandocCompiler =
     hSetBuffering hin  NoBuffering
     hSetBuffering hout NoBuffering
     (`walkM` pandoc) \case
-      CodeBlock (_, listToMaybe -> mbLang, _) body -> do
-        case fromMaybe "text" mbLang of
-          "diff" -> pure $ diffHighlight body
-          lang   -> do
+      CodeBlock (_, fromMaybe "text" . listToMaybe -> lang, _) body
+        | lang == "diff" -> pure $ diffHighlight body
+        | otherwise      -> do
             T.hPutStr hin (T.intercalate "\n" [lang, tshow (T.length body), body])
             RawBlock "html" <$> getResponse hout
       block -> pure block
@@ -827,11 +811,11 @@ myPandocCompiler =
       go :: [Inline] -> [Inline]
       go = map \case
         Link a is t -> Link a (go is) t
-        Str s       -> Str . (\t -> foldl' (\u (new, old) -> T.replace old new u) t subs) $ T.filter (/= ' ') s
+        Str s       -> Str $ replaceAll subs (T.filter (/= ' ') s)
         is          -> is
 
-      subs :: [(Text, Text)] -- [(new, old)]
-      subs = either (fail . show) mkSubs $ runPure do
+      subs :: [(Text, Text)] -- [(old, new)]
+      subs = either (error . show) mkSubs $ runPure do
           -- Get citations. This is terrible for the same reasons that
           -- processPandocBiblio is, and also has to use pandoc's ersatz
           -- filesystem, because getReferences expects a file.
@@ -843,7 +827,7 @@ myPandocCompiler =
             $ mempty
        where
         mkSubs :: [Reference a] -> [(Text, Text)]
-        mkSubs = foldMap dis . groupBy ((==) `on` fst) . Set.toList . Set.fromList . map newOld
+        mkSubs = map swap . foldMap dis . groupBy ((==) `on` fst) . Set.toList . Set.fromList . map newOld
          where
           dis :: [(Text, Text)] -> [(Text, Text)] -- disambiguation
           dis = \case
@@ -920,11 +904,9 @@ myPandocCompiler =
     (`walkM` pandoc) \case
       Math mathType (T.unwords . T.lines . T.strip -> text) -> do
         let math :: Text
-              = foldl' (\str (repl, with) -> T.replace repl with str)
-                       case mathType of
-                         DisplayMath{-s-} -> ":DISPLAY " <> text
-                         InlineMath{-s-}  ->                text
-                       macros
+              = replaceAll macros case mathType of
+                  DisplayMath{-s-} -> ":DISPLAY " <> text
+                  InlineMath{-s-}  ->                text
         T.hPutStrLn hin math
         RawInline "html" <$> getResponse hout
       block -> pure block
@@ -958,13 +940,13 @@ myPandocCompiler =
   -- Automatically turn things like *replicate* into a link to the relevant
   -- part of the BQN documentation.
   bqnLink :: Pandoc -> Compiler Pandoc
-  bqnLink pandoc =
-    do Just ts <- (`getMetadataField` "tags") =<< getUnderlying
-       guard $ "BQN" `T.isInfixOf` T.pack ts
-       pure $ (`walk` pandoc) \case
-         Emph i -> lookupBqn i
-         i      -> i
-    `catchError` const (pure pandoc)
+  bqnLink pandoc = do
+    tags <- (`getMetadataField` "tags") =<< getUnderlying
+    pure if any (T.isInfixOf "BQN" . T.pack) tags
+         then (`walk` pandoc) \case
+                Emph i -> lookupBqn i
+                i      -> i
+         else pandoc
    where
     textify :: [Inline] -> Text
     textify = T.concat . map \case
@@ -975,43 +957,44 @@ myPandocCompiler =
 
     -- https://mlochbaum.github.io/BQN/doc/index.html
     lookupBqn :: [Inline] -> Inline
-    lookupBqn is =
-      let s = textify is
-          l = T.toLower s
-          linkTo :: Text -> Inline = \link ->
-            let u = if "https" `T.isPrefixOf` link then link
-                    else "https://mlochbaum.github.io/BQN/doc/" <> link <> ".html"
-            in Link nullAttr [Str s] (u, "")
-      in if
-      | l `elem` ["depth", "shape", "assert", "rank", "choose", "constant", "reshape", "enclose", "find", "fold", "group", "replicate", "join", "match", "pair", "pick", "prefixes", "range", "repeat", "reverse", "scan", "select", "swap", "couple", "take", "transpose", "under", "undo", "windows", "identity"] -> linkTo l
-      | l `elem` ["deduplicate", "classify", "mark firsts", "occurrence count"] -> linkTo "selfcmp"
-      | l `elem` ["member of", "index of", "progressive index of"] -> linkTo "search"
-      | l `elem` ["sort down", "sort up", "sort"] -> linkTo "order"
-      | l `elem` ["grade", "grade up", "grade down"] -> linkTo "order"
-      | l == "catch" -> linkTo "assert"
-      | l `elem` ["atop", "over"] -> linkTo "compose"
-      | l `elem` ["before", "after"] -> linkTo "hook"
-      | l == "cells" -> linkTo "rank"
-      | l == "deshape" -> linkTo "reshape"
-      | l == "insert" -> linkTo "fold"
-      | l `elem` ["each", "table"] -> linkTo "map"
-      | l == "indices" -> linkTo "replicate"
-      | l == "suffixes" -> linkTo "prefixes"
-      | l == "nothing" -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#nothing"
-      | l == "first" -> linkTo "pick"
-      | l == "rotate" -> linkTo "reverse"
-      | l == "self" -> linkTo "swap"
-      | l == "enlist" -> linkTo "pair"
-      | l `elem` ["negate", "and", "or"] -> linkTo "logic"
-      | l == "export" -> linkTo "namespace"
-      | l == "nudge" -> linkTo "shift"
-      | l `elem` ["merge", "solo"] -> linkTo "couple"
-      | l `elem` ["major cell", "cell"] -> linkTo "https://mlochbaum.github.io/BQN/doc/array.html#cells"
-      | l `elem` ["train", "2-train", "3-train", "fork"] -> linkTo "train"
-      | l `elem` ["define", "change", "modify"] -> linkTo "https://mlochbaum.github.io/BQN/doc/expression.html#assignment"
-      | l == "first cell" -> linkTo "select"
-      | l `elem` ["length", "tally"] -> linkTo "shape"
-      | otherwise -> Emph is
+    lookupBqn is = maybe (Emph is) linkTo (docs Map.!? (T.toLower (textify is)))
+     where
+      linkTo :: Text -> Inline
+      linkTo link = Link nullAttr [Str (textify is)] (url, "")
+       where url | "https" `T.isPrefixOf` link = link
+                 | otherwise = "https://mlochbaum.github.io/BQN/doc/" <> link <> ".html"
+
+      docs :: Map Text Text
+      docs = Map.fromList [ (a, n) | (n, as) <- t, a <- n : as ]
+       where
+        t :: [(Text, [Text])] -- [(name, [aliases])]
+        t = [ ("order"    , ["sort", "sort up", "sort down", "grade", "grade up", "grade down"])
+            , ("selfcmp"  , ["deduplicate", "classify", "mark firsts", "occurrence count"])
+            , ("search"   , ["member of", "index of", "progressive index of"])
+            , ("logic"    , ["negate", "and", "or"])
+            , ("train"    , ["2-train", "3-train", "fork"])
+            , ("compose"  , ["atop", "over"])
+            , ("hook"     , ["before", "after"])
+            , ("map"      , ["each", "table"])
+            , ("couple"   , ["merge", "solo"])
+            , ("shape"    , ["length", "tally"])
+            , ("assert"   , ["catch"])
+            , ("rank"     , ["cells"])
+            , ("reshape"  , ["deshape"])
+            , ("fold"     , ["insert"])
+            , ("replicate", ["indices"])
+            , ("prefixes" , ["suffixes"])
+            , ("pick"     , ["first"])
+            , ("reverse"  , ["rotate"])
+            , ("swap"     , ["self"])
+            , ("pair"     , ["enlist"])
+            , ("namespace", ["export"])
+            , ("shift"    , ["nudge"])
+            , ("select"   , ["first cell"])
+            , ("https://mlochbaum.github.io/BQN/doc/array.html#cells"          , ["major cell", "cell"])
+            , ("https://mlochbaum.github.io/BQN/doc/expression.html#nothing"   , ["nothing"])
+            , ("https://mlochbaum.github.io/BQN/doc/expression.html#assignment", ["define", "change", "modify"])
+            ] <> map (, []) [ "depth", "choose", "constant", "enclose", "find", "group", "join", "match", "range", "repeat", "scan", "take", "transpose", "under", "undo", "windows", "identity" ]
 
   -- Sources:
   --   + Initial idea: https://taeer.bar-yam.me/blog/posts/hakyll-tikz/
@@ -1041,9 +1024,7 @@ myPandocCompiler =
   -- @boolTwoCol f t p@ applies @t@ to @p@ if the @two-column@ metadata field
   -- is true, otherwise it applies @f@ to @p@.
   boolTwoCol :: (Pandoc -> Pandoc) -> (Pandoc -> Pandoc) -> Pandoc -> Compiler Pandoc
-  boolTwoCol f t p = do
-    tc <- (Just "true" ==) <$> (getUnderlying >>= (`getMetadataField` "two-column"))
-    pure $ if tc then t p else f p
+  boolTwoCol f t p = (\tc -> if tc then t p else f p) <$> metaFlag "two-column"
 
   -- Two-column layout for a post: text on the left, and code on the right.
   -- Inspired by: https://tangled.org/oppi.li/aoc

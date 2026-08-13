@@ -8,7 +8,6 @@ executable site
   main-is:          site.hs
   build-depends:    base   == 4.*
                   , hakyll >= 4.15
-                  , mtl >= 2.2.2
                   , pandoc
                   , pandoc-types >= 1.22.2.1
                   , pandoc-sidenote
