@@ -112,7 +112,8 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 - *Closed reconstruction* \
   2026-05-12, Seminar [GMM], Dresden. \
   2026-05-26, [Seminar on Quantum groups, Hopf algebras and monoidal categories](https://hopfalgb.ulb.be/), Brussels. \
-  2026-06-17, [European Quantum Algebra Lectures](https://sites.google.com/view/equalseminar/home), Online; [slides](https://codeberg.org/slotThe/equal26) ([handout](https://codeberg.org/slotThe/equal26/src/branch/main/handout.pdf)).
+  2026-06-17, [European Quantum Algebra Lectures](https://sites.google.com/view/equalseminar/home), Online; [slides](https://codeberg.org/slotThe/equal26) ([handout](https://codeberg.org/slotThe/equal26/src/branch/main/handout.pdf)). \
+  2026-08-26, [Tensor categories in representation theory \& vice versa](https://sites.google.com/view/reptensor/), Uppsala.
 
 - *The Reflection Equation and Braided Module Categories* \
   2026-02-19, [Seminario di Algebra e Teoria dei Numeri](https://www.seminarioatn.unito.it/), Turin.
