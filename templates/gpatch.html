@@ -3,9 +3,10 @@
 <table>
   $for(notes)$
     <tr>
-      <td style="vertical-align: top; font-variant-numeric: tabular-nums;">$date$</td>
-      <td style="vertical-align: top;">–</td>
-      <td style="vertical-align: top;"><a href="$url$">$title$</a></td>
+      <td style="font-variant-numeric: tabular-nums;">$date$</td>
+      <td>–</td>
+      <td><a href="$url$">$title$</a></td>
+      <td>$if(pub)$#pub$endif$</td>
     </tr>
   $endfor$
 </table>

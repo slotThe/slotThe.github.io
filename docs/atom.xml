@@ -11,8 +11,41 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2026-07-15T00:00:00Z</updated>
+    <updated>2026-08-13T00:00:00Z</updated>
     <entry>
+    <title>Infinite Polynomial Rings</title>
+    <link href="https://tony-zorman.com/maths/polycard.html" />
+    <id>https://tony-zorman.com/maths/polycard.html</id>
+    <published>2026-08-13T00:00:00Z</published>
+    <updated>2026-08-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+  <div class="header">
+      <a href="/maths.html" class="back">← Maths</a>
+      &nbsp;·&nbsp;&nbsp;planted 13th Aug 2026
+      &nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></div>
+    <h1 class="note-title">Infinite Polynomial Rings</h1>
+    <div id="title-underline"></div>
+    <section>
+      <p>Here’s something incredibly cursed: let <span class="math inline">V</span> be an infinite-dimensional vector space, say of dimension <span class="math inline">\alpha</span>.
+Then <span class="math inline">V</span> is isomorphic as a vector space to <span class="math inline">k[x_{\alpha}]</span>, the polynomial ring in <span class="math inline">\alpha</span>-many variables!
+The dimension of <span class="math inline">k[x]</span> (just a single variable) is <span class="math inline">\aleph_0</span>, and so the dimension of <span class="math inline">k[x_{\alpha}]</span> is <span class="math inline">\alpha \cdot \aleph_0</span>.
+Since <span class="math inline">\alpha \ge \aleph_0</span> this is actually equal to <span class="math inline">\alpha</span> again, so the vector spaces have the same dimension and are thus isomorphic.</p>
+<hr />
+<p>This can be used to prove that a vector space <span class="math inline">V</span> is finite-dimensional if and only if it’s isomorphic to its dual:
+for <span class="math inline">k = \mathbb{R}</span> and <span class="math inline">V = k[x]</span>, a good proof exists by looking at evaluation maps
+<span class="math display">
+  \mathrm{ev}_{\lambda} \colon V \to k, \qquad p \mapsto p(\lambda),
+</span>
+for <span class="math inline">\lambda \in k</span>.
+Then one can use a Lagrange polynomial argument to show these must all be linearly independent, and hence <span class="math inline">V^*</span> must have uncountable dimension.</p>
+<p>This argument obviously depends on the ground-field being uncountable.
+For smaller fields, one instead has to “enlarge” the polynomial ring so that the evaluation doesn’t happen for a single <span class="math inline">\lambda \in k</span>, but it’s an entire variable assignment.
+Then the same Lagrange polynomial argument still works, just with more indices.</p></section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Sieving Primes</title>
     <link href="https://tony-zorman.com/posts/primes.html" />
     <id>https://tony-zorman.com/posts/primes.html</id>

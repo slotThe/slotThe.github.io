@@ -1,6 +1,8 @@
 ---
 title: Infinite Polynomial Rings
 date: 2026-08-13
+pub: 2026-08-28
+tags: maths
 ---
 
 Here's something incredibly cursed: let $V$ be an infinite-dimensional vector space, say of dimension $\alpha$.

@@ -3,6 +3,8 @@
       <a href="$patch-url$" class="back">← $patch$</a>
       &nbsp;·&nbsp;&nbsp;planted $date$
       $if(tended)$&nbsp;&nbsp;·&nbsp;&nbsp;tended $tended$$endif-$
+      $if(pub)$&nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>$endif-$
+      $if(tags)$&nbsp;&nbsp;·&nbsp;&nbsp;$tags$$endif-$
     </div>
     <h1 class="note-title">$title$</h1>
     <div id="title-underline"></div>

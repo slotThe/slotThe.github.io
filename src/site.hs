@@ -101,7 +101,7 @@ main = do
     match "bib/bibliography.bib" $ compile biblioCompiler
 
     -- Generate tags
-    tags <- buildTags "posts/**" (fromCapture "tags/**.html")
+    tags <- buildTags ("posts/**" .||. "garden/**") (fromCapture "tags/**.html")
     let tagCtx = tagsFieldWith getTags
                                (simpleRenderLink . ("#" <>))
                                (mconcat . intersperse "   ")
@@ -117,7 +117,7 @@ main = do
     aboutMe
     standalones tagCtx
     rss         tags
-    garden      postCtx patches
+    garden      tagCtx patches
 
 landing :: Rules ()
 landing = match "index.html" do
@@ -200,7 +200,7 @@ listOfPosts tags@Tags{ tagsMakeId, tagsMap } = do
   create ["posts.html"] do
     let allPostsCtx :: Context String
           = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
-    mkList allPostsCtx "All posts" "atom" "templates/all-posts.html"
+    mkList allPostsCtx "Published" "atom" "templates/all-posts.html"
   -- Only posts tagged by a certain tag
   tagsRules tags \tag taggedPosts -> do
     let taggedPostCtx :: Context String
@@ -312,13 +312,22 @@ garden ctx patches = do
   let noteCtx patch = constField "patch" (patchTitle patch)
                   <> field "patch-url" (const (toUrl . fromJust <$> getRoute (patchId patch)))
                   <> gardenCtx
+  -- Notes
   for_ patches \patch -> match (fromGlob (patch <> "/**.md")) do
     route $ setExtension "html" `composeRoutes` noG
-    compile $ myPandocCompiler
-      >>= saveSnapshot "note"
-      >>= loadAndApplyTemplate "templates/gpost.html"   (noteCtx patch)
-      >>= loadAndApplyTemplate "templates/default.html" (noteCtx patch)
-      >>= relativizeUrls
+    compile do
+      -- Atom feed
+      atom <- (fmap isJust . (`getMetadataField` "pub") =<< getUnderlying)
+      when atom $
+        void $ pandocRssCompiler
+          >>= loadAndApplyTemplate "templates/gpost.html" (noteCtx patch <> boolField "no-comment" (pure True))
+          >>= mkCleanSnapshot "post-for-feed"  -- See 'rss'
+      -- Note
+      myPandocCompiler
+        >>= saveSnapshot "note"
+        >>= loadAndApplyTemplate "templates/gpost.html"   (noteCtx patch)
+        >>= loadAndApplyTemplate "templates/default.html" (noteCtx patch)
+        >>= relativizeUrls
   -- Landing page
   let landingCtx = listField "recently-tended" ctx (fmap (take 5) $ recentNotes
                      =<< loadAllSnapshots (fromGlob "garden/*/**.md") "note")
@@ -357,10 +366,12 @@ rss tags = do
   create ["atom.xml"] do
     route idRoute
     compile do
-      lastPosts <- recentFirst =<< loadAllSnapshots allPosts "post-for-feed"
+      gs <- (traverse (`loadSnapshot` "post-for-feed") <=< filterM (fmap isJust . (`getMetadataField` "pub")))
+               =<< getMatches "garden/**.md"
+      lastPosts <- recentFirst =<< (gs <>) <$> loadAllSnapshots allPosts "post-for-feed"
       renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
   -- Individual tags
-  tagsRules tags $ \tag taggedPosts ->
+  tagsRules tags \tag taggedPosts ->
     create [fromFilePath $ "atom-" <> tag <> ".xml"] do
       route idRoute
       compile do

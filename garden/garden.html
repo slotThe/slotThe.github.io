@@ -9,9 +9,10 @@ When in doubt, just <a href="/wander">wander</a> around.
 <table>
   $for(recently-tended)$
     <tr>
-      <td style="vertical-align: top; font-variant-numeric: tabular-nums;">$if(tended)$$tended$$else$$date$$endif$</td>
-      <td style="vertical-align: top;">–</td>
-      <td style="vertical-align: top;"><a href="$url$">$title$</a></td>
+      <td style="font-variant-numeric: tabular-nums;">$if(tended)$$tended$$else$$date$$endif$</td>
+      <td>–</td>
+      <td><a href="$url$">$title$</a></td>
+      <td>$if(pub)$#pub$endif$</td>
     </tr>
   $endfor$
 </table>
@@ -22,9 +23,10 @@ $for(patches)$
   <table>
     $for(notes)$
       <tr>
-        <td style="vertical-align: top; font-variant-numeric: tabular-nums;">$date$</td>
-        <td style="vertical-align: top;">–</td>
-        <td style="vertical-align: top;"><a href="$url$">$title$</a></td>
+        <td style="font-variant-numeric: tabular-nums;">$if(tended)$$tended$$else$$date$$endif$</td>
+        <td>–</td>
+        <td><a href="$url$">$title$</a></td>
+      <td>$if(pub)$#pub$endif$</td>
       </tr>
     $endfor$
   </table>

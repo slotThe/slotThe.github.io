@@ -8,9 +8,12 @@ h1.note-title {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+a.back { font-family: var(--monospace-fonts) }
 
-a.back {
-    font-family: var(--monospace-fonts);
+td { /* Tight rows except for last one, which takes all remaining space. */
+    vertical-align: top;
+    &:not(:last-child) { width: 1%; white-space: nowrap; }
+    &:last-child { width: auto; text-align: right; color: var(--fg-dim); }
 }
 
 /* Put footer at bottom of viewport for very short posts */
