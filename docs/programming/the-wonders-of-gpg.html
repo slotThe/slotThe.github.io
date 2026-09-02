@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noai, noimageai">
+    <!-- Link previews in Signal and friends -->
+    <title>Fix hanging GPG database lock · Tony Zorman</title>
+    <meta name="og:title" content="Fix hanging GPG database lock">
+    
+    <meta name="og:site" content="tony-zorman.com">
+    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.png">
+    <meta property="og:image:height" content="221">
+    <meta property="og:image:width" content="197">
+
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css"><link rel="stylesheet" type="text/css" href="../css/garden.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/katex.css">
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
+  </head>
+
+  <body>
+    <div class="navbar-space">
+      <div id="navigation">
+        <a href="../" class="menu-title">Tony's site</a>
+        <ul>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../garden.html">Garden</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../free-software.html">Free Software</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../site.html">Colophon</a></li>
+        </ul>
+      </div>
+      <!-- A table of contents on the left side, but only for screens that are big enough -->
+    </div>
+    <div class="text-space">
+      <div id="content">
+        <article>
+  <div class="header">
+      <a href="../programming.html" class="back">← Programming</a>
+      &nbsp;·&nbsp;&nbsp;planted 2nd Sep 2026
+      &nbsp;&nbsp;·&nbsp;&nbsp;</div>
+    <h1 class="note-title">Fix hanging GPG database lock</h1>
+    <div id="title-underline"></div>
+    <section>
+      If you ever encounter a warning like
+<div class="highlight-text" style="padding-left: 1em;"><pre><span></span>gpg: Note: database_open «ID» waiting for lock (held by «ID») ...
+</pre></div>
+<p></p>
+when interacting with <code>gpg-agent</code>, or even doing something as simple as <code>gpg --list-keys</code>,
+just delete the respective pubring lock and try again:<!--
+--><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="sidenote"><a href="https://discuss.kde.org/t/kgpg-starts-with-invalid-argument-gpg-error/23029">Source</a>.</div><!--
+-->
+
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/.gnupg/public-keys.d
+<span class="gp">$ </span>rm<span class="w"> </span>pubring.db.lock
+</pre></div>
+<hr />
+<p></p>
+Would be nice to find the underlying issue some day, but for now this seems sufficient.</section>
+    <div style="text-align: center;">
+      <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
+      Have a comment? Write me an <a href="../about.html">email!</a>
+    </div>
+</article>
+</div>
+      <div id="footer">
+        <!-- Left -->
+        <a id="to-top" href="#">top</a>
+        <!-- Right -->
+        <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+        &nbsp;|&nbsp;
+        <a href="../impressum.html">Legal notice and privacy policy</a>
+        <!-- Newline -->
+        <p style="margin-top:0;">Everything on this website—<a style="color:var(--fg-footer-pipe)" href="https://en.wikipedia.org/wiki/Dash#Em_dash">em dash</a> and all—was created by a human</p>
+      </div>
+    </div>
+  </body>
+</html>
