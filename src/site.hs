@@ -362,20 +362,20 @@ garden ctx patches = do
 
 rss :: Tags -> Rules ()
 rss tags = do
+  feed <- fmap ((allPosts .||.) . fromList)
+       . filterM (fmap isJust . (`getMetadataField` "pub")) =<< getMatches "garden/**.md"
   -- All posts
   create ["atom.xml"] do
     route idRoute
     compile do
-      gs <- (traverse (`loadSnapshot` "post-for-feed") <=< filterM (fmap isJust . (`getMetadataField` "pub")))
-               =<< getMatches "garden/**.md"
-      lastPosts <- recentFirst =<< (gs <>) <$> loadAllSnapshots allPosts "post-for-feed"
+      lastPosts <- recentFirst =<< loadAllSnapshots feed "post-for-feed"
       renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
   -- Individual tags
   tagsRules tags \tag taggedPosts ->
     create [fromFilePath $ "atom-" <> tag <> ".xml"] do
       route idRoute
       compile do
-        lastPosts <- recentFirst =<< loadAllSnapshots taggedPosts "post-for-feed"
+        lastPosts <- recentFirst =<< loadAllSnapshots (feed .&&. taggedPosts) "post-for-feed"
         renderAtom feedConfig (postCtx <> bodyField "description") lastPosts
  where
   feedConfig :: FeedConfiguration
