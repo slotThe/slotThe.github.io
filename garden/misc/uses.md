@@ -37,12 +37,13 @@ My dotfiles are [freely available](https://codeberg.org/slotThe/dotfiles) on Cod
   I figured that having a shell that "just works" might be a good choice—and it was!
 
   Special shout out goes to eshell, which I also sometimes use in case extra Emacs integration is necessary.
-+ Coding: [Emacs](https://www.gnu.org/software/emacs/) ([Emacs])
++ LaTeX: [AUCTeX](https://www.gnu.org/software/auctex/index.html) ([Emacs])
 + Mail: [notmuch](https://notmuchmail.org/) ([Emacs])
 + Notes: [Org-roam](https://www.orgroam.com/) ([Emacs])
 + To-Do: [Org](https://orgmode.org/) ([Emacs])
 + Calendar: [Org](https://orgmode.org/) ([Emacs])
 + RSS Reader: [elfeed](https://github.com/emacs-elfeed/elfeed) ([Emacs])
++ Coding: [Emacs](https://www.gnu.org/software/emacs/) ([Emacs])
 + Browser: [Firefox](https://www.firefox.com/de/)
 + Chat: [Matrix](https://matrix.org/), [Signal](https://signal.org/), [Telegram](https://telegram.org/)
 + Password Manager: [pass(1)](https://www.passwordstore.org/)
@@ -50,7 +51,6 @@ My dotfiles are [freely available](https://codeberg.org/slotThe/dotfiles) on Cod
 + VPN: [Mullvad](https://mullvad.net/)
 + Static site generator: [Hakyll](https://jaspervdj.be/hakyll/)
 + Hosting: [Microsoft GitHub Pages](https://docs.github.com/en/pages)
-+ LaTeX: [AUCTeX](https://www.gnu.org/software/auctex/index.html) ([Emacs])
 
 [^1]: Eww, I know. But try surviving in today's world without occasionally having access to a phone...
 
