@@ -441,7 +441,8 @@ postCtx = mconcat
   calcWords = length . words . stripTags . itemBody
 
   toISO :: String -> String
-  toISO s = maybe @_ @Day s (formatTime defaultTimeLocale "%-d %b %Y") (parseTimeM True defaultTimeLocale "%F" s)
+  toISO s = addSuf $
+    maybe @_ @Day s (formatTime defaultTimeLocale "%-d %b %Y") (parseTimeM True defaultTimeLocale "%F" s)
 
   addSuf :: String -> String
   addSuf = \case
