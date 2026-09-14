@@ -2,7 +2,6 @@
 title: Advent of Code in K
 date: 2026-09-12
 tags: array-lang, k
-tended: 2026-09-14
 ---
 
 Let's do some k.

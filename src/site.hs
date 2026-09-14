@@ -356,9 +356,7 @@ garden ctx patches = do
   -- last-modified and creation date.
   recentNotes :: [Item a] -> Compiler [Item a]
   recentNotes notes = map snd . sortOn (Down . fst) <$>
-    traverse (\i -> (,i) . fromMaybe "" . listToMaybe . catMaybes <$>
-                traverse (getMetadataField (itemIdentifier i)) ["tended", "date"])
-             notes
+    traverse (\i -> (,i) <$> lastMod (itemIdentifier i)) notes
 
 rss :: Tags -> Rules ()
 rss tags = do
@@ -390,6 +388,21 @@ rss tags = do
 -----------------------------------------------------------------------
 -- Contexts
 
+lastMod :: Identifier -> Compiler String
+lastMod ident = do
+  meta <- getMetadata ident
+  case lookupString "last-modified" meta of
+    Just t  -> pure t
+    Nothing -> do
+      git <- unsafeCompiler $ trim <$>
+              readProcess "git"
+                           [ "log", "-1", "--format=%ad", "--date=format:%F"
+                           , "--", toFilePath ident ]
+                           ""
+      case git of
+        ""  -> formatTime defaultTimeLocale "%F" <$> getItemModificationTime ident
+        str -> pure str
+
 postCtx :: Context String
 postCtx = mconcat
   [ dateField "date"    "%-d %b %Y" addSuf  -- Creation date
@@ -409,17 +422,7 @@ postCtx = mconcat
   modTime :: Context String
   modTime = field "last-mod" \(Item ident _) -> do
     meta <- getMetadata ident
-    lastMod <- case lookupString "last-modified" meta of
-      Just t  -> pure t
-      Nothing -> do
-        git <- unsafeCompiler $ trim <$>
-                readProcess "git"
-                             [ "log", "-1", "--format=%ad", "--date=format:%F"
-                             , "--", toFilePath ident ]
-                             ""
-        case git of
-          ""  -> formatTime defaultTimeLocale "%F" <$> getItemModificationTime ident
-          str -> pure str
+    lastMod <- lastMod ident
     case lookupString "date" meta of
       Nothing      -> noResult "No creation date means no last modified date."
       Just created -> if lastMod /= created then pure (toISO lastMod)
