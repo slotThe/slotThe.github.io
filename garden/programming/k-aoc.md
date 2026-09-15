@@ -19,7 +19,7 @@ They say the best way to learn a language is to write "useful" programs in it. S
 I'll just quote the BQN post here, as this part is sort of the same:
 
 > Advent of Code is a yearly puzzle-coding-challenge-thing, in which one has to solve two riddles every day from the 1st until the 25th of December, with the second part of each puzzle being unknown until one solves the first one. I’ve found it to be a great way to learn the basics of a language—how it “feels”.
->
+> 
 > The puzzles are accompanied by an endearing—and at times pretty funny—story. I will, however, leave out most of it for this post, as I feel like it would distract too much from the point I’m trying to make.
 
 
@@ -326,7 +326,7 @@ Today, the elves want us to help them with their expense records; for part one, 
  "431"
  "1946")
  `I$ 0:"./aoc/2020/day01.txt"  / s$y is cast, and `I means a list of integers
-1895 1732 1660 1658 1878 367 2010 1989 431 1946 1614 2003 945 1856 1934 1937 1781 1947 1991 1917 1604 1707 1966 1959 1182 1828 1880 1908 1942 1687 1611 1922 1913 1803 1976 1718 1885 1971 2000 1912 1981 1776 1901 1941 1935 1977 1907 1893 1898 1975 2001 1833 1951 1939 19..
+1895 1732 1660 1658 1878 367 2010 1989 431 1946 1614 2003 945 1856 1934 1937 1781 1947 1991 1917 1604 1707 1966 1959..
  i:`I$0:"./aoc/2020/day01.txt" / call this list i
  #i                            / #x is length
 200
@@ -465,9 +465,9 @@ Each line indicates the lowest and highest number of times the given letter may 
  "j"
  "tjjj")
  :(f;c;s): + {(`I$"-"\x 0;*-1_x 1;x 2)}' " "\' 0:"./aoc/2020/day02.txt"
-((3 4;7 10;7 13;4 13;3 11;5 6;7 10;1 10;5 6;12 13;1 4;10 14;1 3;3 4;15 16;3 4;10 12;10 11;4 11;2 4;3 8;5 9;9 16;4 5;2 11;4 7;2 4;8 9;2 9;3 4;16 18;2 12;8 9;1 3;2 10;8 11;3 14;2 3;1 6;1 10;2 11;10 15;6 7;17 18;7 8;3 4;3 10;7 16;2 4;1 3;7 8;14 15;7 19;1 6;2 6;11 15;6 14;..
- "jhjlndzwwmbknwqwrvlprgnvrqsmxdqsqdhlwmbcgtsjmmhxbjmpdlfsscncblhdxxfbjstpjblgftpwgxddxptwnvvdbgxrzxdgpfrwkgxzgnkmwqrbdmqnlmbwlzhbqgdhhxnzfpgvrgxhsrmlfdbknstkxddtsdnspshzjqwqksgqgnknjnffghbxcrgfjdbsdxtmlhdjqbjtzxbwwskfznpbkxkkpbbggsmbllhhrpfnmgmcjrjhpqtrwnbvwwrffrxrdxh..
- ("tjjj";"nhhhhhgghphhh";"tpscbbstbdjsjbtcpj";"ckllmqzlvcsxpplqg";"nnrhnnnnnnnwsdnnnm";"ddddddb";"szfwzrbzzz";"wwwwwcwwwrpnwzwxww";"cgwppfwlwrwtnw";"bmmthmmhmmmbmmmmm";"gbbj";"kkkkkkkkkfkkkzk";"nndn";"wwpf";"qqqqqqqqqqqqrqqqq";"wwcg";"rrrrrrrrrcrrrr";"fvlvrvcxvvp";"qd..)
+((3 4;7 10;7 13;4 13;3 11;5 6;7 10;1 10;5 6;12 13;1 4;10 14;1 3;3 4;15 16;3 4;10 12;10 11;4 11;2 4;3 8;5 9;9 16;4 5;..
+ "jhjlndzwwmbknwqwrvlprgnvrqsmxdqsqdhlwmbcgtsjmmhxbjmpdlfsscncblhdxxfbjstpjblgftpwgxddxptwnvvdbgxrzxdgpfrwkgxzgnkmwq..
+ ("tjjj";"nhhhhhgghphhh";"tpscbbstbdjsjbtcpj";"ckllmqzlvcsxpplqg";"nnrhnnnnnnnwsdnnnm";"ddddddb";"szfwzrbzzz";"wwww..)
 ```
 
 After splitting each line on spaces, we apply the function ``{(`I$"-"\x 0;-1_x 1;x 2)}`` to each element: it splits the first element, which looks like `15-34`, on the dash, and then again *casts* the resulting list of strings into a list of integers. For the second entry, `j:`, we *drop* the last element by giving `i_X` a negative value as a left argument.
@@ -484,7 +484,7 @@ Checking whether a password is valid involves checking whether all occurrences o
  0 0 1 1 0 0 0 1 0 0 0 0 0 0 1 0 0
  1 1 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 0)
  +/' c=s  / Number of occurrences
-3 9 3 4 12 6 5 12 5 12 2 13 3 2 16 2 13 5 2 5 5 14 16 2 2 2 12 8 14 4 16 14 4 9 15 3 17 1 10 5 8 2 7 14 4 3 3 3 3 4 6 14 10 2 10 11 13 3 8 5 4 9 5 10 6 10 11 5 2 11 1 14 3 7 3 6 9 4 5 6 11 12 1 5 8 8 2 19 4 2 11 5 5 0 3 10 14 2 10 1 8 3 2 9 15 3 4 3 2 6 2 9 3 18 2 5 11..
+3 9 3 4 12 6 5 12 5 12 2 13 3 2 16 2 13 5 2 5 5 14 16 2 2 2 12 8 14 4 16 14 4 9 15 3 17 1 10 5 8 2 7 14 4 3 3 3 3 4 ..
 ```
 
 All that's left is to check the interval condition. Now, I have to say, this brings us to a bit of an annoying corner of K, at least in my opinion: the lack of proper `<=` and `>=` operators. They just don't exist, so we'll have to do some logical transformations.[^10] Notice, for example, that $$ x \in [a,b] \iff a \le x \land x \le b \iff x<a \oplus x<b+1 $$ Yes, this is a horribly roundabout way of expressing that particular fact, but it can at least be implemented in K straightforwardly:
@@ -536,9 +536,11 @@ The shopkeeper helpfully informs us that we've actually followed the wrong polic
 Full solution:
 
 ```k
-(f;c;s): + {(`I$"-"\x 0;*-1_x 1;x 2)}' " "\' 0:"./aoc/2020/day02.txt" /freq, char, string
-483= +/1=+/'(+/'c=s)<(0 1+)'f /x ∈ [a,b] ⇔ x≤b∧x≥a ⇔ x<a ⊕ x<b+1
-482= +/1=+/'c=s@'f-1
+ (f;c;s): + {(`I$"-"\x 0;*-1_x 1;x 2)}' " "\' 0:"./aoc/2020/day02.txt" /freq, char, string
+ 483= +/1=+/'(+/'c=s)<(0 1+)'f /x ∈ [a,b] ⇔ x≤b∧x≥a ⇔ x<a ⊕ x<b+1
+1
+ 482= +/1=+/'c=s@'f-1
+1
 ```
 
 
@@ -608,7 +610,7 @@ We can use this *n-dos* to generate all positions: since we're going down one sq
  0 0 0 0 0 1 1 1 0 1 0 1 1 1 0 0 1 1 0 1 0 1 1 0 0 0 0 0 0 0 1)
  r:#i; c:#*i                           / Rows and columns
  ,(r-1){(0;c)!'1 3+x}\(0;0)            / Indices of points
-,(0 0;1 3;2 6;3 9;4 12;5 15;6 18;7 21;8 24;9 27;10 30;11 2;12 5;13 8;14 11;15 14;16 17;17 20;18 23;19 26;20 29;21 1;22 4;23 7;24 10;25 13;26 16;27 19;28 22;29 25;30 28;31 0;32 3;33 6;34 9;35 12;36 15;37 18;38 21;39 24;40 27;41 30;42 2;43 5;44 8;45 11;46 14;47 17;48 20;..
+,(0 0;1 3;2 6;3 9;4 12;5 15;6 18;7 21;8 24;9 27;10 30;11 2;12 5;13 8;14 11;15 14;16 17;17 20;18 23;19 26;20 29;21 1;..
  +/ (i.)' (r-1)((0;c)!'1 3+)\(0;0)     / Part one
 187
 ```
@@ -650,10 +652,12 @@ This uses a very non-obvious overload of `!`: `(-i)!I` is not modding with a neg
 Full solution:
 
 ```k
-i:"#"=0:"./aoc/2020/day03.txt"; r:#i; c:#*i
-whee:{+/(i.)'((-*x)!r-1)((0;c)!'x+)\(0;0)} / x is a slope of the form (down;right)
-187       = one:whee 1 3
-4723283400= one**/whee'(1 1;1 5;1 7;2 1)
+ i:"#"=0:"./aoc/2020/day03.txt"; r:#i; c:#*i
+ whee:{+/(i.)'((-*x)!r-1)((0;c)!'x+)\(0;0)} / x is a slope of the form (down;right)
+ 187       = one:whee 1 3
+1
+ 4723283400= one**/whee'(1 1;1 5;1 7;2 1)
+1
 ```
 
 
@@ -674,9 +678,9 @@ Only passports that either have all of the fields, or are just missing the `cid`
 
 ```k
  ,0:"./aoc/2020/day04.txt" / easier to see
-,("hgt:176cm";"iyr:2013";"hcl:#fffffd ecl:amb";"byr:2000";"eyr:2034";"cid:89 pid:934693255";"";"hcl:#b5c3db ecl:grn hgt:155cm pid:#baec97 iyr:2017";"byr:1939";"eyr:2020";"";"pid:526669252 eyr:1972";"hgt:152cm ecl:dne byr:1960 hcl:z iyr:2023";"";"eyr:2028 hcl:#c0946f hg..
+,("hgt:176cm";"iyr:2013";"hcl:#fffffd ecl:amb";"byr:2000";"eyr:2034";"cid:89 pid:934693255";"";"hcl:#b5c3db ecl:grn ..
  1:"./aoc/2020/day04.txt"  / easier to work with
-"hgt:176cm\niyr:2013\nhcl:#fffffd ecl:amb\nbyr:2000\neyr:2034\ncid:89 pid:934693255\n\nhcl:#b5c3db ecl:grn hgt:155cm pid:#baec97 iyr:2017\nbyr:1939\neyr:2020\n\npid:526669252 eyr:1972\nhgt:152cm ecl:dne byr:1960 hcl:z iyr:2023\n\neyr:2028 hcl:#c0946f hgt:73in byr:1926 ..
+"hgt:176cm\niyr:2013\nhcl:#fffffd ecl:amb\nbyr:2000\neyr:2034\ncid:89 pid:934693255\n\nhcl:#b5c3db ecl:grn hgt:155cm..
 ```
 
 Different fields of a single entry are separated by either spaces, or newlines, so we'll have to first group the entries appropriately. The good thing is that k has some string splitting primitives built in!
@@ -820,7 +824,7 @@ This at least only uses builtin verbs, but to be honest I find this pretty diffi
 
 ```k
  :i: 2/' elem[0:"./aoc/2020/day05.txt"; "BR"]
-565 282 527 451 172 411 388 564 852 524 143 805 816 336 769 228 151 562 755 656 154 165 185 105 114 368 393 572 222 313 358 480 161 529 467 263 182 569 404 540 454 833 437 79 730 459 819 216 638 428 518 848 289 341 701 817 599 720 365 426 291 519 532 321 530 772 323 60..
+565 282 527 451 172 411 388 564 852 524 143 805 816 336 769 228 151 562 755 656 154 165 185 105 114 368 393 572 222 ..
 ```
 
 After parsing, we can use yet another overload of the forward slash—an (array of) integer(s) as its left argument turns it into *decode*.
@@ -836,7 +840,7 @@ For part two, we notice that the flight is completely full, with a slight caveat
 
 ```k
  :ms:(!1024)^i            / missing seats
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 739 865 866 867 868 869 870 871 872 873 874 875 876 87..
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 ..
  ms[* 1_ &0= {y=x-1}':ms] / value of first middle seat
 739
 ```
@@ -846,10 +850,12 @@ For part two, we notice that the flight is completely full, with a slight caveat
 Full solution:
 
 ```k
-elem:{~^(y?)'x} / x ∈ y
-i: 2/' elem[0:"./aoc/2020/day05.txt"; "BR"]
-864= |/i
-739= ms@*1_&0={y=x-1}':ms:(!1024)^i
+ elem:{~^(y?)'x} / x ∈ y
+ i: 2/' elem[0:"./aoc/2020/day05.txt"; "BR"]
+ 864= |/i
+1
+ 739= ms@*1_&0={y=x-1}':ms:(!1024)^i
+1
 ```
 
 
@@ -862,9 +868,9 @@ Today, we're helping the other passengers on the plane navigate ridiculous custo
 
 ```k
  1:"./aoc/2020/day06.txt"
-"gsvdkufnoawjmhp\nwvhusojpnikgfadb\nvshnpfedgwajkou\naujodhskfvnpgw\nokpdnwhsfvjguqa\n\njuedvq\nvqeduj\nveqdju\neqduvj\n\ncdajbuernxm\nmnucjearxbd\naxrmdejuncb\njrebucmdxna\n\nkutplibdoqzfvhw\nqcewmrkdvhl\nqobdwvlkgxhpasyjn\n\npsbjhnatxe\npnaxesjhbt\ntpxhbnseaj\n\nyskv..
+"gsvdkufnoawjmhp\nwvhusojpnikgfadb\nvshnpfedgwajkou\naujodhskfvnpgw\nokpdnwhsfvjguqa\n\njuedvq\nvqeduj\nveqdju\neqdu..
  ,"\n\n"\ 1:"./aoc/2020/day06.txt"              / By groups
-,("gsvdkufnoawjmhp\nwvhusojpnikgfadb\nvshnpfedgwajkou\naujodhskfvnpgw\nokpdnwhsfvjguqa";"juedvq\nvqeduj\nveqdju\neqduvj";"cdajbuernxm\nmnucjearxbd\naxrmdejuncb\njrebucmdxna";"kutplibdoqzfvhw\nqcewmrkdvhl\nqobdwvlkgxhpasyjn";"psbjhnatxe\npnaxesjhbt\ntpxhbnseaj";"yskvjqa..
+,("gsvdkufnoawjmhp\nwvhusojpnikgfadb\nvshnpfedgwajkou\naujodhskfvnpgw\nokpdnwhsfvjguqa";"juedvq\nvqeduj\nveqdju\neqd..
  5# i: "\n"\' "\n\n"\ 1:"./aoc/2020/day06.txt" / Individual groups by line
 (("gsvdkufnoawjmhp";"wvhusojpnikgfadb";"vshnpfedgwajkou";"aujodhskfvnpgw";"okpdnwhsfvjguqa")
  ("juedvq";"vqeduj";"veqdju";"eqduvj")
@@ -902,9 +908,11 @@ Of course, we've actually misread the instructions! Instead of identifying the q
 Full solution:
 
 ```k
-i: "\n"\' "\n\n"\ 1:"./aoc/2020/day06.txt"
-6335= +/(#?,/)'i
-3392= +/(#{x^x^y}/)'i
+ i: "\n"\' "\n\n"\ 1:"./aoc/2020/day06.txt"
+ 6335= +/(#?,/)'i
+1
+ 3392= +/(#{x^x^y}/)'i
+1
 ```
 
 
@@ -1086,12 +1094,14 @@ This code uses the `|/X=\:` idiom which I skipped for readability reasons on day
 Full solution:
 
 ```k
-i:{(`$x 0;.(x 1)^"+")}' " "\' 0:"./aoc/2020/day08.txt";  mx:-1+#i
-While:{(v;c;s;j):x; (^s?c)&(c<mx)}
-Do:{(v;c;s;j):x; (a;b):j c; (v+b*`acc=a; c+(1;b)@`jmp=a; s,c; j)}
-Sol:{While Do/(0;0;,0N;x)}
-1594= *           Sol i
-758 = **{mx=x@'1}#Sol'@[i;;{(*`jmp`nop^x 0;x 1)}]'&|/`jmp`nop=\:*'i
+ i:{(`$x 0;.(x 1)^"+")}' " "\' 0:"./aoc/2020/day08.txt";  mx:-1+#i
+ While:{(v;c;s;j):x; (^s?c)&(c<mx)}
+ Do:{(v;c;s;j):x; (a;b):j c; (v+b*`acc=a; c+(1;b)@`jmp=a; s,c; j)}
+ Sol:{While Do/(0;0;,0N;x)}
+ 1594= *           Sol i
+1
+ 758 = **{mx=x@'1}#Sol'@[i;;{(*`jmp`nop^x 0;x 1)}]'&|/`jmp`nop=\:*'i
+1
 ```
 
 
@@ -1101,7 +1111,7 @@ After using several paperclips to connect our computer to our in-flight screen, 
 
 ```k
  :i:.'0:"./aoc/2020/day09.txt" / .C is eval
-11 6 42 19 23 20 26 4 2 36 35 41 18 38 28 1 48 5 17 10 32 15 46 50 24 3 7 6 8 68 83 23 11 16 4 36 9 78 12 29 13 25 42 14 84 10 17 15 18 28 19 21 20 22 35 24 45 30 67 50 23 40 27 26 31 38 33 25 42 29 32 34 57 41 70 43 44 46 65 75 47 48 89 49 51 61 60 52 54 56 99 86 90 7..
+11 6 42 19 23 20 26 4 2 36 35 41 18 38 28 1 48 5 17 10 32 15 46 50 24 3 7 6 8 68 83 23 11 16 4 36 9 78 12 29 13 25 4..
 ```
 
 The data is encrypted with the whimsically named "eXchange-Masking Addition System"; it starts off by transmitting 25 numbers, and after that every number that follows is a sum of two of the previous 25 numbers.
@@ -1164,10 +1174,12 @@ This additional complexity is not actually needed here, and I'm just going to br
 Full solution:
 
 ```k
-i:.'0:"./aoc/2020/day09.txt"
-1930745883= p1: i@ 25+ *&{~|//(*|x)=as+/:as:-1_x}' 26':i
-(r;of): *+&{p1=+\x_i}'!#i
-268878261 = {(&/x)+|/x}(of+1)#r_i
+ i:.'0:"./aoc/2020/day09.txt"
+ 1930745883= p1: i@ 25+ *&{~|//(*|x)=as+/:as:-1_x}' 26':i
+1
+ (r;of): *+&{p1=+\x_i}'!#i
+ 268878261 = {(&/x)+|/x}(of+1)#r_i
+1
 ```
 
 
@@ -1177,7 +1189,7 @@ Just as we discover the weather forecasts of a massive tropical storm, our batte
 
 ```k
  :i:i@<i:.'0:"./aoc/2020/day10.txt"
-1 2 3 4 7 10 11 12 13 14 17 18 19 20 21 24 25 26 27 28 31 32 33 34 35 38 39 40 43 46 47 48 49 52 53 54 55 56 59 62 63 64 65 66 69 72 73 76 77 78 81 82 83 84 87 88 89 90 93 94 95 96 99 102 103 104 105 108 109 110 111 114 117 120 121 122 123 126 127 128 129 132 135 138 1..
+1 2 3 4 7 10 11 12 13 14 17 18 19 20 21 24 25 26 27 28 31 32 33 34 35 38 39 40 43 46 47 48 49 52 53 54 55 56 59 62 6..
  #i
 101
 ```
@@ -1190,9 +1202,9 @@ Since we have to use every adapter once, there's not actually much to do here. W
  :d:3+|/i
 164
  -':i,d         / Differences, initial 0 is implicit
-1 1 1 1 3 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 3 3 1 1 1 3 1 1 1 1 3 3 1 1 1 1 3 3 1 3 1 1 3 1 1 1 3 1 1 1 3 1 1 1 3 3 1 1 1 3 1 1 1 3 3 3 1 1 1 3 1 1 1 3 3 3 1 1 1 1 3 1 1 1 3 1 1 1 1 3 1 1 1 3
+1 1 1 1 3 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 3 3 1 1 1 3 1 1 1 1 3 3 1 1 1 1 3 3 1 3 1 1 3 1 1 1 3 1 1 1 ..
  =-':i,d        / Group =X
-!/+((1;0 1 2 3 6 7 8 9 11 12 13 14 16 17 18 19 21 22 23 24 26 27 30 31 32 34 35 36 37 40 41 42 43 46 48 49 51 52 53 55 56 57 59 60 61 64 65 66 68 69 70 74 75 76 78 79 80 84 85 86 87 89 90 91 93 94 95 96 98 99 100)
+!/+((1;0 1 2 3 6 7 8 9 11 12 13 14 16 17 18 19 21 22 23 24 26 27 30 31 32 34 35 36 37 40 41 42 43 46 48 49 51 52 5..)
     (3;4 5 10 15 20 25 28 29 33 38 39 44 45 47 50 54 58 62 63 67 71 72 73 77 81 82 83 88 92 97 101))
  */ #' =-':i,d / Part one
 2201
@@ -1206,7 +1218,7 @@ Looking at the differences again, we see a curious pattern:
 
 ```k
  -':i,d
-1 1 1 1 3 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 3 3 1 1 1 3 1 1 1 1 3 3 1 1 1 1 3 3 1 3 1 1 3 1 1 1 3 1 1 1 3 1 1 1 3 3 1 1 1 3 1 1 1 3 3 3 1 1 1 3 1 1 1 3 3 3 1 1 1 1 3 1 1 1 3 1 1 1 1 3 1 1 1 3
+1 1 1 1 3 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 1 1 3 1 1 3 3 1 1 1 3 1 1 1 1 3 3 1 1 1 1 3 3 1 3 1 1 3 1 1 1 3 1 1 1 ..
 ```
 
 All adapters have distance one or three, no twos in sight. The threes thus function as a sort of "reset point": they can't themselves be touched by the surrounding adapters, so we can treat each group of ones as its own little island. The rules for each island are simple: we can't remove anything from the front or back, and in the middle we can remove at most two numbers. For example:
@@ -1223,7 +1235,7 @@ This is the number of binary sequences with at most two ones, which can for exam
 
 ```k
  ,"3"\,/$-':i,d                             / Better solutions welcome!
-,("1111";"";"1111";"1111";"1111";"1111";"11";"";"111";"1111";"";"1111";"";,"1";"11";"111";"111";"111";"";"111";"111";"";"";"111";"111";"";"";"1111";"111";"1111";"111";"")
+,("1111";"";"1111";"1111";"1111";"1111";"11";"";"111";"1111";"";"1111";"";,"1";"11";"111";"111";"111";"";"111";"111"..
  */ {$[x=4;7;x=3;4;1|x]}' #' "3"\,/$-':i,d / Part two
 169255295254528
 ```
@@ -1233,9 +1245,11 @@ This is the number of binary sequences with at most two ones, which can for exam
 Full solution:
 
 ```k
-i:i@<i:.'0:"./aoc/2020/day10.txt"
-2201= */#'=d:-':i,3+|/i
-169255295254528= */{$[x=4;7;x=3;4;1|x]}'#'"3"\,/$d
+ i:i@<i:.'0:"./aoc/2020/day10.txt"
+ 2201= */#'=d:-':i,3+|/i
+1
+ 169255295254528= */{$[x=4;7;x=3;4;1|x]}'#'"3"\,/$d
+1
 ```
 
 
@@ -1299,7 +1313,7 @@ We are about to reach a nearby port, only to discover that no ships actually go 
 ```k
  :(t;bf):{`I$'(x 0;","\x 1)}@0:"./aoc/2020/day13.txt" /timestamp and busses filled
 (1008832
- 23 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 41 0N 0N 0N 0N 0N 0N 0N 0N 0N 449 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 13 19 0N 0N 0N 0N 0N 0N 0N 0N 0N 29 0N 991 0N 0N 0N 0N 0N 37 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 17)
+ 23 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 41 0N 0N 0N 0N 0N 0N 0N 0N 0N 449 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N 0N..)
  :ib:&~^bf                                            /indices of busses
 0 13 23 41 42 52 54 60 71
  :bs:bf^0N                                            /busses
@@ -1563,12 +1577,13 @@ For part two, the elves want to know how well we can optimise this simple loop! 
 447
 ```
 
-&hellip;except this doesn't actually work. The k implementation that I'm using implements its dicts not as "proper" hash maps, but as two arrays, so dict lookup is actually just `X?y` in disguise. This is quite unfortunate, but at least for this problem that doesn't stop us, as the task is rigid enough for us to hard-code some numbers. If we just have some array `m` such that `m[i]` yields the last time that `i` was said, we effectively have a dict. The numbers can never grow larger than the number of steps, so there's a good cap to it as well.
+&hellip;except this doesn't actually work. The k implementation that I'm using implements its dicts not as "proper" hash maps, but as two arrays, so dict lookup is actually just `X?y` in disguise. This is quite unfortunate,[^13] but at least for this problem that doesn't stop us, as the task is rigid enough for us to hard-code some numbers. If we just have some array `m` such that `m[i]` yields the last time that `i` was said, we effectively have a dict. The numbers can never grow larger than the number of steps, so there's a good cap to it as well.
 
 ```k
  i:.'","\1:"./aoc/2020/day15.txt"; s:*|i;
  m:30000000#0N; m[i]:1+!#i;
  11721679= ,*(30000000-#i)({l:y-1; n:l-l^m[x]; m[x]:l; (n;y+1)}.)/(s;1+#i)
+1
 ```
 
 This is still mighty slow, clocking in at around 14 seconds on my machine. Optimising this might be fun, although I suppose one would have to resort to bit-level hacking, which I'm not sure k is particularly well equipped to do (nor optimised for).
@@ -1615,3 +1630,5 @@ Full solution:
 [^11]: I wonder what the carbon footprint is for this journey.
 
 [^12]: I'm surprised that there's no joke about multiple realities at this point.
+
+[^13]: I checked some "newer" K dialects, like [goal](https://codeberg.org/anaseto/goal), but they actually have the same problem! I wonder why that is.
