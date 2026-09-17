@@ -128,9 +128,9 @@ blog :: Context String -> Rules ()
 blog tagCtx = match "blog.html" do
   route idRoute
   compile do
-    allposts <- recentFirst =<< loadAllSnapshots allPosts "post-teaser"
+    allPub <- recentFirst =<< (`loadAllSnapshots` "post-teaser") =<< allPubs
     let teaserCtx = cleanTeaser "teaser" "post-teaser" <> tagCtx
-        indexCtx  = listField "posts" teaserCtx (pure allposts) <> bodyField "body"
+        indexCtx  = listField "posts" teaserCtx (pure allPub) <> bodyField "body"
     getResourceBody
       >>= applyAsTemplate                               indexCtx
       >>= loadAndApplyTemplate "templates/default.html" indexCtx
@@ -160,7 +160,7 @@ blog tagCtx = match "blog.html" do
   cleanTeaser key snapshot = field key \item -> do
     body <- itemBody <$> loadSnapshot (itemIdentifier item) snapshot
     case needlePrefix "<!--more-->" body of
-      Nothing -> fail $ "Hakyll.Web.Template.Context: no teaser defined for " <> show (itemIdentifier item)
+      Nothing -> pure ""
       Just t  -> pure $ asTxt clean t
    where
     clean :: Text -> Text
@@ -324,6 +324,7 @@ garden ctx patches = do
           >>= mkCleanSnapshot "post-for-feed"  -- See 'rss'
       -- Note
       myPandocCompiler
+        >>= (if atom then mkCleanSnapshot "post-teaser" else pure)
         >>= saveSnapshot "note"
         >>= loadAndApplyTemplate "templates/gpost.html"   (noteCtx patch)
         >>= loadAndApplyTemplate "templates/default.html" (noteCtx patch)
@@ -360,8 +361,7 @@ garden ctx patches = do
 
 rss :: Tags -> Rules ()
 rss tags = do
-  feed <- fmap ((allPosts .||.) . fromList)
-       . filterM (fmap isJust . (`getMetadataField` "pub")) =<< getMatches "garden/**.md"
+  feed <- allPubs
   -- All posts
   create ["atom.xml"] do
     route idRoute
@@ -387,6 +387,10 @@ rss tags = do
 
 -----------------------------------------------------------------------
 -- Contexts
+
+allPubs :: MonadMetadata m => m Pattern
+allPubs = fmap ((allPosts .||.) . fromList)
+        . filterM (fmap isJust . (`getMetadataField` "pub")) =<< getMatches "garden/**.md"
 
 lastMod :: Identifier -> Compiler String
 lastMod ident = do
