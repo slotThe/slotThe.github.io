@@ -24,30 +24,26 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## In preparation
 
-+ Finite Tensor 2-Categories
-
-  With [Matti Stroiński](https://sites.google.com/view/stroinski) and [Thibault Décoppet](https://www.thibaultdecoppet.com);
++ *Finite Tensor 2-Categories*\
+  With [Matti Stroiński] and [Thibault Décoppet](https://www.thibaultdecoppet.com);
   [working tune](https://www.youtube.com/watch?v=DJIPepGa07M).[^5]
 
-+ Non-unital gabi-algebras
-
-  With [Sebastian Halbig](https://sebastianhalbig.github.io/main.html) and [Paolo Saracco](https://sites.google.com/view/paolo-saracco/about-me);
++ *Non-unital gabi-algebras*\
+  With [Sebastian Halbig] and [Paolo Saracco];
   [working tune](https://youtu.be/uCBI6uJx_jY?si=WHaqOV_psZfcpNQd&t=704).
 
-+ Hypergroups
-
++ *Hypergroups*\
   With [Ariel E. Rosenfield](https://ari-rosenfield.github.io/) and Florian Warg;
   [working tune](https://www.youtube.com/watch?v=pDtIABGdc18).
 
-+ Reflective Reconstruction
-
-  With [Sebastian Halbig](https://sebastianhalbig.github.io/main.html);
++ *Reflective Reconstruction*\
+  With [Sebastian Halbig];
   [working tune](https://www.youtube.com/watch?v=3krlKI2SXtQ).
 
 ## Published
 
 - *[Duality in Monoidal Categories]* <span class="floatright">[@halbig23:dualit-monoid-categ]</span> \
-  Joint work with Sebastian Halbig.
+  Joint work with [Sebastian Halbig].
 
   We compare closed and rigid monoidal categories.
   Closedness is defined by the tensor product having a right adjoint:
@@ -65,7 +61,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   this yields a proof of a sketched argument by Bouc linking rigidity of an object to it being finitely-generated projective.
 
 - *[Diagrammatics for Comodule Monads]* <span class="floatright">[@halbig23:diagr-comod-monad]</span> \
-  Joint work with Sebastian Halbig.
+  Joint work with [Sebastian Halbig].
 
   We extend Willerton's [@Willerton2008] graphical calculus for bimonads
   to comodule monads, a monadic interpretation of module categories
@@ -73,7 +69,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Tannaka–Krein duality for these structures.
 
 - *[Pivotality, twisted centres, and the anti-double of a Hopf monad]* <span class="floatright">[@halbig24:pivot-hopf]</span> \
-  Joint work with Sebastian Halbig.
+  Joint work with [Sebastian Halbig].
 
   Finite-dimensional Hopf algebras admit a correspondence between
   so-called pairs in involution, one-dimensional anti-Yetter–Drinfeld
@@ -88,6 +84,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 ## Preprints
 
 - *[Gabi-Monads]* <span class="floatright">[@halbig26:gabi-monad]</span> \
+  Joint work with [Sebastian Halbig] and [Paolo Saracco].
 
   We study gabi-monads on skew-closed categories, extending the gabi-algebras of Berger, the second author, and Vercruysse beyond the linear case.
   Our main reconstruction theorem identifies gabi-monad structures on a monad with skew-closed structures on its Eilenberg–Moore category for which the canonical forgetful functor is strict closed.
@@ -103,7 +100,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Further, we investigate how a cocommutative version of this lifts the linearly distributive structure of a normal duoidal category.
 
 - *[Simple algebras and exact module categories]* <span class="floatright">[@coulembier25:simpl]</span> \
-  Joint work with Kevin Coulembier and Mateusz Stroiński.
+  Joint work with [Kevin Coulembier](https://www.maths.usyd.edu.au/u/kevinc) and [Matti Stroiński].
 
   We verify a conjecture of Etingof and Ostrik,
   stating that an algebra object in a finite tensor category is exact if and only if it is a finite direct product of simple algebras.
@@ -112,7 +109,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   We give applications of our main results in the context of incompressible finite symmetric tensor categories.
 
 - *[Reconstruction of module categories in the infinite and non-rigid settings]* <span class="floatright">[@stroinski2024:reconstr]</span> \
-  Joint work with Mateusz Stroiński.
+  Joint work with [Matti Stroiński].
 
   By building on the notions of internal projective and injective objects in a module category
   introduced by Douglas, Schommer-Pries, and Snyder,
@@ -368,9 +365,12 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 [^3]: Also known as Grothendieck–Verdier duality.
 
-[orcid]: https://orcid.org/0009-0009-4940-2864
-[arXiv]: https://arxiv.org/a/zorman_t_1
-[zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
-
 [^5]: I stole this idea from [Thibault](https://www.thibaultdecoppet.com), and I think it's absolutely delightful!
       Not sure he would agree with my taste in music, though :)
+
+[Matti Stroiński]: https://sites.google.com/view/stroinski
+[Paolo Saracco]: https://sites.google.com/view/paolo-saracco/about-me
+[Sebastian Halbig]: https://sebastianhalbig.github.io/main.html
+[arXiv]: https://arxiv.org/a/zorman_t_1
+[orcid]: https://orcid.org/0009-0009-4940-2864
+[zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
