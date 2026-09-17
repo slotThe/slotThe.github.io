@@ -22,6 +22,28 @@ When no one's looking, I also like to study categories for their own sake.
 
 All of my papers—published or not—are readily available on the [arXiv].[^2]
 
+## In preparation
+
++ Finite Tensor 2-Categories
+
+  With [Matti Stroiński](https://sites.google.com/view/stroinski) and [Thibault Décoppet](https://www.thibaultdecoppet.com);
+  [working tune](https://www.youtube.com/watch?v=DJIPepGa07M).[^5]
+
++ Non-unital gabi-algebras
+
+  With [Sebastian Halbig](https://sebastianhalbig.github.io/main.html) and [Paolo Saracco](https://sites.google.com/view/paolo-saracco/about-me);
+  [working tune](https://youtu.be/uCBI6uJx_jY?si=WHaqOV_psZfcpNQd&t=704).
+
++ Hypergroups
+
+  With [Ariel E. Rosenfield](https://ari-rosenfield.github.io/) and Florian Warg;
+  [working tune](https://www.youtube.com/watch?v=pDtIABGdc18).
+
++ Reflective Reconstruction
+
+  With [Sebastian Halbig](https://sebastianhalbig.github.io/main.html);
+  [working tune](https://www.youtube.com/watch?v=3krlKI2SXtQ).
+
 ## Published
 
 - *[Duality in Monoidal Categories]* <span class="floatright">[@halbig23:dualit-monoid-categ]</span> \
@@ -349,3 +371,6 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [orcid]: https://orcid.org/0009-0009-4940-2864
 [arXiv]: https://arxiv.org/a/zorman_t_1
 [zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
+
+[^5]: I stole this idea from [Thibault](https://www.thibaultdecoppet.com), and I think it's absolutely delightful!
+      Not sure he would agree with my taste in music, though :)
