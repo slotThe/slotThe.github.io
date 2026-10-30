@@ -24,13 +24,9 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## In preparation
 
-+ *Finite Tensor 2-Categories*\
-  With [Matti Stroiński] and [Thibault Décoppet](https://www.thibaultdecoppet.com);
-  [working tune](https://www.youtube.com/watch?v=DJIPepGa07M).[^5]
-
 + *Non-unital gabi-algebras*\
   With [Sebastian Halbig] and [Paolo Saracco];
-  [working tune](https://youtu.be/uCBI6uJx_jY?si=WHaqOV_psZfcpNQd&t=704).
+  [working tune](https://youtu.be/uCBI6uJx_jY?si=WHaqOV_psZfcpNQd&t=704).[^5]
 
 + *Hypergroups*\
   With [Ariel E. Rosenfield](https://ari-rosenfield.github.io/) and Florian Warg;
@@ -82,6 +78,20 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   underlying categories is discussed.
 
 ## Preprints
+
+- *[Finite Tensor 2-Categories]* <span class="floatright">[@décoppet26:finit-tensor-categ]</span> \
+  Joint work with [Thibault Décoppet] and [Matti Stroiński].
+
+  We propose a definition of a finite linear 2-category, as a 2-categorical analogue of the notion of a finite abelian category of Etingof–Ostrik.
+  We go on to prove that finite linear 2-categories with adjunctible projectives are precisely the Morita 2-categories of (all) algebras in a finite multitensor category.
+  Thus, finite linear 2-categories with adjunctible projectives can be viewed as "non-semisimple" generalisations of the finite semisimple 2-categories of Douglas–Reutter.
+
+  Secondly, we study finite multitensor 2-categories, that is, finite linear 2-categories equipped with a monoidal structure for which every objects has duals.
+  We extend several results about fusion 2-categories to our present setting.
+  In particular, we investigate the properties of the 2-category of bimodules over a rigid algebra \(\cat{A}\) in a finite tensor 2-category \(\mathfrak{C}\).
+  We show that, if \(\mathfrak{C}\) has adjunctible projectives, then the 2-category of \(\cat{A}\)-\(\cat{A}\)-bimodules in \(\mathfrak{C}\) is a finite multitensor 2-category.
+  This construction provides many examples of finite tensor 2-categories.
+  For instance, the Drinfeld centre of a finite tensor 2-category with adjunctible projectives is a finite tensor 2-category.
 
 - *[Gabi-Monads]* <span class="floatright">[@halbig26:gabi-monad]</span> \
   Joint work with [Sebastian Halbig] and [Paolo Saracco].
@@ -331,32 +341,6 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
   Bachelor's thesis with a focus on keis; objects arising naturally when
   trying to generalise the number of 3-colourings of a knot.
 
-[CT2025]: https://conference.math.muni.cz/ct2025/
-[CT23]: https://sites.uclouvain.be/ct2023/
-[CT24]: https://www.usc.gal/regaca/ct2024/
-[Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
-[Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
-[Duoidal R-Matrices]: https://arxiv.org/abs/2503.03445
-[GMM]: https://tu-dresden.de/mn/math/geometrie/veranstaltungen/Seminar_Methoden
-[Gabi-Monads]: https://arxiv.org/abs/2607.27846
-[HATC23]: https://www.uni-marburg.de/en/fb12/research-groups/algeblie/projects/hatc23
-[Hopf Algebras and Monoidal Categories]: https://sites.google.com/unife.it/ferrara2024
-[Hopf25]: https://hopfalgb.ulb.be/Hopf2025/
-[Pivotality, twisted centres, and the anti-double of a Hopf monad]: http://www.tac.mta.ca/tac/volumes/41/4/41-04abs.html
-[Reconstruction of module categories in the infinite and non-rigid settings]: https://arxiv.org/abs/2409.00793
-[Simple algebras and exact module categories]: https://arxiv.org/abs/2501.06629
-[Uppsala Algebra Seminar]: https://www2.math.uu.se/~vomaz677/seminar.html
-[ct23:landscape]: /talks/ct23-landscape.pdf
-[ct23:portrait]: /talks/ct23-portrait.pdf
-[disputation]: ./disputation.pdf
-[sem:hsha]: /hsha.html
-[sem:mackey-functors]: /mackey-functors.html
-[slides:abstact-schur-functors]: /talks/abstract-schur-functors.pdf
-[slides:mackey-functors:handout]: /talks/mackey-functors.pdf
-[slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
-[slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
-[slides:profunctor]: /talks/profunctor-optics.pdf
-[slides:visual-cat]: /talks/visual-category-theory.pdf
 
 [^1]: {-} I may be found on the [arXiv], [orcid], and [zbmath].
 
@@ -368,9 +352,37 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 [^5]: I stole this idea from [Thibault](https://www.thibaultdecoppet.com), and I think it's absolutely delightful!
       Not sure he would agree with my taste in music, though :)
 
+[CT2025]: https://conference.math.muni.cz/ct2025/
+[CT23]: https://sites.uclouvain.be/ct2023/
+[CT24]: https://www.usc.gal/regaca/ct2024/
+[Diagrammatics for Comodule Monads]: https://arxiv.org/abs/2312.13074
+[Duality in Monoidal Categories]: https://arxiv.org/abs/2301.03545
+[Duoidal R-Matrices]: https://arxiv.org/abs/2503.03445
+[Finite Tensor 2-Categories]: https://arxiv.org/abs/2610.37016
+[GMM]: https://tu-dresden.de/mn/math/geometrie/veranstaltungen/Seminar_Methoden
+[Gabi-Monads]: https://arxiv.org/abs/2607.27846
+[HATC23]: https://www.uni-marburg.de/en/fb12/research-groups/algeblie/projects/hatc23
+[Hopf Algebras and Monoidal Categories]: https://sites.google.com/unife.it/ferrara2024
+[Hopf25]: https://hopfalgb.ulb.be/Hopf2025/
 [Matti Stroiński]: https://sites.google.com/view/stroinski
 [Paolo Saracco]: https://sites.google.com/view/paolo-saracco/about-me
+[Pivotality, twisted centres, and the anti-double of a Hopf monad]: http://www.tac.mta.ca/tac/volumes/41/4/41-04abs.html
+[Reconstruction of module categories in the infinite and non-rigid settings]: https://arxiv.org/abs/2409.00793
 [Sebastian Halbig]: https://sebastianhalbig.github.io/main.html
+[Simple algebras and exact module categories]: https://arxiv.org/abs/2501.06629
+[Thibault Décoppet]: https://www.thibaultdecoppet.com
+[Uppsala Algebra Seminar]: https://www2.math.uu.se/~vomaz677/seminar.html
 [arXiv]: https://arxiv.org/a/zorman_t_1
+[ct23:landscape]: /talks/ct23-landscape.pdf
+[ct23:portrait]: /talks/ct23-portrait.pdf
+[disputation]: ./disputation.pdf
 [orcid]: https://orcid.org/0009-0009-4940-2864
+[sem:hsha]: /hsha.html
+[sem:mackey-functors]: /mackey-functors.html
+[slides:abstact-schur-functors]: /talks/abstract-schur-functors.pdf
+[slides:mackey-functors:handout]: /talks/mackey-functors.pdf
+[slides:piv:brno]: /talks/pivotality-in-monoidal-categories/brno.pdf
+[slides:piv:prague]: /talks/pivotality-in-monoidal-categories/prague.pdf
+[slides:profunctor]: /talks/profunctor-optics.pdf
+[slides:visual-cat]: /talks/visual-category-theory.pdf
 [zbmath]: https://zbmath.org/authors/?q=ai%3Azorman.tony
