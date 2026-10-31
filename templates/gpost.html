@@ -1,6 +1,6 @@
 <article>
   <div class="header">
-      <a href="$patch-url$" class="back">← $patch$</a>
+      <a href="$patch-url$" class="back"><span style="font-family: var(--monospace-fonts)">←</span> $patch$</a>
       &nbsp;·&nbsp;&nbsp;planted $date$
       $if(last-mod)$&nbsp;&nbsp;·&nbsp;&nbsp;tended $last-mod$$endif-$
       $if(pub)$&nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>$endif-$
@@ -11,11 +11,11 @@
     $if(prep)$
       <div class="recipe-stats">
         <span>Prep time: $prep$</span>
-        $if(serv)$<span>Servings: $serv$</span>$endif$
-        $if(cook)$<span>Cooking time: $cook$</span>$endif$
-        $if(macr)$<span>Macros per serving: $macr$</span>$endif$
+        $if(cook)$<span>Cooking time: $cook$</span>$endif-$
+        $if(serv)$<span>Servings: $serv$</span>$endif-$
+        $if(macr)$<span>Per serving: $macr$</span>$endif-$
       </div>
-    $endif$
+    $endif-$
     <section>
       $body-$
     </section>

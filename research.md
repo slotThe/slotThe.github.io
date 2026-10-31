@@ -79,7 +79,7 @@ All of my papers—published or not—are readily available on the [arXiv].[^2]
 
 ## Preprints
 
-- *[Finite Tensor 2-Categories]* <span class="floatright">[@décoppet26:finit-tensor-categ]</span> \
+- *[Finite Tensor 2-Categories]* <span class="floatright">[@decoppet26:finit-tensor-categ]</span> \
   Joint work with [Thibault Décoppet] and [Matti Stroiński].
 
   We propose a definition of a finite linear 2-category, as a 2-categorical analogue of the notion of a finite abelian category of Etingof–Ostrik.

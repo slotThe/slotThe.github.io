@@ -312,9 +312,8 @@ garden ctx patches = do
   -- Notes
   let noteCtx patch = constField "patch" (patchTitle patch)
                   <> field "patch-url" (const (toUrl . fromJust <$> getRoute (patchId patch)))
-                  <> field "has-tags" (\item -> do
-                       tags <- getTags (itemIdentifier item)
-                       if null tags then noResult "" else pure "true")
+                  <> field "has-tags" (\item -> null <$> getTags (itemIdentifier item) >>= \no ->
+                                         if no then noResult "" else pure "true")
                   <> gardenCtx
   -- Notes
   for_ patches \patch -> match (fromGlob (patch <> "/**.md")) do
