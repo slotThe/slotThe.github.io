@@ -10,7 +10,7 @@ h1.note-title {
 }
 a.back { font-family: var(--monospace-fonts) }
 
-td { /* Tight rows except for last one, which takes all remaining space. */
+.patch td { /* Tight rows except for last one, which takes all remaining space. */
     vertical-align: top;
     &:not(:last-child) { width: 1%; white-space: nowrap; }
     &:last-child { width: auto; text-align: right; color: var(--fg-dim); }
@@ -24,3 +24,54 @@ td { /* Tight rows except for last one, which takes all remaining space. */
     @media (width <= 960px) { min-height: 80vh; }
 }
 div#content { flex-grow: 1; }
+
+/** Recipes get a two-column type layout, but with a smaller ingredients
+    column. */
+
+body:has(.recipe) {
+    @media (width > 960px) {
+        width: 90%;
+        max-width: 1600px;
+        padding-right: 0;
+    }
+}
+
+.text-space:has(.recipe) {
+    max-width: 45em;
+    @media (width <= 767px) { padding-left: 1em; }
+    #content { max-width: none; margin: 0; container-type: inline-size; }
+    #footer { max-width: none; }
+    #title-underline { max-width: none; }
+}
+
+.recipe {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding-top: 2.1rem;
+    > * > h2:first-child { margin-top: 0; }
+    .ingredients ul { padding-left: 1rem; }
+    .instructions {
+        border-left: 1px solid var(--border-inline-code);
+        padding-left: 2rem;
+        ol { padding-left: 1rem; }
+    }
+    @media (width <= 767px) {
+        grid-template-columns: 1fr;
+        .instructions {
+            border-left: 0;
+            border-top: 1px solid var(--border-inline-code);
+            padding-left: 0;
+            padding-top: 1.5rem;
+        }
+    }
+}
+
+.recipe-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 2rem;
+    font-size: 0.9em;
+    text-align: left;
+    margin-top: -2rem;
+    padding-bottom: 1rem;
+}

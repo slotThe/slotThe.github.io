@@ -48,6 +48,7 @@ import qualified Text.Pandoc.Builder as Many
 import Text.Pandoc.Citeproc (getReferences)
 import Text.Pandoc.Definition (Block (..), Citation (..), CitationMode (..), Inline (..), MathType (..), MetaValue (..))
 import Text.Pandoc.Options (Extension (..), HTMLMathMethod (..), ReaderOptions (readerExtensions), WriterOptions (..), extensionsFromList)
+import Text.Pandoc.Shared (isHeaderBlock)
 import Text.Pandoc.SideNoteHTML (usingSideNotesHTML)
 import Text.Pandoc.Templates (compileTemplate)
 import Text.Pandoc.Transforms (headerShift)
@@ -323,7 +324,7 @@ garden ctx patches = do
           >>= loadAndApplyTemplate "templates/gpost.html" (noteCtx patch <> boolField "no-comment" (pure True))
           >>= mkCleanSnapshot "post-for-feed"  -- See 'rss'
       -- Note
-      myPandocCompiler
+      pandocGardenCompiler
         >>= (if atom then mkCleanSnapshot "post-teaser" else pure)
         >>= saveSnapshot "note"
         >>= loadAndApplyTemplate "templates/gpost.html"   (noteCtx patch)
@@ -667,15 +668,36 @@ pandocRssCompiler = pandocCompilerWorker (pure . fmap cleanFootnotes)
       b -> b
     i -> i
 
--- | Pandoc compiler with syntax highlighting (via @pygmentize@),
--- sidenotes instead of footnotes (see @css/sidenotes.css@ and
--- @src/Sidenote.hs@), automatic small-caps for certain abbreviations,
--- section links, and referencing via bibtex. Also see 'getTocCtx' for
--- the generation of a table of contents (see there for an explanation),
--- and @./build.sh@ for LaTeX rendering.
+pandocGardenCompiler :: Compiler (Item String)
+pandocGardenCompiler = pandocCompilerWorker (recipeLayout <=< pandocOptions)
+ where
+  recipeLayout :: Item Pandoc -> Compiler (Item Pandoc)
+  recipeLayout p = do
+    let fp = toFilePath (itemIdentifier p)
+    (`withItemBody` p) \(Pandoc m bs) -> pure . Pandoc m $
+      if isJust (stripPrefix "garden/cooking/" fp) then go bs else bs
+   where
+    go :: [Block] -> [Block]
+    go bs = case break isHeaderBlock bs of
+      (pre, ingH : rest) ->
+        let (ing, insH : rest') = break isHeaderBlock rest
+            (ins, post) = break isHeaderBlock rest'
+        in mconcat
+             [ pre
+             , [ Div ("", ["recipe"], [])
+                     [ Div ("", ["ingredients"] , []) (ingH : ing)
+                     , Div ("", ["instructions"], []) (insH : ins) ] ]
+             , post
+             ]
+      _ -> bs
+
+-- | Pandoc compiler. See 'getTocCtx' for the generation of a TOC.
 myPandocCompiler :: Compiler (Item String)
-myPandocCompiler =
-  pandocCompilerWorker $
+myPandocCompiler = pandocCompilerWorker pandocOptions
+
+-- | Common options for a "full" page.
+pandocOptions :: Item Pandoc -> Compiler (Item Pandoc)
+pandocOptions =
     traverse
       (   boolTwoCol (usingSideNotesHTML myWriter) id -- no sidenotes in two column layout
       <=< pygmentsHighlight

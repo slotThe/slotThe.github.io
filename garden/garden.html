@@ -6,7 +6,7 @@ as well as more random things.
 When in doubt, just <a href="/wander">wander</a> around.
 
 <h2 style="border-bottom: 1px solid var(--fg-footer-divider);">Recently tended</h2>
-<table>
+<table class="patch">
   $for(recently-tended)$
     <tr>
       <td style="font-variant-numeric: tabular-nums;">$if(last-mod)$$last-mod$$else$$date$$endif$</td>
@@ -20,7 +20,7 @@ When in doubt, just <a href="/wander">wander</a> around.
 <h2 style="border-bottom: 1px solid var(--fg-footer-divider);">Patches</h2>
 $for(patches)$
   <h3><a href="$url$">$title$</a></h3>
-  <table>
+  <table class="patch">
     $for(notes)$
       <tr>
         <td style="font-variant-numeric: tabular-nums;">$if(last-mod)$$last-mod$$else$$date$$endif$</td>
