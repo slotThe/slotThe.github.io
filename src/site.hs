@@ -102,7 +102,7 @@ main = do
     match "bib/bibliography.bib" $ compile biblioCompiler
 
     -- Generate tags
-    tags <- buildTags ("posts/**" .||. "garden/**") (fromCapture "tags/**.html")
+    tags <- flip buildTags (fromCapture "tags/**.html") =<< allPubs
     let tagCtx = tagsFieldWith getTags
                                (simpleRenderLink . ("#" <>))
                                (mconcat . intersperse "   ")
@@ -197,16 +197,15 @@ posts tagCtx = match allPosts do
 -- https://stackoverflow.com/questions/52805193/in-hakyll-how-can-i-generate-a-tags-page
 listOfPosts :: Tags -> Rules ()
 listOfPosts tags@Tags{ tagsMakeId, tagsMap } = do
+  pubs <- allPubs
   -- All posts
   create ["posts.html"] do
     let allPostsCtx :: Context String
-          = listField "posts" postCtx (recentFirst =<< loadAll allPosts)
+          = listField "posts" postCtx (recentFirst =<< loadAll pubs)
     mkList allPostsCtx "Published" "atom" "templates/all-posts.html"
   -- Only posts tagged by a certain tag
-  tagsRules tags \tag taggedPosts -> do
-    let taggedPostCtx :: Context String
-          = listField "posts" postCtx (recentFirst =<< loadAll taggedPosts)
-    mkList taggedPostCtx
+  tagsRules tags \tag taggedPosts ->
+    mkList (listField "posts" postCtx (recentFirst =<< loadAll (pubs .&&. taggedPosts)))
            ("#" <> tag)
            ("../atom-" <> tag)
            "templates/post-list.html"
@@ -429,10 +428,10 @@ postCtx = mconcat
   modTime :: Context String
   modTime = field "last-mod" \(Item ident _) -> do
     meta <- getMetadata ident
-    lastMod <- lastMod ident
+    lmod <- lastMod ident
     case lookupString "date" meta of
       Nothing      -> noResult "No creation date means no last modified date."
-      Just created -> if lastMod /= created then pure (toISO lastMod)
+      Just created -> if lmod /= created then pure (toISO lmod)
                      else noResult "Last modified equal to date."
 
   numWords :: Context String
