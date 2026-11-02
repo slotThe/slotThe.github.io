@@ -27,16 +27,9 @@ div#content { flex-grow: 1; }
 /** Recipes get a two-column type layout, but with a smaller ingredients
     column. */
 
-body:has(.recipe) {
-    @media (width > 960px) {
-        width: 90%;
-        max-width: 1600px;
-        padding-right: 0;
-    }
-}
-
 .text-space:has(.recipe) {
     max-width: 45em;
+    @media (width > 960px) { width: 100%; margin-right: -25%; }
     @media (width <= 767px) { padding-left: 1em; }
     #content { max-width: none; margin: 0; container-type: inline-size; }
     #footer { max-width: none; }
