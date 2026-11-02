@@ -11,8 +11,121 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2026-08-13T00:00:00Z</updated>
+    <updated>2026-11-02T00:00:00Z</updated>
     <entry>
+    <title>Masuoka–Wigner as an Internal Injective</title>
+    <link href="https://tony-zorman.com/maths/masuoka-wigner.html" />
+    <id>https://tony-zorman.com/maths/masuoka-wigner.html</id>
+    <published>2026-11-02T00:00:00Z</published>
+    <updated>2026-11-02T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+  <div class="header">
+      <a href="/maths.html" class="back"><span style="font-family: var(--monospace-fonts)">←</span> Maths</a>
+      &nbsp;·&nbsp;&nbsp;planted 2nd Nov 2026
+      &nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></div>
+    <h1 class="note-title">Masuoka–Wigner as an Internal Injective</h1>
+    <div id="title-underline"></div>
+    <section>
+      <p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+In <span class="citation" data-cites="masuoka94:faith-hopf">[@masuoka94:faith-hopf]</span>, Masuoka and Wigner study right coideal subalgebras of a Hopf algebra<!--
+-->—i.e., those subalgebras <span class="math inline">B</span> of <span class="math inline">A</span>, such that <span class="math inline">\Delta B \subseteq B \otimes A</span>.
+They prove that <span class="math inline">A</span> being faithfully flat over <span class="math inline">B</span> is equivalent to a whole host of wonderful things:</p>
+<p><strong>Theorem (Masuoka–Wigner).</strong>
+Let <span class="math inline">A</span> be a Hopf algebra with <span class="math inline">S</span> bijective, <span class="math inline">B \subseteq A</span> a right coideal subalgebra.
+Then the following are equivalent:</p>
+<ol type="1">
+<li><span class="math inline">{}_B A</span> is flat and <span class="math inline">B \in \mathrm{Mod}^{A}_{B}</span> is simple;</li>
+<li><span class="math inline">{}_B A</span> is faithfully flat;</li>
+<li><span class="math inline">{}_B A</span> is a projective generator; and</li>
+<li><span class="math inline">\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}</span>,
+for <span class="math inline">\overline{A} \defeq A/AB^+</span> and <span class="math inline">B^+ \defeq B \cap \ker \varepsilon</span>.</li>
+</ol>
+<p>This is in fact a statement about an internal cohom having a certain shape—namely, that <span class="math inline">\lceil A,M\rceil \cong A/MB^+</span>.</p>
+<hr />
+<p>In more categorical language, the fact that <span class="math inline">A</span> is faithfully flat as a left <span class="math inline">B</span>-module just means that the functor <span class="math inline">{-} \otimes_B A</span> is faithfully exact;
+i.e., if a short exact sequence <span class="math inline">0 \to X \to Y \to Z \to 0</span> is exact if and only if <span class="math inline">0 \to X \otimes_B A \to Y \otimes_B A \to Z \otimes_B A \to 0</span> is exact.
+Generally, an additive functor <span class="math inline">F\colon \mathcal{C} \to \mathcal{D}</span> of abelian categories reflects exact sequences if and only if it is faithful (hence the name), and this is equivalent to it being conservative (i.e., reflecting isomorphisms) if the functor is exact.
+But recall one slight reformulation of Beck’s monadicity theorem,
+to be found for example in Theorem 4.4.4 of <span class="citation" data-cites="borceux94:handb2">[@borceux94:handb2]</span>:</p>
+<p><strong>Theorem (Beck).</strong>
+Let <span class="math inline">U\colon \mathcal{D} \to \mathcal{C}</span> be a functor.
+Then <span class="math inline">U</span> is monadic if and only if it has a left adjoint, is conservative, and preserves coequalisers of <span class="math inline">U</span>-split pairs (which must exist).</p>
+<p>In fact, for abelian categories this takes the much more digestible form that an exact and conservative right adjoint is monadic, and an exact and conservative left adjoint is comonadic.
+This means that being faithfully flat is actually about an adjunction being monadic, which quite nicely fits the fourth point of Masuoka–Wigner’s theorem above.</p>
+<hr />
+<p>Briefly, in <span class="citation" data-cites="stroinski2024:reconstr">[@stroinski2024:reconstr]</span> we looked at reconstruction without a fibre functor,
+so that—as opposed to Tannakian reconstruction—one only recovers an algebra object up to Morita equivalence.
+This allows us to classify good module categories of monoidal categories up to that notion of equivalence:</p>
+<p><strong>Theorem 5.3 of <span class="citation" data-cites="stroinski2024:reconstr">[@stroinski2024:reconstr]</span></strong>
+Let <span class="math inline">\mathcal{C}</span> be an abelian monoidal category with enough injectives
+and <span class="math inline">\mathcal{M}</span> an abelian (left) <span class="math inline">\mathcal{C}</span>-module category with enough injectives.
+If <span class="math inline">\ell \in \mathcal{M}</span> is a coclosed <span class="math inline">\mathcal{C}</span>-injective <span class="math inline">\mathcal{C}</span>-cogenerator,
+then there is an equivalence of <span class="math inline">\mathcal{C}</span>-module categories
+<span class="math inline">\mathcal{M} \simeq \mathcal{C}^{\lceil \ell,{-} \triangleright \ell \rceil}</span>
+between <span class="math inline">\mathcal{M}</span> and the Eilenberg–Moore category of the comonad
+<span class="math inline">\lceil \ell,{-} \triangleright \ell \rceil</span> on <span class="math inline">\mathcal{C}</span>.</p>
+<p>Although it sounds scary, a coclosed <span class="math inline">\mathcal{C}</span>-injective <span class="math inline">\mathcal{C}</span>-cogenerator is really just a good object such that the internal cohom<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is a faithfully exact functor,
+and the proof is really just Beck’s (co)monadicity theorem, together with some details on how the module structure works and is preserved.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>In fact, up to Morita equivalence, this yields a bijective correspondence between module categories of <span class="math inline">\mathcal{C}</span> with such a cogenerator and left exact oplax module comonads on <span class="math inline">\mathcal{C}</span>.</p>
+<hr />
+<p>To see how these two theorems interact, we essentially set <span class="math inline">\mathcal{C} := \mathrm{Vec}</span> and <span class="math inline">\mathcal{M} := \mathrm{Mod}^A_B</span> in the theorem above.
+In this language, <span class="math inline">A</span> being faithfully flat is equivalent to it being a coclosed <span class="math inline">\mathrm{Vec}</span>-injective <span class="math inline">\mathrm{Vec}</span>-cogenerator of <span class="math inline">\mathrm{Mod}^A_B</span>;
+i.e., <span class="math inline">\mathrm{Vec}(\lceil A, M \rceil, V) \cong \mathrm{Mod}^A_B(M, V \triangleright A)</span>
+holds and the functor <span class="math inline">\lceil A, {-} \rceil\colon \mathrm{Mod}^A_B \to \mathrm{Vec}</span> is faithfully exact.</p>
+<p>First, notice that <span class="math inline">A</span> is always coclosed:
+let <span class="math inline">F := {-} \otimes A\colon \mathrm{Vec} \to \mathrm{Mod}^A_B</span> be the action.
+We claim that this has left adjoint
+<span class="math display">
+  \overline{({-})} \colon \mathrm{Mod}^A_B \to \mathrm{Vec}, \qquad
+  M \mapsto \overline{M} := M/MB^+.
+</span>
+We have to prove that
+<span class="math display">
+  \mathrm{Vec}(\overline{M}, V) \cong \mathrm{Mod}^A_B(M, V \otimes A).
+</span>
+Let <span class="math inline">f\colon \overline{M} \to V</span> be a linear map.
+Map this to <span class="math inline">g\colon M \to V \otimes A</span> defined by
+sending <span class="math inline">m \in M</span> to <span class="math inline">f(\overline{m_{(0)}}) \otimes m_{(1)}</span>.
+Conversely, send <span class="math inline">g\colon M \to V \otimes A</span> to <span class="math inline">f\colon \overline{M} \to V</span>
+by taking <span class="math inline">\overline{m} \in \overline{M}</span> to <span class="math inline">(V \otimes \varepsilon)(g(m))</span>.</p>
+<p>Now, it is not too difficult to see that <span class="math inline">A</span> being faithfully flat as a left <span class="math inline">B</span>-module is equivalent
+to it being a <span class="math inline">\mathrm{Vec}</span>-injective <span class="math inline">\mathrm{Vec}</span>-cogenerator.
+In one direction, notice that we have a Galois-type isomorphism
+<span class="math display">
+  M \otimes_B A \cong \overline{M} \otimes A.
+</span>
+Since <span class="math inline">{-} \otimes A</span> is exact, if <span class="math inline">\lceil A, {-} \rceil = \overline{({-})}</span> is faithfully exact,
+then this immediately implies that <span class="math inline">{-} \otimes_B A</span> also is, which means that <span class="math inline">A</span> is faithfully flat.</p>
+<p>Now, assume that <span class="math inline">A</span> is faithfully flat.
+Since <span class="math inline">A</span> is flat as a left <span class="math inline">B</span>-module, <span class="math inline">{-} \otimes_B A</span> is exact, and so by the Galois map above, <span class="math inline">\overline{({-})}</span> has to be as well, so <span class="math inline">A</span> is <span class="math inline">\mathrm{Vec}</span>-injective.
+For the cogenerator part, we instead show that <span class="math inline">\overline{({-})}</span> is faithful.
+If <span class="math inline">\overline{M}=0</span>, then due to the Galois isomorphism above we must also have <span class="math inline">\overline{M} \otimes A = M \otimes_B A = 0</span>,
+and since <span class="math inline">A</span> is faithfully flat, it follows that <span class="math inline">M=0</span>; hence, <span class="math inline">\overline{({-})}</span> is faithful.</p>
+<p>Then the comonad to consider is
+<span class="math inline">\lceil A, {-} \triangleright A \rceil = \overline{{-} \otimes A} \cong {-} \otimes \overline{A}</span>,
+because tensoring is exact.
+Hence, <span class="math inline">\mathrm{Vec}^{\lceil A, {-} \triangleright A \rceil} \simeq \mathrm{Mod}^{\overline{A}}</span>,
+and the theorem indeed gives <span class="math inline">\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}</span>, as required.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>After programming, maths is also dead now,
+which I guess shouldn’t keep me from writing these silly posts,
+and yet it kind of does.
+We are truly living in the darkest timeline.
+Maybe I need a circle beard to match now.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The action functor <span class="math inline">{-} \triangleright \ell</span> has a <em>left</em> adjoint <span class="math inline">\lceil \ell, {-} \rceil</span>, which we call the internal cohom.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Everything is always modulo details.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Notice how we in fact reconstruct a coalgebra object, and not just a comonad!
+This is not the case in general, but since Masuoka–Wigner assume that <span class="math inline">A</span> has a bijective antipode,
+one is in the slightly simpler setting of the ind-completion of a rigid monoidal category.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Infinite Polynomial Rings</title>
     <link href="https://tony-zorman.com/maths/polycard.html" />
     <id>https://tony-zorman.com/maths/polycard.html</id>
