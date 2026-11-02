@@ -1,10 +1,15 @@
 <article>
   <div class="header">
       <a href="$patch-url$" class="back"><span style="font-family: var(--monospace-fonts)">←</span> $patch$</a>
-      &nbsp;·&nbsp;&nbsp;planted $date$
-      $if(last-mod)$&nbsp;&nbsp;·&nbsp;&nbsp;tended $last-mod$$endif-$
-      $if(pub)$&nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>$endif-$
-      $if(has-tags)$&nbsp;&nbsp;·&nbsp;&nbsp;$tags$$endif-$
+      <span class="ws"> ·  planted $date$</span>
+      $if(last-mod)$<span class="ws">  ·   tended $last-mod$</span>$endif-$
+      $if(pub)$<span class="ws">  ·   $estimated-reading-time$</span>$endif-$
+      $if(pub)$
+        <span class="ws">  ·  <a href="/posts.html">#published</a></span>
+        $-if(has-tags)$<span class="ws">   $tags$</span>$endif-$
+      $else$
+        $if(has-tags)$<span class="ws">  ·  $tags$</span>$endif-$
+      $endif-$
   </div>
     <h1 class="note-title">$title$</h1>
     <div id="title-underline"></div>

@@ -21,15 +21,20 @@
     <summary type="html"><![CDATA[<article>
   <div class="header">
       <a href="/maths.html" class="back"><span style="font-family: var(--monospace-fonts)">←</span> Maths</a>
-      &nbsp;·&nbsp;&nbsp;planted 2nd Nov 2026
-      &nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></div>
+      <span class="ws"> ·  planted 2nd Nov 2026</span>
+      <span class="ws">  ·   <span title="1145 words">5 min read</span></span>
+        <span class="ws">  ·  <a href="/posts.html">#published</a></span><span class="ws">   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span></div>
     <h1 class="note-title">Masuoka–Wigner as an Internal Injective</h1>
     <div id="title-underline"></div>
     <section>
       <p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 In <span class="citation" data-cites="masuoka94:faith-hopf">[<a href="#ref-masuoka94:faith-hopf" role="doc-biblioref">MW94</a>]</span>, Masuoka and Wigner study right coideal subalgebras of a Hopf algebra<!--
 -->—i.e., those subalgebras <span class="math inline">B</span> of <span class="math inline">A</span>, such that <span class="math inline">\Delta B \subseteq B \otimes A</span>.
-They prove that <span class="math inline">A</span> being faithfully flat over <span class="math inline">B</span> is equivalent to a whole host of wonderful things:</p>
+They prove that <span class="math inline">A</span> being faithfully flat over <span class="math inline">B</span> is equivalent to a whole host of wonderful things.
+In modern language, what they are talking about is the fact that an internal cohom has a certain shape,
+which is what I want to convince you of in this post.</p>
+<!--more-->
+<p>For reference, here’s the original theorem:</p>
 <p><strong>Theorem (Masuoka–Wigner).</strong>
 Let <span class="math inline">A</span> be a Hopf algebra with <span class="math inline">S</span> bijective, <span class="math inline">B \subseteq A</span> a right coideal subalgebra.
 Then the following are equivalent:</p>
@@ -40,7 +45,6 @@ Then the following are equivalent:</p>
 <li><span class="math inline">\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}</span>,
 for <span class="math inline">\overline{A} \defeq A/AB^+</span> and <span class="math inline">B^+ \defeq B \cap \ker \varepsilon</span>.</li>
 </ol>
-<p>This is in fact a statement about an internal cohom having a certain shape, but we’ll get to that later.</p>
 <hr />
 <p>In more categorical language, the fact that <span class="math inline">A</span> is faithfully flat as a left <span class="math inline">B</span>-module just means that the functor <span class="math inline">{-} \otimes_B A</span> is faithfully exact;
 i.e., if a short exact sequence <span class="math inline">0 \to X \to Y \to Z \to 0</span> is exact if and only if <span class="math inline">0 \to X \otimes_B A \to Y \otimes_B A \to Z \otimes_B A \to 0</span> is exact.
@@ -66,7 +70,7 @@ between <span class="math inline">\mathcal{M}</span> and the Eilenberg–Moore c
 <span class="math inline">\lceil \ell,{-} \triangleright \ell \rceil</span> on <span class="math inline">\mathcal{C}</span>.</p>
 <p>Although it sounds scary, a coclosed <span class="math inline">\mathcal{C}</span>-injective <span class="math inline">\mathcal{C}</span>-cogenerator is really just a good object such that the internal cohom<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is a faithfully exact functor,
 and the proof is really just Beck’s (co)monadicity theorem, together with some details on how the module structure works and is preserved.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
-<p>In fact, up to Morita equivalence, this yields a bijective correspondence between module categories of <span class="math inline">\mathcal{C}</span> with such a cogenerator and left exact oplax module comonads on <span class="math inline">\mathcal{C}</span>.</p>
+<p>Up to Morita equivalence, this yields a bijective correspondence between module categories of <span class="math inline">\mathcal{C}</span> with such a cogenerator and left exact oplax module comonads on <span class="math inline">\mathcal{C}</span>.</p>
 <hr />
 <p>To see how these two theorems interact, we essentially set <span class="math inline">\mathcal{C} := \mathrm{Vec}</span> and <span class="math inline">\mathcal{M} := \mathrm{Mod}^A_B</span> in the theorem above.
 In this language, <span class="math inline">A</span> being faithfully flat is equivalent to it being a coclosed <span class="math inline">\mathrm{Vec}</span>-injective <span class="math inline">\mathrm{Vec}</span>-cogenerator of <span class="math inline">\mathrm{Mod}^A_B</span>;
@@ -171,8 +175,9 @@ This is not the case in general, but since the category of vector spaces is the 
     <summary type="html"><![CDATA[<article>
   <div class="header">
       <a href="/maths.html" class="back"><span style="font-family: var(--monospace-fonts)">←</span> Maths</a>
-      &nbsp;·&nbsp;&nbsp;planted 13th Aug 2026
-      &nbsp;&nbsp;·&nbsp;&nbsp;tended 28th Aug 2026&nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></div>
+      <span class="ws"> ·  planted 13th Aug 2026</span>
+      <span class="ws">  ·   tended 28th Aug 2026</span><span class="ws">  ·   <span title="199 words">1 min read</span></span>
+        <span class="ws">  ·  <a href="/posts.html">#published</a></span><span class="ws">   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span></div>
     <h1 class="note-title">Infinite Polynomial Rings</h1>
     <div id="title-underline"></div>
     <section>
@@ -204,8 +209,8 @@ Then the same Lagrange polynomial argument still works, just with more indices.<
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th May 2024–2nd Jun 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1040 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#anki'." href="/tags/anki.html" rel="tag">#anki</a>   <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="1040 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#anki'." href="/tags/anki.html" rel="tag">#anki</a>   <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">Leveraging LaTeX in Anki</h1>
     <div id="title-underline"></div>
@@ -400,8 +405,8 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
     <summary type="html"><![CDATA[<article>
     <div class="header">
       12th Jun 2023–30th Aug 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1502 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="1502 words">7 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">The tensor product of S-modules is a convolution product</h1>
     <div id="title-underline"></div>
@@ -658,8 +663,8 @@ In both expressions,
     <summary type="html"><![CDATA[<article>
     <div class="header">
       10th Jan 2023–12th Jan 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="902 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="902 words">4 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">Duality in Monoidal Categories</h1>
     <div id="title-underline"></div>
@@ -830,8 +835,8 @@ exactly duals!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎
     <summary type="html"><![CDATA[<article>
     <div class="header">
       15th Oct 2022–13th Mar 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3770 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="3770 words">16 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">Understanding Weighted Colimits as Tensor Products of Modules</h1>
     <div id="title-underline"></div>
@@ -1368,8 +1373,8 @@ is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">�
     <summary type="html"><![CDATA[<article>
     <div class="header">
       1st May 2022–23rd May 2022
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2284 words">10 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="2284 words">10 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">My PhD Research Workflow</h1>
     <div id="title-underline"></div>

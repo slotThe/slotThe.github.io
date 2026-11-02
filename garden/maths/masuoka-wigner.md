@@ -59,7 +59,7 @@ This allows us to classify good module categories of monoidal categories up to t
 Although it sounds scary, a coclosed \(\mathcal{C}\)-injective \(\mathcal{C}\)-cogenerator is really just a good object such that the internal cohom[^1] is a faithfully exact functor,
 and the proof is really just Beck's (co)monadicity theorem, together with some details on how the module structure works and is preserved.[^2]
 
-In fact, up to Morita equivalence, this yields a bijective correspondence between module categories of \(\mathcal{C}\) with such a cogenerator and left exact oplax module comonads on \(\mathcal{C}\).
+Up to Morita equivalence, this yields a bijective correspondence between module categories of \(\mathcal{C}\) with such a cogenerator and left exact oplax module comonads on \(\mathcal{C}\).
 
 ---
 

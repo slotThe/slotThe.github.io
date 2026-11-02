@@ -21,15 +21,20 @@
     <summary type="html"><![CDATA[<article>
   <div class="header">
       <a href="/maths.html" class="back"><span style="font-family: var(--monospace-fonts)">←</span> Maths</a>
-      &nbsp;·&nbsp;&nbsp;planted 2nd Nov 2026
-      &nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></div>
+      <span class="ws"> ·  planted 2nd Nov 2026</span>
+      <span class="ws">  ·   <span title="1145 words">5 min read</span></span>
+        <span class="ws">  ·  <a href="/posts.html">#published</a></span><span class="ws">   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span></div>
     <h1 class="note-title">Masuoka–Wigner as an Internal Injective</h1>
     <div id="title-underline"></div>
     <section>
       <p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
 In <span class="citation" data-cites="masuoka94:faith-hopf">[<a href="#ref-masuoka94:faith-hopf" role="doc-biblioref">MW94</a>]</span>, Masuoka and Wigner study right coideal subalgebras of a Hopf algebra<!--
 -->—i.e., those subalgebras <span class="math inline">B</span> of <span class="math inline">A</span>, such that <span class="math inline">\Delta B \subseteq B \otimes A</span>.
-They prove that <span class="math inline">A</span> being faithfully flat over <span class="math inline">B</span> is equivalent to a whole host of wonderful things:</p>
+They prove that <span class="math inline">A</span> being faithfully flat over <span class="math inline">B</span> is equivalent to a whole host of wonderful things.
+In modern language, what they are talking about is the fact that an internal cohom has a certain shape,
+which is what I want to convince you of in this post.</p>
+<!--more-->
+<p>For reference, here’s the original theorem:</p>
 <p><strong>Theorem (Masuoka–Wigner).</strong>
 Let <span class="math inline">A</span> be a Hopf algebra with <span class="math inline">S</span> bijective, <span class="math inline">B \subseteq A</span> a right coideal subalgebra.
 Then the following are equivalent:</p>
@@ -40,7 +45,6 @@ Then the following are equivalent:</p>
 <li><span class="math inline">\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}</span>,
 for <span class="math inline">\overline{A} \defeq A/AB^+</span> and <span class="math inline">B^+ \defeq B \cap \ker \varepsilon</span>.</li>
 </ol>
-<p>This is in fact a statement about an internal cohom having a certain shape, but we’ll get to that later.</p>
 <hr />
 <p>In more categorical language, the fact that <span class="math inline">A</span> is faithfully flat as a left <span class="math inline">B</span>-module just means that the functor <span class="math inline">{-} \otimes_B A</span> is faithfully exact;
 i.e., if a short exact sequence <span class="math inline">0 \to X \to Y \to Z \to 0</span> is exact if and only if <span class="math inline">0 \to X \otimes_B A \to Y \otimes_B A \to Z \otimes_B A \to 0</span> is exact.
@@ -66,7 +70,7 @@ between <span class="math inline">\mathcal{M}</span> and the Eilenberg–Moore c
 <span class="math inline">\lceil \ell,{-} \triangleright \ell \rceil</span> on <span class="math inline">\mathcal{C}</span>.</p>
 <p>Although it sounds scary, a coclosed <span class="math inline">\mathcal{C}</span>-injective <span class="math inline">\mathcal{C}</span>-cogenerator is really just a good object such that the internal cohom<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is a faithfully exact functor,
 and the proof is really just Beck’s (co)monadicity theorem, together with some details on how the module structure works and is preserved.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
-<p>In fact, up to Morita equivalence, this yields a bijective correspondence between module categories of <span class="math inline">\mathcal{C}</span> with such a cogenerator and left exact oplax module comonads on <span class="math inline">\mathcal{C}</span>.</p>
+<p>Up to Morita equivalence, this yields a bijective correspondence between module categories of <span class="math inline">\mathcal{C}</span> with such a cogenerator and left exact oplax module comonads on <span class="math inline">\mathcal{C}</span>.</p>
 <hr />
 <p>To see how these two theorems interact, we essentially set <span class="math inline">\mathcal{C} := \mathrm{Vec}</span> and <span class="math inline">\mathcal{M} := \mathrm{Mod}^A_B</span> in the theorem above.
 In this language, <span class="math inline">A</span> being faithfully flat is equivalent to it being a coclosed <span class="math inline">\mathrm{Vec}</span>-injective <span class="math inline">\mathrm{Vec}</span>-cogenerator of <span class="math inline">\mathrm{Mod}^A_B</span>;
@@ -171,8 +175,9 @@ This is not the case in general, but since the category of vector spaces is the 
     <summary type="html"><![CDATA[<article>
   <div class="header">
       <a href="/maths.html" class="back"><span style="font-family: var(--monospace-fonts)">←</span> Maths</a>
-      &nbsp;·&nbsp;&nbsp;planted 13th Aug 2026
-      &nbsp;&nbsp;·&nbsp;&nbsp;tended 28th Aug 2026&nbsp;·&nbsp;&nbsp;<a href="/posts.html">#published</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></div>
+      <span class="ws"> ·  planted 13th Aug 2026</span>
+      <span class="ws">  ·   tended 28th Aug 2026</span><span class="ws">  ·   <span title="199 words">1 min read</span></span>
+        <span class="ws">  ·  <a href="/posts.html">#published</a></span><span class="ws">   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span></div>
     <h1 class="note-title">Infinite Polynomial Rings</h1>
     <div id="title-underline"></div>
     <section>
@@ -204,8 +209,8 @@ Then the same Lagrange polynomial argument still works, just with more indices.<
     <summary type="html"><![CDATA[<article>
     <div class="header">
       15th Jul 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="8816 words">36 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>
+        <span class="ws">  ·   <span title="8816 words">36 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a></span>
       </div>
     <h1 class="post-title">Sieving Primes</h1>
     <div id="title-underline"></div>
@@ -1375,8 +1380,8 @@ in the spirit of <a href="https://ashwinsundar.com/posts/legibility-and-programm
     <summary type="html"><![CDATA[<article>
     <div class="header">
       23rd Apr 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1962 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="1962 words">8 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Writing Literate Blog Posts</h1>
     <div id="title-underline"></div>
@@ -1677,8 +1682,8 @@ though if you wander too far outside of the mainstream you might have to go hunt
     <summary type="html"><![CDATA[<article>
     <div class="header">
       7th Apr 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="5160 words">21 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#k'." href="/tags/k.html" rel="tag">#k</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
+        <span class="ws">  ·   <span title="5160 words">21 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#k'." href="/tags/k.html" rel="tag">#k</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">But what about K?</h1>
     <div id="title-underline"></div>
@@ -2283,8 +2288,8 @@ followed by an opening parenthesis.<a href="#fnref1" class="footnote-back" role=
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="8549 words">35 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>   <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>
+        <span class="ws">  ·   <span title="8549 words">35 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>   <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a></span>
       </div>
     <h1 class="post-title">Sudoku Solving in BQN</h1>
     <div id="title-underline"></div>
@@ -3042,8 +3047,8 @@ Took 5.2216s/50, avg 0.1044s
     <summary type="html"><![CDATA[<article>
     <div class="header">
       7th Feb 2026–23rd Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="471 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
+        <span class="ws">  ·   <span title="471 words">2 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a></span>
       </div>
     <h1 class="post-title">DUCK</h1>
     <div id="title-underline"></div>
@@ -3154,8 +3159,8 @@ wanting a bit of fun and not knowing how to press the key!<a href="#fnref3" clas
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th Jan 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1992 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="/tags/j.html" rel="tag">#j</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
+        <span class="ws">  ·   <span title="1992 words">8 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#c'." href="/tags/c.html" rel="tag">#c</a>   <a title="All pages tagged '#j'." href="/tags/j.html" rel="tag">#j</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">The J Incunabulum</h1>
     <div id="title-underline"></div>
@@ -3447,8 +3452,8 @@ I’ve pushed everything in this post to a
     <summary type="html"><![CDATA[<article>
     <div class="header">
       25th Dec 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1165 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="1165 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Fixing Eglot's Hover Signatures</h1>
     <div id="title-underline"></div>
@@ -3757,8 +3762,8 @@ which argument is currently being filled in!<a href="#fnref3" class="footnote-ba
     <summary type="html"><![CDATA[<article>
     <div class="header">
       8th Oct 2025–18th Oct 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="6545 words">27 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
+        <span class="ws">  ·   <span title="6545 words">27 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">Writing a JSON Parser in BQN</h1>
     <div id="title-underline"></div>
@@ -4656,8 +4661,8 @@ The resulting representation is probably not super easy to work with<!--
     <summary type="html"><![CDATA[<article>
     <div class="header">
       28th Jul 2025–18th Oct 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1852 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
+        <span class="ws">  ·   <span title="1852 words">8 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">Parsing CSV in BQN</h1>
     <div id="title-underline"></div>
@@ -4917,8 +4922,8 @@ and for <code>"""a"",""b"""</code> we have the wonderful
     <summary type="html"><![CDATA[<article>
     <div class="header">
       13th Apr 2025–8th Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2044 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
+        <span class="ws">  ·   <span title="2044 words">9 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a></span>
       </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
     <div id="title-underline"></div>
@@ -5374,8 +5379,8 @@ which I think I picked up from Edward Tufte.<a href="#fnref8" class="footnote-ba
     <summary type="html"><![CDATA[<article>
     <div class="header">
       30th Jan 2025–15th Feb 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1755 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
+        <span class="ws">  ·   <span title="1755 words">8 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a></span>
       </div>
     <h1 class="post-title">Speeding up LaTeX compilation</h1>
     <div id="title-underline"></div>
@@ -5702,8 +5707,8 @@ Even if not, just firing off a one-off <code>pdflatex main</code> is very fast.<
     <summary type="html"><![CDATA[<article>
     <div class="header">
       8th Nov 2024–13th Nov 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3093 words">13 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
+        <span class="ws">  ·   <span title="3093 words">13 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">Integer Volutes in BQN</h1>
     <div id="title-underline"></div>
@@ -6117,8 +6122,8 @@ so I prefer leaving it in the final solution.<a href="#fnref8" class="footnote-b
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Oct 2024–28th Oct 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="22369 words">90 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a>
+        <span class="ws">  ·   <span title="22369 words">90 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">BQNing Advent of Code</h1>
     <div id="title-underline"></div>
@@ -9116,8 +9121,8 @@ is a lot more relaxed than trying to bash out both parts before work every day.<
     <summary type="html"><![CDATA[<article>
     <div class="header">
       20th Jul 2024–1st Feb 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1193 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
+        <span class="ws">  ·   <span title="1193 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a></span>
       </div>
     <h1 class="post-title">Integrating KaTeX Into Hakyll</h1>
     <div id="title-underline"></div>
@@ -9325,8 +9330,8 @@ such that buffering does not deadlock your program indefinitely.<a href="#fnref4
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th May 2024–2nd Jun 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1040 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#anki'." href="/tags/anki.html" rel="tag">#anki</a>   <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="1040 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#anki'." href="/tags/anki.html" rel="tag">#anki</a>   <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">Leveraging LaTeX in Anki</h1>
     <div id="title-underline"></div>
@@ -9521,8 +9526,8 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
     <summary type="html"><![CDATA[<article>
     <div class="header">
       23rd Mar 2024–1st May 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1288 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
+        <span class="ws">  ·   <span title="1288 words">6 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a></span>
       </div>
     <h1 class="post-title">Announcing: rq Version 0.1.0</h1>
     <div id="title-underline"></div>
@@ -9748,8 +9753,8 @@ was justified.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎
     <summary type="html"><![CDATA[<article>
     <div class="header">
       2nd Mar 2024–15th Aug 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1012 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="1012 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Smartly join comments with join-line</h1>
     <div id="title-underline"></div>
@@ -9956,8 +9961,8 @@ on <a href="https://github.com/slotThe/delete-indentation-comments">Microsoft Gi
     <summary type="html"><![CDATA[<article>
     <div class="header">
       3rd Jan 2024–5th Jan 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="881 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="881 words">4 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Parentheses-Aware Yanking</h1>
     <div id="title-underline"></div>
@@ -10128,8 +10133,8 @@ not just ones where I happen to use paredit
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Nov 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="416 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="416 words">2 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Integrating Zsh's History Into Eshell</h1>
     <div id="title-underline"></div>
@@ -10241,8 +10246,8 @@ and doing so at the start solves <code>esh-autosuggest</code> et al producing ga
     <summary type="html"><![CDATA[<article>
     <div class="header">
       13th Nov 2023–15th Oct 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1151 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="/tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="1151 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#nix'." href="/tags/nix.html" rel="tag">#nix</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">Using XMonad with NixOS</h1>
     <div id="title-underline"></div>
@@ -10501,8 +10506,8 @@ lest you will be greeted by a black screen upon login.<a href="#fnref2" class="f
     <summary type="html"><![CDATA[<article>
     <div class="header">
       22nd Oct 2023–27th Oct 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1144 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
+        <span class="ws">  ·   <span title="1144 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a></span>
       </div>
     <h1 class="post-title">Fixing Lsp-Mode's Hover Signatures</h1>
     <div id="title-underline"></div>
@@ -10731,8 +10736,8 @@ does, just as an extra function.&quot;
     <summary type="html"><![CDATA[<article>
     <div class="header">
       10th Sep 2023–15th Oct 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1615 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="1615 words">7 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Prettifying LaTeX Buffers</h1>
     <div id="title-underline"></div>
@@ -11022,8 +11027,8 @@ which has not found its way to GNU ELPA yet.<a href="#fnref8" class="footnote-ba
     <summary type="html"><![CDATA[<article>
     <div class="header">
       26th Aug 2023–29th Aug 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1750 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="1750 words">7 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Change the Insides of an S-Expression in Emacs</h1>
     <div id="title-underline"></div>
@@ -11362,8 +11367,8 @@ Nice.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       30th Jul 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="523 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="523 words">3 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Notmuch: Warn on Empty Subjects</h1>
     <div id="title-underline"></div>
@@ -11478,8 +11483,8 @@ However, this is not important for what follows, so I simply omitted it.</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       20th Jun 2023–9th Aug 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3559 words">15 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
+        <span class="ws">  ·   <span title="3559 words">15 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a></span>
       </div>
     <h1 class="post-title">Incorporating BibTeX into Hakyll</h1>
     <div id="title-underline"></div>
@@ -12192,8 +12197,8 @@ Pretty neat if you ask me.<a href="#fnref5" class="footnote-back" role="doc-back
     <summary type="html"><![CDATA[<article>
     <div class="header">
       12th Jun 2023–30th Aug 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1502 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="1502 words">7 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">The tensor product of S-modules is a convolution product</h1>
     <div id="title-underline"></div>
@@ -12450,8 +12455,8 @@ In both expressions,
     <summary type="html"><![CDATA[<article>
     <div class="header">
       18th May 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="232 words">1 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="232 words">1 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Use-package now has a :vc keyword</h1>
     <div id="title-underline"></div>
@@ -12522,8 +12527,8 @@ sudo make install</code></pre>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       6th May 2023–17th Jun 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="4130 words">17 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a>
+        <span class="ws">  ·   <span title="4130 words">17 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#hardware'." href="/tags/hardware.html" rel="tag">#hardware</a></span>
       </div>
     <h1 class="post-title">Keyboardio Atreus Review</h1>
     <div id="title-underline"></div>
@@ -12997,8 +13002,8 @@ QMK can’t emit shifted keycodes with an ordinary <code>LSFT_T</code> setup.<a 
     <summary type="html"><![CDATA[<article>
     <div class="header">
       19th Mar 2023–12th Jul 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1306 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="1306 words">6 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.Search</h1>
     <div id="title-underline"></div>
@@ -13230,8 +13235,8 @@ submap from a list of <code>(key, action)</code> pairs.<a href="#fnref6" class="
     <summary type="html"><![CDATA[<article>
     <div class="header">
       19th Feb 2023–3rd Jun 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="964 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="964 words">4 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Announcing: latex-change-env Version 0.3</h1>
     <div id="title-underline"></div>
@@ -13405,8 +13410,8 @@ seems possible to do.<a href="#fnref6" class="footnote-back" role="doc-backlink"
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Jan 2023–17th Jul 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2103 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
+        <span class="ws">  ·   <span title="2103 words">9 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a></span>
       </div>
     <h1 class="post-title">Using Sidenotes with Hakyll</h1>
     <div id="title-underline"></div>
@@ -13773,8 +13778,8 @@ that I will go down that path.<a href="#fnref8" class="footnote-back" role="doc-
     <summary type="html"><![CDATA[<article>
     <div class="header">
       21st Jan 2023–5th Jan 2025
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1834 words">8 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a>
+        <span class="ws">  ·   <span title="1834 words">8 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#hakyll'." href="/tags/hakyll.html" rel="tag">#hakyll</a></span>
       </div>
     <h1 class="post-title">Pygmentising Hakyll's Syntax Highlighting</h1>
     <div id="title-underline"></div>
@@ -14073,8 +14078,8 @@ them form</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎
     <summary type="html"><![CDATA[<article>
     <div class="header">
       14th Jan 2023–13th Feb 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="668 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="668 words">3 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">Immediately Refile Notes with X.P.OrgMode</h1>
     <div id="title-underline"></div>
@@ -14190,8 +14195,8 @@ welcome!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       10th Jan 2023–12th Jan 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="902 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="902 words">4 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">Duality in Monoidal Categories</h1>
     <div id="title-underline"></div>
@@ -14362,8 +14367,8 @@ exactly duals!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎
     <summary type="html"><![CDATA[<article>
     <div class="header">
       22nd Dec 2022–18th May 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="286 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="286 words">2 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Announcing: vc-use-package</h1>
     <div id="title-underline"></div>
@@ -14423,8 +14428,8 @@ If not, then don’t worry: <code>vc-use-package</code> will not go anywhere for
     <summary type="html"><![CDATA[<article>
     <div class="header">
       30th Nov 2022–18th May 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="621 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="621 words">3 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Exploring package-vc-install</h1>
     <div id="title-underline"></div>
@@ -14536,8 +14541,8 @@ there—this is quite enough. After all, for anything more there’s always
     <summary type="html"><![CDATA[<article>
     <div class="header">
       5th Nov 2022–13th Feb 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="451 words">2 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="451 words">2 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Adjusting preview.el for vertical monitors</h1>
     <div id="title-underline"></div>
@@ -14631,8 +14636,8 @@ certainly know which of the two I’d rather write!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       22nd Oct 2022–9th Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3980 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="3980 words">16 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">A Potpourri of Emacs Tweaks</h1>
     <div id="title-underline"></div>
@@ -15279,8 +15284,8 @@ so there’s nothing more to be said on that front.<a href="#fnref9" class="foot
     <summary type="html"><![CDATA[<article>
     <div class="header">
       15th Oct 2022–13th Mar 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="3770 words">16 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
+        <span class="ws">  ·   <span title="3770 words">16 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a></span>
       </div>
     <h1 class="post-title">Understanding Weighted Colimits as Tensor Products of Modules</h1>
     <div id="title-underline"></div>
@@ -15817,8 +15822,8 @@ is fully faithful.<a href="#fnref7" class="footnote-back" role="doc-backlink">�
     <summary type="html"><![CDATA[<article>
     <div class="header">
       11th Sep 2022–17th Feb 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1309 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="1309 words">6 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">XMonad Module Showcase: X.A.TopicSpace</h1>
     <div id="title-underline"></div>
@@ -16014,8 +16019,8 @@ win in my book!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       27th Aug 2022–7th Mar 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="656 words">3 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="656 words">3 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">Rapidly Capture Ideas with XMonad and Emacs</h1>
     <div id="title-underline"></div>
@@ -16121,8 +16126,8 @@ case, I’d like to <a href="mailto:mail@tony-zorman.com">hear from you</a>!</p>
     <summary type="html"><![CDATA[<article>
     <div class="header">
       6th Aug 2022–7th Mar 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1022 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>
+        <span class="ws">  ·   <span title="1022 words">5 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
       </div>
     <h1 class="post-title">Multiple Replacements with query-replace</h1>
     <div id="title-underline"></div>
@@ -16275,8 +16280,8 @@ out.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></
     <summary type="html"><![CDATA[<article>
     <div class="header">
       25th May 2022–7th Mar 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1742 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="1742 words">7 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#haskell'." href="/tags/haskell.html" rel="tag">#haskell</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">Calling Emacs from XMonad</h1>
     <div id="title-underline"></div>
@@ -16529,8 +16534,8 @@ maintain a slightly modified and POSIX shell compatible version
     <summary type="html"><![CDATA[<article>
     <div class="header">
       1st May 2022–23rd May 2022
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2284 words">10 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
-        <a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a>
+        <span class="ws">  ·   <span title="2284 words">10 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a>   <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>   <a title="All pages tagged '#xmonad'." href="/tags/xmonad.html" rel="tag">#xmonad</a></span>
       </div>
     <h1 class="post-title">My PhD Research Workflow</h1>
     <div id="title-underline"></div>

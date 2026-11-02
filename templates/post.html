@@ -2,10 +2,10 @@
     <div class="header">
       $if(date)$$date$$endif$$if(last-mod)$–$last-mod$$endif-$
       $if(date)$$if(no-reading-time)$$else$
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;$estimated-reading-time$&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        <span class="ws">  ·   $estimated-reading-time$   ·  </span>
       $-endif$$endif-$
       $if(tags)$
-        $tags$
+        <span class="ws">$tags$</span>
       $endif-$
     </div>
     <h1 class="post-title">$title$</h1>

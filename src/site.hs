@@ -105,7 +105,7 @@ main = do
     tags <- flip buildTags (fromCapture "tags/**.html") =<< allPubs
     let tagCtx = tagsFieldWith getTags
                                (simpleRenderLink . ("#" <>))
-                               (mconcat . intersperse "   ")
+                               (mconcat . intersperse "   ") -- uses white-space:break-spaces
                                "tags"
                                tags
               <> postCtx
