@@ -796,6 +796,8 @@ pandocOptions =
   -- https://frasertweedale.github.io/blog-fp/posts/2020-12-10-hakyll-section-links.html
   addSectionLinks :: Pandoc -> Pandoc
   addSectionLinks = walk \case
+    h@(Header _ _ [RawInline (Format "html") "Ingredients" ]) -> h
+    h@(Header _ _ [RawInline (Format "html") "Instructions"]) -> h
     Header n attr@(idAttr, _, _) inlines ->
       let link = Link ("", ["floatleft", "sec-link"], []) [Str "§"] ("#" <> idAttr, "")
        in Header n attr (inlines <> [link])
