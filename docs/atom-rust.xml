@@ -21,7 +21,7 @@
     <summary type="html"><![CDATA[<article>
     <div class="header">
       23rd Mar 2024–1st May 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1245 words">5 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1288 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#rust'." href="/tags/rust.html" rel="tag">#rust</a>
       </div>
     <h1 class="post-title">Announcing: rq Version 0.1.0</h1>
@@ -121,7 +121,7 @@ Sadly, this rules out any Hindley–Milner-inspired type system (at least to my 
 I settled on Dunfield and Krishnaswami’s bidirectional
 type checking algorithm from their paper<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> “Complete and easy
 bidirectional type checking for higher-rank polymorphism”
-<span class="citation" data-cites="dunfield13:higher">[@dunfield13:higher]</span>,
+<span class="citation" data-cites="dunfield13:higher">[<a href="#ref-dunfield13:higher" role="doc-biblioref">DK13</a>]</span>,
 as it seemed to be the most straightforward description of exactly what I needed.
 The paper is quite readable, actually,
 so I encourage you to check it out!</p>
@@ -197,6 +197,20 @@ Having a type signature like</p>
 <p>would please me.</p></li>
 <li><p>I’m also interested to find other (bidirectional) type checking algorithms that may be worth studying more closely.</p></li>
 </ul>
+<h2 id="references">References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr>
+<td><div id="ref-dunfield13:higher" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[DK13] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Jana Dunfield</span> and <span class="smallcaps">Neelakantan R. Krishnaswami</span>: <a href="https://doi.org/10.1145/2500365.2500582">Complete and easy bidirectional typechecking for higher-rank polymorphism</a>. In: <em>Proceedings of the 18th ACM SIGPLAN international conference on functional programming</em>, <em>ICFP ’13</em>. New York, NY, USA: Association for Computing Machinery, 2013;  ISBN 9781450323260, pages 429–442</div></td>
+</tr>
+</tbody>
+</table>
+</div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

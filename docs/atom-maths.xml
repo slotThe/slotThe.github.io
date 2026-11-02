@@ -27,7 +27,7 @@
     <div id="title-underline"></div>
     <section>
       <p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
-In <span class="citation" data-cites="masuoka94:faith-hopf">[@masuoka94:faith-hopf]</span>, Masuoka and Wigner study right coideal subalgebras of a Hopf algebra<!--
+In <span class="citation" data-cites="masuoka94:faith-hopf">[<a href="#ref-masuoka94:faith-hopf" role="doc-biblioref">MW94</a>]</span>, Masuoka and Wigner study right coideal subalgebras of a Hopf algebra<!--
 -->—i.e., those subalgebras <span class="math inline">B</span> of <span class="math inline">A</span>, such that <span class="math inline">\Delta B \subseteq B \otimes A</span>.
 They prove that <span class="math inline">A</span> being faithfully flat over <span class="math inline">B</span> is equivalent to a whole host of wonderful things:</p>
 <p><strong>Theorem (Masuoka–Wigner).</strong>
@@ -40,23 +40,23 @@ Then the following are equivalent:</p>
 <li><span class="math inline">\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}</span>,
 for <span class="math inline">\overline{A} \defeq A/AB^+</span> and <span class="math inline">B^+ \defeq B \cap \ker \varepsilon</span>.</li>
 </ol>
-<p>This is in fact a statement about an internal cohom having a certain shape—namely, that <span class="math inline">\lceil A,M\rceil \cong A/MB^+</span>.</p>
+<p>This is in fact a statement about an internal cohom having a certain shape, but we’ll get to that later.</p>
 <hr />
 <p>In more categorical language, the fact that <span class="math inline">A</span> is faithfully flat as a left <span class="math inline">B</span>-module just means that the functor <span class="math inline">{-} \otimes_B A</span> is faithfully exact;
 i.e., if a short exact sequence <span class="math inline">0 \to X \to Y \to Z \to 0</span> is exact if and only if <span class="math inline">0 \to X \otimes_B A \to Y \otimes_B A \to Z \otimes_B A \to 0</span> is exact.
 Generally, an additive functor <span class="math inline">F\colon \mathcal{C} \to \mathcal{D}</span> of abelian categories reflects exact sequences if and only if it is faithful (hence the name), and this is equivalent to it being conservative (i.e., reflecting isomorphisms) if the functor is exact.
 But recall one slight reformulation of Beck’s monadicity theorem,
-to be found for example in Theorem 4.4.4 of <span class="citation" data-cites="borceux94:handb2">[@borceux94:handb2]</span>:</p>
+to be found for example in Theorem 4.4.4 of <span class="citation" data-cites="borceux94:handb2">[<a href="#ref-borceux94:handb2" role="doc-biblioref">Bor94</a>]</span>:</p>
 <p><strong>Theorem (Beck).</strong>
-Let <span class="math inline">U\colon \mathcal{D} \to \mathcal{C}</span> be a functor.
+Let <span class="math inline">U\colon \mathcal{D} \to \mathcal{C}</span> be a functor.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
 Then <span class="math inline">U</span> is monadic if and only if it has a left adjoint, is conservative, and preserves coequalisers of <span class="math inline">U</span>-split pairs (which must exist).</p>
 <p>In fact, for abelian categories this takes the much more digestible form that an exact and conservative right adjoint is monadic, and an exact and conservative left adjoint is comonadic.
 This means that being faithfully flat is actually about an adjunction being monadic, which quite nicely fits the fourth point of Masuoka–Wigner’s theorem above.</p>
 <hr />
-<p>Briefly, in <span class="citation" data-cites="stroinski2024:reconstr">[@stroinski2024:reconstr]</span> we looked at reconstruction without a fibre functor,
-so that—as opposed to Tannakian reconstruction—one only recovers an algebra object up to Morita equivalence.
+<p>Briefly, in <span class="citation" data-cites="stroinski2024:reconstr">[<a href="#ref-stroinski2024:reconstr" role="doc-biblioref">SZ24</a>]</span> we looked at reconstruction without a fibre functor,
+so that—as opposed to Tannakian reconstruction—one only recovers an algebra or coalgebra object<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> up to Morita equivalence.
 This allows us to classify good module categories of monoidal categories up to that notion of equivalence:</p>
-<p><strong>Theorem 5.3 of <span class="citation" data-cites="stroinski2024:reconstr">[@stroinski2024:reconstr]</span></strong>
+<p><strong>Theorem 5.3 of <span class="citation" data-cites="stroinski2024:reconstr">[<a href="#ref-stroinski2024:reconstr" role="doc-biblioref">SZ24</a>]</span></strong>
 Let <span class="math inline">\mathcal{C}</span> be an abelian monoidal category with enough injectives
 and <span class="math inline">\mathcal{M}</span> an abelian (left) <span class="math inline">\mathcal{C}</span>-module category with enough injectives.
 If <span class="math inline">\ell \in \mathcal{M}</span> is a coclosed <span class="math inline">\mathcal{C}</span>-injective <span class="math inline">\mathcal{C}</span>-cogenerator,
@@ -64,8 +64,8 @@ then there is an equivalence of <span class="math inline">\mathcal{C}</span>-mod
 <span class="math inline">\mathcal{M} \simeq \mathcal{C}^{\lceil \ell,{-} \triangleright \ell \rceil}</span>
 between <span class="math inline">\mathcal{M}</span> and the Eilenberg–Moore category of the comonad
 <span class="math inline">\lceil \ell,{-} \triangleright \ell \rceil</span> on <span class="math inline">\mathcal{C}</span>.</p>
-<p>Although it sounds scary, a coclosed <span class="math inline">\mathcal{C}</span>-injective <span class="math inline">\mathcal{C}</span>-cogenerator is really just a good object such that the internal cohom<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is a faithfully exact functor,
-and the proof is really just Beck’s (co)monadicity theorem, together with some details on how the module structure works and is preserved.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Although it sounds scary, a coclosed <span class="math inline">\mathcal{C}</span>-injective <span class="math inline">\mathcal{C}</span>-cogenerator is really just a good object such that the internal cohom<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is a faithfully exact functor,
+and the proof is really just Beck’s (co)monadicity theorem, together with some details on how the module structure works and is preserved.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <p>In fact, up to Morita equivalence, this yields a bijective correspondence between module categories of <span class="math inline">\mathcal{C}</span> with such a cogenerator and left exact oplax module comonads on <span class="math inline">\mathcal{C}</span>.</p>
 <hr />
 <p>To see how these two theorems interact, we essentially set <span class="math inline">\mathcal{C} := \mathrm{Vec}</span> and <span class="math inline">\mathcal{M} := \mathrm{Mod}^A_B</span> in the theorem above.
@@ -74,7 +74,7 @@ i.e., <span class="math inline">\mathrm{Vec}(\lceil A, M \rceil, V) \cong \mathr
 holds and the functor <span class="math inline">\lceil A, {-} \rceil\colon \mathrm{Mod}^A_B \to \mathrm{Vec}</span> is faithfully exact.</p>
 <p>First, notice that <span class="math inline">A</span> is always coclosed:
 let <span class="math inline">F := {-} \otimes A\colon \mathrm{Vec} \to \mathrm{Mod}^A_B</span> be the action.
-We claim that this has left adjoint
+We claim that this has a left adjoint
 <span class="math display">
   \overline{({-})} \colon \mathrm{Mod}^A_B \to \mathrm{Vec}, \qquad
   M \mapsto \overline{M} := M/MB^+.
@@ -95,7 +95,14 @@ In one direction, notice that we have a Galois-type isomorphism
   M \otimes_B A \cong \overline{M} \otimes A.
 </span>
 Since <span class="math inline">{-} \otimes A</span> is exact, if <span class="math inline">\lceil A, {-} \rceil = \overline{({-})}</span> is faithfully exact,
-then this immediately implies that <span class="math inline">{-} \otimes_B A</span> also is, which means that <span class="math inline">A</span> is faithfully flat.</p>
+then this immediately implies that <span class="math inline">{-} \otimes_B A</span> also is—at least on relative Hopf modules.
+To pass to all right <span class="math inline">B</span>-modules, one can use that
+<span class="math display">
+  (M \otimes A)/(M \otimes A)B^+ \cong M \otimes_B A,
+  \qquad
+  \overline{m \otimes a} \mapsto m \otimes S(a)
+</span>
+is a natural isomorphism, and hence <span class="math inline">A</span> is faithfully flat.</p>
 <p>Now, assume that <span class="math inline">A</span> is faithfully flat.
 Since <span class="math inline">A</span> is flat as a left <span class="math inline">B</span>-module, <span class="math inline">{-} \otimes_B A</span> is exact, and so by the Galois map above, <span class="math inline">\overline{({-})}</span> has to be as well, so <span class="math inline">A</span> is <span class="math inline">\mathrm{Vec}</span>-injective.
 For the cogenerator part, we instead show that <span class="math inline">\overline{({-})}</span> is faithful.
@@ -105,7 +112,35 @@ and since <span class="math inline">A</span> is faithfully flat, it follows that
 <span class="math inline">\lceil A, {-} \triangleright A \rceil = \overline{{-} \otimes A} \cong {-} \otimes \overline{A}</span>,
 because tensoring is exact.
 Hence, <span class="math inline">\mathrm{Vec}^{\lceil A, {-} \triangleright A \rceil} \simeq \mathrm{Mod}^{\overline{A}}</span>,
-and the theorem indeed gives <span class="math inline">\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}</span>, as required.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+and the theorem indeed gives <span class="math inline">\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}</span>, as required.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<h2 id="references">References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr>
+<td><div id="ref-borceux94:handb2" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Bor94] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Francis Borceux</span>: <em>Handbook of categorical algebra. 2: <span>Categories</span> and structures</em>, <em>Encycl. Math. appl.</em> vol. 51: Cambridge: Univ. Press, 1994;  ISBN 0-521-44179-X</div></td>
+</tr>
+<tr>
+<td><div id="ref-masuoka94:faith-hopf" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[MW94] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Akira Masuoka</span> and <span class="smallcaps">David Wigner</span>: <a href="https://doi.org/10.1006/jabr.1994.1332">Faithful flatness of <span>Hopf</span> algebras</a>. In: <em>J. Algebra</em> vol. 170 (1994), Nr. 1, pages 156–164</div></td>
+</tr>
+<tr>
+<td><div id="ref-stroinski2024:reconstr" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[SZ24] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Mateusz Stroiński</span> and <span class="smallcaps">Tony Zorman</span>: <a href="https://arxiv.org/abs/2409.00793"><span>R</span>econstruction of module categories in the infinite and non-rigid settings</a>. In: <em>arXiv e-prints</em> (2024)</div></td>
+</tr>
+</tbody>
+</table>
+</div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
@@ -114,11 +149,13 @@ which I guess shouldn’t keep me from writing these silly posts,
 and yet it kind of does.
 We are truly living in the darkest timeline.
 Maybe I need a circle beard to match now.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>The action functor <span class="math inline">{-} \triangleright \ell</span> has a <em>left</em> adjoint <span class="math inline">\lceil \ell, {-} \rceil</span>, which we call the internal cohom.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Everything is always modulo details.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Notice how we in fact reconstruct a coalgebra object, and not just a comonad!
-This is not the case in general, but since Masuoka–Wigner assume that <span class="math inline">A</span> has a bijective antipode,
-one is in the slightly simpler setting of the ind-completion of a rigid monoidal category.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Naturally, a comonadic analogue—the one we’ll actually use—also exists,
+but the monadic version is perhaps more commonly known and thus less scary.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Really, a (co)monad, but for the purposes of this post algebra objects are good enough.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The action functor <span class="math inline">{-} \triangleright \ell</span> has a <em>left</em> adjoint <span class="math inline">\lceil \ell, {-} \rceil</span>, which we call the internal cohom.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Everything is always modulo details.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Notice how we in fact reconstruct a coalgebra object, and not just a comonad!
+This is not the case in general, but since the category of vector spaces is the ind-completion of a rigid monoidal category—namely, the category of finite-dimensional vector spaces—all is well.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></section>
     
@@ -363,7 +400,7 @@ For me, this is <code>~/.local/share/Anki2/User 1/collection.media/</code>.<a hr
     <summary type="html"><![CDATA[<article>
     <div class="header">
       12th Jun 2023–30th Aug 2024
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1479 words">6 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="1502 words">7 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
       </div>
     <h1 class="post-title">The tensor product of S-modules is a convolution product</h1>
@@ -383,7 +420,7 @@ vector spaces—though the argument holds for all nice enough target categories�
 to show that it is nothing but the usual tensor product of modules.</p>
 <!--more-->
 <p>While there is more to this
-story—all of which is wonderfully explained in <span class="citation" data-cites="kelly05:j">[@kelly05:j]</span>—I
+story—all of which is wonderfully explained in <span class="citation" data-cites="kelly05:j">[<a href="#ref-kelly05:j" role="doc-biblioref">Kel05</a>]</span>—I
 think focusing on the tensor product of <span class="math inline">\mathbb{S}</span>-modules in the case of vector spaces already gives one a clue
 as to how this whole translation works in general.</p>
 <h2 id="the-day-convolution-product">The Day convolution product</h2>
@@ -550,6 +587,20 @@ or, in different notation,
   \bigoplus_{n + m = r} \mathsf{Ind}_{S_n \times S_m}^{S_k} Fn \otimes_{\mathtt{k}} Gm,
 </span>
 which is exactly the kind of formula that we wanted to end up with. Neat.</p>
+<h2 id="references">References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr>
+<td><div id="ref-kelly05:j" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Kel05] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">G. M. Kelly</span>: On the operads of <span>J</span>.<span>P</span>. <span>May</span>. In: <em>Repr. Theory Appl. Categ.</em> vol. 2005 (2005), Nr. 13, pages 1–13</div></td>
+</tr>
+</tbody>
+</table>
+</div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
@@ -607,7 +658,7 @@ In both expressions,
     <summary type="html"><![CDATA[<article>
     <div class="header">
       10th Jan 2023–12th Jan 2023
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="857 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="902 words">4 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#maths'." href="/tags/maths.html" rel="tag">#maths</a>
       </div>
     <h1 class="post-title">Duality in Monoidal Categories</h1>
@@ -665,7 +716,7 @@ extra condition:</p>
 </span>
 Then <span class="math inline">\mathcal{C}</span> is *-autonomous.</p>
 </blockquote>
-<p>Using the notion of a *-autonomous category of <span class="citation" data-cites="boyarchenko13:groth-verdier">[@boyarchenko13:groth-verdier]</span>—that is, for
+<p>Using the notion of a *-autonomous category of <span class="citation" data-cites="boyarchenko13:groth-verdier">[<a href="#ref-boyarchenko13:groth-verdier" role="doc-biblioref">BD13</a>]</span>—that is, for
 every <span class="math inline">x \in \mathcal{C}</span> the functor <span class="math inline">\mathcal{C}({-} \otimes x, 1)</span> is
 representable by <span class="math inline">Dx</span>—this becomes an exercise in “Yoneda Yoga”. More
 precisely, one uses the fact that the Yoneda embedding is fully faithful
@@ -732,12 +783,33 @@ snake identities for duals is (i) closed under exactly these relations,
 and (ii) all morphisms in this set have length at least two. Hence, if
 we project any morphism down to <span class="math inline">\mathcal{C}</span>, it can’t possibly be the
 identity, and thus the snake identities for duals do not hold. If you
-want more details, check the paper <span class="citation" data-cites="halbig23:dualit-monoid-categ">[@halbig23:dualit-monoid-categ]</span>!</p>
+want more details, check the paper <span class="citation" data-cites="halbig23:dualit-monoid-categ">[<a href="#ref-halbig23:dualit-monoid-categ" role="doc-biblioref">HZ26</a>]</span>!</p>
+<h2 id="references">References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr>
+<td><div id="ref-boyarchenko13:groth-verdier" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[BD13] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Mitya Boyarchenko</span> and <span class="smallcaps">Vladimir Drinfeld</span>: <a href="https://doi.org/10.4171/QT/45">A duality formalism in the spirit of <span>Grothendieck</span> and <span>Verdier</span></a>. In: <em>Quantum Topol.</em> vol. 4 (2013), Nr. 4, pages 447–489</div></td>
+</tr>
+<tr>
+<td><div id="ref-halbig23:dualit-monoid-categ" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[HZ26] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Sebastian Halbig</span> and <span class="smallcaps">Tony Zorman</span>: <a href="https://doi.org/10.1007/s00209-026-03983-z">Duality in monoidal categories</a>. In: <em>Math. Z.</em> vol. 313 (2026), Nr. 4</div></td>
+</tr>
+</tbody>
+</table>
+</div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Or rather, a non-symmetric variant of it called an <em>r-category</em> in
-<span class="citation" data-cites="boyarchenko13:groth-verdier">[@boyarchenko13:groth-verdier]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<span class="citation" data-cites="boyarchenko13:groth-verdier">[<a href="#ref-boyarchenko13:groth-verdier" role="doc-biblioref">BD13</a>]</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>This is not a coincidence; for example, adjoints in the monoidal
 category <span class="math inline">([\mathcal{C}, \mathcal{C}], \circ, \mathrm{Id})</span> are
 exactly duals!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

@@ -646,14 +646,85 @@ myReader = defaultHakyllReaderOptions
   }
 
 pandocCompilerWorker :: (Item Pandoc -> Compiler (Item Pandoc)) -> Compiler (Item String)
-pandocCompilerWorker =
-  pandocItemCompilerWithTransformM
-    myReader
-    myWriter
-    -- Only the `title' should be <h1>. This needs to be here so that
-    -- headings are shifted down for both 'myPandocCompiler', and
-    -- 'pandocRssCompiler' .
-    . ((fmap . fmap) (headerShift 1) .)
+pandocCompilerWorker trans = pandocItemCompilerWithTransformM myReader myWriter $
+  -- Only the `title' should be <h1>. This needs to be here so that headings
+  -- are shifted down for both 'myPandocCompiler', and 'pandocRssCompiler'.
+  fmap (fmap (headerShift 1)) . trans <=< processBib
+ where
+  processBib :: Item Pandoc -> Compiler (Item Pandoc)
+  processBib pandoc = do
+    -- See @Citations@ in the main function.
+    csl <- load @CSL    "bib/style.csl"
+    bib <- load @Biblio "bib/bibliography.bib"
+    -- We do want to link citations.
+    p <- withItemBody (pure . setMeta "link-citations" True) pandoc
+    fmap (tableiseBib . insertRefHeading . relabel bib) <$> processPandocBiblio csl bib p
+   where
+    -- Insert a heading for the citations.
+    insertRefHeading :: Pandoc -> Pandoc
+    insertRefHeading = walk $ concatMap \case
+      d@(Div ("refs", _, _) _) -> [Header 1 ("references", [], []) [Str "References"], d]
+      block                    -> [block]
+
+    -- Arrange all citations in a table, so that they are nicely aligned.
+    -- This probably only works with label or numerical styles.
+    tableiseBib :: Pandoc -> Pandoc
+    tableiseBib = walk \case
+      Div a@("refs", _, _) body -> Div a (Many.toList (simpleTable [] (map citToRow body)))
+      body                      -> body
+     where
+      citToRow :: Block -> [Many Block]
+      citToRow = map Many.singleton . \case
+        Div attr [Para (s1 : ss)] -> [Div attr [Plain [s1]], Plain [Space], Plain ss]
+        d                         -> error $ "citToRow: unexpected citation format: " <> show d
+
+    -- Citation naming is hardcoded in Citeproc.Eval.citationLabel: four
+    -- letters of the last name for single author papers, and two per name in
+    -- multi author papers. I'd rather follows what bibtex does more closely.
+    relabel :: Item Biblio -> Pandoc -> Pandoc
+    relabel bib = walk \case
+      Cite cs is                                   -> Cite cs (go is)
+      Span as@(_, c, _) is | "csl-left-margin" `elem` c -> Span as (go is)
+      i                                            -> i
+     where
+      go :: [Inline] -> [Inline]
+      go = map \case
+        Link a is t -> Link a (go is) t
+        Str s       -> Str $ replaceAll subs (T.filter (/= ' ') s)
+        is          -> is
+
+      subs :: [(Text, Text)] -- [(old, new)]
+      subs = either (error . show) mkSubs $ runPure do
+          -- Get citations. This is terrible for the same reasons that
+          -- processPandocBiblio is, and also has to use pandoc's ersatz
+          -- filesystem, because getReferences expects a file.
+          modifyPureState \st -> st{ stFiles =
+            insertInFileTree "_.bib" (FileInfo (UTCTime (toEnum 0) 0) (unBiblio (itemBody bib))) (stFiles st) }
+          getReferences Nothing
+            . setMeta "nocite" (MetaInlines [Cite [Citation "*" [] [] NormalCitation 0 0] []])
+            . setMeta "bibliography" ("_.bib" :: Text)
+            $ mempty
+       where
+        mkSubs :: [Reference a] -> [(Text, Text)]
+        mkSubs = map swap . foldMap dis . groupBy ((==) `on` fst) . Set.toList . Set.fromList . map newOld
+         where
+          dis :: [(Text, Text)] -> [(Text, Text)] -- disambiguation
+          dis = \case
+            [x] -> [x]
+            xs  -> zipWith (\x s -> first (<> s) x) xs (map T.singleton ['a' .. 'z'])
+
+        -- Manually recreate what citationLabel does...
+        newOld :: Reference a -> (Text, Text)
+        newOld ref = (new <> year, foldMap (T.take abbrev) (take 4 fam) <> year)
+         where
+          names  :: [Name] = ns where NamesVal ns = referenceVariables ref Map.! "author"
+          fam    :: [Text] = map (fromMaybe "" . nameFamily) names
+          abbrev :: Int    = case length names of 1->4; n|n>=4->1; _->2
+          new    :: Text   = case fam of [f]->T.take 3 f; fs->foldMap (T.take 1) fs
+          year   :: Text   = case referenceVariables ref Map.!? "issued" of
+            Just (DateVal d) | (DateParts (y : _) : _) <- dateParts d
+              -> T.justifyRight 2 '0' . T.pack . show $ y `mod` 100
+            _ -> ""
 
 -- | A simple pandoc compiler for RSS/Atom feeds, with none of the
 -- fanciness that 'myPandocCompiler' has.
@@ -713,7 +784,6 @@ pandocOptions =
       .   styleLocalLinks
       .   strongEmdash
       )
-    <=< processBib
  where
   -- Links that go to the site itself get a special CSS class.
   styleLocalLinks :: Pandoc -> Pandoc
@@ -813,81 +883,6 @@ pandocOptions =
         Just (sName -> "Default") -> Div ("", ["included"], []) [Para [Str content]]
         Just (sName -> l)         -> CodeBlock ("", [l], []) content
     block -> pure block
-
-  processBib :: Item Pandoc -> Compiler (Item Pandoc)
-  processBib pandoc = do
-    -- See @Citations@ in the main function.
-    csl <- load @CSL    "bib/style.csl"
-    bib <- load @Biblio "bib/bibliography.bib"
-    -- We do want to link citations.
-    p <- withItemBody (pure . setMeta "link-citations" True) pandoc
-    fmap (tableiseBib . insertRefHeading . relabel bib) <$> processPandocBiblio csl bib p
-   where
-    -- Insert a heading for the citations.
-    insertRefHeading :: Pandoc -> Pandoc
-    insertRefHeading = walk $ concatMap \case
-      d@(Div ("refs", _, _) _) -> [Header 1 ("references", [], []) [Str "References"], d]
-      block                    -> [block]
-
-    -- Arrange all citations in a table, so that they are nicely aligned.
-    -- This probably only works with label or numerical styles.
-    tableiseBib :: Pandoc -> Pandoc
-    tableiseBib = walk \case
-      Div a@("refs", _, _) body -> Div a (Many.toList (simpleTable [] (map citToRow body)))
-      body                      -> body
-     where
-      citToRow :: Block -> [Many Block]
-      citToRow = map Many.singleton . \case
-        Div attr [Para (s1 : ss)] -> [Div attr [Plain [s1]], Plain [Space], Plain ss]
-        d                         -> error $ "citToRow: unexpected citation format: " <> show d
-
-    -- Citation naming is hardcoded in Citeproc.Eval.citationLabel: four
-    -- letters of the last name for single author papers, and two per name in
-    -- multi author papers. I'd rather follows what bibtex does more closely.
-    relabel :: Item Biblio -> Pandoc -> Pandoc
-    relabel bib = walk \case
-      Cite cs is                                   -> Cite cs (go is)
-      Span as@(_, c, _) is | "csl-left-margin" `elem` c -> Span as (go is)
-      i                                            -> i
-     where
-      go :: [Inline] -> [Inline]
-      go = map \case
-        Link a is t -> Link a (go is) t
-        Str s       -> Str $ replaceAll subs (T.filter (/= ' ') s)
-        is          -> is
-
-      subs :: [(Text, Text)] -- [(old, new)]
-      subs = either (error . show) mkSubs $ runPure do
-          -- Get citations. This is terrible for the same reasons that
-          -- processPandocBiblio is, and also has to use pandoc's ersatz
-          -- filesystem, because getReferences expects a file.
-          modifyPureState \st -> st{ stFiles =
-            insertInFileTree "_.bib" (FileInfo (UTCTime (toEnum 0) 0) (unBiblio (itemBody bib))) (stFiles st) }
-          getReferences Nothing
-            . setMeta "nocite" (MetaInlines [Cite [Citation "*" [] [] NormalCitation 0 0] []])
-            . setMeta "bibliography" ("_.bib" :: Text)
-            $ mempty
-       where
-        mkSubs :: [Reference a] -> [(Text, Text)]
-        mkSubs = map swap . foldMap dis . groupBy ((==) `on` fst) . Set.toList . Set.fromList . map newOld
-         where
-          dis :: [(Text, Text)] -> [(Text, Text)] -- disambiguation
-          dis = \case
-            [x] -> [x]
-            xs  -> zipWith (\x s -> first (<> s) x) xs (map T.singleton ['a' .. 'z'])
-
-        -- Manually recreate what citationLabel does...
-        newOld :: Reference a -> (Text, Text)
-        newOld ref = (new <> year, foldMap (T.take abbrev) (take 4 fam) <> year)
-         where
-          names  :: [Name] = ns where NamesVal ns = referenceVariables ref Map.! "author"
-          fam    :: [Text] = map (fromMaybe "" . nameFamily) names
-          abbrev :: Int    = case length names of 1->4; n|n>=4->1; _->2
-          new    :: Text   = case fam of [f]->T.take 3 f; fs->foldMap (T.take 1) fs
-          year   :: Text   = case referenceVariables ref Map.!? "issued" of
-            Just (DateVal d) | (DateParts (y : _) : _) <- dateParts d
-              -> T.justifyRight 2 '0' . T.pack . show $ y `mod` 100
-            _ -> ""
 
   -- This is very manual, but for now that's "good enough".
   smallCaps :: Pandoc -> Pandoc

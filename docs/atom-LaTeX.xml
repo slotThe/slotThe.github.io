@@ -21,7 +21,7 @@
     <summary type="html"><![CDATA[<article>
     <div class="header">
       13th Apr 2025–8th Feb 2026
-        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2031 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
+        &nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span title="2044 words">9 min read</span>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;
         <a title="All pages tagged '#LaTeX'." href="/tags/LaTeX.html" rel="tag">#LaTeX</a>
       </div>
     <h1 class="post-title">Dissertation Typesetting Considerations</h1>
@@ -90,7 +90,7 @@ quite a bit.</p>
 <p>For chapter headings memoir features a <code>bringhurst</code> chapter style,
 which however doesn’t include the chapter number beside it:</p>
 <p><img class="pure-img" src="../images/phd-typesetting/no-chapter-number.png" alt="The default memoir style does not feature a chapter number."></p>
-<p>The famous book <span class="citation" data-cites="bringhurst92:el-typ">[@bringhurst92:el-typ]</span> puts a rather large number in the margin,
+<p>The famous book <span class="citation" data-cites="bringhurst92:el-typ">[<a href="#ref-bringhurst92:el-typ" role="doc-biblioref">Bri92</a>]</span> puts a rather large number in the margin,
 which is also what I ended up going with (see the first double page in this post).
 Thankfully, this is not difficult to fix—so much so that someone on TeX.Stackexchange has
 <a href="https://tex.stackexchange.com/questions/88895/bringhurst-chapter-style-in-memoir">already done it</a>.
@@ -402,6 +402,20 @@ Still, start early.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareDelimFormat</span>{finalnamedelim}{<span class="co">% Force Oxford comma</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\ifnumgreater</span>{<span class="fu">\value</span>{liststop}}{2}{,}{}<span class="co">%</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\addspace\bibstring</span>{and}<span class="fu">\space</span>}</span></code></pre></div>
+<h2 id="references">References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
+<table>
+<tbody>
+<tr>
+<td><div id="ref-bringhurst92:el-typ" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[Bri92] </div>
+</div></td>
+<td> </td>
+<td><div class="csl-right-inline"><span class="smallcaps">Robert Bringhurst</span>: <em>The elements of typographic style</em>: Hartley &amp; Marks, 1992</div></td>
+</tr>
+</tbody>
+</table>
+</div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
