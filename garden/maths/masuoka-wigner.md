@@ -8,7 +8,13 @@ tags: maths
 [^3]
 In [@masuoka94:faith-hopf], Masuoka and Wigner study right coideal subalgebras of a Hopf algebra<!--
 -->—i.e., those subalgebras \(B\) of \(A\), such that \(\Delta B \subseteq B \otimes A\).
-They prove that \(A\) being faithfully flat over \(B\) is equivalent to a whole host of wonderful things:
+They prove that \(A\) being faithfully flat over \(B\) is equivalent to a whole host of wonderful things.
+In modern language, what they are talking about is the fact that an internal cohom has a certain shape,
+which is what I want to convince you of in this post.
+
+<!--more-->
+
+For reference, here's the original theorem:
 
 **Theorem (Masuoka–Wigner).**
   Let \(A\) be a Hopf algebra with \(S\) bijective, \(B \subseteq A\) a right coideal subalgebra.
@@ -19,8 +25,6 @@ They prove that \(A\) being faithfully flat over \(B\) is equivalent to a whole 
   3. \({}_B A\) is a projective generator; and
   4. \(\mathrm{Mod}^{A}_B \simeq \mathrm{Mod}^{\overline{A}}\),
      for \(\overline{A} \defeq A/AB^+\) and \(B^+ \defeq B \cap \ker \varepsilon\).
-
-This is in fact a statement about an internal cohom having a certain shape, but we'll get to that later.
 
 ---
 
