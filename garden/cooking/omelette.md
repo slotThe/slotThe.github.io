@@ -20,7 +20,7 @@ macr: 332kcal 31c 11f 27p
 + Some vegetables of choice
 + 30g vegan cheese
 + Salt & pepper
-+ Oil
++ Oil [⁽*⁾](#notes)
 
 # Instructions
 
@@ -36,5 +36,5 @@ macr: 332kcal 31c 11f 27p
 
 # Notes
 
-+ Macros are with around 5ml oil per omelette, might need more depending on the stickiness of the pan.
++ Macros are calculated using around 5ml oil per omelette; you might need (a lot) more depending on the stickiness of the pan.
 + [Based on this recipe](https://youtu.be/uQQgco_BmWU&t=72).
