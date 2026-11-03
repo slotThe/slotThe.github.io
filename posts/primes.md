@@ -1,6 +1,7 @@
 ---
 title: Sieving Primes
 date: 2026-07-15
+last-modified: 2026-07-15
 tags: c
 og-description: Manually optimising some prime sieves as if it was 2021.
 ---

@@ -57,6 +57,7 @@
             p.pygments
           ]))
           optipng
+          imagemagick
           zlib
           html-tidy
           linkchecker

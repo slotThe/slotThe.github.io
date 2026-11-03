@@ -1,5 +1,5 @@
 .ONESHELL:
-.PHONY: builds watch clean tidy
+.PHONY: builds watch clean tidy webp
 
 build:
 	nix run . rebuild
@@ -20,6 +20,16 @@ check: tidy
 
 optipng:
 	for f in `find images -name '**.png'`; do optipng -o7 $$f; done
+
+webp:
+	set -e
+	for png in `find images talks posters -name '*.png'`; do
+	  webp=$${png%png}webp
+	  magick $$png -quality 100 -define webp:method=6 $$webp
+	  grep -rlF --include='*.md' --include='*.html' --include='*.org' --include='*.css' --exclude-dir=docs --exclude-dir=tmp $$png . \
+	    | xargs -r sed -i s:$$png:$$webp:g
+	  rm $$png
+	done
 
 tidy: # Courtesy of Susam (https://codeberg.org/susam/susam.net/src/branch/main/Makefile)
 	find docs -name "*.html" | \
