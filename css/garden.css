@@ -11,8 +11,8 @@ h1.note-title {
 
 .patch td { /* Tight rows except for last one, which takes all remaining space. */
     vertical-align: top;
-    &:not(:last-child) { width: 1%; white-space: nowrap; }
-    &:last-child { width: auto; text-align: right; color: var(--fg-dim); }
+    &:not(:nth-child(3)) { width: 1%; white-space: nowrap; }
+    &:last-child { text-align: right; color: var(--fg-dim); }
 }
 
 /* Put footer at bottom of viewport for very short posts */
@@ -40,12 +40,11 @@ div#content { flex-grow: 1; }
     display: grid;
     grid-template-columns: 1fr 2fr;
     padding-top: 2.1rem;
+    ol,ul { padding-left: 1rem; }
     > * > h2:first-child { margin-top: 0; }
-    .ingredients ul { padding-left: 1rem; }
     .instructions {
         border-left: 1px solid var(--border-inline-code);
         padding-left: 2rem;
-        ol { padding-left: 1rem; }
     }
     @media (width <= 767px) {
         grid-template-columns: 1fr;
