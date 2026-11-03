@@ -53,8 +53,12 @@ def optimise_font(in_file: str, out_file: str, text: str) -> None:
     before_size = os.path.getsize(in_file)  # might be that in_file = out_file
 
     options = Options(hinting=False, desubroutinize=True)
-    if text_font in in_file or latex_font in in_file:
-        options.layout_features = ["*"]  # small-caps et al
+    if text_font in in_file:
+        # Manually allow features that are in use; cuts down on the total size
+        # of the font quite dramatically.
+        options.layout_features = [ "rvrn", "ccmp", "locl", "rlig", "liga", "clig", "calt", "kern", "mark", "mkmk", "smcp", "c2sc", "onum", "lnum", "tnum", "pnum", "ss02", ]
+    elif latex_font in in_file:
+        options.layout_features = ["*"]
     elif title_font in in_file:
         options.layout_features += ["smcp", "c2sc"]
     font = TTFont(in_file, lazy=True)
