@@ -1678,8 +1678,8 @@ The resulting representation is probably not super easy to work with<!--
     <updated>2025-07-28T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <div class="header">
-      28th Jul 2025–18th Oct 2025
-        <span class="ws">  ·   <span title="1852 words">8 min read</span>   ·  </span>
+      28th Jul 2025–3rd Nov 2026
+        <span class="ws">  ·   <span title="1902 words">8 min read</span>   ·  </span>
         <span class="ws"><a title="All pages tagged '#BQN'." href="/tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="/tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">Parsing CSV in BQN</h1>
@@ -1881,6 +1881,15 @@ Changing</p>
 <p>now parses both cases correctly:</p>
 <pre class="bqn"><code>    (CSV &quot;a,,b&quot;) ≡ CSV &quot;a,&quot;&quot;&quot;&quot;,b&quot;
 1</code></pre>
+<p>For ease of copying, here’s the final version:</p>
+<pre class="bqn"><code>CSV ⇐ {
+  [q,c,n] ← ('&quot;'∾','∾@+10) =⌜ 𝕩        # Quote, comma, LF
+  e ← ≠`q                              # Escapes
+  s ← (¬e)∧n∨c                         # Where to split
+  d ← s∨q∧e∨«⊸&lt;q                       # What to drop
+  (0∾s/+`(¬e)∧n) ⊔ (1-˜(¬d)×1+`s) ⊔ 𝕩  # Split all, split lines
+}
+</code></pre>
 <hr />
 <p>Here are some exercises for the interested reader:</p>
 <ol type="1">

@@ -1,9 +1,8 @@
 ---
 title: Parsing CSV in BQN
 date: 2025-07-28
-last-modified: 2025-10-18
 tags: BQN, array-lang
-og-description: Writing a simple CSV parser in BQN in 5 lines of code.
+og-description: Writing a CSV parser in 5 lines of code.
 ---
 
 Let's write a CSV parser in [BQN](https://mlochbaum.github.io/BQN)!
@@ -307,6 +306,19 @@ now parses both cases correctly:
 ``` bqn
     (CSV "a,,b") ≡ CSV "a,"""",b"
 1
+```
+
+For ease of copying, here's the final version:
+
+``` bqn
+CSV ⇐ {
+  [q,c,n] ← ('"'∾','∾@+10) =⌜ 𝕩        # Quote, comma, LF
+  e ← ≠`q                              # Escapes
+  s ← (¬e)∧n∨c                         # Where to split
+  d ← s∨q∧e∨«⊸<q                       # What to drop
+  (0∾s/+`(¬e)∧n) ⊔ (1-˜(¬d)×1+`s) ⊔ 𝕩  # Split all, split lines
+}
+
 ```
 
 ---

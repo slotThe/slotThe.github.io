@@ -7,7 +7,7 @@
     <!-- Link previews in Signal and friends -->
     <title>Parsing CSV in BQN · Tony Zorman</title>
     <meta name="og:title" content="Parsing CSV in BQN">
-    <meta name="og:description" content="Writing a simple CSV parser in BQN in 5 lines of code.">
+    <meta name="og:description" content="Writing a CSV parser in 5 lines of code.">
     <meta name="og:site" content="tony-zorman.com">
     <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.png">
     <meta property="og:image:height" content="221">
@@ -52,8 +52,8 @@
       <div id="content">
         <article>
     <div class="header">
-      28th Jul 2025–18th Oct 2025
-        <span class="ws">  ·   <span title="1850 words">8 min read</span>   ·  </span>
+      28th Jul 2025–3rd Nov 2026
+        <span class="ws">  ·   <span title="1900 words">8 min read</span>   ·  </span>
         <span class="ws"><a title="All pages tagged '#BQN'." href="../tags/BQN.html" rel="tag">#BQN</a>   <a title="All pages tagged '#array-lang'." href="../tags/array-lang.html" rel="tag">#array-lang</a></span>
       </div>
     <h1 class="post-title">Parsing CSV in BQN</h1>
@@ -366,6 +366,17 @@ now parses both cases correctly:
 
 <div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="w">    </span><span class="sr">(</span><span class="o">CSV</span><span class="w"> </span><span class="s2">&quot;a,,b&quot;</span><span class="sr">)</span><span class="w"> </span><span class="o">≡</span><span class="w"> </span><span class="o">CSV</span><span class="w"> </span><span class="s2">&quot;a,&quot;&quot;&quot;&quot;,b&quot;</span>
 <span class="m">1</span>
+</pre></div>
+<p></p>
+For ease of copying, here’s the final version:
+
+<div class="highlight-bqn" style="padding-left: 1em;"><pre><span></span><span class="o">CSV</span><span class="w"> </span><span class="kd">⇐</span><span class="w"> </span><span class="kt">{</span>
+<span class="w">  </span><span class="p">[</span><span class="nv">q</span><span class="p">,</span><span class="nv">c</span><span class="p">,</span><span class="nv">n</span><span class="p">]</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="s1">'&quot;'</span><span class="o">∾</span><span class="s1">','</span><span class="o">∾</span><span class="ss">@</span><span class="o">+</span><span class="m">10</span><span class="sr">)</span><span class="w"> </span><span class="o">=</span><span class="na">⌜</span><span class="w"> </span><span class="ni">𝕩</span><span class="w">        </span><span class="c1"># Quote, comma, LF</span>
+<span class="w">  </span><span class="nv">e</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="o">≠</span><span class="na">`</span><span class="nv">q</span><span class="w">                              </span><span class="c1"># Escapes</span>
+<span class="w">  </span><span class="nv">s</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">n</span><span class="o">∨</span><span class="nv">c</span><span class="w">                         </span><span class="c1"># Where to split</span>
+<span class="w">  </span><span class="nv">d</span><span class="w"> </span><span class="kd">←</span><span class="w"> </span><span class="nv">s</span><span class="o">∨</span><span class="nv">q</span><span class="o">∧</span><span class="nv">e</span><span class="o">∨«</span><span class="py">⊸</span><span class="o">&lt;</span><span class="nv">q</span><span class="w">                       </span><span class="c1"># What to drop</span>
+<span class="w">  </span><span class="sr">(</span><span class="m">0</span><span class="o">∾</span><span class="nv">s</span><span class="o">/+</span><span class="na">`</span><span class="sr">(</span><span class="o">¬</span><span class="nv">e</span><span class="sr">)</span><span class="o">∧</span><span class="nv">n</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="sr">(</span><span class="m">1</span><span class="o">-</span><span class="na">˜</span><span class="sr">(</span><span class="o">¬</span><span class="nv">d</span><span class="sr">)</span><span class="o">×</span><span class="m">1</span><span class="o">+</span><span class="na">`</span><span class="nv">s</span><span class="sr">)</span><span class="w"> </span><span class="o">⊔</span><span class="w"> </span><span class="ni">𝕩</span><span class="w">  </span><span class="c1"># Split all, split lines</span>
+<span class="kt">}</span>
 </pre></div>
 <hr />
 <p></p>
