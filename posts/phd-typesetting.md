@@ -18,14 +18,14 @@ For reference, here are a few pages of how the end product looks like:
 <figure>
   <a href="../images/phd-typesetting/look1.pdf">
   <img class="pure-img"
-       src="../images/phd-typesetting/look1.png"
+       src="../images/phd-typesetting/look1.webp"
        alt="Two pages, one features a chapter beginning.">
   </a>
 </figure>
 <figure>
   <a href="../images/phd-typesetting/look2.pdf">
   <img class="pure-img"
-       src="../images/phd-typesetting/look2.png"
+       src="../images/phd-typesetting/look2.webp"
        alt="Two pages of the preliminaries.">
   </a>
 </figure>
@@ -56,7 +56,7 @@ though `\isopage`—inspired by page dimensions suggested by Robert Bringhurst�
 This is especially true with a slightly larger font size,
 which is more or less mandatory if you have to print something in as big of a format as A4.
 
-[^6]<img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.png" alt="The different page layouts that memoir offers: the default for a4paper, \medievalpage, \isopage, and \semiisopage.">
+[^6]<img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.webp" alt="The different page layouts that memoir offers: the default for a4paper, \medievalpage, \isopage, and \semiisopage.">
 
 Being a little bit wider, it is also good for long-ish formulas and large-ish diagrams,
 of which my thesis has more than enough.
@@ -88,7 +88,7 @@ For chapter headings memoir features a `bringhurst` chapter style,
 which however doesn't include the chapter number beside it:
 
 <img class="pure-img"
-     src="../images/phd-typesetting/no-chapter-number.png"
+     src="../images/phd-typesetting/no-chapter-number.webp"
      alt="The default memoir style does not feature a chapter number.">
 
 The famous book [@bringhurst92:el-typ] puts a rather large number in the margin,
@@ -208,7 +208,7 @@ depending on the parity of the page.
 <figure>
   <a href="../images/phd-typesetting/look3.pdf">
   <img class="pure-img"
-       src="../images/phd-typesetting/look3.png"
+       src="../images/phd-typesetting/look3.webp"
        alt="Two pages with sidenotes; one set raggedright and one raggedleft.">
   </a>
 </figure>
@@ -253,18 +253,18 @@ in that the `\label` of the figure has to go inside of the caption:
 
 However, I think the end result looks quite nice:[^4]
 
-<img class="pure-img" src="../images/phd-typesetting/captions.png" alt="Sidecaptions.">
+<img class="pure-img" src="../images/phd-typesetting/captions.webp" alt="Sidecaptions.">
 
 ---
 
 Another thing I did was pushing equation numbers into the margin.
 Instead of
 
-<img class="pure-img" src="../images/phd-typesetting/equations-before.png" alt="Default LaTeX equation labels.">
+<img class="pure-img" src="../images/phd-typesetting/equations-before.webp" alt="Default LaTeX equation labels.">
 
 my thesis instead displays such an equation as
 
-<img class="pure-img" src="../images/phd-typesetting/equations-after.png" alt="Equation labels in the margin.">
+<img class="pure-img" src="../images/phd-typesetting/equations-after.webp" alt="Equation labels in the margin.">
 
 which in particular means that equation numbers are sometimes on the left of the page,
 depending on where the margin is.
@@ -276,7 +276,7 @@ nor be scaled quite so aggressively.
 <figure>
   <a href="../images/phd-typesetting/equations-in-margin.pdf">
   <img class="pure-img"
-       src="../images/phd-typesetting/equations-in-margin.png"
+       src="../images/phd-typesetting/equations-in-margin.webp"
        alt="Double page example of equation labels in the margin.">
   </a>
 </figure>
@@ -308,15 +308,15 @@ The code for this is a bit more involved, but luckily TeX.Stackexchange has us c
 For the default calligraphic font, I settled on `boondoxupr` from the excellently documented `mathalfa` package.
 It changes the default Computer Modern alphabet
 
-<img class="pure-img" src="../images/phd-typesetting/cm-script.png" alt="Computer modern (cm) calligraphic alphabet.">
+<img class="pure-img" src="../images/phd-typesetting/cm-script.webp" alt="Computer modern (cm) calligraphic alphabet.">
 
 to
 
-<img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="boondoxupr calligraphic alphabet. Also features lower case letters.">
+<img class="pure-img" src="../images/phd-typesetting/bx-script.webp" alt="boondoxupr calligraphic alphabet. Also features lower case letters.">
 
 I also went ahead and chose a Fraktur font that is slightly less bold—`esstix`.
 
-<img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="esstix fraktur alphabet. Also features lower case letters.">
+<img class="pure-img" src="../images/phd-typesetting/esstix.webp" alt="esstix fraktur alphabet. Also features lower case letters.">
 
 However, much more important than that is a good text font.
 For me, there are two top contenders here,
@@ -324,22 +324,22 @@ which is [Libertinus](https://github.com/alerque/libertinus)—<!--
 -->provided by the [libertinus](https://ctan.org/pkg/libertinus) package—<!--
 -->on the one hand
 
-<img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="Writing sample of Libertinus.">
+<img class="pure-img" src="../images/phd-typesetting/libertinus.webp" alt="Writing sample of Libertinus.">
 
 and Palatino—or a clone of it, in the form of [newpx](https://ctan.org/pkg/newpx)—on the other:
 
-<img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="Writing sample of the newpx Palatino clone.">
+<img class="pure-img" src="../images/phd-typesetting/palatino.webp" alt="Writing sample of the newpx Palatino clone.">
 
 Libertinus has one critical flaw,
 which is that the italic *f* extends way too far to the right.
 This clashes quite significantly with `boondoxupr`
 
-<img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font.">
+<img class="pure-img" src="../images/phd-typesetting/libertinus-f.webp" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font.">
 
 and the issue only gets exacerbated once [microtype](https://ctan.org/pkg/microtype) comes into play and squashes those spaces even more.
 Palatino, while not perfect, fares much better here:
 
-<img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*.">
+<img class="pure-img" src="../images/phd-typesetting/palatino-f.webp" alt="The newpx italic f is *fine*.">
 
 As I didn't want to manually check every occurrence of *f* at the end of a word and potentially add a thin space after it,
 the choice was forced upon me.[^11]
@@ -372,11 +372,11 @@ Some options should be self-explanatory<!--
   For example, with this option, you get
   theorem statements like this
 
-  <img class="pure-img" src="../images/phd-typesetting/theoremfont.png" alt="theoremfont forces parentheses to be upright, even when the rest of the text is set in italics.">
+  <img class="pure-img" src="../images/phd-typesetting/theoremfont.webp" alt="theoremfont forces parentheses to be upright, even when the rest of the text is set in italics.">
 
   instead of (notice the parentheses surrounding the numbering or the colon)
 
-  <img class="pure-img" src="../images/phd-typesetting/no-theoremfont.png" alt="Not supplying the theoremfont option just sets parentheses as in the surrounding text.">
+  <img class="pure-img" src="../images/phd-typesetting/no-theoremfont.webp" alt="Not supplying the theoremfont option just sets parentheses as in the surrounding text.">
 
 - `p` uses proportional figures (numbers) instead of tabular ones.
 
@@ -418,11 +418,11 @@ so things "breathe" a bit more.
 
 This transforms text like this
 
-<img src="../images/phd-typesetting/no-kerning.png" alt="No kerning">
+<img src="../images/phd-typesetting/no-kerning.webp" alt="No kerning">
 
 into text like this
 
-<img src="../images/phd-typesetting/kerning.png" alt="Kerning">
+<img src="../images/phd-typesetting/kerning.webp" alt="Kerning">
 
 Quite subtle, but certainly noticeable, I think!
 
@@ -433,11 +433,11 @@ the references in the main text should nevertheless use
 [lining figures](https://en.wikipedia.org/wiki/Text_figures).
 That is, instead of
 
-<img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="Citations use oldstyle figures, even though most of the citation is all upper case letters.">
+<img class="pure-img" src="../images/phd-typesetting/osf-citations.webp" alt="Citations use oldstyle figures, even though most of the citation is all upper case letters.">
 
 we rather want[^10]
 
-<img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="Citations using lining figures.">
+<img class="pure-img" src="../images/phd-typesetting/lining-citations.webp" alt="Citations using lining figures.">
 
 Luckily, it's pretty easy to change the field format:
 
@@ -480,7 +480,7 @@ One can use it just like a regular `theoremstyle`:
 
 This will then be typeset like so, with a link to the actual result:
 
-<img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
+<img class="pure-img" src="../images/phd-typesetting/reptheorem.webp" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
 
 This taught me a bit more about how `amsmath` environments work under the hood.
 Plus, using `cleveref` saves one from having to define many different commands like `reptheorem`, `repcorollary`, and so on<!--
@@ -556,7 +556,7 @@ Lastly, I will just leave the following *very important* bibLaTeX configuration 
        which applies some italics correction to the `\(…\)` inline maths environment.
        Using that, the above comparison becomes
 
-       <img src="../images/phd-typesetting/mathic.png"
+       <img src="../images/phd-typesetting/mathic.webp"
             alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result.">
 
        which looks much better in both cases!

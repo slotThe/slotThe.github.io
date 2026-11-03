@@ -87,7 +87,7 @@ img[src*="latex"] {
 It looks like this:[^9]
 
 <img class="pure-img"
-     src="../images/anki-latex/centered.png"
+     src="../images/anki-latex/centered.webp"
      alt="A note with approximately centred LaTeX">
 
 Very far from perfect, but readable.

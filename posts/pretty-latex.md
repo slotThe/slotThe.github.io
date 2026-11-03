@@ -26,14 +26,14 @@ it would display a buffer like this[^2]
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/no-pretty-symbols.png"
+     src="../images/pretty-latex/no-pretty-symbols.webp"
      alt="Definition of the Day convolution without prettify-symbols-mode enabled">
 
 as the already much more readable
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/default-pretty-symbols.png"
+     src="../images/pretty-latex/default-pretty-symbols.webp"
      alt="Definition of the Day convolution with AUCTeX's default prettify-symbols-alist">
 
 Basically, `prettify-symbols-mode` is a home-cooked ligature system for Emacs,
@@ -61,7 +61,7 @@ Executing that hook makes the above situation even prettier.
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/custom-pretty-symbols.png"
+     src="../images/pretty-latex/custom-pretty-symbols.webp"
      alt="Definition of the Day convolution with a custom prettify-symbols-alist">
 
 ## Going further
@@ -138,7 +138,7 @@ Here are some more examples of this in action:
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/stitching-together-symbols.png"
+     src="../images/pretty-latex/stitching-together-symbols.webp"
      alt="The above symbols">
 
 # Going too far: code folding
@@ -203,7 +203,7 @@ This ends up looking like the following:
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/hide-emphasis.png"
+     src="../images/pretty-latex/hide-emphasis.webp"
      alt="Hiding \emph">
 
 As with `prettify-symbols-mode`,
@@ -211,7 +211,7 @@ things unprettify when the point is on them.
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/show-emphasis.png"
+     src="../images/pretty-latex/show-emphasis.webp"
      alt="Show \emph on hover">
 
 Using these techniques,
@@ -264,14 +264,14 @@ Using everything in this article together—see
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/end-before.png"
+     src="../images/pretty-latex/end-before.webp"
      alt="Before prettifying: Sections, subsections, emphasis, math">
 
 into something like this:
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/end-after.png"
+     src="../images/pretty-latex/end-after.webp"
      alt="After prettifying: Sections, subsections, emphasis, math">
 
 Nice.

@@ -423,9 +423,9 @@ side-by-side:</p>
 <p>The plot comparing <code>triv</code> and <code>simp</code> looks kinda funny, actually:</p>
 <p><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
 <picture>
-<source srcset="../images/primes/ts.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/ts-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/ts.png" alt="-t vs. -s">
+<source srcset="../images/primes/ts.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/ts-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/ts.webp" alt="-t vs. -s">
 </picture></p>
 <p>However, only being able to check 5 million numbers in one second isn’t
 all that impressive on a modern computer. We’ve already seen a better
@@ -485,9 +485,9 @@ the primes, so we can add them to the output array:</p>
 <p>The benchmark results are quite decisive, however.</p>
 <p><a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
 <picture>
-<source srcset="../images/primes/s0.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/s0-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/s0.png" alt="-s vs. -e0">
+<source srcset="../images/primes/s0.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/s0-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/s0.webp" alt="-s vs. -e0">
 </picture></p>
 <h3 id="packing-bits">Packing bits</h3>
 <p>Instead of using a full byte to represent a single bit, how about we
@@ -521,9 +521,9 @@ mean that a lot more of this stuff fits into the smaller, though faster,
 regions of memory, which does pay off:</p>
 <p><a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>
 <picture>
-<source srcset="../images/primes/01.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/01-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/01.png" alt="-e0 vs. -e1">
+<source srcset="../images/primes/01.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/01-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/01.webp" alt="-e0 vs. -e1">
 </picture></p>
 <h3 id="odds-only">Odds-only</h3>
 <p>An immediate optimisation that one could do is to throw away all of the
@@ -551,9 +551,9 @@ over the odd numbers, with the same justification as before.</p>
 <p>The wins are quite immediate:</p>
 <p><a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>
 <picture>
-<source srcset="../images/primes/012.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/012-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/012.png" alt="-e0 vs. -e1 vs. -e2">
+<source srcset="../images/primes/012.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/012-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/012.webp" alt="-e0 vs. -e1 vs. -e2">
 </picture></p>
 <h2 id="wheels">Wheels</h2>
 <p>So, how can one improve on the odds-only sieve? One approach is to try
@@ -649,9 +649,9 @@ starting at <code>i*i</code>, and then just crossing off each valid multiple.</p
 <p>Again, we get a noticeable speedup:</p>
 <p><a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>
 <picture>
-<source srcset="../images/primes/123.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/123-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/123.png" alt="-e1 vs. -e2 vs. -e3">
+<source srcset="../images/primes/123.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/123-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/123.webp" alt="-e1 vs. -e2 vs. -e3">
 </picture></p>
 <p>We’re doing more work in the inner loop with <code>4*j/15</code>, instead of just
 <code>j/2</code>—while both compile down to shifts, the former also has some
@@ -738,9 +738,9 @@ aligned with <code>era4</code> to showcase the differences:</p>
 <p>This does indeed give a pretty nice performance boost:</p>
 <p><a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>
 <picture>
-<source srcset="../images/primes/2345.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/2345-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/2345.png" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
+<source srcset="../images/primes/2345.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/2345-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/2345.webp" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
 </picture></p>
 <p>I guess array access really is <em>much</em> faster than manual bit-twiddling.<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>
 Optimisation is weird.</p>
@@ -787,9 +787,9 @@ increasing in steps that are reasonable for the wheel.</p>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//era6</span></span></code></pre></div>
 <p><a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a>
 <picture>
-<source srcset="../images/primes/3456.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/3456-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/3456.png" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
+<source srcset="../images/primes/3456.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/3456-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/3456.webp" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
 </picture></p>
 <p>It’s… not actually that much faster. Sometimes one does see an
 improvement at 1e9, but it’s quite flaky. I’m not sure why this is true,
@@ -868,9 +868,9 @@ the segment start <code>l</code>. Then just force-add it to the array.</p>
 <p>This gives a small boost after a certain point:</p>
 <p><a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>
 <picture>
-<source srcset="../images/primes/4567.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/4567-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/4567.png" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
+<source srcset="../images/primes/4567.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/4567-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/4567.webp" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
 </picture></p>
 <h2 id="giving-up-on-rules">Giving up on rules</h2>
 <p>At this point, I slowly ran out of ideas on what to do that might have a
@@ -934,9 +934,9 @@ still needs to be representable.</p>
 mostly just because the array-less approach is so much faster.</p>
 <p><a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a>
 <picture>
-<source srcset="../images/primes/678.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/678-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/678.png" alt="-e6 vs. -e7 vs. -e8">
+<source srcset="../images/primes/678.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/678-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/678.webp" alt="-e6 vs. -e7 vs. -e8">
 </picture></p>
 <h3 id="fixed-steps">Fixed steps</h3>
 <p>It’s finally time I stop complaining about <code>4*j/15</code> being slow, and just
@@ -1032,9 +1032,9 @@ same, I think, so I’ll keep it in.</p>
 Some more benchmarks:</p>
 <p><a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a>
 <picture>
-<source srcset="../images/primes/6789.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/6789-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/6789.png" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
+<source srcset="../images/primes/6789.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/6789-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/6789.webp" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
 </picture></p>
 <hr />
 <p>I think this is a good time to stop—if only because <code>era10</code> would
@@ -1042,16 +1042,16 @@ completely destroy the alignment, and continuing in hex looks weird.
 Also, this still neatly fits on my screen without me having to decrease
 the font size, or being forced to use overly long lines:</p>
 <p><picture>
-<source srcset="../images/primes/end.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/end-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/end.png" alt="Full source code.">
+<source srcset="../images/primes/end.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/end-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/end.webp" alt="Full source code.">
 </picture></p>
 <h2 id="the-end">The end</h2>
 <p>Here are all of the variants:</p>
 <p><picture>
-<source srcset="../images/primes/all.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/all-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/all.png" alt="Comparison of all algorithms.">
+<source srcset="../images/primes/all.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/all-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/all.webp" alt="Comparison of all algorithms.">
 </picture></p>
 <figure>
 <details>
@@ -1743,9 +1743,9 @@ variables.</li>
 side, which is how I read through the whole thing:</p>
 </div>
 <p><picture>
-<source srcset="../images/k-incunabulum/code.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/k-incunabulum/code-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/k-incunabulum/code.png" alt="a.c and a.h (no comments) fitting on a single screen.">
+<source srcset="../images/k-incunabulum/code.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/k-incunabulum/code-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/k-incunabulum/code.webp" alt="a.c and a.h (no comments) fitting on a single screen.">
 </picture>
 I think that that’s really pretty—reason enough to try and understand it.</p>
 <hr />
@@ -3062,8 +3062,8 @@ Took 5.2216s/50, avg 0.1044s
 straight out of a—judging by the quality of the print—cheap 3D printer,
 and looks like just about the derpiest duck one can imagine:</p>
 <figure>
-<img src="../images/duck/duck2.png" style="max-width: 41.2%; height: 100%;" alt="Duck 2">
-<img src="../images/duck/duck1.png" style="max-width: 50%; height: 100%;" alt="Duck 1">
+<img src="../images/duck/duck2.webp" style="max-width: 41.2%; height: 100%;" alt="Duck 2">
+<img src="../images/duck/duck1.webp" style="max-width: 50%; height: 100%;" alt="Duck 1">
 </figure>
 <p>What does it do? Since the key is in one of the
 <a href="/posts/atreus-review.html#physical-layout">inaccessible-ish</a>
@@ -3487,9 +3487,9 @@ but the default for all of them is pretty “meh”.<a href="#fn2" class="footno
 <ul>
 <li><p><code>rust-analyzer</code> shows where the thing comes from</p>
 <p><picture>
-<source srcset="../images/eglot-hover/rust-analyzer1.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/rust-analyzer1-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/rust-analyzer1.png" alt="Hovering over a method shows crate::module::Type">
+<source srcset="../images/eglot-hover/rust-analyzer1.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/rust-analyzer1-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/rust-analyzer1.webp" alt="Hovering over a method shows crate::module::Type">
 </picture></p>
 <p>I will draw your attention to the second line in the minibuffer;
 the first is just additional context,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
@@ -3499,70 +3499,70 @@ sitting in <code>./type/context.rs</code>,
 with <code>./</code> being the root of the crate.</p></li>
 <li><p><code>clangd</code> shows the vague type</p>
 <p><picture>
-<source srcset="../images/eglot-hover/clangd1.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/clangd1-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/clangd1.png" alt="Hovering over fgetc just shows 'function fgetc'">
+<source srcset="../images/eglot-hover/clangd1.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/clangd1-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/clangd1.webp" alt="Hovering over fgetc just shows 'function fgetc'">
 </picture></p></li>
 <li><p><code>(based)pyright</code> shows something completely useless</p>
 <p><picture>
-<source srcset="../images/eglot-hover/pyright1.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/pyright1-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/pyright1.png" alt="Hovering over the function 'go' shows '(function) def go(' (because the type signature gets split into multiple lines, see below)">
+<source srcset="../images/eglot-hover/pyright1.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/pyright1-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/pyright1.webp" alt="Hovering over the function 'go' shows '(function) def go(' (because the type signature gets split into multiple lines, see below)">
 </picture></p></li>
 <li><p><code>ocaml-lsp</code> sort of shows what I want to see</p>
 <p><picture>
-<source srcset="../images/eglot-hover/ocaml-lsp1.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/ocaml-lsp1-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/ocaml-lsp1.png" alt="Hovering over a function with a short type shows the full type signature on one line">
+<source srcset="../images/eglot-hover/ocaml-lsp1.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/ocaml-lsp1-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/ocaml-lsp1.webp" alt="Hovering over a function with a short type shows the full type signature on one line">
 </picture></p>
 <p>…but only for short type signatures</p>
 <p><picture>
-<source srcset="../images/eglot-hover/ocaml-lsp2.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/ocaml-lsp2-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/ocaml-lsp2.png" alt="Hovering over a function with a long type signature just shows the first line again">
+<source srcset="../images/eglot-hover/ocaml-lsp2.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/ocaml-lsp2-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/ocaml-lsp2.webp" alt="Hovering over a function with a long type signature just shows the first line again">
 </picture></p></li>
 <li><p>Same issue with <code>haskell-language-server</code></p>
 <p><picture>
-<source srcset="../images/eglot-hover/hls1.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/hls1-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/hls1.png" alt="Hovering over a function with a short type shows the full type signature on one line">
+<source srcset="../images/eglot-hover/hls1.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/hls1-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/hls1.webp" alt="Hovering over a function with a short type shows the full type signature on one line">
 </picture></p>
 <p><picture>
-<source srcset="../images/eglot-hover/hls2.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/hls2-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/hls2.png" alt="Hovering over a function with a long type signature just shows the first line">
+<source srcset="../images/eglot-hover/hls2.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/hls2-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/hls2.webp" alt="Hovering over a function with a long type signature just shows the first line">
 </picture></p></li>
 </ul>
 <hr />
 <p>What I’d like to achieve instead is a type signature—if I want to know where the thing comes from I can just <code>M-.</code> it.</p>
 <p><picture>
-<source srcset="../images/eglot-hover/rust-analyzer2.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/rust-analyzer2-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/rust-analyzer2.png" alt="Hovering over a method shows the full type signature of the method">
+<source srcset="../images/eglot-hover/rust-analyzer2.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/rust-analyzer2-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/rust-analyzer2.webp" alt="Hovering over a method shows the full type signature of the method">
 </picture></p>
 <hr />
 <p><picture>
-<source srcset="../images/eglot-hover/clangd2.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/clangd2-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/clangd2.png" alt="Hovering over 'fgetc' shows its actual signature 'extern int fgetc(FILE *__stream)'">
+<source srcset="../images/eglot-hover/clangd2.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/clangd2-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/clangd2.webp" alt="Hovering over 'fgetc' shows its actual signature 'extern int fgetc(FILE *__stream)'">
 </picture></p>
 <hr />
 <p><picture>
-<source srcset="../images/eglot-hover/pyright2.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/pyright2-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/pyright2.png" alt="Hovering over a function shows the complete type signature with proper formatting">
+<source srcset="../images/eglot-hover/pyright2.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/pyright2-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/pyright2.webp" alt="Hovering over a function shows the complete type signature with proper formatting">
 </picture></p>
 <hr />
 <p><picture>
-<source srcset="../images/eglot-hover/ocaml-lsp3.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/ocaml-lsp3-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/ocaml-lsp3.png" alt="Hovering over a function shows the full type signature, even for long signatures">
+<source srcset="../images/eglot-hover/ocaml-lsp3.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/ocaml-lsp3-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/ocaml-lsp3.webp" alt="Hovering over a function shows the full type signature, even for long signatures">
 </picture></p>
 <hr />
 <p><picture>
-<source srcset="../images/eglot-hover/hls3.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/eglot-hover/hls3-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/eglot-hover/hls3.png" alt="Hovering over a function shows the full type signature, even for long signatures">
+<source srcset="../images/eglot-hover/hls3.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/eglot-hover/hls3-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/eglot-hover/hls3.webp" alt="Hovering over a function shows the full type signature, even for long signatures">
 </picture></p>
 <hr />
 <p>In case anyone finds this useful,
@@ -4948,12 +4948,12 @@ some of the typesetting considerations that went into the document might not be.
 <p>For reference, here are a few pages of how the end product looks like:</p>
 <figure>
 <a href="../images/phd-typesetting/look1.pdf">
-<img class="pure-img" src="../images/phd-typesetting/look1.png" alt="Two pages, one features a chapter beginning.">
+<img class="pure-img" src="../images/phd-typesetting/look1.webp" alt="Two pages, one features a chapter beginning.">
 </a>
 </figure>
 <figure>
 <a href="../images/phd-typesetting/look2.pdf">
-<img class="pure-img" src="../images/phd-typesetting/look2.png" alt="Two pages of the preliminaries.">
+<img class="pure-img" src="../images/phd-typesetting/look2.webp" alt="Two pages of the preliminaries.">
 </a>
 </figure>
 <p>While this post really is about typography,
@@ -4977,7 +4977,7 @@ but I’m quite happy with memoir and would recommend it for any kind of book-le
 though <code>\isopage</code>—inspired by page dimensions suggested by Robert Bringhurst—yields a nicer looking printout in my opinion.
 This is especially true with a slightly larger font size,
 which is more or less mandatory if you have to print something in as big of a format as A4.</p>
-<p><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a><img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.png" alt="The different page layouts that memoir offers: the default for a4paper, \medievalpage, \isopage, and \semiisopage."></p>
+<p><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a><img class="pure-img" src="../images/phd-typesetting/memoir-pagelayout.webp" alt="The different page layouts that memoir offers: the default for a4paper, \medievalpage, \isopage, and \semiisopage."></p>
 <p>Being a little bit wider, it is also good for long-ish formulas and large-ish diagrams,
 of which my thesis has more than enough.
 Together with my chosen fonts below,
@@ -4999,7 +4999,7 @@ quite a bit.</p>
 <h3 id="chapter-headings">Chapter headings</h3>
 <p>For chapter headings memoir features a <code>bringhurst</code> chapter style,
 which however doesn’t include the chapter number beside it:</p>
-<p><img class="pure-img" src="../images/phd-typesetting/no-chapter-number.png" alt="The default memoir style does not feature a chapter number."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/no-chapter-number.webp" alt="The default memoir style does not feature a chapter number."></p>
 <p>The famous book <span class="citation" data-cites="bringhurst92:el-typ">[<a href="#ref-bringhurst92:el-typ" role="doc-biblioref">Bri92</a>]</span> puts a rather large number in the margin,
 which is also what I ended up going with (see the first double page in this post).
 Thankfully, this is not difficult to fix—so much so that someone on TeX.Stackexchange has
@@ -5106,7 +5106,7 @@ depending on the parity of the page.</p>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <figure>
 <a href="../images/phd-typesetting/look3.pdf">
-<img class="pure-img" src="../images/phd-typesetting/look3.png" alt="Two pages with sidenotes; one set raggedright and one raggedleft.">
+<img class="pure-img" src="../images/phd-typesetting/look3.webp" alt="Two pages with sidenotes; one set raggedright and one raggedleft.">
 </a>
 </figure>
 <p>Interestingly, I don’t actually use the <code>\sidecaption</code> implementation of either memoir or sidenotes,
@@ -5140,13 +5140,13 @@ in that the <code>\label</code> of the figure has to go inside of the caption:</
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">figure</span>}</span></code></pre></div>
 <p>However, I think the end result looks quite nice:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
-<p><img class="pure-img" src="../images/phd-typesetting/captions.png" alt="Sidecaptions."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/captions.webp" alt="Sidecaptions."></p>
 <hr />
 <p>Another thing I did was pushing equation numbers into the margin.
 Instead of</p>
-<p><img class="pure-img" src="../images/phd-typesetting/equations-before.png" alt="Default LaTeX equation labels."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/equations-before.webp" alt="Default LaTeX equation labels."></p>
 <p>my thesis instead displays such an equation as</p>
-<p><img class="pure-img" src="../images/phd-typesetting/equations-after.png" alt="Equation labels in the margin."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/equations-after.webp" alt="Equation labels in the margin."></p>
 <p>which in particular means that equation numbers are sometimes on the left of the page,
 depending on where the margin is.
 This is quite nice for larger diagrams or longer formulas,
@@ -5155,7 +5155,7 @@ Figures now neither need to intrude upon the margin,
 nor be scaled quite so aggressively.</p>
 <figure>
 <a href="../images/phd-typesetting/equations-in-margin.pdf">
-<img class="pure-img" src="../images/phd-typesetting/equations-in-margin.png" alt="Double page example of equation labels in the margin.">
+<img class="pure-img" src="../images/phd-typesetting/equations-in-margin.webp" alt="Double page example of equation labels in the margin.">
 </a>
 </figure>
 <p>The code for this is a bit more involved, but luckily TeX.Stackexchange has us covered yet again!</p>
@@ -5179,26 +5179,26 @@ nor be scaled quite so aggressively.</p>
 <h2 id="picking-fonts">Picking fonts</h2>
 <p>For the default calligraphic font, I settled on <code>boondoxupr</code> from the excellently documented <code>mathalfa</code> package.
 It changes the default Computer Modern alphabet</p>
-<p><img class="pure-img" src="../images/phd-typesetting/cm-script.png" alt="Computer modern (cm) calligraphic alphabet."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/cm-script.webp" alt="Computer modern (cm) calligraphic alphabet."></p>
 <p>to</p>
-<p><img class="pure-img" src="../images/phd-typesetting/bx-script.png" alt="boondoxupr calligraphic alphabet. Also features lower case letters."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/bx-script.webp" alt="boondoxupr calligraphic alphabet. Also features lower case letters."></p>
 <p>I also went ahead and chose a Fraktur font that is slightly less bold—<code>esstix</code>.</p>
-<p><img class="pure-img" src="../images/phd-typesetting/esstix.png" alt="esstix fraktur alphabet. Also features lower case letters."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/esstix.webp" alt="esstix fraktur alphabet. Also features lower case letters."></p>
 <p>However, much more important than that is a good text font.
 For me, there are two top contenders here,
 which is <a href="https://github.com/alerque/libertinus">Libertinus</a>—<!--
 -->provided by the <a href="https://ctan.org/pkg/libertinus">libertinus</a> package—<!--
 -->on the one hand</p>
-<p><img class="pure-img" src="../images/phd-typesetting/libertinus.png" alt="Writing sample of Libertinus."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/libertinus.webp" alt="Writing sample of Libertinus."></p>
 <p>and Palatino—or a clone of it, in the form of <a href="https://ctan.org/pkg/newpx">newpx</a>—on the other:</p>
-<p><img class="pure-img" src="../images/phd-typesetting/palatino.png" alt="Writing sample of the newpx Palatino clone."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/palatino.webp" alt="Writing sample of the newpx Palatino clone."></p>
 <p>Libertinus has one critical flaw,
 which is that the italic <em>f</em> extends way too far to the right.
 This clashes quite significantly with <code>boondoxupr</code></p>
-<p><img class="pure-img" src="../images/phd-typesetting/libertinus-f.png" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/libertinus-f.webp" alt="The Libertinus italic f extends too far to the right when used with the boondoxupr calligraphic font."></p>
 <p>and the issue only gets exacerbated once <a href="https://ctan.org/pkg/microtype">microtype</a> comes into play and squashes those spaces even more.
 Palatino, while not perfect, fares much better here:</p>
-<p><img class="pure-img" src="../images/phd-typesetting/palatino-f.png" alt="The newpx italic f is *fine*."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/palatino-f.webp" alt="The newpx italic f is *fine*."></p>
 <p>As I didn’t want to manually check every occurrence of <em>f</em> at the end of a word and potentially add a thin space after it,
 the choice was forced upon me.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
 There are lots of knobs to turn with the <code>newpxtext</code> and <code>newpxmath</code> packages,
@@ -5224,9 +5224,9 @@ which I use for theorems, corollaries, and the like.
 It keeps the text itself in italics, but uses upright figures, parentheses, and punctuation symbols.
 For example, with this option, you get
 theorem statements like this</p>
-<p><img class="pure-img" src="../images/phd-typesetting/theoremfont.png" alt="theoremfont forces parentheses to be upright, even when the rest of the text is set in italics."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/theoremfont.webp" alt="theoremfont forces parentheses to be upright, even when the rest of the text is set in italics."></p>
 <p>instead of (notice the parentheses surrounding the numbering or the colon)</p>
-<p><img class="pure-img" src="../images/phd-typesetting/no-theoremfont.png" alt="Not supplying the theoremfont option just sets parentheses as in the surrounding text."></p></li>
+<p><img class="pure-img" src="../images/phd-typesetting/no-theoremfont.webp" alt="Not supplying the theoremfont option just sets parentheses as in the surrounding text."></p></li>
 <li><p><code>p</code> uses proportional figures (numbers) instead of tabular ones.</p></li>
 </ul>
 <p>The <a href="https://ctan.ebinger.cc/tex-archive/fonts/newpx/doc/newpxdoc.pdf">newpx manual</a>
@@ -5256,18 +5256,18 @@ so things “breathe” a bit more.</p>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">%  –                      —</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">\textendash</span>={100,100}, <span class="fu">\textemdash</span>={200,200}}</span></code></pre></div>
 <p>This transforms text like this</p>
-<p><img src="../images/phd-typesetting/no-kerning.png" alt="No kerning"></p>
+<p><img src="../images/phd-typesetting/no-kerning.webp" alt="No kerning"></p>
 <p>into text like this</p>
-<p><img src="../images/phd-typesetting/kerning.png" alt="Kerning"></p>
+<p><img src="../images/phd-typesetting/kerning.webp" alt="Kerning"></p>
 <p>Quite subtle, but certainly noticeable, I think!</p>
 <hr />
 <p>One important change has to be made to <code>biblatex</code> when using a font’s oldstyle figures:
 the references in the main text should nevertheless use
 <a href="https://en.wikipedia.org/wiki/Text_figures">lining figures</a>.
 That is, instead of</p>
-<p><img class="pure-img" src="../images/phd-typesetting/osf-citations.png" alt="Citations use oldstyle figures, even though most of the citation is all upper case letters."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/osf-citations.webp" alt="Citations use oldstyle figures, even though most of the citation is all upper case letters."></p>
 <p>we rather want<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
-<p><img class="pure-img" src="../images/phd-typesetting/lining-citations.png" alt="Citations using lining figures."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/lining-citations.webp" alt="Citations using lining figures."></p>
 <p>Luckily, it’s pretty easy to change the field format:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode tex"><code class="sourceCode latex"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\DeclareFieldFormat</span>{labelalpha}{<span class="fu">\liningnums</span>{#1}}</span></code></pre></div>
 <h2 id="miscellaneous-thoughts">Miscellaneous thoughts</h2>
@@ -5295,7 +5295,7 @@ One can use it just like a regular <code>theoremstyle</code>:</p>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  as monads.</span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">reptheorem</span>}</span></code></pre></div>
 <p>This will then be typeset like so, with a link to the actual result:</p>
-<p><img class="pure-img" src="../images/phd-typesetting/reptheorem.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result."></p>
+<p><img class="pure-img" src="../images/phd-typesetting/reptheorem.webp" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result."></p>
 <p>This taught me a bit more about how <code>amsmath</code> environments work under the hood.
 Plus, using <code>cleveref</code> saves one from having to define many different commands like <code>reptheorem</code>, <code>repcorollary</code>, and so on<!--
 -->—no going around obsessively checking whether a theorem invariably became a proposition a while ago.</p>
@@ -5353,7 +5353,7 @@ There are also a bunch of concrete and extensive examples, which are very good t
 <li id="fn6"><p><em>Update on 2025-09-13</em>: I recently found out about the <code>mathic</code> option of the <code>mathtools</code> package,
 which applies some italics correction to the <code>\(…\)</code> inline maths environment.
 Using that, the above comparison becomes</p>
-<p><img src="../images/phd-typesetting/mathic.png" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result."></p>
+<p><img src="../images/phd-typesetting/mathic.webp" alt="A reference to a later theorem by typesetting it directly as 'Theorem xx.yy', where 'xx.yy' is a link to the result."></p>
 <p>which looks much better in both cases!
 This means one again has the power—and pain—of choice.
 I still think that, for this kind of technical text,
@@ -8962,10 +8962,10 @@ One might also express it</p>
   S(a_{(1)})a_{(2)} = \varepsilon(a) 1 =  a_{(1)}S(a_{(2)});
 </span></li>
 <li>with <em>commutative diagrams</em>:
-<img class="pure-img" src="../images/bqn-aoc/commutative-diagram.png" alt="A commutative diagram for the above equation.">
+<img class="pure-img" src="../images/bqn-aoc/commutative-diagram.webp" alt="A commutative diagram for the above equation.">
 and</li>
 <li>with <em>string diagrams</em>:
-<img class="pure-img" src="../images/bqn-aoc/string-diagram.png" alt="A string diagram for the above equation."></li>
+<img class="pure-img" src="../images/bqn-aoc/string-diagram.webp" alt="A string diagram for the above equation."></li>
 </ul>
 <p>Needless to say, these all look <em>vastly</em> different,
 each—in my opinion—enabling a certain mode of thought better than the others.
@@ -9410,7 +9410,7 @@ It can, however, be somewhat improved by using CSS to vertically centre the imag
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>It looks like this:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<p><img class="pure-img" src="../images/anki-latex/centered.png" alt="A note with approximately centred LaTeX"></p>
+<p><img class="pure-img" src="../images/anki-latex/centered.webp" alt="A note with approximately centred LaTeX"></p>
 <p>Very far from perfect, but readable.
 Since this seems to be the only drawback with not using MathJax,
 I’ll take it.
@@ -9553,7 +9553,7 @@ so let’s do that.</p>
 <p>As the name suggests,
 <code>rq</code> is heavily inspired by the venerable <code>jq</code>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
 and looks quite similar in action:</p>
-<p><img class="pure-img" src="../images/rq/rq.png" alt="rq in action"></p>
+<p><img class="pure-img" src="../images/rq/rq.webp" alt="rq in action"></p>
 <p>Another example,
 printing out the name of <code>rq</code>s direct and transitive dependencies.</p>
 <pre class="console"><code>$ cargo metadata | rq '.packages | map .name | filter (!= &quot;rq&quot;)'
@@ -10547,7 +10547,7 @@ following:</p>
 <p>By default, lsp-mode<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> will display the following type signature
 in the echo-area
 when hovering over the function name:</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.webp" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
 <p>That’s… not correct.
 Executing <code>lsp-describe-thing-at-point</code> immediately reveals the problem;
 the request we get back looks like this:</p>
@@ -10598,7 +10598,7 @@ Original implementation from https://github.com/emacs-lsp/lsp-mode/pull/1740.&qu
   &quot;Display the type signature of the function at point.&quot;
   (slot/lsp-get-type-signature &quot;haskell&quot; (plist-get contents :value)))</code></pre>
 <p>This already looks <em>fine</em>, but something is still amiss.</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.png" alt="Correctly shows the whole type signature, but there is no syntax highlighting"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.webp" alt="Correctly shows the whole type signature, but there is no syntax highlighting"></p>
 <p>There is no syntax highlighting!
 Thankfully, this is not very difficult to fix;
 the idea is to paste the string into a temporary buffer,
@@ -10631,18 +10631,18 @@ which I would very much like to take effect.</p>
    (slot/lsp-get-type-signature &quot;haskell&quot; (plist-get contents :value))
    'haskell-mode))</code></pre>
 <p>This works quite nicely:</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.webp" alt="Properly syntax highlighted type signature"></p>
 <h2 id="fixing-rust-hovers">Fixing Rust hovers</h2>
 <p>One of the above code snippets already mentions <a href="https://github.com/emacs-lsp/lsp-mode/pull/1740">lsp-mode#1740</a>,
 which is not about Haskell, but Rust,
 a language that I also occasionally dabble in.
 The basic issue here goes like this:
 by default, <code>lsp-mode</code> shows the following hover information.</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.png" alt="By default, the hover shows the module that the identifier is imported from"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.webp" alt="By default, the hover shows the module that the identifier is imported from"></p>
 <p>Much like the user who opened the mentioned pull-request,
 I really don’t care about this.
 Instead, I’d much rather see</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.png" alt="Instead of the module, show the type singature"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.webp" alt="Instead of the module, show the type singature"></p>
 <p>which looks much more useful to me.</p>
 <p>Luckily, this is exactly the same situation as in the Haskell case,
 which we already fixed.
@@ -10768,9 +10768,9 @@ I encourage you to just issue an <code>M-x prettify-symbols-mode RET</code> in a
 The default <code>prettify-symbols-alist</code> that e.g. AUCTeX provides already includes a lot of symbols.
 For the uninitiated,
 it would display a buffer like this<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/no-pretty-symbols.png" alt="Definition of the Day convolution without prettify-symbols-mode enabled"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/no-pretty-symbols.webp" alt="Definition of the Day convolution without prettify-symbols-mode enabled"></p>
 <p>as the already much more readable</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/default-pretty-symbols.png" alt="Definition of the Day convolution with AUCTeX's default prettify-symbols-alist"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/default-pretty-symbols.webp" alt="Definition of the Day convolution with AUCTeX's default prettify-symbols-alist"></p>
 <p>Basically, <code>prettify-symbols-mode</code> is a home-cooked ligature system for Emacs,
 because of course that exists.</p>
 <p>However, the above already has some problems:
@@ -10788,7 +10788,7 @@ the (buffer-local) <code>prettify-symbols-alist</code> variable:</p>
                      (&quot;\\mathcal{C}&quot; . ?𝓒) ; better looking
                      (&quot;\\cat{C}&quot;     . ?𝓒)))))</code></pre>
 <p>Executing that hook makes the above situation even prettier.</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/custom-pretty-symbols.png" alt="Definition of the Day convolution with a custom prettify-symbols-alist"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/custom-pretty-symbols.webp" alt="Definition of the Day convolution with a custom prettify-symbols-alist"></p>
 <h3 id="going-further">Going further</h3>
 <p>Naturally<!--
 -->—this being Emacs—<!--
@@ -10845,7 +10845,7 @@ Here are some more examples of this in action:</p>
   (&quot;\\defeq&quot;       . (?: (cr cl -20 -8) ?=))
   (&quot;^{\\tensorop}&quot; . (?​ (tr bl 0 80) ?⊗ (tr . tl) ?ᵒ (tr tl -25 0) ?ᵖ))
   (&quot;^{-1}&quot;         . (?​ (tr bl 0 100) ?- (cr . bl) ?¹)))</code></pre>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/stitching-together-symbols.png" alt="The above symbols"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/stitching-together-symbols.webp" alt="The above symbols"></p>
 <h2 id="going-too-far-code-folding">Going too far: code folding</h2>
 <p><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p>The only thing that <code>prettify-symbols-mode</code> lacks is
@@ -10893,10 +10893,10 @@ The simplest example is probably hiding the <code>\emph</code> macro,
 which indicates emphasised text.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <pre class="emacs-lisp"><code>(setopt TeX-fold-macro-spec-list '((&quot;{1}&quot; (&quot;emph&quot;))))</code></pre>
 <p>This ends up looking like the following:</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/hide-emphasis.png" alt="Hiding \emph"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/hide-emphasis.webp" alt="Hiding \emph"></p>
 <p>As with <code>prettify-symbols-mode</code>,
 things unprettify when the point is on them.</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/show-emphasis.png" alt="Show \emph on hover"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/show-emphasis.webp" alt="Show \emph on hover"></p>
 <p>Using these techniques,
 we can define replacements for calligraphic letters
 (or any other alphabet, like Fraktur or blackboard bold)
@@ -10931,9 +10931,9 @@ all this entails is to amend the respective line in <code>TeX-fold-math-spec-lis
 <p>Using everything in this article together—see
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el">here</a>—<!--
 -->one can transform a boring old LaTeX buffer</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.webp" alt="Before prettifying: Sections, subsections, emphasis, math"></p>
 <p>into something like this:</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.webp" alt="After prettifying: Sections, subsections, emphasis, math"></p>
 <p>Nice.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
@@ -14286,11 +14286,11 @@ quite fit. As a reminder, suppose we have an adjunction
 and counit
 <span class="math inline">\varepsilon \colon F U \Longrightarrow \mathrm{Id}_{\mathcal{C}}</span>.
 The snake identities for this adjunction look like</p>
-<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction.png" alt="Usual snake identities of an adjunction"></p>
+<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction.webp" alt="Usual snake identities of an adjunction"></p>
 <p>In particular, we get two such diagrams if we apply everything to the
 monoidal unit <span class="math inline">1 \in \mathcal{C}</span>. Specialised to the adjunction
 <span class="math inline">{-} \otimes x \dashv {-} \otimes Dx</span> the above then becomes</p>
-<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction-specialised.png" alt="Snake identities of an adjunction, specialised to this use-case"></p>
+<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction-specialised.webp" alt="Snake identities of an adjunction, specialised to this use-case"></p>
 <p>These are just the snake identities for duals if we make the definitions
 <span class="math inline">\mathrm{ev}_x ≔ \varepsilon_1</span> and <span class="math inline">\mathrm{coev}_x ≔ \eta_1</span>, right?
 Wrong! In the latter case we, for example, require that
@@ -14566,17 +14566,17 @@ monitors are set up in portrait mode.</p>
 <p>When you have two monitors oriented vertically, previews might end up
 looking something like this:</p>
 <p style="text-align:center;">
-<img class="pure-img" src="../images/vertical-preview/two-vertical.png" alt="preview with two vertical monitors, horribly squished vertically">
+<img class="pure-img" src="../images/vertical-preview/two-vertical.webp" alt="preview with two vertical monitors, horribly squished vertically">
 </p>
 <p>With the perhaps more common setup of one vertical and one horizontal
 monitor, you could instead get the charming</p>
 <p style="text-align:center;">
-<img class="pure-img" src="../images/vertical-preview/one-vertical.png" alt="preview with one vertical monitor, horribly squished horizontally">
+<img class="pure-img" src="../images/vertical-preview/one-vertical.webp" alt="preview with one vertical monitor, horribly squished horizontally">
 </p>
 <p>Imagine a whole page of this—things get pretty funky. Being a boring
 person, I would rather prefer the much more ordinary looking</p>
 <p style="text-align:center;">
-<img class="pure-img" src="../images/vertical-preview/normal.png" alt="normal preview, prefectly legible">
+<img class="pure-img" src="../images/vertical-preview/normal.webp" alt="normal preview, prefectly legible">
 </p>
 <p>Thankfully, this isn’t so complicated. Looking into <code>preview.el</code>, we
 get the geometry of the frame from <code>preview-get-geometry</code>. At least,
@@ -14797,9 +14797,9 @@ my research workflow.</p>
 <p>This story is interesting enough that I’ve written a whole <a href="./pretty-latex.html">post</a> about it<!--
 -->—go check it out!
 Long story short, one can transform a buffer like this</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.webp" alt="Before prettifying: Sections, subsections, emphasis, math"></p>
 <p>into one like this</p>
-<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math"></p>
+<p><img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.webp" alt="After prettifying: Sections, subsections, emphasis, math"></p>
 <h2 id="erc">ERC</h2>
 <p>I recently switched from WeeChat to <a href="https://www.gnu.org/software/emacs/erc.html">ERC</a> for IRC. It’s
 really great so far, but some things felt a bit lackluster out of the
@@ -15038,9 +15038,9 @@ check for a certain regular expression, whitespace, and say something if it matc
 <p>and we’re good to go.</p>
 <h2 id="sane-type-signatures-with-lsp-mode">Sane type signatures with lsp-mode</h2>
 <p>By default, <code>lsp-mode</code>’s type signatures for certain languages are… not great.</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.webp" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
 <p>However, with a bit of hacking around this turns out to be quite fixable:</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.webp" alt="Properly syntax highlighted type signature"></p>
 <p><a href="/posts/fixing-lsp-mode.html">The full post with all the code is here</a>.</p>
 <h2 id="eshell">Eshell</h2>
 <h3 id="integrating-zshs-history-into-eshell">Integrating zsh’s history into eshell</h3>
@@ -15402,7 +15402,7 @@ fixed <span class="math inline">\mathcal{C}</span> consists of:</p>
 </ul>
 <p>Further, this data has to satisfy appropriate associativity and
 unitality conditions:</p>
-<p><img class="pure-img" src="../images/weighted-colimits/enriched.png" alt="axioms for an enriched category"></p>
+<p><img class="pure-img" src="../images/weighted-colimits/enriched.webp" alt="axioms for an enriched category"></p>
 <p>In the above diagrams, <span class="math inline">\alpha</span>, <span class="math inline">\lambda</span>, and <span class="math inline">\rho</span> respectively
 denote the associativity, left, and right unitality constraints of
 <span class="math inline">\mathcal{V}</span>.</p>
@@ -15675,7 +15675,7 @@ restricted setting, an arrow <span class="math inline">Wa \longrightarrow \mathc
 just picks out two morphisms. Thus, the whole thing amounts to the
 commutativity of the following diagram:</p>
 <div style="text-align:center;">
-<p><img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram"></p>
+<p><img class="pure-img" src="../images/weighted-colimits/example-1.webp" alt="necessary commutative diagram"></p>
 </div>
 <p>In more plain language, the following equation must hold:</p>
 <p><span class="math display">
@@ -15697,7 +15697,7 @@ pick out arrows <span class="math inline">f</span> and <span class="math inline"
 contains a non-trivial isomorphism, the commutative diagram also
 becomes more complicated. Namely, we required the commutativity of</p>
 <div style="text-align:center;">
-<p><img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram"></p>
+<p><img class="pure-img" src="../images/weighted-colimits/example-2.webp" alt="necessary commutative diagram"></p>
 </div>
 <p>Instead of the requiring <span class="math inline">\theta \circ g</span> to <em>equal</em> <span class="math inline">\theta \circ
 f</span>, we now only require the existence of an invertible 2-cell that
@@ -16083,7 +16083,7 @@ selection and, depending on the type of thing in it, use that as either
 the body or the header of the task. If it’s a URL, create a link (i.e.,
 it will be of the form <code>[[link][input-text]]</code>); if not, just add the
 selection to the body of the note.</p>
-<p><img class="pure-img" src="../images/orgmode-prompt/selection-tasks.png" alt="visual representation of the above paragraph, showing various states of notes"></p>
+<p><img class="pure-img" src="../images/orgmode-prompt/selection-tasks.webp" alt="visual representation of the above paragraph, showing various states of notes"></p>
 <p>Of course, you can use all of this together as well—directly link to
 that one paper or blog post you wanted to read, or that one YouTube
 video you want to watch on the weekend!</p>
@@ -16681,16 +16681,16 @@ Org-roam describes itself as a “plain-text personal knowledge management
 system”, which fits the bill pretty well. In short, it’s a note taking
 system in the spirit of the <a href="https://en.wikipedia.org/wiki/zettelkasten">Zettelkasten</a> method, which is essentially
 about having lots of notes with lots of backlinks to related concepts:</p>
-<p><img class="pure-img" src="../images/phd-workflow/backlinks.png" alt="org-roam showcase"></p>
+<p><img class="pure-img" src="../images/phd-workflow/backlinks.webp" alt="org-roam showcase"></p>
 <p>In fact, using <a href="https://github.com/org-roam/org-roam-ui">org-roam-ui</a>, one can even visualise the entire
 Zettelkasten as an interactive and pretty graph in which notes become
 nodes and backlinks become edges!</p>
 <div class="pure-g">
 <div class="pure-u-1-2">
-<img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.png" alt="org-roam-ui example zoomed-in">
+<img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.webp" alt="org-roam-ui example zoomed-in">
 </div>
 <div class="pure-u-1-2">
-<img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.png" alt="org-roam-ui example zoomed-out">
+<img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.webp" alt="org-roam-ui example zoomed-out">
 </div>
 </div>
 <p>Org-roam <a href="https://github.com/org-roam/org-roam#configuration">suggests

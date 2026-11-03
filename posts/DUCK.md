@@ -17,10 +17,10 @@ straight out of a—judging by the quality of the print—cheap 3D printer,
 and looks like just about the derpiest duck one can imagine:
 
 <figure>
-  <img src="../images/duck/duck2.png"
+  <img src="../images/duck/duck2.webp"
        style="max-width: 41.2%; height: 100%;"
        alt="Duck 2">
-  <img src="../images/duck/duck1.png"
+  <img src="../images/duck/duck1.webp"
        style="max-width: 50%; height: 100%;"
        alt="Duck 1">
 </figure>

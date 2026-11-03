@@ -310,9 +310,9 @@ The plot comparing `triv` and `simp` looks kinda funny, actually:
 
 [^21]
 <picture>
-  <source srcset="../images/primes/ts.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/ts-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/ts.png" alt="-t vs. -s">
+  <source srcset="../images/primes/ts.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/ts-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/ts.webp" alt="-t vs. -s">
 </picture>
 
 However, only being able to check 5 million numbers in one second isn't
@@ -408,9 +408,9 @@ The benchmark results are quite decisive, however.
 
 [^22]
 <picture>
-  <source srcset="../images/primes/s0.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/s0-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/s0.png" alt="-s vs. -e0">
+  <source srcset="../images/primes/s0.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/s0-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/s0.webp" alt="-s vs. -e0">
 </picture>
 
 ## Packing bits
@@ -468,9 +468,9 @@ regions of memory, which does pay off:
 
 [^23]
 <picture>
-  <source srcset="../images/primes/01.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/01-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/01.png" alt="-e0 vs. -e1">
+  <source srcset="../images/primes/01.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/01-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/01.webp" alt="-e0 vs. -e1">
 </picture>
 
 ## Odds-only
@@ -514,9 +514,9 @@ The wins are quite immediate:
 
 [^24]
 <picture>
-  <source srcset="../images/primes/012.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/012-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/012.png" alt="-e0 vs. -e1 vs. -e2">
+  <source srcset="../images/primes/012.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/012-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/012.webp" alt="-e0 vs. -e1 vs. -e2">
 </picture>
 
 # Wheels
@@ -655,9 +655,9 @@ Again, we get a noticeable speedup:
 
 [^25]
 <picture>
-  <source srcset="../images/primes/123.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/123-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/123.png" alt="-e1 vs. -e2 vs. -e3">
+  <source srcset="../images/primes/123.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/123-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/123.webp" alt="-e1 vs. -e2 vs. -e3">
 </picture>
 
 We're doing more work in the inner loop with `4*j/15`, instead of just
@@ -784,9 +784,9 @@ This does indeed give a pretty nice performance boost:
 
 [^26]
 <picture>
-  <source srcset="../images/primes/2345.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/2345-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/2345.png" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
+  <source srcset="../images/primes/2345.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/2345-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/2345.webp" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
 </picture>
 
 I guess array access really is *much* faster than manual bit-twiddling.[^39]
@@ -852,9 +852,9 @@ increasing in steps that are reasonable for the wheel.
 
 [^29]
 <picture>
-  <source srcset="../images/primes/3456.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/3456-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/3456.png" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
+  <source srcset="../images/primes/3456.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/3456-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/3456.webp" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
 </picture>
 
 It's… not actually that much faster. Sometimes one does see an
@@ -980,9 +980,9 @@ This gives a small boost after a certain point:
 
 [^27]
 <picture>
-  <source srcset="../images/primes/4567.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/4567-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/4567.png" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
+  <source srcset="../images/primes/4567.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/4567-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/4567.webp" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
 </picture>
 
 # Giving up on rules
@@ -1082,9 +1082,9 @@ mostly just because the array-less approach is so much faster.
 
 [^28]
 <picture>
-  <source srcset="../images/primes/678.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/678-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/678.png" alt="-e6 vs. -e7 vs. -e8">
+  <source srcset="../images/primes/678.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/678-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/678.webp" alt="-e6 vs. -e7 vs. -e8">
 </picture>
 
 ## Fixed steps
@@ -1231,9 +1231,9 @@ Some more benchmarks:
 
 [^20]
 <picture>
-         <source srcset="../images/primes/6789.png" media="(prefers-color-scheme: light)">
-         <source srcset="../images/primes/6789-dark.png" media="(prefers-color-scheme: dark)">
-         <img src="../images/primes/6789.png" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
+         <source srcset="../images/primes/6789.webp" media="(prefers-color-scheme: light)">
+         <source srcset="../images/primes/6789-dark.webp" media="(prefers-color-scheme: dark)">
+         <img src="../images/primes/6789.webp" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
        </picture>
 
 ---
@@ -1244,9 +1244,9 @@ Also, this still neatly fits on my screen without me having to decrease
 the font size, or being forced to use overly long lines:
 
 <picture>
-  <source srcset="../images/primes/end.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/end-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/end.png" alt="Full source code.">
+  <source srcset="../images/primes/end.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/end-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/end.webp" alt="Full source code.">
 </picture>
 
 # The end
@@ -1254,9 +1254,9 @@ the font size, or being forced to use overly long lines:
 Here are all of the variants:
 
 <picture>
-  <source srcset="../images/primes/all.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/primes/all-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/primes/all.png" alt="Comparison of all algorithms.">
+  <source srcset="../images/primes/all.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/primes/all-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/primes/all.webp" alt="Comparison of all algorithms.">
 </picture>
 
 

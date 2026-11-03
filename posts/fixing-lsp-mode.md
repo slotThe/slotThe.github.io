@@ -40,7 +40,7 @@ when hovering over the function name:
 
 <img class="pure-img"
      style="padding-left: 1em;"
-     src="../images/fixing-lsp-mode/lsp-mode-default.png"
+     src="../images/fixing-lsp-mode/lsp-mode-default.webp"
      alt="By default, lsp-mode only shows `iamTooLong :: Stirng`">
 
 That's… not correct.
@@ -112,7 +112,7 @@ This already looks *fine*, but something is still amiss.
 
 <img class="pure-img"
      style="padding-left: 1em;"
-     src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.png"
+     src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.webp"
      alt="Correctly shows the whole type signature, but there is no syntax highlighting">
 
 There is no syntax highlighting!
@@ -159,7 +159,7 @@ This works quite nicely:
 
 <img class="pure-img"
      style="padding-left: 1em;"
-     src="../images/fixing-lsp-mode/lsp-mode-fixed.png"
+     src="../images/fixing-lsp-mode/lsp-mode-fixed.webp"
      alt="Properly syntax highlighted type signature">
 
 # Fixing Rust hovers
@@ -172,7 +172,7 @@ by default, `lsp-mode` shows the following hover information.
 
 <img class="pure-img"
      style="padding-left: 1em;"
-     src="../images/fixing-lsp-mode/lsp-rust-default-hover.png"
+     src="../images/fixing-lsp-mode/lsp-rust-default-hover.webp"
      alt="By default, the hover shows the module that the identifier is imported from">
 
 Much like the user who opened the mentioned pull-request,
@@ -181,7 +181,7 @@ Instead, I'd much rather see
 
 <img class="pure-img"
      style="padding-left: 1em;"
-     src="../images/fixing-lsp-mode/lsp-rust-improved-hover.png"
+     src="../images/fixing-lsp-mode/lsp-rust-improved-hover.webp"
      alt="Instead of the module, show the type singature">
 
 which looks much more useful to me.

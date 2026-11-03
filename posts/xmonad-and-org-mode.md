@@ -67,7 +67,7 @@ the body or the header of the task.  If it's a URL, create a link (i.e.,
 it will be of the form `[[link][input-text]]`); if not, just add the
 selection to the body of the note.
 
-<img class="pure-img" src="../images/orgmode-prompt/selection-tasks.png"
+<img class="pure-img" src="../images/orgmode-prompt/selection-tasks.webp"
      alt="visual representation of the above paragraph, showing various states of notes">
 
 Of course, you can use all of this together as well—directly link to

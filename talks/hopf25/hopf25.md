@@ -21,7 +21,7 @@ Click on the preview image to access a handout version of the slides.
   <a href="./talks/hopf25/slides.pdf">
     <img class="pure-img"
        style="text-align: center"
-       src="./talks/hopf25/preview.png"
+       src="./talks/hopf25/preview.webp"
        alt="A preview of the slides; a link points to the handout version of the PDF.">
   </a>
 </div>

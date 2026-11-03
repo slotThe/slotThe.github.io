@@ -9,7 +9,7 @@
     <meta name="og:title" content="Prettifying LaTeX Buffers">
     <meta name="og:description" content="Configuring prettify-symbols-mode for LaTeX buffers in Emacs, including multi-glyph ligatures.">
     <meta name="og:site" content="tony-zorman.com">
-    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.png">
+    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.webp">
     <meta property="og:image:height" content="221">
     <meta property="og:image:width" content="197">
 
@@ -102,11 +102,11 @@ it would display a buffer like this<!--
 </pre></div></div><!--
 -->
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/no-pretty-symbols.png" alt="Definition of the Day convolution without prettify-symbols-mode enabled">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/no-pretty-symbols.webp" alt="Definition of the Day convolution without prettify-symbols-mode enabled">
 <p></p>
 as the already much more readable
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/default-pretty-symbols.png" alt="Definition of the Day convolution with AUCTeX's default prettify-symbols-alist">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/default-pretty-symbols.webp" alt="Definition of the Day convolution with AUCTeX's default prettify-symbols-alist">
 <p></p>
 Basically, <code>prettify-symbols-mode</code> is a home-cooked ligature system for Emacs,
 because of course that exists.
@@ -130,7 +130,7 @@ the (buffer-local) <code>prettify-symbols-alist</code> variable:
 <p></p>
 Executing that hook makes the above situation even prettier.
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/custom-pretty-symbols.png" alt="Definition of the Day convolution with a custom prettify-symbols-alist">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/custom-pretty-symbols.webp" alt="Definition of the Day convolution with a custom prettify-symbols-alist">
 <h3 id="going-further">Going further<a href="#going-further" class="floatleft sec-link">§</a></h3>
 <p></p>
 Naturally<!--
@@ -218,7 +218,7 @@ Here are some more examples of this in action:
 <span class="w">  </span><span class="p">(</span><span class="s">&quot;^{-1}&quot;</span><span class="w">         </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="sc">?​</span><span class="w"> </span><span class="p">(</span><span class="nv">tr</span><span class="w"> </span><span class="nv">bl</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="sc">?-</span><span class="w"> </span><span class="p">(</span><span class="nv">cr</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="nv">bl</span><span class="p">)</span><span class="w"> </span><span class="sc">?¹</span><span class="p">)))</span>
 </pre></div>
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/stitching-together-symbols.png" alt="The above symbols">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/stitching-together-symbols.webp" alt="The above symbols">
 <h2 id="going-too-far-code-folding">Going too far: code folding<a href="#going-too-far-code-folding" class="floatleft sec-link">§</a></h2>
 <p></p>
 <!--
@@ -334,12 +334,12 @@ or even <code>\item</code>:
 <p></p>
 This ends up looking like the following:
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/hide-emphasis.png" alt="Hiding \emph">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/hide-emphasis.webp" alt="Hiding \emph">
 <p></p>
 As with <code>prettify-symbols-mode</code>,
 things unprettify when the point is on them.
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/show-emphasis.png" alt="Show \emph on hover">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/show-emphasis.webp" alt="Show \emph on hover">
 <p></p>
 Using these techniques,
 we can define replacements for calligraphic letters
@@ -407,11 +407,11 @@ Using everything in this article <span class="nowrap">together—</span>see
 <a href="https://gitlab.com/slotThe/dotfiles/-/blob/7b2885a8343327717c91818d1970576238184307/emacs/.config/emacs/lisp/hopf-latex-pretty-symbols.el">here</a><span class="nowrap">—</span><!--
 -->one can transform a boring old LaTeX buffer
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.png" alt="Before prettifying: Sections, subsections, emphasis, math">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-before.webp" alt="Before prettifying: Sections, subsections, emphasis, math">
 <p></p>
 into something like this:
 <p></p>
-<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.png" alt="After prettifying: Sections, subsections, emphasis, math">
+<img class="pure-img" style="padding-left: 1em" src="../images/pretty-latex/end-after.webp" alt="After prettifying: Sections, subsections, emphasis, math">
 <p></p>
 Nice.
 <!-- Body is included in the above file -->

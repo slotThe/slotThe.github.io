@@ -20,7 +20,7 @@ As the name suggests,
 and looks quite similar in action:
 
 <img class="pure-img"
-     src="../images/rq/rq.png"
+     src="../images/rq/rq.webp"
      alt="rq in action">
 
 Another example,

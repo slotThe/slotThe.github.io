@@ -235,9 +235,9 @@ side-by-side:</p>
 <p>The plot comparing <code>triv</code> and <code>simp</code> looks kinda funny, actually:</p>
 <p><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
 <picture>
-<source srcset="../images/primes/ts.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/ts-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/ts.png" alt="-t vs. -s">
+<source srcset="../images/primes/ts.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/ts-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/ts.webp" alt="-t vs. -s">
 </picture></p>
 <p>However, only being able to check 5 million numbers in one second isn’t
 all that impressive on a modern computer. We’ve already seen a better
@@ -297,9 +297,9 @@ the primes, so we can add them to the output array:</p>
 <p>The benchmark results are quite decisive, however.</p>
 <p><a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>
 <picture>
-<source srcset="../images/primes/s0.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/s0-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/s0.png" alt="-s vs. -e0">
+<source srcset="../images/primes/s0.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/s0-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/s0.webp" alt="-s vs. -e0">
 </picture></p>
 <h3 id="packing-bits">Packing bits</h3>
 <p>Instead of using a full byte to represent a single bit, how about we
@@ -333,9 +333,9 @@ mean that a lot more of this stuff fits into the smaller, though faster,
 regions of memory, which does pay off:</p>
 <p><a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>
 <picture>
-<source srcset="../images/primes/01.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/01-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/01.png" alt="-e0 vs. -e1">
+<source srcset="../images/primes/01.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/01-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/01.webp" alt="-e0 vs. -e1">
 </picture></p>
 <h3 id="odds-only">Odds-only</h3>
 <p>An immediate optimisation that one could do is to throw away all of the
@@ -363,9 +363,9 @@ over the odd numbers, with the same justification as before.</p>
 <p>The wins are quite immediate:</p>
 <p><a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>
 <picture>
-<source srcset="../images/primes/012.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/012-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/012.png" alt="-e0 vs. -e1 vs. -e2">
+<source srcset="../images/primes/012.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/012-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/012.webp" alt="-e0 vs. -e1 vs. -e2">
 </picture></p>
 <h2 id="wheels">Wheels</h2>
 <p>So, how can one improve on the odds-only sieve? One approach is to try
@@ -461,9 +461,9 @@ starting at <code>i*i</code>, and then just crossing off each valid multiple.</p
 <p>Again, we get a noticeable speedup:</p>
 <p><a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>
 <picture>
-<source srcset="../images/primes/123.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/123-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/123.png" alt="-e1 vs. -e2 vs. -e3">
+<source srcset="../images/primes/123.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/123-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/123.webp" alt="-e1 vs. -e2 vs. -e3">
 </picture></p>
 <p>We’re doing more work in the inner loop with <code>4*j/15</code>, instead of just
 <code>j/2</code>—while both compile down to shifts, the former also has some
@@ -550,9 +550,9 @@ aligned with <code>era4</code> to showcase the differences:</p>
 <p>This does indeed give a pretty nice performance boost:</p>
 <p><a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>
 <picture>
-<source srcset="../images/primes/2345.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/2345-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/2345.png" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
+<source srcset="../images/primes/2345.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/2345-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/2345.webp" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
 </picture></p>
 <p>I guess array access really is <em>much</em> faster than manual bit-twiddling.<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>
 Optimisation is weird.</p>
@@ -599,9 +599,9 @@ increasing in steps that are reasonable for the wheel.</p>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="op">)</span><span class="co">//era6</span></span></code></pre></div>
 <p><a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a>
 <picture>
-<source srcset="../images/primes/3456.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/3456-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/3456.png" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
+<source srcset="../images/primes/3456.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/3456-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/3456.webp" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
 </picture></p>
 <p>It’s… not actually that much faster. Sometimes one does see an
 improvement at 1e9, but it’s quite flaky. I’m not sure why this is true,
@@ -680,9 +680,9 @@ the segment start <code>l</code>. Then just force-add it to the array.</p>
 <p>This gives a small boost after a certain point:</p>
 <p><a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>
 <picture>
-<source srcset="../images/primes/4567.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/4567-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/4567.png" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
+<source srcset="../images/primes/4567.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/4567-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/4567.webp" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
 </picture></p>
 <h2 id="giving-up-on-rules">Giving up on rules</h2>
 <p>At this point, I slowly ran out of ideas on what to do that might have a
@@ -746,9 +746,9 @@ still needs to be representable.</p>
 mostly just because the array-less approach is so much faster.</p>
 <p><a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a>
 <picture>
-<source srcset="../images/primes/678.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/678-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/678.png" alt="-e6 vs. -e7 vs. -e8">
+<source srcset="../images/primes/678.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/678-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/678.webp" alt="-e6 vs. -e7 vs. -e8">
 </picture></p>
 <h3 id="fixed-steps">Fixed steps</h3>
 <p>It’s finally time I stop complaining about <code>4*j/15</code> being slow, and just
@@ -844,9 +844,9 @@ same, I think, so I’ll keep it in.</p>
 Some more benchmarks:</p>
 <p><a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a>
 <picture>
-<source srcset="../images/primes/6789.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/6789-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/6789.png" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
+<source srcset="../images/primes/6789.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/6789-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/6789.webp" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
 </picture></p>
 <hr />
 <p>I think this is a good time to stop—if only because <code>era10</code> would
@@ -854,16 +854,16 @@ completely destroy the alignment, and continuing in hex looks weird.
 Also, this still neatly fits on my screen without me having to decrease
 the font size, or being forced to use overly long lines:</p>
 <p><picture>
-<source srcset="../images/primes/end.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/end-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/end.png" alt="Full source code.">
+<source srcset="../images/primes/end.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/end-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/end.webp" alt="Full source code.">
 </picture></p>
 <h2 id="the-end">The end</h2>
 <p>Here are all of the variants:</p>
 <p><picture>
-<source srcset="../images/primes/all.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/all-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/all.png" alt="Comparison of all algorithms.">
+<source srcset="../images/primes/all.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/all-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/all.webp" alt="Comparison of all algorithms.">
 </picture></p>
 <figure>
 <details>
@@ -1253,9 +1253,9 @@ variables.</li>
 side, which is how I read through the whole thing:</p>
 </div>
 <p><picture>
-<source srcset="../images/k-incunabulum/code.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/k-incunabulum/code-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/k-incunabulum/code.png" alt="a.c and a.h (no comments) fitting on a single screen.">
+<source srcset="../images/k-incunabulum/code.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/k-incunabulum/code-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/k-incunabulum/code.webp" alt="a.c and a.h (no comments) fitting on a single screen.">
 </picture>
 I think that that’s really pretty—reason enough to try and understand it.</p>
 <hr />

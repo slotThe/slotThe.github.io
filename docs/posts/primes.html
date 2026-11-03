@@ -9,7 +9,7 @@
     <meta name="og:title" content="Sieving Primes">
     <meta name="og:description" content="Manually optimising some prime sieves as if it was 2021.">
     <meta name="og:site" content="tony-zorman.com">
-    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.png">
+    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.webp">
     <meta property="og:image:height" content="221">
     <meta property="og:image:width" content="197">
 
@@ -466,9 +466,9 @@ The plot comparing <code>triv</code> and <code>simp</code> looks kinda funny, ac
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/ts.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/ts-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/ts.png" alt="-t vs. -s">
+<source srcset="../images/primes/ts.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/ts-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/ts.webp" alt="-t vs. -s">
 </picture>
 <p></p>
 However, only being able to check 5 million numbers in one second isn’t
@@ -581,9 +581,9 @@ The benchmark results are quite decisive, however.
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/s0.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/s0-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/s0.png" alt="-s vs. -e0">
+<source srcset="../images/primes/s0.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/s0-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/s0.webp" alt="-s vs. -e0">
 </picture>
 <h3 id="packing-bits">Packing bits<a href="#packing-bits" class="floatleft sec-link">§</a></h3>
 <p></p>
@@ -656,9 +656,9 @@ regions of memory, which does pay off:
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/01.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/01-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/01.png" alt="-e0 vs. -e1">
+<source srcset="../images/primes/01.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/01-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/01.webp" alt="-e0 vs. -e1">
 </picture>
 <h3 id="odds-only">Odds-only<a href="#odds-only" class="floatleft sec-link">§</a></h3>
 <p></p>
@@ -716,9 +716,9 @@ The wins are quite immediate:
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/012.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/012-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/012.png" alt="-e0 vs. -e1 vs. -e2">
+<source srcset="../images/primes/012.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/012-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/012.webp" alt="-e0 vs. -e1 vs. -e2">
 </picture>
 <h2 id="wheels">Wheels<a href="#wheels" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -874,9 +874,9 @@ Again, we get a noticeable speedup:
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/123.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/123-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/123.png" alt="-e1 vs. -e2 vs. -e3">
+<source srcset="../images/primes/123.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/123-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/123.webp" alt="-e1 vs. -e2 vs. -e3">
 </picture>
 <p></p>
 We’re doing more work in the inner loop with <code>4*j/15</code>, instead of just
@@ -1020,9 +1020,9 @@ This does indeed give a pretty nice performance boost:
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/2345.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/2345-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/2345.png" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
+<source srcset="../images/primes/2345.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/2345-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/2345.webp" alt="-e2 vs. -e3 vs. -e4 vs. -e5">
 </picture>
 <p></p>
 I guess array access really is <em>much</em> faster than manual bit-twiddling.<!--
@@ -1103,9 +1103,9 @@ increasing in steps that are reasonable for the wheel.
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/3456.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/3456-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/3456.png" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
+<source srcset="../images/primes/3456.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/3456-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/3456.webp" alt="-e3 vs. -e4 vs. -e5 vs. -e6">
 </picture>
 <p></p>
 It’s… not actually that much faster. Sometimes one does see an
@@ -1240,9 +1240,9 @@ This gives a small boost after a certain point:
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/4567.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/4567-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/4567.png" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
+<source srcset="../images/primes/4567.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/4567-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/4567.webp" alt="-e4 vs. -e5 vs. -e6 vs. -e7">
 </picture>
 <h2 id="giving-up-on-rules">Giving up on rules<a href="#giving-up-on-rules" class="floatleft sec-link">§</a></h2>
 <p></p>
@@ -1351,9 +1351,9 @@ mostly just because the array-less approach is so much faster.
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/678.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/678-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/678.png" alt="-e6 vs. -e7 vs. -e8">
+<source srcset="../images/primes/678.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/678-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/678.webp" alt="-e6 vs. -e7 vs. -e8">
 </picture>
 <h3 id="fixed-steps">Fixed steps<a href="#fixed-steps" class="floatleft sec-link">§</a></h3>
 <p></p>
@@ -1503,9 +1503,9 @@ Some more benchmarks:
 </pre></div></div><!--
 -->
 <picture>
-<source srcset="../images/primes/6789.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/6789-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/6789.png" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
+<source srcset="../images/primes/6789.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/6789-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/6789.webp" alt="-e6 vs. -e7 vs. -e8 vs. -e9">
 </picture>
 <hr />
 <p></p>
@@ -1515,18 +1515,18 @@ Also, this still neatly fits on my screen without me having to decrease
 the font size, or being forced to use overly long lines:
 <p></p>
 <picture>
-<source srcset="../images/primes/end.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/end-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/end.png" alt="Full source code.">
+<source srcset="../images/primes/end.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/end-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/end.webp" alt="Full source code.">
 </picture>
 <h2 id="the-end">The end<a href="#the-end" class="floatleft sec-link">§</a></h2>
 <p></p>
 Here are all of the variants:
 <p></p>
 <picture>
-<source srcset="../images/primes/all.png" media="(prefers-color-scheme: light)">
-<source srcset="../images/primes/all-dark.png" media="(prefers-color-scheme: dark)">
-<img src="../images/primes/all.png" alt="Comparison of all algorithms.">
+<source srcset="../images/primes/all.webp" media="(prefers-color-scheme: light)">
+<source srcset="../images/primes/all-dark.webp" media="(prefers-color-scheme: dark)">
+<img src="../images/primes/all.webp" alt="Comparison of all algorithms.">
 </picture>
 <figure>
 <details>

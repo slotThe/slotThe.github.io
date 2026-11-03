@@ -118,7 +118,7 @@ fixed $\mathcal{C}$ consists of:
 Further, this data has to satisfy appropriate associativity and
 unitality conditions:
 
-  <img class="pure-img" src="../images/weighted-colimits/enriched.png" alt="axioms for an enriched category">
+  <img class="pure-img" src="../images/weighted-colimits/enriched.webp" alt="axioms for an enriched category">
 
 In the above diagrams, $\alpha$, $\lambda$, and $\rho$ respectively
 denote the associativity, left, and right unitality constraints of
@@ -452,7 +452,7 @@ I learned these from Richard Garner during [BCQT 2022][leeds].
 
    <div style="text-align:center;">
      <img class="pure-img"
-          src="../images/weighted-colimits/example-1.png"
+          src="../images/weighted-colimits/example-1.webp"
           alt="necessary commutative diagram">
    </div>
 
@@ -482,7 +482,7 @@ I learned these from Richard Garner during [BCQT 2022][leeds].
 
    <div style="text-align:center;">
      <img class="pure-img"
-          src="../images/weighted-colimits/example-2.png"
+          src="../images/weighted-colimits/example-2.webp"
           alt="necessary commutative diagram">
    </div>
 

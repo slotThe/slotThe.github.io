@@ -280,7 +280,7 @@ It can, however, be somewhat improved by using CSS to vertically centre the imag
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>It looks like this:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<p><img class="pure-img" src="../images/anki-latex/centered.png" alt="A note with approximately centred LaTeX"></p>
+<p><img class="pure-img" src="../images/anki-latex/centered.webp" alt="A note with approximately centred LaTeX"></p>
 <p>Very far from perfect, but readable.
 Since this seems to be the only drawback with not using MathJax,
 I’ll take it.
@@ -745,11 +745,11 @@ quite fit. As a reminder, suppose we have an adjunction
 and counit
 <span class="math inline">\varepsilon \colon F U \Longrightarrow \mathrm{Id}_{\mathcal{C}}</span>.
 The snake identities for this adjunction look like</p>
-<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction.png" alt="Usual snake identities of an adjunction"></p>
+<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction.webp" alt="Usual snake identities of an adjunction"></p>
 <p>In particular, we get two such diagrams if we apply everything to the
 monoidal unit <span class="math inline">1 \in \mathcal{C}</span>. Specialised to the adjunction
 <span class="math inline">{-} \otimes x \dashv {-} \otimes Dx</span> the above then becomes</p>
-<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction-specialised.png" alt="Snake identities of an adjunction, specialised to this use-case"></p>
+<p><img class="pure-img" src="../images/duality-in-monoidal-categories/snake-idents-adjunction-specialised.webp" alt="Snake identities of an adjunction, specialised to this use-case"></p>
 <p>These are just the snake identities for duals if we make the definitions
 <span class="math inline">\mathrm{ev}_x ≔ \varepsilon_1</span> and <span class="math inline">\mathrm{coev}_x ≔ \eta_1</span>, right?
 Wrong! In the latter case we, for example, require that
@@ -944,7 +944,7 @@ fixed <span class="math inline">\mathcal{C}</span> consists of:</p>
 </ul>
 <p>Further, this data has to satisfy appropriate associativity and
 unitality conditions:</p>
-<p><img class="pure-img" src="../images/weighted-colimits/enriched.png" alt="axioms for an enriched category"></p>
+<p><img class="pure-img" src="../images/weighted-colimits/enriched.webp" alt="axioms for an enriched category"></p>
 <p>In the above diagrams, <span class="math inline">\alpha</span>, <span class="math inline">\lambda</span>, and <span class="math inline">\rho</span> respectively
 denote the associativity, left, and right unitality constraints of
 <span class="math inline">\mathcal{V}</span>.</p>
@@ -1217,7 +1217,7 @@ restricted setting, an arrow <span class="math inline">Wa \longrightarrow \mathc
 just picks out two morphisms. Thus, the whole thing amounts to the
 commutativity of the following diagram:</p>
 <div style="text-align:center;">
-<p><img class="pure-img" src="../images/weighted-colimits/example-1.png" alt="necessary commutative diagram"></p>
+<p><img class="pure-img" src="../images/weighted-colimits/example-1.webp" alt="necessary commutative diagram"></p>
 </div>
 <p>In more plain language, the following equation must hold:</p>
 <p><span class="math display">
@@ -1239,7 +1239,7 @@ pick out arrows <span class="math inline">f</span> and <span class="math inline"
 contains a non-trivial isomorphism, the commutative diagram also
 becomes more complicated. Namely, we required the commutativity of</p>
 <div style="text-align:center;">
-<p><img class="pure-img" src="../images/weighted-colimits/example-2.png" alt="necessary commutative diagram"></p>
+<p><img class="pure-img" src="../images/weighted-colimits/example-2.webp" alt="necessary commutative diagram"></p>
 </div>
 <p>Instead of the requiring <span class="math inline">\theta \circ g</span> to <em>equal</em> <span class="math inline">\theta \circ
 f</span>, we now only require the existence of an invertible 2-cell that
@@ -1511,16 +1511,16 @@ Org-roam describes itself as a “plain-text personal knowledge management
 system”, which fits the bill pretty well. In short, it’s a note taking
 system in the spirit of the <a href="https://en.wikipedia.org/wiki/zettelkasten">Zettelkasten</a> method, which is essentially
 about having lots of notes with lots of backlinks to related concepts:</p>
-<p><img class="pure-img" src="../images/phd-workflow/backlinks.png" alt="org-roam showcase"></p>
+<p><img class="pure-img" src="../images/phd-workflow/backlinks.webp" alt="org-roam showcase"></p>
 <p>In fact, using <a href="https://github.com/org-roam/org-roam-ui">org-roam-ui</a>, one can even visualise the entire
 Zettelkasten as an interactive and pretty graph in which notes become
 nodes and backlinks become edges!</p>
 <div class="pure-g">
 <div class="pure-u-1-2">
-<img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.png" alt="org-roam-ui example zoomed-in">
+<img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.webp" alt="org-roam-ui example zoomed-in">
 </div>
 <div class="pure-u-1-2">
-<img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.png" alt="org-roam-ui example zoomed-out">
+<img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.webp" alt="org-roam-ui example zoomed-out">
 </div>
 </div>
 <p>Org-roam <a href="https://github.com/org-roam/org-roam#configuration">suggests

@@ -63,9 +63,9 @@ The entire source code easily fits in two Emacs frames, shown side by
 side, which is how I read through the whole thing:
 </div>
 <picture>
-  <source srcset="../images/k-incunabulum/code.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/k-incunabulum/code-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/k-incunabulum/code.png" alt="a.c and a.h (no comments) fitting on a single screen.">
+  <source srcset="../images/k-incunabulum/code.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/k-incunabulum/code-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/k-incunabulum/code.webp" alt="a.c and a.h (no comments) fitting on a single screen.">
 </picture>
 I think that that's really pretty—reason enough to try and understand it.
 

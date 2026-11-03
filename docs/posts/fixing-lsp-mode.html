@@ -9,7 +9,7 @@
     <meta name="og:title" content="Fixing Lsp-Mode's Hover Signatures">
     <meta name="og:description" content="Overriding lsp-mode's hover handler to show type signatures instead of just the first line.">
     <meta name="og:site" content="tony-zorman.com">
-    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.png">
+    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.webp">
     <meta property="og:image:height" content="221">
     <meta property="og:image:width" content="197">
 
@@ -105,7 +105,7 @@ By default, lsp-mode<!--
 in the echo-area
 when hovering over the function name:
 <p></p>
-<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`">
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.webp" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`">
 <p></p>
 That’s… not correct.
 Executing <code>lsp-describe-thing-at-point</code> immediately reveals the problem;
@@ -174,7 +174,7 @@ We can now override the method with our own implementation:
 <p></p>
 This already looks <em>fine</em>, but something is still amiss.
 <p></p>
-<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.png" alt="Correctly shows the whole type signature, but there is no syntax highlighting">
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.webp" alt="Correctly shows the whole type signature, but there is no syntax highlighting">
 <p></p>
 There is no syntax highlighting!
 Thankfully, this is not very difficult to fix;
@@ -226,7 +226,7 @@ If you don’t have the <code>lsp-use-plists</code> variable set<!--
 <p></p>
 This works quite nicely:
 <p></p>
-<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature">
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.webp" alt="Properly syntax highlighted type signature">
 <h2 id="fixing-rust-hovers">Fixing Rust hovers<a href="#fixing-rust-hovers" class="floatleft sec-link">§</a></h2>
 <p></p>
 One of the above code snippets already mentions <a href="https://github.com/emacs-lsp/lsp-mode/pull/1740">lsp-mode#1740</a>,
@@ -235,13 +235,13 @@ a language that I also occasionally dabble in.
 The basic issue here goes like this:
 by default, <code>lsp-mode</code> shows the following hover information.
 <p></p>
-<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.png" alt="By default, the hover shows the module that the identifier is imported from">
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.webp" alt="By default, the hover shows the module that the identifier is imported from">
 <p></p>
 Much like the user who opened the mentioned pull-request,
 I really don’t care about this.
 Instead, I’d much rather see
 <p></p>
-<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.png" alt="Instead of the module, show the type singature">
+<img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.webp" alt="Instead of the module, show the type singature">
 <p></p>
 which looks much more useful to me.
 <p></p>

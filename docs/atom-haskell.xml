@@ -262,7 +262,7 @@ following:</p>
 <p>By default, lsp-mode<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> will display the following type signature
 in the echo-area
 when hovering over the function name:</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.png" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-default.webp" alt="By default, lsp-mode only shows `iamTooLong :: Stirng`"></p>
 <p>That’s… not correct.
 Executing <code>lsp-describe-thing-at-point</code> immediately reveals the problem;
 the request we get back looks like this:</p>
@@ -313,7 +313,7 @@ Original implementation from https://github.com/emacs-lsp/lsp-mode/pull/1740.&qu
   &quot;Display the type signature of the function at point.&quot;
   (slot/lsp-get-type-signature &quot;haskell&quot; (plist-get contents :value)))</code></pre>
 <p>This already looks <em>fine</em>, but something is still amiss.</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.png" alt="Correctly shows the whole type signature, but there is no syntax highlighting"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-no-syntax-highlighting.webp" alt="Correctly shows the whole type signature, but there is no syntax highlighting"></p>
 <p>There is no syntax highlighting!
 Thankfully, this is not very difficult to fix;
 the idea is to paste the string into a temporary buffer,
@@ -346,18 +346,18 @@ which I would very much like to take effect.</p>
    (slot/lsp-get-type-signature &quot;haskell&quot; (plist-get contents :value))
    'haskell-mode))</code></pre>
 <p>This works quite nicely:</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.png" alt="Properly syntax highlighted type signature"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-mode-fixed.webp" alt="Properly syntax highlighted type signature"></p>
 <h2 id="fixing-rust-hovers">Fixing Rust hovers</h2>
 <p>One of the above code snippets already mentions <a href="https://github.com/emacs-lsp/lsp-mode/pull/1740">lsp-mode#1740</a>,
 which is not about Haskell, but Rust,
 a language that I also occasionally dabble in.
 The basic issue here goes like this:
 by default, <code>lsp-mode</code> shows the following hover information.</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.png" alt="By default, the hover shows the module that the identifier is imported from"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-default-hover.webp" alt="By default, the hover shows the module that the identifier is imported from"></p>
 <p>Much like the user who opened the mentioned pull-request,
 I really don’t care about this.
 Instead, I’d much rather see</p>
-<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.png" alt="Instead of the module, show the type singature"></p>
+<p><img class="pure-img" style="padding-left: 1em;" src="../images/fixing-lsp-mode/lsp-rust-improved-hover.webp" alt="Instead of the module, show the type singature"></p>
 <p>which looks much more useful to me.</p>
 <p>Luckily, this is exactly the same situation as in the Haskell case,
 which we already fixed.

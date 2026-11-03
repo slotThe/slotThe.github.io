@@ -185,14 +185,14 @@ Long story short, one can transform a buffer like this
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/end-before.png"
+     src="../images/pretty-latex/end-before.webp"
      alt="Before prettifying: Sections, subsections, emphasis, math">
 
 into one like this
 
 <img class="pure-img"
      style="padding-left: 1em"
-     src="../images/pretty-latex/end-after.png"
+     src="../images/pretty-latex/end-after.webp"
      alt="After prettifying: Sections, subsections, emphasis, math">
 
 # ERC
@@ -492,14 +492,14 @@ By default, `lsp-mode`'s type signatures for certain languages are… not great.
 
 <img class="pure-img"
      style="padding-left: 1em;"
-     src="../images/fixing-lsp-mode/lsp-mode-default.png"
+     src="../images/fixing-lsp-mode/lsp-mode-default.webp"
      alt="By default, lsp-mode only shows `iamTooLong :: Stirng`">
 
 However, with a bit of hacking around this turns out to be quite fixable:
 
 <img class="pure-img"
      style="padding-left: 1em;"
-     src="../images/fixing-lsp-mode/lsp-mode-fixed.png"
+     src="../images/fixing-lsp-mode/lsp-mode-fixed.webp"
      alt="Properly syntax highlighted type signature">
 
 [The full post with all the code is here](/posts/fixing-lsp-mode.html).

@@ -172,7 +172,7 @@ system", which fits the bill pretty well.  In short, it's a note taking
 system in the spirit of the [Zettelkasten] method, which is essentially
 about having lots of notes with lots of backlinks to related concepts:
 
-<img class="pure-img" src="../images/phd-workflow/backlinks.png" alt="org-roam showcase">
+<img class="pure-img" src="../images/phd-workflow/backlinks.webp" alt="org-roam showcase">
 
 In fact, using [org-roam-ui], one can even visualise the entire
 Zettelkasten as an interactive and pretty graph in which notes become
@@ -180,10 +180,10 @@ nodes and backlinks become edges!
 
 <div class="pure-g">
  <div class="pure-u-1-2">
-  <img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.png" alt="org-roam-ui example zoomed-in">
+  <img class="pure-img" src="../images/phd-workflow/org-roam-ui-close.webp" alt="org-roam-ui example zoomed-in">
  </div>
  <div class="pure-u-1-2">
-  <img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.png" alt="org-roam-ui example zoomed-out">
+  <img class="pure-img" src="../images/phd-workflow/org-roam-ui-far.webp" alt="org-roam-ui example zoomed-out">
  </div>
 </div>
 

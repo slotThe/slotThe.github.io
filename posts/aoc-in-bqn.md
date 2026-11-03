@@ -3875,10 +3875,10 @@ Nice.
            S(a_{(1)})a_{(2)} = \varepsilon(a) 1 =  a_{(1)}S(a_{(2)});
          \]
        - with *commutative diagrams*:
-         <img class="pure-img" src="../images/bqn-aoc/commutative-diagram.png" alt="A commutative diagram for the above equation.">
+         <img class="pure-img" src="../images/bqn-aoc/commutative-diagram.webp" alt="A commutative diagram for the above equation.">
          and
        - with *string diagrams*:
-         <img class="pure-img" src="../images/bqn-aoc/string-diagram.png" alt="A string diagram for the above equation.">
+         <img class="pure-img" src="../images/bqn-aoc/string-diagram.webp" alt="A string diagram for the above equation.">
 
        Needless to say, these all look *vastly* different,
        each—in my opinion—enabling a certain mode of thought better than the others.

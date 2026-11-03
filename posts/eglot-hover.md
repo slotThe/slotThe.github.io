@@ -39,9 +39,9 @@ but the default for all of them is pretty "meh".[^2]
 + `rust-analyzer` shows where the thing comes from
 
   <picture>
-    <source srcset="../images/eglot-hover/rust-analyzer1.png" media="(prefers-color-scheme: light)">
-    <source srcset="../images/eglot-hover/rust-analyzer1-dark.png" media="(prefers-color-scheme: dark)">
-    <img src="../images/eglot-hover/rust-analyzer1.png" alt="Hovering over a method shows crate::module::Type">
+    <source srcset="../images/eglot-hover/rust-analyzer1.webp" media="(prefers-color-scheme: light)">
+    <source srcset="../images/eglot-hover/rust-analyzer1-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../images/eglot-hover/rust-analyzer1.webp" alt="Hovering over a method shows crate::module::Type">
   </picture>
 
   I will draw your attention to the second line in the minibuffer;
@@ -54,47 +54,47 @@ but the default for all of them is pretty "meh".[^2]
 + `clangd` shows the vague type
 
   <picture>
-    <source srcset="../images/eglot-hover/clangd1.png" media="(prefers-color-scheme: light)">
-    <source srcset="../images/eglot-hover/clangd1-dark.png" media="(prefers-color-scheme: dark)">
-    <img src="../images/eglot-hover/clangd1.png" alt="Hovering over fgetc just shows 'function fgetc'">
+    <source srcset="../images/eglot-hover/clangd1.webp" media="(prefers-color-scheme: light)">
+    <source srcset="../images/eglot-hover/clangd1-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../images/eglot-hover/clangd1.webp" alt="Hovering over fgetc just shows 'function fgetc'">
   </picture>
 
 + `(based)pyright` shows something completely useless
 
   <picture>
-    <source srcset="../images/eglot-hover/pyright1.png" media="(prefers-color-scheme: light)">
-    <source srcset="../images/eglot-hover/pyright1-dark.png" media="(prefers-color-scheme: dark)">
-    <img src="../images/eglot-hover/pyright1.png" alt="Hovering over the function 'go' shows '(function) def go(' (because the type signature gets split into multiple lines, see below)">
+    <source srcset="../images/eglot-hover/pyright1.webp" media="(prefers-color-scheme: light)">
+    <source srcset="../images/eglot-hover/pyright1-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../images/eglot-hover/pyright1.webp" alt="Hovering over the function 'go' shows '(function) def go(' (because the type signature gets split into multiple lines, see below)">
   </picture>
 
 + `ocaml-lsp` sort of shows what I want to see
 
   <picture>
-    <source srcset="../images/eglot-hover/ocaml-lsp1.png" media="(prefers-color-scheme: light)">
-    <source srcset="../images/eglot-hover/ocaml-lsp1-dark.png" media="(prefers-color-scheme: dark)">
-    <img src="../images/eglot-hover/ocaml-lsp1.png" alt="Hovering over a function with a short type shows the full type signature on one line">
+    <source srcset="../images/eglot-hover/ocaml-lsp1.webp" media="(prefers-color-scheme: light)">
+    <source srcset="../images/eglot-hover/ocaml-lsp1-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../images/eglot-hover/ocaml-lsp1.webp" alt="Hovering over a function with a short type shows the full type signature on one line">
   </picture>
 
   …but only for short type signatures
 
   <picture>
-    <source srcset="../images/eglot-hover/ocaml-lsp2.png" media="(prefers-color-scheme: light)">
-    <source srcset="../images/eglot-hover/ocaml-lsp2-dark.png" media="(prefers-color-scheme: dark)">
-    <img src="../images/eglot-hover/ocaml-lsp2.png" alt="Hovering over a function with a long type signature just shows the first line again">
+    <source srcset="../images/eglot-hover/ocaml-lsp2.webp" media="(prefers-color-scheme: light)">
+    <source srcset="../images/eglot-hover/ocaml-lsp2-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../images/eglot-hover/ocaml-lsp2.webp" alt="Hovering over a function with a long type signature just shows the first line again">
   </picture>
 
 + Same issue with `haskell-language-server`
 
   <picture>
-    <source srcset="../images/eglot-hover/hls1.png" media="(prefers-color-scheme: light)">
-    <source srcset="../images/eglot-hover/hls1-dark.png" media="(prefers-color-scheme: dark)">
-    <img src="../images/eglot-hover/hls1.png" alt="Hovering over a function with a short type shows the full type signature on one line">
+    <source srcset="../images/eglot-hover/hls1.webp" media="(prefers-color-scheme: light)">
+    <source srcset="../images/eglot-hover/hls1-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../images/eglot-hover/hls1.webp" alt="Hovering over a function with a short type shows the full type signature on one line">
   </picture>
 
   <picture>
-    <source srcset="../images/eglot-hover/hls2.png" media="(prefers-color-scheme: light)">
-    <source srcset="../images/eglot-hover/hls2-dark.png" media="(prefers-color-scheme: dark)">
-    <img src="../images/eglot-hover/hls2.png" alt="Hovering over a function with a long type signature just shows the first line">
+    <source srcset="../images/eglot-hover/hls2.webp" media="(prefers-color-scheme: light)">
+    <source srcset="../images/eglot-hover/hls2-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../images/eglot-hover/hls2.webp" alt="Hovering over a function with a long type signature just shows the first line">
   </picture>
 
 ---
@@ -102,41 +102,41 @@ but the default for all of them is pretty "meh".[^2]
 What I'd like to achieve instead is a type signature—if I want to know where the thing comes from I can just `M-.` it.
 
 <picture>
-  <source srcset="../images/eglot-hover/rust-analyzer2.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/eglot-hover/rust-analyzer2-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/eglot-hover/rust-analyzer2.png" alt="Hovering over a method shows the full type signature of the method">
+  <source srcset="../images/eglot-hover/rust-analyzer2.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/eglot-hover/rust-analyzer2-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/eglot-hover/rust-analyzer2.webp" alt="Hovering over a method shows the full type signature of the method">
 </picture>
 
 ---
 
 <picture>
-  <source srcset="../images/eglot-hover/clangd2.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/eglot-hover/clangd2-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/eglot-hover/clangd2.png" alt="Hovering over 'fgetc' shows its actual signature 'extern int fgetc(FILE *__stream)'">
+  <source srcset="../images/eglot-hover/clangd2.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/eglot-hover/clangd2-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/eglot-hover/clangd2.webp" alt="Hovering over 'fgetc' shows its actual signature 'extern int fgetc(FILE *__stream)'">
 </picture>
 
 ---
 
 <picture>
-  <source srcset="../images/eglot-hover/pyright2.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/eglot-hover/pyright2-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/eglot-hover/pyright2.png" alt="Hovering over a function shows the complete type signature with proper formatting">
+  <source srcset="../images/eglot-hover/pyright2.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/eglot-hover/pyright2-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/eglot-hover/pyright2.webp" alt="Hovering over a function shows the complete type signature with proper formatting">
 </picture>
 
 ---
 
 <picture>
-  <source srcset="../images/eglot-hover/ocaml-lsp3.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/eglot-hover/ocaml-lsp3-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/eglot-hover/ocaml-lsp3.png" alt="Hovering over a function shows the full type signature, even for long signatures">
+  <source srcset="../images/eglot-hover/ocaml-lsp3.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/eglot-hover/ocaml-lsp3-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/eglot-hover/ocaml-lsp3.webp" alt="Hovering over a function shows the full type signature, even for long signatures">
 </picture>
 
 ---
 
 <picture>
-  <source srcset="../images/eglot-hover/hls3.png" media="(prefers-color-scheme: light)">
-  <source srcset="../images/eglot-hover/hls3-dark.png" media="(prefers-color-scheme: dark)">
-  <img src="../images/eglot-hover/hls3.png" alt="Hovering over a function shows the full type signature, even for long signatures">
+  <source srcset="../images/eglot-hover/hls3.webp" media="(prefers-color-scheme: light)">
+  <source srcset="../images/eglot-hover/hls3-dark.webp" media="(prefers-color-scheme: dark)">
+  <img src="../images/eglot-hover/hls3.webp" alt="Hovering over a function shows the full type signature, even for long signatures">
 </picture>
 
 ---

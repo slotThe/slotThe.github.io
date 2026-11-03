@@ -20,7 +20,7 @@ Click on the preview image for a full-scale version.
   <a href="./posters/ferrara2024/poster.pdf">
     <img class="pure-img"
        style="text-align: center; max-width: 30%;"
-       src="./posters/ferrara2024/poster.png"
+       src="./posters/ferrara2024/poster.webp"
        alt="A preview of the poster">
   </a>
 </div>
