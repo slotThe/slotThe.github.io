@@ -18,9 +18,6 @@ check: tidy
 	@miss=$$(grep -L -- 'og-description:' posts/*.md); \
 	if [ -n "$$miss" ]; then echo -e "Missing desc:\n$$miss"; exit 1; fi
 
-optipng:
-	for f in `find images -name '**.png'`; do optipng -o7 $$f; done
-
 webp:
 	set -e
 	for png in `find images talks posters -name '*.png'`; do
