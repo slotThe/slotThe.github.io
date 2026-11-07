@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noai, noimageai">
+    <!-- Link previews in Signal and friends -->
+    <title>A tiny tldr client · Tony Zorman</title>
+    <meta name="og:title" content="A tiny tldr client">
+    
+    <meta name="og:site" content="tony-zorman.com">
+    <meta property="og:image" content="https://tony-zorman.com/images/thumbnail.webp">
+    <meta property="og:image:height" content="221">
+    <meta property="og:image:width" content="197">
+
+    <!-- Default appearance -->
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/colours.css">
+    <link rel="stylesheet" type="text/css" href="../css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css"><link rel="stylesheet" type="text/css" href="../css/garden.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" type="text/css" href="../css/pygments.css">
+    <link rel="stylesheet" type="text/css" href="../css/katex.css">
+    <!-- Margin and sidenotes -->
+    <link rel="stylesheet" type="text/css" href="../css/sidenotes.css">
+  </head>
+
+  <body>
+    <div class="navbar-space">
+      <div id="navigation">
+        <a href="../" class="menu-title">Tony's site</a>
+        <ul>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../garden.html">Garden</a></li>
+          <li><a href="../research.html">Research</a></li>
+          <li><a href="../free-software.html">Free Software</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../site.html">Colophon</a></li>
+        </ul>
+      </div>
+      <!-- A table of contents on the left side, but only for screens that are big enough -->
+    </div>
+    <div class="text-space">
+      <div id="content">
+        <article>
+  <div class="header">
+      <a href="../programming.html" class="back"><span style="font-family: var(--monospace-fonts)">←</span> Programming</a>
+      <span class="ws"> ·  planted 7th Nov 2026</span>
+      
+        </div>
+    <h1 class="note-title">A tiny tldr client</h1>
+    <div id="title-underline"></div>
+    <section>
+      The following is a completely functional <a href="https://github.com/tldr-pages/tldr">tldr</a> client in around 50 lines of C.<!--
+--><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle" /><div class="marginnote">Who are you calling unreadable‽</div><!--
+-->
+<div class="highlight-c" style="padding-left: 1em;"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+
+<span class="cp">#define dieif(x) if(x){fprintf(stderr, &quot;Usage: tldr «page»\n&quot;); return 1;}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">ac</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">av</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">home</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;HOME&quot;</span><span class="p">);</span><span class="w"> </span><span class="n">dieif</span><span class="p">(</span><span class="o">!</span><span class="n">home</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">fname</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">ac</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">dieif</span><span class="p">(</span><span class="n">strchr</span><span class="p">(</span><span class="n">av</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="sc">'/'</span><span class="p">));</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lv</span><span class="o">=</span><span class="n">strlen</span><span class="p">(</span><span class="n">av</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"> </span><span class="n">dieif</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">lv</span><span class="o">&gt;=</span><span class="mi">60</span><span class="p">);</span>
+<span class="w">    </span><span class="n">strcpy</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="n">n</span><span class="p">,</span><span class="n">av</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"> </span><span class="n">n</span><span class="o">+=</span><span class="n">lv</span><span class="p">;</span><span class="w"> </span><span class="n">fname</span><span class="p">[</span><span class="n">n</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="sc">'-'</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">dieif</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="n">fname</span><span class="p">[</span><span class="n">n</span><span class="mi">-1</span><span class="p">]</span><span class="o">=</span><span class="sc">'.'</span><span class="p">;</span><span class="w"> </span><span class="n">fname</span><span class="p">[</span><span class="n">n</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="sc">'m'</span><span class="p">;</span><span class="w"> </span><span class="n">fname</span><span class="p">[</span><span class="n">n</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="sc">'d'</span><span class="p">;</span><span class="w"> </span><span class="n">fname</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">){</span><span class="n">fname</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">|=</span><span class="mi">32</span><span class="p">;}</span><span class="w"> </span><span class="c1">// -|32 = -</span>
+
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">l</span><span class="p">[</span><span class="mi">512</span><span class="p">],</span><span class="w"> </span><span class="o">*</span><span class="n">dirs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;linux&quot;</span><span class="p">,</span><span class="s">&quot;common&quot;</span><span class="p">};</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">pth</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span><span class="w"> </span><span class="n">snprintf</span><span class="p">(</span><span class="n">pth</span><span class="p">,</span><span class="w"> </span><span class="mi">256</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%s/.cache/tldr-main/pages/%s/%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">home</span><span class="p">,</span><span class="w"> </span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">fname</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fopen</span><span class="p">(</span><span class="n">pth</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">_</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">_</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">_</span><span class="p">){</span><span class="n">dieif</span><span class="p">(</span><span class="o">!</span><span class="n">fgets</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">512</span><span class="p">,</span><span class="n">f</span><span class="p">));}</span><span class="w"> </span><span class="n">putchar</span><span class="p">(</span><span class="sc">'\n'</span><span class="p">);</span><span class="w"> </span><span class="c1">//skip</span>
+<span class="w">      </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="mi">512</span><span class="p">,</span><span class="n">f</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">'&gt;'</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">'-'</span><span class="p">:</span><span class="w"> </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\x1b</span><span class="s">[32m%s</span><span class="se">\x1b</span><span class="s">[0m&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="c1">//green</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">'`'</span><span class="p">:</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\x1b</span><span class="s">[36m    &quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">//cyan</span>
+<span class="w">          </span><span class="n">l</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="mi">-2</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pp</span><span class="o">=</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">          </span><span class="k">for</span><span class="w"> </span><span class="p">(;</span><span class="o">*</span><span class="n">p</span><span class="p">;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="sc">'{'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="sc">'{'</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="sc">'}'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="sc">'}'</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%.*s&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">p</span><span class="o">-</span><span class="n">pp</span><span class="p">),</span><span class="w"> </span><span class="n">pp</span><span class="p">);</span><span class="w"> </span><span class="n">p</span><span class="o">+=</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">pp</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="n">p</span><span class="o">++</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%.*s</span><span class="se">\x1b</span><span class="s">[0m</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">p</span><span class="o">-</span><span class="n">pp</span><span class="p">),</span><span class="w"> </span><span class="n">pp</span><span class="p">);</span><span class="w"> </span><span class="c1">//reset and last bit</span>
+<span class="w">          </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="n">putchar</span><span class="p">(</span><span class="sc">'\n'</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ERROR: `%s` or cache directory not found. Try running:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fname</span><span class="p">);</span>
+<span class="w">  </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;  rm -fr ~/.cache/tldr-main ; curl https://codeload.github.com/tldr-pages/tldr/tar.gz/main --output ./t.gz &amp;&amp; tar xvf t.gz -C ~/.cache/ &amp;&amp; rm t.gz</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p></p>
+It really looks rather fine
+<p></p>
+<img src="../../images/garden/tldr/tldr.webp" alt="A sample `tldr git`">
+<p></p>
+and even performs quite well:
+
+<div class="highlight-console" style="padding-left: 1em;"><pre><span></span><span class="gp">$ </span>hyperfine<span class="w"> </span>--warmup<span class="w"> </span><span class="m">100</span><span class="w"> </span>-N<span class="w">              </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">'./result/bin/tldr tar'</span><span class="w">              </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">'./outfieldr/zig-out/bin/tldr tar'</span><span class="w">   </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">'./tealdeer/target/release/tldr tar'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">'./tlrc/target/release/tldr tar'</span>
+
+<span class="go">Benchmark 1: ./result/bin/tldr tar</span>
+<span class="go">  Time (mean ± σ):     206.3 µs ±  78.1 µs    [User: 126.9 µs, System: 22.6 µs]</span>
+<span class="go">  Range (min … max):   133.6 µs … 1223.3 µs    13485 runs</span>
+
+<span class="go">Benchmark 2: ./outfieldr/zig-out/bin/tldr tar</span>
+<span class="go">  Time (mean ± σ):     247.3 µs ±  90.9 µs    [User: 152.1 µs, System: 36.6 µs]</span>
+<span class="go">  Range (min … max):   160.1 µs … 1887.3 µs    11545 runs</span>
+
+<span class="go">Benchmark 3: ./tealdeer/target/release/tldr tar</span>
+<span class="go">  Time (mean ± σ):       1.1 ms ±   0.2 ms    [User: 0.4 ms, System: 0.6 ms]</span>
+<span class="go">  Range (min … max):     0.8 ms …   3.1 ms    2411 runs</span>
+
+<span class="go">Benchmark 4: ./tlrc/target/release/tldr tar</span>
+<span class="go">  Time (mean ± σ):       1.0 ms ±   0.2 ms    [User: 0.3 ms, System: 0.6 ms]</span>
+<span class="go">  Range (min … max):     0.6 ms …   4.3 ms    2659 runs</span>
+
+<span class="go">Summary</span>
+<span class="go">  ./result/bin/tldr tar ran</span>
+<span class="go">    1.20 ± 0.63 times faster than ./outfieldr/zig-out/bin/tldr tar</span>
+<span class="go">    4.88 ± 2.19 times faster than ./tlrc/target/release/tldr tar</span>
+<span class="go">    5.15 ± 2.26 times faster than ./tealdeer/target/release/tldr tar</span>
+</pre></div>
+<p></p>
+Does it download new versions of the pages every now and then?
+No, but it tells you exactly which command to copy paste into your console.
+I honestly came to the conclusion that I just don’t need more than that for something that <span class="nowrap">should—</span>in <span class="nowrap">theory—</span>be so simple.<!--
+--><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle" /><div class="sidenote"><a href="https://github.com/tealdeer-rs/tealdeer">tealdeer</a> is almost 5000 lines!
+Even <a href="https://gitlab.com/ve-nt/outfieldr">outfieldr</a> is around 1000, but at least it’s super fast.</div><!--
+-->
+Certainly, one does not need a whole markdown parser for something where no parsing at all needs to happen.</section>
+    <div style="text-align: center;">
+      <img class="fleuron-block" src="../images/fleuron.svg" alt="End of post fleuron">
+      Have a comment? Write me an <a href="../about.html">email!</a>
+    </div>
+</article>
+</div>
+      <div id="footer">
+        <!-- Left -->
+        <a id="to-top" href="#">top</a>
+        <!-- Right -->
+        <a href="../atom.xml" style="font-variant:small-caps">rss</a>
+        <span class="ws"> | </span>
+        <a href="https://github.com/slotThe/slotThe.github.io">Website source</a>
+        <span class="ws"> | </span>
+        <a href="../impressum.html">Legal notice and privacy policy</a>
+        <!-- Newline -->
+        <p style="margin-top:0;">Everything on this website—<a style="color:var(--fg-footer-pipe)" href="https://en.wikipedia.org/wiki/Dash#Em_dash">em dash</a> and all—was created by a human</p>
+      </div>
+    </div>
+  </body>
+</html>
