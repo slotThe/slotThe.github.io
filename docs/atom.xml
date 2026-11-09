@@ -11,8 +11,108 @@
         <email>mail@tony-zorman.com</email>
         
     </author>
-    <updated>2026-11-02T00:00:00Z</updated>
+    <updated>2026-11-09T00:00:00Z</updated>
     <entry>
+    <title>LaTeX Previews for Elfeed</title>
+    <link href="https://tony-zorman.com/posts/elfeed-latex.html" />
+    <id>https://tony-zorman.com/posts/elfeed-latex.html</id>
+    <published>2026-11-09T00:00:00Z</published>
+    <updated>2026-11-09T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <div class="header">
+      9th Nov 2026
+        <span class="ws">  ·   <span title="620 words">3 min read</span>   ·  </span>
+        <span class="ws"><a title="All pages tagged '#emacs'." href="/tags/emacs.html" rel="tag">#emacs</a></span>
+      </div>
+    <h1 class="post-title">LaTeX Previews for Elfeed</h1>
+    <div id="title-underline"></div>
+    <section>
+      <!-- A table of contents inline in the text, in case the screen is
+           too small for the one in the `default.html' template -->
+      
+<p>Org’s new LaTeX preview system
+<a href="https://karthinks.com/software/understanding-org-latex-preview/">is</a>
+<a href="https://blog.tecosaur.net/tmio/2026-11-01-preview.html">out</a>—time to celebrate!
+Not only does this mean that one can now enjoy reasonable previews without having to use a forked version of Org,
+but given that we are using the infinitely extensible text editor,
+this preview functionality can be used <a href="https://www.youtube.com/watch?v=u44X_th6_oY">virtually everywhere</a>.
+Let’s hack it into elfeed.</p>
+<!--more-->
+<p>While its creator seems to <a href="https://nullprogram.com/blog/2026/04/26/">disagree</a>,
+I still believe that <a href="https://github.com/emacs-elfeed/elfeed">elfeed</a> is by far the best feed reader in existence.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+As RSS feeds are so static, it also feels like the ideal candidate to get a feeling for adapting <code>org-latex-preview</code> to other major modes.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Previewing LaTeX is quite important when one is subscribed to arXiv’s feeds,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+as titles and descriptions obviously contain maths sometimes:</p>
+<p>
+<video width="100%" controls>
+<source src="../images/elfeed-latex/elfeed.webm" media="(prefers-color-scheme: light)" type="video/webm">
+<source src="../images/elfeed-latex/elfeed-dark.webm" media="(prefers-color-scheme: dark)" type="video/webm">
+</video>
+</p>
+<p>The only function that we’ll need to get these previews working is <code>org-latex-preview-place</code>.
+It has two mandatory arguments, <code>processing-type</code> and <code>entries</code>.
+The latter is just a list of buffer positions <code>(beg end)</code> in which to find the LaTeX fragments,
+while the former sets the type of transformation you want to use.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+This means that the main thing we have to do is to collect all of the fragments:</p>
+<pre class="emacs-lisp"><code>(defun elfeed-latex-preview ()
+  &quot;LaTeX preview the current elfeed buffer.&quot;
+  (interactive)
+  (save-excursion
+    (with-syntax-table (copy-syntax-table)
+      (modify-syntax-entry ?- &quot;.&quot;) ; $x$-y is valid
+      (when-let* ((entries
+                   (cl-loop
+                    for (_ re pos _) in org-latex-regexps
+                    append (cl-loop
+                            initially (goto-char (point-min))
+                            while (re-search-forward re nil t)
+                            collect (list (match-beginning pos)
+                                          (match-end pos))))))
+        (org-latex-preview-place 'dvisvgm entries)))))</code></pre>
+<p>The <code>cl-loop</code> code is so close to natural language that I feel like it should be obvious even if you’ve never seen such a loop expression.
+The only thing that’s slightly tricky is that Org doesn’t really recognise constructs of the form <code>$x$-y</code> as valid
+LaTeX—as far as I know because it conflicts with one of its million syntax rules.
+To hack around this, as I still want to use <code>org-latex-regexps</code>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>
+we can treat the dash as punctuation while looking for fragments, since a punctuation character following the closing dollar is permitted.</p>
+<p>To hook this function into elfeed, we can simply check if the arXiv view is selected in either <code>elfeed-search-mode</code> or <code>elfeed-show-mode</code>,
+and then just call <code>elfeed-latex-preview</code> on the buffer:</p>
+<pre class="emacs-lisp"><code>(defun elfeed-latex (&amp;rest _)
+  (when (or (string-match-p &quot;arXiv&quot; elfeed-search-filter)
+            (and elfeed-show-entry
+                 (memq 'arXiv (elfeed-entry-tags elfeed-show-entry))))
+    (elfeed-latex-preview)))
+
+(add-hook 'elfeed-search-update-hook #'elfeed-latex)
+(add-hook 'elfeed-show-update-hook   #'elfeed-latex)
+(advice-add 'elfeed-search-update-entry :after #'elfeed-latex)</code></pre>
+<p>As the names suggest, the two hooks are for when things change in <code>elfeed-search-mode</code> and <code>elfeed-show-mode</code>, respectively.
+The hooks for entering those major modes seem to run too early for LaTeX previewing to have any effect.
+The advice is needed since opening a feed entry with <code>elfeed-search-show-entry</code> does update and redraw its title (e.g., marking it read),
+but sadly elfeed bypasses the usual <code>search-update</code> machinery, and thus this doesn’t activate any of the required hooks.</p>
+<p>Pretty feeds, at last.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Certainly better than a vibecoded C++ GUI thing…<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Not that it makes much of a difference; the API as I see it is essentially plug-and-play.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>If you can stomach the arXiv in 2026, that is.
+I know enough people who’ve just given up at this point,
+and are just scanning whose name they recognise.
+While this usually <em>is</em> a good way to filter out slop, it’s honestly quite worrying—<!--
+  -->but that’s not what this post is supposed to be about, so let’s stop here.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><code>dvisvgm</code>, <code>dvipng</code>, or <code>imagemagick</code>, at the time of writing.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Yes, the subset of TeX allowed in arXiv titles and descriptions is so minimal that one could probably get away with manually curated regexps.
+However, this would result in more code, so this approach seems simpler.
+It also has the nice benefit that some people don’t care what the arXiv allows or not, and will use <code>\(…\)</code>-style brackets, even though those are not rendered on the website.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!-- Body is included in the above file -->
+    </section>
+    
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>Masuoka–Wigner as an Internal Injective</title>
     <link href="https://tony-zorman.com/maths/masuoka-wigner.html" />
     <id>https://tony-zorman.com/maths/masuoka-wigner.html</id>
