@@ -1,6 +1,7 @@
 ---
 title: Externalising for arXiv
-date: 2026-08-09
+date: 2026-08-04
+last-modified: 2026-08-04
 ---
 
 In your main LaTeX file:
