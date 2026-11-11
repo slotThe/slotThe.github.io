@@ -79,7 +79,7 @@ but sadly elfeed bypasses the usual `search-update` machinery, and thus this doe
 
 Pretty feeds, at last.
 
-[^1]: If you can stomach the arXiv in 2026, that is.
+[^1]: If you can [stomach the arXiv in 2026](https://arxiv.org/stats/monthly_submissions), that is.
       I know enough people who've just given up at this point,
       and are just scanning whose name they recognise.
       While this usually *is* a good way to filter out slop, it's honestly quite worrying—<!--
