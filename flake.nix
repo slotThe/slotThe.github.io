@@ -49,27 +49,20 @@
         packages          = p: [ p.site ];
         nativeBuildInputs = [ hPkgs.haskell-language-server ];
         buildInputs       = with pkgs; [
-          (python3.withPackages (p: [
-            # Font compressing
-            p.brotli
-            p.fonttools
-            p.beautifulsoup4
-            p.pygments
-          ]))
-          optipng
-          imagemagick
-          zlib
+          (python3.withPackages (p: with p;[ beautifulsoup4 brotli fonttools pygments ])) # Font compressing
           html-tidy
+          imagemagick
+          lftp
           linkchecker
+          optipng
+          zlib
           # KaTeX rendering of maths, see scripts/maths.js
-          nodejs
           katex
+          nodejs
           # Directly rendering TikZ pictures into SVGs
-          rubber
-          (texlive.combine {
-            inherit (texlive) scheme-basic amsmath preview pgf pgfplots tikz-cd amsfonts metafont rsfs jknapltx mathtools;
-          })
+          (texlive.combine {inherit (texlive) scheme-basic amsmath preview pgf pgfplots tikz-cd amsfonts metafont rsfs jknapltx mathtools;})
           poppler-utils
+          rubber
         ];
         shellHook = ''
           export PROJECT_ROOT="$(pwd)"
