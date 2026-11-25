@@ -74,14 +74,7 @@ main = do
     match "css/*" do
       route   idRoute
       compile compressCssCompiler
-    match (     "favicon.ico"
-           .||. "images/**"
-           .||. "talks/**.pdf"
-           .||. "css/fonts/**"
-           .||. "robots.txt"
-           .||. "CNAME"
-           .||. ".htaccess"
-          )
+    match (foldr1 (.||.) ["favicon.ico","images/**","talks/**.pdf","css/fonts/**","robots.txt",".htaccess"])
       do route   idRoute
          compile copyFileCompiler
 
