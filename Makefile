@@ -48,3 +48,6 @@ tidy: # Courtesy of Susam (https://codeberg.org/susam/susam.net/src/branch/main/
 	  tidy -q -e --warn-proprietary-attributes no /tmp/tmp.html || exit 1; \
 	done
 	@echo Done; echo
+
+upload: # make upload X=USER:@SERVER
+	cd docs && lftp -e "set cmd:fail-exit yes; mirror --reverse --no-perms -v . public_html; bye" "sftp://$(X)"
