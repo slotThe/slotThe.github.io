@@ -80,6 +80,7 @@ main = do
            .||. "css/fonts/**"
            .||. "robots.txt"
            .||. "CNAME"
+           .||. ".htaccess"
           )
       do route   idRoute
          compile copyFileCompiler
