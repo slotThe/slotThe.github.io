@@ -50,7 +50,7 @@ My dotfiles are [freely available](https://codeberg.org/slotThe/dotfiles) on Cod
   * 2FA: [pass-otp](https://github.com/pass-extension/pass-otp)
 + VPN: [Mullvad](https://mullvad.net/)
 + Static site generator: [Hakyll](https://jaspervdj.be/hakyll/)
-+ Hosting: [Microsoft GitHub Pages](https://docs.github.com/en/pages)
++ Hosting: [Hetzner](https://www.hetzner.com)
 
 [^1]: Eww, I know. But try surviving in today's world without occasionally having access to a phone...
 

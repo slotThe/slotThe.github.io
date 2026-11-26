@@ -2,8 +2,8 @@
 title: About This Website
 ---
 
-This site is hosted via [GitHub Pages](https://pages.github.com/),
-and the full source code is available on [Microsoft GitHub][ghub:site].
+This site is hosted on a [Hetzner](https://www.hetzner.com) web server,
+and the full source code is available on [Codeberg][cb:site] or on [Microsoft GitHub][ghub:site].
 
 My static site generator of choice is [hakyll],
 which leverages [pandoc] for the actual rendering.
@@ -146,13 +146,14 @@ to only keep the glyphs that are actually used in the generated HTML pages.
 ::: {.include from="scripts/opt-fonts.py"}
 :::
 
-[ghub:site]: https://github.com/slotThe/slotThe.github.io
-[pandoc]: https://pandoc.org/
-[hakyll]: https://jaspervdj.be/hakyll/
 [KaTeX]: https://katex.org/
+[cb:site]: https://codeberg.org/slotThe/website
+[ghub:site]: https://github.com/slotThe/slotThe.github.io
 [github:tufte-css]: https://github.com/edwardtufte/tufte-css
+[hakyll]: https://jaspervdj.be/hakyll/
 [pandoc:fenced-divs]: https://pandoc.org/MANUAL.html#extension-fenced_divs
 [pandoc:katex]: https://github.com/jgm/pandoc/issues/6651#issuecomment-1099727774
+[pandoc]: https://pandoc.org/
 [sidenotes-hs]: https://github.com/jez/pandoc-sidenote/blob/master/src/Text/Pandoc/SideNoteHTML.hs
 [site:citations]: /posts/hakyll-and-bibtex.html
 [site:impl:fonts]: https://github.com/slotThe/slotThe.github.io/tree/main/fonts
