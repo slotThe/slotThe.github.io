@@ -61,8 +61,8 @@ siteURL = "https://tony-zorman.com"
 config :: Configuration
 config = defaultConfiguration
   { destinationDirectory = "docs"
-  , ignoreFile = (||) <$> ignoreFile defaultConfiguration
-                      <*> (`elem` ["dist-newstyle", "scripts", "uncompressed_fonts"])
+  , ignoreFile = \p -> p /= ".htaccess" && ignoreFile defaultConfiguration p
+                   || (p `elem` ["dist-newstyle", "scripts", "uncompressed_fonts"])
   }
 
 main :: IO ()
